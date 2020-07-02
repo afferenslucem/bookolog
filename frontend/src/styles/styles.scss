@@ -1,0 +1,17 @@
+@import 'variables';
+
+header {
+    min-height: $header-height;
+    border-bottom: $split-border-style;
+
+    .main-icon {
+        display: block;
+        background-color: cadetblue;
+    }
+
+    .menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
