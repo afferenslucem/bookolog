@@ -27,16 +27,12 @@
       }
     },
     methods: {
-      load(): any {
-        
-      }
     },
     mixins: [userMixin],
     async beforeCreate() {
       try {
         const data = await axios.get('/books.json');
 
-        // @ts-ignore
         this.books = data.data.books;
         return;
       }

@@ -1,4 +1,7 @@
-export default {    
+import Vue from 'vue';
+import { UserModule } from '@/types/user-module';
+
+export default Vue.extend({    
     methods: {
         login() {
             this.$store.commit('login');
@@ -15,4 +18,4 @@ export default {
             return this.user.loggedIn;
         }
     }
-}
+});
