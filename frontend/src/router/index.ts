@@ -1,14 +1,20 @@
-import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
-import Main from '../views/Main.vue'
+import Vue from 'vue';
+import VueRouter, { RouteConfig } from 'vue-router';
+import Main from '@/views/Main.vue';
+import ToRead from '@/views/ToReadList.vue';
 
 Vue.use(VueRouter)
 
-  const routes: Array<RouteConfig> = [
+const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Main',
     component: Main
+  },    
+  {
+    path: '/to-read',
+    name: 'ToRead',
+    component: ToRead
   }
 ]
 

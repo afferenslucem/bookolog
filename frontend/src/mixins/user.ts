@@ -4,10 +4,10 @@ import { UserModule } from '@/types/user-module';
 export default Vue.extend({    
     methods: {
         login() {
-            this.$store.commit('login');
+            this.$store.dispatch('login');
         },
         logout() {
-            this.$store.commit('logout');
+            this.$store.dispatch('logout');
         }
     },
     computed: {

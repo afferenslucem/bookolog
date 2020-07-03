@@ -6,7 +6,9 @@
         <app-logged-in-header v-else></app-logged-in-header>
       </div>
     </header>
-    <main class="container mt-2">{{books}}</main>
+    <main class="container mt-2">
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 
@@ -28,18 +30,7 @@
     },
     methods: {
     },
-    mixins: [userMixin],
-    async beforeCreate() {
-      try {
-        const data = await axios.get('/books.json');
-
-        this.books = data.data.books;
-        return;
-      }
-      catch(e) {
-        console.log(e);
-      }
-    }
+    mixins: [userMixin]
   })
 </script>
 

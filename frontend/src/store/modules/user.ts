@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { StoreOptions } from 'vuex';
 import { UserModule } from '@/types/user-module';
+import { BookResponse } from '@/types/books-module';
 
 const userModule = {  
     state: {
@@ -13,8 +15,19 @@ const userModule = {
             state.loggedIn = false;
         }
     },
-    getters: {
+    actions: {
+        async login({commit}): Promise<void> {
+            const answer = await axios.get<BookResponse>('/books.json');
 
+            const books = answer.data.books;
+
+            commit('pushBooks', books);
+
+            commit('login');
+        },
+        logout({commit}): void {
+            commit('logout');
+        }
     }
 } as StoreOptions<UserModule>;
 
