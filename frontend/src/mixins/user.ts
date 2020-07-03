@@ -8,6 +8,7 @@ export default Vue.extend({
         },
         logout() {
             this.$store.dispatch('logout');
+            this.$router.push({name: 'Main'});
         }
     },
     computed: {

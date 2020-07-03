@@ -10,13 +10,17 @@ export default Vue.extend({
             return this.booksStorage.books;
         },
         toRead(): Book[] {
-            return this.booksStorage.toRead;
+            const result = this.$store.getters.toReadBooks;
+
+            console.log(`result: ${result}`)
+
+            return result;
         },
         inProgress(): Book[] {
-            return this.booksStorage.inProgress;
+            return this.$store.getters.inProgressBooks;
         },
         done(): Book[] {
-            return this.booksStorage.done;
+            return this.$store.getters.doneBooks;
         }
     }
 });

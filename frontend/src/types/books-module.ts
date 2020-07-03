@@ -5,6 +5,7 @@ export enum Status {
 }
 
 export interface Book {
+    id: number;
     name: string;
     authors: string[];
     status: Status;
@@ -13,7 +14,7 @@ export interface Book {
 }
 
 export interface BookResponse {
-    books: Book[]
+    books: Book[];
 }
 
 export interface BooksModule {

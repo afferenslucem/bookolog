@@ -8,18 +8,16 @@ const booksModule = {
     mutations: {
         pushBooks(state, books: Book[]) {
             state.books = books;
-
-            console.log(books);
         }
     },
     getters: {
-        toRead(state): Book[] {
+        toReadBooks(state): Book[] {
             return state.books.filter(book => book.status == Status.toRead)
         },
-        inProgress(state): Book[] {
+        inProgressBooks(state): Book[] {
             return state.books.filter(book => book.status == Status.inProgress)
         },
-        done(state): Book[] {
+        doneBooks(state): Book[] {
             return state.books.filter(book => book.status == Status.done)
         },
     }
