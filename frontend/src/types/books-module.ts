@@ -9,8 +9,8 @@ export interface Book {
     name: string;
     authors: string[];
     status: Status;
-    startDate?: Date;
-    endDate?: Date;
+    startDate?: Date | string;
+    endDate?: Date | string;
     progress?: number;
 }
 
@@ -28,7 +28,7 @@ export interface BooksModule {
 }
 
 export class BookUtils {
-    public static groupByYear(books: Book[]): BookYearList[] {
+    public static groupByYear(books: Book[]): BookYearList[] | null {
         return null;
     }
 }

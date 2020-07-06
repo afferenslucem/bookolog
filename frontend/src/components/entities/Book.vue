@@ -7,7 +7,7 @@
             <div class="progress-bar" role="progressbar" :style="progressStyle" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
 
-        <div v-show="showDate && hasDate">
+        <div v-show="showDate && hasDate" class="date-range">
             [
                 <span class="date">
                     {{startDate}}
