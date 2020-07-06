@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="list book">
     <div class="header">
       <h2>Список к прочтению</h2>
     </div>
@@ -8,7 +8,7 @@
         <span class="index">        
           {{index + 1}}.
         </span>
-        <app-book class="mb-3" :book="item"></app-book>
+        <app-book :book="item"></app-book>
       </div>
     </div>
   </div>

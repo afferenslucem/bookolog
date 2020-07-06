@@ -27,6 +27,14 @@ header {
 
     }
     .body {
-        margin-top: 2rem;
+        margin-top: $list-body-margin-top;
+    }
+}
+
+.list.book {
+    .body {
+        .list-line:not(:last-child) {
+            margin-bottom: $book-list-line-margin-bottom;
+        }
     }
 }
