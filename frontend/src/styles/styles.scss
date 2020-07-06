@@ -1,4 +1,6 @@
 @import 'variables';
+@import 'mixins';
+
 
 header {
     min-height: $header-height;
@@ -26,9 +28,20 @@ header {
     .header {
 
     }
+
     .body {
         margin-top: $list-body-margin-top;
     }
+
+    .list-line {
+        display: flex;
+        justify-content: flex-start;
+        align-items: start;
+    
+        .index {
+          padding-right: 1rem;
+        }
+      }
 }
 
 .list.book {
@@ -36,5 +49,27 @@ header {
         .list-line:not(:last-child) {
             margin-bottom: $book-list-line-margin-bottom;
         }
+    }
+}
+
+.no-index {
+    .list {
+        .list-line {
+            .index {
+                display: none;
+            }
+        }
+    }
+}
+
+.date {
+    color: $date-color;
+}
+
+.book {
+    .progress {
+        @include isDesktop {
+            width: 500px;
+        };
     }
 }

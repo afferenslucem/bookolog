@@ -34,13 +34,15 @@ const books: Book[] = [
         "name": "Как устроен javascript",
         "authors": ["Дуглас Крокфорд"],
         "status": 1,
+        "progress": 60
         "startDate": new Date("2020-06-29")
     },
     {
         "id": 6,
         "name": "BMW. Баварское сердце, Русская душа",
         "authors": ["Александр Пикуленко", "Денис Орлов"],
-        "status": 1
+        "status": 1,
+        "progress": 25
     },
     {
         "id": 7,

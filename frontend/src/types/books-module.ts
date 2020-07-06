@@ -11,6 +11,7 @@ export interface Book {
     status: Status;
     startDate?: Date;
     endDate?: Date;
+    progress?: number;
 }
 
 export interface BookYearList {
