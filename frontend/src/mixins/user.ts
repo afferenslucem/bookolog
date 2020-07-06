@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import { UserModule } from '@/types/user-module';
+import { UserActions } from '@/store/modules/user/storage-methods';
 
-export default Vue.extend({    
+export default Vue.extend({
     methods: {
-        login() {
-            this.$store.dispatch('login');
+        login(): Promise<void> {
+            return this.$store.dispatch(UserActions.login);
         },
         logout() {
-            this.$store.dispatch('logout');
+            this.$store.dispatch(UserActions.logout);
             this.$router.push({name: 'Main'});
         }
     },
@@ -16,6 +17,7 @@ export default Vue.extend({
             return this.$store.state.user;
         },
         loggedIn() {
+            // @ts-ignore
             return this.user.loggedIn;
         }
     }

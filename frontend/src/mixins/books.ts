@@ -12,8 +12,6 @@ export default Vue.extend({
         toRead(): Book[] {
             const result = this.$store.getters.toReadBooks;
 
-            console.log(`result: ${result}`)
-
             return result;
         },
         inProgress(): Book[] {
@@ -22,5 +20,5 @@ export default Vue.extend({
         done(): Book[] {
             return this.$store.getters.doneBooks;
         }
-    }
+    },
 });

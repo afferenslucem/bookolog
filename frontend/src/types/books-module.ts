@@ -9,8 +9,13 @@ export interface Book {
     name: string;
     authors: string[];
     status: Status;
-    startDate: Date;
-    endDate: Date;
+    startDate?: Date;
+    endDate?: Date;
+}
+
+export interface BookYearList {
+    year: number;
+    books: Book[];
 }
 
 export interface BookResponse {
@@ -19,4 +24,10 @@ export interface BookResponse {
 
 export interface BooksModule {
     books: Book[];
+}
+
+export class BookUtils {
+    public static groupByYear(books: Book[]): BookYearList[] {
+        return null;
+    }
 }

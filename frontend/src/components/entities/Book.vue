@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="name">{{book.name}}</div>
+      <div class="name"><strong>{{book.name}}</strong></div>
       <div class="authors">{{authors}}</div>
   </div>
 </template>
