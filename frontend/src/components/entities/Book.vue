@@ -1,6 +1,11 @@
 <template>
     <div class="book">
-        <div class="name"><strong>{{book.name}}</strong></div>
+        <div class="name">
+            <strong>{{book.name}}</strong>
+            <router-link class="edit" :to="{name: 'BookForm', params: { action: 'edit', id: this.book.id }}">
+                [редактировать]
+            </router-link>
+        </div>
         <div class="authors">{{authors}}</div>
 
         <div v-show="showProgress" class="progress">

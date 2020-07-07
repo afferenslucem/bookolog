@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router';
 import Main from '@/views/Main.vue';
 import ToRead from '@/views/ToReadList.vue';
 import Reading from '@/views/MyReadingList.vue';
+import BookForm from '@/views/BookForm.vue';
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,13 @@ const routes: Array<RouteConfig> = [
     path: '/reading',
     name: 'Reading',
     component: Reading
-  }
+  },
+  {
+    path: '/book/:action/:id',
+    name: 'BookForm',
+    component: BookForm,
+    props: true
+  },
 ]
 
 const router = new VueRouter({

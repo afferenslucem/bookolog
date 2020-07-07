@@ -44,7 +44,7 @@ header {
       }
 }
 
-.list.book {
+.book-list {
     .body {
         .list-line:not(:last-child) {
             margin-bottom: $book-list-line-margin-bottom;
@@ -77,5 +77,21 @@ header {
     
     .progress {
         width: 100%;
+    }
+
+    .name {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .edit {
+            display: none;
+        }
+    }
+
+    &:hover {
+        .edit {
+            display: block;
+        }
     }
 }

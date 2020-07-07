@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="list book">
+        <div class="list book-list">
             <div class="header">
                 <h2>{{name}}</h2>
             </div>

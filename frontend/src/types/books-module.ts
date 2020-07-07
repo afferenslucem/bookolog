@@ -5,10 +5,10 @@ export enum Status {
 }
 
 export interface BookData {
-    id: number;
+    id: number | null;
     name: string;
     authors: string[];
-    status: Status;
+    status: Status | null;
     startDate?: Date | string;
     endDate?: Date | string;
     pages?: number;
@@ -16,7 +16,7 @@ export interface BookData {
 }
 
 export class Book implements BookData {
-    id: number;
+    id: number | null;
     name: string;
     authors: string[];
     status: Status;
@@ -29,7 +29,7 @@ export class Book implements BookData {
         this.id = book.id;
         this.name = book.name;
         this.authors = book.authors;
-        this.status = book.status;
+        this.status = book.status || Status.toRead;
         this.startDate = book.startDate;
         this.endDate = book.endDate;
         this.pages = book.pages;
@@ -62,7 +62,10 @@ export interface BooksModule {
 }
 
 export class BookUtils {
-    public static groupByYear(books: BookData[]): BookYearList[] | null {
-        return null;
+    public static copy(book: Book): Book {
+        const result = new Book(book);
+        result.authors = Array.from(book.authors);
+
+        return result;
     }
 }
