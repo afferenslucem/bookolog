@@ -52,7 +52,7 @@
                return this.book.status == BookStatus.inProgress;
            },
            progress(): number {
-               return this.book.progress | 0;
+               return this.book.progressPercent || 0;
            },
            progressStyle(): any {
                return {

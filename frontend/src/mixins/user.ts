@@ -16,8 +16,8 @@ export default Vue.extend({
         user(): UserModule {
             return this.$store.state.user;
         },
-        loggedIn() {
-            // @ts-ignore
+        
+        loggedIn(): boolean {
             return this.user.loggedIn;
         }
     }

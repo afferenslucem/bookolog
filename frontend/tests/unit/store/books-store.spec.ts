@@ -1,13 +1,14 @@
 import { expect } from "chai";
 import { getters, mutations, BookMutations } from "@/store/modules/books/storage-methods";
 import { statusMock } from '../items/books.spec';
-import { BooksModule } from '@/types/books-module';
+import { BooksModule, Book } from '@/types/books-module';
+import { StoreType } from '@/store';
 
 
 
 describe('store books getters', () => {
     it('toReadBooks should return books only with toRead status', () => {
-        const toRead = getters.toReadBooks(statusMock);
+        const toRead = getters.toReadBooks(statusMock, null, {} as StoreType, null) as Book[];
 
         const result = toRead.map(item => item.id);
 
@@ -15,7 +16,7 @@ describe('store books getters', () => {
     });
     
     it('inProgressBooks should return books only with inProgress status', () => {
-        const toRead = getters.inProgressBooks(statusMock);
+        const toRead = getters.inProgressBooks(statusMock, null, {} as StoreType, null) as Book[];
 
         const result = toRead.map(item => item.id);
 
@@ -23,7 +24,7 @@ describe('store books getters', () => {
     });
     
     it('doneBooks should return books only with done status', () => {
-        const toRead = getters.doneBooks(statusMock);
+        const toRead = getters.doneBooks(statusMock, null, {} as StoreType, null) as Book[];
 
         const result = toRead.map(item => item.id);
 

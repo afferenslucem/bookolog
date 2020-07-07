@@ -1,10 +1,12 @@
 import { BooksModule, Book, Status } from '@/types/books-module'
+import { MutationTree, GetterTree } from 'vuex'
+import { StoreType } from '@/store'
 
 export enum BookMutations {
     pushBooks = 'BOOKS_pushBooks'
 }
 
-export const getters = {
+export const getters: GetterTree<BooksModule, StoreType> = {
     toReadBooks(state: BooksModule): Book[] {
         return state.books.filter(book => book.status == Status.toRead)
     },
@@ -16,7 +18,7 @@ export const getters = {
     },
 }
 
-export const mutations = {
+export const mutations: MutationTree<BooksModule> = {
     [BookMutations.pushBooks](state: BooksModule, books: Book[]) {
         state.books = books;
     }

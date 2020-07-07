@@ -4,14 +4,48 @@ export enum Status {
     done = 2
 }
 
-export interface Book {
+export interface BookData {
     id: number;
     name: string;
     authors: string[];
     status: Status;
     startDate?: Date | string;
     endDate?: Date | string;
-    progress?: number;
+    pages?: number;
+    totalPages?: number;
+}
+
+export class Book implements BookData {
+    id: number;
+    name: string;
+    authors: string[];
+    status: Status;
+    startDate?: Date | string;
+    endDate?: Date | string;
+    pages?: number;
+    totalPages?: number;
+
+    public constructor(book: BookData) {
+        this.id = book.id;
+        this.name = book.name;
+        this.authors = book.authors;
+        this.status = book.status;
+        this.startDate = book.startDate;
+        this.endDate = book.endDate;
+        this.pages = book.pages;
+        this.totalPages = book.totalPages;
+    }
+
+    public get progressPercent(): number {
+        const pages = this.pages || 0;
+        const totalPages = this.totalPages || 1;
+
+        const progress = pages / totalPages * 100;
+
+        const result = Math.floor(progress);
+
+        return result;
+    }
 }
 
 export interface BookYearList {
@@ -20,7 +54,7 @@ export interface BookYearList {
 }
 
 export interface BookResponse {
-    books: Book[];
+    books: BookData[];
 }
 
 export interface BooksModule {
@@ -28,7 +62,7 @@ export interface BooksModule {
 }
 
 export class BookUtils {
-    public static groupByYear(books: Book[]): BookYearList[] | null {
+    public static groupByYear(books: BookData[]): BookYearList[] | null {
         return null;
     }
 }

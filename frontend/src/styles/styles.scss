@@ -67,9 +67,15 @@ header {
 }
 
 .book {
+    @include isDesktop {
+        width: 500px;
+    };
+
+    @include isMobile {
+        width: 100%;
+    }
+    
     .progress {
-        @include isDesktop {
-            width: 500px;
-        };
+        width: 100%;
     }
 }

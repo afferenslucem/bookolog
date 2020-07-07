@@ -34,14 +34,16 @@
             "authors": ["Дуглас Крокфорд"],
             "status": 1,
             "startDate": "2020-06-29",
-            "progress": 60
+            "totalPages": 100,
+            "pages": 60
         },
         {
             "id": 6,
             "name": "BMW. Баварское сердце, Русская душа",
             "authors": ["Александр Пикуленко", "Денис Орлов"],
             "status": 1,
-            "progress": 25
+            "totalPages": 100,
+            "pages": 25
         },
         {
             "id": 7,

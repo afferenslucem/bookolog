@@ -41,6 +41,7 @@ describe('Book.vue', () => {
     expect(wrapper.text()).to.include("Дуглас Крокфорд", 'Should show book\'s authors');
     expect(wrapper.text()).to.include("Как устроен javascript", 'Should show book\'s name');
     expect(wrapper.find('.progress').element.style['display']).to.not.equal('none', 'Should show book\'s progress');
+    expect(wrapper.find('.progress-bar').element.style['width']).to.equal('60%', 'Should show correct progress');
     expect(wrapper.find('.date-range').element.style['display']).to.not.equal('none', 'Should show book\'s date range');
     expect(wrapper.find('.date-range').text()).to.equal('[  2020-06-29  -  ...  ]');
   })

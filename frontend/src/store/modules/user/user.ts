@@ -1,8 +1,9 @@
-import { StoreOptions } from 'vuex';
+import { StoreOptions, Module } from 'vuex';
 import { UserModule } from '@/types/user-module';
 import { state, mutations, actions } from './storage-methods';
+import { StoreType } from '@/store';
 
-const userModule = {
+const userModule: Module<UserModule, StoreType> = {
     state,
     mutations,
     actions

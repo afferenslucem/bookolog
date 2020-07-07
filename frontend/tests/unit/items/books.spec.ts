@@ -1,6 +1,6 @@
-import { BooksModule, Book } from '@/types/books-module';
+import { BooksModule, BookData, Book } from '@/types/books-module';
 
-const books: Book[] = [
+const temp: BookData[] = [
     {
         "id": 1,
         "name": "Политика",
@@ -34,15 +34,17 @@ const books: Book[] = [
         "name": "Как устроен javascript",
         "authors": ["Дуглас Крокфорд"],
         "status": 1,
-        "progress": 60,
-        "startDate": "2020-06-29"
+        "startDate": "2020-06-29",
+        "totalPages": 100,
+        "pages": 60
     },
     {
         "id": 6,
         "name": "BMW. Баварское сердце, Русская душа",
         "authors": ["Александр Пикуленко", "Денис Орлов"],
         "status": 1,
-        "progress": 25
+        "totalPages": 100,
+        "pages": 25
     },
     {
         "id": 7,
@@ -57,6 +59,8 @@ const books: Book[] = [
         "status": 0
     }
 ];
+
+const books: Book[] = temp.map(item => new Book(item));
 
 export const statusMock: BooksModule = {
     books
