@@ -1,29 +1,34 @@
 {
   "format": 1,
   "restore": {
-    "/media/repositories/bookolog/backend/server/server.csproj": {}
+    "D:\\Repository\\bookolog\\backend\\Server\\Server.csproj": {}
   },
   "projects": {
-    "/media/repositories/bookolog/backend/server/server.csproj": {
+    "D:\\Repository\\bookolog\\backend\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/media/repositories/bookolog/backend/server/server.csproj",
-        "projectName": "server",
-        "projectPath": "/media/repositories/bookolog/backend/server/server.csproj",
-        "packagesPath": "/home/alex/.nuget/packages/",
-        "outputPath": "/media/repositories/bookolog/backend/server/obj/",
+        "projectUniqueName": "D:\\Repository\\bookolog\\backend\\Server\\Server.csproj",
+        "projectName": "Server",
+        "projectPath": "D:\\Repository\\bookolog\\backend\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\Professional\\.nuget\\packages\\",
+        "outputPath": "D:\\Repository\\bookolog\\backend\\Server\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/home/alex/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Professional\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "netcoreapp3.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
+          "netcoreapp3.0": {
             "projectReferences": {}
           }
         },
@@ -34,7 +39,7 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
+        "netcoreapp3.0": {
           "imports": [
             "net461",
             "net462",
@@ -53,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.301/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
