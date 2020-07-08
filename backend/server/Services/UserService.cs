@@ -13,16 +13,16 @@ namespace Server.Services
     public interface IUserService
     {
         Task<User> Authenticate(string login, string password);
-        Task<User> Authenticate(int id, string password);
-        Task UpdatePassword(int id, string oldPassword, string newPassword);
+        Task<User> Authenticate(long id, string password);
+        Task UpdatePassword(long id, string oldPassword, string newPassword);
         Task<User> CreateUser(User user);
         Task<User> GetByLogin(string login);
-        Task<User> GetById(int id);
+        Task<User> GetById(long id);
         Task<IEnumerable<User>> GetAll();
         Task<User> Save(User user);
         Task Update(User user);
         Task Delete(User user);
-        Task Delete(int userId);
+        Task Delete(long userId);
     }
 
     public class UserService : IUserService
@@ -58,7 +58,7 @@ namespace Server.Services
             }
         }
 
-        public async Task<User> Authenticate(int id, string password)
+        public async Task<User> Authenticate(long id, string password)
         {
             var user = await this.GetById(id);
 
@@ -77,7 +77,7 @@ namespace Server.Services
             }
         }
 
-        public async Task UpdatePassword(int id, string oldPassword, string newPassword)
+        public async Task UpdatePassword(long id, string oldPassword, string newPassword)
         {
             try
             {
@@ -146,12 +146,12 @@ namespace Server.Services
             await this.storage.Delete(user);
         }
 
-        public async Task Delete(int userId)
+        public async Task Delete(long userId)
         {
             await this.storage.Delete(userId);
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<User> GetById(long id)
         {
             var user = await this.storage.GetById(id);
 

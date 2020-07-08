@@ -107,7 +107,7 @@ namespace Server.Testing
             
             await this.service.Update(saved);
 
-            var updated = await this.service.GetById(saved.Id);
+            var updated = await this.storage.GetById(saved.Id);
 
             Assert.AreEqual(updated.Id, saved.Id);
             Assert.AreEqual(updated.Login, "1");

@@ -10,16 +10,16 @@ namespace Server.Tests.Mocks.Storages
 {
     class UserStorageMock : IUserStorage
     {
-        IDictionary<int, User> repository = new Dictionary<int, User>();
+        IDictionary<long, User> repository = new Dictionary<long, User>();
 
-        public IDictionary<int, User> Repository { get { return repository; } }
+        public IDictionary<long, User> Repository { get { return repository; } }
 
         public async Task Delete(User user)
         {
             await Task.Run(() => this.repository.Remove(user.Id));
         }
 
-        public async Task Delete(int userId)
+        public async Task Delete(long userId)
         {
             await Task.Run(() => this.repository.Remove(userId));
         }
@@ -30,7 +30,7 @@ namespace Server.Tests.Mocks.Storages
             return result;
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<User> GetById(long id)
         {
             var result = await Task.Run(() =>
             {

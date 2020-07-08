@@ -8,19 +8,19 @@ namespace Server.Storages
 {
     public interface IUserStorage
     {
-        Task<User> GetById(int id);
+        Task<User> GetById(long id);
         Task<IEnumerable<User>> GetAll();
         Task<User> GetByLogin(string login);
         Task<User> Save(User user);
         Task Update(User user);
         Task Delete(User user);
-        Task Delete(int userId);
+        Task Delete(long userId);
         Task UpdatePassword(User user);
     }
 
     class UserStorage : IUserStorage
     {
-        IDictionary<int, User> repository = new Dictionary<int, User>();
+        IDictionary<long, User> repository = new Dictionary<long, User>();
 
         public UserStorage()
         {
@@ -40,7 +40,7 @@ namespace Server.Storages
             await Task.Run(() => this.repository.Remove(user.Id));
         }
 
-        public async Task Delete(int userId)
+        public async Task Delete(long userId)
         {
             await Task.Run(() => this.repository.Remove(userId));
         }
@@ -51,7 +51,7 @@ namespace Server.Storages
             return result;
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<User> GetById(long id)
         {
             var result = await Task.Run(() =>
             {

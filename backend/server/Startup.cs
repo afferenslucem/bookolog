@@ -51,6 +51,7 @@ namespace Server
             });
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBookService, BookService>();
             services.AddScoped<IUserSession, UserSession>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

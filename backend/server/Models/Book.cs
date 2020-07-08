@@ -14,7 +14,7 @@ namespace Server.Models
 
     public class Book
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string[] Authors { get; set; }
         public Status Status { get; set; }
