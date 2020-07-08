@@ -133,7 +133,7 @@ namespace Server.Services
             user.PasswordHash = hash;
             user.Salt = salt;
 
-            return (await this.storage.Save(user)).WithoutPrivate();
+            return await this.storage.Save(user);
         }
 
         public async Task Update(User user)
