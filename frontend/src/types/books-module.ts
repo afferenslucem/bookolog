@@ -11,7 +11,7 @@ export interface BookData {
     status: Status | null;
     startDate?: Date | string;
     endDate?: Date | string;
-    pages?: number;
+    pagesRead?: number;
     totalPages?: number;
 }
 
@@ -22,7 +22,7 @@ export class Book implements BookData {
     status: Status;
     startDate?: Date | string;
     endDate?: Date | string;
-    pages?: number;
+    pagesRead?: number;
     totalPages?: number;
 
     public constructor(book: BookData) {
@@ -32,12 +32,12 @@ export class Book implements BookData {
         this.status = book.status || Status.toRead;
         this.startDate = book.startDate;
         this.endDate = book.endDate;
-        this.pages = book.pages;
+        this.pagesRead = book.pagesRead;
         this.totalPages = book.totalPages;
     }
 
     public get progressPercent(): number {
-        const pages = this.pages || 0;
+        const pages = this.pagesRead || 0;
         const totalPages = this.totalPages || 1;
 
         const progress = pages / totalPages * 100;

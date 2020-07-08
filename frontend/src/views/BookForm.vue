@@ -30,7 +30,7 @@
         <div class="form-row" v-show="shouldShowProgress">
             <div class="col form-group">
                 <label>Страниц прочитано</label>
-                <input type="number" class="form-control" v-model="book.pages" min="0" :max="book.totalPages" step="1" @change="pagesChanged">
+                <input type="number" class="form-control" v-model="book.pagesRead" min="0" :max="book.totalPages" step="1" @change="pagesChanged">
             </div>
             <div class="col form-group">
                 <label>Всего страниц</label>
@@ -119,7 +119,7 @@
                 }
             },
             pagesChanged(): void {
-                if(this.book.pages && this.book.totalPages == this.book.pages) {
+                if(this.book.pagesRead && this.book.totalPages == this.book.pagesRead) {
                     this.book.status = Status.done;
                 }
             }

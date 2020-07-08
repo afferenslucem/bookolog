@@ -36,7 +36,7 @@ const temp: BookData[] = [
         "status": 1,
         "startDate": "2020-06-29",
         "totalPages": 100,
-        "pages": 60
+        "pagesRead": 60
     },
     {
         "id": 6,
@@ -44,7 +44,7 @@ const temp: BookData[] = [
         "authors": ["Александр Пикуленко", "Денис Орлов"],
         "status": 1,
         "totalPages": 100,
-        "pages": 25
+        "pagesRead": 25
     },
     {
         "id": 7,
