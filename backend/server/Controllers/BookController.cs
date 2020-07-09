@@ -11,6 +11,7 @@ using Server.Services;
 namespace Server.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class BookController : Controller
     {
         private IUserSession session;
@@ -22,25 +23,74 @@ namespace Server.Controllers
             this.bookService = bookService;
         }
 
-        // GET: Book/Details/5
-        public ActionResult All()
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<ActionResult<Book[]>> All()
         {
-            return Ok();
+            try
+            {
+                var user = await session.GetUser();
+
+                var books = await this.bookService.GetByUserId(user.Id);
+
+                return Ok(books);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
-        // GET: Book/Create
-        public ActionResult Create([FromBody] Book book)
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult<Book>> Create([FromBody] Book book)
         {
-            return Ok();
+            try
+            {
+                var user = await session.GetUser();
+
+                var result = await this.bookService.SaveForUser(book, user);
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
-        // GET: Book/Edit/5
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult<Book>> CreateMany([FromBody] Book[] books)
+        {
+            try
+            {
+                var user = await session.GetUser();
+
+                var tasks = books.Select(async (item) => await this.bookService.SaveForUser(item, user));
+
+                var result = await Task.WhenAll(tasks);
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+
+        [HttpPut]
         public ActionResult Edit(int id, [FromBody] Book book)
         {
             return Ok();
         }
 
-        // GET: Book/Delete/5
+
+        [HttpDelete]
         public ActionResult Delete(int id)
         {
             return Ok();

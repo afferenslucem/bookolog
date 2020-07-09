@@ -1,4 +1,5 @@
 ﻿using Server.Models;
+using Storage.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,54 +10,58 @@ namespace Server.Storages
     public interface IBookStorage
     {
         Task<Book> GetById(long id);
-        Task<Book> Save(Book book);
+        Task<Book> SaveForUser(Book book, User user);
         Task Update(Book book);
         Task Delete(Book book);
         Task Delete(long bookId);
-        Task<IEnumerable<Book>> GetByUserId(int id);
+        Task<IEnumerable<Book>> GetByUserId(long userId);
     }
 
     public class BookStorage : IBookStorage
     {
-        IDictionary<long, Book> repository = new Dictionary<long, Book>();
+        IBookRepository repository = BookRepository.GetRepository(Config.ConnectionString);
 
-        public async Task<Book> Save(Book book)
+        public async Task<Book> SaveForUser(Book book, User user)
         {
-            var lastId = await Task.Run(() => this.repository.Keys.DefaultIfEmpty(0).Max());
+            var saved = await this.repository.SaveForUser(new BookStorageAdapter(book), new UserStorageAdapter(user));
+            
+            var result = new Book(saved);
 
-            lastId++;
-
-            book.Id = lastId;
-
-            this.repository[lastId] = book;
-
-            return book;
+            return result;
         }
 
         public async Task Update(Book book)
         {
-            await Task.Run(() => this.repository[book.Id] = book);
+
+            await this.repository.Update(new BookStorageAdapter(book));
         }
 
         public async Task<Book> GetById(long id)
         {
-            var result = await Task.Run(() => this.repository[id]);
+            var book = await this.repository.GetById(id);
+
+            var result = new Book(book);
+
             return result;
         }
 
-        public async Task<IEnumerable<Book>> GetByUserId(int id)
+        public async Task<IEnumerable<Book>> GetByUserId(long id)
         {
-            return await Task.Run(() => this.repository.Values); 
+            var books = await this.repository.GetByUserId(id);
+
+            var result = books.Select(item => new Book(item));
+
+            return result;
         }
 
         public async Task Delete(Book book)
         {
-            await Task.Run(() => this.repository.Remove(book.Id));
+            await this.repository.Delete(book.Id);
         }
 
         public async Task Delete(long bookId)
         {
-            await Task.Run(() => this.repository.Remove(bookId));
+            await this.repository.Delete(bookId);
         }
     }
 }

@@ -18,7 +18,6 @@ namespace Server.Services
         Task<User> CreateUser(User user);
         Task<User> GetByLogin(string login);
         Task<User> GetById(long id);
-        Task<IEnumerable<User>> GetAll();
         Task<User> Save(User user);
         Task Update(User user);
         Task Delete(User user);
@@ -156,13 +155,6 @@ namespace Server.Services
             var user = await this.storage.GetById(id);
 
             return user;
-        }
-
-        public async Task<IEnumerable<User>> GetAll()
-        {
-            var result = await this.storage.GetAll();
-
-            return result;
         }
     }
 }

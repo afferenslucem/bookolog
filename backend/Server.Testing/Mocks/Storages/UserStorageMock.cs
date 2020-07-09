@@ -51,11 +51,12 @@ namespace Server.Tests.Mocks.Storages
         public async Task<User> Save(User user)
         {
             var lastId = await Task.Run(() => this.repository.Keys.DefaultIfEmpty(0).Max());
-            lastId++;
 
-            this.repository[lastId] = user;
+            var value = lastId + 1;
 
-            user.Id = lastId;
+            this.repository[value] = user;
+
+            user.Id = value;
 
             return new User(user);
         }

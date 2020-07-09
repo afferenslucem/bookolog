@@ -10,7 +10,8 @@ namespace Server.Services
     public interface IBookService
     {
         Task<Book> GetById(long id);
-        Task<Book> Save(Book book);
+        Task<IEnumerable<Book>> GetByUserId(long userId);
+        Task<Book> SaveForUser(Book book, User user);
         Task Update(Book book);
         Task Delete(Book book);
         Task Delete(long bookId);
@@ -36,9 +37,16 @@ namespace Server.Services
             return result;
         }
 
-        public async Task<Book> Save(Book book)
+        public async Task<IEnumerable<Book>> GetByUserId(long userId)
         {
-            var result = await this.storage.Save(book);
+            var result = await this.storage.GetByUserId(userId);
+
+            return result;
+        }
+
+        public async Task<Book> SaveForUser(Book book, User user)
+        {
+            var result = await this.storage.SaveForUser(book, user);
 
             return result;
         }

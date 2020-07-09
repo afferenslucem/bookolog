@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Storage.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -14,9 +15,18 @@ namespace Server.Models
         public string Password { get; set; }
         public string Salt { get; set; }
 
-        public User() { }
+        public User() {
+        }
 
         public User(User user)
+        {
+            this.Id = user.Id;
+            this.Login = user.Login;
+            this.PasswordHash = user.PasswordHash;
+            this.Salt = user.Salt;
+        }
+
+        public User(IStorageUser user)
         {
             this.Id = user.Id;
             this.Login = user.Login;
@@ -31,6 +41,22 @@ namespace Server.Models
                 Id = this.Id,
                 Login = this.Login
             };
+        }
+    }
+
+    public class UserStorageAdapter : IStorageUser
+    {
+        public long Id { get; set; }
+        public string Login { get; set; }
+        public string PasswordHash { get; set; }
+        public string Salt { get; set; }
+
+        public UserStorageAdapter(User user)
+        {
+            this.Id = user.Id;
+            this.Login = user.Login;
+            this.PasswordHash = user.PasswordHash;
+            this.Salt = user.Salt;
         }
     }
 }
