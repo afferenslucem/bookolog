@@ -1,4 +1,5 @@
-﻿using Server.Models;
+﻿using Server.Exceptions.Storage;
+using Server.Models;
 using Server.Utils;
 using Storage.Repositories;
 using System.Collections.Generic;
@@ -48,6 +49,11 @@ namespace Server.Storages
         public async Task<User> GetByLogin(string login)
         {
             var storage = await this.repository.GetByLogin(login);
+
+            if(storage == null)
+            {
+                throw new StorageReadException();
+            }
 
             var result = new User(storage);
 

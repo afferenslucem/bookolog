@@ -10,9 +10,9 @@ namespace Server.Tests.Mocks.Storages
 {
     class BookStorageMock : IBookStorage
     {
-        IDictionary<long, (long, Book)> repository = new Dictionary<long, (long, Book)>();
+        IDictionary<long, Book> repository = new Dictionary<long, Book>();
 
-        public IDictionary<long, (long, Book)> Repository { get { return repository; } }
+        public IDictionary<long, Book> Repository { get { return repository; } }
 
         public async Task Delete(Book book)
         {
@@ -28,26 +28,26 @@ namespace Server.Tests.Mocks.Storages
         {
             var result = await Task.Run(() =>
             {
-                (long, Book) temp = (0, null);
+                Book temp = null;
                 var opResult = this.repository.TryGetValue(id, out temp);
 
-                return opResult ? temp.Item2 : null;
+                return opResult ? temp : null;
             });
             return result;
         }
 
-        public Task<IEnumerable<Book>> GetByUserId(long userId)
+        public async Task<IEnumerable<Book>> GetByUserId(long userId)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => this.repository.Values.Where(item => item.UserId == userId));
         }
 
-        public async Task<Book> SaveForUser(Book book, User user)
+        public async Task<Book> Save(Book book)
         {
             var lastId = await Task.Run(() => this.repository.Keys.DefaultIfEmpty(0).Max());
 
             var value = lastId + 1;
 
-            this.repository[value] = (user.Id, book);
+            this.repository[value] = book;
 
             book.Id = value;
 
@@ -59,7 +59,7 @@ namespace Server.Tests.Mocks.Storages
             await Task.Run(() => {
                 var temp = this.repository[book.Id];
 
-                temp.Item2 = book;
+                temp = book;
 
                 this.repository[book.Id] = temp; });
         }

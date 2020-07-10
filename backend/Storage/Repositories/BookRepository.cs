@@ -10,7 +10,7 @@ namespace Storage.Repositories
     public interface IBookRepository {
         Task<IStorageBook> GetById(long id);
         Task<IEnumerable<IStorageBook>> GetByUserId(long userId);
-        Task<IStorageBook> SaveForUser(IStorageBook book, IStorageUser user);
+        Task<IStorageBook> Save(IStorageBook book);
         Task Update(IStorageBook book);
         Task Delete(long bookId);
     }
@@ -59,7 +59,7 @@ namespace Storage.Repositories
             return result;
         }
 
-        public async Task<IStorageBook> SaveForUser(IStorageBook book, IStorageUser user)
+        public async Task<IStorageBook> Save(IStorageBook book)
         {
             using var connection = await this.GetConnection();
 
@@ -74,7 +74,7 @@ namespace Storage.Repositories
             cmd.Parameters.AddWithValue("endDate", (object) book.EndDate ?? DBNull.Value);
             cmd.Parameters.AddWithValue("pages", (object)book.PagesRead ?? DBNull.Value);
             cmd.Parameters.AddWithValue("totalPages", (object)book.TotalPages ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("userId", user.Id);
+            cmd.Parameters.AddWithValue("userId", book.UserId);
 
             var id = (long) await cmd.ExecuteScalarAsync();
 
@@ -90,7 +90,7 @@ namespace Storage.Repositories
 
             var cmd = connection.CreateCommand();
             
-            cmd.CommandText = "update books name = @name, " +
+            cmd.CommandText = "update books set name = @name, " +
                 "authors = @authors, " +
                 "status = @status, " +
                 "startDate = @startDate, " +

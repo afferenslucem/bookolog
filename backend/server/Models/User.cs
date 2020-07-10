@@ -58,5 +58,7 @@ namespace Server.Models
             this.PasswordHash = user.PasswordHash;
             this.Salt = user.Salt;
         }
+
+        public UserStorageAdapter() { }
     }
 }

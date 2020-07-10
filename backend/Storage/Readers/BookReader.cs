@@ -20,6 +20,7 @@ namespace Storage.Readers
             var endDate = this.GetNullableDateTime(reader, ref countOfReadColumns);
             var pages = this.GetNullableInt32(reader, ref countOfReadColumns);
             var totalPages = this.GetNullableInt32(reader, ref countOfReadColumns);
+            var userId = this.GetInt64(reader, ref countOfReadColumns);
 
             return new Book
             {
@@ -30,7 +31,8 @@ namespace Storage.Readers
                 StartDate = startDate,
                 EndDate = endDate,
                 PagesRead = pages,
-                TotalPages = totalPages
+                TotalPages = totalPages,
+                UserId = userId
             };
         }
     }

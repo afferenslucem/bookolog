@@ -12,7 +12,7 @@ namespace Storage.Models
         string Salt { get; set; }
     }
 
-    public class User : IStorageUser
+    class User : IStorageUser
     {
         public long Id { get; set; }
         public string Login { get; set; }

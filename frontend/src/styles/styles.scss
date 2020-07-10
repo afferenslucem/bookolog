@@ -95,3 +95,32 @@ header {
         }
     }
 }
+
+form.login {
+    h2 {
+        text-align: center;
+    }
+
+    max-width: 500px;
+    margin: 0 auto; 
+
+    border: $split-border-style;
+
+    border-radius: 1rem;
+
+    padding: 1.5rem;
+}
+
+form {
+    .alert {
+        text-align: center;
+    }
+}
+
+.buttons-group {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}

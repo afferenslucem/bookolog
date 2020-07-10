@@ -10,7 +10,7 @@ namespace Server.Storages
     public interface IBookStorage
     {
         Task<Book> GetById(long id);
-        Task<Book> SaveForUser(Book book, User user);
+        Task<Book> Save(Book book);
         Task Update(Book book);
         Task Delete(Book book);
         Task Delete(long bookId);
@@ -21,9 +21,9 @@ namespace Server.Storages
     {
         IBookRepository repository = BookRepository.GetRepository(Config.ConnectionString);
 
-        public async Task<Book> SaveForUser(Book book, User user)
+        public async Task<Book> Save(Book book)
         {
-            var saved = await this.repository.SaveForUser(new BookStorageAdapter(book), new UserStorageAdapter(user));
+            var saved = await this.repository.Save(new BookStorageAdapter(book));
             
             var result = new Book(saved);
 

@@ -39,7 +39,7 @@ namespace Server
         {
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost:4200", "http://localhost:4202").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
+                options.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost:8080", "http://localhost:4202").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();

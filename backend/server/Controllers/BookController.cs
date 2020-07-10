@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models;
 using Server.Services;
@@ -51,7 +49,9 @@ namespace Server.Controllers
             {
                 var user = await session.GetUser();
 
-                var result = await this.bookService.SaveForUser(book, user);
+                book.UserId = user.Id;
+
+                var result = await this.bookService.Save(book);
 
                 return Ok(result);
             }
@@ -70,7 +70,10 @@ namespace Server.Controllers
             {
                 var user = await session.GetUser();
 
-                var tasks = books.Select(async (item) => await this.bookService.SaveForUser(item, user));
+                var tasks = books.Select(async (item) => {
+                    item.UserId = user.Id;
+                    return await this.bookService.Save(item);
+                });
 
                 var result = await Task.WhenAll(tasks);
 
@@ -84,16 +87,55 @@ namespace Server.Controllers
 
 
         [HttpPut]
-        public ActionResult Edit(int id, [FromBody] Book book)
+        [Route("[action]/{id}")]
+        public async Task<ActionResult<Book>> Edit(long id, [FromBody] Book book)
         {
-            return Ok();
+            try
+            {
+                var user = await session.GetUser();
+                var oldState = await bookService.GetById(id);
+
+                if(user.Id != oldState.UserId)
+                {
+                    return new StatusCodeResult(403);
+                }
+
+                book.UserId = user.Id;
+                book.Id = id;
+
+                await bookService.Update(book);
+
+                return Ok(book);
+            }
+            catch(Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
 
         [HttpDelete]
-        public ActionResult Delete(int id)
+        [Route("[action]/{id}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            return Ok();
+            try
+            {
+                var user = await session.GetUser();
+                var oldState = await bookService.GetById(id);
+
+                if (user.Id != oldState.UserId)
+                {
+                    return new StatusCodeResult(403);
+                }
+
+                await bookService.Delete(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
     }
 }

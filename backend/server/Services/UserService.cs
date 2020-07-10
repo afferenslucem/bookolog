@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Server.Exceptions.Authentication;
+using Server.Exceptions.Storage;
 using Server.Models;
 using Server.Storages;
 using Server.Utils;
@@ -40,18 +41,20 @@ namespace Server.Services
 
         public async Task<User> Authenticate(string login, string password)
         {
-            var user = await this.GetByLogin(login);
-
-            if (user == null)
+            try
             {
-                throw new IncorrectCredentianlsException();
-            }
+                var user = await this.GetByLogin(login);
 
-            if (user.PasswordHash == this.hasher.GetSHA256Hash(password, user.Salt))
-            {
-                return user.WithoutPrivate();
+                if (user.PasswordHash == this.hasher.GetSHA256Hash(password, user.Salt))
+                {
+                    return user.WithoutPrivate();
+                }
+                else
+                {
+                    throw new IncorrectCredentianlsException();
+                }
             }
-            else
+            catch(StorageReadException)
             {
                 throw new IncorrectCredentianlsException();
             }

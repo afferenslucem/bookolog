@@ -9,9 +9,9 @@ namespace Storage.Repositories
 {
     public interface IUserRepository
     {
-        Task<User> GetById(long id);
-        Task<User> GetByLogin(string login);
-        Task<User> Save(IStorageUser user);
+        Task<IStorageUser> GetById(long id);
+        Task<IStorageUser> GetByLogin(string login);
+        Task<IStorageUser> Save(IStorageUser user);
         Task Update(IStorageUser user);
         Task UpdatePassword(IStorageUser user);
         Task Delete(long id);
@@ -23,7 +23,7 @@ namespace Storage.Repositories
         {
         }
 
-        public async Task<User> GetById(long id)
+        public async Task<IStorageUser> GetById(long id)
         {
             using var connection = await this.GetConnection();
 
@@ -42,7 +42,7 @@ namespace Storage.Repositories
             return result;
         }
 
-        public async Task<User> GetByLogin(string login)
+        public async Task<IStorageUser> GetByLogin(string login)
         {
             using var connection = await this.GetConnection();
 
@@ -61,7 +61,7 @@ namespace Storage.Repositories
             return result;
         }
 
-        public async Task<User> Save(IStorageUser user)
+        public async Task<IStorageUser> Save(IStorageUser user)
         {
             using var connection = await this.GetConnection();
 

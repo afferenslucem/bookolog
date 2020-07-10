@@ -30,12 +30,20 @@
         <div class="form-row" v-show="shouldShowProgress">
             <div class="col form-group">
                 <label>Страниц прочитано</label>
-                <input type="number" class="form-control" v-model="book.pagesRead" min="0" :max="book.totalPages" step="1" @change="pagesChanged">
+                <input type="number" class="form-control" v-model.number="book.pagesRead" min="0" :max="book.totalPages" step="1" @change="pagesChanged">
             </div>
             <div class="col form-group">
                 <label>Всего страниц</label>
-                <input type="number" class="form-control" v-model="book.totalPages" min="0" step="1">
+                <input type="number" class="form-control" v-model.number="book.totalPages" min="0" step="1">
             </div>
+        </div>
+        <div class="buttons-group">
+            <button class="btn btn-primary" type="button" @click="edit">
+                Сохранить
+            </button>
+            <button class="btn btn-outline-danger" type="button" @click="del">
+                Удалить
+            </button>
         </div>
     </form>
 </template>
@@ -43,6 +51,7 @@
 <script lang="ts">
     import Vue from 'vue'
     import { Book, BookUtils, Status } from '../types/books-module'
+import { BookActions } from '../store/modules/books/storage-methods';
 
     interface Data {
         book: Book;
@@ -122,6 +131,14 @@
                 if(this.book.pagesRead && this.book.totalPages == this.book.pagesRead) {
                     this.book.status = Status.done;
                 }
+            },
+            edit(): Promise<void> {
+                return this.$store.dispatch(BookActions.updateBook, this.book).then(() => { 
+                    this.$router.push({name: 'Reading'});
+                });
+            },
+            del(): Promise<void> {
+                return this.$store.dispatch(BookActions.deleteBook, this.book); 
             }
         },
         filters: {

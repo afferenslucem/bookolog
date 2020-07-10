@@ -14,9 +14,10 @@ namespace Storage.Models
         DateTime? EndDate { get; set; }
         int? PagesRead { get; set; }
         int? TotalPages { get; set; }
+        public long UserId { get; set; }
     }
 
-    public class Book : IStorageBook
+    class Book : IStorageBook
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -26,6 +27,7 @@ namespace Storage.Models
         public DateTime? EndDate { get; set; }
         public int? PagesRead { get; set; }
         public int? TotalPages { get; set; }
+        public long UserId { get; set; }
 
         public Book()
         {
@@ -44,6 +46,7 @@ namespace Storage.Models
             this.EndDate = book.EndDate;
             this.PagesRead = book.PagesRead;
             this.TotalPages = book.TotalPages;
+            this.UserId = book.UserId;
         }
     }
 }

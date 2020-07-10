@@ -2,6 +2,7 @@
 using Server.Exceptions.Authentication;
 using Server.Models;
 using Server.Services;
+using Server.Testing.Mocks;
 using Server.Tests.Mocks.Storages;
 using Server.Utils;
 using System.Threading.Tasks;
@@ -11,19 +12,12 @@ namespace Server.Testing
     [TestClass]
     public class UserServiceTests
     {
+        User user = DefaultItems.user;
+
         UserStorageMock storage = new UserStorageMock();
 
         IUserService service;
-
-        User user = new User
-        {
-            Login = "test",
-            Password = "masterkey",
-            Salt = "123",
-            PasswordHash = new SHA256Hasher().GetSHA256Hash("masterkey", "123")
-        };
-
-
+        
         [TestInitialize()]
         public void Startup()
         {

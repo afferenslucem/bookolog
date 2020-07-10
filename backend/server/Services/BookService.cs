@@ -11,7 +11,7 @@ namespace Server.Services
     {
         Task<Book> GetById(long id);
         Task<IEnumerable<Book>> GetByUserId(long userId);
-        Task<Book> SaveForUser(Book book, User user);
+        Task<Book> Save(Book book);
         Task Update(Book book);
         Task Delete(Book book);
         Task Delete(long bookId);
@@ -44,9 +44,9 @@ namespace Server.Services
             return result;
         }
 
-        public async Task<Book> SaveForUser(Book book, User user)
+        public async Task<Book> Save(Book book)
         {
-            var result = await this.storage.SaveForUser(book, user);
+            var result = await this.storage.Save(book);
 
             return result;
         }

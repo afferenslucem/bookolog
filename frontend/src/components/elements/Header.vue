@@ -1,7 +1,7 @@
 <template>
   <div class="menu">
       <main-icon class="main-icon"></main-icon>
-      <div class="auth-button btn btn-primary" @click="login">Log in</div>
+      <router-link class="auth-button btn btn-primary" :to="{ name: 'LoginForm' }">Log in</router-link>
   </div>
 </template>
 
