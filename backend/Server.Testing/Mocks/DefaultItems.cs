@@ -22,8 +22,12 @@ namespace Server.Testing.Mocks
             Authors = new string[] { "test1", "test2" },
             Status = Status.Done,
             UserId = 1,
-            StartDate = DateTime.Now,
-            EndDate = DateTime.Now,
+            StartYear = 2020,
+            StartMonth = 10,
+            StartDay = 1,
+            EndYear = 2021,
+            EndMonth = 10,
+            EndDay = 4,
             PagesRead = 10,
             TotalPages = 100
         };

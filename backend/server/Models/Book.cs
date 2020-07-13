@@ -21,8 +21,12 @@ namespace Server.Models
         public string Name { get; set; }
         public string[] Authors { get; set; }
         public Status Status { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public short? StartYear { get; set; }
+        public short? StartMonth { get; set; }
+        public short? StartDay { get; set; }
+        public short? EndYear { get; set; }
+        public short? EndMonth { get; set; }
+        public short? EndDay { get; set; }
         public int? PagesRead { get; set; }
         public int? TotalPages { get; set; }
 
@@ -41,8 +45,12 @@ namespace Server.Models
             Array.Copy(this.Authors, book.Authors, book.Authors.Length);
 
             this.Status = book.Status;
-            this.StartDate = book.StartDate;
-            this.EndDate = book.EndDate;
+            this.StartYear = book.StartYear;
+            this.StartMonth = book.StartMonth;
+            this.StartDay = book.StartDay;
+            this.EndYear = book.EndYear;
+            this.EndMonth = book.EndMonth;
+            this.EndDay = book.EndDay;
             this.PagesRead = book.PagesRead;
             this.TotalPages = book.TotalPages;
 
@@ -58,8 +66,12 @@ namespace Server.Models
             Array.Copy(book.Authors, this.Authors, book.Authors.Length);
 
             this.Status = (Status)book.Status;
-            this.StartDate = book.StartDate;
-            this.EndDate = book.EndDate;
+            this.StartYear = book.StartYear;
+            this.StartMonth = book.StartMonth;
+            this.StartDay = book.StartDay;
+            this.EndYear = book.EndYear;
+            this.EndMonth = book.EndMonth;
+            this.EndDay = book.EndDay;
             this.PagesRead = book.PagesRead;
             this.TotalPages = book.TotalPages;
             this.UserId = book.UserId;
@@ -80,8 +92,12 @@ namespace Server.Models
                this.Status == (Status)book.Status &&
                this.PagesRead == book.PagesRead &&
                this.TotalPages == book.TotalPages &&
-               this.StartDate == book.StartDate &&
-               this.EndDate == book.EndDate &&
+               this.StartYear == book.StartYear &&
+               this.StartMonth == book.StartMonth &&
+               this.StartDay == book.StartDay &&
+               this.EndYear == book.EndYear &&
+               this.EndMonth == book.EndMonth &&
+               this.EndDay == book.EndDay &&
                this.UserId == book.UserId;
         }
 
@@ -104,8 +120,12 @@ public class BookStorageAdapter : IStorageBook
         public string Name { get; set; }
         public string[] Authors { get; set; }
         public int Status { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public short? StartYear { get; set; }
+        public short? StartMonth { get; set; }
+        public short? StartDay { get; set; }
+        public short? EndYear { get; set; }
+        public short? EndMonth { get; set; }
+        public short? EndDay { get; set; }
         public int? PagesRead { get; set; }
         public int? TotalPages { get; set; }
         public long UserId { get; set; }
@@ -116,8 +136,12 @@ public class BookStorageAdapter : IStorageBook
             this.Name = book.Name;
             this.Authors = book.Authors;
             this.Status = (int)book.Status;
-            this.StartDate = book.StartDate;
-            this.EndDate = book.EndDate;
+            this.StartYear = book.StartYear;
+            this.StartMonth = book.StartMonth;
+            this.StartDay = book.StartDay;
+            this.EndYear = book.EndYear;
+            this.EndMonth = book.EndMonth;
+            this.EndDay = book.EndDay;
             this.PagesRead = book.PagesRead;
             this.TotalPages = book.TotalPages;
             this.UserId = book.UserId;

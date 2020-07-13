@@ -65,13 +65,17 @@ namespace Storage.Repositories
 
             var cmd = connection.CreateCommand();
 
-            cmd.CommandText = "insert into books(name, authors, status, startDate, endDate, pages, totalPages, userId) values(@name, @authors, @status, @startDate, @endDate, @pages, @totalPages, @userId); select last_insert_rowid();";
+            cmd.CommandText = "insert into books(name, authors, status, startYear, startMonth, startDay, endYear, endMonth, endDay, pages, totalPages, userId) values(@name, @authors, @status, @startYear, @startMonth, @startDay, @endYear, @endMonth, @endDay, @pages, @totalPages, @userId); select last_insert_rowid();";
 
             cmd.Parameters.AddWithValue("name", book.Name);
             cmd.Parameters.AddWithValue("authors", string.Join('|', book.Authors));
             cmd.Parameters.AddWithValue("status", book.Status);
-            cmd.Parameters.AddWithValue("startDate", (object) book.StartDate ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("endDate", (object) book.EndDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("startYear", (object) book.StartYear ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("startMonth", (object) book.StartMonth ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("startDay", (object) book.StartDay ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("endYear", (object) book.EndYear ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("endMonth", (object) book.EndMonth ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("endDay", (object) book.EndDay ?? DBNull.Value);
             cmd.Parameters.AddWithValue("pages", (object)book.PagesRead ?? DBNull.Value);
             cmd.Parameters.AddWithValue("totalPages", (object)book.TotalPages ?? DBNull.Value);
             cmd.Parameters.AddWithValue("userId", book.UserId);
@@ -93,8 +97,12 @@ namespace Storage.Repositories
             cmd.CommandText = "update books set name = @name, " +
                 "authors = @authors, " +
                 "status = @status, " +
-                "startDate = @startDate, " +
-                "endDate = @endDate, " +
+                "startYear = @startYear, " +
+                "startMonth = @startMonth, " +
+                "startDay = @startDay, " +
+                "endYear = @endYear, " +
+                "endMonth = @endMonth, " +
+                "endDay = @endDay, " +
                 "pages = @pages, " +
                 "totalPages = @totalPages where id = @id;";
 
@@ -102,8 +110,12 @@ namespace Storage.Repositories
             cmd.Parameters.AddWithValue("name", book.Name);
             cmd.Parameters.AddWithValue("authors", string.Join('|', book.Authors));
             cmd.Parameters.AddWithValue("status", book.Status);
-            cmd.Parameters.AddWithValue("startDate", (object)book.StartDate ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("endDate", (object)book.EndDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("startYear", (object)book.StartYear ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("startMonth", (object)book.StartMonth ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("startDay", (object)book.StartDay ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("endYear", (object)book.EndYear ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("endMonth", (object)book.EndMonth ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("endDay", (object)book.EndDay ?? DBNull.Value);
             cmd.Parameters.AddWithValue("pages", (object)book.PagesRead ?? DBNull.Value);
             cmd.Parameters.AddWithValue("totalPages", (object)book.TotalPages ?? DBNull.Value);
 

@@ -103,6 +103,14 @@ namespace Storage.Readers
             return result;
         }
 
+        protected short? GetNullableInt16(SQLReader reader, ref int readCount)
+        {
+            var result = reader.IsDBNull(readCount) ? (short?)null : reader.GetInt16(readCount);
+            readCount++;
+
+            return result;
+        }
+
         protected int? GetNullableInt32(SQLReader reader, ref int readCount)
         {
             var result = reader.IsDBNull(readCount) ? (int?)null : reader.GetInt32(readCount);

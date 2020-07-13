@@ -10,8 +10,12 @@ namespace Storage.Models
         string Name { get; set; }
         string[] Authors { get; set; }
         int Status { get; set; }
-        DateTime? StartDate { get; set; }
-        DateTime? EndDate { get; set; }
+        short? StartYear { get; set; }
+        short? StartMonth { get; set; }
+        short? StartDay { get; set; }
+        short? EndYear { get; set; }
+        short? EndMonth { get; set; }
+        short? EndDay { get; set; }
         int? PagesRead { get; set; }
         int? TotalPages { get; set; }
         public long UserId { get; set; }
@@ -23,8 +27,12 @@ namespace Storage.Models
         public string Name { get; set; }
         public string[] Authors { get; set; }
         public int Status { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public short? StartYear { get; set; }
+        public short? StartMonth { get; set; }
+        public short? StartDay { get; set; }
+        public short? EndYear { get; set; }
+        public short? EndMonth { get; set; }
+        public short? EndDay { get; set; }
         public int? PagesRead { get; set; }
         public int? TotalPages { get; set; }
         public long UserId { get; set; }
@@ -42,8 +50,12 @@ namespace Storage.Models
             Array.Copy(book.Authors, this.Authors, book.Authors.Length);
 
             this.Status = book.Status;
-            this.StartDate = book.StartDate;
-            this.EndDate = book.EndDate;
+            this.StartYear = book.StartYear;
+            this.StartMonth = book.StartMonth;
+            this.StartDay = book.StartDay;
+            this.EndYear = book.EndYear;
+            this.EndMonth = book.EndMonth;
+            this.EndDay = book.EndDay;
             this.PagesRead = book.PagesRead;
             this.TotalPages = book.TotalPages;
             this.UserId = book.UserId;

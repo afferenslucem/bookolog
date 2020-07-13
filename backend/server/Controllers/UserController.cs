@@ -30,7 +30,7 @@ namespace Server.Controllers
             {
                 var user = await session.GetUser();
 
-                return Ok(user);
+                return Ok(user.WithoutPrivate());
             }
             catch(Exception e)
             {
