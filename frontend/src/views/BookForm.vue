@@ -2,29 +2,31 @@
     <form>
         <div class="form-group">
             <label>Заголовок книги</label>
-            <input type="text" class="form-control" v-model="book.name" />
+            <input type="text" class="form-control" v-model.trim="book.name" />
         </div>
         <div class="form-group">
             <span>Авторы</span>
             
             <div class="form-group" v-for="(item, index) in book.authors" :key="index">
-                <input type="text" class="form-control" v-model="book.authors[index]" @blur="authorBlur(item, index)" />
+                <input type="text" class="form-control" v-model.trim="book.authors[index]" @blur="authorBlur(item, index)" />
             </div>
         </div> 
         <div class="form-group">
             <label>Статус</label>
-            <select class="form-control" v-model="book.status">
+            <select class="form-control" v-model.number="book.status">
                 <option v-for="(value, index) in statuses" :value="index" :key="index">{{value}}</option>
             </select>
         </div>
         <div class="form-row" v-show="shouldShowDates">
             <div class="col form-group">
                 <label>Дата начала чтения</label>
-                <input type="date" class="form-control" v-model="book.startDate" :max="maxStartDate | dateBound">
+                <date-input :year="book.startYear" :month="book.startMonth" :day="book.startDay"
+                 @year="book.startYear = $event" @month="book.startMonth = $event" @day="book.startDay = $event"></date-input>
             </div>
             <div class="col form-group">
                 <label>Дата окончания чтения</label>
-                <input type="date" class="form-control" :disabled="endDateDisabled" v-model="book.endDate" :min="minEndDate | dateBound" :max="maxEndDate | dateBound">
+                <date-input :year="book.endYear" :month="book.endMonth" :day="book.endDay"
+                @year="book.endYear = $event" @month="book.endMonth = $event" @day="book.endDay = $event"></date-input>
             </div>
         </div>
         <div class="form-row" v-show="shouldShowProgress">
@@ -38,10 +40,10 @@
             </div>
         </div>
         <div class="buttons-group">
-            <button class="btn btn-primary" type="button" @click="edit">
+            <button class="btn btn-primary" type="button" @click="submit">
                 Сохранить
             </button>
-            <button class="btn btn-outline-danger" type="button" @click="del">
+            <button class="btn btn-outline-danger" v-show="isEdit || isDelete" type="button" @click="del">
                 Удалить
             </button>
         </div>
@@ -51,14 +53,28 @@
 <script lang="ts">
     import Vue from 'vue'
     import { Book, BookUtils, Status } from '../types/books-module'
-import { BookActions } from '../store/modules/books/storage-methods';
+    import { BookActions } from '../store/modules/books/storage-methods';
+    import DateInput from '@/components/common/DateInput.vue'
 
     interface Data {
         book: Book;
         statuses: any;
     }
 
+    function formatDate(date: Date): string {
+        const year = date.getFullYear();
+
+        const month = date.getMonth() + 1;
+        const monthFormatted = month < 10 ? '0' + month : month;
+
+        const day = date.getDate();
+        const dayFormatted = day < 10 ? '0' + day : day;
+
+        return `${year}-${monthFormatted}-${dayFormatted}`;
+    }
+
     export default Vue.extend({
+        components: { DateInput },
         data() {
             return {
                 book: {},
@@ -95,18 +111,6 @@ import { BookActions } from '../store/modules/books/storage-methods';
             shouldShowProgress(): boolean {
                 return this.book.status == Status.inProgress;
             },
-            maxStartDate(): Date {
-                return this.currentDate;
-            },
-            minEndDate(): Date {
-                return this.book.startDate != null ? new Date(this.book.startDate) : this.maxStartDate;
-            },
-            maxEndDate(): Date {
-                return this.currentDate;
-            },
-            currentDate(): Date {
-                return new Date();
-            }
         },
         methods: {
             authorBlur(item: string, index: number): void {
@@ -137,21 +141,25 @@ import { BookActions } from '../store/modules/books/storage-methods';
                     this.$router.push({name: 'Reading'});
                 });
             },
+            save(): Promise<void> {
+                return this.$store.dispatch(BookActions.createBook, this.book).then(() => { 
+                    this.$router.push({name: 'Reading'});
+                });
+            },
+            submit(): Promise<void> {
+                if(this.isCreate) {
+                    return this.save();
+                } else {
+                    return this.edit();
+                }
+            },
             del(): Promise<void> {
                 return this.$store.dispatch(BookActions.deleteBook, this.book); 
-            }
+            },
         },
         filters: {
             dateBound(date: Date): string {
-                const year = date.getFullYear();
-
-                const month = date.getMonth() + 1;
-                const monthFormatted = month < 10 ? '0' + month : month;
-
-                const day = date.getDate();
-                const dayFormatted = day < 10 ? '0' + day : day;
-
-                return `${year}-${monthFormatted}-${dayFormatted}`;
+                return formatDate(date);
             }
         },
         created(): void {

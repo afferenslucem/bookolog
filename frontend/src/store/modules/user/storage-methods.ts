@@ -57,7 +57,7 @@ export const actions: ActionTree<UserModule, StoreType> = {
     [UserActions.logout]({commit}: any): void {
         commit(UserMutations.removeUser);
     },
-    async [UserActions.isLoggedIn]({commit, dispatch}: any): Promise<boolean> {
+    async [UserActions.isLoggedIn]({dispatch}: any): Promise<boolean> {
         const loggedInResponse = await new HttpClient().isLoggedIn();
 
         if(loggedInResponse.IsSuccess) {

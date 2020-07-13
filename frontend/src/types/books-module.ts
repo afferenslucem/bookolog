@@ -9,8 +9,12 @@ export interface BookData {
     name: string;
     authors: string[];
     status: Status | null;
-    startDate?: Date | string;
-    endDate?: Date | string;
+    startYear?: number;
+    startMonth?: number;
+    startDay?: number;
+    endYear?: number;
+    endMonth?: number;
+    endDay?: number;
     pagesRead?: number;
     totalPages?: number;
 }
@@ -20,8 +24,12 @@ export class Book implements BookData {
     name: string;
     authors: string[];
     status: Status;
-    startDate?: Date | string;
-    endDate?: Date | string;
+    startYear?: number;
+    startMonth?: number;
+    startDay?: number;
+    endYear?: number;
+    endMonth?: number;
+    endDay?: number;
     pagesRead?: number;
     totalPages?: number;
 
@@ -30,8 +38,12 @@ export class Book implements BookData {
         this.name = book.name;
         this.authors = book.authors;
         this.status = book.status || Status.toRead;
-        this.startDate = book.startDate;
-        this.endDate = book.endDate;
+        this.startYear = book.startYear;
+        this.startMonth = book.startMonth;
+        this.startDay = book.startDay;
+        this.endYear = book.endYear;
+        this.endMonth = book.endMonth;
+        this.endDay = book.endDay;
         this.pagesRead = book.pagesRead;
         this.totalPages = book.totalPages;
     }
@@ -45,14 +57,6 @@ export class Book implements BookData {
         const result = Math.floor(progress);
 
         return result;
-    }
-
-    public get StartDate(): Date | undefined {
-        return this.startDate ? new Date(this.startDate) : undefined;
-    }
-
-    public get EndDate(): Date | undefined {
-        return this.endDate ? new Date(this.endDate) : undefined;
     }
 }
 

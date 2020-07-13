@@ -24,6 +24,10 @@ export class HttpClient {
         return this.put(`${HttpClient.host}/book/edit/${book.id}`, book);
     }
 
+    public async createBook(book: Book): Promise<HttpResult<Book>> {
+        return this.post(`${HttpClient.host}/book/create`, book);
+    }
+
     public async deleteBook(book: Book): Promise<HttpResult<Book>> {
         return this.delete(`${HttpClient.host}/book/delete/${book.id}`);
     }

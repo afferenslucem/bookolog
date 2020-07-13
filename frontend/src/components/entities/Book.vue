@@ -46,13 +46,21 @@
                return this.book.status != BookStatus.toRead;
            },
            hasDate(): boolean {
-               return this.book.startDate || this.book.endDate;
+               return this.book.startYear || this.book.endYear;
            },
-           startDate(): Date {
-               return this.book.StartDate;
+           startDate(): number[] {
+               const year = this.book.startYear;
+               const month = this.book.startMonth;
+               const day = this.book.startDay;
+
+               return [year, month, day];
            },
-           endDate(): Date {
-               return this.book.EndDate;
+           endDate(): number[] {
+               const year = this.book.endYear;
+               const month = this.book.endMonth;
+               const day = this.book.endDay;
+
+               return [year, month, day];
            },
            showProgress(): boolean {
                return this.book.status == BookStatus.inProgress;
@@ -67,11 +75,23 @@
            }
        },
        filters: {
-           date(date: Date): string {
-               if(date == null) {
-                   return '...';
+           date(items: number[]): string {
+               function format(item: number): string {
+                   if(item < 10) {
+                       return `0${item}`;
+                   } else {
+                       return item.toString();
+                   }
+               }
+
+               if (!items[0]) {
+                   return '...'
+               } else if (!items[1]) {
+                   return `${items[0]}-...`
+               } else if (!items[2]) {
+                   return `${items[0]}-${format(items[1])}-...`
                } else {
-                   return moment(date).format('L');
+                   return `${items[0]}-${format(items[1])}-${format(items[2])}`
                }
            }
        }

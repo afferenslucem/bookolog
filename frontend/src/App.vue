@@ -38,7 +38,7 @@ import { UserActions } from '@/store/modules/user/storage-methods';
       if (!loggedIn) {
         this.$router.push({name: 'Main'})
       } else {
-        this.$router.push({name: 'Reading'})
+        //this.$router.push({name: 'Reading'})
       }
     }
   })

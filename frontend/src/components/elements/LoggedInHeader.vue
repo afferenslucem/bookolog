@@ -2,6 +2,7 @@
   <div class="menu">
       <main-icon @click="goToMain" class="main-icon"></main-icon>
       <router-link to="/reading">Мой Список</router-link>
+      <router-link to="/book/create/0">Добавить книгу</router-link>
       <router-link to="/to-read">К Прочтению</router-link>
       <div class="auth-button btn btn-primary" @click="logout">Log out</div>
   </div>

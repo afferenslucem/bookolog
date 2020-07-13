@@ -13,29 +13,39 @@ const temp: BookData[] = [
         "name": "Введение в ESMAScript 6 - 2016",
         "authors": ["Нараян Прасти"],
         "status": 2,
-        "startDate": "2020-06-25"
+        "startYear": 2020,
+        "startMonth": 6,
+        "startDay": 25,
     },
     {
         "id": 3,
         "name": "Vue.js в действии",
         "authors": ["Эрик Хэнчетт", "Бенджамин Листуон"],
         "status": 2,
-        "startDate": "2020-06-18",
-        "endDate": "2020-06-28"
+        "startYear": 2020,
+        "startMonth": 6,
+        "startDay": 18,
+        "endYear": 2020,
+        "endMonth": 6,
+        "endDay": 28,
     },
     {
         "id": 4,
         "name": "Занимательная физика",
         "authors": ["Яков Перельман"],
         "status": 2,
-        "endDate": "2020-06-29"
+        "endYear": 2020,
+        "endMonth": 6,
+        "endDay": 29,
     },
     {
         "id": 5,
         "name": "Как устроен javascript",
         "authors": ["Дуглас Крокфорд"],
         "status": 1,
-        "startDate": "2020-06-29T12:15:00",
+        "startYear": 2020,
+        "startMonth": 6,
+        "startDay": 29,
         "totalPages": 100,
         "pagesRead": 60
     },
@@ -66,15 +76,3 @@ const books: Book[] = temp.map(item => new Book(item));
 export const statusMock: BooksModule = {
     books
 }
-
-describe('Book.ts', () => {
-    it('check date equality', () => {
-      const book = statusMock.books.find(item => item.id == 5);
-
-      if(book) {
-        expect(book.StartDate).to.deep.equal(new Date("2020-06-29T12:15:00"));
-      } else {
-        expect.fail()
-      }
-    })
-  })
