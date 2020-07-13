@@ -1,4 +1,5 @@
 import { BooksModule, BookData, Book } from '@/types/books-module';
+import { expect } from 'chai';
 
 const temp: BookData[] = [
     {
@@ -34,7 +35,7 @@ const temp: BookData[] = [
         "name": "Как устроен javascript",
         "authors": ["Дуглас Крокфорд"],
         "status": 1,
-        "startDate": "2020-06-29",
+        "startDate": "2020-06-29T12:15:00",
         "totalPages": 100,
         "pagesRead": 60
     },
@@ -65,3 +66,15 @@ const books: Book[] = temp.map(item => new Book(item));
 export const statusMock: BooksModule = {
     books
 }
+
+describe('Book.ts', () => {
+    it('check date equality', () => {
+      const book = statusMock.books.find(item => item.id == 5);
+
+      if(book) {
+        expect(book.StartDate).to.deep.equal(new Date("2020-06-29T12:15:00"));
+      } else {
+        expect.fail()
+      }
+    })
+  })

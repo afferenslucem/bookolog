@@ -2,6 +2,7 @@ import { BooksModule, Book, Status } from '@/types/books-module'
 import { MutationTree, GetterTree, ActionTree } from 'vuex'
 import { StoreType } from '@/store'
 import { HttpClient } from '@/utils/http-client'
+import Vue from 'vue';
 
 export enum BookMutations {
     pushBooks = 'BOOKS_pushBooks',
@@ -34,6 +35,8 @@ export const mutations: MutationTree<BooksModule> = {
         const index = state.books.findIndex(item => item.id == book.id);
 
         state.books[index] = book;
+
+        Vue.set(state.books, index, book);
     },
     [BookMutations.deleteBook](state: BooksModule, book: Book) {
         state.books = state.books.filter(item => item.id != book.id);
@@ -46,9 +49,11 @@ export const actions: ActionTree<BooksModule, StoreType> = {
 
         const result = await new HttpClient().updateBook(book);
 
-        const updated = new Book(result.Data);
+        if(result.Data) {
+            const updated = new Book(result.Data);
 
-        commit(BookMutations.updateBook, updated);
+            commit(BookMutations.updateBook, updated);
+        }
     },
     async [BookActions.deleteBook]({commit}, book: Book): Promise<void> {
         const result = await new HttpClient().deleteBook(book);
@@ -58,7 +63,7 @@ export const actions: ActionTree<BooksModule, StoreType> = {
     async [BookActions.loadBooks]({commit}): Promise<void> {
         const booksAnswer = await new HttpClient().getBooks();
 
-        if(booksAnswer.IsSuccess) {
+        if(booksAnswer.Data) {
             const books = booksAnswer.Data.map(item => new Book(item));
 
             commit(BookMutations.pushBooks, books);

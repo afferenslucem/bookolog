@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { UserModule } from "@/types/user-module";
-import { Book } from '@/types/books-module';
-import { BookMutations, BookActions } from '../books/storage-methods';
+import { BookActions } from '../books/storage-methods';
 import { ActionTree, MutationTree } from 'vuex';
 import { StoreType } from '@/store';
 import { HttpClient } from '@/utils/http-client';
@@ -12,22 +10,25 @@ import { LoginResult } from '@/types/authentication/login-result';
 export const state: UserModule = {
     loggedIn: false,
     id: 0,
-    login: ''
+    login: '',
+    error: {} as HttpError
 };
 
 export enum UserMutations {
-    login = 'USER_login',
+    setUser = 'USER_login',
     loginError = 'USER_loginError',
-    logout = 'USER_logout',
+    removeUser = 'USER_logout',
 }
 
 export enum UserActions {
     login = 'USER_login',
     logout = 'USER_logout',
+    isLoggedIn = 'USER_isLoggedIn',
+    onLoggedIn = 'USER_onLoggedIn',
 }
 
 export const mutations: MutationTree<UserModule> = {
-    [UserMutations.login](state: UserModule, data: LoginResult) {
+    [UserMutations.setUser](state: UserModule, data: LoginResult) {
         state.loggedIn = true;
         state.id = data.id;
         state.login = data.login;
@@ -35,7 +36,7 @@ export const mutations: MutationTree<UserModule> = {
     [UserMutations.loginError](state: UserModule, http: HttpError) {
         state.error = http;
     },
-    [UserMutations.logout](state: UserModule) {
+    [UserMutations.removeUser](state: UserModule) {
         state.loggedIn = false;
         state.login = '';
         state.id = 0;
@@ -44,18 +45,29 @@ export const mutations: MutationTree<UserModule> = {
 };
 
 export const actions: ActionTree<UserModule, StoreType> = {
-    async [UserMutations.login]({commit, dispatch}, data: LoginData): Promise<void> {
+    async [UserActions.login]({commit, dispatch}, data: LoginData): Promise<void> {
         const loginResponse = await new HttpClient().login(data);
 
         if(loginResponse.IsSuccess) {
-            await dispatch(BookActions.loadBooks);
-
-            commit(UserMutations.login, loginResponse.Data);
+            await dispatch(UserActions.onLoggedIn, loginResponse.Data);
         } else {
             commit(UserMutations.loginError, loginResponse.Error);
         }
     },
-    [UserMutations.logout]({commit}: any): void {
-        commit(UserMutations.logout);
+    [UserActions.logout]({commit}: any): void {
+        commit(UserMutations.removeUser);
+    },
+    async [UserActions.isLoggedIn]({commit, dispatch}: any): Promise<boolean> {
+        const loggedInResponse = await new HttpClient().isLoggedIn();
+
+        if(loggedInResponse.IsSuccess) {
+            await dispatch(UserActions.onLoggedIn, loggedInResponse.Data);
+            return true;
+        } else return false;
+    },
+    async [UserActions.onLoggedIn]({commit, dispatch}, user: LoginData): Promise<void> {
+        await dispatch(BookActions.loadBooks);
+
+        commit(UserMutations.setUser, user);
     }
 };

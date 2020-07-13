@@ -11,7 +11,7 @@ export default Vue.extend({
         logout() {
             this.$store.dispatch(UserActions.logout);
             this.$router.push({name: 'Main'});
-        }
+        },
     },
     computed: {
         user(): UserModule {

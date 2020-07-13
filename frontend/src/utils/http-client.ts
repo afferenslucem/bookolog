@@ -12,6 +12,10 @@ export class HttpClient {
         return this.post(`${HttpClient.host}/authenticate/login`, data);
     }
 
+    public async isLoggedIn(): Promise<HttpResult<LoginResult>> {
+        return this.get(`${HttpClient.host}/user/me`);
+    }
+
     public async getBooks(): Promise<HttpResult<Book[]>> {
         return this.get(`${HttpClient.host}/book/all`);
     }

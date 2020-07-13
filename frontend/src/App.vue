@@ -18,10 +18,11 @@
   import AppLoggedInHeader from '@/components/elements/LoggedInHeader.vue'; 
   import { UserModule } from '@/types/user-module';
   import userMixin from '@/mixins/user';
+import { UserActions } from '@/store/modules/user/storage-methods';
 
   import axios from 'axios';
 
-  export default Vue.extend({
+  export default userMixin.extend({
     components: { AppHeader, AppLoggedInHeader },
     data() {
       return {
@@ -30,7 +31,16 @@
     },
     methods: {
     },
-    mixins: [userMixin]
+    mixins: [userMixin],
+    async beforeCreate(): Promise<void> {
+      const loggedIn = await this.$store.dispatch(UserActions.isLoggedIn);
+
+      if (!loggedIn) {
+        this.$router.push({name: 'Main'})
+      } else {
+        this.$router.push({name: 'Reading'})
+      }
+    }
   })
 </script>
 

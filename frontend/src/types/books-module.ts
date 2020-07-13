@@ -46,6 +46,14 @@ export class Book implements BookData {
 
         return result;
     }
+
+    public get StartDate(): Date | undefined {
+        return this.startDate ? new Date(this.startDate) : undefined;
+    }
+
+    public get EndDate(): Date | undefined {
+        return this.endDate ? new Date(this.endDate) : undefined;
+    }
 }
 
 export interface BookYearList {

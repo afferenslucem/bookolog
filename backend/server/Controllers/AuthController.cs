@@ -29,7 +29,7 @@ namespace Server.Controllers.AuthControllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Login([FromBody]AuthenticateModel model)
+        public async Task<ActionResult<User>> Login([FromBody]AuthenticateModel model)
         {
             try
             {

@@ -15,11 +15,11 @@
         <div v-show="showDate && hasDate" class="date-range">
             [
                 <span class="date">
-                    {{startDate}}
+                    {{startDate | date}}
                 </span>
                 -
                 <span class="date">
-                    {{endDate}}
+                    {{endDate | date}}
                 </span>
             ]
         </div>
@@ -29,6 +29,7 @@
 <script lang="ts">
     import Vue from 'vue'
     import { Book, Status as BookStatus } from '@/types/books-module'
+    import moment from 'moment';
 
     export default Vue.extend({
        props: {
@@ -47,11 +48,11 @@
            hasDate(): boolean {
                return this.book.startDate || this.book.endDate;
            },
-           startDate(): string {
-               return this.book.startDate ? this.book.startDate : '...';
+           startDate(): Date {
+               return this.book.StartDate;
            },
-           endDate(): string {
-               return this.book.endDate ? this.book.endDate : '...';
+           endDate(): Date {
+               return this.book.EndDate;
            },
            showProgress(): boolean {
                return this.book.status == BookStatus.inProgress;
@@ -62,6 +63,15 @@
            progressStyle(): any {
                return {
                    'width': `${this.progress}%`
+               }
+           }
+       },
+       filters: {
+           date(date: Date): string {
+               if(date == null) {
+                   return '...';
+               } else {
+                   return moment(date).format('L');
                }
            }
        }

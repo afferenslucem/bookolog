@@ -163,7 +163,7 @@ import { BookActions } from '../store/modules/books/storage-methods';
                     status: null
                 });
             } else {
-                const book = this.$store.state.booksStorage.books.find(item => item.id == this.id);
+                const book = this.$store.state.booksStorage.books.find((item: Book) => item.id == this.id);
 
                 this.book = BookUtils.copy(book);
                 this.book.authors.push('');

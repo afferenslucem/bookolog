@@ -30,7 +30,7 @@ interface AuthData {
     password: string;
 }
 
-export default Vue.extend({
+export default userMixin.extend({
     mixins: [userMixin],
     data(): AuthData {
         return {

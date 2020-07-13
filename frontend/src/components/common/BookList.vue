@@ -19,7 +19,7 @@
 <script lang="ts">
     import Vue from 'vue';
     import AppBook from '@/components/entities/Book.vue';
-import { Book } from '../../types/books-module';
+    import { Book } from '../../types/books-module';
 
     export default Vue.extend({
         components: { AppBook },
