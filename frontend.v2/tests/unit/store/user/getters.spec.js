@@ -1,4 +1,5 @@
-import { getters, USER_LOGGED_IN } from '../../../../src/store/user/getters'
+import { getters } from '../../../../src/store/user/getters'
+import { USER_LOGGED_IN_GETTER } from '../../../../src/store/naming'
 import {assert} from 'chai';
 
 describe('User Getters', () => {
@@ -7,7 +8,7 @@ describe('User Getters', () => {
             login: 'hrodvitnir'
         };
 
-        const result = getters[USER_LOGGED_IN](state);
+        const result = getters[USER_LOGGED_IN_GETTER](state);
         const expected = true;
         
         assert.equal(result, expected);
@@ -17,7 +18,7 @@ describe('User Getters', () => {
             login: ''
         };
 
-        const result = getters[USER_LOGGED_IN](state);
+        const result = getters[USER_LOGGED_IN_GETTER](state);
         const expected = false;
         
         assert.equal(result, expected);

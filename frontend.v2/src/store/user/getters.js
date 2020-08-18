@@ -1,5 +1,5 @@
-export const USER_LOGGED_IN = 'USER_LOGGED_IN';
+import {USER_LOGGED_IN_GETTER} from '../naming';
 
 export const getters = {
-    [USER_LOGGED_IN]: state => !!state.login.trim()
+    [USER_LOGGED_IN_GETTER]: state => !!state.login.trim()
 }

@@ -1,4 +1,5 @@
-import { USER_LOGIN_MUTATION, USER_LOGOUT_MUTATION, mutations } from '../../../../src/store/user/mutations'
+import { mutations } from '../../../../src/store/user/mutations'
+import { USER_LOGIN_MUTATION, USER_LOGOUT_MUTATION } from '../../../../src/store/naming'
 import {assert} from 'chai';
 
 describe('User Mutations', () => {
