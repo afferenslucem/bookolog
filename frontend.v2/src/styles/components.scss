@@ -1,21 +1,5 @@
 @import 'variables.scss';
 
-// Header 
-.header {
-    width: 100%;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    > div {
-        flex: 0 0 auto;
-    }
-
-    background-color: $header-color;
-    color: $header-text-color;
-}
-
 // Icons 
 .icon {
     display: block;

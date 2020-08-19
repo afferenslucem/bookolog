@@ -29,3 +29,21 @@ export default {
     },
 }
 </script>
+<style lang="scss" scoped>
+@import '@/styles/variables';
+
+.header {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    > div {
+        flex: 0 0 auto;
+    }
+
+    background-color: $header-color;
+    color: $header-text-color;
+}
+</style>
