@@ -3,13 +3,20 @@
     <side-menu class="left" :class="{opened: shouldShowLeftMenu}">
       Hello, I'm left
     </side-menu>
-    <div class="overlay" v-if="shouldShowLeftMenu || shouldShowRightMenu" @click="closeAllMenus"></div>
+    <div class="overlay" v-if="showOverlay" @click="closeAllMenus"></div>
     <div class="main">
       <Header class="top" @avatarclick="openRightMenu" @menuclick="openLeftMenu">
       </Header>
     </div>
     <side-menu class="right" :class="{opened: shouldShowRightMenu}">
-      Hello, I'm rihgt
+      <ul class="nav flex-column">
+        <li class="nav-item" v-if="!isLoggedIn" @click="onSignIn()">
+          <a class="nav-link" href="#">Вход</a>
+        </li>
+        <li class="nav-item" v-else @click="onSignOut()">
+          <a class="nav-link" href="#">Выход</a>
+        </li>
+      </ul>
     </side-menu>
   </div>
 </template>
@@ -19,10 +26,12 @@
 import Header from '@/components/navigation/Header';
 import SideMenu from '@/components/navigation/SideMenu';
 import {getLogger} from '@/logger';
+import userMixin from '@/mixins/user-mixin';
 
 const logger = getLogger('HomePage');
 
 export default {
+  mixins: [userMixin],
   name: 'Home',
   components: {
     Header,
@@ -47,8 +56,21 @@ export default {
       this.shouldShowLeftMenu = false;
       this.shouldShowRightMenu = false;
       logger.debug('Closed all menus');
+    },
+    onSignIn() {
+      this.login();
+      this.closeAllMenus();
+    },
+    onSignOut() {
+      this.logout();
+      this.closeAllMenus();
     }
   },
+  computed: {
+    showOverlay() {
+      return this.shouldShowLeftMenu || this.shouldShowRightMenu
+    }
+  }
 }
 </script>
 
@@ -78,7 +100,7 @@ export default {
   }
 
   .side-menu {
-    width: 60%;
+    width: 75%;
 
     position: fixed;
     top: 0;

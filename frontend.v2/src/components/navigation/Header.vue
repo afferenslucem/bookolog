@@ -12,8 +12,9 @@
     </div>
 </template>
 <script>
-import {USER_LOGGED_IN_GETTER} from '@/store/naming';
+import userMixin from '@/mixins/user-mixin';
 export default {
+    mixins: [userMixin],
     methods: {
         emitAvatarClick(event) {
             event.stopPropagation();
@@ -25,9 +26,6 @@ export default {
         },
     },
     computed: {
-        isLoggedIn() {
-            return this.$store.getters[USER_LOGGED_IN_GETTER];
-        }
     },
 }
 </script>
