@@ -18,11 +18,11 @@ export default {
     methods: {
         emitAvatarClick(event) {
             event.stopPropagation();
-            this.$emit('avatarclick');
+            this.$emit('avatarClick');
         },
         emitMenuClick(event) {
             event.stopPropagation();
-            this.$emit('menuclick');
+            this.$emit('menuClick');
         },
     },
     computed: {

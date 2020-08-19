@@ -1,22 +1,16 @@
 <template>
   <div class="window">
     <side-menu class="left" :class="{opened: shouldShowLeftMenu}">
-      Hello, I'm left
+      <book-menu @itemClick="closeAllMenus()"></book-menu>
     </side-menu>
-    <div class="overlay" v-if="showOverlay" @click="closeAllMenus"></div>
+    <div class="overlay" :class="{active: showOverlay}" @click="closeAllMenus()"></div>
     <div class="main">
-      <Header class="top" @avatarclick="openRightMenu" @menuclick="openLeftMenu">
+      <Header class="top" @avatarClick="openRightMenu()" @menuClick="openLeftMenu()">
       </Header>
+      <router-view/>
     </div>
     <side-menu class="right" :class="{opened: shouldShowRightMenu}">
-      <ul class="nav flex-column">
-        <li class="nav-item" v-if="!isLoggedIn" @click="onSignIn()">
-          <a class="nav-link" href="#">Вход</a>
-        </li>
-        <li class="nav-item" v-else @click="onSignOut()">
-          <a class="nav-link" href="#">Выход</a>
-        </li>
-      </ul>
+      <user-menu @itemClick="closeAllMenus()"></user-menu>
     </side-menu>
   </div>
 </template>
@@ -25,17 +19,20 @@
 // @ is an alias to /src
 import Header from '@/components/navigation/Header';
 import SideMenu from '@/components/navigation/SideMenu';
+import BookMenu from '@/components/navigation/BookMenu';
+import UserMenu from '@/components/navigation/UserMenu';
+import {BOOKS_LOAD_ACTION} from '@/store/naming';
 import {getLogger} from '@/logger';
-import userMixin from '@/mixins/user-mixin';
 
 const logger = getLogger('HomePage');
 
 export default {
-  mixins: [userMixin],
   name: 'Home',
   components: {
     Header,
-    SideMenu
+    SideMenu,
+    BookMenu,
+    UserMenu
   },
   data() {
     return {
@@ -56,20 +53,15 @@ export default {
       this.shouldShowLeftMenu = false;
       this.shouldShowRightMenu = false;
       logger.debug('Closed all menus');
-    },
-    onSignIn() {
-      this.login();
-      this.closeAllMenus();
-    },
-    onSignOut() {
-      this.logout();
-      this.closeAllMenus();
     }
   },
   computed: {
     showOverlay() {
       return this.shouldShowLeftMenu || this.shouldShowRightMenu
     }
+  },
+  created() {
+    this.$store.dispatch(BOOKS_LOAD_ACTION)
   }
 }
 </script>
@@ -92,11 +84,22 @@ export default {
     height: 100%;
     width: 100%;
 
+    visibility: hidden;
+
+    opacity: 0;
+
+    transition: opacity 0.5s ease-in-out;
+
     position: fixed;
 
     z-index: 500;
 
     background-color: $overlay-color;
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 
   .side-menu {

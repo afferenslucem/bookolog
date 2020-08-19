@@ -1,5 +1,5 @@
 const state = {
-    login: 'hrodvitnir'
+    books: []
 }
 
 export default () => state;
