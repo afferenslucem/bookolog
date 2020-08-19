@@ -1,26 +1,28 @@
 <template>
     <div class="header">
-        <div class="icon">
+        <div class="icon" @click="emitMenuClick($event)">
             <i class="fa fa-bars" aria-hidden="true"></i>
         </div>
-        <div class="icon" v-if="!isLoggedIn" @click="login()">
+        <div class="icon" v-if="!isLoggedIn" @click="emitAvatarClick($event)">
             <i class="fa fa-user-o" aria-hidden="true"></i>
         </div>
-        <div class="icon avatar" v-else @click="logout()">
+        <div class="icon avatar" v-else @click="emitAvatarClick($event)">
             <img src="/avatar.jpg"/>
         </div>
     </div>
 </template>
 <script>
-import {USER_LOGIN_ACTION, USER_LOGOUT_ACTION, USER_LOGGED_IN_GETTER} from '@/store/naming';
+import {USER_LOGGED_IN_GETTER} from '@/store/naming';
 export default {
     methods: {
-        async login() {
-            return this.$store.dispatch(USER_LOGIN_ACTION);
+        emitAvatarClick(event) {
+            event.stopPropagation();
+            this.$emit('avatarclick');
         },
-        async logout() {
-            return this.$store.dispatch(USER_LOGOUT_ACTION);
-        }
+        emitMenuClick(event) {
+            event.stopPropagation();
+            this.$emit('menuclick');
+        },
     },
     computed: {
         isLoggedIn() {

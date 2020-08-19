@@ -8,11 +8,15 @@ $phone-screen-width: 768px;
 $black: #000000;
 $white: #FFFFFF;
 $maya-blue: #51bbfe;
+$bdazzled-blue: #415a77;
 
 // Colors
-$split-color: black;
+$split-color: $bdazzled-blue;
 $header-color: $maya-blue;
 $header-text-color: $white;
 
+$bg-color: $white;
+$overlay-color: #{$bdazzled-blue}55;
+
 // Lines
-$split-line: 2px solid $split-color
+$split-line: 1px solid $split-color
