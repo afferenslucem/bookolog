@@ -1,4 +1,5 @@
 [{
+    "guid": "dssddsdfsdfsdfsdasdas",
     "name": "Война миров",
     "authors": ["Герберт Уэллс"],
     "year": 2017,
@@ -12,6 +13,7 @@
     "type": 2,
     "note": ""
 },{
+    "guid": "sacfdvdacdsvfdvdfvdf",
     "name": "Занимательная физика",
     "authors": ["Яков Перельман"],
     "year": 1984,
@@ -25,6 +27,7 @@
     "type": 0,
     "note": "Интересная книга про физику"
 },{
+    "guid": "fvdcfdbhgfdbdsvtrbfg",
     "name": "Наедене с собой",
     "authors": ["Марк Аврелий"],
     "year": 2015,
@@ -38,6 +41,7 @@
     "type": 2,
     "note": ""
 },{
+    "guid": "vfdvasdcfdbgfdsvcsdbvbgf",
     "name": "Скотской бунт",
     "authors": ["Николай Костомаров"],
     "year": 2017,
@@ -50,6 +54,7 @@
     "type": 0,
     "note": ""
 },{
+    "guid": "njhmjhnfgnbfgbfgbfdbd",
     "name": "BMW. Баварское сердце, Русская душа",
     "authors": ["Александр Пикуленко", "Денис Орлов"],
     "year": 2012,
@@ -63,6 +68,7 @@
     "type": 2,
     "note": ""
 },{
+    "guid": "ascdsfbgfbsdsdvfdbdfv",
     "name": "Pro git",
     "authors": ["Скот Шакон", "Бен Страуп"],
     "year": 2020,
@@ -75,6 +81,7 @@
     "type": 1,
     "note": ""
 },{
+    "guid": "vfdvgfnbfgvssdfvdf",
     "name": "Таинственный Рыцарь",
     "authors": ["Джордж Мартин"],
     "year": 2014,
@@ -86,6 +93,7 @@
     "type": 1,
     "note": ""
 },{
+    "guid": "cfdbhgndfvdfnbfgdv",
     "name": "1984",
     "authors": ["Джордж Оруел"],
     "year": 2015,
