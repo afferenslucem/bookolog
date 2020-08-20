@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="container mt-3">
       <ul v-if="shouldShowList">
         <li v-for="book of books" :key="book.guid">
-          <span>{{book.name}}</span>
+          <progressing-book :book=book></progressing-book>
         </li>
       </ul>
       <div v-else>
@@ -13,8 +13,12 @@
 
 <script>
 import {BOOKS_IN_PROGRESS_GETTER} from '@/store/naming';
+import ProgressingBook from '@/components/book/ProgressingBook';
 
 export default {
+  components: {
+    ProgressingBook
+  },
   computed: {
     books() {
       return this.$store.getters[BOOKS_IN_PROGRESS_GETTER];

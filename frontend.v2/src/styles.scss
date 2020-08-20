@@ -1,4 +1,13 @@
-@import 'styles/reset.css';
+//@import 'styles/reset.css';
+ol, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
 
 @import 'styles/mixins.scss';
 @import 'styles/components.scss';
