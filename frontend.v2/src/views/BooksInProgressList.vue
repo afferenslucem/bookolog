@@ -1,8 +1,8 @@
 <template>
   <div class="container mt-3">
       <ul v-if="shouldShowList">
-        <li v-for="book of books" :key="book.guid">
-          <progressing-book :book=book></progressing-book>
+        <li v-for="(book, key, index) of books" :class="{'mb-4' : index !== (books.length - 1)}" :key="book.guid">
+          <progressing-book :book="book"></progressing-book>
         </li>
       </ul>
       <div v-else>

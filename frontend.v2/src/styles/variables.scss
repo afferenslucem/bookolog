@@ -7,16 +7,31 @@ $phone-screen-width: 768px;
 // Color Names
 $black: #000000;
 $white: #FFFFFF;
-$maya-blue: #51bbfe;
+
+$cadet: #637074;
+$space-cadet: #222E50;
+
 $bdazzled-blue: #415a77;
+$maya-blue: #51bbfe;
+
+$bud-green : #79B473;
+$polished-pine : #439A86;
+
+$fire-opal : #DE6449 ;
+$dark-sienna : #230903 ;
+$persian-orange : #DC965A ;
 
 // Colors
 $split-color: $bdazzled-blue;
 $header-color: $maya-blue;
+
 $header-text-color: $white;
+$dark-text-color: $cadet;
 
 $bg-color: $white;
 $overlay-color: #{$bdazzled-blue}55;
+
+$progress-bar-color: $polished-pine;
 
 // Lines
 $split-line: 1px solid $split-color
