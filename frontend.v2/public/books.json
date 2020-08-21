@@ -57,7 +57,6 @@
     "guid": "njhmjhnfgnbfgbfgbfdbd",
     "name": "BMW. Баварское сердце, Русская душа",
     "authors": ["Александр Пикуленко", "Денис Орлов"],
-    "year": 2012,
     "status": 1,
     "tags": ["Автомобили", "Германия", "СССР"],
     "genre": "история",
@@ -92,6 +91,17 @@
     "doneUnits": 100,
     "type": 1,
     "note": "Читать приятнее чем ИП"
+},{
+    "guid": "43tfv",
+    "name": "Эпоха мертвых. Начало",
+    "authors": ["Андрей Круз"],
+    "status": 1,
+    "tags": ["зомби", "постапокалепсис"],
+    "genre": "фантастика",
+    "totalUnits": 0,
+    "doneUnits": 100,
+    "type": 1,
+    "note": ""
 },{
     "guid": "cfdbhgndfvdfnbfgdv",
     "name": "1984",

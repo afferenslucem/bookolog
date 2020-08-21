@@ -1,5 +1,5 @@
 import {IN_PROGRESS_STATUS} from '../models/book'
-import * as moment from 'moment';
+import moment from 'moment';
 
 export default {
     computed: {
