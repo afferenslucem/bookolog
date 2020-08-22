@@ -12,8 +12,8 @@
     <div v-if="book.genre">
       <span>Жанр: {{book.genre | capital}}</span>
     </div>
-    <div v-if="book.startDate">
-      Начата: {{startDate}}
+    <div v-if="book.startDate || book.endDate">
+      [ <small class="dark-text">{{range}}</small> ] 
     </div>
     <div v-if="book.note">
       <small class="dark-text">{{book.note}}</small>
@@ -32,6 +32,15 @@ export default {
   computed: {
     showAuthors() {
       return this.book.authors && (this.book.authors.length > 0)
+    },
+    range() {
+      const start = this.book.startDate ? this.startDate : '...';
+      const end = this.book.endDate ? this.endDate : '...';
+
+      return `${start} - ${end}`;
+    },
+    hasRange() {
+      return this.book.startDate && this.book.endDate
     }
   },
   props: {

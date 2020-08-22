@@ -1,13 +1,13 @@
 <template>
   <ul class="nav flex-column">
     <li class="nav-item">
-      <a class="nav-link" href="#" @click="goToInProgress()">Читаю сейчас</a>
+      <a class="nav-link" href="#" @click="goToInProgress()">Читаю Сейчас</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">К прочтению</a>
+      <a class="nav-link" href="#" @click="goToToRead()">К Прочтению</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Прочитал</a>
+      <a class="nav-link" href="#" @click="goToDone()">Прочитал</a>
     </li>
   </ul>
 </template>
@@ -20,6 +20,14 @@ export default {
   methods: {
     async goToInProgress() {
       this.$router.push({name: 'InProgress'});
+      this.emitClick();
+    },
+    async goToToRead() {
+      this.$router.push({name: 'ToRead'});
+      this.emitClick();
+    },
+    async goToDone() {
+      this.$router.push({name: 'Done'});
       this.emitClick();
     }
   }

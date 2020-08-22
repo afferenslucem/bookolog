@@ -12,14 +12,8 @@
     <div v-if="book.genre">
       <span>Жанр: {{book.genre | capital}}</span>
     </div>
-    <div v-if="book.startDate">
-      Начата: {{startDate}}
-    </div>
     <div v-if="book.note">
       <small class="dark-text">{{book.note}}</small>
-    </div>
-    <div v-if="shouldShowProgress" class="progress">
-      <div class="progress-bar" role="progressbar" :style="{'width': progress + '%'}" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
   </div>
 </template>

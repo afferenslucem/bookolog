@@ -11,6 +11,9 @@ export default {
         },
         startDate() {
             return moment(this.book.startDate).format('YYYY-MM-DD')
+        },
+        endDate() {
+            return moment(this.book.endDate).format('YYYY-MM-DD')
         }
     }
 }

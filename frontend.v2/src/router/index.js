@@ -13,8 +13,18 @@ Vue.use(VueRouter)
       {
         path: '/in-progress',
         name: 'InProgress',
-        component: () => import('../views/BooksInProgressList.vue')
-      }
+        component: () => import('../views/books/BooksInProgressList.vue')
+      },
+      {
+        path: '/to-read',
+        name: 'ToRead',
+        component: () => import('../views/books/BooksToReadList.vue')
+      },
+      {
+        path: '/done',
+        name: 'Done',
+        component: () => import('../views/books/BooksDoneList.vue')
+      },
     ]
   },
 ]
