@@ -13,17 +13,20 @@ Vue.use(VueRouter)
       {
         path: '/in-progress',
         name: 'InProgress',
-        component: () => import('../views/books/BooksInProgressList.vue')
-      },
-      {
+        component: () => import('../views/books/lists/BooksInProgressList.vue')
+      }, {
         path: '/to-read',
         name: 'ToRead',
-        component: () => import('../views/books/BooksToReadList.vue')
-      },
-      {
+        component: () => import('../views/books/lists/BooksToReadList.vue')
+      }, {
         path: '/done',
         name: 'Done',
-        component: () => import('../views/books/BooksDoneList.vue')
+        component: () => import('../views/books/lists/BooksDoneList.vue')
+      }, {
+        path: '/book/form/:status',
+        name: 'CreateBook',
+        component: () => import('../views/books/entity/BookCreate.vue'),
+        props: true
       },
     ]
   },
