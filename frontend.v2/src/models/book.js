@@ -16,6 +16,7 @@ export class Book {
     // doneUnits: number
     // genre: string | optional
     // startDate: string
+    // modifyDate: string
     // endDate: string
     // type: number
     // note: string
