@@ -34,8 +34,15 @@
         />
         <small id="tagsInput" class="text-muted">Вводите через запятую</small>
       </div>
-      <div class="row">
-        <div class="col">
+      <div class="form-group">
+        <select class="form-control" name="status" id="status">
+          <option>Собираюсь читать</option>
+          <option>Читаю</option>
+          <option>Прочитал</option>
+        </select>
+      </div>
+      <div class="row progress-row form-group">
+        <div class="col-5">
           <input
             type="text"
             name="done"
@@ -44,9 +51,28 @@
             placeholder="Прочитано"
           />
         </div>
-        <div class="col">
+        <div class="col-2 from">Из</div>
+        <div class="col-5">
           <input type="text" name="total" id="totalUnits" class="form-control" placeholder="Всего" />
         </div>
+      </div>
+      <div class="row form-group">
+        <div class="col">
+          <div class="form-group">
+            <label for="startDate">Начата</label>
+            <input type="date" name="startDate" id="startDate" class="form-control">
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="endDate">Окончена</label>
+            <input type="date" name="endDate" id="endDate" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="note">Заметки</label>
+        <textarea type="text" name="note" id="note" class="form-control" rows="5"></textarea>
       </div>
     </form>
   </div>
@@ -56,5 +82,14 @@
 export default {};
 </script>
 
-<style>
+<style lang="scss" scoped>
+  .progress-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .from {
+      text-align: center;
+    }
+  }
 </style>
