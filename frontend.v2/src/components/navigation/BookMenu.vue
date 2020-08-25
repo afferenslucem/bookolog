@@ -1,13 +1,13 @@
 <template>
   <ul class="nav flex-column">
     <li class="nav-item">
-      <a class="nav-link" href="#" @click="goToInProgress()">Читаю Сейчас</a> <a class="icon nav-link" href="#" @click="goToAddInProgress()"><i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i></a>
+      <a class="nav-link" href="#" @click="goToInProgress()">Читаю Сейчас</a> <a class="icon nav-link" @click="goToAddInProgress()"><i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#" @click="goToToRead()">К Прочтению</a> <a class="icon nav-link" href="#" @click="goToAddToRead()"><i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i></a>
+      <a class="nav-link" href="#" @click="goToToRead()">К Прочтению</a> <a class="icon nav-link" @click="goToAddToRead()"><i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#" @click="goToDone()">Прочитал</a> <a class="icon nav-link" href="#" @click="goToAddDone()"><i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i></a>
+      <a class="nav-link" href="#" @click="goToDone()">Прочитал</a> <a class="icon nav-link" @click="goToAddDone()"><i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i></a>
     </li>
   </ul>
 </template>
