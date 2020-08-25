@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div>
-      <strong>{{book.name}}</strong>
+  <div class="book-line">
+    <div class="header">
+      <strong>{{book.name}}</strong> <i class="fa fa-pencil-square-o" aria-hidden="true" @click="goToEdit(book.guid)"></i>
     </div>
     <div v-if="showAuthors">
       <span>{{book.authors | join}}</span>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import bookMixin from '@/mixins/book-mixin';
+import bookMixin from '@/mixins/book-entity-mixin';
 
 export default {
   mixins:[bookMixin],

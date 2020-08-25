@@ -61,6 +61,7 @@ export default {
     }
   },
   created() {
+    logger.debug('created')
     this.$store.dispatch(BOOKS_LOAD_ACTION)
   }
 }

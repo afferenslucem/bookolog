@@ -36,3 +36,15 @@
 .progress-bar {
     background-color: $progress-bar-color;
 }
+
+.book-line {
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .fa {
+            font-size: 1.5rem;
+        }
+    }
+}

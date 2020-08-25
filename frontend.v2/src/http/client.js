@@ -8,6 +8,7 @@ export class Client {
 
     get(url) {
         try {
+            this.logger.debug('get to', url);
             return Axios.get(url);
         } catch (e) {
             this.logger.fatal(e);

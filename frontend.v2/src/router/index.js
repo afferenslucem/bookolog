@@ -23,9 +23,14 @@ Vue.use(VueRouter)
         name: 'Done',
         component: () => import('../views/books/lists/BooksDoneList.vue')
       }, {
-        path: '/book/form/:status',
+        path: '/book/create/:status',
         name: 'CreateBook',
         component: () => import('../views/books/entity/BookCreate.vue'),
+        props: true
+      }, {
+        path: '/book/update/:guid',
+        name: 'UpdateBook',
+        component: () => import('../views/books/entity/BookUpdate.vue'),
         props: true
       },
     ]
