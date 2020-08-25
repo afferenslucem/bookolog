@@ -35,6 +35,14 @@ export default {
 .header {
     width: 100%;
 
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 100;
+
+    height: $header-height;
+
     display: flex;
     justify-content: space-between;
     align-items: center;

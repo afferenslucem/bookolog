@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div class="container mt-3 book-list">
     <ul v-if="shouldShowList">
       <li
         v-for="(book, key, index) of books"
