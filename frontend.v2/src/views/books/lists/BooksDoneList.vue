@@ -9,7 +9,7 @@
         <done-book :book="book"></done-book>
       </li>
     </ul>
-    <div v-else>Ты ничего не собираешься читать</div>
+    <div v-else>Ты ничего прочитал</div>
   </div>
 </template>
 

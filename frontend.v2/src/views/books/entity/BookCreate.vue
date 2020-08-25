@@ -118,11 +118,12 @@
 </template>
 
 <script>
-import { getLogger } from '@/logger';
+// import { getLogger } from '@/logger';
+import { BOOK_ADD_ACTION } from '@/store/naming'
 import { TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS, PAPER_BOOK_TYPE, ELECTRONIC_BOOK_TYPE, AUDIO_BOOK_TYPE } from '@/models/book';
 import moment from 'moment';
 
-const logger = getLogger('Form')
+// const logger = getLogger('Form')
 
 export default {
   data: () => ({
@@ -148,7 +149,8 @@ export default {
   }),
   methods: {
     submit(event) {
-      logger.debug('книга', this.book);
+      this.$store.dispatch(BOOK_ADD_ACTION, this.book);
+      this.$router.push({name: 'Done'})
       event.preventDefault()
     },
     statusChange(status) {

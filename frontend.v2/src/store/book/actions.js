@@ -1,5 +1,5 @@
 import {getLogger} from '../../logger';
-import { BOOKS_LOAD_ACTION, BOOKS_SAVE_MUTATION } from '../naming';
+import { BOOKS_LOAD_ACTION, BOOK_ADD_ACTION, BOOKS_SAVE_MUTATION, BOOK_ADD_MUTATION } from '../naming';
 import {BookClient} from '@/http/book-client';
 
 const logger = getLogger({
@@ -16,5 +16,12 @@ export const actions = {
         commit(BOOKS_SAVE_MUTATION, books)
 
         logger.info('loaded books')
-    }
+    },
+    [BOOK_ADD_ACTION]: async ({commit}, book) => {
+        if(!book) return;
+
+        commit(BOOK_ADD_MUTATION, book)
+
+        logger.info('saved book')
+    },
 }
