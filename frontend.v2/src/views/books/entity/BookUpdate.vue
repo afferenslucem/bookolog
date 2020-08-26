@@ -28,7 +28,14 @@
         <small id="authorsInput" class="text-muted">Вводите через запятую</small>
       </div>
       <div class="form-group">
-        <input type="number" name="year" id="year" class="form-control" v-model.number="book.year" placeholder="Год выпуска" />
+        <input
+          type="number"
+          name="year"
+          id="year"
+          class="form-control"
+          v-model.number="book.year"
+          placeholder="Год выпуска"
+        />
       </div>
       <div class="form-group">
         <input
@@ -57,13 +64,21 @@
       <div class="form-group">
         <label for="status">Статус книги</label>
         <select class="form-control" name="status" id="status" v-model.number="book.status">
-          <option v-for="option in statuses" :key="option.value" :value="option.value">{{option.name}}</option>
+          <option
+            v-for="option in statuses"
+            :key="option.value"
+            :value="option.value"
+          >{{option.name}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="type">Тип книги</label>
         <select class="form-control" name="type" id="type" v-model.number="book.type">
-          <option v-for="option in bookTypes" :key="option.value" :value="option.value">{{option.name}}</option>
+          <option
+            v-for="option in bookTypes"
+            :key="option.value"
+            :value="option.value"
+          >{{option.name}}</option>
         </select>
       </div>
       <label for="progress" v-show="showProgress">{{progressHeader}}</label>
@@ -96,19 +111,40 @@
         <div class="col" v-show="showStartDate">
           <div class="form-group">
             <label for="startDate">Начата</label>
-            <input type="date" name="startDate" id="startDate" class="form-control" v-model="book.startDate" :max="book.endDate | calendarDate" />
+            <input
+              type="date"
+              name="startDate"
+              id="startDate"
+              class="form-control"
+              v-model="book.startDate"
+              :max="book.endDate | calendarDate"
+            />
           </div>
         </div>
         <div class="col" v-show="showEndDate">
           <div class="form-group">
             <label for="endDate">Окончена</label>
-            <input type="date" name="endDate" id="endDate" class="form-control" v-model="book.endDate" :min="book.startDate | calendarDate" />
+            <input
+              type="date"
+              name="endDate"
+              id="endDate"
+              class="form-control"
+              v-model="book.endDate"
+              :min="book.startDate | calendarDate"
+            />
           </div>
         </div>
       </div>
       <div class="form-group">
         <label for="note">Заметки</label>
-        <textarea type="text" name="note" id="note" class="form-control" rows="5" v-model.trim="book.note"></textarea>
+        <textarea
+          type="text"
+          name="note"
+          id="note"
+          class="form-control"
+          rows="5"
+          v-model.trim="book.note"
+        ></textarea>
       </div>
       <div class="form-group">
         <button class="btn btn-primary" type="submit">Сохранить</button>
@@ -118,22 +154,23 @@
 </template>
 
 <script>
-import bookMixin from '@/mixins/book-form-mixin';
-import { BOOK_UPDATE_ACTION, BOOK_GET_BY_GUID_ACTION } from '@/store/naming';
+import bookMixin from "@/mixins/book-form-mixin";
+import { BOOK_UPDATE_ACTION, BOOK_GET_BY_GUID_ACTION } from "@/store/naming";
 
 export default {
   mixins: [bookMixin],
   methods: {
     submit(event) {
       this.$store.dispatch(BOOK_UPDATE_ACTION, this.book);
+
       this.redirectForBook(this.book);
-      event.preventDefault()
+      event.preventDefault();
     },
   },
   async created() {
     const bookGuid = this.$route.params.guid;
     this.book = await this.$store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid);
-  }
+  },
 };
 </script>
 

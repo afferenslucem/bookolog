@@ -57,7 +57,7 @@ export class Repository {
         };
         
         transaction.oncomplete  = () => {
-            this.logger.error(`Transaction completed`)
+            this.logger.debug(`Transaction completed`)
         }
 
         return transaction;
@@ -85,6 +85,34 @@ export class Repository {
         });
     }
 
+    update(storeName, object) {
+        const transaction = this.openRWTransaction(storeName);
+
+        return new Promise((resolve, reject) => {
+
+            const store = transaction.objectStore(storeName);
+
+            const tr = store.put(object);
+
+            tr.onerror = (event) => reject(event);
+            tr.onsuccess = (event) => resolve(event);
+        });
+    }
+
+    delete(storeName, guid) {
+        const transaction = this.openRWTransaction(storeName);
+
+        return new Promise((resolve, reject) => {
+
+            const store = transaction.objectStore(storeName);
+
+            const tr = store.delete(guid);
+
+            tr.onerror = (event) => reject(event);
+            tr.onsuccess = (event) => resolve(event);
+        });
+    }
+
     saveMany(storeName, objects) {
         const transaction = this.openRWTransaction(storeName);
 
@@ -98,6 +126,35 @@ export class Repository {
 
             transaction.onerror = (event) => reject(event);
             transaction.oncomplete = (event) => resolve(event);
+        });
+    }
+
+    updateMany(storeName, objects) {
+        const transaction = this.openRWTransaction(storeName);
+
+        return new Promise((resolve, reject) => {
+
+            const store = transaction.objectStore(storeName);
+
+            objects.forEach(function(item) {
+                store.put(item);
+            });
+
+            transaction.onerror = (event) => reject(event);
+            transaction.oncomplete = (event) => resolve(event);
+        });
+    }
+
+    all(storeName) {
+        const transaction = this.openRWTransaction(storeName);
+
+        return new Promise((resolve, reject) => {
+            const store = transaction.objectStore(storeName);
+
+            const request = store.getAll();
+
+            request.onerror = (event) => reject(event);
+            request.onsuccess = (event) => resolve(event.target.result);
         });
     }
 }
