@@ -17,9 +17,7 @@ export const actions = {
 
         const storage = new BookRepository();
 
-        delete books[0].guid;
-
-        storage.saveBook(books[0]);
+        await storage.saveBooks(books);
 
         commit(BOOKS_SAVE_MUTATION, books)
     },

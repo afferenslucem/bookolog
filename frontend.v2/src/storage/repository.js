@@ -19,6 +19,8 @@ export class Repository {
     }
 
     open(dbName) {
+        if(this.#database) return null;
+
         return new Promise((resolve, reject) => {
             const request = this.indexedDB.open(dbName, this.#version);
 
@@ -80,6 +82,22 @@ export class Repository {
 
             tr.onerror = (event) => reject(event);
             tr.onsuccess = (event) => resolve(event);
+        });
+    }
+
+    saveMany(storeName, objects) {
+        const transaction = this.openRWTransaction(storeName);
+
+        return new Promise((resolve, reject) => {
+
+            const store = transaction.objectStore(storeName);
+
+            objects.forEach(function(item) {
+                store.add(item);
+            });
+
+            transaction.onerror = (event) => reject(event);
+            transaction.oncomplete = (event) => resolve(event);
         });
     }
 }
