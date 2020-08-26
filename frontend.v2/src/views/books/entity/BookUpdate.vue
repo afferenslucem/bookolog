@@ -119,7 +119,7 @@
 
 <script>
 import bookMixin from '@/mixins/book-form-mixin';
-import { BOOK_UPDATE_ACTION, BOOK_GET_BY_ID_ACTION } from '@/store/naming';
+import { BOOK_UPDATE_ACTION, BOOK_GET_BY_GUID_ACTION } from '@/store/naming';
 
 export default {
   mixins: [bookMixin],
@@ -131,8 +131,8 @@ export default {
     },
   },
   async created() {
-    const bookId = this.$route.params.guid;
-    this.book = await this.$store.dispatch(BOOK_GET_BY_ID_ACTION, bookId);
+    const bookGuid = this.$route.params.guid;
+    this.book = await this.$store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid);
   }
 };
 </script>

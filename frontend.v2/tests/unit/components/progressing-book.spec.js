@@ -1,7 +1,8 @@
 import { expect } from 'chai'
 import books from '../data/books'
 import { shallowMount } from '@vue/test-utils'
-import ProgressingBook from '@/components/book/ProgressingBook.vue'
+import ProgressingBook from '@/components/book/ProgressingBook.vue';
+import moment from 'moment';
 
 describe('ProgressingBook.vue', () => {
     it('renders props.book.year when exists', () => {
@@ -25,7 +26,7 @@ describe('ProgressingBook.vue', () => {
         const wrapper = shallowMount(ProgressingBook, {
             propsData: { book }
         })
-        expect(wrapper.text()).to.include(`Начата: ${book.startDate}`)
+        expect(wrapper.text()).to.include(`Начата: ${moment(book.startDate).format('lll')}`)
     })
 
     it('Doesn\'t render props.book.startDate when not exists', () => {

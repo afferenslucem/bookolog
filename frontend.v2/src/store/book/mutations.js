@@ -1,6 +1,7 @@
 import {getLogger} from '../../logger';
-import { BOOKS_SAVE_MUTATION, BOOK_ADD_MUTATION, BOOK_UPDATE_MUTATION } from '../naming';
-import Vue from 'vue'
+import { BOOKS_SAVE_MUTATION, BOOK_ADD_MUTATION, BOOK_DELETE_MUTATION, BOOK_UPDATE_MUTATION } from '../naming';
+import Vue from 'vue';
+import u from 'ursus-utilus-collections';
 
 const logger = getLogger({
     namespace: 'BooksModule',
@@ -21,6 +22,11 @@ export const mutations = {
     [BOOK_UPDATE_MUTATION]: (state, id, book) => {
         Vue.set(state.books, [id], book);
         logger.debug('Updated book', book);
+        logger.debug('State', state);
+    },
+    [BOOK_DELETE_MUTATION]: (state, guid) => {
+        state.books = u(state.books).where(item => item.guid !== guid).toArray();
+        logger.debug('Deleted book');
         logger.debug('State', state);
     }
 }

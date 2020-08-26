@@ -13,6 +13,16 @@
     text-align: center;
 }
 
+// Buttons
+.btn-outline-danger {
+    color: $danger-color;
+    border-color: $danger-color;
+}
+
+.btn-danger {
+    background-color: $danger-color;
+}
+
 .icon.avatar {
     img {
         display: inherit;
@@ -52,4 +62,26 @@
 .book-list {
     display: block;
     width: 100%;
+    height: 100%;
+    padding-right: .2rem;
+
+    > .header {
+        display: inline-block;
+        width: 100%;
+        height: $list-header-height;
+
+        border-bottom: $split-line;
+
+        margin-bottom: 0;
+    }
+
+    ul {
+        overflow-y: auto;
+        height: calc(100% - #{$list-header-height});
+        padding-right: .75rem;
+
+        > li {
+            margin-top: 0.2rem;
+        }
+    }
 }

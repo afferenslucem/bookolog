@@ -1,4 +1,5 @@
 export default [{
+    "guid": "cfdbhgntjhfgndfndfvdfnbfgdv",
     "name": "Война миров",
     "authors": ["Герберт Уэллс"],
     "year": 2017,
@@ -12,6 +13,7 @@ export default [{
     "type": 2,
     "note": ""
 },{
+    "guid": "tmjmjmyjmtjm",
     "name": "Занимательная физика",
     "authors": ["Яков Перельман"],
     "year": 1984,
@@ -25,6 +27,7 @@ export default [{
     "type": 0,
     "note": "Интересная книга про физику"
 },{
+    "guid": "cfdbhgndfsdfvsfdvsfvvdfnbfgdv",
     "name": "Наедене с собой",
     "authors": ["Марк Аврелий"],
     "year": 2015,
@@ -38,6 +41,7 @@ export default [{
     "type": 2,
     "note": ""
 },{
+    "guid": "cfdbhgndfhgnfghnfghnfgvdfnbfgdv",
     "name": "Скотской бунт",
     "authors": ["Николай Костомаров"],
     "year": 2017,
@@ -50,6 +54,7 @@ export default [{
     "type": 0,
     "note": ""
 },{
+    "guid": "cfdbhgndfvdfgbdfgbdfgbdfnbfgdv",
     "name": "BMW. Баварское сердце, Русская душа",
     "authors": ["Александр Пикуленко", "Денис Орлов"],
     "status": 1,
@@ -62,6 +67,7 @@ export default [{
     "type": 2,
     "note": ""
 },{
+    "guid": "cfdbhgnsdfbvsdfvsfddfvdfnbfgdv",
     "name": "Pro git",
     "authors": ["Скот Шакон", "Бен Страуп"],
     "year": 2020,
@@ -74,6 +80,7 @@ export default [{
     "type": 1,
     "note": ""
 },{
+    "guid": "dfgbdfgbdgfbdfgb",
     "name": "Таинственный Рыцарь",
     "authors": ["Джордж Мартин"],
     "year": 2014,
@@ -85,6 +92,7 @@ export default [{
     "type": 1,
     "note": ""
 },{
+    "guid": "vdfvbbdfgb",
     "name": "1984",
     "authors": ["Джордж Оруел"],
     "year": 2015,

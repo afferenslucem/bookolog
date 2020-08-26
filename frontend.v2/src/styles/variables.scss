@@ -12,6 +12,8 @@ $bud-green : #79B473;
 $polished-pine : #439A86;
 
 $fire-opal : #DE6449 ;
+$bittersweet : #FF6666 ;
+$vermilion : #D84727 ;
 $dark-sienna : #230903 ;
 $persian-orange : #DC965A ;
 
@@ -27,11 +29,16 @@ $overlay-color: #{$bdazzled-blue}55;
 
 $progress-bar-color: $polished-pine;
 
+$danger-color: $vermilion;
+
 // Lines
 $split-line: 1px solid $split-color;
 
 // Header
 $header-height: 2.7rem;
+
+// Lists
+$list-header-height: 2.2rem;
 
 // Icons
 $icon-size: 2.5rem;

@@ -1,7 +1,7 @@
 <template>
   <div class="book-line">
     <div class="header">
-      <strong>{{book.name}}</strong> <i class="fa fa-pencil-square-o" aria-hidden="true" @click="goToEdit(book.guid)"></i>
+      <strong @click="goToInfo(book.guid)">{{book.name}}</strong> <i class="fa fa-pencil-square-o" aria-hidden="true" @click="goToEdit(book.guid)"></i>
     </div>
     <div v-if="showAuthors">
       <span>{{book.authors | join}}</span>
@@ -18,16 +18,18 @@
     <div v-if="book.note">
       <small class="dark-text">{{book.note}}</small>
     </div>
-    <div v-if="shouldShowProgress" class="progress">
-      <div class="progress-bar" role="progressbar" :style="{'width': progress + '%'}" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
+    <progress-bar v-if="shouldShowProgress" :progress="progress" ></progress-bar>
   </div>
 </template>
 
 <script>
 import bookMixin from '@/mixins/book-entity-mixin';
+import ProgressBar from '@/components/book/ProgressBar.vue'; 
 
 export default {
+  components: {
+    ProgressBar
+  },
   mixins:[bookMixin],
   computed: {
     showAuthors() {

@@ -1,5 +1,7 @@
 <template>
-  <div class="container mt-3 book-list">
+  <div class="container pt-1 book-list">
+    <h4 class="mt-1 header">Буду читать</h4>
+
     <ul v-if="shouldShowList">
       <li
         v-for="(book, key, index) of books"
