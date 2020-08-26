@@ -85,14 +85,9 @@ export default {
     height: calc(100% - #{$header-height});
     width: 100%;
 
-    position: fixed;
-
     overflow: auto;
 
-    top: $header-height;
-    left: 0;
-
-    z-index: 0;
+    margin-top: $header-height;
   }
 }
 

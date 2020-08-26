@@ -27,8 +27,8 @@
       <span class="value">{{book.tags | capital | join}}</span>
     </p>
     <div v-if="shouldShowProgress">
-        <h6>Прогресс</h6>
-        <progress-bar :progress="progress"></progress-bar>
+      <h6>Прогресс</h6>
+      <progress-bar :progress="progress"></progress-bar>
     </div>
     <p v-if="startedBook && book.startDate">
       <span>Начата:</span>
@@ -38,7 +38,36 @@
       <span>Закончена:</span>
       <span>{{startDate}}</span>
     </p>
-    <button class="w-100 btn btn-danger" @click="deleteBook()">Удалить</button>
+    <button class="w-100 btn btn-danger" data-toggle="modal" data-target="#bookDeleteModal">Удалить</button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="bookDeleteModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="bookDeleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bookDeleteModalLabel">Удалить книгу?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Вы уверены, что хотите удалить книгу?</p>
+            <p>Это действие будет нельзя отменить.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            <button type="button" class="btn btn-danger" @click="deleteBook()"  data-dismiss="modal">Удалить</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -84,10 +113,10 @@ export default {
     },
   },
   methods: {
-      deleteBook() {
-          this.$store.dispatch(BOOK_DELETE_ACTION, this.book.guid);
-          history.back();
-      }
+    deleteBook() {
+      this.$store.dispatch(BOOK_DELETE_ACTION, this.book.guid);
+      history.back();
+    },
   },
   async created() {
     const bookGuid = this.$route.params.guid;
