@@ -2,54 +2,77 @@ import { expect } from 'chai'
 import books from '../data/books'
 import { shallowMount } from '@vue/test-utils'
 import ProgressingBook from '@/components/book/ProgressingBook.vue';
-import moment from 'moment';
 
 describe('ProgressingBook.vue', () => {
-    it('renders props.book.year when exists', () => {
-        const book = books[5];
-        const wrapper = shallowMount(ProgressingBook, {
-            propsData: { book }
-        })
-        expect(wrapper.text()).to.include(`Год издания: ${book.year}`)
-    })
-
-    it('Doesn\'t render props.book.year when not exists', () => {
+    it('Render props.book.name', () => {
         const book = books[4];
         const wrapper = shallowMount(ProgressingBook, {
             propsData: { book }
         })
-        expect(wrapper.text()).to.not.include(`Год издания: `)
+        expect(wrapper.text()).to.include(`BMW. Баварское сердце, Русская душа`)
     })
 
-    it('renders props.book.startDate when exists', () => {
-        const book = books[5];
+    it('Render props.book.authors', () => {
+        const book = books[4];
         const wrapper = shallowMount(ProgressingBook, {
             propsData: { book }
         })
-        expect(wrapper.text()).to.include(`Начата: ${moment(book.startDate).format('ll')}`)
+        expect(wrapper.text()).to.include(`[\n  "Александр Пикуленко",\n  "Денис Орлов"\n]`)
     })
 
-    it('Doesn\'t render props.book.startDate when not exists', () => {
+    it('Render props.book.authors', () => {
         const book = books[6];
         const wrapper = shallowMount(ProgressingBook, {
             propsData: { book }
         })
-        expect(wrapper.text()).to.not.include(`Начата: `)
+        expect(wrapper.text()).to.include(`Джордж Мартин`)
     })
 
-    it('renders props.book.genre when exists', () => {
+    it('Render props.book.progress', () => {
         const book = books[4];
         const wrapper = shallowMount(ProgressingBook, {
             propsData: { book }
         })
-        expect(wrapper.text()).to.include(`Жанр: ${book.genre}`)
+        expect(wrapper.html()).to.include(`<progress-bar-stub progress="50"></progress-bar-stub>`)
     })
 
-    it('Doesn\'t render props.book.genre when not exists', () => {
-        const book = books[5];
+    it('Render empty props.book.progress', () => {
+        const book = books[8];
         const wrapper = shallowMount(ProgressingBook, {
             propsData: { book }
         })
-        expect(wrapper.text()).to.not.include(`Жанр: `)
+        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
+    })
+
+    it('Render empty props.book.progress', () => {
+        const book = books[9];
+        const wrapper = shallowMount(ProgressingBook, {
+            propsData: { book }
+        })
+        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
+    })
+
+    it('Render empty props.book.progress', () => {
+        const book = books[10];
+        const wrapper = shallowMount(ProgressingBook, {
+            propsData: { book }
+        })
+        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
+    })
+
+    it('Render empty props.book.progress', () => {
+        const book = books[11];
+        const wrapper = shallowMount(ProgressingBook, {
+            propsData: { book }
+        })
+        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
+    })
+
+    it('Render empty props.book.progress', () => {
+        const book = books[12];
+        const wrapper = shallowMount(ProgressingBook, {
+            propsData: { book }
+        })
+        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
     })
 })

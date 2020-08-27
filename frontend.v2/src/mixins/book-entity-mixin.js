@@ -15,13 +15,13 @@ export default {
             return Math.min(Math.round(this.done / this.total * 100), 100);
         },
         done() {
-            return Math.min(this.book.doneUnits, this.book.totalUnits || 0);
+            return Math.min(this.book.doneUnits || 0, this.book.totalUnits || 0);
         },
         total() {
             return this.book.totalUnits || Number.MAX_SAFE_INTEGER;
         },
         shouldShowProgress() {
-            return this.book.status == IN_PROGRESS_STATUS && this.book.totalUnits;
+            return this.book.status == IN_PROGRESS_STATUS;
         },
         startedBook() {
             return this.book.status == IN_PROGRESS_STATUS;

@@ -6,14 +6,11 @@
     <div v-if="showAuthors">
       <span>{{book.authors | join}}</span>
     </div>
-    <div v-if="book.startDate || book.endDate">
+    <div class="date-range" v-if="book.startDate || book.endDate">
       [ <small class="dark-text">{{range}}</small> ] 
     </div>
     <div v-if="book.note">
       <small class="dark-text">{{book.note}}</small>
-    </div>
-    <div v-if="shouldShowProgress" class="progress">
-      <div class="progress-bar" role="progressbar" :style="{'width': progress + '%'}" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
   </div>
 </template>
