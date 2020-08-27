@@ -18,14 +18,15 @@
 <script>
 import { BOOKS_IN_PROGRESS_GETTER } from "@/store/naming";
 import ProgressingBook from "@/components/book/ProgressingBook";
+import u from "ursus-utilus-collections";
 
 export default {
   components: {
     ProgressingBook,
   },
   computed: {
-    books() {
-      return this.$store.getters[BOOKS_IN_PROGRESS_GETTER];
+    books() {      
+      return u(this.$store.getters[BOOKS_IN_PROGRESS_GETTER]).sortBy(item => item.modifyTime || '0').thenBy(item => item.name).reverse().toArray();
     },
     shouldShowList() {
       return this.books != null && this.books.length > 0;

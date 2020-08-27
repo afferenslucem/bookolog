@@ -24,6 +24,9 @@ export default {
       ]
     }),
     methods: {
+      setModifyTime() {
+          this.book.modifyTime = moment(new Date()).format();
+      },
       statusChange(status) {
         if (status == IN_PROGRESS_STATUS) {
           this.book.startDate = this.today;

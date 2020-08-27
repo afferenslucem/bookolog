@@ -18,6 +18,7 @@
 <script>
 import { BOOKS_TO_READ_GETTER } from "@/store/naming";
 import ToReadBook from "@/components/book/ToReadBook";
+import u from "ursus-utilus-collections";
 
 export default {
   components: {
@@ -25,7 +26,7 @@ export default {
   },
   computed: {
     books() {
-      return this.$store.getters[BOOKS_TO_READ_GETTER];
+      return u(this.$store.getters[BOOKS_TO_READ_GETTER]).sortBy(item => item.modifyDate || '0').thenBy(item => item.name).reverse().toArray();
     },
     shouldShowList() {
       return this.books != null && this.books.length > 0;

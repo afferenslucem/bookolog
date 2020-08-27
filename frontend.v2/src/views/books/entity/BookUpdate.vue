@@ -9,7 +9,7 @@
           id="name"
           class="form-control"
           placeholder="Название*"
-          pattern="[A-Za-zА-Яа-яЁё0-9\s\\.\\,\\(\\)\\-]+"
+          pattern="[A-Za-zА-Яа-яЁё0-9\s\\.\\,\\(\\)\\-\\:]+"
           required
           v-model.trim="book.name"
           autocomplete="off"
@@ -126,9 +126,11 @@ export default {
   mixins: [bookMixin],
   methods: {
     submit(event) {
+      this.setModifyTime();
       this.$store.dispatch(BOOK_UPDATE_ACTION, this.book);
 
       this.redirectForBook(this.book);
+      this.$forceUpdate();
       event.preventDefault();
     },
   },

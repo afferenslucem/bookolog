@@ -59,7 +59,7 @@
     }
 }
 
-.book-list {
+.book-list-standard {
     display: block;
     width: 100%;
     height: 100%;
@@ -76,7 +76,9 @@
         margin-bottom: 0;
     }
 
-    ul {
+    
+
+    > ul {
         overflow-y: auto;
         height: calc(100% - #{$list-header-height});
         padding-right: .75rem;
@@ -85,4 +87,11 @@
             margin-top: 0.2rem;
         }
     }
+}
+
+.book-list {
+    @extend .book-list-standard;
+}
+.book-year-list {
+    @extend .book-list-standard;
 }
