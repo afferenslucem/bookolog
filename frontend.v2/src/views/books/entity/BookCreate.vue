@@ -126,7 +126,7 @@ export default {
   mixins: [bookMixin],
   methods: {
     submit(event) {
-      this.setModifyTime();
+      this.setMeta();
       this.$store.dispatch(BOOK_ADD_ACTION, this.book);
 
       this.redirectForBook(this.book);

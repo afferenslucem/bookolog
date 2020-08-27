@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     books() {
-      return u(this.$store.getters[BOOKS_TO_READ_GETTER]).sortBy(item => item.modifyDate || '0').thenBy(item => item.name).reverse().toArray();
+      return u(this.$store.getters[BOOKS_TO_READ_GETTER]).sortBy(item => item.modifyTime || '0').thenBy(item => item.name).reverse().toArray();
     },
     shouldShowList() {
       return this.books != null && this.books.length > 0;
