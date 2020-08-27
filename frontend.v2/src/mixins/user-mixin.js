@@ -3,10 +3,12 @@ import {USER_LOGGED_IN_GETTER, USER_LOGIN_ACTION, USER_LOGOUT_ACTION} from '@/st
 export default {
     methods: {
         async login() {
-            return this.$store.dispatch(USER_LOGIN_ACTION);
+            await this.$store.dispatch(USER_LOGIN_ACTION);
+            this.$router.push({name: 'InProgress'})
         },
         async logout() {
-            return this.$store.dispatch(USER_LOGOUT_ACTION);
+            await this.$store.dispatch(USER_LOGOUT_ACTION);
+            this.$router.push({name: 'Home'})
         },
     },
     computed: {

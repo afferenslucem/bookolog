@@ -1,5 +1,5 @@
 import {getLogger} from '../../logger';
-import { BOOKS_SAVE_MUTATION, BOOK_ADD_MUTATION, BOOK_DELETE_MUTATION, BOOK_UPDATE_MUTATION } from '../naming';
+import { BOOKS_SAVE_MUTATION, BOOKS_CLEAR_MUTATION, BOOK_ADD_MUTATION, BOOK_DELETE_MUTATION, BOOK_UPDATE_MUTATION } from '../naming';
 import Vue from 'vue'
 
 const logger = getLogger({
@@ -24,5 +24,10 @@ export const mutations = {
     },
     [BOOK_DELETE_MUTATION]: (state, guid) => {
         Vue.delete(state, guid);
+    },
+    [BOOKS_CLEAR_MUTATION]: (state) => {
+        Object.keys(state).forEach(guid => {
+            Vue.delete(state, guid);
+        })
     }
 }

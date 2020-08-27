@@ -1,8 +1,51 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../views/Home.vue';
+import {USER_LOGGED_IN_GETTER} from '../store/naming';
+import store from '../store';
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters[USER_LOGGED_IN_GETTER] || ((to.name === 'Login') || to.name === 'Registration')) {
+    console.log('go to next')
+    next()
+  } else {
+    console.log('redirect to home')
+    next({name: 'Home'})
+  }
+}
 
 Vue.use(VueRouter)
+
+const workspaceRoutes = [
+  {
+    path: 'in-progress',
+    name: 'InProgress',
+    component: () => import('../views/books/lists/BooksInProgressList.vue')
+  }, {
+    path: 'to-read',
+    name: 'ToRead',
+    component: () => import('../views/books/lists/BooksToReadList.vue')
+  }, {
+    path: 'done',
+    name: 'Done',
+    component: () => import('../views/books/lists/BooksDoneList.vue')
+  }, {
+    path: 'book/create/:status',
+    name: 'CreateBook',
+    component: () => import('../views/books/entity/BookCreate.vue'),
+    props: true
+  }, {
+    path: 'book/update/:guid',
+    name: 'UpdateBook',
+    component: () => import('../views/books/entity/BookUpdate.vue'),
+    props: true
+  }, {
+    path: 'book/:guid',
+    name: 'Book',
+    component: () => import('../views/books/entity/Book.vue'),
+    props: true
+  },
+];
 
   const routes = [
   {
@@ -11,33 +54,12 @@ Vue.use(VueRouter)
     component: Home,
     children: [
       {
-        path: '/in-progress',
-        name: 'InProgress',
-        component: () => import('../views/books/lists/BooksInProgressList.vue')
-      }, {
-        path: '/to-read',
-        name: 'ToRead',
-        component: () => import('../views/books/lists/BooksToReadList.vue')
-      }, {
-        path: '/done',
-        name: 'Done',
-        component: () => import('../views/books/lists/BooksDoneList.vue')
-      }, {
-        path: '/book/create/:status',
-        name: 'CreateBook',
-        component: () => import('../views/books/entity/BookCreate.vue'),
-        props: true
-      }, {
-        path: '/book/update/:guid',
-        name: 'UpdateBook',
-        component: () => import('../views/books/entity/BookUpdate.vue'),
-        props: true
-      }, {
-        path: '/book/:guid',
-        name: 'Book',
-        component: () => import('../views/books/entity/Book.vue'),
-        props: true
-      },
+        path: 'workspace',
+        name: 'Workspace',
+        component: () => import('../views/Workspace.vue'),
+        children: workspaceRoutes,
+        beforeEnter: ifAuthenticated
+      }
     ]
   },
 ]

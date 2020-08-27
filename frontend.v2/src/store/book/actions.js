@@ -1,7 +1,8 @@
 import {getLogger} from '../../logger';
-import { BOOKS_LOAD_ACTION, BOOK_ADD_ACTION, BOOK_DELETE_ACTION, BOOKS_SAVE_MUTATION,
+import { BOOKS_LOAD_ACTION, BOOKS_CLEAR_ACTION, BOOK_ADD_ACTION, BOOK_DELETE_ACTION, BOOKS_SAVE_MUTATION,
     BOOK_ADD_MUTATION, BOOK_DELETE_MUTATION, BOOK_UPDATE_MUTATION, BOOK_UPDATE_ACTION,
-    BOOK_GET_BY_GUID_ACTION} from '../naming';
+    BOOK_GET_BY_GUID_ACTION,
+    BOOKS_CLEAR_MUTATION} from '../naming';
 import { BookRepository } from '@/storage/book-repository';
 
 const logger = getLogger({
@@ -48,5 +49,11 @@ export const actions = {
         await storage.deleteBook(guid);
 
         commit(BOOK_DELETE_MUTATION, guid)
+    },
+    [BOOKS_CLEAR_ACTION]: async ({commit}) => {
+        //const storage = new BookRepository();
+        //await storage.clear(guid);
+
+        commit(BOOKS_CLEAR_MUTATION)
     },
 }

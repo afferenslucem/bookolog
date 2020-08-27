@@ -157,4 +157,17 @@ export class Repository {
             request.onsuccess = (event) => resolve(event.target.result);
         });
     }
+
+    clear(storeName) {
+        const transaction = this.openRWTransaction(storeName);
+
+        return new Promise((resolve, reject) => {
+            const store = transaction.objectStore(storeName);
+
+            const request = store.clear();
+
+            request.onerror = (event) => reject(event);
+            request.onsuccess = (event) => resolve(event.target.result);
+        });
+    }
 }

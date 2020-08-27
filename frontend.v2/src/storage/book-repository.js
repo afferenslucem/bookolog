@@ -113,8 +113,11 @@ export class BookRepository {
         await this.#repository.open(this.#dbName);
         const books = await this.#repository.all(this.#booksStore);
 
-        console.log(books)
-
         return _(books).select(item => new Book(item)).toArray();
+    }
+
+    async clearBooks() {
+        await this.#repository.open(this.#dbName);
+        await this.#repository.clear(this.#booksStore);
     }
 }
