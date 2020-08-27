@@ -6,12 +6,6 @@
     <div v-if="showAuthors">
       <span>{{book.authors | join}}</span>
     </div>
-    <div v-if="book.year">
-      <span>Год издания: {{book.year}}</span>
-    </div>
-    <div v-if="book.genre">
-      <span>Жанр: {{book.genre | capital}}</span>
-    </div>
     <div v-if="book.startDate || book.endDate">
       [ <small class="dark-text">{{range}}</small> ] 
     </div>

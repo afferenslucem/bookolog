@@ -1,12 +1,12 @@
 <template>
   <div class="header">
-    <div>
+    <div class="left">
       <div class="icon" v-show="isLoggedIn" @click="emitMenuClick($event)">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
-      <div class="logo">
-
-      </div>
+      <router-link :to="{name: 'Home'}" class="logo">
+          <img src="/img/logo.png" />
+      </router-link>
     </div>
     <div>
       <div class="icon profile" v-if="!isLoggedIn" @click="emitAvatarClick($event)">
@@ -64,4 +64,22 @@ export default {
     justify-self: end;
   }
 }
+
+  .logo {
+      padding: 0.15rem;
+
+      border: $split-line;
+
+      border-radius: 0.1rem;
+
+      > img {
+          height: calc(#{$icon-size} - 0.75rem);
+      }
+  }
+
+  .left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
 </style>

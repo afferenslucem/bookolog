@@ -6,18 +6,6 @@
     <div v-if="showAuthors">
       <span>{{book.authors | join}}</span>
     </div>
-    <div v-if="book.year">
-      <span>Год издания: {{book.year}}</span>
-    </div>
-    <div v-if="book.genre">
-      <span>Жанр: {{book.genre | capital}}</span>
-    </div>
-    <div v-if="book.startDate">
-      Начата: {{startDate}}
-    </div>
-    <div v-if="book.note">
-      <small class="dark-text">{{book.note}}</small>
-    </div>
     <progress-bar v-if="shouldShowProgress" :progress="progress" ></progress-bar>
   </div>
 </template>
