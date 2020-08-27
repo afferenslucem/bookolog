@@ -1,8 +1,20 @@
 import { mutations } from '@/store/book/mutations'
-import { BOOKS_SAVE_MUTATION, BOOK_ADD_MUTATION, BOOK_DELETE_MUTATION } from '@/store/naming'
+import { BOOKS_SAVE_MUTATION, BOOKS_CLEAR_MUTATION, BOOK_ADD_MUTATION, BOOK_DELETE_MUTATION } from '@/store/naming'
 import books from '../../data/books'
 import u from 'ursus-utilus-collections'
 import { assert } from 'chai';
+
+function getState(books) {
+    const state = {
+
+    };
+
+    for (let item of books) {
+        state[item.guid] = item
+    }
+
+    return state;
+}
 
 describe('Book Mutations', () => {
     it('should save books', () => {
@@ -11,13 +23,7 @@ describe('Book Mutations', () => {
 
         mutations[BOOKS_SAVE_MUTATION](state, books);
 
-        const expected = {
-
-        };
-
-        for (let item of books) {
-            expected[item.guid] = item
-        }
+        const expected = getState(books);
 
         assert.deepEqual(state, expected)
     })
@@ -34,12 +40,7 @@ describe('Book Mutations', () => {
         assert.deepEqual(state, expected)
     })
     it('should delete books', () => {
-        const state = {
-        };
-
-        for(let item of books){
-            state[item.guid] = item;
-        }
+        const state = getState(books)
         
         mutations[BOOK_DELETE_MUTATION](state, books[0].guid);
 
@@ -48,5 +49,12 @@ describe('Book Mutations', () => {
         const actual = u(Object.values(state)).sortBy(item => item.guid).toArray();
 
         assert.deepEqual(actual, expected)
+    })
+    it('should clear books', () => {
+        const state = getState(books)
+        
+        mutations[BOOKS_CLEAR_MUTATION](state);
+
+        assert.deepEqual(state, {})
     })
 })

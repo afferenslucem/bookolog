@@ -26,7 +26,7 @@ describe('ProgressingBook.vue', () => {
         const wrapper = shallowMount(ProgressingBook, {
             propsData: { book }
         })
-        expect(wrapper.text()).to.include(`Начата: ${moment(book.startDate).format('lll')}`)
+        expect(wrapper.text()).to.include(`Начата: ${moment(book.startDate).format('ll')}`)
     })
 
     it('Doesn\'t render props.book.startDate when not exists', () => {
