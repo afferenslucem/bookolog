@@ -1,18 +1,19 @@
 <template>
   <div class="container mt-3">
-    <form class="needs-validation" novalidate @submit="submit($event)">
+    <small class="dark-text">* Обязательная информация</small>
+    <form class="needs-validation" @submit="submit($event)">
       <div class="form-group">
         <input
           type="text"
           name="name"
           id="name"
           class="form-control"
-          placeholder="Название"
+          placeholder="Название*"
           pattern="[A-Za-zА-Яа-яЁё0-9\s\\.\\,\\(\\)\\-]+"
           required
           v-model.trim="book.name"
+          autocomplete="off"
         />
-        <div class="invalid-feedback">Это обязательное поле</div>
       </div>
       <div class="form-group">
         <input
@@ -28,14 +29,7 @@
         <small id="authorsInput" class="text-muted">Вводите через запятую</small>
       </div>
       <div class="form-group">
-        <input
-          type="number"
-          name="year"
-          id="year"
-          class="form-control"
-          v-model.number="book.year"
-          placeholder="Год выпуска"
-        />
+        <input type="number" name="year" id="year" class="form-control" v-model.number="book.year" placeholder="Год выпуска" />
       </div>
       <div class="form-group">
         <input
@@ -64,21 +58,13 @@
       <div class="form-group">
         <label for="status">Статус книги</label>
         <select class="form-control" name="status" id="status" v-model.number="book.status">
-          <option
-            v-for="option in statuses"
-            :key="option.value"
-            :value="option.value"
-          >{{option.name}}</option>
+          <option v-for="option in statuses" :key="option.value" :value="option.value">{{option.name}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="type">Тип книги</label>
         <select class="form-control" name="type" id="type" v-model.number="book.type">
-          <option
-            v-for="option in bookTypes"
-            :key="option.value"
-            :value="option.value"
-          >{{option.name}}</option>
+          <option v-for="option in bookTypes" :key="option.value" :value="option.value">{{option.name}}</option>
         </select>
       </div>
       <label for="progress" v-show="showProgress">{{progressHeader}}</label>
@@ -111,43 +97,22 @@
         <div class="col" v-show="showStartDate">
           <div class="form-group">
             <label for="startDate">Начата</label>
-            <input
-              type="date"
-              name="startDate"
-              id="startDate"
-              class="form-control"
-              v-model="book.startDate"
-              :max="book.endDate | calendarDate"
-            />
+            <input type="date" name="startDate" id="startDate" class="form-control" v-model="book.startDate" :max="book.endDate | calendarDate" />
           </div>
         </div>
         <div class="col" v-show="showEndDate">
           <div class="form-group">
             <label for="endDate">Окончена</label>
-            <input
-              type="date"
-              name="endDate"
-              id="endDate"
-              class="form-control"
-              v-model="book.endDate"
-              :min="book.startDate | calendarDate"
-            />
+            <input type="date" name="endDate" id="endDate" class="form-control" v-model="book.endDate" :min="book.startDate | calendarDate" />
           </div>
         </div>
       </div>
       <div class="form-group">
         <label for="note">Заметки</label>
-        <textarea
-          type="text"
-          name="note"
-          id="note"
-          class="form-control"
-          rows="5"
-          v-model.trim="book.note"
-        ></textarea>
+        <textarea type="text" name="note" id="note" class="form-control" rows="5" v-model.trim="book.note"></textarea>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" type="submit">Сохранить</button>
+        <button class="btn btn-primary w-100" type="submit">Сохранить</button>
       </div>
     </form>
   </div>

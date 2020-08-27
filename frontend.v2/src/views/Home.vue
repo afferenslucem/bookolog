@@ -71,23 +71,24 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles/variables";
 .window {
-  height: 100%;
+  height: 100vh;
   width: 100%;
 
   position: relative;
 }
 
 .main {
-  height: 100%;
+  height: 100vh;
   width: 100%;
 
   .content {
-    height: calc(100% - #{$header-height});
+    height: calc(100vh - #{$header-height});
     width: 100%;
 
     overflow: auto;
-
-    margin-top: $header-height;
+    position: absolute;
+    top: $header-height;
+    left: 0;
   }
 }
 

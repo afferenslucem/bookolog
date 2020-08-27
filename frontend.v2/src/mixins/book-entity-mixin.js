@@ -33,10 +33,10 @@ export default {
             return this.book.status == DONE_STATUS;
         },
         startDate() {
-            return moment(this.book.startDate).format('lll')
+            return moment(this.book.startDate).format('ll')
         },
         endDate() {
-            return moment(this.book.endDate).format('lll')
+            return moment(this.book.endDate).format('ll')
         }
     }
 }

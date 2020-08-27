@@ -1,18 +1,19 @@
 <template>
   <div class="container mt-3">
-    <form class="needs-validation" novalidate @submit="submit($event)">
+    <small class="dark-text">* Обязательная информация</small>
+    <form class="needs-validation" @submit="submit($event)">
       <div class="form-group">
         <input
           type="text"
           name="name"
           id="name"
           class="form-control"
-          placeholder="Название"
+          placeholder="Название *"
           pattern="[A-Za-zА-Яа-яЁё0-9\s\\.\\,\\(\\)\\-]+"
           required
           v-model.trim="book.name"
+          autocomplete="off"
         />
-        <div class="invalid-feedback">Это обязательное поле</div>
       </div>
       <div class="form-group">
         <input
@@ -111,7 +112,7 @@
         <textarea type="text" name="note" id="note" class="form-control" rows="5" v-model.trim="book.note"></textarea>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" type="submit">Сохранить</button>
+        <button class="btn btn-primary w-100" type="submit">Сохранить</button>
       </div>
     </form>
   </div>
