@@ -9,7 +9,7 @@ export class BookClient extends Client {
         this.logger = getLogger('BookClient');
     }
 
-    async get() {
+    async getAll() {
         const data = await super.get('/books.json');
         this.logger.debug('books', data);
         return _(data.data).select(item => new Book(item)).toArray();

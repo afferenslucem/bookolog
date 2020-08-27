@@ -1,5 +1,4 @@
 import {getLogger} from '../../logger';
-import u from 'ursus-utilus-collections'
 import { BOOKS_LOAD_ACTION, BOOK_ADD_ACTION, BOOK_DELETE_ACTION, BOOKS_SAVE_MUTATION,
     BOOK_ADD_MUTATION, BOOK_DELETE_MUTATION, BOOK_UPDATE_MUTATION, BOOK_UPDATE_ACTION,
     BOOK_GET_BY_GUID_ACTION} from '../naming';
@@ -38,7 +37,7 @@ export const actions = {
         logger.info('updated book')
     },
     [BOOK_GET_BY_GUID_ACTION]: async ({state}, guid) => {
-        const book = u(state.books).first(item => item.guid === guid);
+        const book = state[guid];
 
         return book;
     },

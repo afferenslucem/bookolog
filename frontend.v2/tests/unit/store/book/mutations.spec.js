@@ -11,30 +11,42 @@ describe('Book Mutations', () => {
 
         mutations[BOOKS_SAVE_MUTATION](state, books);
 
-        const expected = books;
+        const expected = {
 
-        assert.deepEqual(state.books, expected)
+        };
+
+        for (let item of books) {
+            expected[item.guid] = item
+        }
+
+        assert.deepEqual(state, expected)
     })
     it('should add books', () => {
         const state = {
-            books: []
         };
 
         mutations[BOOK_ADD_MUTATION](state, books[0]);
 
-        const expected = books[0];
+        const expected = {
+            [books[0].guid] : books[0]
+        };
 
-        assert.deepEqual(state.books[0], expected)
+        assert.deepEqual(state, expected)
     })
     it('should delete books', () => {
         const state = {
-            books
         };
+
+        for(let item of books){
+            state[item.guid] = item;
+        }
         
         mutations[BOOK_DELETE_MUTATION](state, books[0].guid);
 
-        const expected = u(books).skip(1).toArray();
+        const expected = u(books).skip(1).sortBy(item => item.guid).toArray();
 
-        assert.deepEqual(state.books, expected)
+        const actual = u(Object.values(state)).sortBy(item => item.guid).toArray();
+
+        assert.deepEqual(actual, expected)
     })
 })

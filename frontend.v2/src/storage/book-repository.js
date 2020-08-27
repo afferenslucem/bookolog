@@ -7,14 +7,15 @@ import { Book } from '@/models/book'
 const ENTITY_ALREADY_EXISTS = 'EntityAlreadyExists';
 const ENTITY_DOES_NOT_EXISTS = 'EntityDoesNotExists';
 
-export class BookRepository extends Repository {
+export class BookRepository {
+    #repository = new Repository();
+
     #dbName = 'bookolog.db';
     #booksStore = 'booksStore';
 
     #generator = new UUIDGenerator();
 
     constructor() {
-        super();
         this.logger = getLogger({
             namespace: 'Storage',
             loggerName: 'BookRepository'
@@ -22,7 +23,7 @@ export class BookRepository extends Repository {
     }
 
     async saveBook(book) {
-        await super.open(this.#dbName);
+        await this.#repository.open(this.#dbName);
 
         if (book.guid) {
             throw ENTITY_ALREADY_EXISTS;
@@ -30,33 +31,33 @@ export class BookRepository extends Repository {
             book.guid = this.#generator.generate();
         }
 
-        await this.save(this.#booksStore, book);
+        await this.#repository.save(this.#booksStore, book);
 
         return book;
     }
 
     async updateBook(book) {
-        await super.open(this.#dbName);
+        await this.#repository.open(this.#dbName);
 
         if (!book.guid) {
             throw ENTITY_DOES_NOT_EXISTS;
         }
 
-        await this.update(this.#booksStore, book);
+        await this.#repository.update(this.#booksStore, book);
 
         return book;
     }
 
     async deleteBook(guid) {
-        await super.open(this.#dbName);
+        await this.#repository.open(this.#dbName);
 
-        await this.delete(this.#booksStore, guid);
+        await this.#repository.delete(this.#booksStore, guid);
 
         return;
     }
 
     async saveManyBooks(books) {
-        await super.open(this.#dbName);
+        await this.#repository.open(this.#dbName);
 
         books.forEach(item => {
             if (item.guid) {
@@ -67,7 +68,7 @@ export class BookRepository extends Repository {
             }
         })
 
-        const result = await this.saveMany(this.#booksStore, books);
+        const result = await this.#repository.saveMany(this.#booksStore, books);
 
         this.logger.info('saved books', result);
 
@@ -75,7 +76,7 @@ export class BookRepository extends Repository {
     }
 
     async updateManyBooks(books) {
-        await super.open(this.#dbName);
+        await this.#repository.open(this.#dbName);
 
         books.forEach(item => {
             if (!item.guid) {
@@ -91,8 +92,6 @@ export class BookRepository extends Repository {
     }
 
     async saveOrUpdateBook(book) {
-        await super.open(this.#dbName);
-
         if(book.guid) {
             return await this.updateBook(book);
         } else {
@@ -101,8 +100,6 @@ export class BookRepository extends Repository {
     }
 
     async saveOrUpdateManyBooks(books) {
-        await super.open(this.#dbName);
-
         const shouldCreate = _(books).where(item => !item.guid).toArray();
         const shouldUpdate = _(books).where(item => !!item.guid).toArray();
 
@@ -113,8 +110,8 @@ export class BookRepository extends Repository {
     }
 
     async allBooks() {
-        await super.open(this.#dbName);
-        const books = await this.all(this.#booksStore);
+        await this.#repository.open(this.#dbName);
+        const books = await this.#repository.all(this.#booksStore);
 
         console.log(books)
 

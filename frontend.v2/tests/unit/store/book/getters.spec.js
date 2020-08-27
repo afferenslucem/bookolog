@@ -7,11 +7,10 @@ import { assert } from 'chai';
 
 describe('Book Getters', () => {
     it('should return books with in progress status', () => {
-        const state = {
+        const state = {};
+        const result = getters[BOOKS_IN_PROGRESS_GETTER](state, {
             books
-        };
-
-        const result = getters[BOOKS_IN_PROGRESS_GETTER](state);
+        });
 
         const expected = IN_PROGRESS_STATUS;
 
@@ -25,11 +24,10 @@ describe('Book Getters', () => {
         assert.equal(len, booksTargetLen)
     })
     it('should return books with done status', () => {
-        const state = {
+        const state = {};
+        const result = getters[BOOKS_DONE_GETTER](state, {
             books
-        };
-
-        const result = getters[BOOKS_DONE_GETTER](state);
+        });
 
         const expected = DONE_STATUS;
 
@@ -43,11 +41,10 @@ describe('Book Getters', () => {
         assert.equal(len, booksTargetLen)
     })
     it('should return books with to read status', () => {
-        const state = {
+        const state = {};
+        const result = getters[BOOKS_TO_READ_GETTER](state, {
             books
-        };
-
-        const result = getters[BOOKS_TO_READ_GETTER](state);
+        });
 
         const expected = TO_READ_STATUS;
 
@@ -59,5 +56,15 @@ describe('Book Getters', () => {
         const booksTargetLen = _(books).count(item => item.status == expected);
 
         assert.equal(len, booksTargetLen)
+    })
+    it('should return books like array', () => {
+        const state = {
+            [books[0].guid]: books[0]
+        };
+        const result = getters.books(state);
+
+        const expected = [books[0]];
+
+        assert.deepEqual(result, expected)
     })
 })

@@ -31,6 +31,9 @@ export default {
       return this.books != null && this.books.length > 0;
     },
   },
+  created() {
+    this.$forceUpdate();
+  }
 };
 </script>
 
