@@ -2,6 +2,7 @@
   <div class="window">
     <side-menu class="left" :class="{opened: shouldShowLeftMenu}">
       <book-menu @itemClick="closeAllMenus()"></book-menu>
+      <statistic-menu @itemClick="closeAllMenus()"></statistic-menu>
     </side-menu>
     <div class="overlay" :class="{active: showOverlay}" @click="closeAllMenus()"></div>
     <div class="main">
@@ -21,6 +22,7 @@
 import Header from "@/components/navigation/Header";
 import SideMenu from "@/components/navigation/SideMenu";
 import BookMenu from "@/components/navigation/BookMenu";
+import StatisticMenu from "@/components/navigation/StatisticMenu";
 import UserMenu from "@/components/navigation/UserMenu";
 import { BOOKS_LOAD_ACTION } from "@/store/naming";
 import { getLogger } from "@/logger";
@@ -34,6 +36,7 @@ export default {
     SideMenu,
     BookMenu,
     UserMenu,
+    StatisticMenu
   },
   data() {
     return {

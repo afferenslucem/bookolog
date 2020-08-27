@@ -11,7 +11,7 @@
         <to-read-book :book="book"></to-read-book>
       </li>
     </ul>
-    <div v-else>Ты ничего не собираешься читать</div>
+    <div v-else>Здесь пока ничего нет.</div>
   </div>
 </template>
 

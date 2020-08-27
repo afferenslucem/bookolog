@@ -1,5 +1,6 @@
 @import 'variables.scss';
 
+
 // Icons 
 .icon {
     display: block;
@@ -94,4 +95,8 @@
 }
 .book-year-list {
     @extend .book-list-standard;
+}
+
+.menu {
+    padding: 0.5rem;
 }

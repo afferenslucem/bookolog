@@ -11,7 +11,7 @@
         <progressing-book :book="book"></progressing-book>
       </li>
     </ul>
-    <div v-else>Ты ничего не читаешь</div>
+    <div v-else>Здесь пока ничего нет.</div>
   </div>
 </template>
 
@@ -33,7 +33,6 @@ export default {
     },
   },
   created() {
-    this.$forceUpdate();
   }
 };
 </script>

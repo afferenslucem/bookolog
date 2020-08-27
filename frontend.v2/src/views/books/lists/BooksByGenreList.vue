@@ -1,6 +1,6 @@
 <template>
   <div class="container pt-1 book-year-list">
-    <h4 class="mt-1 header">Прочитал</h4>
+    <h4 class="mt-1 header">{{name | capital}}</h4>
 
     <ul v-if="shouldShowList" class="book-list">
       <li v-for="group of booksByYears" :key="group.key">
@@ -30,9 +30,18 @@ export default {
   components: {
     DoneBook,
   },
+  data: () => ({
+    name: "",
+  }),
   computed: {
     books() {
-      return this.$store.getters[BOOKS_DONE_GETTER];
+      return u(this.$store.getters[BOOKS_DONE_GETTER])
+        .where((item) => !!item.genre)
+        .where((item) => item.genre.toLowerCase() == this.name.toLowerCase())
+        .sortBy((item) => item.modifyTime || "0")
+        .thenBy((item) => item.name)
+        .reverse()
+        .toArray();
     },
     shouldShowList() {
       return this.books != null && this.books.length > 0;
@@ -41,16 +50,25 @@ export default {
       return u(this.books)
         .groupBy(
           (item) => new Date(item.endDate).getFullYear(),
-          (group) => group.sortBy(item => item.endDate).thenBy(item => item.modifyDate).reverse().toArray()
+          (group) =>
+            group
+              .sortBy((item) => item.endDate)
+              .thenBy((item) => item.modifyDate)
+              .reverse()
+              .toArray()
         )
-        .sortBy((item) => item.key, (a, b) => (b || -1) - (a || -1)).toArray();
+        .sortBy(
+          (item) => item.key,
+          (a, b) => (b || -1) - (a || -1)
+        )
+        .toArray();
     },
+  },
+  created() {
+    this.name = this.$route.params.name;
   },
 };
 </script>
 
-<style scoped>
-.year-header {
-  font-weight: 700;
-}
+<style>
 </style>

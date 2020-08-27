@@ -4,7 +4,7 @@
       <div class="icon" v-show="isLoggedIn" @click="emitMenuClick($event)">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
-      <router-link :to="{name: 'Home'}" class="logo">
+      <router-link :to="{name: 'Home'}" class="logo ml-1">
           <img src="/img/logo.png" />
       </router-link>
     </div>

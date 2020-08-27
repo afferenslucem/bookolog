@@ -1,24 +1,27 @@
 <template>
-  <ul class="nav flex-column">
-    <li class="nav-item">
-      <a class="nav-link" href="#" @click="goToInProgress()">Читаю Сейчас</a>
-      <a class="icon nav-link" @click="goToAddInProgress()">
-        <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" @click="goToToRead()">Буду читать</a>
-      <a class="icon nav-link" @click="goToAddToRead()">
-        <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" @click="goToDone()">Прочитал</a>
-      <a class="icon nav-link" @click="goToAddDone()">
-        <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
-      </a>
-    </li>
-  </ul>
+  <div class="menu">
+    <h5>Мои списки</h5>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" href="#" @click="goToInProgress()">Читаю Сейчас</a>
+        <a class="icon nav-link" href="#" @click="goToAddInProgress()">
+          <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" @click="goToToRead()">Буду читать</a>
+        <a class="icon nav-link" href="#" @click="goToAddToRead()">
+          <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" @click="goToDone()">Прочитал</a>
+        <a class="icon nav-link" href="#" @click="goToAddDone()">
+          <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
