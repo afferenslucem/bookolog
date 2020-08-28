@@ -18,7 +18,7 @@
 <script>
 import { BOOKS_TO_READ_GETTER } from "@/store/naming";
 import ToReadBook from "@/components/book/ToReadBook";
-import u from "ursus-utilus-collections";
+import u from "declarray";
 
 export default {
   components: {

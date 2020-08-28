@@ -12,12 +12,13 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "declarray": "^5.1.5",
+    "essents": "^1.2.2",
     "register-service-worker": "^1.7.1",
-    "ursus-utilus": "^1.2.1",
-    "ursus-utilus-logger": "^1.2.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "waterlog": "^2.0.4"
   },
   "devDependencies": {
     "@types/moment": "^2.13.0",
@@ -37,7 +38,6 @@
     "momentjs": "^2.0.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "ursus-utilus-collections": "^5.1.0",
     "vue-template-compiler": "^2.6.11"
   }
 }

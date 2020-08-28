@@ -2,7 +2,7 @@ import { getters } from '@/store/book/getters'
 import { BOOKS_IN_PROGRESS_GETTER, BOOKS_DONE_GETTER, BOOKS_TO_READ_GETTER } from '@/store/naming'
 import {TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS} from '@/models/book'
 import books from '../../data/books'
-import _ from 'ursus-utilus-collections'
+import _ from 'declarray'
 import { assert } from 'chai';
 
 describe('Book Getters', () => {

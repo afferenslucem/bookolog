@@ -1,5 +1,5 @@
 import { Client } from "./client";
-import _ from "ursus-utilus-collections";
+import _ from "declarray";
 import {getLogger} from '../logger';
 import { Book }from '../models/book'
 

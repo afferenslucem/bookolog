@@ -1,4 +1,4 @@
-import u from 'ursus-utilus-collections';
+import _ from 'declarray';
 
 function capitalString(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -6,7 +6,7 @@ function capitalString(str) {
 
 export default (line) => {
     if(Array.isArray(line)) {
-        return u(line).select(item => capitalString(item)).toArray();
+        return _(line).select(item => capitalString(item)).toArray();
     } else {
         return capitalString(line);
     }

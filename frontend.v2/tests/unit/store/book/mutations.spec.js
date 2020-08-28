@@ -1,20 +1,9 @@
 import { mutations } from '@/store/book/mutations'
 import { BOOKS_SAVE_MUTATION, BOOKS_CLEAR_MUTATION, BOOK_ADD_MUTATION, BOOK_DELETE_MUTATION } from '@/store/naming'
 import books from '../../data/books'
-import u from 'ursus-utilus-collections'
+import _ from 'declarray'
 import { assert } from 'chai';
-
-function getState(books) {
-    const state = {
-
-    };
-
-    for (let item of books) {
-        state[item.guid] = item
-    }
-
-    return state;
-}
+import { getState } from '../../data/books';
 
 describe('Book Mutations', () => {
     it('should save books', () => {
@@ -44,9 +33,9 @@ describe('Book Mutations', () => {
         
         mutations[BOOK_DELETE_MUTATION](state, books[0].guid);
 
-        const expected = u(books).skip(1).sortBy(item => item.guid).toArray();
+        const expected = _(books).skip(1).sortBy(item => item.guid).toArray();
 
-        const actual = u(Object.values(state)).sortBy(item => item.guid).toArray();
+        const actual = _(Object.values(state)).sortBy(item => item.guid).toArray();
 
         assert.deepEqual(actual, expected)
     })

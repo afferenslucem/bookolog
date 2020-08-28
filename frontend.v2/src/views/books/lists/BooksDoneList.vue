@@ -24,7 +24,7 @@
 <script>
 import { BOOKS_DONE_GETTER } from "@/store/naming";
 import DoneBook from "@/components/book/DoneBook";
-import u from "ursus-utilus-collections";
+import u from "declarray";
 
 export default {
   components: {

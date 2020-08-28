@@ -6,7 +6,7 @@ export default [{
     "status": 2,
     "tags": ["инопланетяне"],
     "genre": "фантастика",
-    "totalUnits": 442,
+    "totalUnits": 442,  
     "doneUnits": 100,
     "startDate": "2020-08-05",
     "endDate": "2020-08-12",
@@ -197,3 +197,15 @@ export default [{
     "type": 2,
     "note": ""
 }]
+
+export function getState(books) {
+    const state = {
+
+    };
+
+    for (let item of books) {
+        state[item.guid] = item
+    }
+
+    return state;
+}

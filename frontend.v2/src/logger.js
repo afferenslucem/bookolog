@@ -1,4 +1,4 @@
-import {ConsoleLoggerFactory, LogLevel} from 'ursus-utilus-logger';
+import {ConsoleLoggerFactory, LogLevel} from 'waterlog';
 
 const mode = 'dev';
 

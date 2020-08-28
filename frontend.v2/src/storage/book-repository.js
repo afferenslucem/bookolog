@@ -1,7 +1,7 @@
 import { Repository } from "./repository";
 import { getLogger } from '@/logger'
-import _ from 'ursus-utilus-collections';
-import { UUIDGenerator } from 'ursus-utilus';
+import _ from 'declarray';
+import { UUIDGenerator } from 'essents';
 import { Book } from '@/models/book'
 
 const ENTITY_ALREADY_EXISTS = 'EntityAlreadyExists';

@@ -18,7 +18,7 @@
 <script>
 import { BOOKS_IN_PROGRESS_GETTER } from "@/store/naming";
 import ProgressingBook from "@/components/book/ProgressingBook";
-import u from "ursus-utilus-collections";
+import u from "declarray";
 
 export default {
   components: {
