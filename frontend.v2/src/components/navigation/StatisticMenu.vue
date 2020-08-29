@@ -6,7 +6,7 @@
         <a class="nav-link" href="#" @click="goToGenres()">Жанры</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Теги</a>
+        <a class="nav-link" href="#" @click="goToTags()">Теги</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Авторы</a>
@@ -24,6 +24,10 @@ export default {
   methods: {
     async goToGenres() {
       this.$router.push({ name: "Genres" });
+      this.emitClick();
+    },
+    async goToTags() {
+      this.$router.push({ name: "Tags" });
       this.emitClick();
     },
   }

@@ -1,34 +1,19 @@
 <template>
-  <div class="container pt-1 book-year-list">
-    <h4 class="mt-1 header">Прочитал</h4>
-
-    <ul v-if="shouldShowList" class="book-list">
-      <li v-for="group of booksByYears" :key="group.key">
-        <h5 class="header year-header mt-2 mb-2 d-block">{{group.key || 'Год не указан'}}</h5>
-
-        <ul>
-          <li
-            v-for="(book, key, index) of group.group"
-            :class="{'mb-4' : index !== (books.length - 1)}"
-            :key="book.guid"
-          >
-            <done-book :book="book"></done-book>
-          </li>
-        </ul>
-      </li>
-    </ul>
+  <div class="container pt-1">
+    <books-by-years-list v-if="shouldShowList" :books="books" listname="Прочитал">
+      
+    </books-by-years-list>
     <div v-else>Здесь пока ничего нет.</div>
   </div>
 </template>
 
 <script>
 import { BOOKS_DONE_GETTER } from "@/store/naming";
-import DoneBook from "@/components/book/DoneBook";
-import u from "declarray";
+import BooksByYearsList from "@/components/books-lists/BooksByYearsList";
 
 export default {
   components: {
-    DoneBook,
+    BooksByYearsList,
   },
   computed: {
     books() {
@@ -36,21 +21,10 @@ export default {
     },
     shouldShowList() {
       return this.books != null && this.books.length > 0;
-    },
-    booksByYears() {
-      return u(this.books)
-        .groupBy(
-          (item) => new Date(item.endDate).getFullYear(),
-          (group) => group.sortBy(item => item.endDate).thenBy(item => item.modifyDate).reverse().toArray()
-        )
-        .sortBy((item) => item.key, (a, b) => (b || -1) - (a || -1)).toArray();
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
-.year-header {
-  font-weight: 700;
-}
 </style>

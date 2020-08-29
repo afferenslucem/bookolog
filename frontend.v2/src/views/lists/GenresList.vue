@@ -5,7 +5,7 @@
     <ul v-if="shouldShowList">
       <li
         v-for="genre of genres"
-        :class="{'mb-3' : index !== (genres.length - 1)}"
+        class="mb-3"
         :key="genre.name"
       >
         <router-link class="name" :to="{name: 'ByGenre', params: {name: genre.name}}"><span>{{genre.name | capital}}</span></router-link>
@@ -33,23 +33,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/variables";
-.genres-list {
-  ul {
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-
-      .name {
-        font-size: $big-font-size;
-        font-weight: $fat-font-weight;
-      }
-      .count {
-        font-size: $big-font-size;
-        font-weight: $fat-font-weight;
-      }
-    }
-  }
-}
 </style>

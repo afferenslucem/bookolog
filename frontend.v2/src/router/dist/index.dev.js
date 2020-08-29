@@ -71,6 +71,15 @@ var workspaceRoutes = [{
     });
   }
 }, {
+  path: 'by-tag/:name',
+  name: 'ByTag',
+  props: true,
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/books/lists/BooksByTagList.vue'));
+    });
+  }
+}, {
   path: 'book/create/:status',
   name: 'CreateBook',
   component: function component() {
@@ -103,6 +112,15 @@ var workspaceRoutes = [{
   component: function component() {
     return Promise.resolve().then(function () {
       return _interopRequireWildcard(require('../views/lists/GenresList.vue'));
+    });
+  },
+  props: true
+}, {
+  path: 'tags',
+  name: 'Tags',
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/lists/TagsList.vue'));
     });
   },
   props: true

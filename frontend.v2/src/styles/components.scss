@@ -60,6 +60,8 @@
     }
 }
 
+// Lists
+
 .book-list-standard {
     display: block;
     width: 100%;
@@ -67,7 +69,7 @@
     padding-right: .2rem;
     overflow: hidden;
 
-    > .header {
+    >.header {
         display: inline-block;
         width: 100%;
         height: $list-header-height;
@@ -77,14 +79,14 @@
         margin-bottom: 0;
     }
 
-    
 
-    > ul {
+
+    >ul {
         overflow-y: auto;
         height: calc(100% - #{$list-header-height});
         padding-right: .75rem;
 
-        > li {
+        >li {
             margin-top: 0.2rem;
         }
     }
@@ -93,10 +95,43 @@
 .book-list {
     @extend .book-list-standard;
 }
+
 .book-year-list {
     @extend .book-list-standard;
+
+    .year-header {
+        font-weight: 700;
+    }
 }
 
 .menu {
     padding: 0.5rem;
+}
+
+.statistic-list {
+    ul {
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+
+            .name {
+                font-size: $big-font-size;
+                font-weight: $fat-font-weight;
+            }
+
+            .count {
+                font-size: $big-font-size;
+                font-weight: $fat-font-weight;
+            }
+        }
+    }
+}
+
+.genres-list {
+    @extend .statistic-list;
+}
+
+.tags-list {
+    @extend .statistic-list;
 }

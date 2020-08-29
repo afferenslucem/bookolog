@@ -65,6 +65,24 @@
   margin-top: 0.2rem;
 }
 
+.book-year-list .year-header {
+  font-weight: 700;
+}
+
 .menu {
   padding: 0.5rem;
+}
+
+.statistic-list ul li, .tags-list ul li, .genres-list ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.statistic-list ul li .name, .tags-list ul li .name, .genres-list ul li .name {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+.statistic-list ul li .count, .tags-list ul li .count, .genres-list ul li .count {
+  font-size: 1.25rem;
+  font-weight: 500;
 }

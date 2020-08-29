@@ -35,6 +35,11 @@ const workspaceRoutes = [
     props: true,
     component: () => import('../views/books/lists/BooksByGenreList.vue')
   }, {
+    path: 'by-tag/:name',
+    name: 'ByTag',
+    props: true,
+    component: () => import('../views/books/lists/BooksByTagList.vue')
+  }, {
     path: 'book/create/:status',
     name: 'CreateBook',
     component: () => import('../views/books/entity/BookCreate.vue'),
@@ -53,6 +58,11 @@ const workspaceRoutes = [
     path: 'genres',
     name: 'Genres',
     component: () => import('../views/lists/GenresList.vue'),
+    props: true
+  }, {
+    path: 'tags',
+    name: 'Tags',
+    component: () => import('../views/lists/TagsList.vue'),
     props: true
   },
 ];

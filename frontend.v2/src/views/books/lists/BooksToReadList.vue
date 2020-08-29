@@ -4,8 +4,8 @@
 
     <ul v-if="shouldShowList">
       <li
-        v-for="(book, key, index) of books"
-        :class="{'mb-4' : index !== (books.length - 1)}"
+        v-for="book of books"
+        class="mb-4"
         :key="book.guid"
       >
         <to-read-book :book="book"></to-read-book>
