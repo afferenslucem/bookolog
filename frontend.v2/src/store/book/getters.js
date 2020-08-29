@@ -3,7 +3,8 @@ import {
     BOOKS_TO_READ_GETTER,
     BOOKS_DONE_GETTER,
     BOOKS_GENRES_COUNT_GETTER,
-    BOOKS_TAGS_COUNT_GETTER
+    BOOKS_TAGS_COUNT_GETTER,
+    BOOKS_AUTHORS_COUNT_GETTER
 } from '../naming';
 import _ from 'declarray';
 import {
@@ -34,24 +35,44 @@ export const getters = {
             count: item.group
         }))
         .toArray(),
-    [BOOKS_TAGS_COUNT_GETTER](state, getters) {
-        const tags = _(getters[BOOKS_DONE_GETTER])
-            .where(item => !!item.tags && item.tags.length > 0)
-            .select(item => item.tags)
-            .aggregate((a, b) => a.concat(b));
-
-        logger.debug('Tags:', tags);
-
-        const result = _(tags).groupBy(item => item, group => group.count())
-            .sortBy(item => item.group, (a, b) => b - a)
-            .select(item => ({
-                name: item.key,
-                count: item.group
-            }))
-            .toArray();
-
-        logger.debug('Result:', result);
-
-        return result;
-    }
+        [BOOKS_TAGS_COUNT_GETTER](state, getters) {
+            const tags = _(getters[BOOKS_DONE_GETTER])
+                .where(item => !!item.tags && item.tags.length > 0)
+                .select(item => item.tags)
+                .aggregate((a, b) => a.concat(b));
+    
+            logger.debug('Tags:', tags);
+    
+            const result = _(tags).groupBy(item => item, group => group.count())
+                .sortBy(item => item.group, (a, b) => b - a)
+                .select(item => ({
+                    name: item.key,
+                    count: item.group
+                }))
+                .toArray();
+    
+            logger.debug('Result:', result);
+    
+            return result;
+        },
+        [BOOKS_AUTHORS_COUNT_GETTER](state, getters) {
+            const authors = _(getters[BOOKS_DONE_GETTER])
+                .where(item => !!item.authors && item.authors.length > 0)
+                .select(item => item.authors)
+                .aggregate((a, b) => a.concat(b));
+    
+            logger.debug('Authors:', authors);
+    
+            const result = _(authors).groupBy(item => item, group => group.count())
+                .sortBy(item => item.group, (a, b) => b - a)
+                .select(item => ({
+                    name: item.key,
+                    count: item.group
+                }))
+                .toArray();
+    
+            logger.debug('Result:', result);
+    
+            return result;
+        }
 }

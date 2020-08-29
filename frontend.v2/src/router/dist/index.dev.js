@@ -37,49 +37,7 @@ var ifAuthenticated = function ifAuthenticated(to, from, next) {
 
 _vue["default"].use(_vueRouter["default"]);
 
-var workspaceRoutes = [{
-  path: 'in-progress',
-  name: 'InProgress',
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/books/lists/BooksInProgressList.vue'));
-    });
-  }
-}, {
-  path: 'to-read',
-  name: 'ToRead',
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/books/lists/BooksToReadList.vue'));
-    });
-  }
-}, {
-  path: 'done',
-  name: 'Done',
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/books/lists/BooksDoneList.vue'));
-    });
-  }
-}, {
-  path: 'by-genre/:name',
-  name: 'ByGenre',
-  props: true,
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/books/lists/BooksByGenreList.vue'));
-    });
-  }
-}, {
-  path: 'by-tag/:name',
-  name: 'ByTag',
-  props: true,
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/books/lists/BooksByTagList.vue'));
-    });
-  }
-}, {
+var booksRoutes = [{
   path: 'book/create/:status',
   name: 'CreateBook',
   component: function component() {
@@ -106,12 +64,22 @@ var workspaceRoutes = [{
     });
   },
   props: true
-}, {
+}];
+var statisticRoutes = [{
   path: 'genres',
   name: 'Genres',
   component: function component() {
     return Promise.resolve().then(function () {
       return _interopRequireWildcard(require('../views/lists/GenresList.vue'));
+    });
+  },
+  props: true
+}, {
+  path: 'authors',
+  name: 'Authors',
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/lists/AuthorsList.vue'));
     });
   },
   props: true
@@ -125,6 +93,60 @@ var workspaceRoutes = [{
   },
   props: true
 }];
+var readingRoutes = [{
+  path: 'in-progress',
+  name: 'InProgress',
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/books/lists/BooksInProgressList.vue'));
+    });
+  }
+}, {
+  path: 'to-read',
+  name: 'ToRead',
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/books/lists/BooksToReadList.vue'));
+    });
+  }
+}, {
+  path: 'done',
+  name: 'Done',
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/books/lists/BooksDoneList.vue'));
+    });
+  }
+}];
+var booksBySomething = [{
+  path: 'by-genre/:name',
+  name: 'ByGenre',
+  props: true,
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/books/lists/BooksByGenreList.vue'));
+    });
+  }
+}, {
+  path: 'by-tag/:name',
+  name: 'ByTag',
+  props: true,
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/books/lists/BooksByTagList.vue'));
+    });
+  }
+}, {
+  path: 'by-author/:name',
+  name: 'ByAuthor',
+  props: true,
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/books/lists/BooksByAuthorList.vue'));
+    });
+  }
+}];
+var workspaceRoutes = [].concat(booksRoutes, statisticRoutes, readingRoutes, booksBySomething);
 var routes = [{
   path: '/',
   name: 'Home',

@@ -14,32 +14,10 @@ const ifAuthenticated = (to, from, next) => {
   }
 }
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-const workspaceRoutes = [
+const booksRoutes = [
   {
-    path: 'in-progress',
-    name: 'InProgress',
-    component: () => import('../views/books/lists/BooksInProgressList.vue')
-  }, {
-    path: 'to-read',
-    name: 'ToRead',
-    component: () => import('../views/books/lists/BooksToReadList.vue')
-  }, {
-    path: 'done',
-    name: 'Done',
-    component: () => import('../views/books/lists/BooksDoneList.vue')
-  }, {
-    path: 'by-genre/:name',
-    name: 'ByGenre',
-    props: true,
-    component: () => import('../views/books/lists/BooksByGenreList.vue')
-  }, {
-    path: 'by-tag/:name',
-    name: 'ByTag',
-    props: true,
-    component: () => import('../views/books/lists/BooksByTagList.vue')
-  }, {
     path: 'book/create/:status',
     name: 'CreateBook',
     component: () => import('../views/books/entity/BookCreate.vue'),
@@ -54,10 +32,19 @@ const workspaceRoutes = [
     name: 'Book',
     component: () => import('../views/books/entity/Book.vue'),
     props: true
-  }, {
+  }, 
+];
+
+const statisticRoutes = [
+  {
     path: 'genres',
     name: 'Genres',
     component: () => import('../views/lists/GenresList.vue'),
+    props: true
+  }, {
+    path: 'authors',
+    name: 'Authors',
+    component: () => import('../views/lists/AuthorsList.vue'),
     props: true
   }, {
     path: 'tags',
@@ -65,6 +52,48 @@ const workspaceRoutes = [
     component: () => import('../views/lists/TagsList.vue'),
     props: true
   },
+];
+
+const readingRoutes = [
+  {
+    path: 'in-progress',
+    name: 'InProgress',
+    component: () => import('../views/books/lists/BooksInProgressList.vue')
+  }, {
+    path: 'to-read',
+    name: 'ToRead',
+    component: () => import('../views/books/lists/BooksToReadList.vue')
+  }, {
+    path: 'done',
+    name: 'Done',
+    component: () => import('../views/books/lists/BooksDoneList.vue')
+  },
+];
+
+const booksBySomething = [ 
+  {
+    path: 'by-genre/:name',
+    name: 'ByGenre',
+    props: true,
+    component: () => import('../views/books/lists/BooksByGenreList.vue')
+  }, {
+    path: 'by-tag/:name',
+    name: 'ByTag',
+    props: true,
+    component: () => import('../views/books/lists/BooksByTagList.vue')
+  },  {
+    path: 'by-author/:name',
+    name: 'ByAuthor',
+    props: true,
+    component: () => import('../views/books/lists/BooksByAuthorList.vue')
+  }, 
+]
+
+const workspaceRoutes = [
+  ...booksRoutes,
+  ...statisticRoutes,
+  ...readingRoutes,
+  ...booksBySomething
 ];
 
   const routes = [

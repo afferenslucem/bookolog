@@ -9,7 +9,7 @@
         <a class="nav-link" href="#" @click="goToTags()">Теги</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Авторы</a>
+        <a class="nav-link" href="#" @click="goToAuthors()">Авторы</a>
       </li>
     </ul>
   </div>
@@ -17,7 +17,6 @@
 
 <script>
 import sideMenuMixin from "@/mixins/side-menu-mixin";
-//import { TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS } from "@/models/book";
 
 export default {
   mixins: [sideMenuMixin],
@@ -28,6 +27,10 @@ export default {
     },
     async goToTags() {
       this.$router.push({ name: "Tags" });
+      this.emitClick();
+    },
+    async goToAuthors() {
+      this.$router.push({ name: "Authors" });
       this.emitClick();
     },
   }
