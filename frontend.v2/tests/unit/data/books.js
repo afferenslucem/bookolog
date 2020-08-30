@@ -4,7 +4,7 @@ export default [{
     "authors": ["Герберт Уэллс"],
     "year": 2017,
     "status": 2,
-    "tags": ["инопланетяне"],
+    "tags": ["инопланетяне", "научпоп"],
     "genre": "фантастика",
     "totalUnits": 442,  
     "doneUnits": 100,
