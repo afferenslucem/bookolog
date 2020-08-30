@@ -1,7 +1,7 @@
 import { getters } from '@/store/book/getters'
-import { BOOKS_IN_PROGRESS_GETTER, BOOKS_DONE_GETTER, BOOKS_TO_READ_GETTER } from '@/store/naming'
+import { BOOKS_IN_PROGRESS_GETTER, BOOKS_DONE_GETTER, BOOKS_TO_READ_GETTER, BOOKS_GENRES_COUNT_GETTER } from '@/store/naming'
 import {TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS} from '@/models/book'
-import books from '../../data/books'
+import books, {getState} from '../../data/books'
 import _ from 'declarray'
 import { assert } from 'chai';
 
@@ -64,6 +64,27 @@ describe('Book Getters', () => {
         const result = getters.books(state);
 
         const expected = [books[0]];
+
+        assert.deepEqual(result, expected)
+    })
+    it('should return books counted by genre', () => {
+        const state = getState(books);
+
+        const mock = {
+            [BOOKS_DONE_GETTER]: _(books).where(item => item.status === DONE_STATUS).toArray(),
+        }
+
+        const result = _(getters[BOOKS_GENRES_COUNT_GETTER](state, mock))
+        .sortBy(item => item.count)
+        .thenBy(item => item.name)
+        .reverse().
+        select(item => [item.name, item.count])
+        .toArray();
+
+        const expected = [
+            ['фантастика', 1],
+            ['образовательная литература', 1],
+        ]
 
         assert.deepEqual(result, expected)
     })
