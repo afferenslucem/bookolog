@@ -46,9 +46,9 @@ export default {
       return _(this.books)
         .groupBy(
           (item) => new Date(item.endDate).getFullYear(),
-          (group) => group.sortBy(item => item.endDate).thenBy(item => item.modifyDate).reverse().toArray()
+          (group) => group.orderByDescending(item => item.endDate).thenByDescending(item => item.modifyDate).toArray()
         )
-        .sortBy((item) => item.key, (a, b) => (b || -1) - (a || -1)).toArray();
+        .orderByDescending((item) => item.key | -1).toArray();
     },
   },
 };

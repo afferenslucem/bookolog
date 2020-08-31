@@ -10,7 +10,7 @@ import _ from 'declarray';
 describe('BooksInProgressList.vue', () => {
     let wrapper = null;
 
-    const progressBooks = _(books).where(item => item.status === IN_PROGRESS_STATUS).sortBy(item => item.modifyTime || '0').thenBy(item => item.name).reverse().toArray();
+    const progressBooks = _(books).where(item => item.status === IN_PROGRESS_STATUS).orderByDescending(item => item.modifyTime || '0').thenByDescending(item => item.name).toArray();
 
     const $store = {
         getters: {

@@ -75,7 +75,7 @@ describe('Book Getters', () => {
         }
 
         const result = _(getters[BOOKS_GENRES_COUNT_GETTER](state, mock))
-        .sortBy(item => item.count, (a, b) => b - a)
+        .orderByDescending(item => item.count)
         .thenBy(item => item.name)
         .select(item => [item.name, item.count])
         .toArray();
@@ -95,7 +95,7 @@ describe('Book Getters', () => {
         }
 
         const result = _(getters[BOOKS_TAGS_COUNT_GETTER](state, mock))
-        .sortBy(item => item.count, (a, b) => b - a)
+        .orderByDescending(item => item.count)
         .thenBy(item => item.name)
         .select(item => [item.name, item.count])
         .toArray();
@@ -118,7 +118,7 @@ describe('Book Getters', () => {
         }
 
         const result = _(getters[BOOKS_AUTHORS_COUNT_GETTER](state, mock))
-        .sortBy(item => item.count, (a, b) => b - a)
+        .orderByDescending(item => item.count)
         .thenBy(item => item.name)
         .select(item => [item.name, item.count])
         .toArray();

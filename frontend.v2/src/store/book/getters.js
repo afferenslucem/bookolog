@@ -29,7 +29,7 @@ export const getters = {
     [BOOKS_GENRES_COUNT_GETTER]: (state, getters) => _(getters[BOOKS_DONE_GETTER])
         .where(item => !!item.genre)
         .groupBy(item => item.genre.toLowerCase(), group => group.count())
-        .sortBy(item => item.group, (a, b) => b - a)
+        .orderByDescending(item => item.group)
         .select(item => ({
             name: item.key,
             count: item.group
@@ -44,7 +44,7 @@ export const getters = {
         logger.debug('Tags:', tags);
 
         const result = _(tags).groupBy(item => item, group => group.count())
-            .sortBy(item => item.group, (a, b) => b - a)
+            .orderByDescending(item => item.group)
             .select(item => ({
                 name: item.key,
                 count: item.group
@@ -64,7 +64,7 @@ export const getters = {
         logger.debug('Authors:', authors);
 
         const result = _(authors).groupBy(item => item, group => group.count())
-            .sortBy(item => item.group, (a, b) => b - a)
+            .orderByDescending(item => item.group)
             .select(item => ({
                 name: item.key,
                 count: item.group

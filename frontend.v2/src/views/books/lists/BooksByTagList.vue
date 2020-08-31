@@ -22,11 +22,10 @@ export default {
   computed: {
     books() {
       return _(this.$store.getters[BOOKS_DONE_GETTER])
-        .where((item) => !!item.genre)
+        .where((item) => !!item.tags && !!item.tags.length)
         .where((item) => _(item.tags).exists(item => item.toLowerCase() == this.name.toLowerCase()))
-        .sortBy((item) => item.modifyTime || "0")
-        .thenBy((item) => item.name)
-        .reverse()
+        .orderByDescending((item) => item.modifyTime || "0")
+        .thenByDescending((item) => item.name)
         .toArray();
     },
     shouldShowList() {

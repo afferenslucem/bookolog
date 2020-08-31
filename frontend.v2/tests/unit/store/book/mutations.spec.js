@@ -33,9 +33,9 @@ describe('Book Mutations', () => {
         
         mutations[BOOK_DELETE_MUTATION](state, books[0].guid);
 
-        const expected = _(books).skip(1).sortBy(item => item.guid).toArray();
+        const expected = _(books).skip(1).orderBy(item => item.guid).toArray();
 
-        const actual = _(Object.values(state)).sortBy(item => item.guid).toArray();
+        const actual = _(Object.values(state)).orderBy(item => item.guid).toArray();
 
         assert.deepEqual(actual, expected)
     })
