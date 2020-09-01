@@ -2,7 +2,10 @@ version: "3"
 services:
   client:
     build: frontend.v2/
-    #command: http-server ./dist #здесь можно перезаписать CMD из Dockerfile в /client
-    network_mode: host
     ports:
-      - "8080:8080"
+      - "40080:80"
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: masterkey
