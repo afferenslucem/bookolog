@@ -6,6 +6,10 @@ services:
       - "40080:80"
 
   db:
-    image: postgres
+    image: postgres:12.4-alpine
     environment:
       POSTGRES_PASSWORD: masterkey
+    ports:
+      - "45432:5432"
+    volumes: 
+      - "./database/init-db/:/docker-entrypoint-initdb.d/"
