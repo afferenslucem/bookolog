@@ -1,37 +1,102 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Repository\\bookolog\\backend\\Server\\Server.csproj": {}
+    "/home/alex/repositories/bookolog/backend/server/server.csproj": {}
   },
   "projects": {
-    "D:\\Repository\\bookolog\\backend\\Server\\Server.csproj": {
+    "/home/alex/repositories/bookolog/backend/Storage/Storage.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Repository\\bookolog\\backend\\Server\\Server.csproj",
-        "projectName": "Server",
-        "projectPath": "D:\\Repository\\bookolog\\backend\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\Professional\\.nuget\\packages\\",
-        "outputPath": "D:\\Repository\\bookolog\\backend\\Server\\obj\\",
+        "projectUniqueName": "/home/alex/repositories/bookolog/backend/Storage/Storage.csproj",
+        "projectName": "Storage",
+        "projectPath": "/home/alex/repositories/bookolog/backend/Storage/Storage.csproj",
+        "packagesPath": "/home/alex/.nuget/packages/",
+        "outputPath": "/home/alex/repositories/bookolog/backend/Storage/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Professional\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/alex/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/alex/repositories/bookolog/backend/server/server.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/alex/repositories/bookolog/backend/server/server.csproj",
+        "projectName": "server",
+        "projectPath": "/home/alex/repositories/bookolog/backend/server/server.csproj",
+        "packagesPath": "/home/alex/.nuget/packages/",
+        "outputPath": "/home/alex/repositories/bookolog/backend/server/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/alex/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "D:\\Repository\\bookolog\\backend\\Storage\\Storage.csproj": {
-                "projectPath": "D:\\Repository\\bookolog\\backend\\Storage\\Storage.csproj"
+              "/home/alex/repositories/bookolog/backend/Storage/Storage.csproj": {
+                "projectPath": "/home/alex/repositories/bookolog/backend/Storage/Storage.csproj"
               }
             }
           }
@@ -78,6 +143,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[3.0.3, 3.0.3]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -86,72 +165,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "D:\\Repository\\bookolog\\backend\\Storage\\Storage.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\Repository\\bookolog\\backend\\Storage\\Storage.csproj",
-        "projectName": "Storage",
-        "projectPath": "D:\\Repository\\bookolog\\backend\\Storage\\Storage.csproj",
-        "packagesPath": "C:\\Users\\Professional\\.nuget\\packages\\",
-        "outputPath": "D:\\Repository\\bookolog\\backend\\Storage\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\Professional\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.0": {
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.0": {
-          "dependencies": {
-            "Microsoft.EntityFrameworkCore.Sqlite": {
-              "target": "Package",
-              "version": "[3.1.5, )"
-            },
-            "log4net": {
-              "target": "Package",
-              "version": "[2.0.8, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
         }
       }
     }

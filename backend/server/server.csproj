@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Storage\Storage.csproj" />
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="Copy $(ProjectDir)log4net.dev.xml $(OutDir)log4net.dev.xml&#xD;&#xA;Copy $(ProjectDir)log4net.prod.xml $(OutDir)log4net.prod.xml" />
-  </Target>
-
 </Project>
