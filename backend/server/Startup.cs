@@ -25,8 +25,6 @@ namespace Server
     {
         ILog logger = LogManager.GetLogger(typeof(Startup));
 
-        Timer afterStartup = new Timer(5000);
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
