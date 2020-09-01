@@ -2,32 +2,28 @@
 
 -- changeset hrodvitnir:1 splitStatements:false
 create table users (
-	id integer primary key asc,
-	login text not null,
+	id serial primary key,
+	login text not null unique,
 	password_hash text not null,
 	salt text not null
 );
 
-create unique index unqe_users_login on users(login);
-
--- changeset hrodvitnir:2 splitStatements:false
-
 create table books (
-	id integer primary key asc,
-	name text not null,
-	authors text not null,
-	status integer not null,
-	startYear integer,
-	startMonth integer,
-	startDay integer,
-	endYear integer,
-	endMonth integer,
-	endDay integer,
-	pages integer,
-	totalPages integer,
-	userId integer not null,
-	FOREIGN KEY(userId) REFERENCES users(id)
+	guid uuid default uuid_generate_v4 () primary key,
+	name varchar(512) not null,
+	authors varchar(256)[],
+    year integer default null,
+    status integer default 0,
+	tags varchar(256)[],
+	totalUnits integer default 0,
+	doneUnits integer default 0,
+	genre varchar(256),
+	startDate date,
+	modifyDate timestamp,
+	endDate date,
+	type integer default 0,
+	note text,
+	userId integer references users (id),
+	constraint validDates check (startDate <= endDate),
+	constraint validUnits check (doneUnits <= totalUnits)
 );
-
--- changeset hrodvitnir:3 splitStatements:false
-insert into users(login, password_hash, salt) values ('admin', '587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e', '123');
