@@ -1,0 +1,1 @@
+insert into users(login, password_hash, salt) values ('admin', '587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e', '123')

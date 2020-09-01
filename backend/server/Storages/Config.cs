@@ -7,6 +7,6 @@ namespace Server.Storages
 {
     public class Config
     {
-        public static string ConnectionString = @"Data Source=D:\Repository\bookolog\backend\Server\bin\Debug\netcoreapp3.0\db.sqlite;";
+        public static string ConnectionString = @"Server=127.0.0.1;Port=45432;Database=bookolog;User Id=bookolog;Password=masterkey;";
     }
 }

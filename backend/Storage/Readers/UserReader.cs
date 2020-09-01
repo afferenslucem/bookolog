@@ -1,5 +1,5 @@
 ﻿using Storage.Models;
-using Reader = Microsoft.Data.Sqlite.SqliteDataReader;
+using Reader = Npgsql.NpgsqlDataReader;
 
 namespace Storage.Readers
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using SQLReader = Microsoft.Data.Sqlite.SqliteDataReader;
+using SQLReader = Npgsql.NpgsqlDataReader;
 
 namespace Storage.Readers
 {

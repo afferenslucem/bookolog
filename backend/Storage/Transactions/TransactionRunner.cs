@@ -1,5 +1,5 @@
 ﻿using log4net;
-using Connection = Microsoft.Data.Sqlite.SqliteConnection;
+using Connection = Npgsql.NpgsqlConnection;
 using Storage.Exceptions;
 using System;
 using System.Collections.Generic;
