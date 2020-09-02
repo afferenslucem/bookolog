@@ -13,7 +13,9 @@ namespace Server.Testing.Mocks
             Login = "test",
             Password = "masterkey",
             Salt = "123",
-            PasswordHash = new SHA256Hasher().GetSHA256Hash("masterkey", "123")
+            Email = "321",
+            PasswordHash = new SHA256Hasher().GetSHA256Hash("masterkey", "123"),
+            LastAction = DateTime.Now
         };
 
         public static Book book = new Book

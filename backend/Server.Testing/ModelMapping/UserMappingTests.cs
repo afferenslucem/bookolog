@@ -22,7 +22,9 @@ namespace Server.Testing.Mocks
                 Login = "a",
                 Password = "b",
                 PasswordHash = "c",
-                Salt = "d"
+                Salt = "d",
+                Email = "e",
+                LastAction = new DateTime()
             };
 
             var adapter = new UserStorageAdapter(user);
@@ -31,7 +33,9 @@ namespace Server.Testing.Mocks
                 user.Id == adapter.Id &&
                 user.Login == adapter.Login &&
                 user.PasswordHash == adapter.PasswordHash &&
-                user.Salt == adapter.Salt
+                user.Salt == adapter.Salt && 
+                user.Email == adapter.Email && 
+                user.LastAction == adapter.LastAction
             );
         }
         [TestMethod]
@@ -42,7 +46,9 @@ namespace Server.Testing.Mocks
                 Id = 1,
                 Login = "a",
                 PasswordHash = "c",
-                Salt = "d"
+                Salt = "d",
+                Email = "e",
+                LastAction = new DateTime()
             };
 
             var user = new User(adapter);
@@ -52,6 +58,8 @@ namespace Server.Testing.Mocks
                 user.Login == adapter.Login &&
                 user.PasswordHash == adapter.PasswordHash &&
                 user.Salt == adapter.Salt &&
+                user.Email == adapter.Email &&
+                user.LastAction == adapter.LastAction &&
                 user.Password == null
             );
         }
