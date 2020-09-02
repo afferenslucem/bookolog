@@ -29,7 +29,7 @@ namespace Storage.Repositories
 
             cmd.CommandText = "select * from books where guid = @guid limit 1";
 
-            cmd.Parameters.AddWithValue("guid", guid);
+            cmd.Parameters.AddWithValue("guid", new Guid(guid));
 
             using var reader = await cmd.ExecuteReaderAsync();
 
@@ -67,7 +67,7 @@ namespace Storage.Repositories
 
             cmd.CommandText = "select \"createBook\"(@guid, @name, @authors, @year, @status, @tags, @doneUnits, @totalUnits, @genre, @startdate, @modifyDate, @enddate, @type, @note, @userid);";
 
-            cmd.Parameters.AddWithValue("guid", book.Guid);
+            cmd.Parameters.AddWithValue("guid", book.Guid != null ? (object)new Guid(book.Guid) : DBNull.Value);
             cmd.Parameters.AddWithValue("name", book.Name);
             cmd.Parameters.AddWithValue("authors", (object) book.Authors ?? DBNull.Value);
             cmd.Parameters.AddWithValue("year", (object) book.Year ?? DBNull.Value);
@@ -81,12 +81,14 @@ namespace Storage.Repositories
             cmd.Parameters.AddWithValue("enddate", (object)book.EndDate ?? DBNull.Value);
             cmd.Parameters.AddWithValue("type", (object)book.Type ?? DBNull.Value);
             cmd.Parameters.AddWithValue("note", (object)book.Note ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("userId", book.UserId);
+            cmd.Parameters.AddWithValue("userId", (int)book.UserId);
 
-            var id = (string) await cmd.ExecuteScalarAsync();
+            var reader = await cmd.ExecuteReaderAsync();
+
+            var id = reader.GetGuid(0);
 
             var result = new Book(book);
-            result.Guid = id;
+            result.Guid = id.ToString();
 
             return result;
         }
@@ -99,7 +101,7 @@ namespace Storage.Repositories
             
             cmd.CommandText = "select \"updateBook\"(@guid, @name, @authors, @year, @status, @tags, @doneUnits, @totalUnits, @genre, @startdate, @modifyDate, @enddate, @type, @note)";
 
-            cmd.Parameters.AddWithValue("guid", book.Guid);
+            cmd.Parameters.AddWithValue("guid", new Guid(book.Guid));
             cmd.Parameters.AddWithValue("name", book.Name);
             cmd.Parameters.AddWithValue("authors", (object) book.Authors ?? DBNull.Value);
             cmd.Parameters.AddWithValue("year", (object) book.Year ?? DBNull.Value);
@@ -125,7 +127,7 @@ namespace Storage.Repositories
 
             cmd.CommandText = "delete from books where guid = @guid";
 
-            cmd.Parameters.AddWithValue("guid", bookGuid);
+            cmd.Parameters.AddWithValue("guid", new Guid(bookGuid));
 
             await cmd.ExecuteNonQueryAsync();
         }

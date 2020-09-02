@@ -41,8 +41,24 @@ namespace Server.Controllers
         }
 
 
+        [HttpGet]
+        [Route("{guid}")]
+        public async Task<ActionResult<Book[]>> Get(string guid)
+        {
+            try
+            {
+                var books = await this.bookService.GetByGuid(guid);
+
+                return Ok(books);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+
         [HttpPost]
-        [Route("[action]")]
         public async Task<ActionResult<Book>> Create([FromBody] Book book)
         {
             try
@@ -60,31 +76,6 @@ namespace Server.Controllers
                 return BadRequest(e);
             }
         }
-
-
-        [HttpPost]
-        [Route("[action]")]
-        public async Task<ActionResult<Book>> CreateMany([FromBody] Book[] books)
-        {
-            try
-            {
-                var user = await session.GetUser();
-
-                var tasks = books.Select(async (item) => {
-                    item.UserId = user.Id;
-                    return await this.bookService.Save(item);
-                });
-
-                var result = await Task.WhenAll(tasks);
-
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
-
 
         [HttpPut]
         [Route("[action]/{guid}")]

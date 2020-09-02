@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "frontend.v2"
+		},
+		{
+			"path": "backend"
+		},
+		{
+			"path": "database"
+		}
+	],
+	"settings": {}
+}
