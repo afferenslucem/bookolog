@@ -18,36 +18,40 @@ namespace Server.Testing.Mocks
         {
             var book = new Book
             {
-                Id = 1,
-                Authors = new string[] { "a", "b" },
-                Name = "name",
+                Name = "test",
+                Authors = new string[] { "test1", "test2" },
                 Status = Status.Done,
-                PagesRead = 0,
-                TotalPages = 10,
-                StartYear = 2020,
-                StartMonth = 10,
-                StartDay = 1,
-                EndYear = 2021,
-                EndMonth = 10,
-                EndDay = 4,
-                UserId = 2
+                UserId = 1,
+                DoneUnits = 100,
+                TotalUnits = 450,
+                Genge = "Fantastic",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(1),
+                ModifyDate = DateTime.Now.AddDays(2),
+                Note = "note",
+                Guid = "csdcsdvdfvsdbsdfb sfgdvbsfd",
+                Tags = new string[] { "tag1" },
+                Type = Server.Models.Type.Audio,
+                Year = 2018
             };
 
             var adapter = new BookStorageAdapter(book);
 
             Assert.IsTrue(
-                book.Id == adapter.Id &&
+                book.Guid == adapter.Guid &&
                 book.Authors.SequenceEqual(adapter.Authors) &&
                 book.Name == adapter.Name &&
                 book.Status == (Status)adapter.Status &&
-                book.PagesRead == adapter.PagesRead &&
-                book.TotalPages == adapter.TotalPages &&
-                book.StartYear == adapter.StartYear &&
-                book.StartMonth == adapter.StartMonth &&
-                book.StartDay == adapter.StartDay &&
-                book.EndYear == adapter.EndYear &&
-                book.EndMonth == adapter.EndMonth &&
-                book.EndDay == adapter.EndDay &&
+                book.DoneUnits == adapter.DoneUnits &&
+                book.TotalUnits == adapter.TotalUnits &&
+                book.Genge == adapter.Genge &&
+                book.StartDate == adapter.StartDate &&
+                book.EndDate == adapter.EndDate &&
+                book.ModifyDate == adapter.ModifyDate &&
+                book.Note == adapter.Note &&
+                book.Type == (Server.Models.Type?)adapter.Type &&
+                book.Year == adapter.Year &&
+                book.Tags.SequenceEqual(adapter.Tags) &&
                 book.UserId == adapter.UserId
             );
         }
@@ -56,36 +60,40 @@ namespace Server.Testing.Mocks
         {
             var adapter = new BookStorageAdapter
             {
-                Id = 1,
-                Authors = new string[] { "a", "b" },
-                Name = "name",
-                Status = (int)Status.Done,
-                PagesRead = 0,
-                TotalPages = 10,
-                StartYear = 2020,
-                StartMonth = 10,
-                StartDay = 1,
-                EndYear = 2021,
-                EndMonth = 10,
-                EndDay = 4,
-                UserId = 2
+                Name = "test",
+                Authors = new string[] { "test1", "test2" },
+                Status = (int?)Status.Done,
+                UserId = 1,
+                DoneUnits = 100,
+                TotalUnits = 450,
+                Genge = "Fantastic",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(1),
+                ModifyDate = DateTime.Now.AddDays(2),
+                Note = "note",
+                Guid = "csdcsdvdfvsdbsdfb sfgdvbsfd",
+                Tags = new string[] { "tag1" },
+                Type = (int?)Server.Models.Type.Audio,
+                Year = 2018
             };
 
             var book = new Book(adapter);
 
             Assert.IsTrue(
-                book.Id == adapter.Id &&
+                book.Guid == adapter.Guid &&
                 book.Authors.SequenceEqual(adapter.Authors) &&
                 book.Name == adapter.Name &&
                 book.Status == (Status)adapter.Status &&
-                book.PagesRead == adapter.PagesRead &&
-                book.TotalPages == adapter.TotalPages &&
-                book.StartYear == adapter.StartYear &&
-                book.StartMonth == adapter.StartMonth &&
-                book.StartDay == adapter.StartDay &&
-                book.EndYear == adapter.EndYear &&
-                book.EndMonth == adapter.EndMonth &&
-                book.EndDay == adapter.EndDay &&
+                book.DoneUnits == adapter.DoneUnits &&
+                book.TotalUnits == adapter.TotalUnits &&
+                book.Genge == adapter.Genge &&
+                book.StartDate == adapter.StartDate &&
+                book.EndDate == adapter.EndDate &&
+                book.ModifyDate == adapter.ModifyDate &&
+                book.Note == adapter.Note &&
+                book.Type == (Server.Models.Type?)adapter.Type &&
+                book.Year == adapter.Year &&
+                book.Tags.SequenceEqual(adapter.Tags) &&
                 book.UserId == adapter.UserId
             );
         }

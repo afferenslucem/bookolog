@@ -24,14 +24,17 @@ namespace Server.Testing.Mocks
             Authors = new string[] { "test1", "test2" },
             Status = Status.Done,
             UserId = 1,
-            StartYear = 2020,
-            StartMonth = 10,
-            StartDay = 1,
-            EndYear = 2021,
-            EndMonth = 10,
-            EndDay = 4,
-            PagesRead = 10,
-            TotalPages = 100
+            DoneUnits = 100,
+            TotalUnits = 450,
+            Genge = "Fantastic",
+            StartDate = DateTime.Now,
+            EndDate = DateTime.Now.AddDays(1),
+            ModifyDate = DateTime.Now.AddDays(2),
+            Note = "note",
+            Guid = "csdcsdvdfvsdbsdfb sfgdvbsfd",
+            Tags = new string[] { "tag1" },
+            Type = Server.Models.Type.Audio,
+            Year = 2018
         };
     }
 }

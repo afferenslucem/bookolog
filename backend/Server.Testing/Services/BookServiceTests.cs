@@ -29,7 +29,7 @@ namespace Server.Testing
         {
             var saved = await this.service.Save(this.book);
 
-            var result = await this.storage.GetById(saved.Id);
+            var result = await this.storage.GetByGuid(saved.Guid);
 
             Assert.AreEqual(this.book, result);
         }
@@ -42,7 +42,7 @@ namespace Server.Testing
 
             await this.service.Delete(saved);
 
-            var result = await this.storage.GetById(saved.Id);
+            var result = await this.storage.GetByGuid(saved.Guid);
 
             Assert.IsNull(result);
         }
@@ -53,9 +53,9 @@ namespace Server.Testing
         {
             var saved = await this.service.Save(this.book);
 
-            await this.service.Delete(saved.Id);
+            await this.service.Delete(saved.Guid);
 
-            var result = await this.storage.GetById(saved.Id);
+            var result = await this.storage.GetByGuid(saved.Guid);
 
             Assert.IsNull(result);
         }
@@ -68,9 +68,9 @@ namespace Server.Testing
                         
             await this.service.Update(saved);
 
-            var updated = await this.storage.GetById(saved.Id);
+            var updated = await this.storage.GetByGuid(saved.Guid);
 
-            Assert.AreEqual(book, updated);
+            Assert.AreEqual(saved, updated);
         }
     }
 }
