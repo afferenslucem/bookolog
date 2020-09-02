@@ -1,7 +1,58 @@
 insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
-values('Земля лишних. Два билета туда', '{"Андрей Круз", "Андрей Царев"}', 2018, 2, '{"боевик", "другие миры", "криминал", "авантюра"}', null, null, 'фантастика', '2020-08-30', '2020-08-31', 2, null, 1);
+values('Зеленый луч', '{"Кайл Иторр"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
 insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
-values('Земля лишних. Последний борт на Одессу', '{"Андрей Круз", "Андрей Царев"}', 2018, 1, '{"боевик", "другие миры", "криминал", "авантюра", "маньяки"}', 393, 791, 'фантастика', '2020-08-31', null, 2, null, 1);
+values('Змеиное логово', '{"Кайл Иторр"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Простые оружные парни', '{"Владимир Стрельников"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Путанабус. Лишние Земли лишних', '{"Дмитрий Старицкий"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Путанабус. Две свадьбы и одни похороны', '{"Дмитрий Старицкий"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Путанабус. Наперегонки со смертью', '{"Дмитрий Старицкий"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Резервист', '{"Владимир Стрельников"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Лишнее золото. Судьбы цвета хаки', '{"Игорь Негатин"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Лишнее золото. Без права на выбор', '{"Игорь Негатин"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Лишнее золото. За гранью джихада', '{"Игорь Негатин"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Лишнее золото. Наедине с мечтой', '{"Игорь Негатин"}', 2018, 0, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Нижний уровень', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 100, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Нижний уровень 2', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 234, 456, 'фантастика', '2020-08-11', null, 0, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('На пороге тьмы', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 0, 456, 'фантастика', '2020-08-11', null, 1, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Двери во тьме', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 0, 456, 'фантастика', '2020-08-11', null, 1, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Возле тьмы. Чужой', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 0, 456, 'фантастика', '2020-08-11', null, 1, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Странник', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 0, 456, 'фантастика', '2020-08-11', null, 1, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Странники', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 0, 456, 'фантастика', '2020-08-11', null, 1, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Бандит', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 0, 456, 'фантастика', '2020-08-11', null, 1, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Мир Цитадели', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 0, 456, 'фантастика', '2020-08-11', null, 1, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Земля лишних. Побег', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 120, 456, 'фантастика', '2020-08-01', null, 1, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Земля лишних. Коммерсант', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 12, 456, 'фантастика', '2020-08-01', null, 1, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Земля лишних. Исход', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 0, 791, 'фантастика', '2020-08-01', null, 2, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Земля лишних. Новая жизнь', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 0, 791, 'фантастика', '2020-09-02', null, 2, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Земля лишних. За други своя', '{"Андрей Круз"}', 2018, 1, '{"боевик", "другие миры", "авантюра"}', 234, 791, 'фантастика', '2020-09-01', null, 2, null, 1);
+insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
+values('Земля лишних. Два билета туда', '{"Андрей Круз", "Андрей Царев"}', 2018, 2, '{"боевик", "другие миры", "криминал", "авантюра"}', null, null, 'фантастика', '2020-08-30', '2020-08-31', 2, null, 1);
 insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
 values('Чужой. Холодная кузница', '{"Алекс Уайт"}', 2019, 2, '{"боевик", "пришельцы", "ксеноморфы"}', 668, 668, 'фантастика', '2020-08-23', '2020-08-27', 2, 'Не понравилось', 1);
 insert into books(name, authors, year, status, tags, doneunits, totalunits, genre, startdate, enddate, type, note, userid)
