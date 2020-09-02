@@ -9,12 +9,12 @@ namespace Server.Services
 {
     public interface IBookService
     {
-        Task<Book> GetById(long id);
+        Task<Book> GetByGuid(string guid);
         Task<IEnumerable<Book>> GetByUserId(long userId);
         Task<Book> Save(Book book);
         Task Update(Book book);
         Task Delete(Book book);
-        Task Delete(long bookId);
+        Task Delete(string guid);
     }
 
     public class BookService : IBookService
@@ -30,9 +30,9 @@ namespace Server.Services
             this.storage = storage;
         }
 
-        public async Task<Book> GetById(long id)
+        public async Task<Book> GetByGuid(string guid)
         {
-            var result = await this.storage.GetById(id);
+            var result = await this.storage.GetByGuid(guid);
 
             return result;
         }
@@ -61,9 +61,9 @@ namespace Server.Services
             await this.storage.Delete(book);
         }
 
-        public async Task Delete(long bookId)
+        public async Task Delete(string guid)
         {
-            await this.storage.Delete(bookId);
+            await this.storage.Delete(guid);
         }
     }
 }

@@ -10,21 +10,21 @@ namespace Server.Tests.Mocks.Storages
 {
     class BookStorageMock : IBookStorage
     {
-        IDictionary<long, Book> repository = new Dictionary<long, Book>();
+        IDictionary<string, Book> repository = new Dictionary<string, Book>();
 
-        public IDictionary<long, Book> Repository { get { return repository; } }
+        public IDictionary<string, Book> Repository { get { return repository; } }
 
         public async Task Delete(Book book)
         {
-            await Task.Run(() => this.repository.Remove(book.Id));
+            await Task.Run(() => this.repository.Remove(book.Guid));
         }
 
-        public async Task Delete(long bookId)
+        public async Task Delete(string bookId)
         {
             await Task.Run(() => this.repository.Remove(bookId));
         }
 
-        public async Task<Book> GetById(long id)
+        public async Task<Book> GetByGuid(string id)
         {
             var result = await Task.Run(() =>
             {
@@ -43,13 +43,11 @@ namespace Server.Tests.Mocks.Storages
 
         public async Task<Book> Save(Book book)
         {
-            var lastId = await Task.Run(() => this.repository.Keys.DefaultIfEmpty(0).Max());
-
-            var value = lastId + 1;
+            var value = Guid.NewGuid().ToString();
 
             this.repository[value] = book;
 
-            book.Id = value;
+            book.Guid = value;
 
             return new Book(book);
         }
@@ -57,11 +55,11 @@ namespace Server.Tests.Mocks.Storages
         public async Task Update(Book book)
         {
             await Task.Run(() => {
-                var temp = this.repository[book.Id];
+                var temp = this.repository[book.Guid];
 
                 temp = book;
 
-                this.repository[book.Id] = temp; });
+                this.repository[book.Guid] = temp; });
         }
     }
 }

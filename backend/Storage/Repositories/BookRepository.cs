@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace Storage.Repositories
 {
     public interface IBookRepository {
-        Task<IStorageBook> GetById(long id);
+        Task<IStorageBook> GetByGuid(string guid);
         Task<IEnumerable<IStorageBook>> GetByUserId(long userId);
         Task<IStorageBook> Save(IStorageBook book);
         Task Update(IStorageBook book);
-        Task Delete(long bookId);
+        Task Delete(string bookGuid);
     }
 
     public class BookRepository : Repository, IBookRepository
@@ -21,15 +21,15 @@ namespace Storage.Repositories
         {
         }
 
-        public async Task<IStorageBook> GetById(long id)
+        public async Task<IStorageBook> GetByGuid(string guid)
         {
             using var connection = await this.GetConnection();
 
             var cmd = connection.CreateCommand();
 
-            cmd.CommandText = "select * from books where id = @id limit 1";
+            cmd.CommandText = "select * from books where guid = @guid limit 1";
 
-            cmd.Parameters.AddWithValue("id", id);
+            cmd.Parameters.AddWithValue("guid", guid);
 
             using var reader = await cmd.ExecuteReaderAsync();
 
@@ -65,25 +65,28 @@ namespace Storage.Repositories
 
             var cmd = connection.CreateCommand();
 
-            cmd.CommandText = "insert into books(name, authors, status, startYear, startMonth, startDay, endYear, endMonth, endDay, pages, totalPages, userId) values(@name, @authors, @status, @startYear, @startMonth, @startDay, @endYear, @endMonth, @endDay, @pages, @totalPages, @userId); select last_insert_rowid();";
+            cmd.CommandText = "select \"createBook\"(@guid, @name, @authors, @year, @status, @tags, @doneUnits, @totalUnits, @genre, @startdate, @modifyDate, @enddate, @type, @note, @userid);";
 
+            cmd.Parameters.AddWithValue("guid", book.Guid);
             cmd.Parameters.AddWithValue("name", book.Name);
-            cmd.Parameters.AddWithValue("authors", string.Join('|', book.Authors));
-            cmd.Parameters.AddWithValue("status", book.Status);
-            cmd.Parameters.AddWithValue("startYear", (object) book.StartYear ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("startMonth", (object) book.StartMonth ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("startDay", (object) book.StartDay ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("endYear", (object) book.EndYear ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("endMonth", (object) book.EndMonth ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("endDay", (object) book.EndDay ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("pages", (object)book.PagesRead ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("totalPages", (object)book.TotalPages ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("authors", (object) book.Authors ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("year", (object) book.Year ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("status", (object) book.Status ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("tags", (object) book.Tags ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("doneUnits", (object) book.DoneUnits ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("totalUnits", (object) book.TotalUnits ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("genre", (object) book.Genge ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("startdate", (object) book.StartDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("modifyDate", (object)book.ModifyDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("enddate", (object)book.EndDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("type", (object)book.Type ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("note", (object)book.Note ?? DBNull.Value);
             cmd.Parameters.AddWithValue("userId", book.UserId);
 
-            var id = (long) await cmd.ExecuteScalarAsync();
+            var id = (string) await cmd.ExecuteScalarAsync();
 
             var result = new Book(book);
-            result.Id = id;
+            result.Guid = id;
 
             return result;
         }
@@ -94,43 +97,35 @@ namespace Storage.Repositories
 
             var cmd = connection.CreateCommand();
             
-            cmd.CommandText = "update books set name = @name, " +
-                "authors = @authors, " +
-                "status = @status, " +
-                "startYear = @startYear, " +
-                "startMonth = @startMonth, " +
-                "startDay = @startDay, " +
-                "endYear = @endYear, " +
-                "endMonth = @endMonth, " +
-                "endDay = @endDay, " +
-                "pages = @pages, " +
-                "totalPages = @totalPages where id = @id;";
+            cmd.CommandText = "select \"updateBook\"(@guid, @name, @authors, @year, @status, @tags, @doneUnits, @totalUnits, @genre, @startdate, @modifyDate, @enddate, @type, @note)";
 
-            cmd.Parameters.AddWithValue("id", book.Id);
+            cmd.Parameters.AddWithValue("guid", book.Guid);
             cmd.Parameters.AddWithValue("name", book.Name);
-            cmd.Parameters.AddWithValue("authors", string.Join('|', book.Authors));
-            cmd.Parameters.AddWithValue("status", book.Status);
-            cmd.Parameters.AddWithValue("startYear", (object)book.StartYear ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("startMonth", (object)book.StartMonth ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("startDay", (object)book.StartDay ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("endYear", (object)book.EndYear ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("endMonth", (object)book.EndMonth ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("endDay", (object)book.EndDay ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("pages", (object)book.PagesRead ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("totalPages", (object)book.TotalPages ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("authors", (object) book.Authors ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("year", (object) book.Year ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("status", (object) book.Status ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("tags", (object) book.Tags ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("doneUnits", (object) book.DoneUnits ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("totalUnits", (object) book.TotalUnits ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("genre", (object) book.Genge ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("startdate", (object) book.StartDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("modifyDate", (object)book.ModifyDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("enddate", (object)book.EndDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("type", (object)book.Type ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("note", (object)book.Note ?? DBNull.Value);
 
             await cmd.ExecuteNonQueryAsync();
         }
 
-        public async Task Delete(long bookId)
+        public async Task Delete(string bookGuid)
         {
             using var connection = await this.GetConnection();
 
             var cmd = connection.CreateCommand();
 
-            cmd.CommandText = "delete from books where id = @id";
+            cmd.CommandText = "delete from books where guid = @guid";
 
-            cmd.Parameters.AddWithValue("id", bookId);
+            cmd.Parameters.AddWithValue("guid", bookGuid);
 
             await cmd.ExecuteNonQueryAsync();
         }

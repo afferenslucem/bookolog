@@ -87,13 +87,13 @@ namespace Server.Controllers
 
 
         [HttpPut]
-        [Route("[action]/{id}")]
-        public async Task<ActionResult<Book>> Edit(long id, [FromBody] Book book)
+        [Route("[action]/{guid}")]
+        public async Task<ActionResult<Book>> Edit(string guid, [FromBody] Book book)
         {
             try
             {
                 var user = await session.GetUser();
-                var oldState = await bookService.GetById(id);
+                var oldState = await bookService.GetByGuid(guid);
 
                 if(user.Id != oldState.UserId)
                 {
@@ -101,7 +101,7 @@ namespace Server.Controllers
                 }
 
                 book.UserId = user.Id;
-                book.Id = id;
+                book.Guid = guid;
 
                 await bookService.Update(book);
 
@@ -115,20 +115,20 @@ namespace Server.Controllers
 
 
         [HttpDelete]
-        [Route("[action]/{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [Route("[action]/{guid}")]
+        public async Task<ActionResult> Delete(string guid)
         {
             try
             {
                 var user = await session.GetUser();
-                var oldState = await bookService.GetById(id);
+                var oldState = await bookService.GetByGuid(guid);
 
                 if (user.Id != oldState.UserId)
                 {
                     return new StatusCodeResult(403);
                 }
 
-                await bookService.Delete(id);
+                await bookService.Delete(oldState);
 
                 return Ok();
             }

@@ -103,6 +103,14 @@ namespace Storage.Readers
             return result;
         }
 
+        protected string[] GetNullableStringArray(SQLReader reader, ref int readCount)
+        {
+            var result = reader.IsDBNull(readCount) ? (string[])null : reader.GetFieldValue<string[]>(readCount);
+            readCount++;
+
+            return result;
+        }
+
         protected short? GetNullableInt16(SQLReader reader, ref int readCount)
         {
             var result = reader.IsDBNull(readCount) ? (short?)null : reader.GetInt16(readCount);

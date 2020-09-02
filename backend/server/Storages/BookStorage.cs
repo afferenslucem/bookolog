@@ -9,11 +9,11 @@ namespace Server.Storages
 {
     public interface IBookStorage
     {
-        Task<Book> GetById(long id);
+        Task<Book> GetByGuid(string guid);
         Task<Book> Save(Book book);
         Task Update(Book book);
         Task Delete(Book book);
-        Task Delete(long bookId);
+        Task Delete(string guid);
         Task<IEnumerable<Book>> GetByUserId(long userId);
     }
 
@@ -36,9 +36,9 @@ namespace Server.Storages
             await this.repository.Update(new BookStorageAdapter(book));
         }
 
-        public async Task<Book> GetById(long id)
+        public async Task<Book> GetByGuid(string guid)
         {
-            var book = await this.repository.GetById(id);
+            var book = await this.repository.GetByGuid(guid);
 
             var result = new Book(book);
 
@@ -56,12 +56,12 @@ namespace Server.Storages
 
         public async Task Delete(Book book)
         {
-            await this.repository.Delete(book.Id);
+            await this.repository.Delete(book.Guid);
         }
 
-        public async Task Delete(long bookId)
+        public async Task Delete(string guid)
         {
-            await this.repository.Delete(bookId);
+            await this.repository.Delete(guid);
         }
     }
 }

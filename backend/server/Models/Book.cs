@@ -14,22 +14,29 @@ namespace Server.Models
         InProgress = 1,
         Done = 2
     }
-
-    public class Book : IComparable<Book>, IEquatable<Book>
+    public enum Type
     {
-        public long Id { get; set; }
+        Paper = 0,
+        Electronic = 1,
+        Audio = 2
+    }
+
+    public class Book
+    {
+        public string Guid { get; set; }
         public string Name { get; set; }
         public string[] Authors { get; set; }
-        public Status Status { get; set; }
-        public short? StartYear { get; set; }
-        public short? StartMonth { get; set; }
-        public short? StartDay { get; set; }
-        public short? EndYear { get; set; }
-        public short? EndMonth { get; set; }
-        public short? EndDay { get; set; }
-        public int? PagesRead { get; set; }
-        public int? TotalPages { get; set; }
-
+        public int? Year { get; set; }
+        public Status? Status { get; set; }
+        public string[] Tags { get; set; }
+        public int? DoneUnits { get; set; }
+        public int? TotalUnits { get; set; }
+        public string Genge { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? ModifyDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public Type? Type { get; set; }
+        public string Note { get; set; }
         public long UserId { get; set; }
 
         public Book()
@@ -38,112 +45,95 @@ namespace Server.Models
 
         public Book(Book book)
         {
-            this.Id = book.Id;
-            this.Name = book.Name;
-            
-            this.Authors = new string[book.Authors.Length];
-            Array.Copy(this.Authors, book.Authors, book.Authors.Length);
-
-            this.Status = book.Status;
-            this.StartYear = book.StartYear;
-            this.StartMonth = book.StartMonth;
-            this.StartDay = book.StartDay;
-            this.EndYear = book.EndYear;
-            this.EndMonth = book.EndMonth;
-            this.EndDay = book.EndDay;
-            this.PagesRead = book.PagesRead;
-            this.TotalPages = book.TotalPages;
-
-            this.UserId = book.UserId;
-        }
-
-        public Book(IStorageBook book)
-        {
-            this.Id = book.Id;
+            this.Guid = book.Guid;
             this.Name = book.Name;
 
             this.Authors = new string[book.Authors.Length];
             Array.Copy(book.Authors, this.Authors, book.Authors.Length);
 
-            this.Status = (Status)book.Status;
-            this.StartYear = book.StartYear;
-            this.StartMonth = book.StartMonth;
-            this.StartDay = book.StartDay;
-            this.EndYear = book.EndYear;
-            this.EndMonth = book.EndMonth;
-            this.EndDay = book.EndDay;
-            this.PagesRead = book.PagesRead;
-            this.TotalPages = book.TotalPages;
+            this.Year = book.Year;
+            this.Status = book.Status;
+
+            this.Tags = new string[book.Tags.Length];
+            Array.Copy(book.Tags, this.Tags, book.Tags.Length);
+
+            this.DoneUnits = book.DoneUnits;
+            this.TotalUnits = book.TotalUnits;
+            this.Genge = book.Genge;
+            this.StartDate = book.StartDate;
+            this.ModifyDate = book.ModifyDate;
+            this.EndDate = book.EndDate;
+            this.Type = book.Type;
+            this.Note = book.Note;
             this.UserId = book.UserId;
         }
 
-        public int CompareTo(Book book)
+        public Book(IStorageBook book)
         {
-            return unchecked((int)(this.Id - book.Id));
-        }
+            this.Guid = book.Guid;
+            this.Name = book.Name;
 
-        public bool Equals([AllowNull] Book book)
-        {
-            if (book == null) return false;
+            this.Authors = new string[book.Authors.Length];
+            Array.Copy(book.Authors, this.Authors, book.Authors.Length);
 
-            return this.Id == book.Id &&
-               this.Authors.SequenceEqual(book.Authors) &&
-               this.Name == book.Name &&
-               this.Status == (Status)book.Status &&
-               this.PagesRead == book.PagesRead &&
-               this.TotalPages == book.TotalPages &&
-               this.StartYear == book.StartYear &&
-               this.StartMonth == book.StartMonth &&
-               this.StartDay == book.StartDay &&
-               this.EndYear == book.EndYear &&
-               this.EndMonth == book.EndMonth &&
-               this.EndDay == book.EndDay &&
-               this.UserId == book.UserId;
-        }
+            this.Year = book.Year;
+            this.Status = (Status?)book.Status;
 
-        public override bool Equals(object other)
-        {
-            var book = other as Book;
-
-            return this.Equals(book);
-        }
-
-        public override int GetHashCode()
-        {
-            return 0;
+            this.Tags = new string[book.Tags.Length];
+            Array.Copy(book.Tags, this.Tags, book.Tags.Length);
+            
+            this.DoneUnits = book.DoneUnits;
+            this.TotalUnits = book.TotalUnits;
+            this.Genge = book.Genge;
+            this.StartDate = book.StartDate;
+            this.ModifyDate = book.ModifyDate;
+            this.EndDate = book.EndDate;
+            this.Type = (Type?)book.Type;
+            this.Note = book.Note;
+            this.UserId = book.UserId;
         }
     }
 
-public class BookStorageAdapter : IStorageBook
+    public class BookStorageAdapter : IStorageBook
     {
-        public long Id { get; set; }
+        public string Guid { get; set; }
         public string Name { get; set; }
         public string[] Authors { get; set; }
-        public int Status { get; set; }
-        public short? StartYear { get; set; }
-        public short? StartMonth { get; set; }
-        public short? StartDay { get; set; }
-        public short? EndYear { get; set; }
-        public short? EndMonth { get; set; }
-        public short? EndDay { get; set; }
-        public int? PagesRead { get; set; }
-        public int? TotalPages { get; set; }
+        public int? Year { get; set; }
+        public int? Status { get; set; }
+        public string[] Tags { get; set; }
+        public int? DoneUnits { get; set; }
+        public int? TotalUnits { get; set; }
+        public string Genge { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? ModifyDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public int? Type { get; set; }
+        public string Note { get; set; }
         public long UserId { get; set; }
 
         public BookStorageAdapter(Book book)
         {
-            this.Id = book.Id;
+            this.Guid = book.Guid;
             this.Name = book.Name;
-            this.Authors = book.Authors;
-            this.Status = (int)book.Status;
-            this.StartYear = book.StartYear;
-            this.StartMonth = book.StartMonth;
-            this.StartDay = book.StartDay;
-            this.EndYear = book.EndYear;
-            this.EndMonth = book.EndMonth;
-            this.EndDay = book.EndDay;
-            this.PagesRead = book.PagesRead;
-            this.TotalPages = book.TotalPages;
+
+            this.Authors = new string[book.Authors.Length];
+            Array.Copy(book.Authors, this.Authors, book.Authors.Length);
+
+            this.Year = book.Year;
+            this.Status = (int?)book.Status;
+
+            this.Tags = new string[book.Tags.Length];
+            Array.Copy(book.Tags, this.Tags, book.Tags.Length);
+            
+            this.DoneUnits = book.DoneUnits;
+            this.TotalUnits = book.TotalUnits;
+            this.Genge = book.Genge;
+            this.StartDate = book.StartDate;
+            this.ModifyDate = book.ModifyDate;
+            this.EndDate = book.EndDate;
+            this.Type = (int?)book.Type;
+            this.Note = book.Note;
             this.UserId = book.UserId;
         }
 

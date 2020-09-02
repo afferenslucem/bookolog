@@ -12,35 +12,39 @@ namespace Storage.Readers
 
         protected override Book ParseModel(Reader reader, ref int countOfReadColumns)
         {
-            var id = this.GetInt64(reader, ref countOfReadColumns);
+            var guid = this.GetString(reader, ref countOfReadColumns);
             var name = this.GetString(reader, ref countOfReadColumns);
-            var authors = this.GetString(reader, ref countOfReadColumns).Split('|');
-            var status = this.GetInt32(reader, ref countOfReadColumns);
-            var startYear = this.GetNullableInt16(reader, ref countOfReadColumns);
-            var startMonth = this.GetNullableInt16(reader, ref countOfReadColumns);
-            var startDay = this.GetNullableInt16(reader, ref countOfReadColumns);
-            var endYear = this.GetNullableInt16(reader, ref countOfReadColumns);
-            var endMonth = this.GetNullableInt16(reader, ref countOfReadColumns);
-            var endDay = this.GetNullableInt16(reader, ref countOfReadColumns);
-            var pages = this.GetNullableInt32(reader, ref countOfReadColumns);
-            var totalPages = this.GetNullableInt32(reader, ref countOfReadColumns);
-            var userId = this.GetInt64(reader, ref countOfReadColumns);
+            var authors = this.GetNullableStringArray(reader, ref countOfReadColumns);
+            var year = this.GetNullableInt32(reader, ref countOfReadColumns);
+            var status = this.GetNullableInt32(reader, ref countOfReadColumns);
+            var tags = this.GetNullableStringArray(reader, ref countOfReadColumns);
+            var doneUnits = this.GetNullableInt32(reader, ref countOfReadColumns);
+            var totalUnits = this.GetNullableInt32(reader, ref countOfReadColumns);
+            var genge = this.GetNullableString(reader, ref countOfReadColumns);
+            var startDate = this.GetNullableDateTime(reader, ref countOfReadColumns);
+            var modifyDate = this.GetNullableDateTime(reader, ref countOfReadColumns);
+            var endDate = this.GetNullableDateTime(reader, ref countOfReadColumns);
+            var type = this.GetNullableInt32(reader, ref countOfReadColumns);
+            var note = this.GetNullableString(reader, ref countOfReadColumns);
+            var userId = this.GetInt32(reader, ref countOfReadColumns);
 
             return new Book
             {
-                Id = id,
+                Guid = guid,
                 Name = name,
                 Authors = authors,
+                Year = year,
                 Status = status,
-                StartYear = startYear,
-                StartMonth = startMonth,
-                StartDay = startDay,
-                EndYear = endYear,
-                EndMonth = endMonth,
-                EndDay = endDay,
-                PagesRead = pages,
-                TotalPages = totalPages,
-                UserId = userId
+                Tags = tags,                      
+                DoneUnits = doneUnits,
+                TotalUnits = totalUnits,
+                Genge = genge,
+                StartDate = startDate,
+                ModifyDate = modifyDate,
+                EndDate = endDate,
+                Type = type,
+                Note = note,
+                UserId = userId,
             };
         }
     }
