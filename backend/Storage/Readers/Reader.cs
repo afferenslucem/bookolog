@@ -78,6 +78,13 @@ namespace Storage.Readers
 
             return result;
         }
+        protected string GetGuid(SQLReader reader, ref int readCount)
+        {
+            var result = reader.GetGuid(readCount);
+            readCount++;
+
+            return result.ToString();
+        }
 
         protected int GetInt32(SQLReader reader, ref int readCount)
         {

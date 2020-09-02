@@ -12,7 +12,7 @@ namespace Storage.Readers
 
         protected override Book ParseModel(Reader reader, ref int countOfReadColumns)
         {
-            var guid = this.GetString(reader, ref countOfReadColumns);
+            var guid = this.GetGuid(reader, ref countOfReadColumns);
             var name = this.GetString(reader, ref countOfReadColumns);
             var authors = this.GetNullableStringArray(reader, ref countOfReadColumns);
             var year = this.GetNullableInt32(reader, ref countOfReadColumns);

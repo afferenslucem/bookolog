@@ -73,14 +73,25 @@ namespace Server.Models
             this.Guid = book.Guid;
             this.Name = book.Name;
 
-            this.Authors = new string[book.Authors.Length];
-            Array.Copy(book.Authors, this.Authors, book.Authors.Length);
+            if(book.Authors != null) {
+                this.Authors = new string[book.Authors.Length];
+                Array.Copy(book.Authors, this.Authors, book.Authors.Length);
+            } 
+            else {
+                this.Authors = new string[]{};
+            }
 
             this.Year = book.Year;
             this.Status = (Status?)book.Status;
+        
+            if(book.Tags != null) {
+                this.Tags = new string[book.Tags.Length];
+                Array.Copy(book.Tags, this.Tags, book.Tags.Length);
+            } 
+            else {
+                this.Tags = new string[]{};
+            }
 
-            this.Tags = new string[book.Tags.Length];
-            Array.Copy(book.Tags, this.Tags, book.Tags.Length);
             
             this.DoneUnits = book.DoneUnits;
             this.TotalUnits = book.TotalUnits;
@@ -117,14 +128,24 @@ namespace Server.Models
             this.Guid = book.Guid;
             this.Name = book.Name;
 
-            this.Authors = new string[book.Authors.Length];
-            Array.Copy(book.Authors, this.Authors, book.Authors.Length);
+            if(book.Authors != null) {
+                this.Authors = new string[book.Authors.Length];
+                Array.Copy(book.Authors, this.Authors, book.Authors.Length);
+            } 
+            else {
+                this.Authors = new string[]{};
+            }
 
             this.Year = book.Year;
             this.Status = (int?)book.Status;
-
-            this.Tags = new string[book.Tags.Length];
-            Array.Copy(book.Tags, this.Tags, book.Tags.Length);
+        
+            if(book.Tags != null) {
+                this.Tags = new string[book.Tags.Length];
+                Array.Copy(book.Tags, this.Tags, book.Tags.Length);
+            } 
+            else {
+                this.Tags = new string[]{};
+            }
             
             this.DoneUnits = book.DoneUnits;
             this.TotalUnits = book.TotalUnits;
