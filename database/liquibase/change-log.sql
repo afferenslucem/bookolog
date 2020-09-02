@@ -61,7 +61,7 @@ before insert on books
 create or replace function "updateBook" 
 (bookGuid uuid, bookName text, bookAuthors varchar(256)[], bookYear integer, bookStatus integer, bookTags varchar(256)[],
 bookDoneUnits integer, bookTotalUnits integer, bookGenre varchar(256), bookStartDate date, bookModifyDate timestamp without time zone,
-bookEndDate date, bookType integer, bookNote text, bookUserId integer) returns void as $$
+bookEndDate date, bookType integer, bookNote text) returns void as $$
     begin
 		update books 
 			set name = bookName,
@@ -76,8 +76,7 @@ bookEndDate date, bookType integer, bookNote text, bookUserId integer) returns v
 				modifyDate = bookModifyDate,
 				endDate = bookEndDate,
 				type = bookType,
-				note = bookNote,
-				userId = bookUserId
+				note = bookNote
 				where guid = bookGuid;
 	end
 $$ language plpgsql;

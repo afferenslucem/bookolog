@@ -7,6 +7,7 @@ export const IN_PROGRESS_STATUS = 1;
 export const DONE_STATUS = 2;
 
 export class Book {
+    // guid: string
     // name: string
     // authors: string[]
     // year: number
