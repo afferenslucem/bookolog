@@ -3,7 +3,9 @@ services:
   client:
     build: frontend.v2/
     ports:
-      - "40080:80"
+      - "40080:80"    
+    depends_on: 
+      - server
 
   server:
     build: backend/

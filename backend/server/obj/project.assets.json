@@ -9320,31 +9320,33 @@
     ]
   },
   "packageFolders": {
-    "/home/alex/.nuget/packages/": {}
+    "C:\\Users\\a.shakirov\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/alex/repositories/bookolog/backend/server/server.csproj",
+      "projectUniqueName": "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "/home/alex/repositories/bookolog/backend/server/server.csproj",
-      "packagesPath": "/home/alex/.nuget/packages/",
-      "outputPath": "/home/alex/repositories/bookolog/backend/server/obj/",
+      "projectPath": "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend\\server\\server.csproj",
+      "packagesPath": "C:\\Users\\a.shakirov\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend\\server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/alex/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\a.shakirov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "/home/alex/repositories/bookolog/backend/Storage/Storage.csproj": {
-              "projectPath": "/home/alex/repositories/bookolog/backend/Storage/Storage.csproj"
+            "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend\\Storage\\Storage.csproj": {
+              "projectPath": "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend\\Storage\\Storage.csproj"
             }
           }
         }
@@ -9397,11 +9399,15 @@
             "version": "[3.0.1, 3.0.1]"
           },
           {
-            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "name": "Microsoft.NETCore.App.Host.win-x64",
             "version": "[3.0.3, 3.0.3]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
+            "version": "[3.0.0, 3.0.0]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
             "version": "[3.0.0, 3.0.0]"
           }
         ],
@@ -9413,7 +9419,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

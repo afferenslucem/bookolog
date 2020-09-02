@@ -4,8 +4,10 @@
 create table users (
 	id serial primary key,
 	login text not null unique,
-	password_hash text not null,
-	salt text not null
+	email text not null unique,
+	passwordHash text not null,
+	salt text not null,
+	lastAction timestamp without time zone
 );
 
 create table books (
@@ -19,7 +21,7 @@ create table books (
 	doneUnits integer default 0,
 	genre varchar(256),
 	startDate date,
-	modifyDate timestamp,
+	modifyDate timestamp without time zone,
 	endDate date,
 	type integer default 0,
 	note text,

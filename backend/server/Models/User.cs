@@ -11,9 +11,11 @@ namespace Server.Models
     {
         public long Id { get; set; }
         public string Login { get; set; }
+        public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
+        public DateTime? LastAction { get; set; }
 
         public User() {
         }
@@ -22,16 +24,20 @@ namespace Server.Models
         {
             this.Id = user.Id;
             this.Login = user.Login;
+            this.Email = user.Email;
             this.PasswordHash = user.PasswordHash;
             this.Salt = user.Salt;
+            this.LastAction = user.LastAction;
         }
 
         public User(IStorageUser user)
         {
             this.Id = user.Id;
             this.Login = user.Login;
+            this.Email = user.Email;
             this.PasswordHash = user.PasswordHash;
             this.Salt = user.Salt;
+            this.LastAction = user.LastAction;
         }
 
         public User WithoutPrivate()
@@ -39,7 +45,8 @@ namespace Server.Models
             return new User()
             {
                 Id = this.Id,
-                Login = this.Login
+                Login = this.Login,
+                Email = this.Email,
             };
         }
     }
@@ -48,15 +55,19 @@ namespace Server.Models
     {
         public long Id { get; set; }
         public string Login { get; set; }
+        public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
+        public DateTime? LastAction { get; set; }
 
         public UserStorageAdapter(User user)
         {
             this.Id = user.Id;
             this.Login = user.Login;
+            this.Email = user.Email;
             this.PasswordHash = user.PasswordHash;
             this.Salt = user.Salt;
+            this.LastAction = user.LastAction;
         }
 
         public UserStorageAdapter() { }

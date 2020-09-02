@@ -13,15 +13,19 @@ namespace Storage.Readers
         {
             var id = this.GetInt64(reader, ref countOfReadColumns);
             var login = this.GetString(reader, ref countOfReadColumns);
+            var email = this.GetString(reader, ref countOfReadColumns);
             var hash = this.GetString(reader, ref countOfReadColumns);
             var salt = this.GetString(reader, ref countOfReadColumns);
+            var lastAction = this.GetNullableDateTime(reader, ref countOfReadColumns);
 
             return new User
             {
                 Id = id,
                 Login = login,
+                Email = email,
                 PasswordHash = hash,
                 Salt = salt,
+                LastAction = lastAction
             };
         }
     }
