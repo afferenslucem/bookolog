@@ -1,13 +1,13 @@
 create or replace function default_guid() returns trigger as $$
     begin       
-        if (new.guid is null) then
-            new.guid := uuid_generate_v4();
+        if (new."Id" is null) then
+            new."Id" := uuid_generate_v4();
         end if;
         return new;
     end;
 $$ language plpgsql;
 
-drop trigger default_guid on "Books"
+-- drop trigger default_guid on "Books"
 
 create trigger default_guid
 before insert on "Books"

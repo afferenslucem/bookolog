@@ -20,19 +20,22 @@ POST http://localhost:5000/book/create
 Content-Type: application/json
 
 {
-  "name": "Как устроен javascript",
+  "id": "b94ab064-c39c-42c0-909f-0b3cea348ae2",
+  "name": "Змеиное логово 2",
   "authors": [
-    "Дуглас Крокфорд"
+    "Кайл Иторр"
   ],
-  "status": 2,
+  "status": 0,
   "tags": [
-    "программирование",
-    "it",
-    "javascript"
+    "боевик",
+    "другие миры",
+    "авантюра"
   ],
-  "genre": "Компьютерная литература",
-  "endDate": "2020-06-26T00:00:00",
-  "type": 2,
-  "userId": 1,
-},
-
+  "doneUnits": 100,
+  "totalUnits": 456,
+  "genre": "фантастика",
+  "startDate": "2020-08-11T00:00:00",
+  "modifyDate": null,
+  "endDate": null,
+  "type": 0
+}

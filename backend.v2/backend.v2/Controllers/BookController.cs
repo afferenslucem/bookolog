@@ -35,9 +35,9 @@ namespace backend.Controllers
         public async Task<ActionResult<Book>> Create([FromBody]Book model) {
             var user = await this.userSession.GetUser();
 
-            model.User = user;
+            model.UserId = user.Id;
 
-            var book = this.bookService.Save(model);
+            var book = await this.bookService.Save(model);
 
             return Ok(book);
         }

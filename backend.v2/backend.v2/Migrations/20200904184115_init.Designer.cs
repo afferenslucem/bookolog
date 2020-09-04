@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Storage;
 
-namespace backend.Migrations
+namespace backend.v2.Migrations
 {
     [DbContext(typeof(BookologContext))]
-    [Migration("20200904171654_Rename book field")]
-    partial class Renamebookfield
+    [Migration("20200904184115_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Book", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 

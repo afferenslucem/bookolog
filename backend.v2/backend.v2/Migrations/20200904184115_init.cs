@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace backend.Migrations
+namespace backend.v2.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,14 +29,14 @@ namespace backend.Migrations
                 name: "Books",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "varchar(512)", nullable: true),
                     Authors = table.Column<string[]>(type: "varchar(512)[]", nullable: true),
                     Status = table.Column<int>(nullable: true),
                     Tags = table.Column<string[]>(type: "varchar(256)[]", nullable: true),
                     DoneUnits = table.Column<short>(nullable: true),
                     TotalUnits = table.Column<short>(nullable: true),
-                    Genge = table.Column<string>(type: "varchar(256)", nullable: true),
+                    Genre = table.Column<string>(type: "varchar(256)", nullable: true),
                     StartDate = table.Column<DateTime>(nullable: true),
                     ModifyDate = table.Column<DateTime>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: true),

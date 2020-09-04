@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Storage;
 
-namespace backend.Migrations
+namespace backend.v2.Migrations
 {
     [DbContext(typeof(BookologContext))]
     partial class BookologContextModelSnapshot : ModelSnapshot
