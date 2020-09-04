@@ -17,12 +17,12 @@ using Microsoft.Extensions.Logging;
 namespace backend.Controllers.AuthControllers
 {
     [Route("[controller]")]
-    public class AuthenticateController : Controller
+    public class Auth : Controller
     {
         private readonly IUserService userService;
-        private readonly ILogger<AuthenticateController> logger;
+        private readonly ILogger<Auth> logger;
 
-        public AuthenticateController(IUserService userService, ILogger<AuthenticateController> logger)
+        public Auth(IUserService userService, ILogger<Auth> logger)
         {
             this.userService = userService;
             this.logger = logger;
@@ -48,6 +48,25 @@ namespace backend.Controllers.AuthControllers
             {
                 this.logger.LogDebug(500, e, "Can't log in user");
                 return StatusCode(500);
+            }
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult<User>> Register([FromBody]User user)
+        {
+            try
+            {
+                var result = await this.userService.RegisterUser(user);
+
+                var withoutPrivate = result.WithoutPrivate();
+
+                return Ok(withoutPrivate);
+            }
+            catch (Exception e)
+            {
+                this.logger.LogDebug(500, e, "Can't register user", user);
+                return StatusCode(500, "Can't register user");
             }
         }
         private async Task AuthenticateUser(User user)

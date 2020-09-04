@@ -17,6 +17,7 @@ namespace backend.Services
         Task<User> Authenticate(long id, string password);
         Task<User> GetByLogin(string login);
         Task<User> GetById(long id);
+        Task<User> RegisterUser(User user);
     }
 
     public class UserService : IUserService
@@ -91,7 +92,7 @@ namespace backend.Services
             }
         }
 
-        public async Task<User> CreateUser(User user)
+        public async Task<User> RegisterUser(User user)
         {
             try
             {
