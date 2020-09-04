@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace backend.v2.Models
+namespace backend.Models
 {
     public class User
     {
@@ -19,5 +19,16 @@ namespace backend.v2.Models
         public string Password { get; set; }
         public string Salt { get; set; }
         public DateTime? LastAction { get; set; }
+
+        public User WithoutPrivate()
+        {
+            return new User()
+            {
+                Id = this.Id,
+                Login = this.Login,
+                Email = this.Email,
+                LastAction = this.LastAction
+            };
+        }
     }
 }

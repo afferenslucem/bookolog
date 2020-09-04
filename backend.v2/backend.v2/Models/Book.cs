@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace backend.v2.Models
+namespace backend.Models
 {
     public enum Status
     {

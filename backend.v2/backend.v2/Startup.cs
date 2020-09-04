@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using backend.v2.Storage;
+using backend.Storage;
+using backend.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace backend.v2
+namespace backend
 {
     public class Startup
     {
@@ -27,9 +30,21 @@ namespace backend.v2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
             services.AddControllers();
 
             services.AddDbContext<BookologContext>();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserSession, UserSession>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

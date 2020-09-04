@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend.v2\\backend.v2\\backend.v2.csproj": {}
+    "/home/alex/repositories/bookolog/backend.v2/backend.v2/backend.v2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend.v2\\backend.v2\\backend.v2.csproj": {
+    "/home/alex/repositories/bookolog/backend.v2/backend.v2/backend.v2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend.v2\\backend.v2\\backend.v2.csproj",
+        "projectUniqueName": "/home/alex/repositories/bookolog/backend.v2/backend.v2/backend.v2.csproj",
         "projectName": "backend.v2",
-        "projectPath": "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend.v2\\backend.v2\\backend.v2.csproj",
-        "packagesPath": "C:\\Users\\a.shakirov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\a.shakirov\\codyarna\\bookolog\\backend.v2\\backend.v2\\obj\\",
+        "projectPath": "/home/alex/repositories/bookolog/backend.v2/backend.v2/backend.v2.csproj",
+        "packagesPath": "/home/alex/.nuget/packages/",
+        "outputPath": "/home/alex/repositories/bookolog/backend.v2/backend.v2/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\a.shakirov\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/alex/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,6 +36,12 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.7, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -71,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
         }
       }
     }

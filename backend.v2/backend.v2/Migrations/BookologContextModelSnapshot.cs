@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using backend.v2.Storage;
+using backend.Storage;
 
-namespace backend.v2.Migrations
+namespace backend.Migrations
 {
     [DbContext(typeof(BookologContext))]
     partial class BookologContextModelSnapshot : ModelSnapshot
@@ -19,7 +19,7 @@ namespace backend.v2.Migrations
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("backend.v2.Models.Book", b =>
+            modelBuilder.Entity("backend.Models.Book", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,7 +71,7 @@ namespace backend.v2.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("backend.v2.Models.User", b =>
+            modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,9 +104,9 @@ namespace backend.v2.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("backend.v2.Models.Book", b =>
+            modelBuilder.Entity("backend.Models.Book", b =>
                 {
-                    b.HasOne("backend.v2.Models.User", "User")
+                    b.HasOne("backend.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

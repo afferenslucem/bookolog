@@ -4,10 +4,10 @@
 			"path": "frontend.v2"
 		},
 		{
-			"path": "backend"
+			"path": "database"
 		},
 		{
-			"path": "database"
+			"path": "backend.v2"
 		}
 	],
 	"settings": {}
