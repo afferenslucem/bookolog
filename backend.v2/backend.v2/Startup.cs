@@ -35,6 +35,8 @@ namespace backend
                 options.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
             });
 
+            //services.AddSession();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.AddControllers();
@@ -42,6 +44,7 @@ namespace backend
             services.AddDbContext<BookologContext>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBookService, BookService>();
             services.AddScoped<IUserSession, UserSession>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -58,6 +61,10 @@ namespace backend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //app.UseSession();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -28,7 +28,7 @@ namespace backend.Storage
         public async Task<User> Save(User user) {
             using var db = new BookologContext();
 
-            db.Add(user);
+            await db.Users.AddAsync(user);
 
             await db.SaveChangesAsync();
 
@@ -38,7 +38,7 @@ namespace backend.Storage
         public async Task<User> Update(User user) {
             using var db = new BookologContext();
 
-            db.Update(user);
+            db.Users.Update(user);
 
             await db.SaveChangesAsync();
 
@@ -48,7 +48,7 @@ namespace backend.Storage
         public async Task<User> Delete(User user) {
             using var db = new BookologContext();
 
-            db.Remove(user);
+            db.Users.Remove(user);
 
             await db.SaveChangesAsync();
 

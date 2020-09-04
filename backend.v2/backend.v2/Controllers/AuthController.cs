@@ -14,15 +14,15 @@ using backend.Models.Authentication;
 using backend.Services;
 using Microsoft.Extensions.Logging;
 
-namespace backend.Controllers.AuthControllers
+namespace backend.Controllers
 {
     [Route("[controller]")]
-    public class Auth : Controller
+    public class AuthController : Controller
     {
         private readonly IUserService userService;
-        private readonly ILogger<Auth> logger;
+        private readonly ILogger<AuthController> logger;
 
-        public Auth(IUserService userService, ILogger<Auth> logger)
+        public AuthController(IUserService userService, ILogger<AuthController> logger)
         {
             this.userService = userService;
             this.logger = logger;

@@ -10,6 +10,7 @@ namespace backend.Services
     public interface IUserSession
     {
         Task<User> GetUser();
+        Task<User> User { get; }
     }
 
     public class UserSession : IUserSession
@@ -29,8 +30,14 @@ namespace backend.Services
         {
             if (this.user != null) return this.user;
 
-            this.user = await Task.Run(() => this.userService.GetByLogin(this.context.User.Identity.Name));
+            this.user = await this.userService.GetByLogin(this.context.User.Identity.Name);
             return this.user;
+        }
+
+        public Task<User> User {
+            get {
+                return this.GetUser();
+            }
         }
     }
 }

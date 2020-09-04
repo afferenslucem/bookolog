@@ -1,0 +1,38 @@
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "login": "admin",
+    "password": "masterkey"
+}
+
+###############################################
+
+Get http://localhost:5000/book/user/1
+
+###############################################
+
+Get http://localhost:5000/book/get/0f69aaf9-d0b0-4928-9322-c5056a9f01b6
+
+###############################################
+
+POST http://localhost:5000/book/create
+Content-Type: application/json
+
+{
+  "name": "Как устроен javascript",
+  "authors": [
+    "Дуглас Крокфорд"
+  ],
+  "status": 2,
+  "tags": [
+    "программирование",
+    "it",
+    "javascript"
+  ],
+  "genre": "Компьютерная литература",
+  "endDate": "2020-06-26T00:00:00",
+  "type": 2,
+  "userId": 1,
+},
+

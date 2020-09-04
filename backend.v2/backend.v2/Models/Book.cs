@@ -35,7 +35,7 @@ namespace backend.Models
         public short? DoneUnits { get; set; }
         public short? TotalUnits { get; set; }
         [Column(TypeName = "varchar(256)")]
-        public string Genge { get; set; }
+        public string Genre { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? ModifyDate { get; set; }
         public DateTime? EndDate { get; set; }

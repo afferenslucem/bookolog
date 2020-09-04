@@ -1,0 +1,19 @@
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "login": "admin",
+    "password": "masterkey"
+}
+
+###############################################
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "login": "kruz",
+  "email": "kruz@gmail.com",
+  "password": "nullnullnull"
+}
+

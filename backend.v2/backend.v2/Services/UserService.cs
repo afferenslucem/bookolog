@@ -23,10 +23,15 @@ namespace backend.Services
     public class UserService : IUserService
     {
         private SHA256Hasher hasher = new SHA256Hasher();
-        private UserStorage storage = new UserStorage();
+        private UserStorage storage;
 
         public UserService() : base()
         {
+            this.storage = new UserStorage();
+        }
+        public UserService(UserStorage storage) : base()
+        {
+            this.storage = storage;
         }
 
         public async Task<User> Authenticate(string login, string password)
