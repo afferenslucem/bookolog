@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using backend.Exceptions;
 using backend.Models;
 using backend.Models.Authentication;
 using backend.Services;
@@ -20,74 +21,158 @@ namespace backend.Controllers
     public class BookController : Controller
     {
         private readonly IBookService bookService;
-        private readonly IUserSession userSession;
         private readonly ILogger<BookController> logger;
 
-        public BookController(IBookService bookService, IUserSession session, ILogger<BookController> logger)
+        public BookController(IBookService bookService, ILogger<BookController> logger)
         {
             this.bookService = bookService;
-            this.userSession = session;
             this.logger = logger;
         }
 
+        /// <summary>
+        /// Creates Book item
+        /// </summary>
+        /// <param name="model">Book description model</param>
+        /// <returns>Created book with filled guid</returns>
+        /// <response code="200">Returns the newly created item</response>
+        /// <response code="400">Returns error description</response>
+        /// <response code="500">Returns error response</response>
         [HttpPost]
+        [Authorize]
         [Route("[action]")]
-        public async Task<ActionResult<Book>> Create([FromBody]Book model) {
-            var user = await this.userSession.GetUser();
+        public async Task<IActionResult> Create([FromBody]Book model) {
+            try
+            {
+                var book = await this.bookService.Save(model);
 
-            model.UserId = user.Id;
-
-            var book = await this.bookService.Save(model);
-
-            return Ok(book);
-        }
-
-        [HttpPut]
-        [Route("[action]/{guid}")]
-        public async Task<ActionResult<Book>> Update(Guid guid, [FromBody]Book model) {
-            var user = await this.userSession.User;
-
-            if(model.UserId != user.Id) {
-                return StatusCode(403, "Access Denied");
+                return Ok(book);
             }
+            catch (BookologException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex, ex.Message, model);
 
-            var book = await this.bookService.Update(model);
+                return StatusCode(400, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, model);
 
-            return Ok(book);
+                return StatusCode(500);
+            }
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Updates Book item
+        /// </summary>
+        /// <param name="model">Book description model</param>
+        /// <returns>Created book with filled guid</returns>
+        /// <response code="200">Returns the updated item</response>
+        /// <response code="400">Returns error description</response>
+        /// <response code="500">Returns error response</response>
+        [HttpPut]
+        [Authorize]
         [Route("[action]/{guid}")]
-        public async Task<ActionResult<Book>> Get(Guid guid) {
-            var book = await this.bookService.GetByGuid(guid);
+        public async Task<IActionResult> Update([FromBody]Book model) {
+            try
+            {
+                var book = await this.bookService.Update(model);
 
-            return Ok(book);
-        }
+                return Ok(book);
+            }
+            catch (BookologException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex, ex.Message, model);
 
-        [HttpGet]
-        [Route("user/{userId}")]
-        public async Task<ActionResult<IEnumerable<Book>>> Get(long userId) {
-            var books = await this.bookService.GetByUserId(userId);
+                return StatusCode(400, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, model);
 
-            return Ok(books);
+                return StatusCode(500);
+            }
         }
     
-
+        /// <summary>
+        /// Deletes Book item
+        /// </summary>
+        /// <param name="guid">Book guid</param>
+        /// <returns>Deleted item</returns>
+        /// <response code="200">Returns the deleted item</response>
+        /// <response code="400">Returns error description</response>
+        /// <response code="500">Returns error response</response>
         [HttpDelete]
+        [Authorize]
         [Route("[action]/{guid}")]
-        public async Task<ActionResult<Book>> Delete(Guid guid) {
-            var user = await this.userSession.User;
+        public async Task<IActionResult> Delete(Guid guid) {
+            try
+            {
+                var book = await this.bookService.GetByGuid(guid);
+            
+                await this.bookService.Delete(guid);
 
-            var book = await this.bookService.GetByGuid(guid);
-
-            if(book.UserId != user.Id) {
-                return StatusCode(403, "Access Denied");
+                return Ok(book);
             }
+            catch (BookologException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex, ex.Message, guid);
 
-            await this.bookService.Delete(guid);
+                return StatusCode(400, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, guid);
 
-            return Ok(book);
+                return StatusCode(500);
+            }
         }
 
+        /// <summary>
+        /// Returns Book by guid
+        /// </summary>
+        /// <param name="guid">Book guid</param>
+        /// <returns>Item</returns>
+        /// <response code="200">Returns requested item</response>
+        /// <response code="500">Returns error response</response>
+        [HttpGet]
+        [Route("[action]/{guid}")]
+        public async Task<IActionResult> Get(Guid guid) {
+            try
+            {
+                var book = await this.bookService.GetByGuid(guid);
+
+                return Ok(book);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, guid);
+
+                return StatusCode(500);
+            }
+        }
+
+        /// <summary>
+        /// Returns array of books by user id
+        /// </summary>
+        /// <param name="userId">Id of user</param>
+        /// <returns>Users items</returns>
+        /// <response code="200">Returns requested items</response>
+        /// <response code="500">Returns error response</response>
+        [HttpGet]
+        [Route("User/{userId}")]
+        public async Task<IActionResult> Get(long userId) {
+            try
+            {
+                var books = await this.bookService.GetByUserId(userId);
+
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, userId);
+
+                return StatusCode(500);
+            }
+        }
     }
 }

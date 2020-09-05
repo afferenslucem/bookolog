@@ -7,8 +7,16 @@ using System.Threading.Tasks;
 
 namespace backend.Storage
 {
+    public interface IBookStorage
+    {
+        Task<Book> Save(Book book);
+        Task<Book> Update(Book book);
+        Task<Book> GetByGuid(Guid guid);
+        Task<IEnumerable<Book>> GetByUserId(long id);
+        Task<Book> Delete(Guid guid);
+    }
 
-    public class BookStorage
+    public class BookStorage : IBookStorage
     {
         public async Task<Book> Save(Book book)
         {

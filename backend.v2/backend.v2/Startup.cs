@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Storage;
@@ -20,6 +21,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore;
+using Swashbuckle.Swagger;
 
 namespace backend
 {
@@ -52,7 +54,15 @@ namespace backend
             {
                 swagger.DescribeAllEnumsAsStrings();
                 swagger.DescribeAllParametersInCamelCase();
-                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "My First Swagger" });
+                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "Bookolog API" });
+            });
+            
+            services.ConfigureSwaggerGen(options =>
+            {
+                //Set the comments path for the swagger json and ui.
+                var basePath = AppContext.BaseDirectory;
+                var xmlPath = Path.Combine(basePath, "backend.v2.xml"); 
+                options.IncludeXmlComments(xmlPath);
             });
 
             services.AddScoped<IUserService, UserService>();

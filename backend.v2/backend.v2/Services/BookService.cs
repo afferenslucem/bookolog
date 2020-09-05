@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Exceptions.BookExceptions;
 
 namespace backend.Services
 {
@@ -18,15 +19,18 @@ namespace backend.Services
 
     public class BookService : IBookService
     {
-        private BookStorage storage;
+        private IBookStorage storage;
+        private IUserSession session;
 
-        public BookService()
+        public BookService(IUserSession session)
         {
             this.storage = new BookStorage();
+            this.session = session;
         }
-        public BookService(BookStorage storage)
+        public BookService(IBookStorage storage, IUserSession session)
         {
             this.storage = storage;
+            this.session = session;
         }
 
         public async Task<Book> GetByGuid(Guid guid)
@@ -46,18 +50,50 @@ namespace backend.Services
         public async Task<Book> Save(Book book)
         {
             var result = await this.storage.Save(book);
+            this.CheckEntity(book);
+            book.UserId = (await this.session.User).Id;
 
             return result;
         }
 
         public async Task<Book> Update(Book book)
         {
+            var currentState = await this.storage.GetByGuid(book.Id.Value);
+            
+            await this.CheckAccess(currentState);
+            this.CheckEntity(book);
+
+            book.UserId = (await this.session.User).Id;
+            
             return await this.storage.Update(book);
         }
 
         public async Task<Book> Delete(Guid guid)
         {
+            var currentState = await this.storage.GetByGuid(guid);
+            await this.CheckAccess(currentState);
+            
             return await this.storage.Delete(guid);
+        }
+        
+        private async Task CheckAccess(Book book)
+        {
+            if (book.UserId != (await this.session.User).Id)
+            {
+                throw new BookCouldNotAccessSomeoneElsesException();
+            }
+        }
+
+        private void CheckEntity(Book book)
+        {
+            if (book.DoneUnits != null && book.TotalUnits != null && book.DoneUnits > book.TotalUnits)
+            {
+                throw new BookWrongUnitsException();
+            }
+            if (book.StartDate != null && book.EndDate != null && book.StartDate > book.EndDate)
+            {
+                throw new BookWrongDatesException();
+            }
         }
     }
 }
