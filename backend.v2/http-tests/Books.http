@@ -20,7 +20,7 @@ POST http://localhost:5000/book/create
 Content-Type: application/json
 
 {
-  "id": "b94ab064-c39c-42c0-909f-0b3cea348ae2",
+  "id": "b94ab064-c39c-42c0-909f-0b3cea348ae6",
   "name": "Змеиное логово 2",
   "authors": [
     "Кайл Иторр"
@@ -35,7 +35,10 @@ Content-Type: application/json
   "totalUnits": 456,
   "genre": "фантастика",
   "startDate": "2020-08-11T00:00:00",
-  "modifyDate": null,
-  "endDate": null,
-  "type": 0
+  "modifyDate": "2020-08-11T00:00:00",
+  "endDate": "2020-08-11T00:00:00",
+  "type": 0,
+  "note": "trololo",
+  "userId": 1,
+  "user": null
 }
