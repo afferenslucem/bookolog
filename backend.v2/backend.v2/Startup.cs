@@ -39,7 +39,7 @@ namespace backend
         {
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder => builder.WithOrigins("http://192.168.0.106:8080", "http://localhost:8080").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
+                options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowCredentials().AllowAnyMethod().AllowAnyHeader());
             });
 
             //services.AddSession();

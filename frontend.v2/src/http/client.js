@@ -25,7 +25,7 @@ export class Client {
 
     post(url, data, options) {
         try {
-            this.logger.debug('post to', data, url);
+            this.logger.debug('post to', data, this.getAddress(url));
             return Axios.post(this.getAddress(url), data, options);
         } catch (e) {
             this.logger.fatal(e);
