@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-1 tags-list">
+  <div class="container tags-list">
     <h4 class="mt-1 header">Теги</h4>
 
     <ul v-if="shouldShowList">

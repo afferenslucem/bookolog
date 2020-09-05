@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-1 book-list">
+  <div class="container book-list">
     <h4 class="mt-1 header">Буду читать</h4>
 
     <ul v-if="shouldShowList">

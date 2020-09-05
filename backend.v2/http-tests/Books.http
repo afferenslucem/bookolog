@@ -5,14 +5,9 @@ Content-Type: application/json
     "login": "admin",
     "password": "masterkey"
 }
-
 ###############################################
 
-Get http://localhost:5000/book/user/1
-
-###############################################
-
-Get http://localhost:5000/book/get/0f69aaf9-d0b0-4928-9322-c5056a9f01b6
+Get http://localhost:5000/book/get/aa968554-eae2-4eb8-b07e-bf3067274d30
 
 ###############################################
 
@@ -42,3 +37,41 @@ Content-Type: application/json
   "userId": 1,
   "user": null
 }
+
+
+###############################################
+
+PUT http://localhost:5000/book/update/aa968554-eae2-4eb8-b07e-bf3067274d30
+Content-Type: application/json
+
+{
+  "id": "b94ab064-c39c-42c0-909f-0b3cea348ae6",
+  "name": "Змеиное логово 2",
+  "authors": [
+    "Кайл Иторр"
+  ],
+  "status": 0,
+  "tags": [
+    "боевик",
+    "другие миры",
+    "авантюра"
+  ],
+  "doneUnits": 100,
+  "totalUnits": 456,
+  "genre": "фантастика",
+  "startDate": "2020-08-11T00:00:00",
+  "modifyDate": "2020-08-11T00:00:00",
+  "endDate": "2020-08-11T00:00:00",
+  "type": 0,
+  "note": "trololo",
+  "userId": 1,
+  "user": null
+}
+
+###############################################
+
+DELETE  http://localhost:5000/book/delete/b94ab064-c39c-42c0-909f-0b3cea348af7
+
+###############################################
+
+Get http://localhost:5000/book/user/1

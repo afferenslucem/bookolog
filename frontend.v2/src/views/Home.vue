@@ -7,7 +7,7 @@
     <div class="overlay" :class="{active: showOverlay}" @click="closeAllMenus()"></div>
     <div class="main">
       <Header class="top" @avatarClick="openRightMenu()" @menuClick="openLeftMenu()"></Header>
-      <div class="content">
+      <div class="content pt-3">
         <router-view />
       </div>
     </div>
@@ -24,7 +24,6 @@ import SideMenu from "@/components/navigation/SideMenu";
 import BookMenu from "@/components/navigation/BookMenu";
 import StatisticMenu from "@/components/navigation/StatisticMenu";
 import UserMenu from "@/components/navigation/UserMenu";
-import { BOOKS_LOAD_ACTION } from "@/store/naming";
 import { getLogger } from "@/logger";
 
 const logger = getLogger("HomePage");
@@ -65,8 +64,6 @@ export default {
     },
   },
   created() {
-    logger.debug("created");
-    this.$store.dispatch(BOOKS_LOAD_ACTION);
   },
 };
 </script>

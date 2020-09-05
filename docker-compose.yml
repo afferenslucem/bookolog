@@ -8,7 +8,7 @@ services:
       - server
 
   server:
-    build: backend/
+    build: backend.v2/backend.v2
     ports:
       - "45080:80"
       - "45081:81"

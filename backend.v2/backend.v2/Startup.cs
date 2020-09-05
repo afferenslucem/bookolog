@@ -39,7 +39,7 @@ namespace backend
         {
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
+                options.AddDefaultPolicy(builder => builder.WithOrigins("http://192.168.0.106:8080", "http://localhost:8080").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
             });
 
             //services.AddSession();
@@ -60,9 +60,9 @@ namespace backend
             services.ConfigureSwaggerGen(options =>
             {
                 //Set the comments path for the swagger json and ui.
-                var basePath = AppContext.BaseDirectory;
-                var xmlPath = Path.Combine(basePath, "backend.v2.xml"); 
-                options.IncludeXmlComments(xmlPath);
+                // var basePath = AppContext.BaseDirectory;
+                // var xmlPath = Path.Combine(basePath, "backend.v2.xml"); 
+                // options.IncludeXmlComments(xmlPath);
             });
 
             services.AddScoped<IUserService, UserService>();

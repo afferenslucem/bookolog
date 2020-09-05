@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-1 genres-list">
+  <div class="container genres-list">
     <h4 class="mt-1 header">Жанры</h4>
 
     <ul v-if="shouldShowList">

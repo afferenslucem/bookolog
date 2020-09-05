@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-1 book-year-list">    
+  <div class="container book-year-list">    
     <books-by-years-list v-if="shouldShowList" :books="books" :listname="name | capital">
       
     </books-by-years-list>

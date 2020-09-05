@@ -18,13 +18,11 @@ namespace backend.Exceptions
     
     public class BookologException : Exception
     {
-        public BookologException(ErrorCodes code, string message)
+        public BookologException(ErrorCodes code, string message) : base(message)
         {
             Code = code;
-            Message = message;
         }
 
         public ErrorCodes Code { get; set; }
-        public string Message { get; set; }
     }
 }

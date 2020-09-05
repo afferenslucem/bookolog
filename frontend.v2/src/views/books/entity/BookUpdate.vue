@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div class="container">
     <small class="dark-text">* Обязательная информация</small>
     <form class="needs-validation" @submit="submit($event)">
       <div class="form-group">

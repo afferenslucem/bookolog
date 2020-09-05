@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div class="container">
     <h4>{{book.name}}</h4>
     <p class="authors" v-if="book.authors">{{book.authors | join}}</p>
     <p v-if="book.year">

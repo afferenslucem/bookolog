@@ -16,6 +16,20 @@ const ifAuthenticated = (to, from, next) => {
 
 Vue.use(VueRouter);
 
+const authRoutes = [
+  {
+    path: 'login',
+    name: 'Login',
+    component: () => import('../views/auth/Login.vue'),
+    props: true
+  }, {
+    path: 'registration',
+    name: 'Registration',
+    component: () => import('../views/auth/Registration.vue'),
+    props: true
+  }, 
+];
+
 const booksRoutes = [
   {
     path: 'book/create/:status',
@@ -93,7 +107,7 @@ const workspaceRoutes = [
   ...booksRoutes,
   ...statisticRoutes,
   ...readingRoutes,
-  ...booksBySomething
+  ...booksBySomething,
 ];
 
   const routes = [
@@ -108,9 +122,10 @@ const workspaceRoutes = [
         component: () => import('../views/Workspace.vue'),
         children: workspaceRoutes,
         beforeEnter: ifAuthenticated
-      }
+      },
+      ...authRoutes
     ]
-  },
+  }
 ]
 
 const router = new VueRouter({
