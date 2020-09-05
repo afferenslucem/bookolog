@@ -151,5 +151,50 @@ namespace tests.Controllers
             Assert.AreEqual(400, result.StatusCode);
             Assert.AreEqual(BookWrongDatesException.ErrorMessage, result.Value);
         }
+        
+        [TestMethod]
+        public async Task ShouldUpdateException()
+        {
+            var book = new Book
+            {
+                Id = Guid.NewGuid(),
+                Name = "Name",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(-1)
+            };
+
+            await this.controller.Create(book);
+            
+            var user = await this.userSession.User;
+            user.Id = 2;
+            
+            var result = await this.controller.Update(book) as ObjectResult;
+            
+            Assert.IsNotNull(result);
+            Assert.AreEqual(400, result.StatusCode);
+            Assert.AreEqual(BookCouldNotAccessSomeoneElsesException.ErrorMessage, result.Value);
+        }
+        [TestMethod]
+        public async Task ShouldDeleteException()
+        {
+            var book = new Book
+            {
+                Id = Guid.NewGuid(),
+                Name = "Name",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(-1)
+            };
+
+            await this.controller.Create(book);
+            
+            var user = await this.userSession.User;
+            user.Id = 2;
+            
+            var result = await this.controller.Delete(book.Id.Value) as ObjectResult;
+            
+            Assert.IsNotNull(result);
+            Assert.AreEqual(400, result.StatusCode);
+            Assert.AreEqual(BookCouldNotAccessSomeoneElsesException.ErrorMessage, result.Value);
+        }
     }
 }

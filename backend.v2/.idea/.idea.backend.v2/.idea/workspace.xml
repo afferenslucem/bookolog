@@ -29,7 +29,6 @@
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookWrongUnitsException - Copy.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookWrongDatesException - Copy.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookologException.cs" />
-        <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookCouldNotAccessSomeoneElsesException.cs" />
         <option value="$PROJECT_DIR$/tests/Mocks/Services/BookServiceMock.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Storage/BookStorage.cs" />
         <option value="$PROJECT_DIR$/tests/Mocks/Storage/BookStorageMock.cs" />
@@ -40,6 +39,7 @@
         <option value="$PROJECT_DIR$/tests/Services/BookControllerTest.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Controllers/BookController.cs" />
         <option value="$PROJECT_DIR$/tests/Services/BookServiceTests.cs" />
+        <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookCouldNotAccessSomeoneElsesException.cs" />
         <option value="$PROJECT_DIR$/tests/Controllers/BookControllerTest.cs" />
       </list>
     </option>
@@ -102,7 +102,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599279476948</updated>
-      <workItem from="1599279495068" duration="11974000" />
+      <workItem from="1599279495068" duration="12408000" />
     </task>
     <servers />
   </component>

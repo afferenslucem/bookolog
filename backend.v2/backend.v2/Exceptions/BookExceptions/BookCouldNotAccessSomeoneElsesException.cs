@@ -2,7 +2,8 @@ namespace backend.Exceptions.BookExceptions
 {
     public class BookCouldNotAccessSomeoneElsesException : BookException
     {
-        public BookCouldNotAccessSomeoneElsesException() : base(ErrorCodes.BookCouldNotAccessSomeoneElses, "Could not access someone else's book")
+        public static readonly string ErrorMessage = "Could not access someone else's book";
+        public BookCouldNotAccessSomeoneElsesException() : base(ErrorCodes.BookCouldNotAccessSomeoneElses, ErrorMessage)
         {
         }
     }
