@@ -7,7 +7,16 @@ using System.Threading.Tasks;
 
 namespace backend.Storage
 {
-    public class UserStorage
+    public interface IUserStorage
+    {
+        Task<User> GetByLogin(string login);
+        Task<User> GetById(long id);
+        Task<User> Save(User user);
+        Task<User> Update(User user);
+        Task<User> Delete(long id);
+    }
+    
+    public class UserStorage : IUserStorage
     {
         public async Task<User> GetByLogin(string login) {
             using var context = new BookologContext();
@@ -45,9 +54,22 @@ namespace backend.Storage
             return user;
         }
 
-        public async Task<User> Delete(User user) {
+        public async Task<User> Delete(long id) {
             using var db = new BookologContext();
 
+            var user = await db.Users.Where(item => item.Id == id).SingleAsync();
+            
+            db.Users.Remove(user);
+
+            await db.SaveChangesAsync();
+
+            return user;
+        }
+        public async Task<User> Delete(string login) {
+            using var db = new BookologContext();
+
+            var user = await db.Users.Where(item => item.Login == login).SingleAsync();
+            
             db.Users.Remove(user);
 
             await db.SaveChangesAsync();

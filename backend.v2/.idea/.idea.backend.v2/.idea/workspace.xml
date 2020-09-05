@@ -41,6 +41,12 @@
         <option value="$PROJECT_DIR$/tests/Services/BookServiceTests.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookCouldNotAccessSomeoneElsesException.cs" />
         <option value="$PROJECT_DIR$/tests/Controllers/BookControllerTest.cs" />
+        <option value="$PROJECT_DIR$/tests/Mocks/Services/UserServiceMock.cs" />
+        <option value="$PROJECT_DIR$/backend.v2/Storage/UserStorage.cs" />
+        <option value="$PROJECT_DIR$/tests/Mocks/Storage/UserStorageMock.cs" />
+        <option value="$PROJECT_DIR$/backend.v2/Services/UserService.cs" />
+        <option value="$PROJECT_DIR$/backend.v2/Controllers/AuthController.cs" />
+        <option value="$PROJECT_DIR$/tests/Controllers/AuthControllerTest.cs" />
       </list>
     </option>
   </component>
@@ -102,7 +108,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599279476948</updated>
-      <workItem from="1599279495068" duration="12408000" />
+      <workItem from="1599279495068" duration="14301000" />
     </task>
     <servers />
   </component>

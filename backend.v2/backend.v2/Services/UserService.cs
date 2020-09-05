@@ -23,13 +23,13 @@ namespace backend.Services
     public class UserService : IUserService
     {
         private SHA256Hasher hasher = new SHA256Hasher();
-        private UserStorage storage;
+        private IUserStorage storage;
 
         public UserService() : base()
         {
             this.storage = new UserStorage();
         }
-        public UserService(UserStorage storage) : base()
+        public UserService(IUserStorage storage) : base()
         {
             this.storage = storage;
         }
@@ -76,52 +76,21 @@ namespace backend.Services
 
         public async Task UpdatePassword(long id, string oldPassword, string newPassword)
         {
-            try
-            {
-                await this.Authenticate(id, oldPassword);
+            await this.Authenticate(id, oldPassword);
 
-                var salt = this.hasher.GetSalt();
+            var salt = this.hasher.GetSalt();
 
-                var hash = this.hasher.GetSHA256Hash(newPassword, salt);
+            var hash = this.hasher.GetSHA256Hash(newPassword, salt);
 
-                var user = await this.GetById(id);
+            var user = await this.GetById(id);
 
-                user.PasswordHash = hash;
-                user.Salt = salt;
+            user.PasswordHash = hash;
+            user.Salt = salt;
 
-                await this.storage.Update(user);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            await this.storage.Update(user);
         }
 
         public async Task<User> RegisterUser(User user)
-        {
-            try
-            {
-                var salt = this.hasher.GetSalt();
-
-                var hash = this.hasher.GetSHA256Hash(user.Password, salt);
-
-                user.PasswordHash = hash;
-                user.Salt = salt;
-
-                return await this.storage.Save(user);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public async Task<User> GetByLogin(string login)
-        {
-            return await this.storage.GetByLogin(login);
-        }
-
-        public async Task<User> Save(User user)
         {
             var salt = this.hasher.GetSalt();
 
@@ -133,14 +102,9 @@ namespace backend.Services
             return await this.storage.Save(user);
         }
 
-        public async Task Update(User user)
+        public async Task<User> GetByLogin(string login)
         {
-            await this.storage.Update(user);
-        }
-
-        public async Task Delete(User user)
-        {
-            await this.storage.Delete(user);
+            return await this.storage.GetByLogin(login);
         }
 
         public async Task<User> GetById(long id)

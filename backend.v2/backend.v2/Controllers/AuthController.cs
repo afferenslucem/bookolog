@@ -30,7 +30,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult<User>> Login([FromBody]AuthenticateModel model)
+        public async Task<IActionResult> Login([FromBody]AuthenticateModel model)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult<User>> Register([FromBody]User user)
+        public async Task<IActionResult> Register([FromBody]User user)
         {
             try
             {
