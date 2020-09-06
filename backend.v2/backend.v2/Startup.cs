@@ -27,6 +27,11 @@ namespace backend
 {
     public class Startup
     {
+        string corsPolicy = "default";
+        string[] origins = new string[] {
+            "http://localhost:8080"
+        };
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,7 +44,11 @@ namespace backend
         {
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowCredentials().AllowAnyMethod().AllowAnyHeader());
+                options.AddPolicy(corsPolicy, builder => builder
+                    .WithOrigins(origins)
+                    .AllowCredentials()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
             });
 
             //services.AddSession();
@@ -80,7 +89,9 @@ namespace backend
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+
+            app.UseCors(corsPolicy);
 
             app.UseRouting();
 

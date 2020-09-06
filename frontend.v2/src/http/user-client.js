@@ -12,15 +12,15 @@ export class UserClient extends Client {
     }
 
     async login(username, password) {
-        const user = await super.post('auth/login', {
+        const answer = await super.post('auth/login', {
             login: username,
             password: password
         },
         {
             withCredentials: true
         });
-        this.logger.debug('loggedIn', user);
-        return user.data;
+        this.logger.debug('loggedIn', answer);
+        return answer.data;
     }
 
     async register(username, email, password) {
