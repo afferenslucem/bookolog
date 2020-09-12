@@ -12,8 +12,10 @@ namespace backend.Storage
         Task<Book> Save(Book book);
         Task<Book> Update(Book book);
         Task<Book> GetByGuid(Guid guid);
+        Task<Book[]> GetByGuids(Guid[] guids);
         Task<IEnumerable<Book>> GetByUserId(long id);
         Task<Book> Delete(Guid guid);
+        Task<Synched<Book>> Synch(Sync<Book, Guid> syncData);
     }
 
     public class BookStorage : IBookStorage
@@ -48,6 +50,14 @@ namespace backend.Storage
 
             return result;
         }
+        public async Task<Book[]> GetByGuids(Guid[] guids)
+        {
+            using var context = new BookologContext();
+
+            var result = await context.Books.Where(item => guids.Contains(item.Id.Value)).ToArrayAsync();
+
+            return result;
+        }
 
         public async Task<IEnumerable<Book>> GetByUserId(long id)
         {
@@ -69,6 +79,26 @@ namespace backend.Storage
             await context.SaveChangesAsync();
 
             return result;
+        }
+    
+        public async Task<Synched<Book>> Synch(Sync<Book, Guid> syncData) {
+            using var context = new BookologContext();
+
+            var added = context.Books.AddRangeAsync(syncData.Add);
+
+            context.Books.RemoveRange(syncData.Delete);
+
+            context.Books.UpdateRange(syncData.Update);
+
+            await added;
+
+            await context.SaveChangesAsync();
+
+            return new Synched<Book> {
+                Add = syncData.Add,
+                Delete = syncData.Delete,
+                Update = syncData.Update
+            };
         }
     }
 }

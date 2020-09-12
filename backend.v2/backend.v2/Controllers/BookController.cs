@@ -174,5 +174,30 @@ namespace backend.Controllers
                 return StatusCode(500);
             }
         }
+    
+        [HttpPost]
+        [Authorize]
+        [Route("[action]")]
+        public async Task<IActionResult> Synch(Sync<Book, Guid> data) {
+            try
+            {
+                var result = await this.bookService.Synch(data);
+
+                return Ok(result);
+            }
+            catch (BookologException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex, ex.Message, data);
+
+                return StatusCode(400, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, data);
+
+                return StatusCode(500);
+            }
+        }
+
     }
 }

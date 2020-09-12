@@ -15,6 +15,7 @@ namespace backend.Services
         Task<Book> Save(Book book);
         Task<Book> Update(Book book);
         Task<Book> Delete(Guid guid);
+        Task<Synched<Book>> Synch(Sync<Book, Guid> data);
     }
 
     public class BookService : IBookService
@@ -94,6 +95,30 @@ namespace backend.Services
             {
                 throw new BookWrongDatesException();
             }
+        }
+
+        public async Task<Synched<Book>> Synch(Sync<Book, Guid> data)
+        {
+            var toDeleteAwait = this.storage.GetByGuids(data.DeleteGuids);
+
+            foreach(var item in data.Add) {
+                this.CheckEntity(item);
+            }
+
+            foreach(var item in data.Update) {
+                this.CheckEntity(item);
+                await this.CheckAccess(item);
+            }
+
+            var toDelete = await toDeleteAwait;
+
+            foreach(var item in toDelete) {
+                await this.CheckAccess(item);
+            }
+
+            data.Delete = toDelete;
+
+            return await this.storage.Synch(data);
         }
     }
 }
