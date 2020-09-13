@@ -15,7 +15,9 @@ namespace backend.Storage
         Task<Book[]> GetByGuids(Guid[] guids);
         Task<IEnumerable<Book>> GetByUserId(long id);
         Task<Book> Delete(Guid guid);
-        Task<Synched<Book>> Synch(Sync<Book, Guid> syncData);
+        Task<Book[]> SaveMany(Book[] books);
+        Task<Book[]> UpdateMany(Book[] books);
+        Task<Book[]> DeleteMany(Book[] books);
     }
 
     public class BookStorage : IBookStorage
@@ -80,25 +82,30 @@ namespace backend.Storage
 
             return result;
         }
-    
-        public async Task<Synched<Book>> Synch(Sync<Book, Guid> syncData) {
+
+        public async Task<Book[]> SaveMany(Book[] books) {
             using var context = new BookologContext();
 
-            var added = context.Books.AddRangeAsync(syncData.Add);
-
-            context.Books.RemoveRange(syncData.Delete);
-
-            context.Books.UpdateRange(syncData.Update);
-
-            await added;
-
+            await context.Books.AddRangeAsync(books);
             await context.SaveChangesAsync();
 
-            return new Synched<Book> {
-                Add = syncData.Add,
-                Delete = syncData.Delete,
-                Update = syncData.Update
-            };
+            return books;
+        }
+        public async Task<Book[]> UpdateMany(Book[] books) {
+            using var context = new BookologContext();
+
+            context.Books.UpdateRange(books);
+            await context.SaveChangesAsync();
+
+            return books;
+        }
+        public async Task<Book[]> DeleteMany(Book[] books) {
+            using var context = new BookologContext();
+
+            context.Books.RemoveRange(books);
+            await context.SaveChangesAsync();
+
+            return books;
         }
     }
 }

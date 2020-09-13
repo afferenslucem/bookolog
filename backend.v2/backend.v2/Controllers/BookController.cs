@@ -71,7 +71,7 @@ namespace backend.Controllers
         /// <response code="500">Returns error response</response>
         [HttpPut]
         [Authorize]
-        [Route("[action]/{guid}")]
+        [Route("[action]")]
         public async Task<IActionResult> Update([FromBody]Book model) {
             try
             {
@@ -178,10 +178,38 @@ namespace backend.Controllers
         [HttpPost]
         [Authorize]
         [Route("[action]")]
-        public async Task<IActionResult> Synch(Sync<Book, Guid> data) {
+        public async Task<IActionResult> Synchronize([FromBody]BookSyncModel data) {
             try
             {
-                var result = await this.bookService.Synch(data);
+                data.Add = data.Add ?? new Book[] {};
+                data.Update = data.Update ?? new Book[] {};
+                data.DeleteGuids = data.DeleteGuids ?? new Guid[] {};
+
+                var answer = await this.bookService.Synch(data);
+
+                return Ok(answer);
+            }
+            catch (BookologException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex, ex.Message, data);
+
+                return StatusCode(400, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, data);
+
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("[action]")]
+        public async Task<IActionResult> CreateMany([FromBody]Book[] data) {
+            try
+            {
+                var result = await this.bookService.SaveMany(data);
 
                 return Ok(result);
             }
@@ -199,5 +227,52 @@ namespace backend.Controllers
             }
         }
 
+        [HttpPut]
+        [Authorize]
+        [Route("[action]")]
+        public async Task<IActionResult> UpdateMany([FromBody]Book[] data) {
+            try
+            {
+                var result = await this.bookService.UpdateMany(data);
+
+                return Ok(result);
+            }
+            catch (BookologException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex, ex.Message, data);
+
+                return StatusCode(400, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, data);
+
+                return StatusCode(500);
+            }
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("[action]")]
+        public async Task<IActionResult> DeleteMany([FromBody]Guid[] data) {
+            try
+            {
+                var result = await this.bookService.DeleteMany(data);
+
+                return Ok(result);
+            }
+            catch (BookologException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex, ex.Message, data);
+
+                return StatusCode(400, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, data);
+
+                return StatusCode(500);
+            }
+        }
     }
 }

@@ -15,8 +15,7 @@ POST http://localhost:5000/book/create
 Content-Type: application/json
 
 {
-  "id": "b94ab064-c39c-42c0-909f-0b3cea348ae6",
-  "name": "Змеиное логово 2",
+  "name": "Паучье логово",
   "authors": [
     "Кайл Иторр"
   ],
@@ -75,3 +74,146 @@ DELETE  http://localhost:5000/book/delete/b94ab064-c39c-42c0-909f-0b3cea348af7
 ###############################################
 
 Get http://localhost:5000/book/user/1
+
+###############################################
+
+POST http://localhost:5000/book/saveMany
+Content-Type: application/json
+
+[{
+  "name": "Паучье логово 3",
+  "authors": [
+    "Кайл Иторр"
+  ],
+  "status": 0,
+  "tags": [
+    "боевик",
+    "другие миры",
+    "авантюра"
+  ],
+  "doneUnits": 100,
+  "totalUnits": 456,
+  "genre": "фантастика",
+  "startDate": "2020-08-11T00:00:00",
+  "modifyDate": "2020-08-11T00:00:00",
+  "endDate": "2020-08-11T00:00:00",
+  "type": 0,
+  "note": "trololo",
+  "userId": 1,
+  "user": null
+},
+{
+  "name": "Паучье логово 2",
+  "authors": [
+    "Кайл Иторр"
+  ],
+  "status": 0,
+  "tags": [
+    "боевик",
+    "другие миры",
+    "авантюра"
+  ],
+  "doneUnits": 100,
+  "totalUnits": 456,
+  "genre": "фантастика",
+  "startDate": "2020-08-11T00:00:00",
+  "modifyDate": "2020-08-11T00:00:00",
+  "endDate": "2020-08-11T00:00:00",
+  "type": 0,
+  "note": "trololo",
+  "userId": 1,
+  "user": null
+}]
+
+###############################################
+
+PUT http://localhost:5000/book/updateMany
+Content-Type: application/json
+
+[{
+  "id": "37122dd4-1b1f-4cc3-917f-ec63b76bdd27",
+  "name": "Ololo 3",
+  "authors": [
+    "Кайл Иторр"
+  ],
+  "status": 0,
+  "tags": [
+    "боевик",
+    "другие миры",
+    "авантюра"
+  ],
+  "doneUnits": 100,
+  "totalUnits": 456,
+  "genre": "фантастика",
+  "startDate": "2020-08-11T00:00:00",
+  "modifyDate": "2020-08-11T00:00:00",
+  "endDate": "2020-08-11T00:00:00",
+  "type": 0,
+  "note": "trololo",
+  "userId": 1,
+  "user": null
+},
+{
+  "id": "e382cd3e-680a-4517-8f01-9b9bd0d8769d",
+  "name": "Ololo 2",
+  "authors": [
+    "Кайл Иторр"
+  ],
+  "status": 0,
+  "tags": [
+    "боевик",
+    "другие миры",
+    "авантюра"
+  ],
+  "doneUnits": 100,
+  "totalUnits": 456,
+  "genre": "фантастика",
+  "startDate": "2020-08-11T00:00:00",
+  "modifyDate": "2020-08-11T00:00:00",
+  "endDate": "2020-08-11T00:00:00",
+  "type": 0,
+  "note": "trololo",
+  "userId": 1,
+  "user": null
+}]
+
+###############################################
+
+DELETE http://localhost:5000/book/deleteMany
+Content-Type: application/json
+
+[
+  "37122dd4-1b1f-4cc3-917f-ec63b76bdd27",
+  "e382cd3e-680a-4517-8f01-9b9bd0d8769d"
+]
+
+###############################################
+
+
+POST http://localhost:5000/book/synchronize
+Content-Type: application/json
+
+{
+  "add": [{
+    "name": "Synch1",
+    "authors": [
+      "Кайл Иторр"
+    ]
+  },{
+    "name": "Synch 2",
+    "authors": [
+      "Кайл Иторр"
+    ]
+  }],
+  "update": [{
+    "id": "b94ab064-d39c-42c0-909f-0b3cea348aa6",
+    "name": "Synch 3"
+  },{
+    "id": "b94ab064-c39c-42c0-909f-0b3cea348aa6",
+    "name": "Synch 4"
+  }],
+  "deleteGuids": [
+    "27be2976-3407-40a3-a576-263bc04440d7",
+    "e382cd3e-680a-4517-8f01-9b9bd0d8769d"
+  ]
+}
