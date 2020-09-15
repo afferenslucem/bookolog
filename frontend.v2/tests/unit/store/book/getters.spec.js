@@ -1,5 +1,12 @@
 import { getters } from '@/store/book/getters'
-import { BOOKS_IN_PROGRESS_GETTER, BOOKS_DONE_GETTER, BOOKS_AUTHORS_COUNT_GETTER, BOOKS_TAGS_COUNT_GETTER, BOOKS_TO_READ_GETTER, BOOKS_GENRES_COUNT_GETTER } from '@/store/naming'
+import { 
+    BOOKS_IN_PROGRESS_GETTER,
+    BOOKS_DONE_GETTER,
+    BOOKS_AUTHORS_COUNT_GETTER, 
+    BOOKS_TAGS_COUNT_GETTER,
+    BOOKS_TO_READ_GETTER, 
+    BOOKS_GENRES_COUNT_GETTER 
+} from '@/store/naming'
 import {TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS} from '@/models/book'
 import books, {getState} from '../../data/books'
 import _ from 'declarray'

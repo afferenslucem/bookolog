@@ -15,9 +15,8 @@ import {
 } from '../naming';
 import { BookRepository } from '@/storage/book-repository';
 import { BookClient } from '@/http/book-client';
-import _ from 'declarray';
-import { BookEqualityComparer } from '../../models/book';
 import moment from 'moment'
+import { BookSynchronizator } from './utils/synchronizator';
 
 const logger = getLogger({
     namespace: 'BooksModule',
@@ -26,54 +25,9 @@ const logger = getLogger({
 
 export const actions = {
     [BOOKS_SYNC_ACTION]: async ({commit, rootState}) => {
-        const storage = new BookRepository();
-        const client = new BookClient();
+        const synchronizer = new BookSynchronizator();
 
-        const answerLoc = storage.allBooks();
-        const answerOr =  client.getAll(rootState.user.id);
-
-        const locBooks = await answerLoc;
-        const orBooks = await answerOr;
-
-        const comparer = new BookEqualityComparer();
-
-        const local = _(locBooks);
-        const origin = _(orBooks); 
-
-        const originNew = origin.except(local, comparer);
-        originNew.toArray()
-
-        const localDeleted = local.where(item => !!item.deleted);
-
-        const localNew = local.except(origin, comparer).where(item => !!item.shouldSync);
-
-        // const originDeleted = local.except(localDeleted.concat(localNew), comparer);
-
-        const joined = local.join(origin, loc => loc.guid, or => or.guid, (loc, or) => ({local: loc, origin: or}));
-
-        const originUpdated = joined.where(item => item.origin.modifyDate > item.local.modifyDate).select(item => item.origin);
-        const localUpdated = joined.where(item => item.origin.modifyDate < item.local.modifyDate).select(item => item.local);
-
-        const toUpdate = localUpdated.toArray();
-        const toCreate = localNew.toArray();
-        const toDelete = localDeleted.toArray();
-
-        const synced = await client.sync({
-            'add': toCreate,
-            'update': toUpdate,
-            'deleteGuids': _(toDelete).select(item => item.guid).toArray(),
-        })
-
-        const deleteAwait = storage.deleteManyBooks(localDeleted.concat(synced.delete).toArray());
-        const updateAwait = storage.updateManyBooks(originUpdated.concat(localNew.select(item => {
-            item.shouldSync = false;
-            return item;
-        })).toArray())
-        const saveAwait = storage.saveManyBooks(originNew.toArray());
-
-        await Promise.all([saveAwait, updateAwait, deleteAwait])
-
-        const books = await storage.allBooks();
+        const books = await synchronizer.sync(rootState.user.id);
 
         commit(BOOKS_SAVE_MUTATION, books)
     },

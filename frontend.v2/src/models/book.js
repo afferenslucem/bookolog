@@ -24,6 +24,8 @@ export class Book {
 
     constructor(obj) {
         Object.assign(this, obj);
+        const modifyDate = obj.modifyDate || obj.modifyTime || 0;
+        this.modifyDate = new Date(modifyDate);
     }
 
     get progress() {
