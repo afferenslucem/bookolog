@@ -10,7 +10,12 @@ export class BookSynchronizator {
     }
 
     async sync(userId) {
-        const [local, origin] = await this.loadAllBooks(userId);
+        let [local, origin] = await this.loadAllBooks(userId);
+
+        local = local.select(item => {
+            item.shouldSync = true
+            return item
+        })
 
         const diff = this.computeSyncData(local, origin);
 
