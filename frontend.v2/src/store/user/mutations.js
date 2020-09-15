@@ -9,6 +9,8 @@ const logger = getLogger({
 export const mutations = {
     [USER_LOGIN_MUTATION]: (state, payload) => {
         state.login = payload.login;
+        state.id = payload.id;
+        state.email = payload.login;
         logger.debug('Logged in', payload);
         logger.debug('State', state);
     },

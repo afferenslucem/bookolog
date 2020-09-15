@@ -61,7 +61,7 @@ export class BookRepository {
 
         books.forEach(item => {
             if (item.guid) {
-                throw ENTITY_ALREADY_EXISTS;
+                //
             }
             else {
                 item.guid = this.#generator.generate();
@@ -69,6 +69,16 @@ export class BookRepository {
         })
 
         const result = await this.#repository.saveMany(this.#booksStore, books);
+
+        this.logger.info('saved books', result);
+
+        return books;
+    }
+
+    async deleteManyBooks(books) {
+        await this.#repository.open(this.#dbName);
+
+        const result = await this.#repository.deleteMany(this.#booksStore, books);
 
         this.logger.info('saved books', result);
 
@@ -84,7 +94,7 @@ export class BookRepository {
             }
         })
 
-        const result = await this.updateMany(this.#booksStore, books);
+        const result = await this.#repository.updateMany(this.#booksStore, books);
 
         this.logger.info('update books', result);
 

@@ -25,7 +25,7 @@ namespace backend.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Column(TypeName = "uuid")]
-        public Guid? Id { get; set; }
+        public Guid? Guid { get; set; }
         [Column(TypeName = "varchar(512)")]
         public string Name { get; set; }
         [Column(TypeName = "varchar(512)[]")]

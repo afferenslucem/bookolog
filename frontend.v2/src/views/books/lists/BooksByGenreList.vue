@@ -24,7 +24,7 @@ export default {
       return _(this.$store.getters[BOOKS_DONE_GETTER])
         .where((item) => !!item.genre)
         .where((item) => item.genre.toLowerCase() == this.name.toLowerCase())
-        .orderByDescending((item) => item.modifyTime || "0")
+        .orderByDescending((item) => item.modifyDate || "0")
         .thenByDescending((item) => item.name)
         .toArray();
     },

@@ -48,7 +48,7 @@ namespace backend.Storage
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => item.Id == guid).SingleAsync();
+            var result = await context.Books.Where(item => item.Guid == guid).SingleAsync();
 
             return result;
         }
@@ -56,7 +56,7 @@ namespace backend.Storage
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => guids.Contains(item.Id.Value)).ToArrayAsync();
+            var result = await context.Books.Where(item => guids.Contains(item.Guid.Value)).ToArrayAsync();
 
             return result;
         }
@@ -74,7 +74,7 @@ namespace backend.Storage
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => item.Id == guid).SingleAsync();
+            var result = await context.Books.Where(item => item.Guid == guid).SingleAsync();
 
             context.Books.Remove(result);
 

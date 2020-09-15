@@ -7,7 +7,7 @@ export const IN_PROGRESS_STATUS = 1;
 export const DONE_STATUS = 2;
 
 export class Book {
-    // guid: string
+    // id: string
     // name: string
     // authors: string[]
     // year: number
@@ -28,5 +28,15 @@ export class Book {
 
     get progress() {
         return this.doneUnits / this.totalUnits;
+    }
+}
+
+export class BookEqualityComparer {
+    getHashCode(book) {
+        return book.guid;
+    }
+
+    equal(firstBook, secondsBook) {
+        return firstBook.guid === secondsBook.guid;
     }
 }

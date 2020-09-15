@@ -25,8 +25,6 @@ export default {
     }),
     methods: {
       setMeta() {
-          this.book.modifyTime = moment(new Date()).format();
-          this.book.shouldSynch = true;
       },
       statusChange(status) {
         if (status == IN_PROGRESS_STATUS) {

@@ -37,14 +37,14 @@ namespace tests.Services
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name"
             };
 
             var result = await this.service.Save(book);
-            var saved = await this.bookStorage.GetByGuid(result.Id.Value);
+            var saved = await this.bookStorage.GetByGuid(result.Guid.Value);
             
-            Assert.AreEqual(result.Id, saved.Id);
+            Assert.AreEqual(result.Guid, saved.Guid);
             Assert.AreEqual(result.UserId, 1);
         }
 
@@ -53,7 +53,7 @@ namespace tests.Services
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 StartDate = DateTime.Now
             };
@@ -66,7 +66,7 @@ namespace tests.Services
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 EndDate = DateTime.Now
             };
@@ -79,7 +79,7 @@ namespace tests.Services
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 TotalUnits = 100
             };
@@ -92,7 +92,7 @@ namespace tests.Services
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 DoneUnits = 100
             };
@@ -105,7 +105,7 @@ namespace tests.Services
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 TotalUnits = 10,
                 DoneUnits = 20
@@ -119,7 +119,7 @@ namespace tests.Services
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(-1)

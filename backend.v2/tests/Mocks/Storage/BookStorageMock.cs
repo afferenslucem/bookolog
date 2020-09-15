@@ -13,14 +13,14 @@ namespace tests.Storage
         private IDictionary<Guid, Book> storage = new Dictionary<Guid, Book>();
         public async Task<Book> Save(Book book)
         {
-            await Task.Run(() => this.storage[book.Id.Value] = book);
+            await Task.Run(() => this.storage[book.Guid.Value] = book);
 
             return book;
         }
 
         public async Task<Book> Update(Book book)
         {
-            await Task.Run(() => this.storage[book.Id.Value] = book);
+            await Task.Run(() => this.storage[book.Guid.Value] = book);
 
             return book;
         }

@@ -42,7 +42,7 @@ namespace tests.Controllers
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name"
             };
 
@@ -57,7 +57,7 @@ namespace tests.Controllers
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 StartDate = DateTime.Now
             };
@@ -73,7 +73,7 @@ namespace tests.Controllers
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 EndDate = DateTime.Now
             };
@@ -89,7 +89,7 @@ namespace tests.Controllers
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 TotalUnits = 100
             };
@@ -105,7 +105,7 @@ namespace tests.Controllers
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 DoneUnits = 100
             };
@@ -121,7 +121,7 @@ namespace tests.Controllers
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 TotalUnits = 10,
                 DoneUnits = 20
@@ -139,7 +139,7 @@ namespace tests.Controllers
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(-1)
@@ -157,7 +157,7 @@ namespace tests.Controllers
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(-1)
@@ -179,7 +179,7 @@ namespace tests.Controllers
         {
             var book = new Book
             {
-                Id = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 Name = "Name",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(-1)
@@ -190,7 +190,7 @@ namespace tests.Controllers
             var user = await this.userSession.User;
             user.Id = 2;
             
-            var result = await this.controller.Delete(book.Id.Value) as ObjectResult;
+            var result = await this.controller.Delete(book.Guid.Value) as ObjectResult;
             
             Assert.IsNotNull(result);
             Assert.AreEqual(400, result.StatusCode);

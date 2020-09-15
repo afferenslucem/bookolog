@@ -22,9 +22,9 @@ export class BookClient extends Client {
 
     async getById(bookId) {
         const book = await super.get(`book/get/${bookId}`);
-        this.logger.debug('book', book);
+        this.logger.debug('book', book.data);
 
-        return  new Book(book);
+        return new Book(book);
     }
 
     async create(book) {
@@ -32,25 +32,33 @@ export class BookClient extends Client {
             withCredentials: true
         });
 
-        this.logger.debug('created', created);
-        return new Book(created);
+        this.logger.debug('created', created.data);
+        return new Book(created.data);
     }
 
     async update(book) {
-        const update = await super.post(`book/update`, book, {
+        const update = await super.put(`book/update`, book, {
             withCredentials: true
         });
 
-        this.logger.debug('update', update);
-        return new Book(update);
+        this.logger.debug('update', update.data);
+        return new Book(update.data);
     }
 
     async delete(bookId) {
-        const deleted = await super.post(`book/delete/${bookId}`, {
+        const deleted = await super.delete(`book/delete/${bookId}`, {
             withCredentials: true
         });
 
-        this.logger.debug('deleted', deleted);
-        return new Book(deleted);
+        this.logger.debug('deleted', deleted.data);
+        return new Book(deleted.data);
+    }
+
+    async sync(syncData) {
+        const synced = await super.post('book/synchronize', syncData, {
+            withCredentials: true
+        });
+
+        return synced.data;
     }
 }

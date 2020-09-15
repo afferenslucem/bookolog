@@ -1,9 +1,23 @@
 import {getLogger} from '../../logger';
-import { BOOKS_LOAD_ACTION, BOOKS_CLEAR_ACTION, BOOK_ADD_ACTION, BOOK_DELETE_ACTION, BOOKS_SAVE_MUTATION,
-    BOOK_ADD_MUTATION, BOOK_DELETE_MUTATION, BOOK_UPDATE_MUTATION, BOOK_UPDATE_ACTION,
+import { 
+    BOOKS_SYNC_ACTION, 
+    BOOKS_CLEAR_ACTION, 
+    BOOK_ADD_ACTION, 
+    BOOK_DELETE_ACTION, 
+    BOOKS_SAVE_MUTATION,
+    BOOK_ADD_MUTATION, 
+    BOOK_DELETE_MUTATION, 
+    BOOK_UPDATE_MUTATION, 
+    BOOK_UPDATE_ACTION,
     BOOK_GET_BY_GUID_ACTION,
-    BOOKS_CLEAR_MUTATION} from '../naming';
+    BOOKS_CLEAR_MUTATION,
+    NETWORK_ERROR,
+} from '../naming';
 import { BookRepository } from '@/storage/book-repository';
+import { BookClient } from '@/http/book-client';
+import _ from 'declarray';
+import { BookEqualityComparer } from '../../models/book';
+import moment from 'moment'
 
 const logger = getLogger({
     namespace: 'BooksModule',
@@ -11,14 +25,73 @@ const logger = getLogger({
 });
 
 export const actions = {
-    [BOOKS_LOAD_ACTION]: async ({commit}) => {
+    [BOOKS_SYNC_ACTION]: async ({commit, rootState}) => {
         const storage = new BookRepository();
+        const client = new BookClient();
+
+        const answerLoc = storage.allBooks();
+        const answerOr =  client.getAll(rootState.user.id);
+
+        const locBooks = await answerLoc;
+        const orBooks = await answerOr;
+
+        const comparer = new BookEqualityComparer();
+
+        const local = _(locBooks);
+        const origin = _(orBooks); 
+
+        const originNew = origin.except(local, comparer);
+        originNew.toArray()
+
+        const localDeleted = local.where(item => !!item.deleted);
+
+        const localNew = local.except(origin, comparer).where(item => !!item.shouldSync);
+
+        // const originDeleted = local.except(localDeleted.concat(localNew), comparer);
+
+        const joined = local.join(origin, loc => loc.guid, or => or.guid, (loc, or) => ({local: loc, origin: or}));
+
+        const originUpdated = joined.where(item => item.origin.modifyDate > item.local.modifyDate).select(item => item.origin);
+        const localUpdated = joined.where(item => item.origin.modifyDate < item.local.modifyDate).select(item => item.local);
+
+        const toUpdate = localUpdated.toArray();
+        const toCreate = localNew.toArray();
+        const toDelete = localDeleted.toArray();
+
+        const synced = await client.sync({
+            'add': toCreate,
+            'update': toUpdate,
+            'deleteGuids': _(toDelete).select(item => item.guid).toArray(),
+        })
+
+        const deleteAwait = storage.deleteManyBooks(localDeleted.concat(synced.delete).toArray());
+        const updateAwait = storage.updateManyBooks(originUpdated.concat(localNew.select(item => {
+            item.shouldSync = false;
+            return item;
+        })).toArray())
+        const saveAwait = storage.saveManyBooks(originNew.toArray());
+
+        await Promise.all([saveAwait, updateAwait, deleteAwait])
+
         const books = await storage.allBooks();
 
         commit(BOOKS_SAVE_MUTATION, books)
     },
     [BOOK_ADD_ACTION]: async ({commit}, book) => {
         if(!book) return;
+
+        try {
+            book = await new BookClient().create(book);
+        } catch (e) {
+            logger.debug(e);
+
+            if(e == NETWORK_ERROR) {
+                book.shouldSync = true;
+            } else {
+                logger.error('Unexpected error:', e)
+                return;
+            }
+        }
 
         const storage = new BookRepository();
         await storage.saveBook(book);
@@ -29,6 +102,21 @@ export const actions = {
     },
     [BOOK_UPDATE_ACTION]: async ({commit}, book) => {
         if(!book) return;
+
+        book.modifyDate = moment(new Date()).format();
+
+        try {
+            book = await new BookClient().update(book);
+        } catch (e) {
+            logger.debug(e);
+
+            if(e == NETWORK_ERROR) {
+                //
+            } else {
+                logger.error('Unexpected error:', e)
+                return;
+            }
+        }
 
         const storage = new BookRepository();
         await storage.updateBook(book);
@@ -42,8 +130,31 @@ export const actions = {
 
         return book;
     },
-    [BOOK_DELETE_ACTION]: async ({commit}, guid) => {
+    [BOOK_DELETE_ACTION]: async ({commit, state}, guid) => {
         if(!guid) return;
+
+        try {
+            await new BookClient().delete(guid);
+        } catch (e) {
+            logger.debug(e);
+
+            if(e == NETWORK_ERROR) {
+                const storage = new BookRepository();
+
+                const book = state[guid];
+
+                book.deleted = true;
+
+                await storage.updateBook(book);
+
+                commit(BOOK_UPDATE_MUTATION, book)
+
+                return;
+            } else {
+                logger.error('Unexpected error:', e)
+                return;
+            }
+        }
 
         const storage = new BookRepository();
         await storage.deleteBook(guid);
@@ -51,8 +162,8 @@ export const actions = {
         commit(BOOK_DELETE_MUTATION, guid)
     },
     [BOOKS_CLEAR_ACTION]: async ({commit}) => {
-        //const storage = new BookRepository();
-        //await storage.clear(guid);
+        const storage = new BookRepository();
+        await storage.clear();
 
         commit(BOOKS_CLEAR_MUTATION)
     },

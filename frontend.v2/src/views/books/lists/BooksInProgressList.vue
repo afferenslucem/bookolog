@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     books() {      
-      return u(this.$store.getters[BOOKS_IN_PROGRESS_GETTER]).orderByDescending(item => item.modifyTime || '0').thenByDescending(item => item.name).toArray();
+      return u(this.$store.getters[BOOKS_IN_PROGRESS_GETTER]).orderByDescending(item => item.modifyDate || '0').thenByDescending(item => item.name).toArray();
     },
     shouldShowList() {
       return this.books != null && this.books.length > 0;

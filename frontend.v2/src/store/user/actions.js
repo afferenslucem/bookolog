@@ -1,5 +1,5 @@
 import {getLogger} from '../../logger';
-import { USER_LOGIN_MUTATION, USER_LOGOUT_MUTATION, USER_RECOVER_ACTION, USER_LOGIN_ACTION, USER_LOGOUT_ACTION, BOOKS_CLEAR_ACTION, BOOKS_LOAD_ACTION } from '../naming';
+import { USER_LOGIN_MUTATION, USER_LOGOUT_MUTATION, USER_RECOVER_ACTION, USER_LOGIN_ACTION, USER_LOGOUT_ACTION, BOOKS_CLEAR_ACTION, BOOKS_SYNC_ACTION } from '../naming';
 import { UserClient } from '../../http/user-client';
 
 const logger = getLogger({
@@ -16,9 +16,9 @@ export const actions = {
 
             localStorage.setItem('user', JSON.stringify(user));
 
-            commit(USER_LOGIN_MUTATION, {login: user.login})
+            commit(USER_LOGIN_MUTATION, user)
 
-            await dispatch(BOOKS_LOAD_ACTION)
+            await dispatch(BOOKS_SYNC_ACTION)
 
             logger.info('Logged in', user)
 
@@ -32,9 +32,9 @@ export const actions = {
 
         if(savedUser) {
             const user = JSON.parse(savedUser);
-            commit(USER_LOGIN_MUTATION, {login: user.login})
+            commit(USER_LOGIN_MUTATION, user)
 
-            await dispatch(BOOKS_LOAD_ACTION)
+            await dispatch(BOOKS_SYNC_ACTION)
 
             logger.info('Logged in', user)
 

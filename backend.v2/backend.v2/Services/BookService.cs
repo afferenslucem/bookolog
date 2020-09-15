@@ -53,16 +53,16 @@ namespace backend.Services
 
         public async Task<Book> Save(Book book)
         {
-            var result = await this.storage.Save(book);
             this.CheckEntity(book);
             book.UserId = (await this.session.User).Id;
+            var result = await this.storage.Save(book);
 
             return result;
         }
 
         public async Task<Book> Update(Book book)
         {
-            var currentState = await this.storage.GetByGuid(book.Id.Value);
+            var currentState = await this.storage.GetByGuid(book.Guid.Value);
             
             await this.CheckAccess(currentState);
             this.CheckEntity(book);
@@ -161,7 +161,7 @@ namespace backend.Services
 
         private async Task<Book[]> CheckForUpdate(Book[] books) {
             var user = await this.session.User;
-            var toUpdateAwait = this.storage.GetByGuids(books.Select(item => item.Id.Value).ToArray());
+            var toUpdateAwait = this.storage.GetByGuids(books.Select(item => item.Guid.Value).ToArray());
 
             foreach(var item in books) {
                 this.CheckEntity(item);
