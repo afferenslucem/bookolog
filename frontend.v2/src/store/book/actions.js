@@ -10,12 +10,9 @@ import {
     BOOK_UPDATE_MUTATION, 
     BOOK_UPDATE_ACTION,
     BOOK_GET_BY_GUID_ACTION,
-    BOOKS_CLEAR_MUTATION,
-    NETWORK_ERROR,
+    BOOKS_CLEAR_MUTATION
 } from '../naming';
 import { BookRepository } from '@/storage/book-repository';
-import { BookClient } from '@/http/book-client';
-import moment from 'moment'
 import { BookSynchronizator } from './utils/synchronizator';
 
 const logger = getLogger({
@@ -34,21 +31,7 @@ export const actions = {
     [BOOK_ADD_ACTION]: async ({commit}, book) => {
         if(!book) return;
 
-        try {
-            book = await new BookClient().create(book);
-        } catch (e) {
-            logger.debug(e);
-
-            if(e == NETWORK_ERROR) {
-                book.shouldSync = true;
-            } else {
-                logger.error('Unexpected error:', e)
-                return;
-            }
-        }
-
-        const storage = new BookRepository();
-        await storage.saveBook(book);
+        book = new BookSynchronizator().saveBook(book);
 
         commit(BOOK_ADD_MUTATION, book)
 
@@ -57,61 +40,41 @@ export const actions = {
     [BOOK_UPDATE_ACTION]: async ({commit}, book) => {
         if(!book) return;
 
-        book.modifyDate = moment(new Date()).format();
-
-        try {
-            book = await new BookClient().update(book);
-        } catch (e) {
-            logger.debug(e);
-
-            if(e == NETWORK_ERROR) {
-                //
-            } else {
-                logger.error('Unexpected error:', e)
-                return;
-            }
-        }
-
-        const storage = new BookRepository();
-        await storage.updateBook(book);
+        book = await new BookSynchronizator().updateBook(book);
         
         commit(BOOK_UPDATE_MUTATION, book)
 
         logger.info('updated book')
     },
-    [BOOK_GET_BY_GUID_ACTION]: async ({state}, guid) => {
-        const book = state[guid];
+    [BOOK_GET_BY_GUID_ACTION]: async ({state, commit}, guid) => {
+        const book = new BookSynchronizator().loadBook(guid);
 
-        return book;
+        if(book) {
+            commit(BOOK_UPDATE_MUTATION, book)
+        }
+
+        return state[guid];
     },
     [BOOK_DELETE_ACTION]: async ({commit, state}, guid) => {
         if(!guid) return;
 
-        try {
-            await new BookClient().delete(guid);
-        } catch (e) {
-            logger.debug(e);
+        let shouldContinue = true;
 
-            if(e == NETWORK_ERROR) {
-                const storage = new BookRepository();
+        await new BookSynchronizator().deleteBook(guid, async () => {
+            const storage = new BookRepository();
 
-                const book = state[guid];
+            const book = state[guid];
 
-                book.deleted = true;
+            book.deleted = true;
 
-                await storage.updateBook(book);
+            storage.updateBook(book);
 
-                commit(BOOK_UPDATE_MUTATION, book)
+            commit(BOOK_UPDATE_MUTATION, book)
 
-                return;
-            } else {
-                logger.error('Unexpected error:', e)
-                return;
-            }
-        }
+            shouldContinue = false;
+        });
 
-        const storage = new BookRepository();
-        await storage.deleteBook(guid);
+        if(!shouldContinue) return;
 
         commit(BOOK_DELETE_MUTATION, guid)
     },

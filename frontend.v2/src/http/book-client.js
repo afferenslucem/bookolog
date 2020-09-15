@@ -24,7 +24,7 @@ export class BookClient extends Client {
         const book = await super.get(`book/get/${bookId}`);
         this.logger.debug('book', book.data);
 
-        return new Book(book);
+        return new Book(book.data);
     }
 
     async create(book) {

@@ -1,12 +1,92 @@
+import { getLogger } from '../../../logger';
 import { BookRepository } from '../../../storage/book-repository';
 import { BookEqualityComparer } from '../../../models/book';
 import { BookClient } from '../../../http/book-client';
+import { 
+    NETWORK_ERROR,
+} from '../../naming';
 import _ from 'declarray';
+import moment from 'moment'
+
+const logger = getLogger({
+    loggerName: 'BookSynchronizator'
+});
 
 export class BookSynchronizator {
     constructor(repository, client) {
         this.repository = repository || new BookRepository();
         this.client = client || new BookClient();
+    }
+
+    async saveBook(book, onOffline = () => {}, onOnline = () => {}) {
+        try {
+            book = await this.client.create(book);
+            onOnline();
+        } catch (e) {
+            logger.debug(e);
+
+            if(e == NETWORK_ERROR) {
+                book.shouldSync = true;
+                onOffline();
+            } else {
+                logger.error('Unexpected error:', e)
+                throw e
+            }
+        }
+
+        await this.repository.saveBook(book);
+    }
+
+    async updateBook(book, onOffline = () => {}, onOnline = () => {}) {
+        book.modifyDate = moment(new Date()).format();
+
+        try {
+            book = await this.client.update(book);
+            onOnline();
+        } catch (e) {
+            if(e == NETWORK_ERROR) {
+                onOffline();
+            } else {
+                logger.error('Unexpected error:', e)
+                throw e;
+            }
+        }
+        
+        await this.repository.updateBook(book);
+    }
+
+    async deleteBook(guid, onOffline = () => {}, onOnline = () => {}) {
+        try {
+            await this.client.delete(guid);
+            onOnline();
+        } catch (e) {
+            if(e == NETWORK_ERROR) {
+                onOffline()
+            } else {
+                logger.error('Unexpected error:', e)
+                throw e;
+            }
+        }
+
+        await this.repository.deleteBook(guid);
+    }
+
+    async loadBook(guid, onOffline = () => {}, onOnline = () => {}) {
+        try {
+            const book = await this.client.getById(guid);
+            onOnline();
+
+            await this.repository.saveBook(book);
+
+            return book;
+        } catch (e) {
+            if(e == NETWORK_ERROR) {
+                onOffline()
+            } else {
+                logger.error('Unexpected error:', e)
+                throw e;
+            }
+        }
     }
 
     async sync(userId) {
