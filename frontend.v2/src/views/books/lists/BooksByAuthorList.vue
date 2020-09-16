@@ -23,7 +23,8 @@ export default {
     books() {
       return _(this.$store.getters[BOOKS_DONE_GETTER])
         .where((item) => item.authors && item.authors.length)
-        .where((item) => _(item.authors).exists(item => item.toLowerCase() == this.name.toLowerCase()))
+        .where((item) => _(item.authors)
+        .any(item => item.toLowerCase() == this.name.toLowerCase()))
         .orderByDescending((item) => item.modifyDate || "0")
         .thenByDescending((item) => item.name)
         .toArray();

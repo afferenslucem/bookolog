@@ -89,27 +89,48 @@ export class BookSynchronizator {
         }
     }
 
-    async sync(userId) {
-        let [local, origin] = await this.loadAllBooks(userId);
+    async sync(userId, onOffline = () => {}, onOnline = () => {}) {
+        let isOnline = true;
 
-        local = local.select(item => {
-            item.shouldSync = true
-            return item
-        })
+        let [local, origin] = await this.loadAllBooks(userId, () => {
+            isOnline = false;
+            onOffline();
+        }, onOnline);
 
-        const diff = this.computeSyncData(local, origin);
+        if (isOnline) {
+            const diff = this.computeSyncData(local, origin);
 
-        const originSynched = await this.syncRemote(diff);
+            const originSynched = await this.syncRemote(diff);
 
-        await this.syncLocal(diff, originSynched);
+            await this.syncLocal(diff, originSynched);
 
-        return this.composeActual(diff);
+            return this.composeActual(diff);
+        } else {
+            return local.toArray();
+        }
     }
 
-    async loadAllBooks(userId) {
-        const [localBooks, originBooks] = await Promise.all([this.repository.allBooks(), this.client.getAll(userId)])
+    async loadAllBooks(userId, onOffline, onOnline) {
+        const originAwait = this.client.getAll(userId);
 
-        return [_(localBooks), _(originBooks)];
+        const local = await this.repository.allBooks();
+
+        try {
+            const origin = await originAwait;
+            onOnline();
+
+            return [_(local), _(origin)];
+        } catch (e) {
+            logger.debug(e);
+
+            if(e == NETWORK_ERROR) {
+                onOffline();
+                return [_(local), _.empty()];
+            } else {
+                logger.error('Unexpected error:', e)
+                throw e
+            }
+        }
     }
 
     computeSyncData(local, origin) {

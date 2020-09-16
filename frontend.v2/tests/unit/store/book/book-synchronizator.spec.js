@@ -94,45 +94,158 @@ describe('BookSynchronizator', () => {
                 local[1],
             ]);
     });
-});
+    
+    describe('saveBook', () => {
+        it('should trigger offline', () => {
+            let offline = false;
+            let data = null;
 
-describe('BookSynchronizator save', () => {
-    it('should trigger offline', () => {
-        let offline = false;
-        let data = null;
-
-        new BookSynchronizator({
-            saveBook: (book) => data = book
-        },{
-            create: () => {
-                throw NETWORK_ERROR
+            new BookSynchronizator({
+                saveBook: (book) => data = book
+            },{
+                create: () => {
+                    throw NETWORK_ERROR
+                }
             }
-        }
-        ).saveBook({}, () => {
-            offline = true;
-        }, () => {
-            offline = false;
+            ).saveBook({}, () => {
+                offline = true;
+            }, () => {
+                offline = false;
+            })
+
+            assert.equal(offline, true);
+            assert.equal(data.shouldSync, true);
         })
 
-        assert.equal(offline, true);
-        assert.equal(data.shouldSync, true);
-    })
+        it('should trigger online', async () => {
+            let offline = true;
+            let data = null;
 
-    it('should trigger online', async () => {
-        let offline = true;
-        let data = null;
+            await new BookSynchronizator({
+                saveBook: (book) => data = book
+            },{
+                create: (book) => new Promise(resolve => resolve(book))
+            }).saveBook({}, () => {
+                offline = true;
+            }, () => {
+                offline = false;
+            })
 
-        await new BookSynchronizator({
-            saveBook: (book) => data = book
-        },{
-            create: (book) => new Promise(resolve => resolve(book))
-        }).saveBook({}, () => {
-            offline = true;
-        }, () => {
-            offline = false;
+            assert.equal(offline, false);
+            assert.equal(data.shouldSync, undefined);
+        })
+    });
+    
+    describe('updateBook', () => {
+        it('should trigger offline', () => {
+            let offline = false;
+            let data = null;
+
+            new BookSynchronizator({
+                updateBook: (book) => data = book
+            },{
+                update: () => {
+                    throw NETWORK_ERROR
+                }
+            }
+            ).updateBook({}, () => {
+                offline = true;
+            }, () => {
+                offline = false;
+            })
+
+            assert.equal(offline, true);
+            assert.equal(data.modifyDate !== undefined, true);
         })
 
-        assert.equal(offline, false);
-        assert.equal(data.shouldSync, undefined);
-    })
+        it('should trigger online', async () => {
+            let offline = true;
+            let data = null;
+
+            await new BookSynchronizator({
+                updateBook: (book) => data = book
+            },{
+                update: (book) => new Promise(resolve => resolve(book))
+            }).updateBook({}, () => {
+                offline = true;
+            }, () => {
+                offline = false;
+            })
+
+            assert.equal(offline, false);
+            assert.equal(data.shouldSync, undefined);
+        })
+    });
+    
+    describe('deleteBook', () => {
+        it('should trigger offline', () => {
+            let offline = false;
+
+            new BookSynchronizator({
+                deleteBook: (book) => book
+            },{
+                delete: () => {
+                    throw NETWORK_ERROR
+                }
+            }
+            ).deleteBook({}, () => {
+                offline = true;
+            }, () => {
+                offline = false;
+            })
+
+            assert.equal(offline, true);
+        })
+
+        it('should trigger online', async () => {
+            let offline = true;
+            await new BookSynchronizator({
+                deleteBook: (book) => book
+            },{
+                delete: (book) => new Promise(resolve => resolve(book))
+            }).deleteBook({}, () => {
+                offline = true;
+            }, () => {
+                offline = false;
+            })
+
+            assert.equal(offline, false);
+        })
+    });
+    
+    describe('loadBook', () => {
+        it('should trigger offline', () => {
+            let offline = false;
+
+            new BookSynchronizator({
+                saveBook: (book) => book
+            },{
+                getById: () => {
+                    throw NETWORK_ERROR
+                }
+            }
+            ).loadBook({}, () => {
+                offline = true;
+            }, () => {
+                offline = false;
+            })
+
+            assert.equal(offline, true);
+        })
+
+        it('should trigger online', async () => {
+            let offline = true;
+            await new BookSynchronizator({
+                saveBook: (book) => book
+            },{
+                getById: (book) => new Promise(resolve => resolve(book))
+            }).loadBook({}, () => {
+                offline = true;
+            }, () => {
+                offline = false;
+            })
+
+            assert.equal(offline, false);
+        })
+    });
 });

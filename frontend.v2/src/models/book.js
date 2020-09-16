@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const PAPER_BOOK_TYPE = 0;
 export const ELECTRONIC_BOOK_TYPE = 1;
 export const AUDIO_BOOK_TYPE = 2;
@@ -26,6 +28,8 @@ export class Book {
         Object.assign(this, obj);
         const modifyDate = obj.modifyDate || obj.modifyTime || 0;
         this.modifyDate = new Date(modifyDate);
+        this.endDate = moment(obj.endDate).format('YYYY-MM-DD')
+        this.startDate = moment(obj.startDate).format('YYYY-MM-DD')
     }
 
     get progress() {
