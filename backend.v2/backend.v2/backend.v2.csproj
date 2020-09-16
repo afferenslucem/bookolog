@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>38f4a97e-7df2-427e-b2ba-d13c342612d1</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
 
   <!--PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

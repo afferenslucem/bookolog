@@ -4,7 +4,7 @@ using backend.Storage;
 
 namespace tests.Services
 {
-    public class BookServiceMock: UserService
+    public class BookServiceMock//: IBookService
     {
 
     }

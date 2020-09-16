@@ -18,5 +18,9 @@
   <ItemGroup>
     <ProjectReference Include="..\backend.v2\backend.v2.csproj" />
   </ItemGroup>
-
+  
+  <PropertyGroup>
+    <NoWarn>NU1701</NoWarn>
+  </PropertyGroup>
+  
 </Project>

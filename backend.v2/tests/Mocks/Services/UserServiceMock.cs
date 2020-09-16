@@ -4,7 +4,7 @@ using backend.Storage;
 
 namespace tests.Services
 {
-    public class UserServiceMock: UserService
+    public class UserServiceMock//: IUserService
     {
 
     }

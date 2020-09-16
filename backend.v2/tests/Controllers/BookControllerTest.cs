@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Extensions.Logging;
@@ -50,6 +51,78 @@ namespace tests.Controllers
             
             Assert.IsNotNull(saved);
             Assert.AreEqual(200, saved.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task ShouldSaveMany()
+        {
+            var book = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name"
+            };
+
+            var saved = await this.controller.CreateMany(new Book[] {book}) as OkObjectResult;
+            
+            Assert.IsNotNull(saved);
+            Assert.AreEqual(200, saved.StatusCode);
+
+            var storage = this.bookStorage.GetByGuid(book.Guid.Value);
+
+            Assert.IsNotNull(storage);
+        }
+
+        [TestMethod]
+        public async Task ShouldUpdateMany()
+        {
+            var book = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name"
+            };
+
+            var book2 = new Book
+            {
+                Guid = book.Guid,
+                Name = "Name2"
+            };
+
+            var saved = await this.controller.CreateMany(new Book[] {book}) as OkObjectResult;
+            var updated = await this.controller.UpdateMany(new Book[] {book2}) as OkObjectResult;
+        
+            var storage = this.bookStorage.GetByGuid(book.Guid.Value);
+
+            Assert.AreEqual(book2.Name, "Name2");
+        }
+
+        [TestMethod]
+        public async Task ShouldDeleteMany()
+        {
+            var book = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name"
+            };
+
+            var book2 = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name2"
+            };
+
+            var saved = await this.controller.CreateMany(new Book[] {book, book2}) as OkObjectResult;
+
+            Console.WriteLine(book.Guid);
+            Console.WriteLine(book2.Guid);
+            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(saved.Value));
+
+            var updated = await this.controller.DeleteMany(new Guid[] {book.Guid.Value, book2.Guid.Value}) as OkObjectResult;
+        
+            var user = await this.userSession.User;
+
+            var storage = await this.bookStorage.GetByUserId(user.Id);
+
+            Assert.AreEqual(storage.Count(), 0);
         }
 
         [TestMethod]
@@ -160,20 +233,22 @@ namespace tests.Controllers
                 Guid = Guid.NewGuid(),
                 Name = "Name",
                 StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(-1)
+                EndDate = DateTime.Now.AddDays(1)
             };
 
             await this.controller.Create(book);
             
-            var user = await this.userSession.User;
-            user.Id = 2;
+            book.UserId = 2;
             
-            var result = await this.controller.Update(book) as ObjectResult;
+            var updateResult = await this.controller.Update(book);
+
+            var result = updateResult as ObjectResult;
             
             Assert.IsNotNull(result);
             Assert.AreEqual(400, result.StatusCode);
             Assert.AreEqual(BookCouldNotAccessSomeoneElsesException.ErrorMessage, result.Value);
         }
+        
         [TestMethod]
         public async Task ShouldDeleteException()
         {
@@ -182,13 +257,12 @@ namespace tests.Controllers
                 Guid = Guid.NewGuid(),
                 Name = "Name",
                 StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(-1)
+                EndDate = DateTime.Now.AddDays(1)
             };
 
             await this.controller.Create(book);
             
-            var user = await this.userSession.User;
-            user.Id = 2;
+            book.UserId = 2;
             
             var result = await this.controller.Delete(book.Guid.Value) as ObjectResult;
             

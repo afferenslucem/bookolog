@@ -29,9 +29,7 @@
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookWrongUnitsException - Copy.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookWrongDatesException - Copy.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookologException.cs" />
-        <option value="$PROJECT_DIR$/tests/Mocks/Services/BookServiceMock.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Storage/BookStorage.cs" />
-        <option value="$PROJECT_DIR$/tests/Mocks/Storage/BookStorageMock.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookWrongDatesException.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookWrongUnitsException.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Services/BookService.cs" />
@@ -41,12 +39,16 @@
         <option value="$PROJECT_DIR$/tests/Services/BookServiceTests.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Exceptions/BookExceptions/BookCouldNotAccessSomeoneElsesException.cs" />
         <option value="$PROJECT_DIR$/tests/Controllers/BookControllerTest.cs" />
-        <option value="$PROJECT_DIR$/tests/Mocks/Services/UserServiceMock.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Storage/UserStorage.cs" />
         <option value="$PROJECT_DIR$/tests/Mocks/Storage/UserStorageMock.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Services/UserService.cs" />
         <option value="$PROJECT_DIR$/backend.v2/Controllers/AuthController.cs" />
         <option value="$PROJECT_DIR$/tests/Controllers/AuthControllerTest.cs" />
+        <option value="$PROJECT_DIR$/tests/Mocks/Storage/BookStorageMock.cs" />
+        <option value="$PROJECT_DIR$/tests/Mocks/Services/UserServiceMock.cs" />
+        <option value="$PROJECT_DIR$/tests/Mocks/Services/BookServiceMock.cs" />
+        <option value="$PROJECT_DIR$/tests/tests.csproj" />
+        <option value="$PROJECT_DIR$/backend.v2/backend.v2.csproj" />
       </list>
     </option>
   </component>
@@ -64,7 +66,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="RiderUnitTestingPageId" />
   </component>
-  <component name="RunManager" selected="1e766a94-ec50-4360-91a5-08bb92213965">
+  <component name="RunManager" selected=".NET Launch Settings Profile.backend.v2">
     <configuration name="backend.v2" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/backend.v2/backend.v2.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
@@ -109,6 +111,7 @@
       <option name="presentableId" value="Default" />
       <updated>1599279476948</updated>
       <workItem from="1599279495068" duration="14935000" />
+      <workItem from="1600269637042" duration="2195000" />
     </task>
     <servers />
   </component>
@@ -208,10 +211,10 @@
       <screen x="0" y="0" width="1366" height="732" />
     </state>
     <state x="283" y="101" key="Rider.ProjectTemplateDialog.Size/0.0.1366.732@0.0.1366.732" timestamp="1599292543954" />
-    <state x="366" y="12" key="RiderGenerateDialog" timestamp="1599293712343">
+    <state x="366" y="12" key="RiderGenerateDialog" timestamp="1600269760106">
       <screen x="0" y="0" width="1366" height="732" />
     </state>
-    <state x="366" y="12" key="RiderGenerateDialog/0.0.1366.732@0.0.1366.732" timestamp="1599293712343" />
+    <state x="366" y="12" key="RiderGenerateDialog/0.0.1366.732@0.0.1366.732" timestamp="1600269760106" />
     <state x="184" y="1" key="SettingsEditor" timestamp="1599295018571">
       <screen x="0" y="0" width="1366" height="732" />
     </state>
@@ -220,19 +223,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/backend.v2/Services/BookService.cs</url>
-          <line>28</line>
-          <properties documentPath="$PROJECT_DIR$/backend.v2/Services/BookService.cs" initialLine="28">
-            <startOffsets>
-              <option value="747" />
-            </startOffsets>
-            <endOffsets>
-              <option value="748" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/tests/Controllers/BookControllerTest.cs</url>
           <line>150</line>

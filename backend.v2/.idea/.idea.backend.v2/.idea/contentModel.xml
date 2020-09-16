@@ -36,6 +36,10 @@
         <e p="Migrations" t="Include">
           <e p="20200904184115_init.Designer.cs" t="Include" />
           <e p="20200904184115_init.cs" t="Include" />
+          <e p="20200915060053_renamed_id_to_guid.Designer.cs" t="Include" />
+          <e p="20200915060053_renamed_id_to_guid.cs" t="Include" />
+          <e p="20200915105807_added tz.Designer.cs" t="Include" />
+          <e p="20200915105807_added tz.cs" t="Include" />
           <e p="BookologContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="Models" t="Include">
@@ -43,6 +47,8 @@
             <e p="AuthenticateModel.cs" t="Include" />
           </e>
           <e p="Book.cs" t="Include" />
+          <e p="Sync.cs" t="Include" />
+          <e p="Synced.cs" t="Include" />
           <e p="User.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />

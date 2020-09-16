@@ -21,13 +21,13 @@ export class BookSynchronizator {
     async saveBook(book, onOffline = () => {}, onOnline = () => {}) {
         try {
             book = await this.client.create(book);
-            onOnline();
+            await onOnline();
         } catch (e) {
             logger.debug(e);
 
             if(e == NETWORK_ERROR) {
                 book.shouldSync = true;
-                onOffline();
+                await onOffline();
             } else {
                 logger.error('Unexpected error:', e)
                 throw e
@@ -42,10 +42,10 @@ export class BookSynchronizator {
 
         try {
             book = await this.client.update(book);
-            onOnline();
+            await onOnline();
         } catch (e) {
             if(e == NETWORK_ERROR) {
-                onOffline();
+                await onOffline();
             } else {
                 logger.error('Unexpected error:', e)
                 throw e;
@@ -58,10 +58,10 @@ export class BookSynchronizator {
     async deleteBook(guid, onOffline = () => {}, onOnline = () => {}) {
         try {
             await this.client.delete(guid);
-            onOnline();
+            await onOnline();
         } catch (e) {
             if(e == NETWORK_ERROR) {
-                onOffline()
+                await onOffline()
             } else {
                 logger.error('Unexpected error:', e)
                 throw e;
@@ -74,14 +74,14 @@ export class BookSynchronizator {
     async loadBook(guid, onOffline = () => {}, onOnline = () => {}) {
         try {
             const book = await this.client.getById(guid);
-            onOnline();
+            await onOnline();
 
             await this.repository.saveBook(book);
 
             return book;
         } catch (e) {
             if(e == NETWORK_ERROR) {
-                onOffline()
+                await onOffline()
             } else {
                 logger.error('Unexpected error:', e)
                 throw e;
@@ -94,8 +94,8 @@ export class BookSynchronizator {
 
         let [local, origin] = await this.loadAllBooks(userId, () => {
             isOnline = false;
-            onOffline();
-        }, onOnline);
+           async () => await onOffline();
+        }, async () => await onOnline);
 
         if (isOnline) {
             const diff = this.computeSyncData(local, origin);
@@ -117,14 +117,14 @@ export class BookSynchronizator {
 
         try {
             const origin = await originAwait;
-            onOnline();
+            await onOnline();
 
             return [_(local), _(origin)];
         } catch (e) {
             logger.debug(e);
 
             if(e == NETWORK_ERROR) {
-                onOffline();
+                await onOffline();
                 return [_(local), _.empty()];
             } else {
                 logger.error('Unexpected error:', e)
