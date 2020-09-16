@@ -124,6 +124,62 @@ namespace tests.Controllers
 
             Assert.AreEqual(storage.Count(), 0);
         }
+        
+        [TestMethod]
+        public async Task ShouldSync()
+        {
+            var init = new Book[] {
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name"
+                },
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name2"
+                },
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name3"
+                }
+            };
+            var saved = await this.controller.CreateMany(init) as OkObjectResult;
+
+            var sync = new BookSyncModel {
+                Add = new Book[] {
+                    new Book {
+                        Guid = Guid.NewGuid(),
+                        Name = "Name4"
+                    }
+                },
+                Update = new Book[] {
+                    new Book {
+                        Guid = init[0].Guid.Value,
+                        Name = "Name5"
+                    }
+                },
+                DeleteGuids = new Guid[] {init[2].Guid.Value}
+            };
+            var synched = await this.controller.Synchronize(sync) as OkObjectResult;
+
+            var user = await this.userSession.User;
+
+            var storage = (await this.bookStorage.GetByUserId(user.Id)).ToArray();
+
+            var temp = storage.Where(item => item.Guid == sync.Update[0].Guid).Single();
+            Assert.AreEqual(temp.Name, "Name5");
+
+            temp = storage.Where(item => item.Guid == init[1].Guid).Single();
+            Assert.AreEqual(temp.Name, "Name2");
+
+            temp = storage.Where(item => item.Guid == sync.DeleteGuids[0]).SingleOrDefault();
+            Assert.AreEqual(temp, null);
+
+            temp = storage.Where(item => item.Guid == sync.Add[0].Guid).Single();
+            Assert.AreEqual(temp.Name, "Name4");
+        }
 
         [TestMethod]
         public async Task ShouldSaveWithStartDate()
