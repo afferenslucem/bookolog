@@ -47,7 +47,7 @@ namespace backend.Controllers
             catch (Exception e)
             {
                 this.logger.LogDebug(500, e, "Can't log in user");
-                return StatusCode(500);
+                return StatusCode(500, e.Message);
             }
         }
 

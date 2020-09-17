@@ -21,6 +21,6 @@ namespace backend.Storage
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Server=localhost;Port=45432;Database=bookolog;User Id=bookolog;Password=masterkey;");
+            => optionsBuilder.UseNpgsql(Config.ConnectionString);
     }
 }

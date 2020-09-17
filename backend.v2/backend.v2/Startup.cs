@@ -28,12 +28,6 @@ namespace backend
     public class Startup
     {
         string corsPolicy = "default";
-        string[] origins = new string[] {
-            "http://localhost:8080",
-            "https://bookolog.hrodvitnir.pw",
-            "https://demo.hrodvitnir.pw"
-        };
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -44,10 +38,12 @@ namespace backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            this.ReadConfig();
+            
             services.AddCors(options =>
             {
                 options.AddPolicy(corsPolicy, builder => builder
-                    .WithOrigins(origins)
+                    .WithOrigins(Config.AllowedOrigins)
                     .AllowCredentials()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
@@ -114,6 +110,11 @@ namespace backend
             {
                 endpoints.MapControllers();
             });
+        }
+
+        public void ReadConfig() {
+            Config.ConnectionString = this.Configuration.GetConnectionString("DefaultConnection");
+            Config.AllowedOrigins = this.Configuration.GetSection("AllowedOrigins").Get<string[]>();
         }
     }
 }

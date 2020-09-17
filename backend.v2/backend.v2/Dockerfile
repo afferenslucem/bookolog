@@ -11,6 +11,7 @@ COPY ["backend.v2.csproj", "backend.v2.csproj"]
 RUN dotnet restore "backend.v2.csproj"
 COPY . .
 RUN dotnet build "backend.v2.csproj" -c Release -o /app/build
+COPY ["appsettings.json", "/app/build"]
 
 FROM build AS publish
 RUN dotnet publish "backend.v2.csproj" -c Release -o /app/publish
