@@ -6,7 +6,6 @@ services:
       - "40080:80"    
     depends_on: 
       - server
-    network_mode: host
   
 
   server:
@@ -15,10 +14,14 @@ services:
       - "45080:80"
       - "45081:81"
     depends_on: 
-      - db
-    network_mode: host
+      - postgre
+    links: 
+      - postgre
+    networks: 
+      database:
+        ipv4_address: 172.16.238.10
 
-  db:
+  postgre:
     image: postgres:12.4-alpine
     environment:
       POSTGRES_PASSWORD: masterkey
@@ -26,3 +29,14 @@ services:
       - "45432:5432"
     volumes: 
       - "./database/init-db/:/docker-entrypoint-initdb.d/"
+    networks: 
+      database:
+        ipv4_address: 172.16.238.11
+
+networks: 
+  database:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
