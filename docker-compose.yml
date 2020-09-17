@@ -15,11 +15,6 @@ services:
       - "45081:81"
     depends_on: 
       - postgre
-    links: 
-      - postgre
-    networks: 
-      database:
-        ipv4_address: 172.16.238.10
 
   postgre:
     image: postgres:12.4-alpine
@@ -29,14 +24,3 @@ services:
       - "45432:5432"
     volumes: 
       - "./database/init-db/:/docker-entrypoint-initdb.d/"
-    networks: 
-      database:
-        ipv4_address: 172.16.238.11
-
-networks: 
-  database:
-    driver: "bridge"
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.16.238.0/24
