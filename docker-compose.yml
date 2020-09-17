@@ -24,3 +24,8 @@ services:
       - "45432:5432"
     volumes: 
       - "./database/init-db/:/docker-entrypoint-initdb.d/"
+
+
+# firewall-cmd --zone=public --add-masquerade --permanent
+# firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=172.18.0.0/16 accept'
+# firewall-cmd --reload
