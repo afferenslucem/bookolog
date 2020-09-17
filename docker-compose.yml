@@ -6,6 +6,8 @@ services:
       - "40080:80"    
     depends_on: 
       - server
+    network_mode: host
+  
 
   server:
     build: backend.v2/backend.v2
@@ -14,6 +16,7 @@ services:
       - "45081:81"
     depends_on: 
       - db
+    network_mode: host
 
   db:
     image: postgres:12.4-alpine
