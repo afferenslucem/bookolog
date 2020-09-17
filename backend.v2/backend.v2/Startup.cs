@@ -29,7 +29,9 @@ namespace backend
     {
         string corsPolicy = "default";
         string[] origins = new string[] {
-            "http://localhost:8080"
+            "http://localhost:8080",
+            "https://bookolog.hrodvitnir.pw",
+            "https://demo.hrodvitnir.pw"
         };
 
         public Startup(IConfiguration configuration)
