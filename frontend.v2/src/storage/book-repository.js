@@ -4,7 +4,6 @@ import _ from 'declarray';
 import { UUIDGenerator } from 'essents';
 import { Book } from '@/models/book'
 
-const ENTITY_ALREADY_EXISTS = 'EntityAlreadyExists';
 const ENTITY_DOES_NOT_EXISTS = 'EntityDoesNotExists';
 
 export class BookRepository {
