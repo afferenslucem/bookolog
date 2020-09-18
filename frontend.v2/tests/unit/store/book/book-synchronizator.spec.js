@@ -96,12 +96,15 @@ describe('BookSynchronizator', () => {
     });
     
     describe('saveBook', () => {
-        it('should trigger offline', () => {
+        it('should trigger offline', async () => {
             let offline = false;
             let data = null;
 
-            new BookSynchronizator({
-                saveBook: (book) => data = book
+            await new BookSynchronizator({
+                saveBook: async (book) => new Promise(resolve => {
+                    data = book;
+                    resolve(book);
+                })
             },{
                 create: () => {
                     throw NETWORK_ERROR
@@ -137,11 +140,11 @@ describe('BookSynchronizator', () => {
     });
     
     describe('updateBook', () => {
-        it('should trigger offline', () => {
+        it('should trigger offline', async () => {
             let offline = false;
             let data = null;
 
-            new BookSynchronizator({
+            await new BookSynchronizator({
                 updateBook: (book) => data = book
             },{
                 update: () => {
@@ -214,11 +217,11 @@ describe('BookSynchronizator', () => {
     });
     
     describe('loadBook', () => {
-        it('should trigger offline', () => {
+        it('should trigger offline', async () => {
             let offline = false;
 
-            new BookSynchronizator({
-                saveBook: (book) => book
+            await new BookSynchronizator({
+                updateBook: (book) => book
             },{
                 getById: () => {
                     throw NETWORK_ERROR
@@ -236,7 +239,7 @@ describe('BookSynchronizator', () => {
         it('should trigger online', async () => {
             let offline = true;
             await new BookSynchronizator({
-                saveBook: (book) => book
+                updateBook: (book) => book
             },{
                 getById: (book) => new Promise(resolve => resolve(book))
             }).loadBook({}, () => {

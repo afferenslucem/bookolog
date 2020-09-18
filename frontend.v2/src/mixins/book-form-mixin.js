@@ -22,8 +22,10 @@ export default {
         { value: ELECTRONIC_BOOK_TYPE, name: 'Электронная книга' },
         { value: AUDIO_BOOK_TYPE, name: 'Аудиокнига' },
       ],
-      bookNamePattern: '',
-      bookTagsPattern: ''
+      bookNamePattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-\\\\:\\\\!]+',
+      bookTagsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-]+',
+      bookAuthorsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-]+',
+      genrePattern: '[A-Za-zА-Яа-яЁё\\s\\\\-]++',
     }),
     methods: {
       setMeta() {

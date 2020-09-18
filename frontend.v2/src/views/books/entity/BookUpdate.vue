@@ -9,7 +9,7 @@
           id="name"
           class="form-control"
           placeholder="Название*"
-          pattern="[A-Za-zА-Яа-яЁё0-9\\s\\.\\,\\(\\)\\-\\:\\!]+"
+          :pattern="bookNamePattern"
           required
           v-model.trim="book.name"
           autocomplete="off"
@@ -23,7 +23,7 @@
           class="form-control"
           placeholder="Авторы"
           aria-describedby="authorsInput"
-          pattern="[A-Za-zА-Яа-яЁё0-9\\s\\.\\,\\(\\)\\-]+"
+          :pattern="bookAuthorsPattern"
           v-model.trim="authorsComp"
         />
         <small id="authorsInput" class="text-muted">Вводите через запятую</small>
@@ -38,7 +38,7 @@
           id="genre"
           class="form-control"
           placeholder="Жанр"
-          pattern="[A-Za-zА-Яа-яЁё\\s\\-]+"
+          :pattern="genrePattern"
           v-model.trim="book.genre"
         />
       </div>
@@ -50,7 +50,7 @@
           class="form-control"
           placeholder="Теги"
           aria-describedby="tagsInput"
-          pattern="[A-Za-zА-Яа-яЁё0-9\\s\\.\\,\\(\\)\\-]+"
+          :pattern="bookTagsPattern"
           v-model.trim="tagsComp"
         />
         <small id="tagsInput" class="text-muted">Вводите через запятую</small>
