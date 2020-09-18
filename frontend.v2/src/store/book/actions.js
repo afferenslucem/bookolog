@@ -103,7 +103,7 @@ export const actions = {
     },
     [BOOKS_CLEAR_ACTION]: async ({commit}) => {
         const storage = new BookRepository();
-        await storage.clear();
+        await storage.clearBooks();
 
         commit(BOOKS_CLEAR_MUTATION)
     },
