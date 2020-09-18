@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <button class="btn btn-primary" type="submit" >Войти</button>
+      <button class="btn btn-primary w-100" type="submit" >Войти</button>
     </form>
   </div>
 </template>
@@ -28,9 +28,6 @@
 <script>
 import {USER_LOGIN_ACTION} from '@/store/naming';
 import { INCORRECT_CREDENTIALS_EXCEPTION } from '@/http/user-client'
-import {getLogger} from '@/logger'
-
-const logger = getLogger('LoginForm');
 
 export default {
     data:() => ({
@@ -42,21 +39,21 @@ export default {
         async login(event) {
             event.preventDefault();
             try {
-                this.errors = {};
-
                 await this.$store.dispatch(USER_LOGIN_ACTION, {
                     username: this.username,
                     password: this.password
                 });
+                
+                this.errors = {};
 
                 this.$router.push({ name: 'InProgress'});
 
                 return false;
             } catch(e) {
                 if(e == INCORRECT_CREDENTIALS_EXCEPTION) {
+                  this.$forceUpdate();
                   this.errors.incorrectCredentials = true;
                 }
-                logger.error('Login error', JSON.stringify(e))
             }
         }
     }
