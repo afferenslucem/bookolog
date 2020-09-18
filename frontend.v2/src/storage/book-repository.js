@@ -26,7 +26,7 @@ export class BookRepository {
         await this.#repository.open(this.#dbName);
 
         if (book.guid) {
-            throw ENTITY_ALREADY_EXISTS;
+            //
         } else {
             book.guid = this.#generator.generate();
         }
