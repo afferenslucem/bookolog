@@ -46,7 +46,7 @@ export default {
       return _(this.books)
         .groupBy(
           (item) => new Date(item.endDate).getFullYear(),
-          (group) => group.orderByDescending(item => item.endDate).thenByDescending(item => item.modifyDate).toArray()
+          (group) => group.orderByDescending(item => +item.endDate).thenByDescending(item => item.modifyDate).toArray()
         )
         .orderByDescending((item) => item.key | Number.MIN_SAFE_INTEGER).toArray();
     },

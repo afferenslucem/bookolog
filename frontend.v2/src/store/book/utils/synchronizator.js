@@ -34,7 +34,7 @@ export class BookSynchronizator {
             }
         }
 
-        await this.repository.saveBook(book);
+        return await this.repository.saveBook(book);
     }
 
     async updateBook(book, onOffline = () => {}, onOnline = () => {}) {
@@ -52,7 +52,7 @@ export class BookSynchronizator {
             }
         }
         
-        await this.repository.updateBook(book);
+        return await this.repository.updateBook(book);
     }
 
     async deleteBook(guid, onOffline = () => {}, onOnline = () => {}) {

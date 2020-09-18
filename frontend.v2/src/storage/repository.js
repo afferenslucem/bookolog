@@ -44,7 +44,10 @@ export class Repository {
                 var objectStore = db.createObjectStore("booksStore", { keyPath: "guid" });
                 objectStore.createIndex("guid", "guid", { unique: true });
 
-                resolve(event);
+                const transaction = event.target.transaction;
+
+                transaction.oncomplete = resolve;
+                transaction.onerror = reject;
             };
         })
     }

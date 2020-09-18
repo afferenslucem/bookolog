@@ -28,8 +28,8 @@ export class Book {
         Object.assign(this, obj);
         const modifyDate = obj.modifyDate || obj.modifyTime || 0;
         this.modifyDate = new Date(modifyDate);
-        this.endDate = moment(obj.endDate).format('YYYY-MM-DD')
-        this.startDate = moment(obj.startDate).format('YYYY-MM-DD')
+        this.endDate = obj.endDate && obj.endDate !== 'Invalid date' ? moment(obj.endDate).format('YYYY-MM-DD') : null;
+        this.startDate = obj.startDate && obj.startDate !== 'Invalid date' ? moment(obj.startDate).format('YYYY-MM-DD') : null;
     }
 
     get progress() {

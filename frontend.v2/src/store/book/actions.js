@@ -16,6 +16,7 @@ import {
 } from '../naming';
 import { BookRepository } from '@/storage/book-repository';
 import { BookSynchronizator } from './utils/synchronizator';
+import { Book } from '@/models/book';
 
 const logger = getLogger({
     namespace: 'BooksModule',
@@ -43,7 +44,9 @@ export const actions = {
     [BOOK_ADD_ACTION]: async ({commit, dispatch}, book) => {
         if(!book) return;
 
-        book = new BookSynchronizator().saveBook(book,
+        book = new Book(book);
+
+        book = await new BookSynchronizator().saveBook(book,
             async () => await onOffline(dispatch),
             async () => await onOnline(dispatch));
 
@@ -63,7 +66,7 @@ export const actions = {
         logger.info('updated book')
     },
     [BOOK_GET_BY_GUID_ACTION]: async ({state, commit, dispatch}, guid) => {
-        const book = new BookSynchronizator().loadBook(guid,
+        const book = await new BookSynchronizator().loadBook(guid,
             async () => await onOffline(dispatch),
             async () => await onOnline(dispatch));
 

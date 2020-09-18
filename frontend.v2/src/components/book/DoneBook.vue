@@ -25,8 +25,8 @@ export default {
       return this.book.authors && (this.book.authors.length > 0)
     },
     range() {
-      const start = this.book.startDate ? this.startDate : '...';
-      const end = this.book.endDate ? this.endDate : '...';
+      const start = this.book.startDate != null ? this.startDate : '...';
+      const end = this.book.endDate != null ? this.endDate : '...';
 
       return `${start} - ${end}`;
     },

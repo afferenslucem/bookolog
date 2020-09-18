@@ -21,7 +21,9 @@ export default {
         { value: PAPER_BOOK_TYPE, name: 'Бумажная книга' },
         { value: ELECTRONIC_BOOK_TYPE, name: 'Электронная книга' },
         { value: AUDIO_BOOK_TYPE, name: 'Аудиокнига' },
-      ]
+      ],
+      bookNamePattern: '',
+      bookTagsPattern: ''
     }),
     methods: {
       setMeta() {

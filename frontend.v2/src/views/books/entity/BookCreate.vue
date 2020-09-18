@@ -24,7 +24,7 @@
           placeholder="Авторы"
           aria-describedby="authorsInput"
           pattern="[A-Za-zА-Яа-яЁё0-9\s\\.\\,\\(\\)\\-]+"
-          v-model="authorsComp"
+          v-model.trim="authorsComp"
         />
         <small id="authorsInput" class="text-muted">Вводите через запятую</small>
       </div>
@@ -39,7 +39,7 @@
           class="form-control"
           placeholder="Жанр"
           pattern="[A-Za-zА-Яа-яЁё\s\\-]+"
-          v-model="book.genre"
+          v-model.trim="book.genre"
         />
       </div>
       <div class="form-group">
@@ -51,7 +51,7 @@
           placeholder="Теги"
           aria-describedby="tagsInput"
           pattern="[A-Za-zА-Яа-яЁё0-9\s\\.\\,\\(\\)\\-]+"
-          v-model="tagsComp"
+          v-model.trim="tagsComp"
         />
         <small id="tagsInput" class="text-muted">Вводите через запятую</small>
       </div>
