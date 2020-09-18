@@ -76,7 +76,7 @@ export class BookSynchronizator {
             const book = await this.client.getById(guid);
             await onOnline();
 
-            await this.repository.saveBook(book);
+            await this.repository.updateBook(book);
 
             return book;
         } catch (e) {

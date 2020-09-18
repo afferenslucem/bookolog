@@ -45,10 +45,11 @@ export default {
     booksByYears() {
       return _(this.books)
         .groupBy(
-          (item) => new Date(item.endDate).getFullYear(),
-          (group) => group.orderByDescending(item => +item.endDate).thenByDescending(item => item.modifyDate).toArray()
+          (item) => item.endDate ? new Date(item.endDate).getFullYear() : null,
+          (group) => group.orderByDescending(item => item.endDate || Number.MIN_SAFE_INTEGER)
+                          .thenByDescending(item => +item.modifyDate).toArray()
         )
-        .orderByDescending((item) => item.key | Number.MIN_SAFE_INTEGER).toArray();
+        .orderByDescending((item) => item.key || Number.MIN_SAFE_INTEGER).toArray();
     },
   },
 };
