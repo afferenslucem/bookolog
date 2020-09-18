@@ -1,1 +1,0 @@
-insert into users(login, email, passwordHash, salt) values ('admin', 'alexshakirov74@gmail.com', '587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e', '123')
