@@ -2,7 +2,11 @@
 
 describe('My First Test', () => {
   it('Visits the app root url', () => {
-    cy.visit('/')
-    cy.contains('h1', 'Welcome to Your Vue.js App')
+    cy.visit('/login');
+    cy.get('#login').type("admin");
+    cy.get('#password').type("masterkey");
+    cy.get('[type="submit"]').click();
+    cy.wait(1000);
+    cy.contains('h4', 'Читаю сейчас');
   })
 })

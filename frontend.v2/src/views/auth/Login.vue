@@ -5,13 +5,13 @@
         <input
           class="form-control"
           placeholder="Логин"
-          id="exampleInputEmail1"
+          id="login"
           aria-describedby="emailHelp"
           v-model="username"
         />
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль" v-model="password" />
+        <input type="password" class="form-control" id="password" placeholder="Пароль" v-model="password" />
       </div>
 
       <div class="form-group" v-if="errors.incorrectCredentials">
