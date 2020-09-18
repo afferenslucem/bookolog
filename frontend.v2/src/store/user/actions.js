@@ -11,21 +11,17 @@ export const actions = {
     [USER_LOGIN_ACTION]: async ({commit, dispatch}, {username, password}) => {
         const userClient = new UserClient();
 
-        try {
-            const user = await userClient.login(username, password);
+        const user = await userClient.login(username, password);
 
-            localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
 
-            commit(USER_LOGIN_MUTATION, user)
+        commit(USER_LOGIN_MUTATION, user)
 
-            await dispatch(BOOKS_SYNC_ACTION)
+        await dispatch(BOOKS_SYNC_ACTION)
 
-            logger.info('Logged in', user)
+        logger.info('Logged in', user)
 
-            return user;
-        } catch(e) {
-            throw new Error(e)
-        }
+        return user;
     },
     [USER_RECOVER_ACTION]: async ({commit, dispatch}) => {
         const savedUser = localStorage.getItem('user');

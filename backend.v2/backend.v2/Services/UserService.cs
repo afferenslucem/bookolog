@@ -104,7 +104,13 @@ namespace backend.Services
 
         public async Task<User> GetByLogin(string login)
         {
-            return await this.storage.GetByLogin(login);
+            var result = await this.storage.GetByLogin(login);
+
+            if(result == null) {
+                throw new StorageReadException();
+            }
+
+            return result;
         }
 
         public async Task<User> GetById(long id)

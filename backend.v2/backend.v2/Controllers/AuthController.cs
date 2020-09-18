@@ -81,7 +81,7 @@ namespace backend.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
         }
-        private async Task<User> CheckUser(string login, string password)
+        public async Task<User> CheckUser(string login, string password)
         {
             return await this.userService.Authenticate(login, password);
         }

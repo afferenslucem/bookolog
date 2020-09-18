@@ -2,6 +2,8 @@ import { Client } from "./client";
 import {getLogger} from '../logger';
 import { BACKEND_URL } from "./config";
 
+export const INCORRECT_CREDENTIALS_EXCEPTION = 'INCORRECT_CREDENTIALS_EXCEPTION';
+
 export class UserClient extends Client {
     constructor() {
         super(BACKEND_URL);
@@ -12,15 +14,24 @@ export class UserClient extends Client {
     }
 
     async login(username, password) {
-        const answer = await super.post('auth/login', {
-            login: username,
-            password: password
-        },
-        {
-            withCredentials: true
-        });
-        this.logger.debug('loggedIn', answer);
-        return answer.data;
+        try {
+            const answer = await super.post('auth/login', {
+                login: username,
+                password: password
+            },
+            {
+                withCredentials: true
+            });
+
+            this.logger.debug('loggedIn', answer);
+
+            return answer.data;
+        }
+        catch (e) {
+            if(e == 'Error: Request failed with status code 401') {
+                throw INCORRECT_CREDENTIALS_EXCEPTION;
+            }
+        }
     }
 
     async register(username, email, password) {

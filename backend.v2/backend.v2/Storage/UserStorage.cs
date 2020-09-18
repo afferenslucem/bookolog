@@ -21,15 +21,13 @@ namespace backend.Storage
         public async Task<User> GetByLogin(string login) {
             using var context = new BookologContext();
 
-            var user = await context.Users.Where(item => item.Login == login).SingleAsync();
-
-            return user;
+            return await context.Users.Where(item => item.Login == login).SingleOrDefaultAsync();
         }
 
         public async Task<User> GetById(long id) {
             using var context = new BookologContext();
 
-            var user = await context.Users.Where(item => item.Id == id).SingleAsync();
+            var user = await context.Users.Where(item => item.Id == id).SingleOrDefaultAsync();
 
             return user;
         }

@@ -42,7 +42,11 @@ namespace tests.Storage
 
         public async Task<User> GetById(long id)
         {
-            return await Task.Run(() => this.storage[id]);
+            return await Task.Run(() => {
+                User result = null;
+
+                return this.storage.TryGetValue(id, out result) ? result : null;
+            });
         }
 
         public Task<User> GetByLogin(string login)
@@ -50,7 +54,7 @@ namespace tests.Storage
             return Task.Run(() => storage
                 .Select(item => item.Value)
                 .Where(item => item.Login == login)
-                .Single()
+                .SingleOrDefault()
             );
         }
 
