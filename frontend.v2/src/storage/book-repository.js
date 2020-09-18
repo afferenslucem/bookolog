@@ -56,6 +56,8 @@ export class BookRepository {
     }
 
     async saveManyBooks(books) {
+        if(books.length === 0) return;
+
         await this.#repository.open(this.#dbName);
 
         books.forEach(item => {
@@ -75,6 +77,8 @@ export class BookRepository {
     }
 
     async deleteManyBooks(books) {
+        if(books.length === 0) return;
+
         await this.#repository.open(this.#dbName);
 
         const result = await this.#repository.deleteMany(this.#booksStore, books);
@@ -85,6 +89,8 @@ export class BookRepository {
     }
 
     async updateManyBooks(books) {
+        if(books.length === 0) return;
+
         await this.#repository.open(this.#dbName);
 
         books.forEach(item => {
@@ -109,6 +115,8 @@ export class BookRepository {
     }
 
     async saveOrUpdateManyBooks(books) {
+        if(books.length === 0) return;
+        
         const shouldCreate = _(books).where(item => !item.guid).toArray();
         const shouldUpdate = _(books).where(item => !!item.guid).toArray();
 
