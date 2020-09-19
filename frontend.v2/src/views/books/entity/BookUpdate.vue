@@ -94,13 +94,13 @@
         </div>
       </div>
       <div class="row form-group">
-        <div class="col" v-show="showStartDate">
+        <div class="col-12 col-md-6" v-show="showStartDate">
           <div class="form-group start-date">
             <label for="startDate">Начата</label>
             <date-input :year.sync="book.startDateYear" :month.sync="book.startDateMonth" :day.sync="book.startDateDay"></date-input>
           </div>
         </div>
-        <div class="col" v-show="showEndDate">
+        <div class="col-12 col-md-6" v-show="showEndDate">
           <div class="form-group end-date">
             <label for="endDate">Окончена</label>
             <date-input :year.sync="book.endDateYear" :month.sync="book.endDateMonth" :day.sync="book.endDateDay"></date-input>
