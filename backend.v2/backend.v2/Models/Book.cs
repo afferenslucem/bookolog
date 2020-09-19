@@ -39,10 +39,18 @@ namespace backend.Models
         public string Genre { get; set; }
         [Column(TypeName = "timestamptz")]
         public DateTime? StartDate { get; set; }
+        public short? StartDateYear { get; set; }
+        public short? StartDateMonth { get; set; }
+        public short? StartDateDay { get; set; }
+        [Column(TypeName = "timestamptz")]
+        public DateTime? EndDate { get; set; }
+        public short? EndDateYear { get; set; }
+        public short? EndDateMonth { get; set; }
+        public short? EndDateDay { get; set; }
         [Column(TypeName = "timestamptz")]
         public DateTime? ModifyDate { get; set; }
         [Column(TypeName = "timestamptz")]
-        public DateTime? EndDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public Type? Type { get; set; }
         public string Note { get; set; }
         public long UserId { get; set; }

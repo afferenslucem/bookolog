@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Storage;
@@ -9,9 +10,10 @@ using backend.Storage;
 namespace backend.v2.Migrations
 {
     [DbContext(typeof(BookologContext))]
-    partial class BookologContextModelSnapshot : ModelSnapshot
+    [Migration("20200919152247_Added new date fields")]
+    partial class Addednewdatefields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
