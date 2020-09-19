@@ -6,37 +6,41 @@
       <span>Год издания:</span>
       <span>{{book.year}}</span>
     </p>
-    <p>
+    <p class="book-type">
       <span>Тип:</span>
       <span v-if="book.type === PAPER_BOOK_TYPE">Бумажная книга</span>
       <span v-else-if="book.type === ELECTRONIC_BOOK_TYPE">Электронная книга</span>
       <span v-else>Аудиокнига</span>
     </p>
-    <p v-if="book.genre">
+    <p v-if="book.genre" class="genre">
       <span>Жанр:</span>
       <span>{{book.genre | capital}}</span>
     </p>
-    <p>
+    <p class="status">
       <span>Статус:</span>
       <span v-if="book.status === TO_READ_STATUS">К Прочтению</span>
       <span v-else-if="book.status === IN_PROGRESS_STATUS">Читаю</span>
-      <span v-else>Прочитал</span>
+      <span v-else>Прочтена</span>
     </p>
     <p class="tags" v-if="book.tags">
       <span>Теги:</span>
       <span class="value">{{book.tags | capital | join}}</span>
     </p>
-    <div v-if="shouldShowProgress">
+    <div v-if="shouldShowProgress" class="progress">
       <h6>Прогресс</h6>
       <progress-bar :progress="progress"></progress-bar>
     </div>
-    <p v-if="startedBook && book.startDate">
+    <p v-if="startedBook && book.startDate" class="start-date">
       <span>Начата:</span>
       <span>{{startDate}}</span>
     </p>
-    <p v-if="doneBook && book.endDate">
+    <p v-if="doneBook && book.endDate" class="end-date">
       <span>Закончена:</span>
-      <span>{{startDate}}</span>
+      <span>{{endDate}}</span>
+    </p>
+    <p v-if="book.note" class="note">
+      <span>Заметки:</span>
+      <span>{{book.note}}</span>
     </p>
     <button class="w-100 btn btn-danger" data-toggle="modal" data-target="#bookDeleteModal">Удалить</button>
 

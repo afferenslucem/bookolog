@@ -24,7 +24,7 @@ export default {
             return this.book.status == IN_PROGRESS_STATUS;
         },
         startedBook() {
-            return this.book.status == IN_PROGRESS_STATUS;
+            return this.book.status != TO_READ_STATUS;
         },
         toReadDook() {
             return this.book.status == TO_READ_STATUS;

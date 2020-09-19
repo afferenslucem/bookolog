@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <books-by-years-list v-if="shouldShowList" :books="books" listname="Прочитал">
-      
+    <books-by-years-list :books="books" listname="Прочитал">
     </books-by-years-list>
-    <div v-else>Здесь пока ничего нет.</div>
+    <div v-if="!shouldShowList">Здесь пока ничего нет.</div>
   </div>
 </template>
 

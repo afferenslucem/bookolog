@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="left">
-      <div class="icon" v-show="isLoggedIn" @click="emitMenuClick($event)">
+      <div class="icon" id="booksLists" v-if="isLoggedIn" @click="emitMenuClick($event)">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
       <router-link :to="{name: 'Home'}" class="logo ml-1">
