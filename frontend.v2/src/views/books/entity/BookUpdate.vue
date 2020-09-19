@@ -95,15 +95,15 @@
       </div>
       <div class="row form-group">
         <div class="col" v-show="showStartDate">
-          <div class="form-group">
+          <div class="form-group start-date">
             <label for="startDate">Начата</label>
-            <input type="date" name="startDate" id="startDate" class="form-control" v-model="book.startDate" :max="book.endDate | calendarDate" />
+            <date-input :year.sync="book.startDateYear" :month.sync="book.startDateMonth" :day.sync="book.startDateDay"></date-input>
           </div>
         </div>
         <div class="col" v-show="showEndDate">
-          <div class="form-group">
+          <div class="form-group end-date">
             <label for="endDate">Окончена</label>
-            <input type="date" name="endDate" id="endDate" class="form-control" v-model="book.endDate" :min="book.startDate | calendarDate" />
+            <date-input :year.sync="book.endDateYear" :month.sync="book.endDateMonth" :day.sync="book.endDateDay"></date-input>
           </div>
         </div>
       </div>
@@ -120,9 +120,13 @@
 
 <script>
 import bookMixin from "@/mixins/book-form-mixin";
+import DateInput from '@/components/inputs/BookDateInput.vue';
 import { BOOK_UPDATE_ACTION, BOOK_GET_BY_GUID_ACTION } from "@/store/naming";
 
 export default {
+  components: {
+    DateInput
+  },
   mixins: [bookMixin],
   methods: {
     submit(event) {

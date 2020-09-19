@@ -96,15 +96,23 @@ Cypress.Commands.add("fillToReadBookForm", (book) => {
 
 Cypress.Commands.add("fillDoneBookForm", (book) => {
     fillCommonForm(book);
-    cy.get('#startDate').type(book.startDate);
-    cy.get('#endDate').type(book.endDate);
+    cy.get('.start-date #year').type(book.startDateYear);
+    cy.get('.start-date #month').type(book.startDateMonth);
+    cy.get('.start-date #day').type(book.startDateDay);
+
+    cy.get('.end-date #year').type(book.endDateYear);
+    cy.get('.end-date #month').type(book.endDateMonth);
+    cy.get('.end-date #day').type(book.endDateDay);
 });
 
 Cypress.Commands.add("fillInProgressBookForm", (book) => {
     fillCommonForm(book);
     cy.get('#doneUnits').type(book.doneUnits);
     cy.get('#totalUnits').type(book.totalUnits);
-    cy.get('#startDate').type(book.startDate);
+    
+    cy.get('.start-date #year').type(book.startDateYear);
+    cy.get('.start-date #month').type(book.startDateMonth);
+    cy.get('.start-date #day').type(book.startDateDay);
 });
 
 function compareCommonForm(book) {
@@ -124,8 +132,14 @@ Cypress.Commands.add("compareToReadBookForm", (book) => {
 Cypress.Commands.add("compareDoneBookForm", (book) => {
     compareCommonForm(book);
     cy.get('#status').should('have.value', '2');
-    cy.get('#startDate').should('have.value', moment(book.startDate).format('YYYY-MM-DD'));
-    cy.get('#endDate').should('have.value', moment(book.endDate).format('YYYY-MM-DD'));
+
+    cy.get('.start-date #year').should('have.value', book.startDateYear);
+    cy.get('.start-date #month').should('have.value', book.startDateMonth);
+    cy.get('.start-date #day').should('have.value', book.startDateDay);
+
+    cy.get('.end-date #year').should('have.value', book.endDateYear);
+    cy.get('.end-date #month').should('have.value', book.endDateMonth);
+    cy.get('.end-date #day').should('have.value', book.endDateDay);
 });
 
 Cypress.Commands.add("compareInProgressBookForm", (book) => {
@@ -133,7 +147,10 @@ Cypress.Commands.add("compareInProgressBookForm", (book) => {
     cy.get('#status').should('have.value', '1');
     cy.get('#doneUnits').should('have.value', book.doneUnits.toString());
     cy.get('#totalUnits').should('have.value', book.totalUnits.toString());
-    cy.get('#startDate').should('have.value', moment(book.startDate).format('YYYY-MM-DD'));
+    
+    cy.get('.start-date #year').should('have.value', book.startDateYear);
+    cy.get('.start-date #month').should('have.value', book.startDateMonth);
+    cy.get('.start-date #day').should('have.value', book.startDateDay);
 });
 
 function compareCommonView(book) {

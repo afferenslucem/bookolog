@@ -20,6 +20,9 @@ export class BookSynchronizator {
 
     async saveBook(book, onOffline = () => {}, onOnline = () => {}) {
         try {
+            book.createDate = moment(new Date()).format();
+            book.modifyDate = moment(new Date()).format();
+            
             book = await this.client.create(book);
             await onOnline();
         } catch (e) {

@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 export const PAPER_BOOK_TYPE = 0;
 export const ELECTRONIC_BOOK_TYPE = 1;
 export const AUDIO_BOOK_TYPE = 2;
@@ -18,18 +16,20 @@ export class Book {
     // totalUnits: number
     // doneUnits: number
     // genre: string | optional
-    // startDate: string
+    // startDateYear: number
+    // startDateMonth: number
+    // startDateDay: number
+    // endDateYear: string
+    // endDateMonth: string
+    // endDateDay: string
     // modifyDate: string
-    // endDate: string
+    // createDate: string
     // type: number
     // note: string
 
     constructor(obj) {
         Object.assign(this, obj);
-        const modifyDate = obj.modifyDate || obj.modifyTime || 0;
-        this.modifyDate = new Date(modifyDate);
-        this.endDate = obj.endDate && obj.endDate !== 'Invalid date' ? moment(obj.endDate).format('YYYY-MM-DD') : null;
-        this.startDate = obj.startDate && obj.startDate !== 'Invalid date' ? moment(obj.startDate).format('YYYY-MM-DD') : null;
+        this.modifyDate = new Date(obj.modifyDate);
     }
 
     get progress() {
