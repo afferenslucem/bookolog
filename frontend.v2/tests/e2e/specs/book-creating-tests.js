@@ -88,4 +88,44 @@ describe('Login test', () => {
 
     cy.get('.book-line').should('have.length', 0);
   });
+
+  it('Create in progress book test', () => {
+    cy.goToInProgressDoneBook();
+
+    cy.pageIs('workspace/book/create/1');
+
+    cy.get('#status').should('have.value', '1')
+
+    cy.fillInProgressBookForm(books[2]);
+
+    cy.compareInProgressBookForm(books[2]);
+
+    cy.get('[type="submit"]').click();
+
+    cy.pageIs('workspace/in-progress');
+
+    cy.compareBookLine(0, books[2]);
+
+    cy.clickToBookLineHeader(0);
+
+    cy.wait(1000);
+
+    cy.urlContains('workspace/book/');
+
+    cy.compareInProgressBookVue(books[2]);
+
+    cy.deleteBookFromView();
+
+    cy.pageIs('workspace/in-progress');
+
+    cy.reload();
+
+    cy.wait(1000);
+
+    cy.visit('/workspace/in-progress');
+
+    cy.wait(1000);
+
+    cy.get('.book-line').should('have.length', 0);
+  });
 })

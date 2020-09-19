@@ -76,12 +76,16 @@ Cypress.Commands.add("goToCreateDoneBook", () => {
     cy.get('.nav-item.done > .icon.nav-link').click();
 })
 
+Cypress.Commands.add("goToInProgressDoneBook", () => {
+    cy.openBooksMenu();
+    cy.get('.nav-item.in-progress > .icon.nav-link').click();
+})
+
 function fillCommonForm(book) {
     cy.get('#name').type(book.name);
     cy.get('#authors').type(book.authors.join(', '));
     cy.get('#genre').type(book.genre);
     cy.get('#tags').type(book.tags.join(', '));
-    // cy.get('#status').select(book.status.toString());
     cy.get('#type').select(book.type.toString());
     cy.get('#note').type(book.note);
 }
@@ -92,10 +96,15 @@ Cypress.Commands.add("fillToReadBookForm", (book) => {
 
 Cypress.Commands.add("fillDoneBookForm", (book) => {
     fillCommonForm(book);
-    // cy.get('#doneUnits').type(book.doneUnits);
-    // cy.get('#totalUnits').type(book.totalUnits);
     cy.get('#startDate').type(book.startDate);
     cy.get('#endDate').type(book.endDate);
+});
+
+Cypress.Commands.add("fillInProgressBookForm", (book) => {
+    fillCommonForm(book);
+    cy.get('#doneUnits').type(book.doneUnits);
+    cy.get('#totalUnits').type(book.totalUnits);
+    cy.get('#startDate').type(book.startDate);
 });
 
 function compareCommonForm(book) {
@@ -115,10 +124,16 @@ Cypress.Commands.add("compareToReadBookForm", (book) => {
 Cypress.Commands.add("compareDoneBookForm", (book) => {
     compareCommonForm(book);
     cy.get('#status').should('have.value', '2');
-    // cy.get('#doneUnits').should('have.value', book.doneUnits);
-    // cy.get('#totalUnits').should('have.value', book.totalUnits);
     cy.get('#startDate').should('have.value', moment(book.startDate).format('YYYY-MM-DD'));
     cy.get('#endDate').should('have.value', moment(book.endDate).format('YYYY-MM-DD'));
+});
+
+Cypress.Commands.add("compareInProgressBookForm", (book) => {
+    compareCommonForm(book);
+    cy.get('#status').should('have.value', '1');
+    cy.get('#doneUnits').should('have.value', book.doneUnits.toString());
+    cy.get('#totalUnits').should('have.value', book.totalUnits.toString());
+    cy.get('#startDate').should('have.value', moment(book.startDate).format('YYYY-MM-DD'));
 });
 
 function compareCommonView(book) {
@@ -161,10 +176,12 @@ Cypress.Commands.add("compareDoneBookVue", (book) => {
     cy.get('.status').contains('Прочтена');
 });
 
-Cypress.Commands.add("compareBookLine", (index, book) => {
-    const line = cy.get(`.book-line:nth-child(${index + 1})`);
-    line.get('.header').contains(book.name)
-    line.get('span').contains(book.authors.join(', '));
+Cypress.Commands.add("compareInProgressBookVue", (book) => {
+    compareCommonView(book);
+    cy.get('.progress').should('exist');
+    cy.get('.start-date').contains(moment(book.startDate).format('ll'));
+    cy.get('.end-date').should('not.exist');
+    cy.get('.status').contains('Читаю');
 });
 
 Cypress.Commands.add("compareBookLine", (index, book) => {
