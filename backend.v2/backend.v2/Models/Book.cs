@@ -37,20 +37,34 @@ namespace backend.Models
         public short? TotalUnits { get; set; }
         [Column(TypeName = "varchar(256)")]
         public string Genre { get; set; }
-        [Column(TypeName = "timestamptz")]
-        public DateTime? StartDate { get; set; }
         public short? StartDateYear { get; set; }
         public short? StartDateMonth { get; set; }
         public short? StartDateDay { get; set; }
-        [Column(TypeName = "timestamptz")]
-        public DateTime? EndDate { get; set; }
         public short? EndDateYear { get; set; }
         public short? EndDateMonth { get; set; }
         public short? EndDateDay { get; set; }
+
         [Column(TypeName = "timestamptz")]
         public DateTime? ModifyDate { get; set; }
+
         [Column(TypeName = "timestamptz")]
         public DateTime? CreateDate { get; set; }
+
+        public DateTime? StartDate { 
+            get {
+                if (!this.StartDateYear.HasValue) return null;
+                
+                return new DateTime(this.StartDateYear ?? 1, this.StartDateMonth ?? 1, this.StartDateDay ?? 1);
+            }
+        }
+        public DateTime? EndDate { 
+            get {
+                if (!this.EndDateYear.HasValue) return null;
+                
+                return new DateTime(this.EndDateYear ?? 1, this.EndDateMonth ?? 1, this.EndDateDay ?? 1);
+            }
+        }
+
         public Type? Type { get; set; }
         public string Note { get; set; }
         public long UserId { get; set; }
