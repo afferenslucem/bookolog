@@ -17,7 +17,7 @@ const factory = mode == 'dev' ? new ConsoleLoggerFactory([
         name: {
             namespace: 'Http',
         },
-        logger: LogLevel.Debug
+        logger: LogLevel.Warning
     },
     {
         name: {

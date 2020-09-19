@@ -22,6 +22,7 @@ export class BookRepository {
     }
 
     async saveBook(book) {
+        this.logger.debug('save book', book);
         await this.#repository.open(this.#dbName);
 
         if (book.guid) {
@@ -36,6 +37,7 @@ export class BookRepository {
     }
 
     async updateBook(book) {
+        this.logger.debug('update book', book);
         await this.#repository.open(this.#dbName);
 
         if (!book.guid) {
@@ -48,6 +50,7 @@ export class BookRepository {
     }
 
     async deleteBook(guid) {
+        this.logger.debug('delete book', guid);
         await this.#repository.open(this.#dbName);
 
         await this.#repository.delete(this.#booksStore, guid);
@@ -57,6 +60,7 @@ export class BookRepository {
 
     async saveManyBooks(books) {
         if(books.length === 0) return;
+        this.logger.debug('save books', books);
 
         await this.#repository.open(this.#dbName);
 
@@ -78,10 +82,11 @@ export class BookRepository {
 
     async deleteManyBooks(books) {
         if(books.length === 0) return;
+        this.logger.debug('delete books', books);
 
         await this.#repository.open(this.#dbName);
 
-        const result = await this.#repository.deleteMany(this.#booksStore, books);
+        const result = await this.#repository.deleteMany(this.#booksStore, books.map(item => item.guid));
 
         this.logger.info('saved books', result);
 
@@ -90,6 +95,7 @@ export class BookRepository {
 
     async updateManyBooks(books) {
         if(books.length === 0) return;
+        this.logger.debug('update books', books);
 
         await this.#repository.open(this.#dbName);
 
@@ -134,6 +140,7 @@ export class BookRepository {
     }
 
     async clearBooks() {
+        this.logger.debug('clear all books');
         await this.#repository.open(this.#dbName);
         await this.#repository.clear(this.#booksStore);
     }
