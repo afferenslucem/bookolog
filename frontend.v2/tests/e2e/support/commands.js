@@ -191,7 +191,7 @@ Cypress.Commands.add("compareBookLine", (index, book) => {
 });
 
 Cypress.Commands.add("clickToBookLineHeader", (index) => {
-    cy.get(`li:nth-child(${index + 1}) > .book-line > .header`).click();
+    cy.get(`li:nth-child(${index + 1}) > .book-line > .header > strong`).click();
 });
 
 Cypress.Commands.add("deleteBookFromView", () => {
