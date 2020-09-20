@@ -61,8 +61,8 @@
         "lists": {
             "byStatus": {
                 "title": "Мои списки",
-                "inProgress": "Читаю Сейчас",
-                "toRead": "Буду Читать",
+                "inProgress": "Читаю сейчас",
+                "toRead": "Буду читать",
                 "done": "Прочитаны"
             },
             "statistic": {

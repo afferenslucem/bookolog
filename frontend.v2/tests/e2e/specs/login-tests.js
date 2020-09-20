@@ -23,7 +23,7 @@ describe('Login test', () => {
     cy.contains('h4', 'Буду читать');
 
     cy.openToDoneList();
-    cy.contains('h4', 'Прочитал');
+    cy.contains('h4', 'Прочитаны');
 
     cy.openInProgressList();
     cy.contains('h4', 'Читаю сейчас');

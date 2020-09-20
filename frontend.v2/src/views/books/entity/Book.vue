@@ -39,8 +39,8 @@
       <span>{{endDate}}</span>
     </p>
     <p v-if="book.note" class="note">
-      <span>{{ $t('book.entity.progress') }}:</span>
-      <span>{{book.notes}}</span>
+      <span>{{ $t('book.entity.notes') }}:</span>
+      <span>{{book.note}}</span>
     </p>
     <button class="w-100 btn btn-danger" data-toggle="modal" data-target="#bookDeleteModal">{{ $t('book.actions.delete') }}</button>
 
