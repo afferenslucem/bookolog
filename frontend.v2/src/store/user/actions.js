@@ -16,10 +16,6 @@ export const actions = {
     
             localStorage.setItem('user', JSON.stringify(user));
     
-            await dispatch(BOOKS_SYNC_ACTION)
-    
-            logger.info('Logged in', user)
-    
             commit(USER_LOGIN_MUTATION, user)
     
             return user;

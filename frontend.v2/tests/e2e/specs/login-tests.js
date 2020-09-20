@@ -13,7 +13,7 @@ describe('Login test', () => {
     cy.get('.connection-marker').should('have.class', 'green')
 
     cy.login("admin", "masterkey");
-    cy.wait(1000);
+    cy.wait(1500);
 
     cy.pageIs('workspace/in-progress');
     cy.get('.profile').should('have.class', 'avatar');
@@ -37,7 +37,7 @@ describe('Login test', () => {
   it('Wrong logout test', () => {
     cy.login("admin", "wrongPassword");
 
-    cy.wait(1000);
+    cy.wait(1500);
 
     cy.get('.alert-danger').contains('Неверный логин или пароль.');
   });

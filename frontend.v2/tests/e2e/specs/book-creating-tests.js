@@ -6,7 +6,7 @@ describe('Login test', () => {
   beforeEach(() => {
     cy.viewport('iphone-6')
     cy.login("admin", "masterkey")
-    cy.wait(1000);
+    cy.wait(1500);
   });
 
   it('Create to read book test', () => {
@@ -22,6 +22,8 @@ describe('Login test', () => {
 
     cy.get('[type="submit"]').click();
 
+    cy.wait(1000);
+
     cy.pageIs('workspace/to-read');
 
     cy.compareBookLine(0, books[0]);
@@ -36,17 +38,9 @@ describe('Login test', () => {
 
     cy.deleteBookFromView();
 
+    cy.wait(1000);
+
     cy.pageIs('workspace/to-read');
-
-    cy.reload();
-
-    cy.wait(1000);
-
-    cy.visit('workspace/to-read');
-
-    cy.wait(1000);
-
-    cy.get('.book-line').should('have.length', 0);
   });
 
   it('Create done book test', () => {
@@ -62,6 +56,8 @@ describe('Login test', () => {
 
     cy.get('[type="submit"]').click();
 
+    cy.wait(1000);
+
     cy.pageIs('workspace/done');
 
     cy.compareBookLine(0, books[1]);
@@ -76,17 +72,9 @@ describe('Login test', () => {
 
     cy.deleteBookFromView();
 
+    cy.wait(1000);
+
     cy.pageIs('workspace/done');
-
-    cy.reload();
-
-    cy.wait(1000);
-
-    cy.visit('/workspace/done');
-
-    cy.wait(1000);
-
-    cy.get('.book-line').should('have.length', 0);
   });
 
   it('Create in progress book test', () => {
@@ -102,6 +90,8 @@ describe('Login test', () => {
 
     cy.get('[type="submit"]').click();
 
+    cy.wait(1000);
+
     cy.pageIs('workspace/in-progress');
 
     cy.compareBookLine(0, books[2]);
@@ -116,16 +106,8 @@ describe('Login test', () => {
 
     cy.deleteBookFromView();
 
+    cy.wait(1000);
+
     cy.pageIs('workspace/in-progress');
-
-    cy.reload();
-
-    cy.wait(1000);
-
-    cy.visit('/workspace/in-progress');
-
-    cy.wait(1000);
-
-    cy.get('.book-line').should('have.length', 0);
   });
 })

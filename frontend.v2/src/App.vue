@@ -43,7 +43,7 @@ export default {
       }, 150),
       hideLoadingTimer: new Timer(() => {
         this.$store.commit(CONNECTION_LOAD_FINISH_MUTATION);
-      }, 150),
+      }, 75),
     });
   },
   methods: {
