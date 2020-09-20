@@ -1,5 +1,6 @@
 const state = {
-    online: true
+    online: true,
+    loadingCounter: 0,
 }
 
 export default () => state;

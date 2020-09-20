@@ -66,7 +66,10 @@ export class Client {
 
     async sendRequest(routine) {
         try {
+            await this.requestStarted();
+
             const result = await routine();
+
             await this.onSuccess();
 
             return result;
@@ -78,6 +81,13 @@ export class Client {
             }
 
             throw e;
+        } finally {
+            await this.requestCanceled();
         }
     }
 }
+Client.prototype.onSuccess = () => {}
+Client.prototype.onNetworkError = () => {}
+Client.prototype.onForbiddenError = () => {}
+Client.prototype.requestCanceled = () => {}
+Client.prototype.requestStarted = () => {}
