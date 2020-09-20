@@ -75,6 +75,11 @@
             "byYear": {
                 "yearNotSpecified": "Год не указан"
             }
+        },
+        "deleteModal": {
+            "title":"Удалить книгу?",
+            "sure": "Вы уверены, что хотите удалить книгу?",
+            "cantRollback": "Это действие будет нельзя отменить."
         }
     },
     "auth": {
@@ -86,5 +91,9 @@
             "incorrectCredentials": "Неверный логин или пароль.",
             "submit": "Войти"
         }
+    },
+    "buttons": {
+        "delete": "Удалить",
+        "cancel": "Отмена"
     }
 }

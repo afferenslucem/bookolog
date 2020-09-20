@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h4>{{book.name}}</h4>
-    <p class="authors" v-if="book.authors">{{book.authors | join}}</p>
+    <p class="authors" v-if="book.authors && (book.authors.length > 0)">{{book.authors | join}}</p>
     <p v-if="book.year">
       <span>{{ $t('book.entity.year') }}:</span>
       <span>{{book.year}}</span>
@@ -22,7 +22,7 @@
       <span v-else-if="book.status === IN_PROGRESS_STATUS">{{ $t('book.entity.status.inProgress') }}</span>
       <span v-else>{{ $t('book.entity.status.done') }}</span>
     </p>
-    <p class="tags" v-if="book.tags">
+    <p class="tags" v-if="book.tags && (book.tags.length > 0)">
       <span>{{ $t('book.entity.tags') }}:</span>
       <span class="value">{{book.tags | capital | join}}</span>
     </p>
@@ -56,18 +56,18 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="bookDeleteModalLabel">Удалить книгу?</h5>
+            <h5 class="modal-title" id="bookDeleteModalLabel">{{ $t('book.deleteModal.title') }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <p>Вы уверены, что хотите удалить книгу?</p>
-            <p>Это действие будет нельзя отменить.</p>
+            <p>{{ $t('book.deleteModal.sure') }}</p>
+            <p>{{ $t('book.deleteModal.cantRollback') }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-            <button type="button" class="btn btn-danger" @click="deleteBook()"  data-dismiss="modal">Удалить</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $t('buttons.cancel') }}</button>
+            <button type="button" class="btn btn-danger" @click="deleteBook()"  data-dismiss="modal">{{ $t('buttons.delete') }}</button>
           </div>
         </div>
       </div>
