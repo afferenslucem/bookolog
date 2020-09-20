@@ -5,21 +5,24 @@
         <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
       <router-link :to="{name: 'Home'}" class="logo ml-1">
-          <img src="/img/logo.png" />
+        <img src="/img/logo.png" />
       </router-link>
     </div>
     <div>
       <div class="icon profile" v-if="!isLoggedIn" @click="emitAvatarClick($event)">
         <i class="fa fa-user-o" aria-hidden="true"></i>
+        <connection-marker class="marker"></connection-marker>
       </div>
       <div class="icon avatar profile" v-else @click="emitAvatarClick($event)">
         <img src="/avatar.jpg" />
+        <connection-marker class="marker"></connection-marker>
       </div>
     </div>
   </div>
 </template>
 <script>
 import userMixin from "@/mixins/user-mixin";
+import ConnectionMarker from "@/components/connection-module/ConnectionMarker.vue";
 export default {
   mixins: [userMixin],
   methods: {
@@ -33,6 +36,9 @@ export default {
     },
   },
   computed: {},
+  components: {
+    ConnectionMarker,
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -65,21 +71,32 @@ export default {
   }
 }
 
-  .logo {
-      padding: 0.15rem;
+.logo {
+  padding: 0.15rem;
 
-      border: $split-line;
+  border: $split-line;
 
-      border-radius: 0.1rem;
+  border-radius: 0.1rem;
 
-      > img {
-          height: calc(#{$icon-size} - 0.75rem);
-      }
+  > img {
+    height: calc(#{$icon-size} - 0.75rem);
   }
+}
 
-  .left {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+.left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.profile {
+  position: relative;
+
+  > .marker {
+    position: absolute;
+
+    right: .1rem;
+    top: 0;
   }
+}
 </style>

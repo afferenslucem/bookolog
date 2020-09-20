@@ -10,6 +10,8 @@ describe('Login test', () => {
 
     cy.get('.profile').should('not.have.class', 'avatar');
 
+    cy.get('.connection-marker').should('have.class', 'green')
+
     cy.login("admin", "masterkey");
     cy.wait(1000);
 

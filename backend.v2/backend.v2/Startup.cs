@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using backend.Storage;
 using backend.Services;
@@ -51,7 +52,22 @@ namespace backend
 
             //services.AddSession();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
+            {
+                o.LoginPath = new PathString("/Auth/Login/");
+                o.Cookie.Path = "/";
+                o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                o.Cookie.HttpOnly = true;
+                o.LogoutPath = new PathString("/Auth/Logout/");
+
+                o.Events = new CookieAuthenticationEvents() {
+                    OnRedirectToLogin = context =>
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                        return Task.CompletedTask;
+                    },
+                };
+            });
 
             services.AddControllers();
 

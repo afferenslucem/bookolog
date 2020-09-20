@@ -11,8 +11,6 @@ import {
     BOOK_UPDATE_ACTION,
     BOOK_GET_BY_GUID_ACTION,
     BOOKS_CLEAR_MUTATION,
-    CONNECTION_ONLINE_ACTION,
-    CONNECTION_OFFLINE_ACTION,
 } from '../naming';
 import { BookRepository } from '@/storage/book-repository';
 import { BookSynchronizator } from './utils/synchronizator';
@@ -23,52 +21,36 @@ const logger = getLogger({
     loggerName: 'Actions'
 });
 
-async function onOffline(dispatch) {
-    await dispatch(CONNECTION_OFFLINE_ACTION)
-}
-
-async function onOnline(dispatch) {
-    await dispatch(CONNECTION_ONLINE_ACTION)
-}
-
 export const actions = {
-    [BOOKS_SYNC_ACTION]: async ({commit, rootState, dispatch}) => {
+    [BOOKS_SYNC_ACTION]: async ({commit, rootState}) => {
         const synchronizer = new BookSynchronizator();
 
-        const books = await synchronizer.sync(rootState.user.id,
-            async () => await onOffline(dispatch),
-            async () => await onOnline(dispatch));
+        const books = await synchronizer.sync(rootState.user.id);
 
         commit(BOOKS_SAVE_MUTATION, books)
     },
-    [BOOK_ADD_ACTION]: async ({commit, dispatch}, book) => {
+    [BOOK_ADD_ACTION]: async ({commit}, book) => {
         if(!book) return;
 
         book = new Book(book);
 
-        book = await new BookSynchronizator().saveBook(book,
-            async () => await onOffline(dispatch),
-            async () => await onOnline(dispatch));
+        book = await new BookSynchronizator().saveBook(book);
 
         commit(BOOK_ADD_MUTATION, book)
 
         logger.info('saved book')
     },
-    [BOOK_UPDATE_ACTION]: async ({commit, dispatch}, book) => {
+    [BOOK_UPDATE_ACTION]: async ({commit}, book) => {
         if(!book) return;
 
-        book = await new BookSynchronizator().updateBook(book,
-            async () => await onOffline(dispatch),
-            async () => await onOnline(dispatch));
+        book = await new BookSynchronizator().updateBook(book);
         
         commit(BOOK_UPDATE_MUTATION, book)
 
         logger.info('updated book')
     },
-    [BOOK_GET_BY_GUID_ACTION]: async ({state, commit, dispatch}, guid) => {
-        const book = await new BookSynchronizator().loadBook(guid,
-            async () => await onOffline(dispatch),
-            async () => await onOnline(dispatch));
+    [BOOK_GET_BY_GUID_ACTION]: async ({state, commit}, guid) => {
+        const book = await new BookSynchronizator().loadBook(guid);
 
         if(book) {
             commit(BOOK_UPDATE_MUTATION, book)
@@ -76,7 +58,7 @@ export const actions = {
 
         return state[guid];
     },
-    [BOOK_DELETE_ACTION]: async ({commit, state, dispatch}, guid) => {
+    [BOOK_DELETE_ACTION]: async ({commit, state}, guid) => {
         if(!guid) return;
 
         let shouldContinue = true;
@@ -93,9 +75,7 @@ export const actions = {
             commit(BOOK_UPDATE_MUTATION, book)
 
             shouldContinue = false;
-
-            await onOffline(dispatch)
-        }, async () => await onOnline(dispatch));
+        });
 
         if(!shouldContinue) return;
 

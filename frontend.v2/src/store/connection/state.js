@@ -1,5 +1,5 @@
 const state = {
-    login: undefined
+    online: true
 }
 
 export default () => state;

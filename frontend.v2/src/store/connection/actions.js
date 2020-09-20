@@ -8,9 +8,11 @@ import {
 
 export const actions = {
     [CONNECTION_ONLINE_ACTION]: async ({commit, dispatch, getters}) => {
+        const wasOffline = getters.offline;
+
         commit(CONNECTION_ONLINE_MUTATION)
 
-        if (getters.offline) {
+        if (wasOffline) {
             await dispatch(BOOKS_SYNC_ACTION)
         }
     },

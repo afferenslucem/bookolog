@@ -4,7 +4,7 @@ const mode = 'dev';
 
 const factory = mode == 'dev' ? new ConsoleLoggerFactory([
     {
-        logger: LogLevel.Debug,
+        logger: LogLevel.Warning,
         name: 'default'
     },
     {
@@ -21,7 +21,8 @@ const factory = mode == 'dev' ? new ConsoleLoggerFactory([
     },
     {
         name: {
-            namespace: 'Store',
+            namespace: 'ConnectionModule',
+            loggerName: 'Mutations'
         },
         logger: LogLevel.All
     }
