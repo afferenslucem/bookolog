@@ -1,15 +1,15 @@
 <template>
   <div class="menu">
-    <h5>Статистика</h5>
+    <h5>{{ $t('book.lists.statistic.title') }}</h5>
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link" href="#" @click="goToGenres()">Жанры</a>
+        <a class="nav-link" href="#" @click="goToGenres()">{{ $t('book.lists.statistic.genres') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" @click="goToTags()">Теги</a>
+        <a class="nav-link" href="#" @click="goToTags()">{{ $t('book.lists.statistic.tags') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" @click="goToAuthors()">Авторы</a>
+        <a class="nav-link" href="#" @click="goToAuthors()">{{ $t('book.lists.statistic.authors') }}</a>
       </li>
     </ul>
   </div>

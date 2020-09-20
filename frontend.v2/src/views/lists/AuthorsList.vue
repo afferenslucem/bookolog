@@ -1,6 +1,6 @@
 <template>
   <div class="container genres-list">
-    <h4 class="mt-1 header">Авторы</h4>
+    <h4 class="mt-1 header">{{ $t('book.lists.statistic.authors') }}</h4>
 
     <ul v-if="shouldShowList">
       <li
@@ -12,7 +12,7 @@
         <span class="count">{{author.count}}</span>
       </li>
     </ul>
-    <div v-else>Здесь пока ничего нет.</div>
+    <div v-else>{{ $t('book.lists.noOneBook') }}</div>
   </div>
 </template>
 

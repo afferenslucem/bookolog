@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <books-by-years-list :books="books" listname="Прочитал">
+    <books-by-years-list :books="books" :listname="$t('book.lists.byStatus.done')">
     </books-by-years-list>
-    <div v-if="!shouldShowList">Здесь пока ничего нет.</div>
+    <div v-if="!shouldShowList">{{ $t('book.lists.noOneBook') }}</div>
   </div>
 </template>
 

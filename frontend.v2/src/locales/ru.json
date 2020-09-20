@@ -4,13 +4,22 @@
             "status": {
                 "done": "Прочитана",
                 "inProgress": "Читаю",
-                "toRead": "К прочтению"
+                "toRead": "К прочтению",
+                "title": "Статус"
             },
             "type": {
                 "paper": "Бумажная книга",
                 "electronic": "Электронная книга",
-                "audio": "Аудиокнига"
-            }
+                "audio": "Аудиокнига",
+                "title": "Тип"
+            },
+            "year": "Год выпуска",
+            "genre": "Жанр",
+            "tags": "Теги",
+            "progress": "Прогресс",
+            "started": "Начата",
+            "finished": "Окончена",
+            "notes": "Заметки"
         },
         "form": {
             "titles": {
@@ -43,10 +52,39 @@
                 "started": "Начата",
                 "finished": "Окончена",
                 "notes": "Заметки"
-            },
-            "buttons": {
-                "save": "Сохранить"
             }
+        },
+        "actions": {
+            "save": "Сохранить",
+            "delete": "Удалить"
+        },
+        "lists": {
+            "byStatus": {
+                "title": "Мои списки",
+                "inProgress": "Читаю Сейчас",
+                "toRead": "Буду Читать",
+                "done": "Прочитаны"
+            },
+            "statistic": {
+                "title": "Статистика",
+                "genres": "Жанры",
+                "tags": "Теги",
+                "authors": "Авторы"
+            },
+            "noOneBook": "Здесь пока ничего нет.",
+            "byYear": {
+                "yearNotSpecified": "Год не указан"
+            }
+        }
+    },
+    "auth": {
+        "login": "Вход",
+        "logout": "Выход",
+        "loginForm": {
+            "username": "Логин",
+            "password": "Пароль",
+            "incorrectCredentials": "Неверный логин или пароль.",
+            "submit": "Войти"
         }
     }
 }

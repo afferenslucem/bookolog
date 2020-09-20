@@ -1,21 +1,21 @@
 <template>
   <div class="menu">
-    <h5>Мои списки</h5>
+    <h5>{{ $t('book.lists.byStatus.title') }}</h5>
     <ul class="nav flex-column">
       <li class="nav-item in-progress">
-        <a class="nav-link" href="#" id="inProgressListButton" @click="goToInProgress()">Читаю Сейчас</a>
+        <a class="nav-link" href="#" id="inProgressListButton" @click="goToInProgress()">{{ $t('book.lists.byStatus.inProgress') }}</a>
         <a class="icon nav-link" href="#" @click="goToAddInProgress()">
           <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
         </a>
       </li>
       <li class="nav-item to-read">
-        <a class="nav-link" href="#" id="toReadListButton" @click="goToToRead()">Буду читать</a>
+        <a class="nav-link" href="#" id="toReadListButton" @click="goToToRead()">{{ $t('book.lists.byStatus.toRead') }}</a>
         <a class="icon nav-link" href="#" @click="goToAddToRead()">
           <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
         </a>
       </li>
       <li class="nav-item done">
-        <a class="nav-link" href="#" id="toDoneListButton" @click="goToDone()">Прочитал</a>
+        <a class="nav-link" href="#" id="toDoneListButton" @click="goToDone()">{{ $t('book.lists.byStatus.done') }}</a>
         <a class="icon nav-link" href="#" @click="goToAddDone()">
           <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
         </a>

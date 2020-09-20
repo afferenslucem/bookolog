@@ -3,7 +3,7 @@
     <books-by-years-list v-if="shouldShowList" :books="books" :listname="name | capital">
       
     </books-by-years-list>
-    <div v-else>Здесь пока ничего нет.</div>
+    <div v-else>{{ $t('book.lists.noOneBook') }}</div>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
       return _(this.$store.getters[BOOKS_DONE_GETTER])
         .where((item) => !!item.genre)
         .where((item) => item.genre.toLowerCase() == this.name.toLowerCase())
-        .orderByDescending((item) => item.modifyDate || "0")
+        .orderByDescending((item) => +item.modifyDate)
         .thenByDescending((item) => item.name)
         .toArray();
     },

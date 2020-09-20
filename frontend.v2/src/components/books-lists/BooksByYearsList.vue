@@ -4,7 +4,7 @@
 
     <ul class="book-list">
       <li v-for="group of booksByYears" :key="group.key">
-        <h5 class="header year-header mt-2 mb-2 d-block">{{group.key || 'Год не указан'}}</h5>
+        <h5 class="header year-header mt-2 mb-2 d-block">{{group.key || $t('book.lists.byYear.yearNotSpecified')}}</h5>
 
         <ul>
           <li

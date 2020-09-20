@@ -1,6 +1,6 @@
 <template>
   <div class="container book-list">
-    <h4 class="mt-1 header">Читаю сейчас</h4>
+    <h4 class="mt-1 header">{{$t('book.lists.byStatus.inProgress')}}</h4>
 
     <ul v-if="shouldShowList">
       <li
@@ -11,7 +11,7 @@
         <progressing-book :book="book"></progressing-book>
       </li>
     </ul>
-    <div v-else>Здесь пока ничего нет.</div>
+    <div v-else>{{ $t('book.lists.noOneBook') }}</div>
   </div>
 </template>
 

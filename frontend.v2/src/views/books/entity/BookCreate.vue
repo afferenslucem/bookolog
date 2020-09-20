@@ -113,7 +113,7 @@
         <textarea type="text" name="note" id="note" class="form-control" rows="5" v-model.trim="book.note"></textarea>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary w-100" type="submit">{{ $t('book.form.buttons.save') }}</button>
+        <button class="btn btn-primary w-100" type="submit">{{ $t('book.actions.save') }}</button>
       </div>
     </form>
   </div>

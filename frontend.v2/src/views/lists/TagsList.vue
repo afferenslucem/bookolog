@@ -1,6 +1,6 @@
 <template>
   <div class="container tags-list">
-    <h4 class="mt-1 header">Теги</h4>
+    <h4 class="mt-1 header">{{ $t('book.lists.statistic.tags') }}</h4>
 
     <ul v-if="shouldShowList">
       <li
@@ -12,7 +12,7 @@
         <span class="count">{{tag.count}}</span>
       </li>
     </ul>
-    <div v-else>Здесь пока ничего нет.</div>
+    <div v-else>{{ $t('book.lists.noOneBook') }}</div>
   </div>
 </template>
 

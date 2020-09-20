@@ -39,7 +39,7 @@ export const getters = {
         const tags = _(getters[BOOKS_DONE_GETTER])
             .where(item => !!item.tags && item.tags.length > 0)
             .select(item => item.tags)
-            .aggregate((a, b) => a.concat(b));
+            .aggregate((a, b) => a.concat(b), []);
 
         logger.debug('Tags:', tags);
 
@@ -59,7 +59,7 @@ export const getters = {
         const authors = _(getters[BOOKS_DONE_GETTER])
             .where(item => !!item.authors && item.authors.length > 0)
             .select(item => item.authors)
-            .aggregate((a, b) => a.concat(b));
+            .aggregate((a, b) => a.concat(b), []);
 
         logger.debug('Authors:', authors);
 

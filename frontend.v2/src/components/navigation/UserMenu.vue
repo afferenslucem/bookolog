@@ -1,10 +1,10 @@
 <template>
   <ul class="nav flex-column">
     <li class="nav-item" v-if="!isLoggedIn" @click="onLogin()">
-      <a class="nav-link" href="#" id="loginButton">Вход</a>
+      <a class="nav-link" href="#" id="loginButton">{{ $t('auth.login') }}</a>
     </li>
     <li class="nav-item" v-else @click="onLogout()">
-      <a class="nav-link" href="#" id="logoutButton">Выход</a>
+      <a class="nav-link" href="#" id="logoutButton">{{ $t('auth.logout') }}</a>
     </li>
   </ul>
 </template>
