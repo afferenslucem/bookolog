@@ -12,7 +12,7 @@
 
 <script>
 import bookMixin from '@/mixins/book-entity-mixin';
-import ProgressBar from '@/components/book/ProgressBar.vue'; 
+import ProgressBar from '@/components/book-module/book/ProgressBar.vue'; 
 
 export default {
   components: {

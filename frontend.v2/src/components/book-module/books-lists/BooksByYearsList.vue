@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import DoneBook from "@/components/book/DoneBook";
+import DoneBook from "@/components/book-module/book/DoneBook";
 import _ from "declarray";
 
 export default {

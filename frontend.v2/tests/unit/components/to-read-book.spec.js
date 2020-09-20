@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import books from '../data/books'
 import { shallowMount } from '@vue/test-utils'
-import ToReadBook from '@/components/book/ToReadBook.vue';
+import ToReadBook from '@/components/book-module/book/ToReadBook.vue';
 
 describe('ProgressingBook.vue', () => {
     it('Render props.book.name', () => {

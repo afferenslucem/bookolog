@@ -25,7 +25,8 @@ describe('BooksByTagList.vue', () => {
                     params: {
                         name: "физика"
                     }
-                }
+                },
+                $t: () => ''
              }
         })
     });

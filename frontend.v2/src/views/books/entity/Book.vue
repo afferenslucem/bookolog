@@ -86,7 +86,7 @@ import {
   AUDIO_BOOK_TYPE,
 } from "@/models/book";
 import bookEntityMixin from "@/mixins/book-entity-mixin";
-import ProgressBar from "@/components/book/ProgressBar.vue";
+import ProgressBar from "@/components/book-module/book/ProgressBar.vue";
 
 export default {
   components: {

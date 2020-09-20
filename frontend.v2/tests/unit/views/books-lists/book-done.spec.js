@@ -21,6 +21,7 @@ describe('BooksDoneList.vue', () => {
          wrapper = shallowMount(BooksDoneList, {
             mocks: { 
                 $store,
+                $t: () => ''
              }
         })
     });

@@ -4,7 +4,7 @@ import { shallowMount } from '@vue/test-utils'
 import BooksInProgressList from '@/views/books/lists/BooksInProgressList.vue';
 import { BOOKS_IN_PROGRESS_GETTER } from "@/store/naming";
 import {IN_PROGRESS_STATUS} from '@/models/book';
-import ProgressingBook from '@/components/book/ProgressingBook.vue';
+import ProgressingBook from '@/components/book-module/book/ProgressingBook.vue';
 import _ from 'declarray';
 
 describe('BooksInProgressList.vue', () => {
@@ -21,7 +21,8 @@ describe('BooksInProgressList.vue', () => {
     beforeEach(() => {
          wrapper = shallowMount(BooksInProgressList, {
             mocks: { 
-                $store
+                $store,
+                $t: () => ''
              }
         })
     });
@@ -47,7 +48,8 @@ describe('BooksInProgressList.vue', () => {
                     getters: {
                         [BOOKS_IN_PROGRESS_GETTER]: []
                     }
-                }
+                },
+                $t: () => 'Здесь пока ничего нет.'
              }
         })
 

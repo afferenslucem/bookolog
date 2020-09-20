@@ -25,7 +25,8 @@ describe('BooksByGenreList.vue', () => {
                     params: {
                         name: "Образовательная литература"
                     }
-                }
+                },
+                $t: () => ''
              }
         })
     });

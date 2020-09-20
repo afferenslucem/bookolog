@@ -8,7 +8,7 @@
 
 <script>
 import { BOOKS_DONE_GETTER } from "@/store/naming";
-import BooksByYearsList from "@/components/books-lists/BooksByYearsList";
+import BooksByYearsList from "@/components/book-module/books-lists/BooksByYearsList";
 
 export default {
   components: {

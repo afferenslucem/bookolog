@@ -5,11 +5,11 @@ import books from '../data/books'
 import {
     shallowMount
 } from '@vue/test-utils'
-import BooksByYearsList from "@/components/books-lists/BooksByYearsList";
+import BooksByYearsList from "@/components/book-module/books-lists/BooksByYearsList";
 import {
     DONE_STATUS
 } from '@/models/book';
-import DoneBook from '@/components/book/DoneBook.vue';
+import DoneBook from '@/components/book-module/book/DoneBook.vue';
 import _ from 'declarray';
 
 describe('BooksByYearsList.vue', () => {

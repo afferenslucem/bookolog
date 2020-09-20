@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import books from '../data/books'
 import { shallowMount } from '@vue/test-utils'
-import DoneBook from '@/components/book/DoneBook.vue';
+import DoneBook from '@/components/book-module/book/DoneBook.vue';
 import moment from 'moment';
 
 describe('DoneBook.vue', () => {

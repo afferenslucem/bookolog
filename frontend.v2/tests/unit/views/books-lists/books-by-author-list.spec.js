@@ -25,7 +25,8 @@ describe('BooksByAuthorList.vue', () => {
                     params: {
                         name: "Яков Перельман"
                     }
-                }
+                },
+                $t: () => ''
              }
         })
     });

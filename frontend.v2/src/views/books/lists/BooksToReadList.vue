@@ -17,7 +17,7 @@
 
 <script>
 import { BOOKS_TO_READ_GETTER } from "@/store/naming";
-import ToReadBook from "@/components/book/ToReadBook";
+import ToReadBook from "@/components/book-module/book/ToReadBook";
 import u from "declarray";
 
 export default {
