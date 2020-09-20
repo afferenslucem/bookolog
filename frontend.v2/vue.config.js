@@ -3,6 +3,7 @@ module.exports = {
         themeColor: '#51bbfe',
         name: 'Bookolog'
     },
+
     chainWebpack: (config) => {
         config
             .plugin('html')
@@ -11,4 +12,13 @@ module.exports = {
             return args;
             });
     },
+
+    pluginOptions: {
+      i18n: {
+        locale: 'ru',
+        fallbackLocale: 'ru',
+        localeDir: 'locales',
+        enableInSFC: false
+      }
+    }
 }

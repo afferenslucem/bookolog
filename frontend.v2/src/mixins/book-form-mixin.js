@@ -2,31 +2,33 @@ import { TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS, PAPER_BOOK_TYPE, ELECT
 import moment from 'moment';
 
 export default {
-    data: () => ({
-      book: {
-        name: "",
-        authors: [],
-        year: null,
-        genre: '',
-        tags: [],
-        type: PAPER_BOOK_TYPE,
-        status: TO_READ_STATUS
-      },
-      statuses: [
-        { value: TO_READ_STATUS, name: 'Собираюсь читать' },
-        { value: IN_PROGRESS_STATUS, name: 'Читаю' },
-        { value: DONE_STATUS, name: 'Прочитал' },
-      ],
-      bookTypes: [
-        { value: PAPER_BOOK_TYPE, name: 'Бумажная книга' },
-        { value: ELECTRONIC_BOOK_TYPE, name: 'Электронная книга' },
-        { value: AUDIO_BOOK_TYPE, name: 'Аудиокнига' },
-      ],
-      bookNamePattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-\\\\:\\\\!]+',
-      bookTagsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-]+',
-      bookAuthorsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-]+',
-      genrePattern: '[A-Za-zА-Яа-яЁё\\s\\\\-]++',
-    }),
+    data: function(){
+      return {
+        book: {
+          name: "",
+          authors: [],
+          year: null,
+          genre: '',
+          tags: [],
+          type: PAPER_BOOK_TYPE,
+          status: TO_READ_STATUS
+        },
+        statuses: [
+          { value: TO_READ_STATUS, name: this.$t('book.entity.status.toRead') },
+          { value: IN_PROGRESS_STATUS, name: this.$t('book.entity.status.inProgress') },
+          { value: DONE_STATUS, name: this.$t('book.entity.status.done') },
+        ],
+        bookTypes: [
+          { value: PAPER_BOOK_TYPE, name: this.$t('book.entity.type.paper') },
+          { value: ELECTRONIC_BOOK_TYPE, name: this.$t('book.entity.type.electronic') },
+          { value: AUDIO_BOOK_TYPE, name: this.$t('book.entity.type.audio') },
+        ],
+        bookNamePattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-\\\\:\\\\!]+',
+        bookTagsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-]+',
+        bookAuthorsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-]+',
+        genrePattern: '[A-Za-zА-Яа-яЁё\\s\\\\-]++',
+      }
+    },
     methods: {
       setMeta() {
       },
@@ -73,16 +75,16 @@ export default {
       },
       progressHeader() {
         if (this.book.type === AUDIO_BOOK_TYPE) {
-          return 'Прослушано'
+          return this.$t('book.form.titles.progress.listen.title')
         } else {
-          return 'Прочитано'
+          return this.$t('book.form.titles.progress.read.title')
         }
       },
       progressDonePlaceholder() {
         if (this.book.type === AUDIO_BOOK_TYPE) {
-          return 'Минут'
+          return this.$t('book.form.titles.progress.listen.units')
         } else {
-          return 'Страниц'
+          return this.$t('book.form.titles.progress.read.units')
         }
       },
       today() {

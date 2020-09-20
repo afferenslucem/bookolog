@@ -18,9 +18,9 @@
     </p>
     <p class="status">
       <span>Статус:</span>
-      <span v-if="book.status === TO_READ_STATUS">К Прочтению</span>
-      <span v-else-if="book.status === IN_PROGRESS_STATUS">Читаю</span>
-      <span v-else>Прочтена</span>
+      <span v-if="book.status === TO_READ_STATUS">{{ $t('book.entity.status.toRead') }}</span>
+      <span v-else-if="book.status === IN_PROGRESS_STATUS">{{ $t('book.entity.status.inProgress') }}</span>
+      <span v-else>{{ $t('book.entity.status.done') }}</span>
     </p>
     <p class="tags" v-if="book.tags">
       <span>Теги:</span>
