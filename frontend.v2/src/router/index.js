@@ -3,14 +3,21 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import {USER_LOGGED_IN_GETTER} from '../store/naming';
 import store from '../store';
+import {
+  USER_RECOVER_ACTION,
+} from '@/store/naming';
 
 const ifAuthenticated = (to, from, next) => {
   if (store.getters[USER_LOGGED_IN_GETTER] || ((to.name === 'Login') || to.name === 'Registration')) {
-    console.log('go to next')
     next()
   } else {
-    console.log('redirect to home')
-    next({name: 'Home'})
+      store.dispatch(USER_RECOVER_ACTION).then((user) => {
+      if(user) {
+        next()
+      } else {
+        next({name: 'Home'})
+      }
+    }).reject(() => next({name: 'Home'}));
   }
 }
 

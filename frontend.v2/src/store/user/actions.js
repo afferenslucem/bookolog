@@ -39,7 +39,7 @@ export const actions = {
 
             return user;
         } else {
-            return;
+            return null;
         }
     },
     [USER_LOGOUT_ACTION]: async ({commit, dispatch}) => {

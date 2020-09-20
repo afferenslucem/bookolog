@@ -18,6 +18,9 @@ export default {
             required: true,
             type: Number
         }
+    },
+    created() {
+      console.log('progress', this.progress)
     }
 };
 </script>

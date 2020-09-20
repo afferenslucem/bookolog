@@ -132,10 +132,12 @@ export default {
   methods: {
     submit(event) {
       this.setMeta();
-      this.$store.dispatch(BOOK_UPDATE_ACTION, this.book);
 
-      this.redirectForBook(this.book);
-      this.$forceUpdate();
+      this.$store.dispatch(BOOK_UPDATE_ACTION, this.book).then(() => {
+        this.redirectForBook(this.book);
+        this.$forceUpdate();
+      });
+
       event.preventDefault();
     },
   },

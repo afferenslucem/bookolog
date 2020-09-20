@@ -26,7 +26,7 @@
       <span>{{ $t('book.entity.tags') }}:</span>
       <span class="value">{{book.tags | capital | join}}</span>
     </p>
-    <div v-if="shouldShowProgress" class="progress">
+    <div v-if="shouldShowProgress" class="progressing-bar">
       <h6>{{ $t('book.entity.progress') }}:</h6>
       <progress-bar :progress="progress"></progress-bar>
     </div>
@@ -77,6 +77,7 @@
 
 <script>
 import { BOOK_GET_BY_GUID_ACTION, BOOK_DELETE_ACTION } from "@/store/naming";
+import store from "@/store";
 import {
   TO_READ_STATUS,
   IN_PROGRESS_STATUS,
@@ -118,13 +119,16 @@ export default {
   },
   methods: {
     deleteBook() {
-      this.$store.dispatch(BOOK_DELETE_ACTION, this.book.guid);
-      history.back();
+      this.$store.dispatch(BOOK_DELETE_ACTION, this.book.guid).then(() => {
+        history.back();
+      })
     },
   },
-  async created() {
-    const bookGuid = this.$route.params.guid;
-    this.book = await this.$store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid);
+  beforeRouteEnter (to, from, next) {
+    const bookGuid = to.params.guid;
+      store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid).then((book) => {
+        next(vm => vm.book = book);
+    });
   },
 };
 </script>

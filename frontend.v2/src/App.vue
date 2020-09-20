@@ -40,7 +40,7 @@ export default {
     return ({
       loadingTimer: new Timer(() => {
         this.$store.commit(CONNECTION_LOAD_START_MUTATION);
-      }, 150),
+      }, 100),
       hideLoadingTimer: new Timer(() => {
         this.$store.commit(CONNECTION_LOAD_FINISH_MUTATION);
       }, 75),
