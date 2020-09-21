@@ -4,7 +4,15 @@
 
     <ul class="book-list">
       <li v-for="group of booksByYears" :key="group.key">
-        <h5 class="header year-header mt-2 mb-2 d-block">{{group.key || $t('book.lists.byYear.yearNotSpecified')}}</h5>
+        <div class="top-year">
+          <h5 class="header year-header mt-2 mb-2 d-block">
+            {{group.key || $t('book.lists.byYear.yearNotSpecified')}}
+          </h5>
+          <span class="book-count">
+            {{group.group.length}}
+          </span>
+        </div>
+        
 
         <ul>
           <li
@@ -45,12 +53,24 @@ export default {
     booksByYears() {
       return _(this.books)
         .groupBy(
-          (item) => item.endDate ? new Date(item.endDate).getFullYear() : null,
-          (group) => group.orderByDescending(item => item.endDate || Number.MIN_SAFE_INTEGER)
-                          .thenByDescending(item => +item.modifyDate).toArray()
+          (item) => item.endDateYear ? item.endDateYear : null,
+          (group) => group.orderByDescending(item => item.endDateYear || 0)
+                          .thenByDescending(item => item.endDateMonth || 0)
+                          .thenByDescending(item => item.endDateDay || 0)
+                          .thenByDescending(item => item.createDate)
+                          .toArray()
         )
         .orderByDescending((item) => item.key || Number.MIN_SAFE_INTEGER).toArray();
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.top-year {
+  display:flex;
+
+  justify-content: space-between;
+  align-items: baseline;
+}
+</style>
