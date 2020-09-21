@@ -40,13 +40,14 @@
     </p>
     <p v-if="book.note" class="note">
       <span>{{ $t('book.entity.notes') }}:</span>
-      <span>{{book.note}}</span>
+      <span class="note-body">{{book.note}}</span>
     </p>
     <button
       class="w-100 btn btn-danger"
       data-toggle="modal"
       data-target="#bookDeleteModal"
     >{{ $t('book.actions.delete') }}</button>
+    <button class="w-100 mt-1 btn btn-primary" @click="goToEdit(book.guid)">{{ $t('book.actions.edit') }}</button>
 
     <!-- Modal -->
     <div
@@ -162,6 +163,14 @@ div:not(.book-header) {
 p {
   display: flex;
   justify-content: space-between;
+
+  > span:first-child {
+    min-width: 60px;
+  }
+}
+
+.note {
+  flex-direction: column;
 }
 
 .tags {
