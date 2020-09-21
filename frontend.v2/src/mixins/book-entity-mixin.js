@@ -21,7 +21,7 @@ export default {
             return this.book.totalUnits || Number.MAX_SAFE_INTEGER;
         },
         shouldShowProgress() {
-            return this.book.status == IN_PROGRESS_STATUS && (Number(this.progress)) > 0;
+            return this.book.status == IN_PROGRESS_STATUS;
         },
         startedBook() {
             return this.book.status != TO_READ_STATUS;

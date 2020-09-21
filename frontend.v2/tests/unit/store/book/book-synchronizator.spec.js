@@ -9,7 +9,8 @@ describe('BookSynchronizator', () => {
     const local = [
         {
             guid: '1aaa-aaaaa-aaaaaaaaaa',
-            modifyDate: new Date('2020-01-12 16:01')
+            modifyDate: new Date('2020-01-12 16:01'),
+            shouldSync: true,
         }, // updated local
         {
             guid: '12aa-aaaaa-aaaaaaaaaa',
@@ -159,6 +160,7 @@ describe('BookSynchronizator', () => {
 
             assert.equal(offline, true);
             assert.equal(data.modifyDate !== undefined, true);
+            assert.equal(data.shouldSync, true);
         })
 
         it('should trigger online', async () => {

@@ -48,6 +48,7 @@ export class BookSynchronizator {
             await onOnline();
         } catch (e) {
             if(e == NETWORK_ERROR) {
+                book.shouldSync = true;
                 await onOffline();
             } else {
                 logger.error('Unexpected error:', e)
@@ -153,7 +154,7 @@ export class BookSynchronizator {
         .toArray();
         
         const localUpdated = joined
-        .where(item => +item.origin.modifyDate < +item.local.modifyDate)
+        .where(item => (+item.origin.modifyDate < +item.local.modifyDate) && item.local.shouldSync)
         .select(item => item.local)
         .toArray();
 
