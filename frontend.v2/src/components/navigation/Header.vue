@@ -16,6 +16,7 @@
       <div class="icon avatar profile" v-else @click="emitAvatarClick($event)">
         <img src="/avatar.jpg" />
         <connection-marker class="marker"></connection-marker>
+        <total-read-count class="total-count"></total-read-count>
       </div>
     </div>
   </div>
@@ -23,6 +24,7 @@
 <script>
 import userMixin from "@/mixins/user-mixin";
 import ConnectionMarker from "@/components/connection-module/ConnectionMarker.vue";
+import TotalReadCount from "@/components/statistic-module/TotalReadBooksCount.vue";
 export default {
   mixins: [userMixin],
   methods: {
@@ -38,6 +40,7 @@ export default {
   computed: {},
   components: {
     ConnectionMarker,
+    TotalReadCount,
   },
 };
 </script>
@@ -97,6 +100,17 @@ export default {
 
     right: .1rem;
     top: 0;
+  }
+
+  > .total-count {
+    left: 0;
+    bottom: 0;
+
+    font-size: 0.65rem;
+
+    transform: translate(-30%, 0%);
+
+    position: absolute;
   }
 }
 </style>
