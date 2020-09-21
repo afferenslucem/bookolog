@@ -1,6 +1,6 @@
 <template>
   <div class="container book-list">
-    <h4 class="mt-1 header">{{$t('book.lists.byStatus.toRead')}}</h4>
+    <h4 class="pt-1 header">{{$t('book.lists.byStatus.toRead')}}</h4>
 
     <ul v-if="shouldShowList">
       <li

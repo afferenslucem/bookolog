@@ -1,6 +1,6 @@
 <template>
   <div class="book-year-list">
-    <h4 class="mt-1 header">{{listname | capital}}</h4>
+    <h4 class="pt-1 header">{{listname | capital}}</h4>
 
     <ul class="book-list">
       <li v-for="group of booksByYears" :key="group.key">
@@ -67,10 +67,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables";
+
 .top-year {
   display:flex;
 
   justify-content: space-between;
   align-items: baseline;
+
+  background-color: $bg-color;
+
+  position: sticky;
+
+  top: -1px;
+  left: 0;
 }
 </style>

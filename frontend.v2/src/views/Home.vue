@@ -7,7 +7,7 @@
     <div class="overlay" :class="{active: showOverlay}" @click="closeAllMenus()"></div>
     <div class="main">
       <Header class="top" @avatarClick="openRightMenu()" @menuClick="openLeftMenu()"></Header>
-      <div class="content pt-3">
+      <div class="content">
         <router-view />
       </div>
     </div>
@@ -85,10 +85,15 @@ export default {
     height: calc(100vh - #{$header-height});
     width: 100%;
 
-    overflow: auto;
+    overflow: hidden;
     position: absolute;
     top: $header-height;
     left: 0;
+
+    .container {
+      height: 100%;
+      overflow: auto;
+    }
   }
 }
 

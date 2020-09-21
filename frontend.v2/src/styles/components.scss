@@ -66,7 +66,6 @@
     display: block;
     width: 100%;
     height: 100%;
-    padding-right: .2rem;
     overflow: hidden;
 
     >.header {
@@ -84,7 +83,6 @@
     >ul {
         overflow-y: auto;
         height: calc(100% - #{$list-header-height});
-        padding-right: .75rem;
 
         >li {
             margin-top: 0.2rem;
