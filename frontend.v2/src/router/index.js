@@ -17,7 +17,7 @@ const ifAuthenticated = (to, from, next) => {
       } else {
         next({name: 'Home'})
       }
-    }).reject(() => next({name: 'Home'}));
+    }).catch(() => next({name: 'Home'}));
   }
 }
 
