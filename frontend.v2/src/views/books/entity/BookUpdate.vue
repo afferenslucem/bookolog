@@ -123,6 +123,7 @@
 import bookMixin from "@/mixins/book-form-mixin";
 import DateInput from '@/components/inputs/BookDateInput.vue';
 import { BOOK_UPDATE_ACTION, BOOK_GET_BY_GUID_ACTION } from "@/store/naming";
+import store from "@/store";
 
 export default {
   components: {
@@ -131,8 +132,6 @@ export default {
   mixins: [bookMixin],
   methods: {
     submit(event) {
-      this.setMeta();
-
       this.$store.dispatch(BOOK_UPDATE_ACTION, this.book).then(() => {
         this.redirectForBook(this.book);
         this.$forceUpdate();
@@ -141,9 +140,11 @@ export default {
       event.preventDefault();
     },
   },
-  async created() {
-    const bookGuid = this.$route.params.guid;
-    this.book = await this.$store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid);
+  beforeRouteEnter(to, from, next) {
+    const bookGuid = to.params.guid;
+    store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid).then((book) => {
+      next((vm) => (vm.book = book));
+    });
   },
 };
 </script>

@@ -30,8 +30,6 @@ export default {
       }
     },
     methods: {
-      setMeta() {
-      },
       statusChange(status) {
         if (status == IN_PROGRESS_STATUS) {
           this.book.startDate = this.today;

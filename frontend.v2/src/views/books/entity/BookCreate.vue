@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <small class="dark-text">* {{ $t('book.form.titles.required') }}</small>
-    <form class="needs-validation" @submit="submit($event)">
+    <form class="needs-validation">
       <div class="form-group">
         <input
           type="text"
@@ -113,7 +113,8 @@
         <textarea type="text" name="note" id="note" class="form-control" rows="5" v-model.trim="book.note"></textarea>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary w-100" type="submit">{{ $t('book.actions.save') }}</button>
+        <button class="btn btn-primary w-100" type="button" @click="submit()">{{ $t('book.actions.save') }}</button>
+        <button class="btn btn-info mt-1 w-100" type="button" @click="submitAndAdd()">{{ $t('book.actions.saveAndAdd') }}</button>
       </div>
     </form>
   </div>
@@ -130,14 +131,15 @@ export default {
   },
   mixins: [bookMixin],
   methods: {
-    submit(event) {
-      this.setMeta();
-
+    submit() {
       this.$store.dispatch(BOOK_ADD_ACTION, this.book).then(() => {
         this.redirectForBook(this.book);
       })
-      
-      event.preventDefault()
+    },
+    submitAndAdd() {
+      this.$store.dispatch(BOOK_ADD_ACTION, this.book).then(() => {
+        this.$router.go(this.$router.currentRoute)
+      })
     },
   },
   created() {
