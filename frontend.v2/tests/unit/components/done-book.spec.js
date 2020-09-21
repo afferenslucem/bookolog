@@ -5,13 +5,13 @@ import DoneBook from '@/components/book-module/book/DoneBook.vue';
 import moment from 'moment';
 
 describe('DoneBook.vue', () => {
-    it('Render props.book.name', () => {
-        const book = books[0];
-        const wrapper = shallowMount(DoneBook, {
-            propsData: { book }
-        })
-        expect(wrapper.text()).to.include(`Война миров`)
-    })
+    // it('Render props.book.name', () => {
+    //     const book = books[0];
+    //     const wrapper = shallowMount(DoneBook, {
+    //         propsData: { book }
+    //     })
+    //     expect(wrapper.text()).to.include(`Война миров`)
+    // })
 
     it('Render props.book.authors', () => {
         const book = books[2];

@@ -185,7 +185,7 @@ export class BookSynchronizator {
 
     syncLocal(diff, originSynched) {
         const deleteAwait = this.repository.deleteManyBooks(_(diff.localDeleted).concat(originSynched.delete).concat(diff.originDeleted).toArray());
-        const updateAwait = this.repository.updateManyBooks(_(diff.originUpdated).concat(originSynched.add).toArray())
+        const updateAwait = this.repository.updateManyBooks(_(diff.originUpdated).concat(originSynched.add).concat(_(diff.localUpdated).select(item => {item.shouldSync = false; return item;})).toArray())
         const saveAwait = this.repository.saveManyBooks(diff.originCreated);
 
         return Promise.all([saveAwait, updateAwait, deleteAwait])

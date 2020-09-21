@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h4>{{book.name}}</h4>
+    <book-header :book="book"></book-header>
     <p class="authors" v-if="book.authors && (book.authors.length > 0)">{{book.authors | join}}</p>
     <p v-if="book.year">
       <span>{{ $t('book.entity.year') }}:</span>
@@ -42,7 +42,11 @@
       <span>{{ $t('book.entity.notes') }}:</span>
       <span>{{book.note}}</span>
     </p>
-    <button class="w-100 btn btn-danger" data-toggle="modal" data-target="#bookDeleteModal">{{ $t('book.actions.delete') }}</button>
+    <button
+      class="w-100 btn btn-danger"
+      data-toggle="modal"
+      data-target="#bookDeleteModal"
+    >{{ $t('book.actions.delete') }}</button>
 
     <!-- Modal -->
     <div
@@ -66,8 +70,17 @@
             <p>{{ $t('book.deleteModal.cantRollback') }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $t('buttons.cancel') }}</button>
-            <button type="button" class="btn btn-danger" @click="deleteBook()"  data-dismiss="modal">{{ $t('buttons.delete') }}</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >{{ $t('buttons.cancel') }}</button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              @click="deleteBook()"
+              data-dismiss="modal"
+            >{{ $t('buttons.delete') }}</button>
           </div>
         </div>
       </div>
@@ -88,10 +101,12 @@ import {
 } from "@/models/book";
 import bookEntityMixin from "@/mixins/book-entity-mixin";
 import ProgressBar from "@/components/book-module/book/ProgressBar.vue";
+import BookHeader from "@/components/book-module/book/BookHeader.vue";
 
 export default {
   components: {
     ProgressBar,
+    BookHeader,
   },
   data: () => ({
     book: {},
@@ -121,13 +136,13 @@ export default {
     deleteBook() {
       this.$store.dispatch(BOOK_DELETE_ACTION, this.book.guid).then(() => {
         history.back();
-      })
+      });
     },
   },
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     const bookGuid = to.params.guid;
-      store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid).then((book) => {
-        next(vm => vm.book = book);
+    store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid).then((book) => {
+      next((vm) => (vm.book = book));
     });
   },
 };
@@ -140,7 +155,7 @@ export default {
 }
 
 p,
-div {
+div:not(.book-header) {
   margin-bottom: 0.75rem;
 }
 

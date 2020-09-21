@@ -4,13 +4,13 @@ import { shallowMount } from '@vue/test-utils'
 import ProgressingBook from '@/components/book-module/book/ProgressingBook.vue';
 
 describe('ProgressingBook.vue', () => {
-    it('Render props.book.name', () => {
-        const book = books[4];
-        const wrapper = shallowMount(ProgressingBook, {
-            propsData: { book }
-        })
-        expect(wrapper.text()).to.include(`BMW. Баварское сердце, Русская душа`)
-    })
+    // it('Render props.book.name', () => {
+    //     const book = books[4];
+    //     const wrapper = shallowMount(ProgressingBook, {
+    //         propsData: { book }
+    //     })
+    //     expect(wrapper.text()).to.include(`BMW. Баварское сердце, Русская душа`)
+    // })
 
     it('Render props.book.authors', () => {
         const book = books[4];

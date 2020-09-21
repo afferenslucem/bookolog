@@ -1,8 +1,6 @@
 <template>
   <div class="book-line">
-    <div class="header">
-      <strong @click="goToInfo(book.guid)">{{book.name}}</strong> <i class="fa fa-pencil-square-o" aria-hidden="true" @click="goToEdit(book.guid)"></i>
-    </div>
+    <book-inline-header :book="book"></book-inline-header>
     <div v-if="showAuthors">
       <span>{{book.authors | join}}</span>
     </div>
@@ -10,6 +8,7 @@
 </template>
 
 <script>
+import BookInlineHeader from "@/components/book-module/book/BookInlineHeader.vue";
 import bookMixin from '@/mixins/book-entity-mixin';
 
 export default {
@@ -24,6 +23,9 @@ export default {
       required: true,
       type: Object
     }
+  },
+  components: {
+    BookInlineHeader,
   }
 };
 </script>
