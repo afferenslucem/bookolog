@@ -78,7 +78,7 @@
             class="form-control"
             :placeholder="progressDonePlaceholder"
             v-model.number="book.doneUnits"
-            :max="book.totalUnits"
+            :max="Math.min(book.totalUnits, maxUnitsCount)"
           />
         </div>
         <div class="col-2 from">{{ $t('book.form.titles.progress.from') }}</div>
@@ -91,6 +91,7 @@
             :placeholder="$t('book.form.titles.progress.total')"
             v-model.number="book.totalUnits"
             :min="book.doneUnits"
+            :max="maxUnitsCount"
           />
         </div>
       </div>

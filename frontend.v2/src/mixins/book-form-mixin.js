@@ -23,10 +23,11 @@ export default {
           { value: ELECTRONIC_BOOK_TYPE, name: this.$t('book.entity.type.electronic') },
           { value: AUDIO_BOOK_TYPE, name: this.$t('book.entity.type.audio') },
         ],
-        bookNamePattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-\\\\:\\\\!]+',
-        bookTagsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-]+',
+        bookNamePattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-\\\\:\\\\!\\\\#\\\\+]+',
+        bookTagsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-\\\\#\\\\+]+',
         bookAuthorsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-]+',
         genrePattern: '[A-Za-zА-Яа-яЁё\\s\\\\-]++',
+        maxUnitsCount: 65000,
       }
     },
     methods: {

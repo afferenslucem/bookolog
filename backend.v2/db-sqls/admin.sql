@@ -1,1 +1,3 @@
-insert into "Users"("Login", "Email", "PasswordHash", "Salt") values ('admin', 'alexshakirov74@gmail.com', '587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e', '123')
+insert into "Users"("Login", "Email", "PasswordHash", "Salt") values ('hrodvitnir', 'alexshakirov74@gmail.com', '587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e', '123');
+insert into "Users"("Login", "Email", "PasswordHash", "Salt") values ('foxy', 'foxy@gmail.com', 'e45e8b947c3274a938f2a78b48b0b95ddee48e3daf730c1e2726d15d0d35ffca', 'vfdvdsf');
+insert into "Users"("Login", "Email", "PasswordHash", "Salt") values ('darkeneez', 'darkeneez@gmail.com', 'd0eaa668d0c198aada5f7bd310375b1f52c35958022ba9931cd15809178c9b57', 'fvdvdfv');
