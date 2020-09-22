@@ -1,6 +1,6 @@
 <template>
-    <div class="total-placeholder">
-        <div v-if="total > 0">{{total}}</div>
+    <div class="total-placeholder" v-if="total > 0">
+        <div>{{total}}</div>
     </div>
 </template>
 

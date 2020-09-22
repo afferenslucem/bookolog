@@ -1,6 +1,6 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-import {books} from './testing-data';
+import {books} from '../support/testing-data';
 
 describe('Login test', () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('Login test', () => {
 
     cy.compareToReadBookForm(books[0]);
 
-    cy.get('[type="submit"]').click();
+    cy.get('.submit').click();
 
     cy.wait(1000);
 
@@ -54,7 +54,7 @@ describe('Login test', () => {
 
     cy.compareDoneBookForm(books[1]);
 
-    cy.get('[type="submit"]').click();
+    cy.get('.submit').click();
 
     cy.wait(1000);
 
@@ -88,7 +88,7 @@ describe('Login test', () => {
 
     cy.compareInProgressBookForm(books[2]);
 
-    cy.get('[type="submit"]').click();
+    cy.get('.submit').click();
 
     cy.wait(1000);
 

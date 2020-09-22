@@ -49,19 +49,11 @@ export default {
 @import "@/styles/variables";
 
     #notification {
-        position: fixed;
-
-        z-index: 5000;
-
-        top: 1rem;
-        left: 0;
-
-        width: 100%;
-        height: 4rem;
-
         .notification-message {
+            z-index: 5000;
             width: 80%;
-            position: relative;
+            top: 1rem;
+            position: fixed;
             margin: 0 auto;
             animation: 0.5s ease-in 0s forwards appear, 0.5s ease-out 2s forwards disappear;
         }
@@ -73,13 +65,13 @@ export default {
         }
 
         to {
-            left: 0;
+            left: 10%;
         }
     }
 
     @keyframes disappear {
         from {
-            left: 0%;
+            left: 10%;
         }
 
         to {
