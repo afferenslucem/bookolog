@@ -12,8 +12,6 @@
             {{group.group.length}}
           </span>
         </div>
-        
-
         <ul>
           <li
             v-for="book of group.group"

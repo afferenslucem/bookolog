@@ -1,7 +1,7 @@
 import {
     expect
 } from 'chai'
-import books from '../data/books'
+import books from '../../data/books'
 import {
     shallowMount
 } from '@vue/test-utils'
