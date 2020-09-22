@@ -1,24 +1,30 @@
 module.exports = {
-    pwa: {
-        themeColor: '#51bbfe',
-        name: 'Bookolog'
-    },
+  pwa: {
+    themeColor: '#51bbfe',
+    name: 'Bookolog'
+  },
 
-    chainWebpack: (config) => {
-        config
-            .plugin('html')
-            .tap((args) => {
-            args[0].title = 'Bookolog';
-            return args;
-            });
-    },
+  chainWebpack: (config) => {
+    config
+      .plugin('html')
+      .tap((args) => {
+        args[0].title = 'Bookolog';
+        return args;
+      });
 
-    pluginOptions: {
-      i18n: {
-        locale: 'ru',
-        fallbackLocale: 'ru',
-        localeDir: 'locales',
-        enableInSFC: false
-      }
+    if (process.env.NODE_ENV === 'test') {
+      const sassRule = config.module.rule('scss')
+      sassRule.uses.clear()
+      sassRule.use('null-loader').loader('null-loader')
     }
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: 'ru',
+      fallbackLocale: 'ru',
+      localeDir: 'locales',
+      enableInSFC: false
+    }
+  }
 }
