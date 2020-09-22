@@ -1,5 +1,6 @@
 import { TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS, PAPER_BOOK_TYPE, ELECTRONIC_BOOK_TYPE, AUDIO_BOOK_TYPE } from '@/models/book';
 import moment from 'moment';
+import { PAGES_MAX_VALUE } from '../config';
 
 export default {
     data: function(){
@@ -23,11 +24,11 @@ export default {
           { value: ELECTRONIC_BOOK_TYPE, name: this.$t('book.entity.type.electronic') },
           { value: AUDIO_BOOK_TYPE, name: this.$t('book.entity.type.audio') },
         ],
-        bookNamePattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-\\\\:\\\\!\\\\#\\\\+]+',
-        bookTagsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-\\\\#\\\\+]+',
-        bookAuthorsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\\\.\\\\,\\\\(\\\\)\\\\-]+',
-        genrePattern: '[A-Za-zА-Яа-яЁё\\s\\\\-]++',
-        maxUnitsCount: 65000,
+        bookNamePattern: '[A-Za-zА-Яа-яЁё0-9\\s\\.\\\\,\\(\\)\\-\\:\\!\\#\\+\\$\\№]+',
+        bookTagsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\.\\,\\(\\)\\-\\#\\+]+',
+        bookAuthorsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\.\\,\\(\\)\\-]+',
+        genrePattern: '[A-Za-zА-Яа-яЁё\\s\\-]+',
+        maxUnitsCount: PAGES_MAX_VALUE,
       }
     },
     methods: {
