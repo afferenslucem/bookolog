@@ -55,7 +55,9 @@ namespace tests.Services
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name",
-                StartDate = DateTime.Now
+                StartDateYear = 2012,
+                StartDateMonth = 07,
+                StartDateDay = 12,
             };
 
             var result = await this.service.Save(book);
@@ -68,7 +70,9 @@ namespace tests.Services
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name",
-                EndDate = DateTime.Now
+                EndDateYear = 2012,
+                EndDateMonth = 06,
+                EndDateDay = 12,
             };
 
             var result = await this.service.Save(book);
@@ -121,8 +125,12 @@ namespace tests.Services
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name",
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(-1)
+                StartDateYear = 2012,
+                StartDateMonth = 07,
+                StartDateDay = 12,
+                EndDateYear = 2012,
+                EndDateMonth = 06,
+                EndDateDay = 12,
             };
 
             await Assert.ThrowsExceptionAsync<BookWrongDatesException>(() => this.service.Save(book));

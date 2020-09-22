@@ -188,7 +188,9 @@ namespace tests.Controllers
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name",
-                StartDate = DateTime.Now
+                StartDateYear = 2012,
+                StartDateMonth = 07,
+                StartDateDay = 12,
             };
 
             var saved = await this.controller.Create(book) as OkObjectResult;
@@ -204,7 +206,9 @@ namespace tests.Controllers
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name",
-                EndDate = DateTime.Now
+                EndDateYear = 2012,
+                EndDateMonth = 08,
+                EndDateDay = 12,
             };
 
             var saved = await this.controller.Create(book) as OkObjectResult;
@@ -270,8 +274,12 @@ namespace tests.Controllers
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name",
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(-1)
+                StartDateYear = 2012,
+                StartDateMonth = 09,
+                StartDateDay = 12,
+                EndDateYear = 2012,
+                EndDateMonth = 08,
+                EndDateDay = 12,
             };
 
             var result = await this.controller.Create(book) as ObjectResult;
@@ -288,8 +296,12 @@ namespace tests.Controllers
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name",
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(1)
+                StartDateYear = 2012,
+                StartDateMonth = 07,
+                StartDateDay = 12,
+                EndDateYear = 2012,
+                EndDateMonth = 08,
+                EndDateDay = 12,
             };
 
             await this.controller.Create(book);
@@ -312,8 +324,12 @@ namespace tests.Controllers
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name",
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(1)
+                StartDateYear = 2012,
+                StartDateMonth = 07,
+                StartDateDay = 12,
+                EndDateYear = 2012,
+                EndDateMonth = 08,
+                EndDateDay = 12,
             };
 
             await this.controller.Create(book);

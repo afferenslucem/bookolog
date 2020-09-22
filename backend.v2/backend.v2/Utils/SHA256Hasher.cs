@@ -34,7 +34,14 @@ namespace backend.Utils
 
             this.random.NextBytes(bytes);
 
-            return Encoding.UTF8.GetString(bytes);
+            var builder = new StringBuilder();
+
+            foreach (var @byte in bytes)
+            {
+                builder.Append(@byte.ToString("x2"));
+            }
+
+            return builder.ToString();
         }
     }
 }

@@ -107,13 +107,29 @@
         }
     },
     "auth": {
-        "login": "Вход",
-        "logout": "Выход",
+        "actions":{
+            "login": {
+                "title": "Вход",
+                "error": "Не удалось выполнить вход."
+            },            
+            "logout": {
+                "title": "Выход",
+                "error": "Ошибка воссановления сессии. Перезайдите."
+            }
+        },
         "loginForm": {
             "username": "Логин",
             "password": "Пароль",
             "incorrectCredentials": "Неверный логин или пароль.",
             "submit": "Войти"
+        },
+        "registrationForm": {
+            "username": "Логин",
+            "password": "Пароль",
+            "email": "Почта",
+            "confirmPassword": "Подтвердение пароля",
+            "submit": "Зарегистрироваться",
+            "registrationError": "Ошибка регистрации. Попробуйте позже."
         }
     },
     "buttons": {
@@ -121,11 +137,8 @@
         "cancel": "Отмена"
     },
     "user": {
-        "login": {
-            "error": "Не удалось выполнить вход"
-        },
-        "recover": {
-            "error": "Ошибка воссановления сессии. Перезайдите."
+        "entity": {
+
         }
     }
 }

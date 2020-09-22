@@ -8,12 +8,12 @@ Content-Type: application/json
 
 ###############################################
 
-POST http://localhost:5000/auth/register
+POST http://localhost:45080/auth/register
 Content-Type: application/json
 
 {
-  "login": "kruz",
-  "email": "kruz@gmail.com",
+  "login": "kruz2",
+  "email": "kruz2@gmail.com",
   "password": "nullnullnull"
 }
 
