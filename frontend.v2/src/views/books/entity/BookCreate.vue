@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container create-form">
     <small class="dark-text">* {{ $t('book.form.titles.required') }}</small>
     <form class="needs-validation">
       <div class="form-group">
@@ -123,7 +123,12 @@
 <script>
 import bookMixin from '@/mixins/book-form-mixin';
 import DateInput from '@/components/inputs/BookDateInput.vue';
-import { BOOK_ADD_ACTION } from '@/store/naming';
+import { 
+  BOOK_ADD_ACTION,
+  NOTIFICATION_SUCCESS_ACTION,
+  NOTIFICATION_DANGER_ACTION,
+} from '@/store/naming';
+import { PAPER_BOOK_TYPE, Book } from '@/models/book';
 
 export default {
   components: {
@@ -134,13 +139,21 @@ export default {
     submit() {
       this.$store.dispatch(BOOK_ADD_ACTION, this.book).then(() => {
         this.redirectForBook(this.book);
-      })
+        this.$store.dispatch(NOTIFICATION_SUCCESS_ACTION, this.$t('book.notification.save.success'));
+      }).catch(() => this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t('book.notification.save.fail')));
     },
     submitAndAdd() {
       this.$store.dispatch(BOOK_ADD_ACTION, this.book).then(() => {
-        this.$router.go(this.$router.currentRoute)
-      })
+        this.renavigate();
+        this.$store.dispatch(NOTIFICATION_SUCCESS_ACTION, this.$t('book.notification.save.success'));
+      }).catch(() => this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t('book.notification.save.fail')));
     },
+    renavigate() {
+      this.book = new Book({});
+      this.book.status = Number(this.$route.params.status);
+      this.book.type = PAPER_BOOK_TYPE;
+      document.querySelector('.create-form').scrollTo(0,0);
+    }
   },
   created() {
     this.book.status = Number(this.$route.params.status)

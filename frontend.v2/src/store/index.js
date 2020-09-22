@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './user'
 import book from './book'
 import connection from './connection';
+import notification from './notification';
 
 Vue.use(Vuex)
 
@@ -17,5 +18,6 @@ export default new Vuex.Store({
     user,
     book,
     connection,
+    notification,
   }
 });

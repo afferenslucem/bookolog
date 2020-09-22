@@ -30,6 +30,8 @@ export class Book {
     constructor(obj) {
         Object.assign(this, obj);
         this.modifyDate = new Date(obj.modifyDate);
+        this.authors = this.authors || [];
+        this.tags = this.tags || [];
     }
 
     get progress() {

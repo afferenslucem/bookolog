@@ -55,10 +55,9 @@ export default {
       this.$forceUpdate();
     },
     hideLoader() {
+      this.loadingTimer.kill();
+      this.$forceUpdate();
       this.hideLoadingTimer.start();
-      if(this.loadingTimer.alive) {
-        this.loadingTimer.kill();
-      }
     }
   }
 }

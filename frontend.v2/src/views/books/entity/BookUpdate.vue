@@ -122,7 +122,12 @@
 <script>
 import bookMixin from "@/mixins/book-form-mixin";
 import DateInput from '@/components/inputs/BookDateInput.vue';
-import { BOOK_UPDATE_ACTION, BOOK_GET_BY_GUID_ACTION } from "@/store/naming";
+import { 
+  BOOK_UPDATE_ACTION,
+  BOOK_GET_BY_GUID_ACTION,
+  NOTIFICATION_SUCCESS_ACTION,
+  NOTIFICATION_DANGER_ACTION,
+} from "@/store/naming";
 import store from "@/store";
 
 export default {
@@ -134,8 +139,9 @@ export default {
     submit(event) {
       this.$store.dispatch(BOOK_UPDATE_ACTION, this.book).then(() => {
         this.redirectForBook(this.book);
+        this.$store.dispatch(NOTIFICATION_SUCCESS_ACTION, this.$t('book.notification.update.success'));
         this.$forceUpdate();
-      });
+      }).catch(() => this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t('book.notification.update.fail')));
 
       event.preventDefault();
     },

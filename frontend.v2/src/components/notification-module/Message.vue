@@ -1,6 +1,6 @@
 <template>
-  <div id="notification">
-      <div class="notification-message" :class="notificationClass" v-show="shouldShow">
+  <div id="notification" v-if="shouldShow">
+      <div class="notification-message alert text-center show hide" :class="notificationClass">
           {{text}}
       </div>
   </div>
@@ -26,16 +26,16 @@ export default {
 
             switch(type) {
                 case NOTIFICATION_SUCCESS_TYPE: {
-                    return {success: true};
+                    return {'alert-success': true};
                 }
                 case NOTIFICATION_DANGER_TYPE: {
-                    return {danger: true};
+                    return {'alert-danger': true};
                 }
                 case NOTIFICATION_WARN_TYPE: {
-                    return {warn: true};
+                    return {'alert-warning': true};
                 }
                 case NOTIFICATION_INFO_TYPE: {
-                    return {info: true};
+                    return {'alert-info': true};
                 }
             }
 
@@ -46,18 +46,44 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    #notification {
-        position: absolute;
+@import "@/styles/variables";
 
-        top: 0;
+    #notification {
+        position: fixed;
+
+        z-index: 5000;
+
+        top: 1rem;
         left: 0;
 
         width: 100%;
+        height: 4rem;
 
         .notification-message {
             width: 80%;
+            position: relative;
+            margin: 0 auto;
+            animation: 0.5s ease-in 0s forwards appear, 0.5s ease-out 2s forwards disappear;
+        }
+    }
 
-            margin: 1rem auto 0 auto;
+    @keyframes appear {
+        from {
+            left: 100%;
+        }
+
+        to {
+            left: 0;
+        }
+    }
+
+    @keyframes disappear {
+        from {
+            left: 0%;
+        }
+
+        to {
+            left: -100%;
         }
     }
 </style>

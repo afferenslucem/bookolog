@@ -4,6 +4,7 @@ import {
     NOTIFICATION_DANGER_ACTION,
     NOTIFICATION_INFO_ACTION,
     NOTIFICATION_SHOW_MUTATION,
+    NOTIFICATION_HIDE_MUTATION,
     NOTIFICATION_SHOW_ACTION,
 } from '../naming';
 
@@ -13,6 +14,9 @@ import {
     NOTIFICATION_WARN_TYPE,
     NOTIFICATION_INFO_TYPE,
 } from '@/models/notification.js';
+
+import {Timer} from 'essents';
+import { NOTIFICATION_SHOW_TIME } from '../../config';
 
 export const actions = {
     [NOTIFICATION_WARNING_ACTION]: async ({dispatch}, text) => {
@@ -41,5 +45,9 @@ export const actions = {
     },
     [NOTIFICATION_SHOW_ACTION]: async ({commit}, payload) => {
         commit(NOTIFICATION_SHOW_MUTATION, payload);
+
+        new Timer(() => {
+            commit(NOTIFICATION_HIDE_MUTATION);
+        }, NOTIFICATION_SHOW_TIME).start();
     },
 }

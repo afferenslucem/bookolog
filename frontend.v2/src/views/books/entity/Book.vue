@@ -90,7 +90,12 @@
 </template>
 
 <script>
-import { BOOK_GET_BY_GUID_ACTION, BOOK_DELETE_ACTION } from "@/store/naming";
+import { 
+  BOOK_GET_BY_GUID_ACTION,
+  BOOK_DELETE_ACTION,  
+  NOTIFICATION_SUCCESS_ACTION,
+  NOTIFICATION_DANGER_ACTION,
+} from "@/store/naming";
 import store from "@/store";
 import {
   TO_READ_STATUS,
@@ -137,7 +142,8 @@ export default {
     deleteBook() {
       this.$store.dispatch(BOOK_DELETE_ACTION, this.book.guid).then(() => {
         history.back();
-      });
+        this.$store.dispatch(NOTIFICATION_SUCCESS_ACTION, this.$t('book.notification.delete.success'));
+      }).catch(() => this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t('book.notification.delete.fail')));
     },
   },
   beforeRouteEnter(to, from, next) {
