@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <notification-message></notification-message>
     <router-view/>
     <app-loader></app-loader>
   </div>
@@ -16,6 +17,7 @@ import {
 } from '@/store/naming';
 
 import AppLoader from '@/components/connection-module/Loader.vue';
+import NotificationMessage from '@/components/notification-module/Message.vue';
 
 import {
   Client
@@ -34,7 +36,8 @@ export default {
     await this.$store.dispatch(USER_RECOVER_ACTION)
   },
   components: {
-    AppLoader
+    AppLoader,
+    NotificationMessage,
   },
   data() {
     return ({
