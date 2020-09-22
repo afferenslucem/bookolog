@@ -1,5 +1,5 @@
 export const getters = {
-    online: state => state.online,
-    offline: state => !state.online,
-    showLoader: state => state.loadingCounter > 0,
+    notificationText: state => state.text,
+    notificationShow: state => state.show,
+    notificationType: state => state.type,
 }

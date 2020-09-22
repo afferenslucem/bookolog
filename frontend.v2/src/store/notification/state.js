@@ -1,6 +1,7 @@
 const state = {
-    online: true,
-    loadingCounter: 0,
+    show: false,
+    text: '',
+    type: ''
 }
 
 export default () => state;

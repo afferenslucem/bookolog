@@ -3,15 +3,43 @@ import {
     NOTIFICATION_SUCCESS_ACTION,
     NOTIFICATION_DANGER_ACTION,
     NOTIFICATION_INFO_ACTION,
-    NOTIFICATION_HIDE_MUTATION,
     NOTIFICATION_SHOW_MUTATION,
+    NOTIFICATION_SHOW_ACTION,
 } from '../naming';
 
+import {
+    NOTIFICATION_SUCCESS_TYPE,
+    NOTIFICATION_DANGER_TYPE,
+    NOTIFICATION_WARN_TYPE,
+    NOTIFICATION_INFO_TYPE,
+} from '@/models/notification.js';
+
 export const actions = {
-    [CONNECTION_ONLINE_ACTION]: async ({commit, dispatch}) => {
-        
+    [NOTIFICATION_WARNING_ACTION]: async ({dispatch}, text) => {
+        dispatch(NOTIFICATION_SHOW_MUTATION, {
+            type: NOTIFICATION_WARN_TYPE,
+            text 
+        });
     },
-    [CONNECTION_OFFLINE_ACTION]: async ({commit}) => {
-        commit(CONNECTION_OFFLINE_MUTATION)
+    [NOTIFICATION_SUCCESS_ACTION]: async ({dispatch}, text) => {
+        dispatch(NOTIFICATION_SHOW_MUTATION, {
+            type: NOTIFICATION_SUCCESS_TYPE,
+            text 
+        });
+    },
+    [NOTIFICATION_DANGER_ACTION]: async ({dispatch}, text) => {
+        dispatch(NOTIFICATION_SHOW_MUTATION, {
+            type: NOTIFICATION_DANGER_TYPE,
+            text 
+        });
+    },
+    [NOTIFICATION_INFO_ACTION]: async ({dispatch}, text) => {
+        dispatch(NOTIFICATION_SHOW_MUTATION, {
+            type: NOTIFICATION_INFO_TYPE,
+            text 
+        });
+    },
+    [NOTIFICATION_SHOW_ACTION]: async ({commit}, payload) => {
+        commit(NOTIFICATION_SHOW_MUTATION, payload);
     },
 }

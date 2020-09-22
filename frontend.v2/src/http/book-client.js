@@ -2,7 +2,7 @@ import { Client } from "./client";
 import _ from "declarray";
 import {getLogger} from '../logger';
 import { Book }from '../models/book'
-import { BACKEND_URL } from "./config";
+import { BACKEND_URL } from "../config";
 
 export class BookClient extends Client {
     constructor() {

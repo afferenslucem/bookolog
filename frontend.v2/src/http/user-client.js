@@ -1,6 +1,6 @@
 import { Client } from "./client";
 import {getLogger} from '../logger';
-import { BACKEND_URL } from "./config";
+import { BACKEND_URL } from "../config";
 
 export const INCORRECT_CREDENTIALS_EXCEPTION = 'INCORRECT_CREDENTIALS_EXCEPTION';
 

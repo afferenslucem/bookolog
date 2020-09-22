@@ -45,6 +45,19 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+    #notification {
+        position: absolute;
 
+        top: 0;
+        left: 0;
+
+        width: 100%;
+
+        .notification-message {
+            width: 80%;
+
+            margin: 1rem auto 0 auto;
+        }
+    }
 </style>
