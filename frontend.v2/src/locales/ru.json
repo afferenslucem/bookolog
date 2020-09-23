@@ -160,7 +160,7 @@
         "title": "Настройки",
         "passwordChangeForm": {
             "title": "Смена пароля",
-            "oldPassword": "Старый Пароль",
+            "oldPassword": "Старый пароль",
             "password": "Пароль",
             "confirmPassword": "Подтверждение пароля",
             "submit": "Изменить пароль",
