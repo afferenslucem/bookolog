@@ -92,14 +92,40 @@ namespace backend.Services
 
         public async Task<User> RegisterUser(User user)
         {
-            var salt = this.hasher.GetSalt();
+            try{
+                var salt = this.hasher.GetSalt();
 
-            var hash = this.hasher.GetSHA256Hash(user.Password, salt);
+                var hash = this.hasher.GetSHA256Hash(user.Password, salt);
 
-            user.PasswordHash = hash;
-            user.Salt = salt;
+                user.PasswordHash = hash;
+                user.Salt = salt;
 
-            return await this.storage.Save(user);
+                return await this.storage.Save(user);            
+            }
+            catch (Exception e) {
+                var exception = this.ParseRegistrationException(e);
+
+                if(exception != null){
+                    throw exception;
+                }
+                else {
+                    throw;
+                }
+            }
+        }
+
+        public Exception ParseRegistrationException(Exception e) {
+            if(e.InnerException == null) return null;
+
+            var message = e.InnerException.Message;
+
+            if(message.Contains("Login") && message.Contains("unique")) {
+                return new UserWithSameLoginAlreadyExistsException();
+            } else  if(message.Contains("Email") && message.Contains("unique")) {
+                return new UserWithSameEmailAlreadyExistsException();
+            } else {
+                return null;
+            }
         }
 
         public async Task<User> GetByLogin(string login)

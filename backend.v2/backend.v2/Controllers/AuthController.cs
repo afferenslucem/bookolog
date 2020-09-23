@@ -63,6 +63,16 @@ namespace backend.Controllers
 
                 return Ok(withoutPrivate);
             }
+            catch (UserWithSameEmailAlreadyExistsException e)
+            {
+                this.logger.LogDebug(400, e, "User with same email already exisists", user);
+                return StatusCode(400, "User with same email already exisists");
+            }
+            catch (UserWithSameLoginAlreadyExistsException e)
+            {
+                this.logger.LogDebug(400, e, "User with same login already exisists", user);
+                return StatusCode(400, "User with same login already exisists");
+            }
             catch (Exception e)
             {
                 this.logger.LogDebug(500, e, "Can't register user", user);

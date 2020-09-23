@@ -133,7 +133,13 @@
             "email": "Почта",
             "confirmPassword": "Подтвердение пароля",
             "submit": "Зарегистрироваться",
-            "registrationError": "Ошибка регистрации. Попробуйте позже."
+            "success": "Регистрация прошла успешно.",
+            "errors": {
+                "registrationError": "Ошибка регистрации. Попробуйте позже.",
+                "loginAlreadyExisists": "Такой логин уже занят.",
+                "emailAlreadyExisists": "Такая почта уже занята.",
+                "passwordMatching": "Пароли не совпадают."
+            }
         }
     },
     "buttons": {
