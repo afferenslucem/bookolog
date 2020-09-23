@@ -34,6 +34,11 @@ const authRoutes = [
     name: 'Registration',
     component: () => import('../views/auth/Registration.vue'),
     props: true
+  }, {
+    path: 'recover-password',
+    name: 'RecoverPassword',
+    component: () => import('../views/auth/RecoverPassword.vue'),
+    props: true
   }, 
 ];
 

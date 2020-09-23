@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using backend.Models;
+using backend.Utils;
 using backend.Models.Authentication;
 using backend.Services;
 using Microsoft.Extensions.Logging;
@@ -22,11 +23,13 @@ namespace backend.Controllers
         private readonly IUserService userService;
         private readonly ILogger<AuthController> logger;
         private readonly IUserSession userSession;
+        private readonly IMailService mailService;
 
-        public AuthController(IUserService userService, IUserSession userSession, ILogger<AuthController> logger)
+        public AuthController(IUserService userService, IUserSession userSession, IMailService mailService, ILogger<AuthController> logger)
         {
             this.userService = userService;
             this.userSession = userSession;
+            this.mailService = mailService;
             this.logger = logger;
         }
 
@@ -128,6 +131,26 @@ namespace backend.Controllers
         {
             await HttpContext.SignOutAsync();
             return Ok();
+        }
+    
+        [HttpGet]
+        [Route("[action]/{email}")]
+        public async Task<IActionResult> RecoverPassword(string email) {
+            try {
+                var user = await this.userService.GetByEmail(email);
+
+                if (user.Email == email) {
+                    var newPassword = RandomString.GetRandomString(6);
+                    await this.userService.SetNewPassword(user.Id, newPassword);
+                    await this.mailService.SendPasswordRecover(user, newPassword);
+                }
+
+                return Ok();
+            }
+            catch(Exception e) {
+                this.logger.LogDebug(500, e, "Can't send to email", email);
+                return StatusCode(500, "Can't send to email");
+            }
         }
     }
 }

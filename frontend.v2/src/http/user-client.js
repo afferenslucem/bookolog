@@ -57,6 +57,10 @@ export class UserClient extends Client {
         });
     }
 
+    async passwordRecover(email) {
+        await super.get('auth/recoverPassword/' + email);
+    }
+
     async logout() {
         await super.get('auth/logout',
         {

@@ -15,6 +15,16 @@ services:
       - "45081:81"
     depends_on: 
       - postgre
+      - mail-server
+
+  mail-server:
+    image: juanluisbaptiste/postfix:latest
+    environment: 
+      SMTP_SERVER: "localhost"
+      SMTP_USERNAME: "smtp"
+      SMTP_PASSWORD: "masterkey"
+      SERVER_HOSTNAME: "bookolog.ru"
+      SMTP_PORT: 587
 
   postgre:
     image: postgres:12.4-alpine

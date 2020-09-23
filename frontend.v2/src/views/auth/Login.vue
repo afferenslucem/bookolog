@@ -26,6 +26,10 @@
       </div>
 
       <button class="btn btn-primary w-100" type="submit">{{ $t('auth.loginForm.submit') }}</button>
+
+      <router-link :to="{name: 'RecoverPassword'}" class="ml-1">
+        Восстановить пароль
+      </router-link>
     </form>
   </div>
 </template>

@@ -10,6 +10,7 @@ namespace backend.Storage
     public interface IUserStorage
     {
         Task<User> GetByLogin(string login);
+        Task<User> GetByEmail(string email);
         Task<User> GetById(long id);
         Task<User> Save(User user);
         Task<User> Update(User user);
@@ -22,6 +23,11 @@ namespace backend.Storage
             using var context = new BookologContext();
 
             return await context.Users.Where(item => item.Login == login).SingleOrDefaultAsync();
+        }
+        public async Task<User> GetByEmail(string email) {
+            using var context = new BookologContext();
+
+            return await context.Users.Where(item => item.Email == email).SingleOrDefaultAsync();
         }
 
         public async Task<User> GetById(long id) {

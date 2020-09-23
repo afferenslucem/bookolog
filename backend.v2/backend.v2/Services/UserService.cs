@@ -16,9 +16,11 @@ namespace backend.Services
         Task<User> Authenticate(string login, string password);
         Task<User> Authenticate(long id, string password);
         Task<User> GetByLogin(string login);
+        Task<User> GetByEmail(string email);
         Task<User> GetById(long id);
         Task<User> RegisterUser(User user);
         Task ChangePassword(long id, string oldPassword, string newPassword);
+        Task SetNewPassword(long id, string newPassword);
     }
 
     public class UserService : IUserService
@@ -79,6 +81,10 @@ namespace backend.Services
         {
             await this.Authenticate(id, oldPassword);
 
+            await this.SetNewPassword(id, newPassword);
+        }
+
+        public async Task SetNewPassword(long id, string newPassword) {
             var salt = this.hasher.GetSalt();
 
             var hash = this.hasher.GetSHA256Hash(newPassword, salt);
@@ -132,6 +138,17 @@ namespace backend.Services
         public async Task<User> GetByLogin(string login)
         {
             var result = await this.storage.GetByLogin(login);
+
+            if(result == null) {
+                throw new StorageReadException();
+            }
+
+            return result;
+        }
+
+        public async Task<User> GetByEmail(string email)
+        {
+            var result = await this.storage.GetByEmail(email);
 
             if(result == null) {
                 throw new StorageReadException();

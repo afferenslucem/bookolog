@@ -91,6 +91,7 @@ namespace backend
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IUserSession, UserSession>();
+            services.AddScoped<IMailService, MailService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
