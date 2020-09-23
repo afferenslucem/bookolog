@@ -162,7 +162,7 @@
             "title": "Смена пароля",
             "oldPassword": "Старый Пароль",
             "password": "Пароль",
-            "confirmPassword": "Подтвердение пароля",
+            "confirmPassword": "Подтверждение пароля",
             "submit": "Изменить пароль",
             "success": "Пароль изменен успешно.",
             "errors": {
