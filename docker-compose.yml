@@ -23,7 +23,7 @@ services:
       RELAYHOST: hrodvitnir.pw
       POSTFIX_myhostname: hrodvitnir.pw
     ports:
-      - "45432:5432"
+      - "45587:587"
 
   postgre:
     image: postgres:12.4-alpine

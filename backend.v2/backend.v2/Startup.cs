@@ -132,6 +132,10 @@ namespace backend
         public void ReadConfig() {
             Config.ConnectionString = this.Configuration.GetConnectionString("DefaultConnection");
             Config.AllowedOrigins = this.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+            Config.SMTP.Host = this.Configuration.GetValue<string>("SMTP:Host");
+            Config.SMTP.Port = this.Configuration.GetValue<int>("SMTP:Port");
+            Config.SMTP.From = this.Configuration.GetValue<string>("SMTP:From");
+            Config.SMTP.User = this.Configuration.GetValue<string>("SMTP:User");
         }
     }
 }

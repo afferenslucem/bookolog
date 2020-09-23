@@ -33,7 +33,7 @@ namespace backend.Services
         {
             var message = new MimeMessage();
 
-            var from = new MailboxAddress("Bookolog", "noreply@bookolog.ru");
+            var from = new MailboxAddress(Config.SMTP.User, Config.SMTP.From);
             message.From.Add(from);
 
             var to = new MailboxAddress(user.Login, user.Email);
@@ -52,7 +52,7 @@ namespace backend.Services
         private async Task SendMessage(MimeMessage message) {
             using var client = new SmtpClient();
 
-            await client.ConnectAsync("postfix", 587);
+            await client.ConnectAsync(Config.SMTP.Host, Config.SMTP.Port);
 
             await client.SendAsync(message);
 
