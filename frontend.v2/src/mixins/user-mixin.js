@@ -12,8 +12,8 @@ export default {
         async registration() {
             this.$router.push({name: 'Registration'})
         },
-        async passwordChange() {
-            this.$router.push({name: 'PasswordChange'})
+        async settings() {
+            this.$router.push({name: 'Settings'})
         },
     },
     computed: {

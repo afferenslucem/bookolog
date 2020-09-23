@@ -76,9 +76,11 @@ export class Client {
         } catch (e) {
             if(e == NETWORK_ERROR) {
                 await this.onNetworkError();
-            } else if(e == FORBIDDEN_ERROR) {
-                await this.onForbiddenError()
+            } else if((e.response?.data === '') && (e.response.status === 401)) {
+                await this.onUnauthorizedError()
             }
+
+            console.log(e.response)
 
             throw e;
         } finally {
@@ -88,6 +90,6 @@ export class Client {
 }
 Client.prototype.onSuccess = () => {}
 Client.prototype.onNetworkError = () => {}
-Client.prototype.onForbiddenError = () => {}
+Client.prototype.onUnauthorizedError = () => {}
 Client.prototype.requestCanceled = () => {}
 Client.prototype.requestStarted = () => {}

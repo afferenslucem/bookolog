@@ -63,7 +63,7 @@ namespace backend
                 o.Events = new CookieAuthenticationEvents() {
                     OnRedirectToLogin = context =>
                     {
-                        context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         return Task.CompletedTask;
                     },
                 };

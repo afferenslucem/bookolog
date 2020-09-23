@@ -112,10 +112,10 @@ const booksBySomethingRoutes = [
 
 const settingsRoutes = [ 
   {
-    path: 'password-change',
-    name: 'PasswordChange',
+    path: 'settings',
+    name: 'Settings',
     props: false,
-    component: () => import('../views/auth/PasswordChange.vue')
+    component: () => import('../views/user/Settings.vue')
   }, 
 ]
 

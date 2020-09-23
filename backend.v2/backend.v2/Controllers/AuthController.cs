@@ -97,7 +97,7 @@ namespace backend.Controllers
             }
             catch (IncorrectCredentianlsException)
             {
-                return Unauthorized("Incorrect old password");
+                return StatusCode(403, "Incorrect old password");
             }
             catch (Exception e)
             {

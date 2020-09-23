@@ -119,9 +119,6 @@
             "registration": {
                 "title": "Регистрация",
                 "error": "Ошибка регистрации."
-            },            
-            "passwordChange": {
-                "title": "Поменять пароль"
             }
         },
         "loginForm": {
@@ -145,7 +142,22 @@
                 "emailAlreadyExisists": "Такая почта уже занята.",
                 "passwordMatching": "Пароли не совпадают."
             }
-        },
+        }
+    },
+    "buttons": {
+        "delete": "Удалить",
+        "cancel": "Отмена"
+    },
+    "user": {
+        "entity": {
+
+        },                    
+        "actions": {
+            "settings": "Настройки"
+        }
+    },
+    "settings": {
+        "title": "Настройки",
         "passwordChangeForm": {
             "title": "Смена пароля",
             "oldPassword": "Старый Пароль",
@@ -158,15 +170,6 @@
                 "incorrectPassword": "Неверный пароль.",
                 "passwordMatching": "Пароли не совпадают."
             }
-        }
-    },
-    "buttons": {
-        "delete": "Удалить",
-        "cancel": "Отмена"
-    },
-    "user": {
-        "entity": {
-
         }
     }
 }

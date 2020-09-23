@@ -177,6 +177,7 @@ namespace backend.Controllers
     
         [HttpPost]
         [Route("[action]")]
+        [Authorize]
         public async Task<IActionResult> Synchronize([FromBody]BookSyncModel data) {
             try
             {
