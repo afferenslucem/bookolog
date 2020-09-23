@@ -19,6 +19,8 @@ services:
 
   mail-server:
     image: juanluisbaptiste/postfix:latest
+    ports:
+      - "45587:587"
     environment: 
       SMTP_SERVER: "localhost"
       SMTP_USERNAME: "smtp"

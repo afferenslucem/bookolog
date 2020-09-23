@@ -52,7 +52,7 @@ namespace backend.Services
         private async Task SendMessage(MimeMessage message) {
             using var client = new SmtpClient();
 
-            await client.ConnectAsync("mail-server", 587);
+            await client.ConnectAsync("mail-server", 45587);
             await client.AuthenticateAsync("smtp", "masterkey");
 
             await client.SendAsync(message);
