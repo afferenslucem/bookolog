@@ -1,10 +1,10 @@
 <template>
-  <form @submit="submit($event)" class="container mt-3">
+  <form @submit="submit($event)" class="container mt-3" name="registration">
     <div class="form-group">
       <input
         class="form-control"
         :placeholder="$t('auth.registrationForm.username')"
-        id="login"
+        id="login-registration"
         v-model="user.username"
       />
     </div>
@@ -12,7 +12,7 @@
       <input
         class="form-control"
         :placeholder="$t('auth.registrationForm.email')"
-        id="email"
+        id="email-registration"
         v-model="user.email"
       />
     </div>
@@ -21,13 +21,13 @@
         type="password"
         :placeholder="$t('auth.registrationForm.password')"
         class="form-control"
-        id="password"
+        id="password-registration"
         v-model="user.password"
       />
     </div>
     <div class="form-group">
       <input
-        type="password"
+        type="password-confirmation-registration"
         :placeholder="$t('auth.registrationForm.confirmPassword')"
         class="form-control"
         id="confirmation"
