@@ -6,6 +6,9 @@
     <li class="nav-item" v-else @click="onLogout()">
       <a class="nav-link" href="#" id="logoutButton">{{ $t('auth.actions.logout.title') }}</a>
     </li>
+    <li class="nav-item" v-if="!isLoggedIn" @click="onRegistration()">
+      <a class="nav-link" href="#" id="registrationButton">{{ $t('auth.actions.registration.title') }}</a>
+    </li>
   </ul>
 </template>
 <script>
@@ -17,6 +20,10 @@ export default {
   methods: {
     async onLogin() {
       await this.login();
+      this.emitClick();
+    },
+    async onRegistration() {
+      await this.registration();
       this.emitClick();
     },
     async onLogout() {

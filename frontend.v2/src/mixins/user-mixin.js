@@ -9,6 +9,9 @@ export default {
             await this.$store.dispatch(USER_LOGOUT_ACTION);
             this.$router.push({name: 'Home'})
         },
+        async registration() {
+            this.$router.push({name: 'Registration'})
+        },
     },
     computed: {
         isLoggedIn() {
