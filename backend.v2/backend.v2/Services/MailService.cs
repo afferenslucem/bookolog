@@ -53,7 +53,6 @@ namespace backend.Services
             using var client = new SmtpClient();
 
             await client.ConnectAsync("mail-server", 587);
-            await client.AuthenticateAsync("smtp", "masterkey");
 
             await client.SendAsync(message);
 

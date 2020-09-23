@@ -18,15 +18,12 @@ services:
       - mail-server
 
   mail-server:
-    image: juanluisbaptiste/postfix:latest
+    image: boky/postfix
+    environment:
+      RELAYHOST: hrodvitnir.pw
+      POSTFIX_myhostname: hrodvitnir.pw
     ports:
-      - "45587:587"
-    environment: 
-      SMTP_SERVER: "localhost"
-      SMTP_USERNAME: "smtp"
-      SMTP_PASSWORD: "masterkey"
-      SERVER_HOSTNAME: "bookolog.ru"
-      SMTP_PORT: 587
+      - "45432:5432"
 
   postgre:
     image: postgres:12.4-alpine
