@@ -15,9 +15,9 @@ services:
       - "45081:81"
     depends_on: 
       - postgre
-      - mail-server
+      - postfix
 
-  mail-server:
+  postfix:
     image: boky/postfix
     environment:
       RELAYHOST: hrodvitnir.pw
