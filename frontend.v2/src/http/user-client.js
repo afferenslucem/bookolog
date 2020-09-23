@@ -47,6 +47,16 @@ export class UserClient extends Client {
         return user;
     }
 
+    async passwordChange(oldPassword, newPassword) {
+        await super.post('auth/changePassword', {
+            oldPassword,
+            newPassword,
+        },
+        {
+            withCredentials: true
+        });
+    }
+
     async logout() {
         await super.get('auth/logout',
         {

@@ -21,10 +21,12 @@ namespace backend.Controllers
     {
         private readonly IUserService userService;
         private readonly ILogger<AuthController> logger;
+        private readonly IUserSession userSession;
 
-        public AuthController(IUserService userService, ILogger<AuthController> logger)
+        public AuthController(IUserService userService, IUserSession userSession, ILogger<AuthController> logger)
         {
             this.userService = userService;
+            this.userSession = userSession;
             this.logger = logger;
         }
 
@@ -77,6 +79,30 @@ namespace backend.Controllers
             {
                 this.logger.LogDebug(500, e, "Can't register user", user);
                 return StatusCode(500, "Can't register user");
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("[action]")]
+        public async Task<IActionResult> ChangePassword([FromBody]PasswordChangeModel changeData)
+        {
+            try
+            {
+                var id = (await this.userSession.User).Id;
+
+                await this.userService.ChangePassword(id, changeData.OldPassword, changeData.NewPassword);
+
+                return Ok();
+            }
+            catch (IncorrectCredentianlsException)
+            {
+                return Unauthorized("Incorrect old password");
+            }
+            catch (Exception e)
+            {
+                this.logger.LogDebug(500, e, "Can't change password");
+                return StatusCode(500, "Can't change password");
             }
         }
         private async Task AuthenticateUser(User user)

@@ -9,6 +9,9 @@
     <li class="nav-item" v-if="!isLoggedIn" @click="onRegistration()">
       <a class="nav-link" href="#" id="registrationButton">{{ $t('auth.actions.registration.title') }}</a>
     </li>
+    <li class="nav-item" v-if="isLoggedIn" @click="onLogin()">
+      <a class="nav-link" href="#" id="passwordChangeButton">{{ $t('auth.actions.passwordChange.title') }}</a>
+    </li>
   </ul>
 </template>
 <script>
@@ -28,6 +31,10 @@ export default {
     },
     async onLogout() {
       await this.logout();
+      this.emitClick();
+    },
+    async onPasswordChange() {
+      await this.passwordChange();
       this.emitClick();
     }
   }

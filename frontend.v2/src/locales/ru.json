@@ -119,15 +119,20 @@
             "registration": {
                 "title": "Регистрация",
                 "error": "Ошибка регистрации."
+            },            
+            "passwordChange": {
+                "title": "Поменять пароль"
             }
         },
         "loginForm": {
+            "title": "Вход",
             "username": "Логин",
             "password": "Пароль",
             "incorrectCredentials": "Неверный логин или пароль.",
             "submit": "Войти"
         },
         "registrationForm": {
+            "title": "Регистрация",
             "username": "Логин",
             "password": "Пароль",
             "email": "Почта",
@@ -138,6 +143,19 @@
                 "registrationError": "Ошибка регистрации. Попробуйте позже.",
                 "loginAlreadyExisists": "Такой логин уже занят.",
                 "emailAlreadyExisists": "Такая почта уже занята.",
+                "passwordMatching": "Пароли не совпадают."
+            }
+        },
+        "passwordChangeForm": {
+            "title": "Смена пароля",
+            "oldPassword": "Старый Пароль",
+            "password": "Пароль",
+            "confirmPassword": "Подтвердение пароля",
+            "submit": "Изменить пароль",
+            "success": "Пароль изменен успешно.",
+            "errors": {
+                "error": "Ошибка изменения пароля. Попробуйте позже.",
+                "incorrectPassword": "Неверный пароль.",
                 "passwordMatching": "Пароли не совпадают."
             }
         }

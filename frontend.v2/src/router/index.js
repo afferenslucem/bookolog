@@ -91,7 +91,7 @@ const readingRoutes = [
   },
 ];
 
-const booksBySomething = [ 
+const booksBySomethingRoutes = [ 
   {
     path: 'by-genre/:name',
     name: 'ByGenre',
@@ -110,11 +110,21 @@ const booksBySomething = [
   }, 
 ]
 
+const settingsRoutes = [ 
+  {
+    path: 'password-change',
+    name: 'PasswordChange',
+    props: false,
+    component: () => import('../views/auth/PasswordChange.vue')
+  }, 
+]
+
 const workspaceRoutes = [
   ...booksRoutes,
   ...statisticRoutes,
   ...readingRoutes,
-  ...booksBySomething,
+  ...booksBySomethingRoutes,
+  ...settingsRoutes,
 ];
 
   const routes = [

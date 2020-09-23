@@ -30,7 +30,7 @@ namespace tests.Controllers
             
             var service = new UserService(this.userStorage);
 
-            this.controller = new AuthController(service, logger.Object);
+            this.controller = new AuthController(service, new UserSessionMock(), logger.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
         }

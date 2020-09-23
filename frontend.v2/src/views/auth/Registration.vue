@@ -1,5 +1,6 @@
 <template>
   <form @submit="submit($event)" class="container mt-3" name="registration">
+    <h4>{{ $t('auth.registrationForm.title') }}</h4>
     <div class="form-group">
       <input
         class="form-control"
@@ -27,10 +28,10 @@
     </div>
     <div class="form-group">
       <input
-        type="password-confirmation-registration"
+        type="password"
         :placeholder="$t('auth.registrationForm.confirmPassword')"
         class="form-control"
-        id="confirmation"
+        id="confirmation-confirmation-registration"
         v-model="user.confirmation"
       />
     </div>

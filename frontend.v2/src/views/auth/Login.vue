@@ -1,6 +1,7 @@
 <template>
   <div class="container mt-3">
     <form @submit="login($event)">
+      <h4>{{ $t('auth.loginForm.title') }}</h4>
       <div class="form-group">
         <input
           class="form-control"

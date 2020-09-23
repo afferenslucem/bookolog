@@ -18,6 +18,7 @@ namespace backend.Services
         Task<User> GetByLogin(string login);
         Task<User> GetById(long id);
         Task<User> RegisterUser(User user);
+        Task ChangePassword(long id, string oldPassword, string newPassword);
     }
 
     public class UserService : IUserService
@@ -74,7 +75,7 @@ namespace backend.Services
             }
         }
 
-        public async Task UpdatePassword(long id, string oldPassword, string newPassword)
+        public async Task ChangePassword(long id, string oldPassword, string newPassword)
         {
             await this.Authenticate(id, oldPassword);
 
