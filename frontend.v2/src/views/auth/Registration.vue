@@ -81,7 +81,7 @@ export default {
                 return await new UserClient().register(user.username, user.email, user.password);
             } catch (e) {
                 this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t('auth.registrationForm.registrationError'));
-                throw e;
+                console.log(e.response)
             }
         }
     }
