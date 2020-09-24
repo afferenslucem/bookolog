@@ -13,6 +13,7 @@ import {
 } from '../naming';
 import { UserClient } from '../../http/user-client';
 import i18n from '../../i18n';
+import { UserSynchronizator } from './utils/user-syncronizator';
 
 const logger = getLogger({
     namespace: 'UserModule',
@@ -44,22 +45,16 @@ export const actions = {
         }
     },
     [USER_RECOVER_ACTION]: async ({commit, dispatch}) => {
-        const savedUser = localStorage.getItem('user');
+        const recoveredUser = await new UserSynchronizator().getCurrentUser();
 
-        if(savedUser == 'undefined') {
-            dispatch(NOTIFICATION_DANGER_ACTION, i18n.t('auth.actions.recover.error'));
-            return null;
-        }
-
-        if(savedUser) {
-            const user = JSON.parse(savedUser);
-            commit(USER_LOGIN_MUTATION, user)
+        if(recoveredUser) {
+            commit(USER_LOGIN_MUTATION, recoveredUser)
 
             await dispatch(BOOKS_SYNC_ACTION)
 
-            logger.info('Logged in', user)
+            logger.info('Logged in', recoveredUser)
 
-            return user;
+            return recoveredUser;
         } else {
             return null;
         }

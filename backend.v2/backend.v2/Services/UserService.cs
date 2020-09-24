@@ -18,6 +18,7 @@ namespace backend.Services
         Task<User> GetByLogin(string login);
         Task<User> GetByEmail(string email);
         Task<User> GetById(long id);
+        Task<User> Update(User user);
         Task<User> RegisterUser(User user);
         Task ChangePassword(long id, string oldPassword, string newPassword);
         Task SetNewPassword(long id, string newPassword);
@@ -95,6 +96,10 @@ namespace backend.Services
             user.Salt = salt;
 
             await this.storage.Update(user);
+        }
+
+        public async Task<User> Update(User user) {
+            return await this.storage.Update(user);
         }
 
         public async Task<User> RegisterUser(User user)
