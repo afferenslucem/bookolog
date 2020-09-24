@@ -2,7 +2,8 @@
   <div class="book-year-list">
     <h4 class="pt-1 header">{{listname | capital}}</h4>
 
-    <ul class="book-list">
+    <div v-if="!shouldShowList">{{ $t('book.lists.noOneBook') }}</div>
+    <ul class="book-list" v-else>
       <li v-for="group of booksByYears" :key="group.key">
         <div class="top-year">
           <h5 class="header year-header mt-2 mb-2 d-block">

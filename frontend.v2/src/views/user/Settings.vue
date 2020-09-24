@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>{{$t('settings.title')}}</h3>
+    <h4>{{$t('settings.title')}}</h4>
     <password-form></password-form>
   </div>
 </template>

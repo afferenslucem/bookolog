@@ -115,7 +115,7 @@
       </div>
       <div class="form-group">
         <button class="btn btn-primary w-100 submit" type="submit" @click="submit()">{{ $t('book.actions.save') }}</button>
-        <button class="btn btn-info mt-1 w-100" type="submit" @click="submitAndAdd()">{{ $t('book.actions.saveAndAdd') }}</button>
+        <button class="btn btn-info mt-1 w-100 mt-3" type="submit" @click="submitAndAdd()">{{ $t('book.actions.saveAndAdd') }}</button>
       </div>
     </form>
   </div>

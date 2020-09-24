@@ -1,6 +1,6 @@
 <template>
   <form @submit="submit($event)" class="container mt-3" name="password-change" autocomplete="off">
-    <h4>{{ $t('settings.passwordChangeForm.title') }}</h4>
+    <h5>{{ $t('settings.passwordChangeForm.title') }}</h5>
     <div class="form-group">
       <input
         class="form-control"

@@ -10,6 +10,7 @@ import {
     BOOKS_CLEAR_ACTION,
     BOOKS_SYNC_ACTION,
     NOTIFICATION_DANGER_ACTION,
+    USER_SAVE_ACTION,
 } from '../naming';
 import { UserClient } from '../../http/user-client';
 import i18n from '../../i18n';
@@ -21,7 +22,7 @@ const logger = getLogger({
 });
 
 export const actions = {
-    [USER_LOGIN_ACTION]: async ({commit, dispatch}, {username, password}) => {
+    [USER_LOGIN_ACTION]: async ({dispatch}, {username, password}) => {
         try {
             const userClient = new UserClient();
 
@@ -32,9 +33,7 @@ export const actions = {
                 return;
             }
 
-            localStorage.setItem('user', JSON.stringify(user));
-    
-            commit(USER_LOGIN_MUTATION, user)
+            dispatch(USER_SAVE_ACTION, user);
     
             return user;
         } catch(e) {
@@ -44,11 +43,11 @@ export const actions = {
             throw e;
         }
     },
-    [USER_RECOVER_ACTION]: async ({commit, dispatch}) => {
+    [USER_RECOVER_ACTION]: async ({dispatch}) => {
         const recoveredUser = await new UserSynchronizator().getCurrentUser();
 
         if(recoveredUser) {
-            commit(USER_LOGIN_MUTATION, recoveredUser)
+            dispatch(USER_SAVE_ACTION, recoveredUser);
 
             await dispatch(BOOKS_SYNC_ACTION)
 
@@ -58,6 +57,11 @@ export const actions = {
         } else {
             return null;
         }
+    },
+    [USER_SAVE_ACTION]({commit}, user) {
+        localStorage.setItem('user', JSON.stringify(user));
+
+        commit(USER_LOGIN_MUTATION, user)
     },
     [USER_LOGOUT_ACTION]: async ({commit, dispatch}) => {
         await new UserClient().logout();
