@@ -131,7 +131,8 @@
             "username": "Логин",
             "password": "Пароль",
             "incorrectCredentials": "Неверный логин или пароль.",
-            "submit": "Войти"
+            "submit": "Войти",
+            "registation": "Зарегистрироваться"
         },
         "registrationForm": {
             "title": "Регистрация",

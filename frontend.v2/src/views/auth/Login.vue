@@ -25,11 +25,16 @@
         <div class="alert alert-danger text-center">{{ $t('auth.loginForm.incorrectCredentials') }}</div>
       </div>
 
-      <button class="btn btn-primary w-100" type="submit">{{ $t('auth.loginForm.submit') }}</button>
+      <div class="mt-2 mb-2">
+        <router-link :to="{name: 'RecoverPassword'}">Восстановить пароль</router-link>
+      </div>
 
-      <router-link :to="{name: 'RecoverPassword'}" class="ml-1">
-        Восстановить пароль
-      </router-link>
+      <button class="btn btn-primary w-100" type="submit">{{ $t('auth.loginForm.submit') }}</button>
+      <button
+        class="btn btn-primary w-100 mt-3"
+        type="button"
+        @click="goToRegistration()"
+      >{{ $t('auth.loginForm.registation') }}</button>
     </form>
   </div>
 </template>
@@ -64,6 +69,9 @@ export default {
           this.errors.incorrectCredentials = true;
         }
       }
+    },
+    goToRegistration() {
+      this.$router.push({ name: "Registration" });
     },
   },
 };

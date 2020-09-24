@@ -27,7 +27,7 @@ export const actions = {
             const user = await userClient.login(username, password);
     
             if (user == undefined) {
-                dispatch(NOTIFICATION_DANGER_ACTION, i18n.t('user.actions.login.error'));
+                dispatch(NOTIFICATION_DANGER_ACTION, i18n.t('auth.actions.login.error'));
                 return;
             }
 
@@ -47,7 +47,7 @@ export const actions = {
         const savedUser = localStorage.getItem('user');
 
         if(savedUser == 'undefined') {
-            dispatch(NOTIFICATION_DANGER_ACTION, i18n.t('user.actions.recover.error'));
+            dispatch(NOTIFICATION_DANGER_ACTION, i18n.t('auth.actions.recover.error'));
             return null;
         }
 

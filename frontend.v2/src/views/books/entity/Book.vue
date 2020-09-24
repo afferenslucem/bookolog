@@ -78,7 +78,7 @@
             >{{ $t('buttons.cancel') }}</button>
             <button
               type="button"
-              class="btn btn-danger"
+              class="btn btn-danger mt-3"
               @click="deleteBook()"
               data-dismiss="modal"
             >{{ $t('buttons.delete') }}</button>
