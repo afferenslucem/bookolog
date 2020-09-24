@@ -40,7 +40,7 @@ namespace backend
         public void ConfigureServices(IServiceCollection services)
         {
             this.ReadConfig();
-            
+
             services.AddCors(options =>
             {
                 options.AddPolicy(corsPolicy, builder => builder
@@ -60,7 +60,8 @@ namespace backend
                 o.Cookie.HttpOnly = true;
                 o.LogoutPath = new PathString("/Auth/Logout/");
 
-                o.Events = new CookieAuthenticationEvents() {
+                o.Events = new CookieAuthenticationEvents()
+                {
                     OnRedirectToLogin = context =>
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
@@ -79,7 +80,7 @@ namespace backend
                 swagger.DescribeAllParametersInCamelCase();
                 swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "Bookolog API" });
             });
-            
+
             services.ConfigureSwaggerGen(options =>
             {
                 //Set the comments path for the swagger json and ui.
@@ -127,9 +128,24 @@ namespace backend
             {
                 endpoints.MapControllers();
             });
+
+            this.UpdateDatabase(app);
         }
 
-        public void ReadConfig() {
+        private void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<BookologContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
+        }
+        public void ReadConfig()
+        {
             Config.ConnectionString = this.Configuration.GetConnectionString("DefaultConnection");
             Config.AllowedOrigins = this.Configuration.GetSection("AllowedOrigins").Get<string[]>();
             Config.SMTP.Host = this.Configuration.GetValue<string>("SMTP:Host");
