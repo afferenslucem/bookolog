@@ -1,15 +1,16 @@
 <template>
   <form @submit="submit($event)" class="container mt-3" name="registration">
-    <h4>{{ $t('auth.actions.recoverPassword.title') }}</h4>
+    <h4>{{ $t('auth.recaveryPasswordForm.title') }}</h4>
     <div class="form-group">
       <input
         class="form-control"
-        :placeholder="$t('auth.registrationForm.email')"
+        :placeholder="$t('auth.recaveryPasswordForm.email')"
         id="email-recover"
         v-model.trim="email"
+        type="email"
       />
     </div>
-    <button class="btn btn-primary w-100" type="submit" :disabled="email === ''" >{{ $t('auth.registrationForm.submit') }}</button>
+    <button class="btn btn-primary w-100" type="submit" :disabled="email === ''" >{{ $t('auth.recaveryPasswordForm.submit') }}</button>
   </form>
 </template>
 
@@ -27,7 +28,7 @@ export default {
         this.$router.push({ name: "Login" });
         this.$store.dispatch(
           NOTIFICATION_INFO_ACTION,
-          this.$t("auth.actions.recoverPassword.success")
+          this.$t("auth.recaveryPasswordForm.success")
         ); 
       });
 
@@ -37,15 +38,10 @@ export default {
     async recover(email) {
       try {
         await new UserClient().passwordRecover(email);
-
-        this.$store.dispatch(
-          NOTIFICATION_DANGER_ACTION,
-          this.$t("auth.actions.recoverPassword.error")
-        ); 
       } catch (e) {
           this.$store.dispatch(
             NOTIFICATION_DANGER_ACTION,
-            this.$t("auth.actions.recoverPassword.error")
+            this.$t("auth.recaveryPasswordForm.errors.error")
           );   
           throw e;       
         }

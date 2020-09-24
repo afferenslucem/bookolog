@@ -15,6 +15,7 @@
         :placeholder="$t('auth.registrationForm.email')"
         id="email-registration"
         v-model="user.email"
+        type="email"
       />
     </div>
     <div class="form-group">
