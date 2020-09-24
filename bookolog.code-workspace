@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "backend.v2"
+		},
+		{
+			"path": "e2e"
 		}
 	],
 	"settings": {}

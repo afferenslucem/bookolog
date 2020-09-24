@@ -1,8 +1,8 @@
-POST https://localhost:45081/auth/login
+POST http://localhost:35080/auth/login
 Content-Type: application/json
 
 {
-    "login": "admin",
+    "login": "fullUser",
     "password": "masterkey"
 }
 

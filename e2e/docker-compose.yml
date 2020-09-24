@@ -1,7 +1,9 @@
 version: "3"
 services:
   client:
-    build: ../frontend.v2/
+    build:
+        dockerfile: DockerfileTest
+        context: ../frontend.v2/
     ports:
       - "30080:80"    
     depends_on: 
@@ -9,7 +11,9 @@ services:
   
 
   server:
-    build: ../backend.v2/backend.v2
+    build: 
+        dockerfile: DockerfileTest
+        context: ../backend.v2/backend.v2/
     ports:
       - "35080:80"
       - "35081:81"
