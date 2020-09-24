@@ -1,6 +1,11 @@
 <template>
-  <form @submit="submit($event)" class="container mt-3" name="password-change" autocomplete="off">
-    <h5>{{ $t('settings.passwordChangeForm.title') }}</h5>
+  <form
+    @submit="submit($event)"
+    class="container mt-3"
+    name="password-change"
+    autocomplete="off"
+  >
+    <h5>{{ $t("settings.passwordChangeForm.title") }}</h5>
     <div class="form-group">
       <input
         class="form-control"
@@ -32,16 +37,24 @@
       />
     </div>
     <div v-if="errors" class="text-center">
-      <div
-        v-if="errors.incorrectPassword"
-        class="alert alert-danger"
-      >{{$t('settings.passwordChangeForm.errors.incorrectPassword')}}</div>
-      <div
-        v-else-if="errors.passwordMatching"
-        class="alert alert-danger"
-      >{{$t('settings.passwordChangeForm.errors.passwordMatching')}}</div>
+      <div v-if="errors.incorrectPassword" class="alert alert-danger">
+        {{ $t("settings.passwordChangeForm.errors.incorrectPassword") }}
+      </div>
+      <div v-else-if="errors.passwordMatching" class="alert alert-danger">
+        {{ $t("settings.passwordChangeForm.errors.passwordMatching") }}
+      </div>
     </div>
-    <button class="btn btn-primary w-100" type="submit">{{ $t('settings.passwordChangeForm.submit') }}</button>
+    <button
+      class="btn btn-primary w-100"
+      type="submit"
+      :disabled="
+        passwordChangeData.confirmation === '' ||
+        passwordChangeData.password === '' ||
+        passwordChangeData.oldPassword === ''
+      "
+    >
+      {{ $t("settings.passwordChangeForm.submit") }}
+    </button>
   </form>
 </template>
 
@@ -83,7 +96,9 @@ export default {
       this.errors.incorrectPassword = false;
     },
     validateForm() {
-      if (this.passwordChangeData.confirmation == this.passwordChangeData.password) {
+      if (
+        this.passwordChangeData.confirmation == this.passwordChangeData.password
+      ) {
         this.errors.passwordMatching = false;
       } else {
         this.errors.passwordMatching = true;

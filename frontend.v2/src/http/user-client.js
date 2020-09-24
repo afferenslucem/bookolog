@@ -66,7 +66,7 @@ export class UserClient extends Client {
     }
 
     async emailChange(email) {
-        await super.get(`auth/changeEmail/${email}`,
+        await super.get(`user/changeEmail/${email}`,
         {
             withCredentials: true
         });

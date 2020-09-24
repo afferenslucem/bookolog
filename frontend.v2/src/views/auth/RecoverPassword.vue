@@ -6,7 +6,7 @@
         class="form-control"
         :placeholder="$t('auth.registrationForm.email')"
         id="email-recover"
-        v-model="email"
+        v-model.trim="email"
       />
     </div>
     <button class="btn btn-primary w-100" type="submit" :disabled="email === ''" >{{ $t('auth.registrationForm.submit') }}</button>
