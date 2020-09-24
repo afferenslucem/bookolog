@@ -34,7 +34,7 @@ namespace backend.Controllers
         [HttpGet]
         [Authorize]
         [Route("[action]/{newMail}")]
-        public async Task<IActionResult> ChangePassword(string newMail)
+        public async Task<IActionResult> ChangeEmail(string newMail)
         {
             try
             {

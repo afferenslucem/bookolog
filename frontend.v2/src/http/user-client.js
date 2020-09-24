@@ -65,6 +65,13 @@ export class UserClient extends Client {
         });
     }
 
+    async emailChange(email) {
+        await super.get(`auth/changeEmail/${email}`,
+        {
+            withCredentials: true
+        });
+    }
+
     async passwordRecover(email) {
         await super.get('auth/recoverPassword/' + email);
     }
