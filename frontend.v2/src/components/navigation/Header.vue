@@ -4,17 +4,13 @@
       <div class="icon" id="booksLists" v-if="isLoggedIn" @click="emitMenuClick($event)">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
-      <router-link :to="{name: 'Home'}" class="logo ml-1">
-        <img src="/img/logo.png" />
-      </router-link>
+      <div @click="headerClick()" class="logo ml-1">
+        <span>BKLG</span>
+      </div>
     </div>
     <div>
-      <div class="icon profile" v-if="!isLoggedIn" @click="emitAvatarClick($event)">
+      <div class="icon avatar profile" v-if="isLoggedIn" @click="emitAvatarClick($event)">
         <i class="fa fa-user-o" aria-hidden="true"></i>
-        <connection-marker class="marker"></connection-marker>
-      </div>
-      <div class="icon avatar profile" v-else @click="emitAvatarClick($event)">
-        <img src="/avatar.jpg" />
         <connection-marker class="marker"></connection-marker>
         <total-read-count class="total-count"></total-read-count>
       </div>
@@ -36,6 +32,13 @@ export default {
       event.stopPropagation();
       this.$emit("menuClick");
     },
+    headerClick() {
+      if(this.isLoggedIn) {
+        this.$router.push({name: 'InProgress'})
+      } else {
+        this.$router.push({name: 'Main'})
+      }
+    }
   },
   computed: {},
   components: {
@@ -77,13 +80,9 @@ export default {
 .logo {
   padding: 0.15rem;
 
-  border: $split-line;
+  color: $white;
 
-  border-radius: 0.1rem;
-
-  > img {
-    height: calc(#{$icon-size} - 0.75rem);
-  }
+  font-weight: $fat-font-weight;
 }
 
 .left {

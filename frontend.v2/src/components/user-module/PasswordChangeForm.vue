@@ -81,7 +81,6 @@ export default {
       this.cleanErrors();
       if (this.validateForm()) {
         this.passwordChange(this.passwordChangeData).then(() => {
-          this.$router.push({ name: "Home" });
           this.$store.dispatch(
             NOTIFICATION_SUCCESS_ACTION,
             this.$t("settings.passwordChangeForm.success")
