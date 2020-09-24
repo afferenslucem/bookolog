@@ -46,6 +46,9 @@ describe('BooksByYearsList.vue', () => {
         wrapper = shallowMount(BooksByYearsList, {
             propsData: {
                 books: []
+            },
+            mocks: {
+                $t: () => ''
             }
         })
 
