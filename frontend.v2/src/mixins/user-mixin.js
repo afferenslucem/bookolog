@@ -7,7 +7,7 @@ export default {
         },
         async logout() {
             await this.$store.dispatch(USER_LOGOUT_ACTION);
-            this.$router.push({name: 'Home'})
+            this.$router.push({name: 'Main'})
         },
         async registration() {
             this.$router.push({name: 'Registration'})
