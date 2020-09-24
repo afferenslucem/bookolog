@@ -42,12 +42,12 @@
       <span>{{ $t('book.entity.notes') }}:</span>
       <span class="note-body">{{book.note}}</span>
     </p>
+    <button class="w-100 mt-1 btn btn-primary" @click="goToEdit(book.guid)">{{ $t('book.actions.edit') }}</button>
     <button
-      class="w-100 btn btn-danger"
+      class="w-100 btn btn-danger mt-3"
       data-toggle="modal"
       data-target="#bookDeleteModal"
     >{{ $t('book.actions.delete') }}</button>
-    <button class="w-100 mt-1 btn btn-primary" @click="goToEdit(book.guid)">{{ $t('book.actions.edit') }}</button>
 
     <!-- Modal -->
     <div
@@ -78,7 +78,7 @@
             >{{ $t('buttons.cancel') }}</button>
             <button
               type="button"
-              class="btn btn-danger mt-3"
+              class="btn btn-danger"
               @click="deleteBook()"
               data-dismiss="modal"
             >{{ $t('buttons.delete') }}</button>
