@@ -70,6 +70,7 @@ export const credentials = {
     },
     emailChangeAccount: {
         username: "emailChange",
-        password: "masterkey"
+        password: "masterkey",
+        email: "nfillippov@gmail.com"
     }
 }

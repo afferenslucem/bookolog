@@ -8,10 +8,15 @@ describe('Password change test', () => {
 
     cy.get('.profile').should('not.exist')
   });
+  
+  afterEach(() => {
+    cy.reload();
+    cy.logout();
+  })
 
   const passwordChange = credentials.passwordChangeAccount;
 
-  it('Login/Logout test', () => {
+  it('Password change test', () => {
     cy.login(passwordChange.username, passwordChange.password);
 
     cy.pageIs('workspace/in-progress');
