@@ -15,16 +15,16 @@ services:
       - "45081:81"
     depends_on: 
       - postgre
-      - postfix
+  #    - postfix
 
-  postfix:
-    image: boky/postfix
-    environment:
-      POSTFIX_myhostname: hrodvitnir.pw
-      POSTFIX_myorigin: hrodvitnir.pw
-      ALLOWED_SENDER_DOMAINS: hrodvitnir.pw
-    ports:
-      - "45587:587"
+  # postfix:
+  #   image: boky/postfix
+  #   environment:
+  #     POSTFIX_myhostname: hrodvitnir.pw
+  #     POSTFIX_myorigin: hrodvitnir.pw
+  #     ALLOWED_SENDER_DOMAINS: hrodvitnir.pw
+  #   ports:
+  #     - "45587:587"
 
   postgre:
     image: postgres:12.4-alpine

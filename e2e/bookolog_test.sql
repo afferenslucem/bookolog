@@ -303,7 +303,7 @@ COPY public."Users" ("Id", "Login", "Email", "PasswordHash", "Salt", "LastAction
 4	emptyUser	darkeneez@gmail.com	587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e	123	\N
 3	passwordChange	foxy@gmail.com	587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e	123	\N
 5	emailChange	nfillippov@gmail.com	587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e	123	\N
-6	a.dementiev	a.dementiev@gmail.com	587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e	123	\N
+6	emptyUser2	a.dementiev@gmail.com	587eacbcd7cf434707a49d58bd8c5715d186b2a6120763f2bf735cb1bd61426e	123	\N
 \.
 
 

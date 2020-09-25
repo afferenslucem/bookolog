@@ -39,3 +39,22 @@ export const books = [{
     totalUnits: 710,
     type: 2,
 }];
+
+export const credentials = {
+    fullUserAccount: {
+        username: "fullUser",
+        password: "masterkey"
+    },
+    emptyUserAccount: {
+        username: "emptyUser",
+        password: "masterkey"
+    },
+    passwordChangeAccount: {
+        username: "passwordChange",
+        password: "masterkey"
+    },
+    emailChangeAccount: {
+        username: "emailChange",
+        password: "masterkey"
+    }
+}

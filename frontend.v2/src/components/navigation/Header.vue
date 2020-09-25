@@ -9,7 +9,7 @@
       </div>
     </div>
     <div>
-      <div class="icon avatar profile" v-if="isLoggedIn" @click="emitAvatarClick($event)">
+      <div class="icon profile" v-if="isLoggedIn" @click="emitAvatarClick($event)">
         <i class="fa fa-user-o" aria-hidden="true"></i>
         <connection-marker class="marker"></connection-marker>
         <total-read-count class="total-count"></total-read-count>
