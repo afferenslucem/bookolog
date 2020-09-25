@@ -2,7 +2,7 @@
   <form
     @submit="submit($event)"
     class="container mt-3"
-    name="password-change"
+    name="email-change"
     autocomplete="off"
   >
     <h5>{{ $t("settings.emailChangeForm.title") }}</h5>

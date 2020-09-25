@@ -47,6 +47,11 @@ Cypress.Commands.add("logout", () => {
     cy.get('#logoutButton').click();
 })
 
+Cypress.Commands.add("goToSettings", () => {
+    cy.get('.profile').click();
+    cy.get('#settingsButton').click();
+})
+
 Cypress.Commands.add("openBooksMenu", () => {
     cy.get('#booksLists').click();
 });
@@ -249,4 +254,9 @@ Cypress.Commands.add("goToReadingList", () => {
     cy.get(`#booksLists`).click();
 
     cy.get(`#toReadListButton`).click();
+});
+Cypress.Commands.add("changePassword", (oldPassword, newPassword) => {
+    cy.get(`#old-password-change`).type(oldPassword);
+    cy.get(`#password-change`).type(newPassword);
+    cy.get(`#confirmation-change`).type(newPassword);
 });

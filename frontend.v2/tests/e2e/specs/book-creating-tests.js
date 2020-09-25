@@ -5,7 +5,7 @@ import {credentials} from '../support/testing-data';
 
 describe('Book create test', () => {
   
-  const emptyCredentials = credentials.emailChangeAccount;
+  const emptyCredentials = credentials.emptyUserAccount;
 
   beforeEach(() => {
     cy.viewport('iphone-6')

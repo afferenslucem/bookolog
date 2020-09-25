@@ -9,7 +9,7 @@ describe('Login test', () => {
     cy.get('.profile').should('not.exist')
   });
 
-  const emptyCredentials = credentials.emailChangeAccount;
+  const emptyCredentials = credentials.emptyUserAccount;
 
   it('Login/Logout test', () => {
     cy.login(emptyCredentials.username, emptyCredentials.password);
