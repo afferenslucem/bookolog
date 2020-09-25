@@ -72,5 +72,23 @@ export const credentials = {
         username: "emailChange",
         password: "masterkey",
         email: "nfillippov@gmail.com"
+    },
+
+    newAccount: {
+        username: "newLogin",
+        password: "masterkey",
+        email: "newMail@gmail.com"
+    },
+
+    sameLoginAccount: {
+        username: "newLogin",
+        password: "masterkey",
+        email: "otherMail@gmail.com"
+    },
+
+    sameEmailAccount: {
+        username: "otherLogin",
+        password: "masterkey",
+        email: "newMail@gmail.com"
     }
 }

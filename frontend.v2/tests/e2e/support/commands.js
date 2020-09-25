@@ -255,8 +255,16 @@ Cypress.Commands.add("goToReadingList", () => {
 
     cy.get(`#toReadListButton`).click();
 });
+
 Cypress.Commands.add("changePassword", (oldPassword, newPassword) => {
     cy.get(`#old-password-change`).type(oldPassword);
     cy.get(`#password-change`).type(newPassword);
     cy.get(`#confirmation-change`).type(newPassword);
+});
+
+Cypress.Commands.add("fillRegistrationForm", (credentials) => {
+    cy.get(`#login-registration`).type(credentials.username);
+    cy.get(`#email-registration`).type(credentials.email);
+    cy.get(`#password-registration`).type(credentials.password);
+    cy.get(`#confirmation-registration`).type(credentials.password);
 });

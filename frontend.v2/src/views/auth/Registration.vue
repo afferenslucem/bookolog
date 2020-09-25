@@ -32,7 +32,7 @@
         type="password"
         :placeholder="$t('auth.registrationForm.confirmPassword')"
         class="form-control"
-        id="confirmation-confirmation-registration"
+        id="confirmation-registration"
         v-model="user.confirmation"
       />
     </div>
