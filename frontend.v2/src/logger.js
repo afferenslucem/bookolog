@@ -4,27 +4,27 @@ const mode = 'dev';
 
 const factory = mode == 'dev' ? new ConsoleLoggerFactory([
     {
-        logger: LogLevel.Warning,
+        logger: LogLevel.Disable,
         name: 'default'
     },
     {
         name: {
             namespace: 'Storage',
         },
-        logger: LogLevel.Warning
+        logger: LogLevel.Disable
     },
     {
         name: {
             namespace: 'Http',
         },
-        logger: LogLevel.Debug
+        logger: LogLevel.Disable
     },
     {
         name: {
             namespace: 'ConnectionModule',
             loggerName: 'Mutations'
         },
-        logger: LogLevel.All
+        logger: LogLevel.Disable
     }
 ]) : new ConsoleLoggerFactory([{name: 'default', logger: LogLevel.Disable}]);
 
