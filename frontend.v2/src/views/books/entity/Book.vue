@@ -42,7 +42,7 @@
       <span>{{ $t('book.entity.notes') }}:</span>
       <span class="note-body">{{book.note}}</span>
     </p>
-    <button class="w-100 mt-1 btn btn-primary" @click="goToEdit(book.guid)">{{ $t('book.actions.edit') }}</button>
+    <button class="w-100 mt-1 btn btn-primary" id="editBookButton" @click="goToEdit(book.guid)">{{ $t('book.actions.edit') }}</button>
     <button
       class="w-100 btn btn-danger mt-3"
       data-toggle="modal"

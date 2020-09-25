@@ -10,8 +10,8 @@ export const books = [{
     authors: ["Андрей Круз", "Андрей Царев"],
     totalUnits: 100,
     doneUnits: 20,
-    endDate: "2020-08-31",
-    endDateYear: "2020",
+    endDate: "2222-08-31",
+    endDateYear: "2222",
     endDateMonth: "8",
     endDateDay: "31",
     genre: "Фантастика",
@@ -38,6 +38,21 @@ export const books = [{
     tags: ["Мафия", "боевая фантастика"],
     totalUnits: 710,
     type: 2,
+},{
+    guid: 'a08cf143-2a58-40b4-8b6d-1105802bc490',
+    authors: ["Резиг Д.","Бибо Б.","Марас И."],
+    doneUnits: 0,
+    genre: "Компьютерная литература",
+    name: "Секреты JavaScript ниндзя",
+    note: "",
+    startDate: "5000-12-05",
+    startDateYear: "5000",
+    startDateMonth: "12",
+    startDateDay: "05",
+    status: 0,
+    tags: ["JavaScript", "Языки программирования", "Web"],
+    totalUnits: 0,
+    type: 1,
 }];
 
 export const credentials = {

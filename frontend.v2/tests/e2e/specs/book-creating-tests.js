@@ -12,6 +12,11 @@ describe('Book create test', () => {
     cy.login(emptyCredentials.username, emptyCredentials.password);
   });
 
+  afterEach(() => {
+    cy.reload();
+    cy.logout();
+  })
+
   it('Create to read book test', () => {
     cy.goToCreateToReadBook();
     cy.pageIs('workspace/book/create/0');
@@ -27,7 +32,7 @@ describe('Book create test', () => {
     cy.pageIs('workspace/to-read');
     cy.compareBookLine(0, book);
 
-    cy.clickToBookLineHeader(0);
+    cy.clickToFirstBookLineHeader();
     cy.urlContains('workspace/book/');
 
     cy.compareToReadBookVue(book);
@@ -48,7 +53,7 @@ describe('Book create test', () => {
 
     cy.pageIs('workspace/done');
     cy.compareBookLine(0, books[1]);
-    cy.clickToBookLineHeader(0);
+    cy.clickToFirstBookLineHeader();
 
     cy.urlContains('workspace/book/');
     cy.compareDoneBookVue(books[1]);
@@ -68,7 +73,7 @@ describe('Book create test', () => {
 
     cy.pageIs('workspace/in-progress');
     cy.compareBookLine(0, books[2]);
-    cy.clickToBookLineHeader(0);
+    cy.clickToFirstBookLineHeader();
 
     cy.urlContains('workspace/book/');
     cy.compareInProgressBookVue(books[2]);

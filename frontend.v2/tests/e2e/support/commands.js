@@ -43,7 +43,7 @@ Cypress.Commands.add("login", (username, password) => {
 })
 
 Cypress.Commands.add("logout", () => {
-    cy.get('.avatar').click();
+    cy.get('.profile').click();
     cy.get('#logoutButton').click();
 })
 
@@ -115,6 +115,27 @@ Cypress.Commands.add("fillInProgressBookForm", (book) => {
     cy.get('.start-date #day').type(book.startDateDay);
 });
 
+function clearCommonForm() {
+    cy.get('#name').clear();
+    cy.get('#authors').clear();
+    cy.get('#genre').clear();
+    cy.get('#tags').clear();
+    //cy.get('#type').clear();
+    cy.get('#note').clear();
+}
+
+Cypress.Commands.add("clearDoneForm", () => {
+    clearCommonForm();
+
+    cy.get('.start-date #year').clear();
+    cy.get('.start-date #month').clear();
+    cy.get('.start-date #day').clear();
+
+    cy.get('.end-date #year').clear();
+    cy.get('.end-date #month').clear();
+    cy.get('.end-date #day').clear();
+});
+
 function compareCommonForm(book) {
     cy.get('#name').should('have.value', book.name);
     cy.get('#authors').should('have.value', book.authors.join(', '));
@@ -174,7 +195,10 @@ function compareCommonView(book) {
 
     cy.get('.genre').contains(capitalFirst(book.genre));
     cy.get('.tags').contains(book.tags.map(item => capitalFirst(item)).join(', '));
-    cy.get('.note').contains(book.note);
+
+    if(!!book.note) {
+        cy.get('.note').contains(book.note);
+    }
 }
 
 Cypress.Commands.add("compareToReadBookVue", (book) => {
@@ -207,12 +231,22 @@ Cypress.Commands.add("compareBookLine", (index, book) => {
     line.get('span').contains(book.authors.join(', '));
 });
 
-Cypress.Commands.add("clickToBookLineHeader", (index) => {
-    cy.get(`li:nth-child(${index + 1}) > .book-line > .header > strong`).click();
+Cypress.Commands.add("clickToFirstBookLineHeader", () => {
+    cy.get(`.book-list ul:first-of-type > li:first-child > .book-line > .header > strong`).click();
 });
 
 Cypress.Commands.add("deleteBookFromView", () => {
     cy.get(`[data-target="#bookDeleteModal"]`).click();
 
     cy.get(`#bookDeleteModal .btn-danger`).click();
+});
+
+Cypress.Commands.add("editBookFromView", () => {
+    cy.get(`#editBookButton`).click();
+});
+
+Cypress.Commands.add("goToReadingList", () => {
+    cy.get(`#booksLists`).click();
+
+    cy.get(`#toReadListButton`).click();
 });
