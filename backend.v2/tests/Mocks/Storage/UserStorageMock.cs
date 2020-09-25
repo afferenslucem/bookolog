@@ -10,7 +10,7 @@ using backend.Utils;
 
 namespace tests.Storage
 {
-    public class UserStorageMock: IUserStorage
+    public class UserStorageMock : IUserStorage
     {
         private IDictionary<long, User> storage = new Dictionary<long, User>();
 
@@ -25,7 +25,7 @@ namespace tests.Storage
                 Salt = "123"
             });
         }
-        
+
         public async Task<User> Save(User user)
         {
             await Task.Run(() => this.storage[user.Id] = user);
@@ -42,7 +42,8 @@ namespace tests.Storage
 
         public async Task<User> GetById(long id)
         {
-            return await Task.Run(() => {
+            return await Task.Run(() =>
+            {
                 User result = null;
 
                 return this.storage.TryGetValue(id, out result) ? result : null;
@@ -61,10 +62,20 @@ namespace tests.Storage
         public async Task<User> Delete(long id)
         {
             var book = this.storage[id];
-            
+
             await Task.Run(() => this.storage.Remove(id));
-            
+
             return book;
+        }
+
+
+        public Task<User> GetByEmail(string email)
+        {
+            return Task.Run(() => storage
+                .Select(item => item.Value)
+                .Where(item => item.Email == email)
+                .SingleOrDefault()
+            );
         }
     }
 }

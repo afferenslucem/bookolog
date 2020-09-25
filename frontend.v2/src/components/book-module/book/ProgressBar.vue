@@ -20,7 +20,7 @@ export default {
         }
     },
     created() {
-      console.log('progress', this.progress)
+      // console.log('progress', this.progress)
     }
 };
 </script>

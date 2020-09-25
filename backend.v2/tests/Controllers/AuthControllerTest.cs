@@ -25,12 +25,13 @@ namespace tests.Controllers
         [TestInitialize]
         public void BeforeEach() {
             var logger = new Mock<ILogger<AuthController>>();
+            var mailer = new Mock<IMailService>();
 
             this.userStorage = new UserStorageMock();
             
             var service = new UserService(this.userStorage);
 
-            this.controller = new AuthController(service, new UserSessionMock(), logger.Object);
+            this.controller = new AuthController(service, new UserSessionMock(), mailer.Object, logger.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
         }
