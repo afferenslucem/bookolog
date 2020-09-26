@@ -43,6 +43,7 @@ namespace backend.Models
         public short? EndDateYear { get; set; }
         public short? EndDateMonth { get; set; }
         public short? EndDateDay { get; set; }
+        public short? Year { get; set; }
 
         [Column(TypeName = "timestamptz")]
         public DateTime? ModifyDate { get; set; }
