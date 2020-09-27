@@ -71,7 +71,7 @@
       <label for="progress" v-show="showProgress">{{progressHeader}}</label>
       <div class="row progress-row form-group" v-show="showProgress">
         <div class="col-5" id="progress">
-          <progress-input v-if="book.type === 2" :units.sync="book.doneUnits"></progress-input>
+          <audio-book-units-input v-if="book.type === 2" :units.sync="book.doneUnits"></audio-book-units-input>
           <input
             v-else
             type="number"
@@ -85,7 +85,7 @@
         </div>
         <div class="col-2 from">{{ $t('book.form.titles.progress.from') }}</div>
         <div class="col-5">
-          <progress-input v-if="book.type === 2" :units.sync="book.totalUnits"></progress-input>
+          <audio-book-units-input v-if="book.type === 2" :units.sync="book.totalUnits"></audio-book-units-input>
           <input
             v-else
             type="number"
@@ -127,7 +127,7 @@
 <script>
 import bookMixin from "@/mixins/book-form-mixin";
 import DateInput from '@/components/inputs/BookDateInput.vue';
-import ProgressInput from '@/components/inputs/BookUnitsInput.vue';
+import AudioBookUnitsInput from '@/components/inputs/AudioBookUnitsInput.vue';
 import { 
   BOOK_UPDATE_ACTION,
   BOOK_GET_BY_GUID_ACTION,
@@ -139,7 +139,7 @@ import store from "@/store";
 export default {
   components: {
     DateInput,
-    ProgressInput,
+    AudioBookUnitsInput,
   },
   mixins: [bookMixin],
   methods: {
