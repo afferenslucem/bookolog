@@ -15,7 +15,9 @@ const ifAuthenticated = (to, from, next) => {
   } else {
     store.dispatch(USER_RECOVER_ACTION).then((user) => {
       if (user) {
-        next()
+        next({
+          name: 'InProgress'
+        })
       } else {
         next({
           name: 'Home'

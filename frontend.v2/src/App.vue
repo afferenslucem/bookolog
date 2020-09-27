@@ -33,7 +33,10 @@ export default {
     Client.prototype.requestCanceled = () => this.hideLoader();
     Client.prototype.requestStarted = () => this.showLoader();
 
-    await this.$store.dispatch(USER_RECOVER_ACTION)
+    const user = await this.$store.dispatch(USER_RECOVER_ACTION);
+    if (user) {
+      this.$router.push({name: 'InProgress'});
+    }
   },
   components: {
     AppLoader,

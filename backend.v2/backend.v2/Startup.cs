@@ -103,7 +103,7 @@ namespace backend
 
             app.UseAuthentication();
 
-            app.UseAuthorization()
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
