@@ -50,7 +50,10 @@ namespace backend
                     .AllowAnyHeader());
             });
 
-            //services.AddSession();
+            services.ConfigureApplicationCookie(options => {
+                options.ExpireTimeSpan = TimeSpan.FromDays(14);
+                options.SlidingExpiration = true;
+            });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
             {
@@ -73,21 +76,6 @@ namespace backend
             services.AddControllers();
 
             services.AddDbContext<BookologContext>();
-
-            services.AddSwaggerGen(swagger =>
-            {
-                swagger.DescribeAllEnumsAsStrings();
-                swagger.DescribeAllParametersInCamelCase();
-                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "Bookolog API" });
-            });
-
-            services.ConfigureSwaggerGen(options =>
-            {
-                //Set the comments path for the swagger json and ui.
-                // var basePath = AppContext.BaseDirectory;
-                // var xmlPath = Path.Combine(basePath, "backend.v2.xml"); 
-                // options.IncludeXmlComments(xmlPath);
-            });
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBookService, BookService>();
@@ -115,14 +103,7 @@ namespace backend
 
             app.UseAuthentication();
 
-            app.UseAuthorization();
-
-            app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My First Swagger");
-            });
+            app.UseAuthorization()
 
             app.UseEndpoints(endpoints =>
             {
