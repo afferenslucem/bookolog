@@ -115,8 +115,13 @@ Cypress.Commands.add("fillUnits", (name, type, value) => {
         const hours = Math.trunc(value / 60);
         const minutes = value % 60;
 
-        cy.get(`${name} .hours`).type(hours);
-        cy.get(`${name} .minutes`).type(minutes);
+        const hoursInput = cy.get(`${name} .hours`);
+        hoursInput.click();
+        hoursInput.type(hours);
+
+        const minutesInput = cy.get(`${name} .minutes`);
+        minutesInput.click();
+        minutesInput.type(minutes);
     } else {
         cy.get(name).type(value);
     }

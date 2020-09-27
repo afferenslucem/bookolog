@@ -55,13 +55,13 @@ export default {
       }
     },
     unitsToData(units) {
-      this.hours = Math.trunc(units / 60);
-      this.minutes = units % 60;
+      this.hours = Math.trunc(units / 60) || null;
+      this.minutes = units % 60 || null;
     }
   },
   props: ["units"],
   created() {
-    this.unitsToData(this.units);
+    this.unitsToData(this.units || 0);
   },
   watch: {
     units(newValue) { 
@@ -71,7 +71,7 @@ export default {
   },
   computed: {
     unitsValue() {
-      return this.hours * 60 + this.minutes;
+      return +this.hours * 60 + +this.minutes;
     }
   }
 };

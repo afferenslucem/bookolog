@@ -142,22 +142,34 @@ export default {
     AudioBookUnitsInput,
   },
   mixins: [bookMixin],
+  data:() => ({
+    action: null
+  }),
   methods: {
     prefill(event) {
+      if(this.action) {
+        this.action();
+      }
       event.preventDefault();
       return false;
     },
-    submit() {
+    submitAction() {
       this.$store.dispatch(BOOK_ADD_ACTION, this.book).then(() => {
         this.redirectForBook(this.book);
         this.$store.dispatch(NOTIFICATION_SUCCESS_ACTION, this.$t('book.notification.save.success'));
       }).catch(() => this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t('book.notification.save.fail')));
     },
-    submitAndAdd() {
+    submit() {
+      this.action = this.submitAction;
+    },
+    submitAndAddAction() {
       this.$store.dispatch(BOOK_ADD_ACTION, this.book).then(() => {
         this.renavigate();
         this.$store.dispatch(NOTIFICATION_SUCCESS_ACTION, this.$t('book.notification.save.success'));
       }).catch(() => this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t('book.notification.save.fail')));
+    },
+    submitAndAdd() {
+      this.action = this.submitAndAddAction;
     },
     renavigate() {
       this.book = new Book({});
