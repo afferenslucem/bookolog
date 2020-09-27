@@ -71,7 +71,7 @@
       <label for="progress" v-show="showProgress">{{progressHeader}}</label>
       <div class="row progress-row form-group" v-show="showProgress">
         <div class="col-5" id="progress">
-          <audio-book-units-input v-if="book.type === 2" :units.sync="book.doneUnits"></audio-book-units-input>
+          <audio-book-units-input id="doneUnits" v-if="book.type === 2" :units.sync="book.doneUnits"></audio-book-units-input>
           <input
             v-else
             type="number"
@@ -85,7 +85,7 @@
         </div>
         <div class="col-2 from">{{ $t('book.form.titles.progress.from') }}</div>
         <div class="col-5">
-          <audio-book-units-input v-if="book.type === 2" :units.sync="book.totalUnits"></audio-book-units-input>
+          <audio-book-units-input id="totalUnits" v-if="book.type === 2" :units.sync="book.totalUnits"></audio-book-units-input>
           <input
             v-else
             type="number"

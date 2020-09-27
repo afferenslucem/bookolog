@@ -110,10 +110,22 @@ Cypress.Commands.add("fillDoneBookForm", (book) => {
     cy.get('.end-date #day').type(book.endDateDay);
 });
 
+Cypress.Commands.add("fillUnits", (name, type, value) => {
+    if(type == 2) {
+        const hours = Math.trunc(value / 60);
+        const minutes = value % 60;
+
+        cy.get(`${name} .hours`).type(hours);
+        cy.get(`${name} .minutes`).type(minutes);
+    } else {
+        cy.get(name).type(value);
+    }
+})
+
 Cypress.Commands.add("fillInProgressBookForm", (book) => {
     fillCommonForm(book);
-    cy.get('#doneUnits').type(book.doneUnits);
-    cy.get('#totalUnits').type(book.totalUnits);
+    cy.fillUnits('#doneUnits', book.type, book.doneUnits);
+    cy.fillUnits('#totalUnits', book.type, book.totalUnits);
     
     cy.get('.start-date #year').type(book.startDateYear);
     cy.get('.start-date #month').type(book.startDateMonth);
@@ -168,11 +180,23 @@ Cypress.Commands.add("compareDoneBookForm", (book) => {
     cy.get('.end-date #day').should('have.value', book.endDateDay);
 });
 
+Cypress.Commands.add("compareUnits", (name, type, value) => {
+    if(type == 2) {
+        const hours = Math.trunc(value / 60);
+        const minutes = value % 60;
+
+        cy.get(`${name} .hours`).should('have.value', hours.toString());
+        cy.get(`${name} .minutes`).should('have.value', minutes.toString());
+    } else {
+        cy.get(name).should('have.value', value.toString());
+    }
+})
+
 Cypress.Commands.add("compareInProgressBookForm", (book) => {
     compareCommonForm(book);
     cy.get('#status').should('have.value', '1');
-    cy.get('#doneUnits').should('have.value', book.doneUnits.toString());
-    cy.get('#totalUnits').should('have.value', book.totalUnits.toString());
+    cy.compareUnits('#doneUnits', book.type, book.doneUnits);
+    cy.compareUnits('#totalUnits', book.type, book.totalUnits);
     
     cy.get('.start-date #year').should('have.value', book.startDateYear);
     cy.get('.start-date #month').should('have.value', book.startDateMonth);

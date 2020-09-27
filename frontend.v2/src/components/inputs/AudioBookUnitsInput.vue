@@ -3,10 +3,9 @@
     <div class="col">
       <input
         type="number"
-        id="hours"
         @blur="onHoursChange()"
         @click="onHoursClick()"
-        class="form-control"
+        class="form-control hours"
         :placeholder="$t('book.form.titles.progressInput.hours')"
         v-model.number="hours"
         min="0"
@@ -17,10 +16,9 @@
     <div class="col">
       <input
         type="number"
-        id="minutes"
         @blur="onMinutesChange()"
         @click="onMinutesClick()"
-        class="form-control"
+        class="form-control minutes"
         :placeholder="$t('book.form.titles.progressInput.minutes')"
         v-model.number="minutes"
         min="0"
