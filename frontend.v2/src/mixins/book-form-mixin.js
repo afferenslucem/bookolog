@@ -32,12 +32,23 @@ export default {
       }
     },
     methods: {
-      statusChange(status) {
-        if (status == IN_PROGRESS_STATUS) {
-          this.book.startDate = this.today;
-        } else if (status == DONE_STATUS) {
-          this.book.endDate = this.today;
-        }
+      resetBook(status) {
+        this.book.name = null;
+        this.book.authors = [];
+        this.book.year = null;
+        this.book.genre = null;
+        this.book.tags = [];
+        this.book.status = Number(status);
+        this.book.type = PAPER_BOOK_TYPE;
+        this.book.doneUnits = null;
+        this.book.totalUnits = null;
+        this.book.startDateYear = null;
+        this.book.startDateMonth = null;
+        this.book.startDateDay = null;
+        this.book.endDateYear = null;
+        this.book.endDateMonth = null;
+        this.book.endDateDay = null;
+        this.book.note = null;
       },
       redirectForBook(book) {
           switch(book.status) {

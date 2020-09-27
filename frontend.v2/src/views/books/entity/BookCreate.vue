@@ -134,7 +134,6 @@ import {
   NOTIFICATION_SUCCESS_ACTION,
   NOTIFICATION_DANGER_ACTION,
 } from '@/store/naming';
-import { PAPER_BOOK_TYPE, Book } from '@/models/book';
 
 export default {
   components: {
@@ -172,9 +171,7 @@ export default {
       this.action = this.submitAndAddAction;
     },
     renavigate() {
-      this.book = new Book({});
-      this.book.status = Number(this.$route.params.status);
-      this.book.type = PAPER_BOOK_TYPE;
+      this.resetBook(this.$route.params.status);
       document.querySelector('.create-form').scrollTo(0,0);
     }
   },
