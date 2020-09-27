@@ -5,6 +5,7 @@
         type="number"
         id="hours"
         @blur="onHoursChange()"
+        @click="onHoursClick()"
         class="form-control"
         :placeholder="$t('book.form.titles.progressInput.hours')"
         v-model.number="hours"
@@ -18,6 +19,7 @@
         type="number"
         id="minutes"
         @blur="onMinutesChange()"
+        @click="onMinutesClick()"
         class="form-control"
         :placeholder="$t('book.form.titles.progressInput.minutes')"
         v-model.number="minutes"
@@ -37,10 +39,22 @@ export default {
   }),
   methods: {
     onHoursChange() {
-      this.$emit("update:units", this.unitsVaule);
+      this.$emit("update:units", this.unitsValue);
+      this.unitsToData(this.unitsValue);
     },
     onMinutesChange() {
-      this.$emit("update:units", this.unitsVaule);
+      this.$emit("update:units", this.unitsValue);
+      this.unitsToData(this.unitsValue);
+    },
+    onHoursClick() {
+      if(this.hours === 0) {
+        this.hours = null;
+      }
+    },
+    onMinutesClick() {
+      if(this.minutes === 0) {
+        this.minutes = null;
+      }
     },
     unitsToData(units) {
       this.hours = Math.trunc(units / 60);
@@ -58,7 +72,7 @@ export default {
     }
   },
   computed: {
-    unitsVaule() {
+    unitsValue() {
       return this.hours * 60 + this.minutes;
     }
   }
