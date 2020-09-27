@@ -44,17 +44,21 @@ export const actions = {
         }
     },
     [USER_RECOVER_ACTION]: async ({dispatch}) => {
-        const recoveredUser = await new UserSynchronizator().getCurrentUser();
-
-        if(recoveredUser) {
-            dispatch(USER_SAVE_ACTION, recoveredUser);
-
-            await dispatch(BOOKS_SYNC_ACTION)
-
-            logger.info('Logged in', recoveredUser)
-
-            return recoveredUser;
-        } else {
+        try {
+            const recoveredUser = await new UserSynchronizator().getCurrentUser();
+    
+            if(recoveredUser) {
+                dispatch(USER_SAVE_ACTION, recoveredUser);
+    
+                await dispatch(BOOKS_SYNC_ACTION)
+    
+                logger.info('Logged in', recoveredUser)
+    
+                return recoveredUser;
+            } else {
+                return null;
+            }
+        } catch (e) {
             return null;
         }
     },

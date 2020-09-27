@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <notification-message></notification-message>
-    <router-view/>
+    <router-view />
     <app-loader></app-loader>
   </div>
 </template>
@@ -32,6 +32,7 @@ export default {
     Client.prototype.onUnauthorizedError = () => this.$store.dispatch(USER_LOGOUT_ACTION);
     Client.prototype.requestCanceled = () => this.hideLoader();
     Client.prototype.requestStarted = () => this.showLoader();
+    Client.prototype.retry = 2;
 
     const user = await this.$store.dispatch(USER_RECOVER_ACTION);
     if (user) {
@@ -46,10 +47,11 @@ export default {
     return ({
       loadingTimer: new Timer(() => {
         this.$store.commit(CONNECTION_LOAD_START_MUTATION);
-      }, 50),
+      }, 100),
       hideLoadingTimer: new Timer(() => {
         this.$store.commit(CONNECTION_LOAD_FINISH_MUTATION);
-      }, 75),
+      }, 200),
+      checked: false
     });
   },
   methods: {

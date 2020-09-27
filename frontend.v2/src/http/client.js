@@ -64,7 +64,7 @@ export class Client {
         });
     }
 
-    async sendRequest(routine) {
+    async sendRequest(routine, retry) {
         try {
             await this.requestStarted();
 
@@ -74,22 +74,27 @@ export class Client {
 
             return result;
         } catch (e) {
-            if(e == NETWORK_ERROR) {
-                await this.onNetworkError();
-            } else if((e.response?.data === '') && (e.response.status === 401)) {
-                await this.onUnauthorizedError()
+            if (retry === undefined && retry !== 0) {
+                return this.sendRequest(routine, this.retry);
+            } else if (retry > 0) {
+                return this.sendRequest(routine, retry - 1)
+            } else {
+                if(e === NETWORK_ERROR) {
+                    await this.onNetworkError();
+                } else if((e.response?.data === '') && (e.response.status === 401)) {
+                    await this.onUnauthorizedError()
+                }
+
+                throw e;
             }
-
-            console.log(e.response)
-
-            throw e;
         } finally {
             await this.requestCanceled();
         }
     }
 }
-Client.prototype.onSuccess = () => {}
-Client.prototype.onNetworkError = () => {}
-Client.prototype.onUnauthorizedError = () => {}
-Client.prototype.requestCanceled = () => {}
-Client.prototype.requestStarted = () => {}
+Client.prototype.onSuccess = () => {};
+Client.prototype.onNetworkError = () => {};
+Client.prototype.onUnauthorizedError = () => {};
+Client.prototype.requestCanceled = () => {};
+Client.prototype.requestStarted = () => {};
+Client.prototype.retry = 0;

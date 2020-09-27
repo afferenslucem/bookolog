@@ -9,11 +9,11 @@ import {
   USER_RECOVER_ACTION,
 } from '@/store/naming';
 
-const ifAuthenticated = (to, from, next) => {
-  if (store.getters[USER_LOGGED_IN_GETTER] || ((to.name === 'Login') || to.name === 'Registration')) {
-    next()
+const ifAuthenticated = async (to, from, next) => {
+  if (store.getters[USER_LOGGED_IN_GETTER]) {
+    return next()
   } else {
-    store.dispatch(USER_RECOVER_ACTION).then((user) => {
+    return store.dispatch(USER_RECOVER_ACTION).then((user) => {
       if (user) {
         next({
           name: 'InProgress'
@@ -30,23 +30,6 @@ const ifAuthenticated = (to, from, next) => {
 }
 
 Vue.use(VueRouter);
-
-const authRoutes = [{
-  path: 'login',
-  name: 'Login',
-  component: () => import('../views/auth/Login.vue'),
-  props: true
-}, {
-  path: 'registration',
-  name: 'Registration',
-  component: () => import('../views/auth/Registration.vue'),
-  props: true
-}, {
-  path: 'recover-password',
-  name: 'RecoverPassword',
-  component: () => import('../views/auth/RecoverPassword.vue'),
-  props: true
-}, ];
 
 const booksRoutes = [{
   path: 'book/create/:status',
@@ -138,6 +121,23 @@ const externalRoutes = [{
   name: 'About',
   props: false,
   component: () => import('../views/About.vue')
+}, ];
+
+const authRoutes = [{
+  path: 'login',
+  name: 'Login',
+  component: () => import('../views/auth/Login.vue'),
+  props: true
+}, {
+  path: 'registration',
+  name: 'Registration',
+  component: () => import('../views/auth/Registration.vue'),
+  props: true
+}, {
+  path: 'recover-password',
+  name: 'RecoverPassword',
+  component: () => import('../views/auth/RecoverPassword.vue'),
+  props: true
 }, ];
 
 const routes = [{
