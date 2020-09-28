@@ -3,9 +3,8 @@
     <div class="col">
       <input
         type="number"
-        id="year"
         @blur="onChangeYear()"
-        class="form-control"
+        class="form-control year"
         :placeholder="$t('book.form.titles.dateInput.year')"
         v-model.number="yearValue"
         min="1970"
@@ -16,9 +15,8 @@
     <div class="col">
       <input
         type="number"
-        id="month"
         @blur="onChangeMonth()"
-        class="form-control"
+        class="form-control month"
         :placeholder="$t('book.form.titles.dateInput.month')"
         v-model.number="monthValue"
         min="1"
@@ -29,9 +27,8 @@
     <div class="col">
       <input
         type="number"
-        id="day"
         @blur="onChangeDay()"
-        class="form-control"
+        class="form-control day"
         :placeholder="$t('book.form.titles.dateInput.day')"
         v-model.number="dayValue"
         min="1"
