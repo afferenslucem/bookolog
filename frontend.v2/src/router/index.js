@@ -15,17 +15,31 @@ const ifAuthenticated = async (to, from, next) => {
   } else {
     return store.dispatch(USER_RECOVER_ACTION).then((user) => {
       if (user) {
+        next()
+      } else {
+        next({
+          name: 'Main'
+        })
+      }
+    }).catch(() => next({
+      name: 'Main'
+    }));
+  }
+}
+
+const ifAuthenticatedAtMain = async (to, from, next) => {
+  if (!store.getters[USER_LOGGED_IN_GETTER]) {    
+    return store.dispatch(USER_RECOVER_ACTION).then((user) => {
+      if (user) {
         next({
           name: 'InProgress'
         })
       } else {
-        next({
-          name: 'Home'
-        })
+        next()
       }
-    }).catch(() => next({
-      name: 'Home'
-    }));
+    }).catch(() => next());
+  } else {
+    next();
   }
 }
 
@@ -115,7 +129,8 @@ const externalRoutes = [{
   path: '/',
   name: 'Main',
   props: false,
-  component: () => import('../views/Guest.vue')
+  component: () => import('../views/Guest.vue'),
+  afterEnter: ifAuthenticatedAtMain
 }, {
   path: '/about',
   name: 'About',

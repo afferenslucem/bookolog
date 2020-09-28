@@ -10,7 +10,6 @@
 import {
   CONNECTION_ONLINE_ACTION,
   CONNECTION_OFFLINE_ACTION,
-  USER_RECOVER_ACTION,
   USER_LOGOUT_ACTION,
   CONNECTION_LOAD_START_MUTATION,
   CONNECTION_LOAD_FINISH_MUTATION,
@@ -33,11 +32,6 @@ export default {
     Client.prototype.requestCanceled = () => this.hideLoader();
     Client.prototype.requestStarted = () => this.showLoader();
     Client.prototype.retry = 2;
-
-    const user = await this.$store.dispatch(USER_RECOVER_ACTION);
-    if (user) {
-      this.$router.push({name: 'InProgress'});
-    }
   },
   components: {
     AppLoader,
