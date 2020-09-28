@@ -27,22 +27,6 @@ const ifAuthenticated = async (to, from, next) => {
   }
 }
 
-const ifAuthenticatedAtMain = async (to, from, next) => {
-  if (!store.getters[USER_LOGGED_IN_GETTER]) {    
-    return store.dispatch(USER_RECOVER_ACTION).then((user) => {
-      if (user) {
-        next({
-          name: 'InProgress'
-        })
-      } else {
-        next()
-      }
-    }).catch(() => next());
-  } else {
-    next();
-  }
-}
-
 Vue.use(VueRouter);
 
 const booksRoutes = [{
@@ -130,7 +114,6 @@ const externalRoutes = [{
   name: 'Main',
   props: false,
   component: () => import('../views/Guest.vue'),
-  afterEnter: ifAuthenticatedAtMain
 }, {
   path: '/about',
   name: 'About',
@@ -166,7 +149,7 @@ const routes = [{
       beforeEnter: ifAuthenticated
     },
     ...externalRoutes,
-    ...authRoutes
+    ...authRoutes,
   ]
 }]
 

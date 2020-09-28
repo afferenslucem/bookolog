@@ -82,6 +82,10 @@
 </template>
 
 <script>
+import {
+  USER_RECOVER_ACTION,
+} from '@/store/naming';
+
 export default {
     methods: {
         toLogin() {
@@ -90,6 +94,12 @@ export default {
         toRegistration() {
             this.$router.push({name: 'Registration'})
         }
+    },
+    async beforeCreate() {
+      const user = await this.$store.dispatch(USER_RECOVER_ACTION);
+      if (user) {
+        this.$router.push({name: 'InProgress'});
+      }
     }
 };
 </script>
