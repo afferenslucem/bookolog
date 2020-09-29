@@ -35,7 +35,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Login([FromBody]AuthenticateModel model)
+        public async Task<IActionResult> Login([FromBody] AuthenticateModel model)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Register([FromBody]User user)
+        public async Task<IActionResult> Register([FromBody] User user)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace backend.Controllers
         [HttpPost]
         [Authorize]
         [Route("[action]")]
-        public async Task<IActionResult> ChangePassword([FromBody]PasswordChangeModel changeData)
+        public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeModel changeData)
         {
             try
             {
@@ -115,10 +115,16 @@ namespace backend.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Login)
             };
-            
+
             var identity = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity),
+                new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                });
         }
         public async Task<User> CheckUser(string login, string password)
         {
@@ -132,14 +138,17 @@ namespace backend.Controllers
             await HttpContext.SignOutAsync();
             return Ok();
         }
-    
+
         [HttpGet]
         [Route("[action]/{email}")]
-        public async Task<IActionResult> RecoverPassword(string email) {
-            try {
+        public async Task<IActionResult> RecoverPassword(string email)
+        {
+            try
+            {
                 var user = await this.userService.GetByEmail(email);
 
-                if (user.Email == email) {
+                if (user.Email == email)
+                {
                     var newPassword = RandomString.GetRandomString(6);
                     await this.userService.SetNewPassword(user.Id, newPassword);
                     await this.mailService.SendPasswordRecover(user, newPassword);
@@ -147,7 +156,8 @@ namespace backend.Controllers
 
                 return Ok();
             }
-            catch(Exception e) {
+            catch (Exception e)
+            {
                 this.logger.LogDebug(500, e, "Can't send to email", email);
                 return StatusCode(500, "Can't send to email");
             }
