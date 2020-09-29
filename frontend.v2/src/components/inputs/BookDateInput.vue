@@ -22,6 +22,7 @@
         min="1"
         max="12"
         step="1"
+        :disabled="!enabledMonth"
       />
     </div>
     <div class="col">
@@ -34,28 +35,71 @@
         min="1"
         max="31"
         step="1"
+        :disabled="!enabledDay"
       />
     </div>
   </div>
 </template>
 
 <script>
+import inputMixin from '@/mixins/input-mixin';
 export default {
   data: () => ({
     yearValue: null,
     monthValue: null,
     dayValue: null
   }),
+  mixins: [inputMixin],
   methods: {
     onChangeYear() {
-      this.$emit("update:year", this.yearValue);
+      this.emitUpdateYear();
+
+      if(!this.yearValue) {
+        this.resetMonth();
+        this.resetDay();
+      }
+
+      this.emitChangeValue();
     },
     onChangeMonth() {
-      this.$emit("update:month", this.monthValue);
+      this.emitUpdateMonth();
+      
+      if(!this.monthValue) {
+        this.resetDay();
+      }
+
+      this.emitChangeValue();
     },
     onChangeDay() {
-      this.$emit("update:day", this.dayValue);
+      this.emitUpdateDay();
+      this.emitChangeValue();
     },
+
+    resetYear() {
+      this.yearValue = null;
+      this.emitUpdateYear();
+    },
+    resetMonth() {
+      this.monthValue = null;
+      this.emitUpdateMonth();
+    },
+    resetDay() {
+      this.dayValue = null;
+      this.emitUpdateDay();
+    },
+
+    emitUpdateYear() {
+      this.$emit("update:year", this.cleanYear);
+    },
+    emitUpdateMonth() {
+      this.$emit("update:month", this.cleanMonth);
+    },
+    emitUpdateDay() {
+      this.$emit("update:day", this.cleanDay);
+    },
+    emitChangeValue() {
+      this.emitChange([this.cleanYear, this.cleanMonth, this.cleanDay])
+    }
   },
   props: ["year", "month", "day"],
   created() {
@@ -73,6 +117,35 @@ export default {
     day: function (newValue) { 
       this.dayValue = newValue
     },
+  },
+  computed: {
+    cleanYear() {
+      if(this.yearValue) {
+        return Number(this.yearValue)
+      } else {
+        return null
+      }
+    },
+    cleanMonth() {
+      if(this.monthValue) {
+        return Number(this.monthValue)
+      } else {
+        return null
+      }
+    },
+    cleanDay() {
+      if(this.dayValue) {
+        return Number(this.dayValue)
+      } else {
+        return null
+      }
+    },
+    enabledMonth() {
+      return this.cleanYear !== null;
+    },
+    enabledDay() {
+      return this.enabledMonth && (this.cleanMonth !== null);
+    }
   }
 };
 </script>
