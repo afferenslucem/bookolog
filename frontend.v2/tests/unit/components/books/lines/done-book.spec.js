@@ -1,8 +1,13 @@
 import { expect } from 'chai'
-import books from '../../data/books'
+import books from '../../../data/books'
 import { shallowMount } from '@vue/test-utils'
 import DoneBook from '@/components/book-module/book/DoneBook.vue';
 import moment from 'moment';
+import Vue from 'vue';
+
+import join from '@/filters/join'
+
+Vue.filter('join', join);
 
 describe('DoneBook.vue', () => {
     // it('Render props.book.name', () => {
@@ -26,7 +31,7 @@ describe('DoneBook.vue', () => {
         const wrapper = shallowMount(DoneBook, {
             propsData: { book }
         })
-        expect(wrapper.text()).to.include(`[\n  "Николай Костомаров",\n  "Михаил Галустян"\n]`)
+        expect(wrapper.text()).to.include(`Николай Костомаров, Михаил Галустян`)
     })
 
     it('Render no props.book.progress', () => {

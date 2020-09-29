@@ -1,7 +1,13 @@
 import { expect } from 'chai'
-import books from '../../data/books'
+import books from '../../../data/books'
 import { shallowMount } from '@vue/test-utils'
 import ProgressingBook from '@/components/book-module/book/ProgressingBook.vue';
+
+import Vue from 'vue';
+
+import join from '@/filters/join'
+
+Vue.filter('join', join);
 
 describe('ProgressingBook.vue', () => {
     it('Render props.book.authors', () => {
@@ -9,7 +15,7 @@ describe('ProgressingBook.vue', () => {
         const wrapper = shallowMount(ProgressingBook, {
             propsData: { book }
         })
-        expect(wrapper.text()).to.include(`[\n  "Александр Пикуленко",\n  "Денис Орлов"\n]`)
+        expect(wrapper.text()).to.include(`Александр Пикуленко, Денис Орлов`)
     })
 
     it('Render props.book.authors', () => {

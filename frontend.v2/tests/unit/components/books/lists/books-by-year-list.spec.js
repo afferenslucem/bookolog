@@ -1,7 +1,7 @@
 import {
     expect
 } from 'chai'
-import books from '../../data/books'
+import books from '../../../data/books'
 import {
     shallowMount
 } from '@vue/test-utils'
@@ -11,6 +11,10 @@ import {
 } from '@/models/book';
 import DoneBook from '@/components/book-module/book/DoneBook.vue';
 import _ from 'declarray';
+import Vue from 'vue';
+
+import capitalFirst from '@/filters/capital-first'
+Vue.filter('capital', capitalFirst);
 
 describe('BooksByYearsList.vue', () => {
     let wrapper = null;
@@ -20,7 +24,8 @@ describe('BooksByYearsList.vue', () => {
     beforeEach(() => {
         wrapper = shallowMount(BooksByYearsList, {
             propsData: {
-                books: doneBooks
+                books: doneBooks,
+                listname: 'ListName'
             },
             mocks: {
                 $t: () => ''
@@ -31,6 +36,10 @@ describe('BooksByYearsList.vue', () => {
     it('Render correct count of books', () => {
         const items = wrapper.findAllComponents(DoneBook);
         expect(items.length).to.equal(3)
+    })
+
+    it('Render name', () => {
+        expect(wrapper.text()).to.include('ListName')
     })
 
     it('Compare books', () => {

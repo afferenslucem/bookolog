@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import books from '../../data/books'
+import books from '../../../data/books'
 import { shallowMount } from '@vue/test-utils'
 import BookInlineHeader from '@/components/book-module/book/BookInlineHeader.vue';
 

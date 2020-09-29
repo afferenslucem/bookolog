@@ -14,7 +14,7 @@ export class Repository {
             loggerName: 'Repository'
         })
         if (!this.indexedDB) {
-            window.alert("Ваш браузер не поддерживат стабильную версию IndexedDB. Такие-то функции будут недоступны");
+            this.logger.fatal("Ваш браузер не поддерживат стабильную версию IndexedDB");
         }
     }
 
