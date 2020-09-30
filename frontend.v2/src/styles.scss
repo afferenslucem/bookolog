@@ -32,3 +32,13 @@ ol, ul {
     background-color: $danger-color;
     border-color: $danger-color;
 }
+
+.is-invalid {
+    .invalid-feedback {
+      display: inline;
+      padding: 0.5rem 1rem;
+    }
+  
+    background-color: #{$warning-color}33;
+    border-radius: 0.25rem;
+  }

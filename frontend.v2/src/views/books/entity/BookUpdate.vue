@@ -62,7 +62,9 @@
           :pattern="bookTagsPattern"
           v-model.trim="tagsComp"
         />
-        <small id="tagsInput" class="text-muted">Вводите через запятую</small>
+        <small id="tagsInput" class="text-muted">{{
+          $t("book.form.titles.splitByComma")
+        }}</small>
       </div>
       <div class="form-group">
         <label for="status">{{ $t("book.form.titles.status") }}</label>
@@ -99,8 +101,14 @@
           </option>
         </select>
       </div>
-      <label for="progress" v-show="showProgress">{{ progressHeader }}</label>
-      <div class="row progress-row form-group" v-show="showProgress">
+      <div
+        class="row progress-row form-group"
+        :class="{ 'is-invalid': !unitsValid }"
+        v-show="showProgress"
+      >
+        <label class="col-12" for="progress" v-show="showProgress">{{
+          progressHeader
+        }}</label>
         <div class="col-5" id="progress">
           <audio-book-units-input
             id="doneUnits"
@@ -137,10 +145,13 @@
             :max="maxUnitsCount"
           />
         </div>
+        <div class="invalid-feedback">
+          {{ progressError }}
+        </div>
       </div>
-      <div class="row form-group">
+      <div class="row form-group" :class="{ 'is-invalid': !datesValid }">
         <div class="col-12 col-md-6" v-show="showStartDate">
-          <div class="form-group start-date">
+          <div class="start-date">
             <label for="startDate">{{ $t("book.form.titles.started") }}</label>
             <date-input
               :year.sync="book.startDateYear"
@@ -150,7 +161,7 @@
           </div>
         </div>
         <div class="col-12 col-md-6" v-show="showEndDate">
-          <div class="form-group end-date">
+          <div class="end-date">
             <label for="endDate">{{ $t("book.form.titles.finished") }}</label>
             <date-input
               :year.sync="book.endDateYear"
@@ -158,6 +169,9 @@
               :day.sync="book.endDateDay"
             ></date-input>
           </div>
+        </div>
+        <div class="invalid-feedback">
+          {{ $t("book.form.titles.dateInput.error") }}
         </div>
       </div>
       <div class="form-group">
@@ -172,7 +186,11 @@
         ></textarea>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary w-100" type="submit">
+        <button
+          class="btn btn-primary w-100"
+          type="submit"
+          :disabled="!formValid"
+        >
           {{ $t("book.actions.save") }}
         </button>
       </div>
