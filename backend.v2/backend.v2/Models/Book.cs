@@ -51,6 +51,9 @@ namespace backend.Models
         [Column(TypeName = "timestamptz")]
         public DateTime? CreateDate { get; set; }
 
+        [Column(TypeName = "timestamptz")]
+        public DateTime? DeleteDate { get; set; }
+
         public DateTime? StartDate { 
             get {
                 if (!this.StartDateYear.HasValue) return null;
@@ -63,6 +66,12 @@ namespace backend.Models
                 if (!this.EndDateYear.HasValue) return null;
                 
                 return new DateTime(this.EndDateYear ?? 1, this.EndDateMonth ?? 1, this.EndDateDay ?? 1);
+            }
+        }
+
+        public bool Deleted {
+            get {
+                return this.DeleteDate != null;
             }
         }
 
