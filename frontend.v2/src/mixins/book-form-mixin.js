@@ -21,7 +21,15 @@ export default {
         genre: '',
         tags: [],
         type: PAPER_BOOK_TYPE,
-        status: TO_READ_STATUS
+        status: TO_READ_STATUS,
+        totalUnits: null,
+        doneUnits: null,
+        endDateYear: null,
+        endDateMonth: null,
+        endDateDay: null,
+        startDateYear: null,
+        startDateMonth: null,
+        startDateDay: null,
       },
       statuses: [{
           value: TO_READ_STATUS,

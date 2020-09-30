@@ -148,7 +148,7 @@
           {{ progressError }}
         </div>
       </div>
-      <div class="row form-group" :class="{ 'is-invalid': !datesValid }">
+      <div class="row form-group dates" :class="{ 'is-invalid': !datesValid }">
         <div class="col-12 col-md-6" v-show="showStartDate">
           <div class="start-date">
             <label for="startDate">{{ $t("book.form.titles.started") }}</label>
@@ -194,7 +194,7 @@
           {{ $t("book.actions.save") }}
         </button>
         <button
-          class="btn btn-info mt-1 w-100 mt-3"
+          class="btn btn-info mt-1 w-100 mt-3 submit-and-new"
           type="submit"
           @click="submitAndAdd()"
           :disabled="!formValid"
