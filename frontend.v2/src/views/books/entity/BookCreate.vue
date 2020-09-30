@@ -1,6 +1,6 @@
 <template>
   <div class="container create-form">
-    <small class="dark-text">* {{ $t('book.form.titles.required') }}</small>
+    <small class="dark-text">* {{ $t("book.form.titles.required") }}</small>
     <form class="needs-validation" @submit="prefill($event)">
       <div class="form-group">
         <input
@@ -8,7 +8,7 @@
           name="name"
           id="name"
           class="form-control"
-          :placeholder="`${ $t('book.form.titles.name') }*`"
+          :placeholder="`${$t('book.form.titles.name')}*`"
           :pattern="bookNamePattern"
           required
           v-model.trim="book.name"
@@ -26,11 +26,19 @@
           :pattern="bookAuthorsPattern"
           v-model.trim="authorsComp"
         />
-        <small id="authorsInput" class="text-muted">{{ $t('book.form.titles.splitByComma') }}</small>
+        <small id="authorsInput" class="text-muted">{{
+          $t("book.form.titles.splitByComma")
+        }}</small>
       </div>
       <div class="form-group">
-        <input type="number" name="year" id="year" class="form-control"
-        v-model.number="book.year" :placeholder="$t('book.form.titles.year')" />
+        <input
+          type="number"
+          name="year"
+          id="year"
+          class="form-control"
+          v-model.number="book.year"
+          :placeholder="$t('book.form.titles.year')"
+        />
       </div>
       <div class="form-group">
         <input
@@ -54,24 +62,58 @@
           :pattern="bookTagsPattern"
           v-model.trim="tagsComp"
         />
-        <small id="tagsInput" class="text-muted">Вводите через запятую</small>
+        <small id="tagsInput" class="text-muted">{{
+          $t("book.form.titles.splitByComma")
+        }}</small>
       </div>
       <div class="form-group">
-        <label for="status">{{ $t('book.form.titles.status') }}</label>
-        <select class="form-control" name="status" id="status" v-model.number="book.status">
-          <option v-for="option in statuses" :key="option.value" :value="option.value">{{option.name}}</option>
+        <label for="status">{{ $t("book.form.titles.status") }}</label>
+        <select
+          class="form-control"
+          name="status"
+          id="status"
+          v-model.number="book.status"
+        >
+          <option
+            v-for="option in statuses"
+            :key="option.value"
+            :value="option.value"
+          >
+            {{ option.name }}
+          </option>
         </select>
       </div>
       <div class="form-group">
-        <label for="type">{{ $t('book.form.titles.type') }}</label>
-        <select class="form-control" name="type" id="type" v-model.number="book.type">
-          <option v-for="option in bookTypes" :key="option.value" :value="option.value">{{option.name}}</option>
+        <label for="type">{{ $t("book.form.titles.type") }}</label>
+        <select
+          class="form-control"
+          name="type"
+          id="type"
+          v-model.number="book.type"
+        >
+          <option
+            v-for="option in bookTypes"
+            :key="option.value"
+            :value="option.value"
+          >
+            {{ option.name }}
+          </option>
         </select>
       </div>
-      <label for="progress" v-show="showProgress">{{progressHeader}}</label>
-      <div class="row progress-row form-group" v-show="showProgress">
+      <div
+        class="row progress-row form-group"
+        :class="{ 'is-invalid': !unitsValid }"
+        v-show="showProgress"
+      >
+        <label class="col-12" for="progress" v-show="showProgress">{{
+          progressHeader
+        }}</label>
         <div class="col-5" id="progress">
-          <audio-book-units-input id="doneUnits" v-if="book.type === 2" :units.sync="book.doneUnits"></audio-book-units-input>
+          <audio-book-units-input
+            id="doneUnits"
+            v-if="book.type === 2"
+            :units.sync="book.doneUnits"
+          ></audio-book-units-input>
           <input
             v-else
             type="number"
@@ -83,9 +125,13 @@
             :max="Math.min(book.totalUnits, maxUnitsCount)"
           />
         </div>
-        <div class="col-2 from">{{ $t('book.form.titles.progress.from') }}</div>
+        <div class="col-2 from">{{ $t("book.form.titles.progress.from") }}</div>
         <div class="col-5">
-          <audio-book-units-input id="totalUnits" v-if="book.type === 2" :units.sync="book.totalUnits"></audio-book-units-input>
+          <audio-book-units-input
+            id="totalUnits"
+            v-if="book.type === 2"
+            :units.sync="book.totalUnits"
+          ></audio-book-units-input>
           <input
             v-else
             type="number"
@@ -98,42 +144,77 @@
             :max="maxUnitsCount"
           />
         </div>
+        <div class="invalid-feedback">
+          {{ progressError }}
+        </div>
       </div>
-      <div class="row form-group">
+      <div class="row form-group dates" :class="{ 'is-invalid': !datesValid }">
         <div class="col-12 col-md-6" v-show="showStartDate">
-          <div class="form-group start-date">
-            <label for="startDate">{{ $t('book.form.titles.started') }}</label>
-            <date-input :year.sync="book.startDateYear" :month.sync="book.startDateMonth" :day.sync="book.startDateDay"></date-input>
+          <div class="start-date">
+            <label for="startDate">{{ $t("book.form.titles.started") }}</label>
+            <date-input
+              :year.sync="book.startDateYear"
+              :month.sync="book.startDateMonth"
+              :day.sync="book.startDateDay"
+            ></date-input>
           </div>
         </div>
         <div class="col-12 col-md-6" v-show="showEndDate">
-          <div class="form-group end-date">
-            <label for="endDate">{{ $t('book.form.titles.finished') }}</label>
-            <date-input :year.sync="book.endDateYear" :month.sync="book.endDateMonth" :day.sync="book.endDateDay"></date-input>
+          <div class="end-date">
+            <label for="endDate">{{ $t("book.form.titles.finished") }}</label>
+            <date-input
+              :year.sync="book.endDateYear"
+              :month.sync="book.endDateMonth"
+              :day.sync="book.endDateDay"
+            ></date-input>
           </div>
+        </div>
+        <div class="invalid-feedback">
+          {{ $t("book.form.titles.dateInput.error") }}
         </div>
       </div>
       <div class="form-group">
-        <label for="note">{{ $t('book.form.titles.notes') }}</label>
-        <textarea type="text" name="note" id="note" class="form-control" rows="5" v-model.trim="book.note"></textarea>
+        <label for="note">{{ $t("book.form.titles.notes") }}</label>
+        <textarea
+          type="text"
+          name="note"
+          id="note"
+          class="form-control"
+          rows="5"
+          v-model.trim="book.note"
+        ></textarea>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary w-100 submit" type="submit" @click="submit()">{{ $t('book.actions.save') }}</button>
-        <button class="btn btn-info mt-1 w-100 mt-3" type="submit" @click="submitAndAdd()">{{ $t('book.actions.saveAndAdd') }}</button>
+        <button
+          class="btn btn-primary w-100 submit"
+          type="submit"
+          @click="submit()"
+          :disabled="!formValid"
+        >
+          {{ $t("book.actions.save") }}
+        </button>
+        <button
+          class="btn btn-info mt-1 w-100 mt-3 submit-and-new"
+          type="submit"
+          @click="submitAndAdd()"
+          :disabled="!formValid"
+        >
+          {{ $t("book.actions.saveAndAdd") }}
+        </button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import bookMixin from '@/mixins/book-form-mixin';
-import DateInput from '@/components/inputs/BookDateInput.vue';
-import AudioBookUnitsInput from '@/components/inputs/AudioBookUnitsInput.vue';
-import { 
+import bookMixin from "@/mixins/book-form-mixin";
+import DateInput from "@/components/inputs/BookDateInput.vue";
+import AudioBookUnitsInput from "@/components/inputs/AudioBookUnitsInput.vue";
+import {
   BOOK_ADD_ACTION,
   NOTIFICATION_SUCCESS_ACTION,
   NOTIFICATION_DANGER_ACTION,
-} from '@/store/naming';
+} from "@/store/naming";
 
 export default {
   components: {
@@ -141,47 +222,71 @@ export default {
     AudioBookUnitsInput,
   },
   mixins: [bookMixin],
-  data:() => ({
-    action: null
+  data: () => ({
+    action: null,
   }),
   methods: {
     prefill(event) {
-      if(this.action) {
+      if (this.action) {
         this.action();
       }
       event.preventDefault();
       return false;
     },
     submitAction() {
-      this.$store.dispatch(BOOK_ADD_ACTION, this.book).then(() => {
-        this.redirectForBook(this.book);
-        this.$store.dispatch(NOTIFICATION_SUCCESS_ACTION, this.$t('book.notification.save.success'));
-      }).catch(() => this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t('book.notification.save.fail')));
+      this.$store
+        .dispatch(BOOK_ADD_ACTION, this.book)
+        .then(() => {
+          this.redirectForBook(this.book);
+          this.$store.dispatch(
+            NOTIFICATION_SUCCESS_ACTION,
+            this.$t("book.notification.save.success")
+          );
+        })
+        .catch(() =>
+          this.$store.dispatch(
+            NOTIFICATION_DANGER_ACTION,
+            this.$t("book.notification.save.fail")
+          )
+        );
     },
     submit() {
       this.action = this.submitAction;
     },
     submitAndAddAction() {
-      this.$store.dispatch(BOOK_ADD_ACTION, this.book).then(() => {
-        this.renavigate();
-        this.$store.dispatch(NOTIFICATION_SUCCESS_ACTION, this.$t('book.notification.save.success'));
-      }).catch(() => this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t('book.notification.save.fail')));
+      this.$store
+        .dispatch(BOOK_ADD_ACTION, this.book)
+        .then(() => {
+          this.renavigate();
+          this.$store.dispatch(
+            NOTIFICATION_SUCCESS_ACTION,
+            this.$t("book.notification.save.success")
+          );
+        })
+        .catch(() =>
+          this.$store.dispatch(
+            NOTIFICATION_DANGER_ACTION,
+            this.$t("book.notification.save.fail")
+          )
+        );
     },
     submitAndAdd() {
       this.action = this.submitAndAddAction;
     },
     renavigate() {
       this.resetBook(this.$route.params.status);
-      document.querySelector('.create-form').scrollTo(0,0);
-    }
+      document.querySelector(".create-form").scrollTo(0, 0);
+    },
   },
   created() {
-    this.book.status = Number(this.$route.params.status)
-  }
+    this.book.status = Number(this.$route.params.status);
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables";
+
 .progress-row {
   display: flex;
   align-items: center;

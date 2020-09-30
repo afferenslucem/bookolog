@@ -50,7 +50,8 @@ namespace backend
                     .AllowAnyHeader());
             });
 
-            services.ConfigureApplicationCookie(options => {
+            services.ConfigureApplicationCookie(options =>
+            {
                 options.ExpireTimeSpan = TimeSpan.FromDays(14);
                 options.SlidingExpiration = true;
             });
@@ -71,6 +72,20 @@ namespace backend
                         return Task.CompletedTask;
                     },
                 };
+            });
+
+            services.AddDistributedMemoryCache();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true;
             });
 
             services.AddControllers();
@@ -99,7 +114,7 @@ namespace backend
 
             app.UseRouting();
 
-            //app.UseSession();
+            app.UseSession();
 
             app.UseAuthentication();
 

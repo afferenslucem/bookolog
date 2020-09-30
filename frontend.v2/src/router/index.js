@@ -15,16 +15,14 @@ const ifAuthenticated = async (to, from, next) => {
   } else {
     return store.dispatch(USER_RECOVER_ACTION).then((user) => {
       if (user) {
-        next({
-          name: 'InProgress'
-        })
+        next()
       } else {
         next({
-          name: 'Home'
+          name: 'Main'
         })
       }
     }).catch(() => next({
-      name: 'Home'
+      name: 'Main'
     }));
   }
 }
@@ -115,7 +113,7 @@ const externalRoutes = [{
   path: '/',
   name: 'Main',
   props: false,
-  component: () => import('../views/Guest.vue')
+  component: () => import('../views/Guest.vue'),
 }, {
   path: '/about',
   name: 'About',
@@ -151,7 +149,7 @@ const routes = [{
       beforeEnter: ifAuthenticated
     },
     ...externalRoutes,
-    ...authRoutes
+    ...authRoutes,
   ]
 }]
 

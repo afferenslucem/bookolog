@@ -101,13 +101,13 @@ Cypress.Commands.add("fillToReadBookForm", (book) => {
 
 Cypress.Commands.add("fillDoneBookForm", (book) => {
     fillCommonForm(book);
-    cy.get('.start-date #year').type(book.startDateYear);
-    cy.get('.start-date #month').type(book.startDateMonth);
-    cy.get('.start-date #day').type(book.startDateDay);
+    cy.get('.start-date .year').type(book.startDateYear);
+    cy.get('.start-date .month').type(book.startDateMonth);
+    cy.get('.start-date .day').type(book.startDateDay);
 
-    cy.get('.end-date #year').type(book.endDateYear);
-    cy.get('.end-date #month').type(book.endDateMonth);
-    cy.get('.end-date #day').type(book.endDateDay);
+    cy.get('.end-date .year').type(book.endDateYear);
+    cy.get('.end-date .month').type(book.endDateMonth);
+    cy.get('.end-date .day').type(book.endDateDay);
 });
 
 Cypress.Commands.add("fillUnits", (name, type, value) => {
@@ -132,9 +132,9 @@ Cypress.Commands.add("fillInProgressBookForm", (book) => {
     cy.fillUnits('#doneUnits', book.type, book.doneUnits);
     cy.fillUnits('#totalUnits', book.type, book.totalUnits);
     
-    cy.get('.start-date #year').type(book.startDateYear);
-    cy.get('.start-date #month').type(book.startDateMonth);
-    cy.get('.start-date #day').type(book.startDateDay);
+    cy.get('.start-date .year').type(book.startDateYear);
+    cy.get('.start-date .month').type(book.startDateMonth);
+    cy.get('.start-date .day').type(book.startDateDay);
 });
 
 function clearCommonForm() {
@@ -149,13 +149,13 @@ function clearCommonForm() {
 Cypress.Commands.add("clearDoneForm", () => {
     clearCommonForm();
 
-    cy.get('.start-date #year').clear();
-    cy.get('.start-date #month').clear();
-    cy.get('.start-date #day').clear();
+    cy.get('.start-date .year').clear();
+    cy.get('.start-date .month').clear();
+    cy.get('.start-date .day').clear();
 
-    cy.get('.end-date #year').clear();
-    cy.get('.end-date #month').clear();
-    cy.get('.end-date #day').clear();
+    cy.get('.end-date .year').clear();
+    cy.get('.end-date .month').clear();
+    cy.get('.end-date .day').clear();
 });
 
 function compareCommonForm(book) {
@@ -176,13 +176,13 @@ Cypress.Commands.add("compareDoneBookForm", (book) => {
     compareCommonForm(book);
     cy.get('#status').should('have.value', '2');
 
-    cy.get('.start-date #year').should('have.value', book.startDateYear);
-    cy.get('.start-date #month').should('have.value', book.startDateMonth);
-    cy.get('.start-date #day').should('have.value', book.startDateDay);
+    cy.get('.start-date .year').should('have.value', book.startDateYear);
+    cy.get('.start-date .month').should('have.value', book.startDateMonth);
+    cy.get('.start-date .day').should('have.value', book.startDateDay);
 
-    cy.get('.end-date #year').should('have.value', book.endDateYear);
-    cy.get('.end-date #month').should('have.value', book.endDateMonth);
-    cy.get('.end-date #day').should('have.value', book.endDateDay);
+    cy.get('.end-date .year').should('have.value', book.endDateYear);
+    cy.get('.end-date .month').should('have.value', book.endDateMonth);
+    cy.get('.end-date .day').should('have.value', book.endDateDay);
 });
 
 Cypress.Commands.add("compareUnits", (name, type, value) => {
@@ -203,9 +203,9 @@ Cypress.Commands.add("compareInProgressBookForm", (book) => {
     cy.compareUnits('#doneUnits', book.type, book.doneUnits);
     cy.compareUnits('#totalUnits', book.type, book.totalUnits);
     
-    cy.get('.start-date #year').should('have.value', book.startDateYear);
-    cy.get('.start-date #month').should('have.value', book.startDateMonth);
-    cy.get('.start-date #day').should('have.value', book.startDateDay);
+    cy.get('.start-date .year').should('have.value', book.startDateYear);
+    cy.get('.start-date .month').should('have.value', book.startDateMonth);
+    cy.get('.start-date .day').should('have.value', book.startDateDay);
 });
 
 function compareCommonView(book) {

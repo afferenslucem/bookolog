@@ -1,7 +1,10 @@
 module.exports = {
   pwa: {
     themeColor: '#51bbfe',
-    name: 'Bookolog'
+    name: 'Bookolog',
+    manifestOptions: {
+      start_url: 'workspace/in-progress'
+    }
   },
 
   chainWebpack: (config) => {
