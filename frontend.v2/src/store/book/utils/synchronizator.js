@@ -4,6 +4,7 @@ import { BookClient } from '../../../http/book-client';
 import _ from 'declarray';
 import moment from 'moment'
 import { NETWORK_ERROR } from '@/http/client';
+import { getUtcDate } from '@/utils/utc-date';
 
 const logger = getLogger({
     loggerName: 'BookSynchronizator'
@@ -15,10 +16,15 @@ export class BookSynchronizator {
         this.client = client || new BookClient();
     }
 
+    get now() {        
+        const now = getUtcDate();
+        return moment(now).format();
+    }
+
     async saveBook(book, onOffline = () => {}, onOnline = () => {}) {
         try {
-            book.createDate = moment(new Date()).format();
-            book.modifyDate = moment(new Date()).format();
+            book.createDate = this.now();
+            book.modifyDate = this.now();
             
             book = await this.client.create(book);
             await onOnline();
@@ -38,7 +44,7 @@ export class BookSynchronizator {
     }
 
     async updateBook(book, onOffline = () => {}, onOnline = () => {}) {
-        book.modifyDate = moment(new Date()).format();
+        book.modifyDate = this.now();
 
         try {
             book = await this.client.update(book);

@@ -1,4 +1,6 @@
-import {getLogger} from '../../logger';
+import {
+    getLogger
+} from '../../logger';
 import {
     CONNECTION_OFFLINE_ACTION,
     NETWORK_ERROR,
@@ -13,9 +15,16 @@ import {
     NOTIFICATION_DANGER_ACTION,
     USER_SAVE_ACTION,
 } from '../naming';
-import { UserClient } from '../../http/user-client';
+import {
+    UserClient
+} from '../../http/user-client';
 import i18n from '../../i18n';
-import { UserSynchronizator } from './utils/user-syncronizator';
+import {
+    UserSynchronizator
+} from './utils/user-syncronizator';
+import {
+    getUtcDate
+} from '@/utils/utc-date';
 
 const logger = getLogger({
     namespace: 'UserModule',
@@ -32,12 +41,17 @@ function dateHoursDiff(first, second) {
 }
 
 export const actions = {
-    [USER_LOGIN_ACTION]: async ({dispatch}, {username, password}) => {
+    [USER_LOGIN_ACTION]: async ({
+        dispatch
+    }, {
+        username,
+        password
+    }) => {
         try {
             const userClient = new UserClient();
 
             const user = await userClient.login(username, password);
-    
+
             if (user == undefined) {
                 dispatch(NOTIFICATION_DANGER_ACTION, i18n.t('auth.actions.login.error'));
                 return;
@@ -45,33 +59,34 @@ export const actions = {
 
             dispatch(USER_SAVE_ACTION, user);
             await dispatch(BOOKS_LOAD_ACTION)
-    
+
             return user;
-        } catch(e) {
-            if(e == NETWORK_ERROR) {
+        } catch (e) {
+            if (e == NETWORK_ERROR) {
                 await dispatch(CONNECTION_OFFLINE_ACTION)
             }
             throw e;
         }
     },
-    [USER_RECOVER_ACTION]: async ({dispatch}) => {
+    [USER_RECOVER_ACTION]: async ({
+        dispatch
+    }) => {
         try {
             const recoveredUser = await new UserSynchronizator().getCurrentUser();
-    
-            if(recoveredUser) {
+
+            if (recoveredUser) {
+                recoveredUser.lastSyncDate = recoveredUser.lastSyncDate || getUtcDate();
+
                 dispatch(USER_SAVE_ACTION, recoveredUser);
 
-                const now = new Date().toUTCString();
-    
-                if (dateHoursDiff(recoveredUser.lastSyncDate || now, now) > 12)
-                {
+                if (dateHoursDiff(recoveredUser.lastSyncDate, now) > 12) {
                     await dispatch(BOOKS_LOAD_ACTION);
                 } else {
                     await dispatch(BOOKS_SYNC_ACTION)
-                }                
-    
+                }
+
                 logger.info('Logged in', recoveredUser)
-    
+
                 return recoveredUser;
             } else {
                 return null;
@@ -80,12 +95,17 @@ export const actions = {
             return null;
         }
     },
-    [USER_SAVE_ACTION]({commit}, user) {
+    [USER_SAVE_ACTION]({
+        commit
+    }, user) {
         localStorage.setItem('user', JSON.stringify(user));
 
         commit(USER_LOGIN_MUTATION, user)
     },
-    [USER_LOGOUT_ACTION]: async ({commit, dispatch}) => {
+    [USER_LOGOUT_ACTION]: async ({
+        commit,
+        dispatch
+    }) => {
         await new UserClient().logout();
 
         localStorage.clear();
@@ -94,7 +114,7 @@ export const actions = {
         await dispatch(BOOKS_CLEAR_ACTION)
 
         commit(USER_LOGOUT_MUTATION)
-        
+
         logger.info('Logged out')
     }
 }

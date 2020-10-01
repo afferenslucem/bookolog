@@ -30,7 +30,7 @@ namespace backend.Services
 
         public void UpdateLastSyncTime()
         {
-            var now = DateSessionUtils.Now;
+            var now = DateSessionUtils.Now.AddMinutes(-1);
             var str = DateSessionUtils.Stringify(now);
             this.Session.SetString("LastSyncTime", str);
         }

@@ -92,7 +92,7 @@ namespace backend.Storage
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => item.DeleteDate > date).ToArrayAsync();
+            var result = await context.Books.Where(item => item.DeleteDate >= date).ToArrayAsync();
 
             return result;
         }
@@ -101,7 +101,7 @@ namespace backend.Storage
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => item.ModifyDate > date).ToArrayAsync();
+            var result = await context.Books.Where(item => item.ModifyDate >= date || item.CreateDate >= date).ToArrayAsync();
 
             return result;
         }
