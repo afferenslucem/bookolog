@@ -36,6 +36,8 @@ export const actions = {
         const books = await synchronizer.loadAllRemoteBooks(rootState.user.id);
         
         const storage = new BookRepository();
+        
+        await storage.clearBooks();
         await storage.saveManyBooks(books);
 
         commit(BOOKS_SAVE_MUTATION, books)
