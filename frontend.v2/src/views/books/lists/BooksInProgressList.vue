@@ -1,17 +1,13 @@
 <template>
   <div class="container book-list">
-    <h4 class="pt-1 header">{{$t('book.lists.byStatus.inProgress')}}</h4>
+    <h4 class="pt-1 header">{{ $t("book.lists.byStatus.inProgress") }}</h4>
 
     <ul v-if="shouldShowList">
-      <li
-        v-for="book of books"
-        class="mb-4"
-        :key="book.guid"
-      >
+      <li v-for="book of books" class="mb-4" :key="book.guid">
         <progressing-book :book="book"></progressing-book>
       </li>
     </ul>
-    <div v-else>{{ $t('book.lists.noOneBook') }}</div>
+    <div v-else>{{ $t("book.lists.noOneBook") }}</div>
   </div>
 </template>
 
@@ -25,15 +21,18 @@ export default {
     ProgressingBook,
   },
   computed: {
-    books() {      
-      return u(this.$store.getters[BOOKS_IN_PROGRESS_GETTER]).orderByDescending(item => +item.modifyDate).thenByDescending(item => item.name).toArray();
+    books() {
+      return u(this.$store.getters[BOOKS_IN_PROGRESS_GETTER])
+        .orderByDescending((item) => item.modifyDate)
+        .thenByDescending((item) => item.createDate)
+        .thenByDescending((item) => item.name)
+        .toArray();
     },
     shouldShowList() {
       return this.books != null && this.books.length > 0;
     },
   },
-  created() {
-  }
+  created() {},
 };
 </script>
 

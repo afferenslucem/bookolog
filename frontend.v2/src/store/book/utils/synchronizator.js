@@ -8,7 +8,6 @@ import {
     BookClient
 } from '../../../http/book-client';
 import _ from 'declarray';
-import moment from 'moment'
 import {
     NETWORK_ERROR
 } from '@/http/client';
@@ -28,7 +27,7 @@ export class BookSynchronizator {
 
     get now() {
         const now = getUtcDate();
-        return moment(now).format();
+        return now;
     }
 
     async saveBook(book, onOffline = () => {}, onOnline = () => {}) {
@@ -119,7 +118,7 @@ export class BookSynchronizator {
 
             await this.syncLocal(originSynched);
 
-            return this.repository.allBooks();
+            return await this.repository.allBooks();
         } else {
             return local.toArray();
         }

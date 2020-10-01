@@ -1,9 +1,9 @@
 <template>
   <div class="header">
-    <strong @click="goToInfo(book.guid)">{{book.name}}</strong>
+    <strong>{{book.name}}</strong>
     <div class="actions">
       <i class="fa fa-cloud-upload fa-xs" v-show="book.shouldSync" aria-hidden="true"></i>
-      <i class="fa fa-pencil-square-o" aria-hidden="true" @click="goToEdit(book.guid)"></i>
+      <i class="fa fa-pencil-square-o" aria-hidden="true" @click="editClick($event)"></i>
     </div>
   </div>
 </template>
@@ -19,6 +19,8 @@ export default {
       required: true,
     },
   },
+  methods: {
+  }
 };
 </script>
 

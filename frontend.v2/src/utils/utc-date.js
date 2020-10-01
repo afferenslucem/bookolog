@@ -1,3 +1,4 @@
+import moment from 'moment'
 export function getUtcDate() {
-    return new Date(new Date().toUTCString());
+    return moment.utc(new Date()).format()
 }

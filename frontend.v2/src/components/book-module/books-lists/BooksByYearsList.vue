@@ -1,24 +1,20 @@
 <template>
   <div class="book-year-list">
-    <h4 class="pt-1 header">{{listname | capital}}</h4>
+    <h4 class="pt-1 header">{{ listname | capital }}</h4>
 
-    <div v-if="!shouldShowList">{{ $t('book.lists.noOneBook') }}</div>
+    <div v-if="!shouldShowList">{{ $t("book.lists.noOneBook") }}</div>
     <ul class="book-list" v-else>
       <li v-for="group of booksByYears" :key="group.key">
         <div class="top-year">
           <h5 class="header year-header mt-2 mb-2 d-block">
-            {{group.key || $t('book.lists.byYear.yearNotSpecified')}}
+            {{ group.key || $t("book.lists.byYear.yearNotSpecified") }}
           </h5>
           <span class="book-count">
-            {{group.group.length}}
+            {{ group.group.length }}
           </span>
         </div>
         <ul>
-          <li
-            v-for="book of group.group"
-            class="mb-4"
-            :key="book.guid"
-          >
+          <li v-for="book of group.group" class="mb-4" :key="book.guid">
             <done-book :book="book"></done-book>
           </li>
         </ul>
@@ -36,14 +32,14 @@ export default {
     DoneBook,
   },
   props: {
-      books: {
-          type: Array,
-          required: true
-      },
-      listname: {
-          type: String,
-          required: true
-      }
+    books: {
+      type: Array,
+      required: true,
+    },
+    listname: {
+      type: String,
+      required: true,
+    },
   },
   computed: {
     shouldShowList() {
@@ -52,14 +48,18 @@ export default {
     booksByYears() {
       return _(this.books)
         .groupBy(
-          (item) => item.endDateYear ? item.endDateYear : null,
-          (group) => group.orderByDescending(item => item.endDateYear || 0)
-                          .thenByDescending(item => item.endDateMonth || 0)
-                          .thenByDescending(item => item.endDateDay || 0)
-                          .thenByDescending(item => item.createDate)
-                          .toArray()
+          (item) => (item.endDateYear ? item.endDateYear : null),
+          (group) =>
+            group
+              .orderByDescending((item) => item.endDateYear || 0)
+              .thenByDescending((item) => item.endDateMonth || 0)
+              .thenByDescending((item) => item.endDateDay || 0)
+              .thenByDescending((item) => item.modifyDate)
+              .thenByDescending((item) => item.createDate)
+              .toArray()
         )
-        .orderByDescending((item) => item.key || Number.MIN_SAFE_INTEGER).toArray();
+        .orderByDescending((item) => item.key || Number.MIN_SAFE_INTEGER)
+        .toArray();
     },
   },
 };
@@ -69,7 +69,7 @@ export default {
 @import "@/styles/variables";
 
 .top-year {
-  display:flex;
+  display: flex;
 
   justify-content: space-between;
   align-items: baseline;

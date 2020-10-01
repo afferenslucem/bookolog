@@ -1,3 +1,4 @@
+import moment from 'moment'
 export const PAPER_BOOK_TYPE = 0;
 export const ELECTRONIC_BOOK_TYPE = 1;
 export const AUDIO_BOOK_TYPE = 2;
@@ -29,7 +30,8 @@ export class Book {
 
     constructor(obj) {
         Object.assign(this, obj);
-        this.modifyDate = new Date(obj.modifyDate);
+        this.createDate = moment.utc(obj.createDate).format();
+        this.modifyDate = moment.utc(obj.modifyDate).format();
         this.authors = this.authors || [];
         this.tags = this.tags || [];
     }

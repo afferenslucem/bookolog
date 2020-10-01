@@ -1,13 +1,35 @@
 import moment from 'moment';
-import {TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS} from '@/models/book';
+import {
+    TO_READ_STATUS,
+    IN_PROGRESS_STATUS,
+    DONE_STATUS
+} from '@/models/book';
 
 export default {
     methods: {
         goToEdit(guid) {
-            this.$router.push({ name: 'UpdateBook', params: { guid }});
+            this.$router.push({
+                name: 'UpdateBook',
+                params: {
+                    guid
+                }
+            });
         },
         goToInfo(guid) {
-            this.$router.push({ name: 'Book', params: { guid }});
+            this.$router.push({
+                name: 'Book',
+                params: {
+                    guid
+                }
+            });
+        },
+
+        editClick(e) {
+            this.goToEdit(this.book.guid);
+            e.stopPropagation();
+        },
+        lineClick() {
+            this.goToInfo(this.book.guid);
         }
     },
     computed: {
