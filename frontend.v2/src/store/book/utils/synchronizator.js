@@ -1,10 +1,20 @@
-import { getLogger } from '../../../logger';
-import { BookRepository } from '../../../storage/book-repository';
-import { BookClient } from '../../../http/book-client';
+import {
+    getLogger
+} from '../../../logger';
+import {
+    BookRepository
+} from '../../../storage/book-repository';
+import {
+    BookClient
+} from '../../../http/book-client';
 import _ from 'declarray';
 import moment from 'moment'
-import { NETWORK_ERROR } from '@/http/client';
-import { getUtcDate } from '@/utils/utc-date';
+import {
+    NETWORK_ERROR
+} from '@/http/client';
+import {
+    getUtcDate
+} from '@/utils/utc-date';
 
 const logger = getLogger({
     loggerName: 'BookSynchronizator'
@@ -16,22 +26,22 @@ export class BookSynchronizator {
         this.client = client || new BookClient();
     }
 
-    get now() {        
+    get now() {
         const now = getUtcDate();
         return moment(now).format();
     }
 
     async saveBook(book, onOffline = () => {}, onOnline = () => {}) {
         try {
-            book.createDate = this.now();
-            book.modifyDate = this.now();
-            
+            book.createDate = this.now;
+            book.modifyDate = this.now;
+
             book = await this.client.create(book);
             await onOnline();
         } catch (e) {
             logger.debug(e);
 
-            if(e == NETWORK_ERROR) {
+            if (e == NETWORK_ERROR) {
                 book.shouldSync = true;
                 await onOffline();
             } else {
@@ -44,13 +54,13 @@ export class BookSynchronizator {
     }
 
     async updateBook(book, onOffline = () => {}, onOnline = () => {}) {
-        book.modifyDate = this.now();
+        book.modifyDate = this.now;
 
         try {
             book = await this.client.update(book);
             await onOnline();
         } catch (e) {
-            if(e == NETWORK_ERROR) {
+            if (e == NETWORK_ERROR) {
                 book.shouldSync = true;
                 await onOffline();
             } else {
@@ -58,7 +68,7 @@ export class BookSynchronizator {
                 throw e;
             }
         }
-        
+
         return await this.repository.updateBook(book);
     }
 
@@ -67,7 +77,7 @@ export class BookSynchronizator {
             await this.client.delete(guid);
             await onOnline();
         } catch (e) {
-            if(e == NETWORK_ERROR) {
+            if (e == NETWORK_ERROR) {
                 await onOffline()
                 return;
             } else {
@@ -88,7 +98,7 @@ export class BookSynchronizator {
 
             return book;
         } catch (e) {
-            if(e == NETWORK_ERROR) {
+            if (e == NETWORK_ERROR) {
                 await onOffline()
             } else {
                 logger.error('Unexpected error:', e)
@@ -124,7 +134,7 @@ export class BookSynchronizator {
         } catch (e) {
             logger.warn(e);
 
-            if(e == NETWORK_ERROR) {
+            if (e == NETWORK_ERROR) {
                 await onOffline();
                 return null;
             } else {

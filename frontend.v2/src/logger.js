@@ -4,7 +4,7 @@ const mode = 'dev';
 
 const factory = mode == 'dev' ? new ConsoleLoggerFactory([
     {
-        logger: LogLevel.Disable,
+        logger: LogLevel.All,
         name: 'default'
     },
     {
@@ -17,7 +17,7 @@ const factory = mode == 'dev' ? new ConsoleLoggerFactory([
         name: {
             namespace: 'Http',
         },
-        logger: LogLevel.Disable
+        logger: LogLevel.All
     },
     {
         name: {
