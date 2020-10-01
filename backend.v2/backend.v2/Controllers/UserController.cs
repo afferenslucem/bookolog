@@ -59,6 +59,8 @@ namespace backend.Controllers
         {
             var user = await this.userSession.User;
 
+            user.LastSyncTime = this.userSession.LastSyncTime;
+
             return Ok(user.WithoutPrivate());
         }
     }

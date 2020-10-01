@@ -124,6 +124,8 @@ namespace backend.Controllers
             {
                 var books = await this.bookService.GetByUserId(userId);
 
+                this.session.UpdateLastSyncTime();
+
                 return Ok(books);
             }
             catch (Exception ex)

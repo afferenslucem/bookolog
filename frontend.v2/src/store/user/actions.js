@@ -22,6 +22,15 @@ const logger = getLogger({
     loggerName: 'Actions'
 });
 
+function dateHoursDiff(first, second) {
+    const date1 = new Date(first);
+    const date2 = new Date(second);
+
+    const diff = date1.getTime() - date2.getTime();
+
+    return diff / 1000 / 60 / 60;
+}
+
 export const actions = {
     [USER_LOGIN_ACTION]: async ({dispatch}, {username, password}) => {
         try {
@@ -51,8 +60,15 @@ export const actions = {
     
             if(recoveredUser) {
                 dispatch(USER_SAVE_ACTION, recoveredUser);
+
+                const now = new Date().toUTCString();
     
-                await dispatch(BOOKS_SYNC_ACTION)
+                if (dateHoursDiff(recoveredUser.lastSyncDate || now, now) > 12)
+                {
+                    await dispatch(BOOKS_LOAD_ACTION);
+                } else {
+                    await dispatch(BOOKS_SYNC_ACTION)
+                }                
     
                 logger.info('Logged in', recoveredUser)
     

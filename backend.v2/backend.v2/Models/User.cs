@@ -17,8 +17,9 @@ namespace backend.Models
         public string PasswordHash { get; set; }
         [NotMapped]
         public string Password { get; set; }
+        [NotMapped]
+        public DateTime? LastSyncTime { get; set; }
         public string Salt { get; set; }
-        public DateTime? LastAction { get; set; }
 
         public User WithoutPrivate()
         {
@@ -27,7 +28,7 @@ namespace backend.Models
                 Id = this.Id,
                 Login = this.Login,
                 Email = this.Email,
-                LastAction = this.LastAction
+                LastSyncTime = this.LastSyncTime
             };
         }
     }
