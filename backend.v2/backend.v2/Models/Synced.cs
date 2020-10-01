@@ -9,7 +9,6 @@ namespace backend.Models
 {
     public class Synched<TModel>
     {
-        public TModel[] Add {get; set;}
         public TModel[] Update {get; set;}
         public TModel[] Delete {get; set;}
     }

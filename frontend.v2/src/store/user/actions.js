@@ -9,6 +9,7 @@ import {
     USER_LOGOUT_ACTION,
     BOOKS_CLEAR_ACTION,
     BOOKS_SYNC_ACTION,
+    BOOKS_LOAD_ACTION,
     NOTIFICATION_DANGER_ACTION,
     USER_SAVE_ACTION,
 } from '../naming';
@@ -34,6 +35,7 @@ export const actions = {
             }
 
             dispatch(USER_SAVE_ACTION, user);
+            await dispatch(BOOKS_LOAD_ACTION)
     
             return user;
         } catch(e) {

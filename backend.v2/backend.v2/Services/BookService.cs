@@ -113,26 +113,33 @@ namespace backend.Services
             try {
                 var toDeleteAwait = this.CheckAndLoadForDelete(data.DeleteGuids);
                 var toUpdateAwait = this.CheckForUpdate(data.Update);
-                var toAddAwait = this.CheckForSave(data.Add);
 
-                var loaded = await Task.WhenAll(toAddAwait, toUpdateAwait, toDeleteAwait);
+                var loaded = await Task.WhenAll(toUpdateAwait, toDeleteAwait);
 
-                var savingAwait = this.storage.SaveMany(loaded[0]);
-                var updatingAwait = this.storage.UpdateMany(loaded[1]);
-                var deletingAwait = this.storage.DeleteMany(loaded[2]);
+                var updatingAwait = this.storage.SaveOrUpdateMany(loaded[0]);
+                var deletingAwait = this.DeleteMany(loaded[1]);
 
-                var synched = await Task.WhenAll(savingAwait, updatingAwait, deletingAwait);
+                var synched = await Task.WhenAll(updatingAwait, deletingAwait);
 
-                return new Synched<Book> {
-                    Add = synched[0],
-                    Update = synched[1],
-                    Delete = synched[2],
-                };
+                return await this.GetDifferenceForSession();
             } catch (Exception e) {
                 throw e;
             }
         }
 
+        private async Task<Synched<Book>> GetDifferenceForSession() {
+            var tres = this.session.LastSyncTime;
+
+            var updateAwait = this.storage.GetChangedAfter(tres);
+            var deleteAwait = this.storage.GetDeletedAfter(tres);
+
+            var diff = await Task.WhenAll(updateAwait, deleteAwait);
+
+            return new Synched<Book> {
+                Update = diff[0],
+                Delete = diff[1],
+            };
+        }
 
         public async Task<Book[]> SaveMany(Book[] books)
         {            
@@ -180,6 +187,17 @@ namespace backend.Services
         public async Task<Book[]> DeleteMany(Guid[] guids)
         {            
             var books = await this.CheckAndLoadForDelete(guids);
+
+            return await this.storage.DeleteMany(books);
+        }
+
+        public async Task<Book[]> DeleteMany(Book[] books)
+        {            
+            var user = await this.session.User;
+            
+            foreach(var item in books) {
+                this.CheckAccess(user.Id, item);
+            } 
 
             return await this.storage.DeleteMany(books);
         }

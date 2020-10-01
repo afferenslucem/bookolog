@@ -3,6 +3,7 @@ using backend.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using backend.Services;
 using backend.Storage;
+using System;
 
 namespace tests.Services
 {
@@ -16,9 +17,16 @@ namespace tests.Services
             });
         }
 
+        public void UpdateLastSyncTime()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<User> User
         {
             get { return this.GetUser(); }
         }
+
+        public DateTime LastSyncTime => throw new NotImplementedException();
     }
 }

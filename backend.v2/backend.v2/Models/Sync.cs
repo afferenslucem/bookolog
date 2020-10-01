@@ -8,7 +8,6 @@ namespace backend.Models
 {
     public class BookSyncModel
     {
-        public Book[] Add { get; set; }
         public Book[] Update { get; set; }
         public Guid[] DeleteGuids { get; set; }
     }

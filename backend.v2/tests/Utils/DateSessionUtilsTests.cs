@@ -25,8 +25,6 @@ namespace tests.Services
 
             var str = DateSessionUtils.Stringify(now);
 
-            Console.WriteLine(str);
-
             var result = DateSessionUtils.Parse(str);
 
             Assert.AreEqual(now.Year, result.Value.Year);

@@ -5,6 +5,7 @@ import {
     BOOK_ADD_ACTION, 
     BOOK_DELETE_ACTION, 
     BOOKS_SAVE_MUTATION,
+    BOOKS_LOAD_ACTION,
     BOOK_ADD_MUTATION, 
     BOOK_DELETE_MUTATION, 
     BOOK_UPDATE_MUTATION, 
@@ -22,10 +23,20 @@ const logger = getLogger({
 });
 
 export const actions = {
-    [BOOKS_SYNC_ACTION]: async ({commit, rootState}) => {
+    [BOOKS_SYNC_ACTION]: async ({commit}) => {
         const synchronizer = new BookSynchronizator();
 
-        const books = await synchronizer.sync(rootState.user.id);
+        const books = await synchronizer.sync();
+
+        commit(BOOKS_SAVE_MUTATION, books)
+    },
+    [BOOKS_LOAD_ACTION]: async ({commit, rootState}) => {
+        const synchronizer = new BookSynchronizator();
+
+        const books = await synchronizer.loadAllRemoteBooks(rootState.user.id);
+        
+        const storage = new BookRepository();
+        await storage.saveManyBooks(books);
 
         commit(BOOKS_SAVE_MUTATION, books)
     },
@@ -61,8 +72,6 @@ export const actions = {
     [BOOK_DELETE_ACTION]: async ({commit, state}, guid) => {
         if(!guid) return;
 
-        let shouldContinue = true;
-
         await new BookSynchronizator().deleteBook(guid, async () => {
             const storage = new BookRepository();
 
@@ -73,11 +82,7 @@ export const actions = {
             storage.updateBook(book);
 
             commit(BOOK_UPDATE_MUTATION, book)
-
-            shouldContinue = false;
         });
-
-        if(!shouldContinue) return;
 
         commit(BOOK_DELETE_MUTATION, guid)
     },

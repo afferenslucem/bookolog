@@ -112,26 +112,6 @@ export class BookRepository {
         return books;
     }
 
-    async saveOrUpdateBook(book) {
-        if(book.guid) {
-            return await this.updateBook(book);
-        } else {
-            return await this.saveBook(book);
-        }
-    }
-
-    async saveOrUpdateManyBooks(books) {
-        if(books.length === 0) return;
-        
-        const shouldCreate = _(books).where(item => !item.guid).toArray();
-        const shouldUpdate = _(books).where(item => !!item.guid).toArray();
-
-        const created = await this.saveManyBooks(shouldCreate);
-        const updated = await this.updateManyBooks(shouldUpdate);
-
-        return _(created).concat(updated).toArray();
-    }
-
     async allBooks() {
         await this.#repository.open(this.#dbName);
         const books = await this.#repository.all(this.#booksStore);

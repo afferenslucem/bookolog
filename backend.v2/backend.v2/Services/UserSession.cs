@@ -9,8 +9,10 @@ namespace backend.Services
 {
     public interface IUserSession
     {
+        void UpdateLastSyncTime();
         Task<User> GetUser();
         Task<User> User { get; }
+        DateTime LastSyncTime { get; }
     }
 
     public class UserSession : IUserSession
@@ -26,6 +28,13 @@ namespace backend.Services
             this.userService = userService;
         }
 
+        public void UpdateLastSyncTime()
+        {
+            var now = DateSessionUtils.Now;
+            var str = DateSessionUtils.Stringify(now);
+            this.Session.SetString("LastSyncTime", str);
+        }
+
         public async Task<User> GetUser()
         {
             if (this.user != null) return this.user;
@@ -34,9 +43,29 @@ namespace backend.Services
             return this.user;
         }
 
-        public Task<User> User {
-            get {
+        public Task<User> User
+        {
+            get
+            {
                 return this.GetUser();
+            }
+        }
+
+        public DateTime LastSyncTime
+        {
+            get
+            {
+                var saved = this.Session.GetString("LastSyncTime");
+
+                return DateSessionUtils.Parse(saved) ?? DateTime.MinValue;
+            }
+        }
+
+        private ISession Session
+        {
+            get
+            {
+                return this.context.Session;
             }
         }
     }

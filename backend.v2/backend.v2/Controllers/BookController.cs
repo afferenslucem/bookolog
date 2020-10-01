@@ -4,14 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using backend.Exceptions.Authentication;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using backend.Exceptions;
 using backend.Models;
-using backend.Models.Authentication;
 using backend.Services;
 using Microsoft.Extensions.Logging;
 
@@ -22,21 +17,15 @@ namespace backend.Controllers
     {
         private readonly IBookService bookService;
         private readonly ILogger<BookController> logger;
+        private readonly IUserSession session;
 
-        public BookController(IBookService bookService, ILogger<BookController> logger)
+        public BookController(IBookService bookService, IUserSession session, ILogger<BookController> logger)
         {
             this.bookService = bookService;
             this.logger = logger;
+            this.session = session;
         }
 
-        /// <summary>
-        /// Creates Book item
-        /// </summary>
-        /// <param name="model">Book description model</param>
-        /// <returns>Created book with filled guid</returns>
-        /// <response code="200">Returns the newly created item</response>
-        /// <response code="400">Returns error description</response>
-        /// <response code="500">Returns error response</response>
         [HttpPost]
         [Authorize]
         [Route("[action]")]
@@ -61,14 +50,6 @@ namespace backend.Controllers
             }
         }
 
-        /// <summary>
-        /// Updates Book item
-        /// </summary>
-        /// <param name="model">Book description model</param>
-        /// <returns>Created book with filled guid</returns>
-        /// <response code="200">Returns the updated item</response>
-        /// <response code="400">Returns error description</response>
-        /// <response code="500">Returns error response</response>
         [HttpPut]
         [Authorize]
         [Route("[action]")]
@@ -93,14 +74,6 @@ namespace backend.Controllers
             }
         }
     
-        /// <summary>
-        /// Deletes Book item
-        /// </summary>
-        /// <param name="guid">Book guid</param>
-        /// <returns>Deleted item</returns>
-        /// <response code="200">Returns the deleted item</response>
-        /// <response code="400">Returns error description</response>
-        /// <response code="500">Returns error response</response>
         [HttpDelete]
         [Authorize]
         [Route("[action]/{guid}")]
@@ -127,13 +100,6 @@ namespace backend.Controllers
             }
         }
 
-        /// <summary>
-        /// Returns Book by guid
-        /// </summary>
-        /// <param name="guid">Book guid</param>
-        /// <returns>Item</returns>
-        /// <response code="200">Returns requested item</response>
-        /// <response code="500">Returns error response</response>
         [HttpGet]
         [Route("[action]/{guid}")]
         public async Task<IActionResult> Get(Guid guid) {
@@ -151,13 +117,6 @@ namespace backend.Controllers
             }
         }
 
-        /// <summary>
-        /// Returns array of books by user id
-        /// </summary>
-        /// <param name="userId">Id of user</param>
-        /// <returns>Users items</returns>
-        /// <response code="200">Returns requested items</response>
-        /// <response code="500">Returns error response</response>
         [HttpGet]
         [Route("User/{userId}")]
         public async Task<IActionResult> Get(long userId) {
@@ -181,11 +140,12 @@ namespace backend.Controllers
         public async Task<IActionResult> Synchronize([FromBody]BookSyncModel data) {
             try
             {
-                data.Add = data.Add ?? new Book[] {};
                 data.Update = data.Update ?? new Book[] {};
                 data.DeleteGuids = data.DeleteGuids ?? new Guid[] {};
 
                 var answer = await this.bookService.Synch(data);
+
+                this.session.UpdateLastSyncTime();
 
                 return Ok(answer);
             }

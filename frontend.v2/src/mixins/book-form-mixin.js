@@ -165,7 +165,7 @@ export default {
       return !this.showProgress || (this.book.doneUnits == null || this.book.totalUnits == null) || (this.book.doneUnits <= this.book.totalUnits);
     },
     nameValid() {
-      return this.book.name.length > 0;
+      return this.book.name != null && this.book.name.length > 0;
     },
     formValid() {
       return this.datesValid && this.unitsValid && this.nameValid

@@ -99,5 +99,20 @@ namespace tests.Storage
 
             return result.ToArray();
         }
+
+        public Task<Book[]> GetChangedAfter(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Book[]> GetDeletedAfter(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Book[]> SaveOrUpdateMany(Book[] books)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
