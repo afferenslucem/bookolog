@@ -43,6 +43,8 @@ namespace backend.Controllers
 
                 await this.AuthenticateUser(user);
 
+                user.LastSyncTime = DateSessionUtils.Now;
+
                 return Ok(user);
             }
             catch (IncorrectCredentianlsException)
