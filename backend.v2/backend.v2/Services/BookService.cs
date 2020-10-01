@@ -129,9 +129,10 @@ namespace backend.Services
 
         private async Task<Synched<Book>> GetDifferenceForSession() {
             var tres = this.session.LastSyncTime;
+            var user = await this.session.User;
 
-            var updateAwait = this.storage.GetChangedAfter(tres);
-            var deleteAwait = this.storage.GetDeletedAfter(tres);
+            var updateAwait = this.storage.GetChangedAfter(user.Id, tres);
+            var deleteAwait = this.storage.GetDeletedAfter(user.Id, tres);
 
             var diff = await Task.WhenAll(updateAwait, deleteAwait);
 

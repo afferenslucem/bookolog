@@ -13,8 +13,8 @@ namespace backend.Storage
         Task<Book> Update(Book book);
         Task<Book> GetByGuid(Guid guid);
         Task<Book[]> GetByGuids(Guid[] guids);
-        Task<Book[]> GetChangedAfter(DateTime date);
-        Task<Book[]> GetDeletedAfter(DateTime date);
+        Task<Book[]> GetChangedAfter(long userId, DateTime date);
+        Task<Book[]> GetDeletedAfter(long userId, DateTime date);
         Task<IEnumerable<Book>> GetByUserId(long id);
         Task<Book> Delete(Guid guid);
         Task<Book[]> SaveMany(Book[] books);
@@ -88,20 +88,20 @@ namespace backend.Storage
             return result;
         }
 
-        public async Task<Book[]> GetDeletedAfter(DateTime date)
+        public async Task<Book[]> GetDeletedAfter(long userId, DateTime date)
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => item.DeleteDate >= date).ToArrayAsync();
+            var result = await context.Books.Where(item => item.DeleteDate >= date && item.UserId == userId).ToArrayAsync();
 
             return result;
         }
 
-        public async Task<Book[]> GetChangedAfter(DateTime date)
+        public async Task<Book[]> GetChangedAfter(long userId, DateTime date)
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => (item.ModifyDate >= date || item.CreateDate >= date) && item.DeleteDate == null).ToArrayAsync();
+            var result = await context.Books.Where(item => (item.ModifyDate >= date || item.CreateDate >= date) && item.DeleteDate == null && item.UserId == userId).ToArrayAsync();
 
             return result;
         }

@@ -100,12 +100,12 @@ namespace tests.Storage
             return result.ToArray();
         }
 
-        public Task<Book[]> GetChangedAfter(DateTime date)
+        public Task<Book[]> GetChangedAfter(long userId, DateTime date)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Book[]> GetDeletedAfter(DateTime date)
+        public Task<Book[]> GetDeletedAfter(long userId, DateTime date)
         {
             throw new NotImplementedException();
         }

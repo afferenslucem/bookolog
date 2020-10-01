@@ -149,13 +149,13 @@ function clearCommonForm() {
 Cypress.Commands.add("clearDoneForm", () => {
     clearCommonForm();
 
-    cy.get('.start-date .year').clear();
-    cy.get('.start-date .month').clear();
     cy.get('.start-date .day').clear();
+    cy.get('.start-date .month').clear();
+    cy.get('.start-date .year').clear();
 
-    cy.get('.end-date .year').clear();
-    cy.get('.end-date .month').clear();
     cy.get('.end-date .day').clear();
+    cy.get('.end-date .month').clear();
+    cy.get('.end-date .year').clear();
 });
 
 function compareCommonForm(book) {
@@ -230,7 +230,7 @@ function compareCommonView(book) {
     cy.get('.genre').contains(capitalFirst(book.genre));
     cy.get('.tags').contains(book.tags.map(item => capitalFirst(item)).join(', '));
 
-    if(!!book.note) {
+    if(book.note) {
         cy.get('.note').contains(book.note);
     }
 }

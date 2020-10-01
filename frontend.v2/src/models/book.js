@@ -30,8 +30,12 @@ export class Book {
 
     constructor(obj) {
         Object.assign(this, obj);
-        this.createDate = moment.utc(obj.createDate).format();
-        this.modifyDate = moment.utc(obj.modifyDate).format();
+        if(obj.createDate) {
+            this.createDate = moment.utc(obj.createDate).format();
+        }
+        if(obj.modifyDate) {
+            this.modifyDate = moment.utc(obj.modifyDate).format();
+        }
         this.authors = this.authors || [];
         this.tags = this.tags || [];
     }

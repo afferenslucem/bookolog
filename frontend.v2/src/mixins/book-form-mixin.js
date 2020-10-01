@@ -157,9 +157,43 @@ export default {
       return this.book.status == IN_PROGRESS_STATUS;
     },
     datesValid() {
-      return !this.showEndDate || !this.showStartDate || ((this.book.startDateYear == null || this.book.endDateYear == null) || (+this.book.startDateYear <= +this.book.endDateYear)) && 
-        ((this.book.startDateMonth == null || this.book.endDateMonth == null) || (+this.book.startDateMonth <= +this.book.endDateMonth)) && 
-        ((this.book.startDateDay == null || this.book.endDateDay == null) || (+this.book.startDateDay <= +this.book.endDateDay));
+      if (!this.showEndDate || !this.showStartDate) {
+        return true;
+      }
+
+      if (this.book.startDateYear == null || this.book.endDateYear == null) {
+        return true;
+      }
+
+      if (+this.book.startDateYear < +this.book.endDateYear) {
+        return true;
+      }
+
+      if (+this.book.startDateYear > +this.book.endDateYear) {
+        return false;
+      }
+
+      if (this.book.startDateMonth == null || this.book.endDateMonth == null) {
+        return true;
+      }
+
+      if (+this.book.startDateMonth > +this.book.endDateMonth) {
+        return false;
+      }
+
+      if (+this.book.startDateMonth < +this.book.endDateMonth) {
+        return true;
+      }
+
+      if (this.book.startDateDay == null || this.book.endDateDay == null) {
+        return true;
+      }
+
+      if (+this.book.startDateDay > +this.book.endDateDay) {
+        return false;
+      }
+
+      return true;
     },
     unitsValid() {
       return !this.showProgress || (this.book.doneUnits == null || this.book.totalUnits == null) || (this.book.doneUnits <= this.book.totalUnits);
