@@ -75,7 +75,9 @@ export const actions = {
             const recoveredUser = await new UserSynchronizator().getCurrentUser();
 
             if (recoveredUser) {
-                recoveredUser.lastSyncDate = recoveredUser.lastSyncDate || getUtcDate();
+                const now = getUtcDate();
+
+                recoveredUser.lastSyncDate = recoveredUser.lastSyncDate || now;
 
                 dispatch(USER_SAVE_ACTION, recoveredUser);
 
