@@ -209,7 +209,7 @@ import {
   NOTIFICATION_DANGER_ACTION,
 } from "@/store/naming";
 import store from "@/store";
-import { DONE_STATUS } from "@/models/book";
+import { DONE_STATUS, IN_PROGRESS_STATUS, TO_READ_STATUS } from "@/models/book";
 
 export default {
   components: {
@@ -245,19 +245,54 @@ export default {
     statusChange() {
       if (this.initialStatus == DONE_STATUS) return;
 
-      if (this.book.status === DONE_STATUS) {
-        this.book.endDateYear = new Date().getFullYear();
-        this.book.endDateMonth = new Date().getMonth() + 1;
-        this.book.endDateDay = new Date().getDate();
-
-        this.book.doneUnits = this.book.totalUnits;
-      } else {
-        this.book.endDateYear = null;
-        this.book.endDateMonth = null;
-        this.book.endDateDay = null;
-
-        this.book.doneUnits = this.initialUnits;
+      if (
+        this.initialStatus === IN_PROGRESS_STATUS &&
+        this.book.status === DONE_STATUS
+      ) {
+        this.fromProgressToDoneStatusChange();
+      } else if (
+        this.initialStatus === TO_READ_STATUS &&
+        this.book.status === IN_PROGRESS_STATUS
+      ) {
+        this.fromToReadToProgressStatusChange();
+      } else if (this.book.status === IN_PROGRESS_STATUS) {
+        this.resetForInProgress();
+      } else if (this.book.status === TO_READ_STATUS) {
+        this.resetForToRead();
       }
+    },
+    fromProgressToDoneStatusChange() {
+      this.book.endDateYear = new Date().getFullYear();
+      this.book.endDateMonth = new Date().getMonth() + 1;
+      this.book.endDateDay = new Date().getDate();
+
+      this.book.doneUnits = this.book.totalUnits;
+    },
+    fromToReadToProgressStatusChange() {
+      this.book.startDateYear = new Date().getFullYear();
+      this.book.startDateMonth = new Date().getMonth() + 1;
+      this.book.startDateDay = new Date().getDate();
+    },
+    resetForInProgress() {
+      this.resetEndDate();
+
+      this.book.doneUnits = this.initialUnits;
+    },
+    resetForToRead() {
+      this.resetEndDate();
+      this.resetStartDate();
+
+      this.book.doneUnits = this.initialUnits;
+    },
+    resetEndDate() {
+      this.book.endDateYear = null;
+      this.book.endDateMonth = null;
+      this.book.endDateDay = null;
+    },
+    resetStartDate() {
+      this.book.startDateYear = null;
+      this.book.startDateMonth = null;
+      this.book.startDateDay = null;
     },
   },
   beforeRouteEnter(to, from, next) {

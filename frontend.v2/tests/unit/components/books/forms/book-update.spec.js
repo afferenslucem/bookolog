@@ -75,7 +75,31 @@ describe('BookUpdate.vue', () => {
         expect(wrapper.vm.book.doneUnits).equal(10);
     })
 
-    it('Prefill dates for new done status', async () => {
+    it('Prefill dates for new progress status', async () => {
+        wrapper.vm.initialStatus = 0;
+
+        expect(wrapper.vm.book.startDateYear).equal(null);
+        expect(wrapper.vm.book.startDateMonth).equal(null);
+        expect(wrapper.vm.book.startDateDay).equal(null);
+
+        wrapper.find('#status').setValue(1);
+
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.vm.book.startDateYear).equal(new Date().getFullYear());
+        expect(wrapper.vm.book.startDateMonth).equal(new Date().getMonth() + 1);
+        expect(wrapper.vm.book.startDateDay).equal(new Date().getDate());
+
+        wrapper.find('#status').setValue(0);
+
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.vm.book.startDateYear).equal(null);
+        expect(wrapper.vm.book.startDateMonth).equal(null);
+        expect(wrapper.vm.book.startDateDay).equal(null);
+    })
+
+    it('Should not prefill dates for same done status', async () => {
         wrapper.vm.initialStatus = 2;
 
         expect(wrapper.vm.book.endDateYear).equal(null);
@@ -91,6 +115,22 @@ describe('BookUpdate.vue', () => {
         expect(wrapper.vm.book.endDateMonth).equal(null);
         expect(wrapper.vm.book.endDateDay).equal(null);
         expect(wrapper.vm.book.doneUnits).equal(null);
+    })
+
+    it('Should not prefill dates for same progress status', async () => {
+        wrapper.vm.initialStatus = 1;
+
+        expect(wrapper.vm.book.startDateYear).equal(null);
+        expect(wrapper.vm.book.startDateMonth).equal(null);
+        expect(wrapper.vm.book.startDateDay).equal(null);
+
+        wrapper.find('#status').setValue(1);
+
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.vm.book.startDateYear).equal(null);
+        expect(wrapper.vm.book.startDateMonth).equal(null);
+        expect(wrapper.vm.book.startDateDay).equal(null);
     })
     
     
