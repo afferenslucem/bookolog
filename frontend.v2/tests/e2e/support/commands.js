@@ -152,10 +152,6 @@ Cypress.Commands.add("clearDoneForm", () => {
     cy.get('.start-date .day').clear();
     cy.get('.start-date .month').clear();
     cy.get('.start-date .year').clear();
-
-    cy.get('.end-date .day').clear();
-    cy.get('.end-date .month').clear();
-    cy.get('.end-date .year').clear();
 });
 
 function compareCommonForm(book) {

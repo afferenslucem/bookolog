@@ -7,6 +7,7 @@ import {
     USER_LOGIN_MUTATION,
     USER_LOGOUT_MUTATION,
     USER_RECOVER_ACTION,
+    USER_SYNC_DATA_ACTION,
     USER_LOGIN_ACTION,
     USER_LOGOUT_ACTION,
     BOOKS_CLEAR_ACTION,
@@ -25,6 +26,9 @@ import {
 import {
     getUtcDate
 } from '@/utils/utc-date';
+import {
+    BOOK_RELOAD_TIMEOUT_HOURS
+} from '@/config';
 
 const logger = getLogger({
     namespace: 'UserModule',
@@ -58,6 +62,7 @@ export const actions = {
             }
 
             dispatch(USER_SAVE_ACTION, user);
+
             await dispatch(BOOKS_LOAD_ACTION)
 
             return user;
@@ -75,17 +80,9 @@ export const actions = {
             const recoveredUser = await new UserSynchronizator().getCurrentUser();
 
             if (recoveredUser) {
-                const now = getUtcDate();
-
-                recoveredUser.lastSyncDate = recoveredUser.lastSyncDate || now;
-
                 dispatch(USER_SAVE_ACTION, recoveredUser);
 
-                if (dateHoursDiff(recoveredUser.lastSyncDate, now) > 12) {
-                    await dispatch(BOOKS_LOAD_ACTION);
-                } else {
-                    await dispatch(BOOKS_SYNC_ACTION)
-                }
+                await dispatch(USER_SYNC_DATA_ACTION, recoveredUser);
 
                 logger.info('Logged in', recoveredUser)
 
@@ -93,6 +90,22 @@ export const actions = {
             } else {
                 return null;
             }
+        } catch (e) {
+            return null;
+        }
+    },
+    [USER_SYNC_DATA_ACTION]: async ({
+        dispatch
+    }, user) => {
+        try {
+            const now = getUtcDate();
+
+            if (dateHoursDiff(user.lastSyncDate, now) > BOOK_RELOAD_TIMEOUT_HOURS) {
+                await dispatch(BOOKS_LOAD_ACTION);
+            } else {
+                await dispatch(BOOKS_SYNC_ACTION)
+            }
+
         } catch (e) {
             return null;
         }
