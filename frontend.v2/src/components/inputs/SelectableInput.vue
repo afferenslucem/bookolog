@@ -4,7 +4,7 @@
       <div class="form-row">
         <div class="col-8">
           <input
-            v-model.trim="value"
+            v-model="value"
             type="text"
             class="form-control"
             :placeholder="placeholder"
@@ -24,7 +24,7 @@
               type="button"
               @click="pushValue(value)"
             >
-              {{ value }}
+              {{ value | capital }}
             </button>
           </div>
         </div>
@@ -61,7 +61,7 @@ export default {
       e.stopPropagation();
     },
     pushBySubmit() {
-      this.pushValue(this.value);
+      this.pushValue(this.value.trim().toLowerCase());
       this.value = "";
     },
     pushValue(value) {
