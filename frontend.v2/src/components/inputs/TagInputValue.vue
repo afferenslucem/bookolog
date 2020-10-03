@@ -28,13 +28,13 @@ export default {
 
   width: auto;
 
-  padding: .2rem;
+  padding: 0.2rem 0.4rem;
 
   justify-content: flex-start;
   align-items: center;
 
   i {
-    margin-left: .3rem;
+    margin-left: 0.3rem;
   }
 
   border: $split-line;

@@ -12,14 +12,6 @@ import {
     TO_READ_STATUS,
     DONE_STATUS
 } from '@/models/book';
-import {
-    getLogger
-} from '@/logger'
-
-const logger = getLogger({
-    namespace: 'Store',
-    loggerName: 'BooksGetters'
-})
 
 export const getters = {
     books: state => Object.values(state),
@@ -41,8 +33,6 @@ export const getters = {
             .select(item => item.tags)
             .aggregate((a, b) => a.concat(b), []);
 
-        logger.debug('Tags:', tags);
-
         const result = _(tags).groupBy(item => item, group => group.count())
             .orderByDescending(item => item.group)
             .select(item => ({
@@ -50,8 +40,6 @@ export const getters = {
                 count: item.group
             }))
             .toArray();
-
-        logger.debug('Result:', result);
 
         return result;
     },
@@ -61,8 +49,6 @@ export const getters = {
             .select(item => item.authors)
             .aggregate((a, b) => a.concat(b), []);
 
-        logger.debug('Authors:', authors);
-
         const result = _(authors).groupBy(item => item, group => group.count())
             .orderByDescending(item => item.group)
             .select(item => ({
@@ -70,8 +56,6 @@ export const getters = {
                 count: item.group
             }))
             .toArray();
-
-        logger.debug('Result:', result);
 
         return result;
     }

@@ -20,6 +20,7 @@
         :placeholder="$t('book.form.titles.authors')"
         :datalist="existingAuthors"
         :tags.sync="book.authors"
+        name="authors"
       ></tag-list-input>
       <div class="form-group">
         <input
@@ -32,21 +33,19 @@
         />
       </div>
       <div class="form-group">
-        <input
-          type="text"
+        <completable-input
           name="genre"
-          id="genre"
-          class="form-control"
           :placeholder="$t('book.form.titles.genre')"
-          :pattern="genrePattern"
-          v-model.trim="book.genre"
-        />
+          :value.sync="book.genre"
+          :datalist="existingGenres"
+        ></completable-input>
       </div>
       <tag-list-input
         class="form-group"
         :placeholder="$t('book.form.titles.tags')"
         :datalist="existingTags"
         :tags.sync="book.tags"
+        name="tags"
       ></tag-list-input>
       <div class="form-group">
         <label for="status">{{ $t("book.form.titles.status") }}</label>
@@ -185,6 +184,7 @@ import bookMixin from "@/mixins/book-form-mixin";
 import DateInput from "@/components/inputs/BookDateInput.vue";
 import AudioBookUnitsInput from "@/components/inputs/AudioBookUnitsInput.vue";
 import TagListInput from '@/components/inputs/TagListInput.vue';
+import CompletableInput from "@/components/inputs/AutoCompletableInput.vue";
 import {
   BOOK_UPDATE_ACTION,
   BOOK_GET_BY_GUID_ACTION,
@@ -199,6 +199,7 @@ export default {
     DateInput,
     AudioBookUnitsInput,
     TagListInput,
+    CompletableInput,
   },
   data: () => ({
     initialStatus: null,

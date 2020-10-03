@@ -49,14 +49,16 @@ export default {
         justify-content: center;
 
         .loader {
-            background-image: url('/img/loader.gif');
+            background-image: url('/img/loader.svg');
+
+            background-size: 100% 100%;
 
             background-origin: content-box;
             background-position: center;
             background-repeat: no-repeat;
 
-            height: 200px;
-            width: 200px;
+            height: 300px;
+            width: 300px;
         }
     }
 </style>

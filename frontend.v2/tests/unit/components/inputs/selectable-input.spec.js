@@ -1,36 +1,62 @@
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
-import SelectableInput from '@/components/inputs/SelectableInput.vue'
+import SelectableInput from '@/components/inputs/AutoCompletableInput.vue'
 
 describe('SelectableInput.vue', () => {
-    it('Should emit by submit', async () => {
+    it('Should emit by input', async () => {
         const component = new shallowMount(SelectableInput, {
             mocks: {
-                $t: () => {}
-            }
+                $t: () => { }
+            },
+            propsData: {
+                name: 'test'
+            },
         });
 
         component.find('input').setValue('qwerty');
+        component.find('input').trigger('input');
 
         await component.vm.$nextTick()
 
-        expect(component.vm.value).equal('qwerty');
+        expect(component.vm.innerValue).equal('qwerty');
 
-        component.vm.pushBySubmit();
-
-        expect(component.vm.value).equal('');
-        expect(component.emitted()['submitted'][0]).deep.equal(['qwerty']);
+        expect(component.emitted()['update:value'][0]).deep.equal(['qwerty']);
     });
-    it('Should emit by click', () => {
+
+    it('Should render placeholder', async () => {
         const component = new shallowMount(SelectableInput, {
             mocks: {
-                $t: () => {}
-            }
+                $t: () => { }
+            },
+            propsData: {
+                name: 'test',
+                placeholder: 'renderCheck',
+            },
         });
 
-        component.vm.pushByValue('value');
+        expect(component.find('input').attributes().placeholder).equal('renderCheck');
+    });
 
-        expect(component.vm.value).equal('');
-        expect(component.emitted()['submitted'][0]).deep.equal(['value']);
+    it('Should render same ids', async () => {
+        const component = new shallowMount(SelectableInput, {
+            mocks: {
+                $t: () => { }
+            },
+            propsData: {
+                name: 'test',
+                placeholder: 'renderCheck',
+                datalist: [
+                    'first',
+                    'second',
+                    'third',
+                ]
+            },
+        });
+
+        await component.vm.$nextTick()
+
+        expect(component.find('input').attributes().list).equal('test-list');
+        expect(component.find('.datalist').attributes().id).equal('test-list');
+        expect(component.vm.completeId).equal('test-list');
     });
 });
