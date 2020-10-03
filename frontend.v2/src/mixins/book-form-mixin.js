@@ -10,6 +10,7 @@ import moment from 'moment';
 import {
   PAGES_MAX_VALUE
 } from '../config';
+import { BOOKS_TAGS_COUNT_GETTER, BOOKS_AUTHORS_COUNT_GETTER } from "@/store/naming";
 
 export default {
   data: function () {
@@ -203,7 +204,17 @@ export default {
     },
     formValid() {
       return this.datesValid && this.unitsValid && this.nameValid
-    }
+    },
+    existingTags() {
+      return this.$store.getters[BOOKS_TAGS_COUNT_GETTER].map(
+        (item) => item.name
+      );
+    },
+    existingAuthors() {
+      return this.$store.getters[BOOKS_AUTHORS_COUNT_GETTER].map(
+        (item) => item.name
+      );
+    },
   },
   filters: {
     calendarDate(date) {

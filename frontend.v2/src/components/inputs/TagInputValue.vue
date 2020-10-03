@@ -1,6 +1,6 @@
 <template>
   <span class="tag">
-    <small>{{ name }}</small>
+    <small>{{ name | capital }}</small>
     <i class="fa fa-times" aria-hidden="true" @click="crossClick()"></i>
   </span>
 </template>

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <selectable-input @submitted="appendTag($event)"></selectable-input>
+    <selectable-input
+      @submitted="appendTag($event)"
+      :list="datalist"
+      :placeholder="placeholder"
+    ></selectable-input>
     <div class="tags">
       <tag-input-value
         :name="tag"
@@ -24,6 +28,13 @@ export default {
     tags: {
       type: Array,
     },
+    datalist: {
+      type: Array,
+    },
+    placeholder: {
+      type: String,
+      default: () => "",
+    },
   },
   components: {
     SelectableInput,
@@ -33,8 +44,8 @@ export default {
     this.tagsValue = this.tags;
   },
   watch: {
-    tags: function (newValue) { 
-      this.tagsValue = newValue; 
+    tags: function (newValue) {
+      this.tagsValue = newValue;
     },
   },
   methods: {
@@ -58,15 +69,22 @@ export default {
 <style lang="scss" scoped>
 .tags {
   display: flex;
-
+  flex-wrap: wrap;
   justify-content: flex-start;
 
   > * {
     flex: 0 0 auto;
 
-    &:not(:first-child) {
-      margin-left: 0.5rem;
+    &:not(:last-child) {
+      margin-right: 0.5rem;
     }
+
+    margin-top: 0.5rem;
   }
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 0;
 }
 </style>

@@ -15,21 +15,12 @@
           autocomplete="off"
         />
       </div>
-      <div class="form-group">
-        <input
-          type="text"
-          name="authors"
-          id="authors"
-          class="form-control"
-          :placeholder="$t('book.form.titles.authors')"
-          aria-describedby="authorsInput"
-          :pattern="bookAuthorsPattern"
-          v-model.trim="authorsComp"
-        />
-        <small id="authorsInput" class="text-muted">{{
-          $t("book.form.titles.splitByComma")
-        }}</small>
-      </div>
+      <tag-list-input
+        class="form-group"
+        :placeholder="$t('book.form.titles.authors')"
+        :datalist="existingAuthors"
+        :tags.sync="book.authors"
+      ></tag-list-input>
       <div class="form-group">
         <input
           type="number"
@@ -51,7 +42,12 @@
           v-model.trim="book.genre"
         />
       </div>
-      <tag-list-input class="form-group" :tags.sync="book.tags"></tag-list-input>
+      <tag-list-input
+        class="form-group"
+        :placeholder="$t('book.form.titles.tags')"
+        :datalist="existingTags"
+        :tags.sync="book.tags"
+      ></tag-list-input>
       <div class="form-group">
         <label for="status">{{ $t("book.form.titles.status") }}</label>
         <select

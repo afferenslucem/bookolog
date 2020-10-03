@@ -7,7 +7,7 @@
             v-model.trim="value"
             type="text"
             class="form-control"
-            placeholder="Тег"
+            :placeholder="placeholder"
             autocomplete="off"
             data-toggle="dropdown"
             aria-haspopup="true"
@@ -22,13 +22,14 @@
               v-for="value of autocomplete"
               :key="value"
               type="button"
+              @click="pushValue(value)"
             >
               {{ value }}
             </button>
           </div>
         </div>
         <div class="col-4">
-          <button type="submit" class="btn btn-primary">Добавить</button>
+          <button type="submit" class="btn btn-primary">{{ $t('common.buttons.add') }}</button>
         </div>
       </div>
     </form>
@@ -37,6 +38,7 @@
 
 <script>
 import {fuzzyThrough} from '@/utils/fuzzy-throw.js'
+import _ from 'declarray';
 export default {
   data: () => ({
     value: "",
@@ -46,6 +48,10 @@ export default {
       type: Array,
       required: false,
       default: () => [],
+    },
+    placeholder: {
+        type: String,
+        default: () => '',
     },
   },
   methods: {
@@ -65,28 +71,16 @@ export default {
     pushEvent(value) {
       this.$emit("submitted", value);
     },
-    fuzzy(line, term, ratio = 0.25) {
-      var string = line.toLowerCase();
-      var compare = term.toLowerCase();
-      var matches = 0;
-
-      if (string.indexOf(compare) > -1) return true; // covers basic partial matches
-
-      for (var i = 0; i < compare.length; i++) {
-        string.indexOf(compare[i]) > -1 ? (matches += 1) : (matches -= 1);
-      }
-
-      return matches / line.length >= ratio || term == "";
-    },
   },
   computed: {
     autocomplete() {
+      let result = [];
       if (!this.value) {
-        return this.list;
+        result = this.list;
       } else {
-        const result = fuzzyThrough(this.value);
-        return result;
+        result = fuzzyThrough(this.list, this.value);
       }
+      return _(result).take(5).toArray();
     },
   },
 };
