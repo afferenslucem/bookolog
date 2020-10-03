@@ -6,16 +6,21 @@
       class="form-control"
       :placeholder="placeholder"
       :list="completeId"
+      autocomplete="on"
       @input="onInput()"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
     />
-    <datalist :id="completeId" class="datalist" v-if="autocomplete.length > 0">
-      <option
-        v-for="value of autocomplete"
-        :key="value"
-      >
+    <div
+      class="dropdown-menu datalist"
+      :id="completeId"
+      v-if="autocomplete.length > 0"
+    >
+      <a class="dropdown-item" v-for="value of autocomplete" :key="value" @click="optionClick(value)">
         {{ value | capital }}
-      </option>
-    </datalist>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -41,8 +46,8 @@ export default {
       required: true,
     },
     value: {
-      type: String
-    }
+      type: String,
+    },
   },
   created() {
     this.innerValue = this.value;
@@ -54,24 +59,26 @@ export default {
   },
   methods: {
     onInput() {
-      this.$emit('update:value', this.innerValue);
+      this.$emit("update:value", this.innerValue);
+    },
+    optionClick(value) {
+      this.value = value;
+      this.$emit("update:value", value);
     }
   },
   computed: {
     autocomplete() {
       let result = [];
-      if (!this.innerValue
-      ) {
+      if (!this.innerValue) {
         result = this.datalist;
       } else {
-        result = fuzzyThrough(this.datalist, this.innerValue
-        );
+        result = fuzzyThrough(this.datalist, this.innerValue);
       }
       return _(result).take(5).toArray();
     },
     completeId() {
       return `${this.name}-list`;
-    }
+    },
   },
 };
 </script>
