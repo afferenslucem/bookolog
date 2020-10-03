@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <book-header :book="book"></book-header>
-    <p class="authors" v-if="book.authors && book.authors.length > 0">
+    <p class="authors" v-if="book.authors && book.authors.length > 0" >
       {{ book.authors | join }}
     </p>
     <p v-if="book.year">
@@ -35,8 +35,8 @@
     <p class="tags" v-if="book.tags && book.tags.length > 0">
       <span>{{ $t("book.entity.tags") }}:</span>
 
-      <span class="value tag" v-for="tag in tags" :key="tag">{{
-        tag | capital
+      <span class="value">{{
+        book.tags | capital | join
       }}</span>
     </p>
     <div v-if="shouldShowProgress" class="progressing-bar">
@@ -225,10 +225,6 @@ p {
 .tags {
   .value {
     text-align: right;
-  }
-
-  .tag {
-    white-space: nowrap;
   }
 }
 </style>
