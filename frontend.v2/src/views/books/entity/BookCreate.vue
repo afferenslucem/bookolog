@@ -51,21 +51,7 @@
           v-model.trim="book.genre"
         />
       </div>
-      <div class="form-group">
-        <input
-          type="text"
-          name="tags"
-          id="tags"
-          class="form-control"
-          :placeholder="$t('book.form.titles.tags')"
-          aria-describedby="tagsInput"
-          :pattern="bookTagsPattern"
-          v-model.trim="tagsComp"
-        />
-        <small id="tagsInput" class="text-muted">{{
-          $t("book.form.titles.splitByComma")
-        }}</small>
-      </div>
+      <tag-list-input class="form-group" :tags.sync="book.tags"></tag-list-input>
       <div class="form-group">
         <label for="status">{{ $t("book.form.titles.status") }}</label>
         <select
@@ -210,6 +196,7 @@
 import bookMixin from "@/mixins/book-form-mixin";
 import DateInput from "@/components/inputs/BookDateInput.vue";
 import AudioBookUnitsInput from "@/components/inputs/AudioBookUnitsInput.vue";
+import TagListInput from '@/components/inputs/TagListInput.vue';
 import {
   BOOK_ADD_ACTION,
   NOTIFICATION_SUCCESS_ACTION,
@@ -220,6 +207,7 @@ export default {
   components: {
     DateInput,
     AudioBookUnitsInput,
+    TagListInput,
   },
   mixins: [bookMixin],
   data: () => ({
