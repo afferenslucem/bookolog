@@ -4,20 +4,16 @@
       <div class="form-row">
         <div class="col-8">
           <input
-            v-model="value"
+            v-model.trim="value"
             type="text"
             class="form-control"
             :placeholder="placeholder"
-            autocomplete="off"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
+            list="data"
           />
-          <div
-            class="dropdown-menu dropdown-menu-right"
+          <datalist id="data"
             v-if="autocomplete.length > 0"
           >
-            <button
+            <option
               class="dropdown-item"
               v-for="value of autocomplete"
               :key="value"
@@ -25,8 +21,8 @@
               @click="pushValue(value)"
             >
               {{ value | capital }}
-            </button>
-          </div>
+            </option>
+          </datalist>
         </div>
         <div class="col-4">
           <button type="submit" class="btn btn-primary">{{ $t('common.buttons.add') }}</button>
@@ -61,7 +57,7 @@ export default {
       e.stopPropagation();
     },
     pushBySubmit() {
-      this.pushValue(this.value.trim().toLowerCase());
+      this.pushValue(this.value.trim());
       this.value = "";
     },
     pushValue(value) {
