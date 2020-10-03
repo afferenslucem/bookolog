@@ -21,7 +21,6 @@
 
 <script>
 import { fuzzyThrough } from "@/utils/fuzzy-throw.js";
-import _ from "declarray";
 export default {
   data: () => ({
     innerValue: "",
@@ -67,7 +66,7 @@ export default {
         result = fuzzyThrough(this.datalist, this.innerValue
         );
       }
-      return _(result).take(5).toArray();
+      return result;
     },
     completeId() {
       return `${this.name}-list`;
