@@ -8,11 +8,14 @@
         <span>BKLG</span>
       </div>
     </div>
-    <div>
-      <div class="icon profile" v-if="isLoggedIn" @click="emitAvatarClick($event)">
-        <i class="fa fa-user-o" aria-hidden="true"></i>
+    <div >
+      <div class="actions" v-if="isLoggedIn">
+      <sync-button></sync-button>
+      <div class="icon profile" @click="emitAvatarClick($event)">
+        <i class="far fa-user" aria-hidden="true"></i>
         <connection-marker class="marker"></connection-marker>
         <total-read-count class="total-count"></total-read-count>
+      </div>
       </div>
     </div>
   </div>
@@ -20,6 +23,7 @@
 <script>
 import userMixin from "@/mixins/user-mixin";
 import ConnectionMarker from "@/components/connection-module/ConnectionMarker.vue";
+import SyncButton from "@/components/connection-module/SyncButton.vue";
 import TotalReadCount from "@/components/statistic-module/TotalReadBooksCount.vue";
 export default {
   mixins: [userMixin],
@@ -44,6 +48,7 @@ export default {
   components: {
     ConnectionMarker,
     TotalReadCount,
+    SyncButton,
   },
 };
 </script>
@@ -107,9 +112,21 @@ export default {
 
     font-size: 0.65rem;
 
-    transform: translate(-30%, 0%);
+    transform: translate(5%, 0%);
 
     position: absolute;
+  }
+}
+
+.actions {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  > *:not(:last-child) {
+    margin-right: .5rem;
   }
 }
 </style>

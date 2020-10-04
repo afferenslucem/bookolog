@@ -79,7 +79,7 @@ export class Client {
             } else if (retry > 0) {
                 return this.sendRequest(routine, retry - 1)
             } else {
-                if(e === NETWORK_ERROR) {
+                if(e == NETWORK_ERROR) {
                     await this.onNetworkError();
                 } else if((e.response?.data === '') && (e.response.status === 401)) {
                     await this.onUnauthorizedError()

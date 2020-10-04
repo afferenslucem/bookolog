@@ -8,6 +8,7 @@ import {
     USER_LOGOUT_MUTATION,
     USER_RECOVER_ACTION,
     USER_SYNC_DATA_ACTION,
+    USER_SYNC_BOOKS_ACTION,
     USER_LOGIN_ACTION,
     USER_LOGOUT_ACTION,
     BOOKS_CLEAR_ACTION,
@@ -82,7 +83,7 @@ export const actions = {
             if (recoveredUser) {
                 dispatch(USER_SAVE_ACTION, recoveredUser);
 
-                await dispatch(USER_SYNC_DATA_ACTION, recoveredUser);
+                await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
 
                 logger.info('Logged in', recoveredUser)
 
@@ -94,7 +95,7 @@ export const actions = {
             return null;
         }
     },
-    [USER_SYNC_DATA_ACTION]: async ({
+    [USER_SYNC_BOOKS_ACTION]: async ({
         dispatch
     }, user) => {
         try {
@@ -106,6 +107,21 @@ export const actions = {
                 await dispatch(BOOKS_SYNC_ACTION)
             }
 
+        } catch (e) {
+            return null;
+        }
+    },
+    [USER_SYNC_DATA_ACTION]: async ({
+        dispatch
+    }) => {
+        try {
+            const recoveredUser = await new UserSynchronizator().getCurrentUser();
+
+            await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
+
+            const userCurrentState = await new UserClient().me();
+
+            dispatch(USER_SAVE_ACTION, userCurrentState);
         } catch (e) {
             return null;
         }

@@ -26,8 +26,8 @@ import { Timer } from 'essents';
 
 export default {
   async created() {
-    Client.prototype.onSuccess = () => this.$store.dispatch(CONNECTION_ONLINE_ACTION);
-    Client.prototype.onNetworkError = () => this.$store.dispatch(CONNECTION_OFFLINE_ACTION);
+    Client.prototype.onSuccess = () => this.turnOnline();
+    Client.prototype.onNetworkError = () => this.turnOffline();
     Client.prototype.onUnauthorizedError = () => this.$store.dispatch(USER_LOGOUT_ACTION);
     Client.prototype.requestCanceled = () => this.hideLoader();
     Client.prototype.requestStarted = () => this.showLoader();
@@ -57,6 +57,14 @@ export default {
       this.loadingTimer.kill();
       this.$forceUpdate();
       this.hideLoadingTimer.start();
+    },
+    turnOffline() {
+      console.log('offline')
+      return this.$store.dispatch(CONNECTION_OFFLINE_ACTION)
+    },
+    turnOnline() {
+      console.log('online')
+      return this.$store.dispatch(CONNECTION_ONLINE_ACTION);
     }
   }
 }
