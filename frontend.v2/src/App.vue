@@ -59,11 +59,9 @@ export default {
       this.hideLoadingTimer.start();
     },
     turnOffline() {
-      console.log('offline')
       return this.$store.dispatch(CONNECTION_OFFLINE_ACTION)
     },
     turnOnline() {
-      console.log('online')
       return this.$store.dispatch(CONNECTION_ONLINE_ACTION);
     }
   }

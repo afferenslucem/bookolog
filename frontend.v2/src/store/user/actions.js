@@ -83,7 +83,13 @@ export const actions = {
             if (recoveredUser) {
                 dispatch(USER_SAVE_ACTION, recoveredUser);
 
-                await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
+                try {
+                    await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
+
+                }
+                catch (e) {
+                    logger.error('unexpected', e);
+                }
 
                 logger.info('Logged in', recoveredUser)
 
@@ -114,17 +120,13 @@ export const actions = {
     [USER_SYNC_DATA_ACTION]: async ({
         dispatch
     }) => {
-        try {
-            const recoveredUser = await new UserSynchronizator().getCurrentUser();
+        const recoveredUser = await new UserSynchronizator().getCurrentUser();
 
-            await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
+        await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
 
-            const userCurrentState = await new UserClient().me();
+        const userCurrentState = await new UserClient().me();
 
-            dispatch(USER_SAVE_ACTION, userCurrentState);
-        } catch (e) {
-            return null;
-        }
+        dispatch(USER_SAVE_ACTION, userCurrentState);
     },
     [USER_SAVE_ACTION]({
         commit

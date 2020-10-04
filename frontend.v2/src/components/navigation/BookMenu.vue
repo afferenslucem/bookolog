@@ -5,19 +5,19 @@
       <li class="nav-item in-progress">
         <a class="nav-link" href="#" id="inProgressListButton" @click="goToInProgress()">{{ $t('book.lists.byStatus.inProgress') }}</a>
         <a class="icon nav-link" href="#" @click="goToAddInProgress()">
-          <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
+          <plus-icon class="fa-lg"></plus-icon>
         </a>
       </li>
       <li class="nav-item to-read">
         <a class="nav-link" href="#" id="toReadListButton" @click="goToToRead()">{{ $t('book.lists.byStatus.toRead') }}</a>
         <a class="icon nav-link" href="#" @click="goToAddToRead()">
-          <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
+          <plus-icon class="fa-lg"></plus-icon>
         </a>
       </li>
       <li class="nav-item done">
         <a class="nav-link" href="#" id="toDoneListButton" @click="goToDone()">{{ $t('book.lists.byStatus.done') }}</a>
         <a class="icon nav-link" href="#" @click="goToAddDone()">
-          <i class="fa fa-lg fa-plus-square-o" aria-hidden="true"></i>
+          <plus-icon class="fa-lg"></plus-icon>
         </a>
       </li>
     </ul>
@@ -27,9 +27,13 @@
 <script>
 import sideMenuMixin from "@/mixins/side-menu-mixin";
 import { TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS } from "@/models/book";
+import PlusIcon from "@/components/icons/PlusIcon.vue";
 
 export default {
   mixins: [sideMenuMixin],
+  components: {
+    PlusIcon,
+  },
   methods: {
     async goToInProgress() {
       this.$router.push({ name: "InProgress" });

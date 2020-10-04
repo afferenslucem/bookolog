@@ -11,7 +11,7 @@
       </div>
       <div class="col-2">
         <button class="btn btn-primary" type="submit">
-          <i class="fa fa-plus-square-o plus" aria-hidden="true"></i>
+          <plus-icon></plus-icon>
         </button>
       </div>
     </form>
@@ -31,6 +31,7 @@
 <script>
 import SelectableInput from "./AutoCompletableInput";
 import TagInputValue from "./TagInputValue";
+import PlusIcon from "@/components/icons/PlusIcon.vue";
 export default {
   data: () => ({
     tagsValue: [],
@@ -55,6 +56,7 @@ export default {
   components: {
     SelectableInput,
     TagInputValue,
+    PlusIcon,
   },
   created() {
     this.tagsValue = this.tags;

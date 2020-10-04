@@ -30,7 +30,7 @@ export class BookSynchronizator {
         return now;
     }
 
-    async saveBook(book, onOffline = () => {}, onOnline = () => {}) {
+    async saveBook(book, onOffline = () => { }, onOnline = () => { }) {
         try {
             book.createDate = this.now;
             book.modifyDate = this.now;
@@ -52,7 +52,7 @@ export class BookSynchronizator {
         return await this.repository.saveBook(book);
     }
 
-    async updateBook(book, onOffline = () => {}, onOnline = () => {}) {
+    async updateBook(book, onOffline = () => { }, onOnline = () => { }) {
         book.modifyDate = this.now;
 
         try {
@@ -71,7 +71,7 @@ export class BookSynchronizator {
         return await this.repository.updateBook(book);
     }
 
-    async deleteBook(guid, onOffline = () => {}, onOnline = () => {}) {
+    async deleteBook(guid, onOffline = () => { }, onOnline = () => { }) {
         try {
             await this.client.delete(guid);
             await onOnline();
@@ -88,7 +88,7 @@ export class BookSynchronizator {
         await this.repository.deleteBook(guid);
     }
 
-    async loadBook(guid, onOffline = () => {}, onOnline = () => {}) {
+    async loadBook(guid, onOffline = () => { }, onOnline = () => { }) {
         try {
             const book = await this.client.getById(guid);
             await onOnline();
@@ -109,20 +109,16 @@ export class BookSynchronizator {
     async sync() {
         const local = await this.repository.allBooks();
 
-        try {
-            const diff = this.computeSyncData(_(local));
+        const diff = this.computeSyncData(_(local));
 
-            const originSynched = await this.syncRemote(diff);
+        const originSynched = await this.syncRemote(diff);
 
-            await this.syncLocal(originSynched);
+        await this.syncLocal(originSynched);
 
-            return await this.repository.allBooks();
-        } catch(e) {
-            return local;
-        }
+        return await this.repository.allBooks();
     }
 
-    async loadAllRemoteBooks(userId, onOffline = () => {}, onOnline = () => {}) {
+    async loadAllRemoteBooks(userId, onOffline = () => { }, onOnline = () => { }) {
         try {
             const origin = await this.client.getAll(userId);
             await onOnline();
