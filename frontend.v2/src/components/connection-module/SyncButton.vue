@@ -11,29 +11,35 @@ import {
   NOTIFICATION_DANGER_ACTION,
   NOTIFICATION_WARNING_ACTION,
 } from "@/store/naming";
-import SyncIcon from '@/components/icons/SyncIcon.vue';
+import SyncIcon from "@/components/icons/SyncIcon.vue";
+import { NETWORK_ERROR } from "@/http/client";
 export default {
   components: {
     SyncIcon,
   },
   methods: {
     runSync() {
-      if (this.offline) {
-        this.$store.dispatch(NOTIFICATION_WARNING_ACTION, this.$t("sync.offline"));
-        return;
-      } else {
-        this.$store
-          .dispatch(USER_SYNC_DATA_ACTION)
-          .then(() =>
-            this.$store.dispatch(
-              NOTIFICATION_SUCCESS_ACTION,
-              this.$t("sync.success")
-            )
+      this.$store
+        .dispatch(USER_SYNC_DATA_ACTION)
+        .then(() =>
+          this.$store.dispatch(
+            NOTIFICATION_SUCCESS_ACTION,
+            this.$t("sync.success")
           )
-          .catch(() =>
-            this.$store.dispatch(NOTIFICATION_DANGER_ACTION, this.$t("sync.error"))
-          );
-      }
+        )
+        .catch((e) => {
+          if (e == NETWORK_ERROR) {
+            this.$store.dispatch(
+              NOTIFICATION_WARNING_ACTION,
+              this.$t("sync.offline")
+            );
+          } else {
+            this.$store.dispatch(
+              NOTIFICATION_DANGER_ACTION,
+              this.$t("sync.error")
+            );
+          }
+        });
     },
   },
   computed: {
