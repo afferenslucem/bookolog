@@ -1,6 +1,6 @@
 <template>
   <div @click="runSync()">
-    <i class="fa fa-sync-alt" aria-hidden="true"></i>
+    <sync-icon></sync-icon>
   </div>
 </template>
 
@@ -11,7 +11,11 @@ import {
   NOTIFICATION_DANGER_ACTION,
   NOTIFICATION_WARNING_ACTION,
 } from "@/store/naming";
+import SyncIcon from '@/components/icons/SyncIcon.vue';
 export default {
+  components: {
+    SyncIcon,
+  },
   methods: {
     runSync() {
       if (this.offline) {

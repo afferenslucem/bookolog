@@ -16,10 +16,8 @@
     <div>
       <div class="actions" v-if="isLoggedIn">
         <sync-button></sync-button>
-        <div class="icon profile" @click="emitAvatarClick($event)">
-          <i class="far fa-user" aria-hidden="true"></i>
-          <connection-marker class="marker"></connection-marker>
-          <total-read-count class="total-count"></total-read-count>
+        <div @click="emitAvatarClick($event)">
+          <profile> </profile>
         </div>
       </div>
     </div>
@@ -27,9 +25,8 @@
 </template>
 <script>
 import userMixin from "@/mixins/user-mixin";
-import ConnectionMarker from "@/components/connection-module/ConnectionMarker.vue";
 import SyncButton from "@/components/connection-module/SyncButton.vue";
-import TotalReadCount from "@/components/statistic-module/TotalReadBooksCount.vue";
+import Profile from "@/components/navigation/Profile.vue";
 export default {
   mixins: [userMixin],
   methods: {
@@ -51,9 +48,8 @@ export default {
   },
   computed: {},
   components: {
-    ConnectionMarker,
-    TotalReadCount,
     SyncButton,
+    Profile,
   },
 };
 </script>
@@ -99,28 +95,6 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
-
-.profile {
-  position: relative;
-
-  > .marker {
-    position: absolute;
-
-    right: 0.1rem;
-    top: 0;
-  }
-
-  > .total-count {
-    left: 0;
-    bottom: 0;
-
-    font-size: 0.65rem;
-
-    transform: translate(5%, 0%);
-
-    position: absolute;
-  }
 }
 
 .actions {

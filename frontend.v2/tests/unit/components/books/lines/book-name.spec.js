@@ -21,7 +21,7 @@ describe('BookHeader.vue', () => {
         const wrapper = shallowMount(BookHeader, {
             propsData: { book }
         })
-        expect(wrapper.find('.fa-cloud-upload').isVisible()).to.equal(true)
+        expect(wrapper.find('should-sync-icon-stub').isVisible()).to.equal(true)
     })
 
     it('Dont renders sync icon', () => {
@@ -32,6 +32,6 @@ describe('BookHeader.vue', () => {
         const wrapper = shallowMount(BookHeader, {
             propsData: { book }
         })
-        expect(wrapper.find('.fa-cloud-upload').isVisible()).to.equal(false)
+        expect(wrapper.find('should-sync-icon-stub').isVisible()).to.equal(false)
     })
 })

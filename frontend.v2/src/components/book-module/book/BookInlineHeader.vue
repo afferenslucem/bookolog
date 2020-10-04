@@ -1,26 +1,31 @@
 <template>
   <div class="header">
-    <strong>{{book.name}}</strong>
+    <strong>{{ book.name }}</strong>
     <div class="actions">
-      <i class="fa fa-cloud-upload fa-xs" v-show="book.shouldSync" aria-hidden="true"></i>
-      <i class="fa fa-pencil-square-o" aria-hidden="true" @click="editClick($event)"></i>
+      <should-sync-icon v-show="book.shouldSync"></should-sync-icon>
+      <edit-icon class="fa-lg" @click="editClick($event)"></edit-icon>
     </div>
   </div>
 </template>
 
 <script>
 import bookMixin from "@/mixins/book-entity-mixin";
+import EditIcon from "@/components/icons/EditIcon.vue";
+import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
 
 export default {
   mixins: [bookMixin],
+  components: {
+    EditIcon,
+    ShouldSyncIcon,
+  },
   props: {
     book: {
       type: Object,
       required: true,
     },
   },
-  methods: {
-  }
+  methods: {},
 };
 </script>
 
@@ -36,5 +41,4 @@ export default {
     margin-right: 0.3rem;
   }
 }
-
 </style>
