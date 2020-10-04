@@ -1,21 +1,26 @@
 <template>
   <div class="header">
     <div class="left">
-      <div class="icon" id="booksLists" v-if="isLoggedIn" @click="emitMenuClick($event)">
+      <div
+        class="icon"
+        id="booksLists"
+        v-if="isLoggedIn"
+        @click="emitMenuClick($event)"
+      >
         <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
       <div @click="headerClick()" class="logo ml-1">
         <span>BKLG</span>
       </div>
     </div>
-    <div >
+    <div>
       <div class="actions" v-if="isLoggedIn">
-      <sync-button></sync-button>
-      <div class="icon profile" @click="emitAvatarClick($event)">
-        <i class="far fa-user" aria-hidden="true"></i>
-        <connection-marker class="marker"></connection-marker>
-        <total-read-count class="total-count"></total-read-count>
-      </div>
+        <sync-button></sync-button>
+        <div class="icon profile" @click="emitAvatarClick($event)">
+          <i class="far fa-user" aria-hidden="true"></i>
+          <connection-marker class="marker"></connection-marker>
+          <total-read-count class="total-count"></total-read-count>
+        </div>
       </div>
     </div>
   </div>
@@ -37,12 +42,12 @@ export default {
       this.$emit("menuClick");
     },
     headerClick() {
-      if(this.isLoggedIn) {
-        this.$router.push({name: 'InProgress'})
+      if (this.isLoggedIn) {
+        this.$router.push({ name: "InProgress" });
       } else {
-        this.$router.push({name: 'Main'})
+        this.$router.push({ name: "Main" });
       }
-    }
+    },
   },
   computed: {},
   components: {
@@ -102,7 +107,7 @@ export default {
   > .marker {
     position: absolute;
 
-    right: .1rem;
+    right: 0.1rem;
     top: 0;
   }
 
@@ -126,7 +131,7 @@ export default {
   align-items: center;
 
   > *:not(:last-child) {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 }
 </style>
