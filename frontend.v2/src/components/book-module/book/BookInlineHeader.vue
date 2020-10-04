@@ -3,7 +3,9 @@
     <strong>{{ book.name }}</strong>
     <div class="actions">
       <should-sync-icon v-show="book.shouldSync"></should-sync-icon>
-      <edit-icon class="fa-lg" @click="editClick($event)"></edit-icon>
+      <div @click="editClick($event)">
+        <edit-icon class="fa-lg"></edit-icon>
+      </div>
     </div>
   </div>
 </template>
