@@ -107,11 +107,9 @@ export class BookSynchronizator {
     }
 
     async sync() {
-        let isOnline = true;
-
         const local = await this.repository.allBooks();
 
-        if (isOnline) {
+        try {
             const diff = this.computeSyncData(_(local));
 
             const originSynched = await this.syncRemote(diff);
@@ -119,8 +117,8 @@ export class BookSynchronizator {
             await this.syncLocal(originSynched);
 
             return await this.repository.allBooks();
-        } else {
-            return local.toArray();
+        } catch(e) {
+            return local;
         }
     }
 
