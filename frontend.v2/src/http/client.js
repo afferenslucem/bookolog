@@ -1,15 +1,20 @@
 import Axios from "axios";
-import {getLogger} from '../logger';
+import {
+    getLogger
+} from '../logger';
 
 export const NETWORK_ERROR = 'Error: Network Error';
+export const UNAUTHORIZED_ERROR = 'Error: Unauthorized';
 export const FORBIDDEN_ERROR = 'Error: Request failed with status code 403';
 
 export class Client {
     #backendAddress = '';
+    #sender = null;
 
-    constructor(backendAddress) {
+    constructor(backendAddress, sender) {
         this.logger = getLogger('Client');
         this.#backendAddress = backendAddress;
+        this.#sender = sender || Axios;
     }
 
     getAddress(endpoint) {
@@ -19,8 +24,7 @@ export class Client {
     get(url, options) {
         return this.sendRequest(() => {
             try {
-                this.logger.debug('get to', url);
-                return Axios.get(this.getAddress(url), options);
+                return this.#sender.get(this.getAddress(url), options);
             } catch (e) {
                 this.logger.fatal(e);
                 throw e;
@@ -31,8 +35,7 @@ export class Client {
     post(url, data, options) {
         return this.sendRequest(() => {
             try {
-                this.logger.debug('post to', data, this.getAddress(url));
-                return Axios.post(this.getAddress(url), data, options);
+                return this.#sender.post(this.getAddress(url), data, options);
             } catch (e) {
                 this.logger.fatal(e);
                 throw e;
@@ -43,8 +46,7 @@ export class Client {
     put(url, data, options) {
         return this.sendRequest(() => {
             try {
-                this.logger.debug('put to', data, url);
-                return Axios.put(this.getAddress(url), data, options);
+                return this.#sender.put(this.getAddress(url), data, options);
             } catch (e) {
                 this.logger.fatal(e);
                 throw e;
@@ -52,11 +54,10 @@ export class Client {
         });
     }
 
-    delete(url, data, options) {
+    delete(url, options) {
         return this.sendRequest(() => {
             try {
-                this.logger.debug('delete to', data, url);
-                return Axios.delete(this.getAddress(url), data, options);
+                return this.#sender.delete(this.getAddress(url), options);
             } catch (e) {
                 this.logger.fatal(e);
                 throw e;
@@ -64,32 +65,50 @@ export class Client {
         });
     }
 
-    async sendRequest(routine, retry) {
+    async sendRequest(routine) {
+        await this.requestStarted();
         try {
-            await this.requestStarted();
-
-            const result = await routine();
+            const result = await this.runRequestRoutine(routine);
 
             await this.onSuccess();
 
             return result;
-        } catch (e) {
-            if (retry === undefined && retry !== 0) {
-                return this.sendRequest(routine, this.retry);
-            } else if (retry > 0) {
-                return this.sendRequest(routine, retry - 1)
-            } else {
-                if(e == NETWORK_ERROR) {
-                    await this.onNetworkError();
-                } else if((e.response?.data === '') && (e.response.status === 401)) {
-                    await this.onUnauthorizedError()
-                }
-
-                throw e;
-            }
         } finally {
             await this.requestCanceled();
         }
+    }
+
+    async runRequestRoutine(routine, retry) {
+        try {
+            const result = await routine();
+            return result;
+        } catch (e) {
+            if (retry === undefined) {
+                return this.runRequestRoutine(routine, this.retry);
+            } else if (retry > 1) {
+                return this.runRequestRoutine(routine, retry - 1)
+            } else {
+                await this.catchError(e);
+                throw e;
+            }
+        }
+    }
+
+    async catchError(e) {
+        if (this.isNetworkError(e)) {
+            await this.onNetworkError();
+        } else if (this.isUnauthorizedError(e)) {
+            await this.onUnauthorizedError();
+            throw UNAUTHORIZED_ERROR;
+        }
+    }
+
+    isNetworkError(e) {
+        return e == NETWORK_ERROR;
+    }
+
+    isUnauthorizedError(e) {
+        return (e.response?.data === '') && (e.response.status === 401);
     }
 }
 Client.prototype.onSuccess = () => {};
