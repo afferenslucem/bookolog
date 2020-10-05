@@ -8,9 +8,6 @@
 
 <script>
 import {
-  USER_RECOVER_ACTION,
-} from '@/store/naming';
-import {
   CONNECTION_ONLINE_ACTION,
   CONNECTION_OFFLINE_ACTION,
   USER_LOGOUT_ACTION,
@@ -24,7 +21,6 @@ import NotificationMessage from "@/components/notification-module/Message.vue";
 import { Client } from "@/http/client";
 
 import { Timer } from "essents";
-import store from "@/store";
 
 export default {
   async created() {
@@ -67,14 +63,6 @@ export default {
     turnOnline() {
       return this.$store.dispatch(CONNECTION_ONLINE_ACTION);
     },
-  },
-  async beforeRouteEnter (to, from, next) {
-    const user = await store.dispatch(USER_RECOVER_ACTION);
-    if (user) {
-      next();
-    } else {
-      next({name: 'Guest'});
-    }
   },
 };
 </script>
