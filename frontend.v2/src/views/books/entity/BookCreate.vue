@@ -16,6 +16,7 @@
         />
       </div>
       <tag-list-input
+        id="authors"
         class="form-group"
         :placeholder="$t('book.form.titles.authors')"
         :datalist="existingAuthors"
@@ -34,6 +35,7 @@
       </div>
       <div class="form-group">
         <completable-input
+          id="genre"
           name="genre"
           :placeholder="$t('book.form.titles.genre')"
           :value.sync="book.genre"
@@ -41,6 +43,7 @@
         ></completable-input>
       </div>
       <tag-list-input
+        id="tags"
         class="form-group"
         :placeholder="$t('book.form.titles.tags')"
         :datalist="existingTags"

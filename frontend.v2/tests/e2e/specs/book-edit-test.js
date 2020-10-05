@@ -36,7 +36,7 @@ describe('Book edit test', () => {
     cy.clearDoneForm();
     cy.fillDoneBookForm(bookEnd);
 
-    cy.get('[type="submit"]').click();    
+    cy.get('[type="submit"].submit').click();    
     cy.pageIs('workspace/done');
 
     cy.wait(2000);

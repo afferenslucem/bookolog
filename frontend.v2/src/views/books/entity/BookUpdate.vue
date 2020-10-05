@@ -16,6 +16,7 @@
         />
       </div>
       <tag-list-input
+        id="authors"
         class="form-group"
         :placeholder="$t('book.form.titles.authors')"
         :datalist="existingAuthors"
@@ -34,6 +35,7 @@
       </div>
       <div class="form-group">
         <completable-input
+          id="genre"
           name="genre"
           :placeholder="$t('book.form.titles.genre')"
           :value.sync="book.genre"
@@ -41,6 +43,7 @@
         ></completable-input>
       </div>
       <tag-list-input
+        id="tags"
         class="form-group"
         :placeholder="$t('book.form.titles.tags')"
         :datalist="existingTags"
@@ -183,7 +186,7 @@
 import bookMixin from "@/mixins/book-form-mixin";
 import DateInput from "@/components/inputs/BookDateInput.vue";
 import AudioBookUnitsInput from "@/components/inputs/AudioBookUnitsInput.vue";
-import TagListInput from '@/components/inputs/TagListInput.vue';
+import TagListInput from "@/components/inputs/TagListInput.vue";
 import CompletableInput from "@/components/inputs/AutoCompletableInput.vue";
 import {
   BOOK_UPDATE_ACTION,

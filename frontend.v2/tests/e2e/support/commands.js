@@ -1,5 +1,6 @@
 import capitalFirst from '../../../src/filters/capital-first';
 import moment from 'moment';
+import { assert } from 'chai';
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -86,11 +87,18 @@ Cypress.Commands.add("goToInProgressDoneBook", () => {
     cy.get('.nav-item.in-progress > .icon.nav-link').click();
 })
 
+function fillTagInputAuthors(id, tags) {
+    tags.forEach((tag) => {
+        cy.get(`${id} input`).type(tag);
+        cy.get(`${id} button[type="submit"]`).click();
+    })
+}
+
 function fillCommonForm(book) {
     cy.get('#name').type(book.name);
-    cy.get('#authors').type(book.authors.join(', '));
+    fillTagInputAuthors('#authors', book.authors);
     cy.get('#genre').type(book.genre);
-    cy.get('#tags').type(book.tags.join(', '));
+    fillTagInputAuthors('#tags', book.tags);
     cy.get('#type').select(book.type.toString());
     cy.get('#note').type(book.note);
 }
@@ -111,7 +119,7 @@ Cypress.Commands.add("fillDoneBookForm", (book) => {
 });
 
 Cypress.Commands.add("fillUnits", (name, type, value) => {
-    if(type == 2) {
+    if (type == 2) {
         const hours = Math.trunc(value / 60);
         const minutes = value % 60;
 
@@ -131,17 +139,29 @@ Cypress.Commands.add("fillInProgressBookForm", (book) => {
     fillCommonForm(book);
     cy.fillUnits('#doneUnits', book.type, book.doneUnits);
     cy.fillUnits('#totalUnits', book.type, book.totalUnits);
-    
+
     cy.get('.start-date .year').type(book.startDateYear);
     cy.get('.start-date .month').type(book.startDateMonth);
     cy.get('.start-date .day').type(book.startDateDay);
 });
 
+Cypress.Commands.add('getTagList', (id) => {
+    return cy.get(`${id} .tags .tag`);
+});
+
+Cypress.Commands.add('tagCrossClick', () => {
+    cy.get(`.fa-times`).click();
+});
+
+function clearTagInput(id) {
+    cy.getTagList(id).each(tag => cy.wrap(tag).within(() => cy.tagCrossClick()));
+}
+
 function clearCommonForm() {
     cy.get('#name').clear();
-    cy.get('#authors').clear();
-    cy.get('#genre').clear();
-    cy.get('#tags').clear();
+    clearTagInput('#authors');
+    cy.get('#genre input').clear();
+    clearTagInput('#tags');
     //cy.get('#type').clear();
     cy.get('#note').clear();
 }
@@ -154,9 +174,17 @@ Cypress.Commands.add("clearDoneForm", () => {
     cy.get('.start-date .year').clear();
 });
 
+Cypress.Commands.add('joinTags', (id, separator = ', ') => {
+    const result = [];
+    cy.get(id + ' .tags .tag small').each(el => result.push(el.text()));
+
+    return result.join(separator);
+})
+
 function compareCommonForm(book) {
     cy.get('#name').should('have.value', book.name);
-    cy.get('#authors').should('have.value', book.authors.join(', '));
+
+    assert.equal(cy.joinTags('#authors'), book.authors.join(', '));
     cy.get('#genre').should('have.value', book.genre);
     cy.get('#tags').should('have.value', book.tags.join(', '));
     cy.get('#type').should('have.value', book.type.toString());
@@ -182,7 +210,7 @@ Cypress.Commands.add("compareDoneBookForm", (book) => {
 });
 
 Cypress.Commands.add("compareUnits", (name, type, value) => {
-    if(type == 2) {
+    if (type == 2) {
         const hours = Math.trunc(value / 60);
         const minutes = value % 60;
 
@@ -198,7 +226,7 @@ Cypress.Commands.add("compareInProgressBookForm", (book) => {
     cy.get('#status').should('have.value', '1');
     cy.compareUnits('#doneUnits', book.type, book.doneUnits);
     cy.compareUnits('#totalUnits', book.type, book.totalUnits);
-    
+
     cy.get('.start-date .year').should('have.value', book.startDateYear);
     cy.get('.start-date .month').should('have.value', book.startDateMonth);
     cy.get('.start-date .day').should('have.value', book.startDateDay);
@@ -208,7 +236,7 @@ function compareCommonView(book) {
     cy.get('h4').contains(book.name);
     cy.get('.authors').contains(book.authors.join(', '));
 
-    switch(book.type) {
+    switch (book.type) {
         case 0: {
             cy.get('.book-type').contains('Бумажная книга');
             break;
@@ -226,7 +254,7 @@ function compareCommonView(book) {
     cy.get('.genre').contains(capitalFirst(book.genre));
     cy.get('.tags').contains(book.tags.map(item => capitalFirst(item)).join(', '));
 
-    if(book.note) {
+    if (book.note) {
         cy.get('.note').contains(book.note);
     }
 }

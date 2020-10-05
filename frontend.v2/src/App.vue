@@ -24,6 +24,7 @@ import NotificationMessage from "@/components/notification-module/Message.vue";
 import { Client } from "@/http/client";
 
 import { Timer } from "essents";
+import store from "@/store";
 
 export default {
   async created() {
@@ -67,10 +68,12 @@ export default {
       return this.$store.dispatch(CONNECTION_ONLINE_ACTION);
     },
   },
-  async beforeCreate() {
-    const user = await this.$store.dispatch(USER_RECOVER_ACTION);
+  async beforeRouteEnter (to, from, next) {
+    const user = await store.dispatch(USER_RECOVER_ACTION);
     if (user) {
-      this.$router.push({ name: "InProgress" });
+      next();
+    } else {
+      next({name: 'Guest'});
     }
   },
 };
