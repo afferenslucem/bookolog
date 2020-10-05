@@ -2,9 +2,9 @@ import { UserClient } from '../../../http/user-client'
 
 export class UserSynchronizator {
     async getCurrentUser() {
-        const savedUser = localStorage.getItem('user');
+        const savedUser = this.getStoredUser();
 
-        if (savedUser == 'undefined' || savedUser == undefined) {
+        if (savedUser == null) {
             return null;
         } else {
             return await this.tryUpdateUser(savedUser);
@@ -16,6 +16,16 @@ export class UserSynchronizator {
             return await new UserClient().me();
         } catch (e) {
             return JSON.parse(cached);
+        }
+    }
+
+    getStoredUser() {
+        const savedUser = localStorage.getItem('user');
+
+        if (savedUser == 'undefined' || savedUser == undefined) {
+            return null;
+        } else {
+            return JSON.parse(savedUser);
         }
     }
 }

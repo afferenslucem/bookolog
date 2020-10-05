@@ -74,29 +74,11 @@ export const actions = {
             throw e;
         }
     },
-    [USER_RECOVER_ACTION]: async ({
-        dispatch
-    }) => {
+    [USER_RECOVER_ACTION]: async () => {
         try {
-            const recoveredUser = await new UserSynchronizator().getCurrentUser();
+            const recoveredUser = await new UserSynchronizator().getStoredUser();
 
-            if (recoveredUser) {
-                dispatch(USER_SAVE_ACTION, recoveredUser);
-
-                try {
-                    await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
-
-                }
-                catch (e) {
-                    logger.error('unexpected', e);
-                }
-
-                logger.info('Logged in', recoveredUser)
-
-                return recoveredUser;
-            } else {
-                return null;
-            }
+            return recoveredUser;
         } catch (e) {
             return null;
         }
@@ -120,7 +102,7 @@ export const actions = {
     [USER_SYNC_DATA_ACTION]: async ({
         dispatch
     }) => {
-        const recoveredUser = await new UserSynchronizator().getCurrentUser();
+        const recoveredUser = await new UserSynchronizator().getStoredUser();
 
         await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
 

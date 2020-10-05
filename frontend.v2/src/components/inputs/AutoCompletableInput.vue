@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { fuzzyThrough } from "@/utils/fuzzy-throw.js";
+import { fuzzyThrough } from "@/utils/fuzzy-through";
 export default {
   data: () => ({
     innerValue: "",
