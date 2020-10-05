@@ -1,6 +1,8 @@
 import capitalFirst from '../../../src/filters/capital-first';
 import moment from 'moment';
-import { assert } from 'chai';
+import {
+    assert
+} from 'chai';
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -174,19 +176,22 @@ Cypress.Commands.add("clearDoneForm", () => {
     cy.get('.start-date .year').clear();
 });
 
-Cypress.Commands.add('joinTags', (id, separator = ', ') => {
-    const result = [];
-    cy.get(id + ' .tags .tag small').each(el => result.push(el.text()));
-
-    return result.join(separator);
-})
 
 function compareCommonForm(book) {
     cy.get('#name').should('have.value', book.name);
 
-    assert.equal(cy.joinTags('#authors'), book.authors.join(', '));
-    cy.get('#genre').should('have.value', book.genre);
-    cy.get('#tags').should('have.value', book.tags.join(', '));
+    const authors = [];
+    cy.get('#authors .tags .tag small').each(el => authors.push(el.text())).then(() => {
+        assert.equal(authors.join(', ').toLowerCase(), book.authors.join(', ').toLowerCase());
+    })
+
+    cy.get('#genre input').should('have.value', book.genre);
+
+    const tags = [];
+    cy.get('#tags .tags .tag small').each(el => tags.push(el.text())).then(() => {
+        assert.equal(tags.join(', ').toLowerCase(), book.tags.join(', ').toLowerCase());
+    })
+
     cy.get('#type').should('have.value', book.type.toString());
     cy.get('#note').should('have.value', book.note);
 }
