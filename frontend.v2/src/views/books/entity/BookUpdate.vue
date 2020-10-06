@@ -190,10 +190,12 @@ import TagListInput from "@/components/inputs/TagListInput.vue";
 import CompletableInput from "@/components/inputs/AutoCompletableInput.vue";
 import {
   BOOK_UPDATE_ACTION,
-  BOOK_GET_BY_GUID_ACTION,
+  BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION,
   NOTIFICATION_SUCCESS_ACTION,
   NOTIFICATION_DANGER_ACTION,
+  NOTIFICATION_WARNING_ACTION,
 } from "@/store/naming";
+import { NETWORK_ERROR } from "@/http/client";
 import store from "@/store";
 import { DONE_STATUS, IN_PROGRESS_STATUS, TO_READ_STATUS } from "@/models/book";
 
@@ -210,25 +212,38 @@ export default {
   }),
   mixins: [bookMixin],
   methods: {
-    submit(event) {
-      this.$store
-        .dispatch(BOOK_UPDATE_ACTION, this.book)
-        .then(() => {
-          this.redirectForBook(this.book);
-          this.$store.dispatch(
-            NOTIFICATION_SUCCESS_ACTION,
-            this.$t("book.notification.update.success")
-          );
-          this.$forceUpdate();
-        })
-        .catch(() =>
-          this.$store.dispatch(
-            NOTIFICATION_DANGER_ACTION,
-            this.$t("book.notification.update.fail")
-          )
-        );
-
+    async submit(event) {
       event.preventDefault();
+      try {
+        await this.$store.dispatch(BOOK_UPDATE_ACTION, this.book);
+        this.updateSuccessfullRoutine();
+      } catch (e) {
+        if (e == NETWORK_ERROR) {
+          this.updateOfflineRoutine();
+        } else {
+          this.cantUpdateRoutine();
+        }
+      }
+    },
+    updateSuccessfullRoutine() {
+      this.redirectForBook(this.book);
+      this.$store.dispatch(
+        NOTIFICATION_SUCCESS_ACTION,
+        this.$t("book.notification.update.success")
+      );
+    },
+    updateOfflineRoutine() {
+      this.$store.dispatch(
+        NOTIFICATION_WARNING_ACTION,
+        this.$t("book.notification.update.offline")
+      );
+      this.redirectForBook(this.book);
+    },
+    cantUpdateRoutine() {
+      this.$store.dispatch(
+        NOTIFICATION_DANGER_ACTION,
+        this.$t("book.notification.update.fail")
+      );
     },
     statusChange() {
       if (this.initialStatus == DONE_STATUS) return;
@@ -285,13 +300,15 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     const bookGuid = to.params.guid;
-    store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid).then((book) => {
-      next((vm) => {
-        vm.book = Object.assign({}, book);
-        vm.initialStatus = book.status;
-        vm.initialUnits = book.doneUnits;
+    store
+      .dispatch(BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION, bookGuid)
+      .then((book) => {
+        next((vm) => {
+          vm.book = Object.assign({}, book);
+          vm.initialStatus = book.status;
+          vm.initialUnits = book.doneUnits;
+        });
       });
-    });
   },
 };
 </script>

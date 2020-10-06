@@ -66,7 +66,7 @@ export class Client {
     }
 
     async sendRequest(routine) {
-        await this.requestStarted();
+        this.requestStarted();
         try {
             const result = await this.runRequestRoutine(routine);
 
@@ -74,7 +74,7 @@ export class Client {
 
             return result;
         } finally {
-            await this.requestCanceled();
+            this.requestCanceled();
         }
     }
 
@@ -97,6 +97,7 @@ export class Client {
     async catchError(e) {
         if (this.isNetworkError(e)) {
             await this.onNetworkError();
+            throw NETWORK_ERROR;
         } else if (this.isUnauthorizedError(e)) {
             await this.onUnauthorizedError();
             throw UNAUTHORIZED_ERROR;

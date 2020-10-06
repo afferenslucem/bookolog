@@ -14,7 +14,7 @@ import {
 } from '@/models/book';
 
 export const getters = {
-    books: state => Object.values(state),
+    books: state => _(Object.values(state)).where(item => item.deleted == false || item.deleted == undefined).toArray(),
     [BOOKS_IN_PROGRESS_GETTER]: (state, getters) => _(getters.books).where(item => item.status === IN_PROGRESS_STATUS).toArray(),
     [BOOKS_TO_READ_GETTER]: (state, getters) => _(getters.books).where(item => item.status === TO_READ_STATUS).toArray(),
     [BOOKS_DONE_GETTER]: (state, getters) => _(getters.books).where(item => item.status === DONE_STATUS).toArray(),

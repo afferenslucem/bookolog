@@ -60,8 +60,12 @@ export default {
     turnOffline() {
       return this.$store.dispatch(CONNECTION_OFFLINE_ACTION);
     },
-    turnOnline() {
-      return this.$store.dispatch(CONNECTION_ONLINE_ACTION);
+    async turnOnline() {
+      try {
+        await this.$store.dispatch(CONNECTION_ONLINE_ACTION);
+      } catch (e) {
+        //
+      }
     },
   },
 };

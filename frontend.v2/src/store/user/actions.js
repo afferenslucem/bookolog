@@ -13,8 +13,10 @@ import {
     USER_LOGOUT_ACTION,
     BOOKS_CLEAR_ACTION,
     BOOKS_SYNC_ACTION,
+    BOOKS_LOAD_LOCAL_ACTION,
     BOOKS_LOAD_ACTION,
     NOTIFICATION_DANGER_ACTION,
+    NOTIFICATION_WARNING_ACTION,
     USER_SAVE_ACTION,
 } from '../naming';
 import {
@@ -48,14 +50,9 @@ function dateHoursDiff(first, second) {
 export const actions = {
     [USER_LOGIN_ACTION]: async ({
         dispatch
-    }, {
-        username,
-        password
-    }) => {
+    }, payload) => {
         try {
-            const userClient = new UserClient();
-
-            const user = await userClient.login(username, password);
+            const user = await dispatch('sendLogin', payload);
 
             if (user == undefined) {
                 dispatch(NOTIFICATION_DANGER_ACTION, i18n.t('auth.actions.login.error'));
@@ -74,9 +71,11 @@ export const actions = {
             throw e;
         }
     },
-    [USER_RECOVER_ACTION]: async () => {
+    [USER_RECOVER_ACTION]: async ({
+        dispatch
+    }) => {
         try {
-            const recoveredUser = await new UserSynchronizator().getStoredUser();
+            const recoveredUser = dispatch('getLocalStoredUser');
 
             return recoveredUser;
         } catch (e) {
@@ -86,29 +85,35 @@ export const actions = {
     [USER_SYNC_BOOKS_ACTION]: async ({
         dispatch
     }, user) => {
-        try {
-            const now = getUtcDate();
+        const now = getUtcDate();
 
-            if (dateHoursDiff(user.lastSyncDate, now) > BOOK_RELOAD_TIMEOUT_HOURS) {
-                await dispatch(BOOKS_LOAD_ACTION);
-            } else {
-                await dispatch(BOOKS_SYNC_ACTION)
-            }
-
-        } catch (e) {
-            return null;
+        if (dateHoursDiff(user.lastSyncDate, now) > BOOK_RELOAD_TIMEOUT_HOURS) {
+            await dispatch(BOOKS_LOAD_ACTION);
+        } else {
+            await dispatch(BOOKS_SYNC_ACTION)
         }
     },
     [USER_SYNC_DATA_ACTION]: async ({
         dispatch
     }) => {
-        const recoveredUser = await new UserSynchronizator().getStoredUser();
+        const recoveredUser = await dispatch('getLocalStoredUser');
 
-        await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
+        try {
+            await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
 
-        const userCurrentState = await new UserClient().me();
+            const userCurrentState = await dispatch('getRemoteUser');
 
-        dispatch(USER_SAVE_ACTION, userCurrentState);
+            dispatch(USER_SAVE_ACTION, userCurrentState);
+        } catch (e) {
+            if (e == NETWORK_ERROR) {
+                const restoreAwait = dispatch(BOOKS_LOAD_LOCAL_ACTION);
+                dispatch(USER_SAVE_ACTION, recoveredUser);
+                await restoreAwait;
+
+                dispatch(NOTIFICATION_WARNING_ACTION, i18n.t('sync.offline'));
+            }
+            throw e;
+        }
     },
     [USER_SAVE_ACTION]({
         commit
@@ -131,5 +136,21 @@ export const actions = {
         commit(USER_LOGOUT_MUTATION)
 
         logger.info('Logged out')
+    },
+
+    async getRemoteUser() {
+        return await new UserClient().me();
+    },
+
+    getLocalStoredUser() {
+        return new UserSynchronizator().getLocalStoredUser();
+    },
+
+    async sendLogin(context, {
+        username,
+        password
+    }) {
+        const userClient = new UserClient();
+        return await userClient.login(username, password);
     }
 }

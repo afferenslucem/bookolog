@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <book-header :book="book"></book-header>
-    <p class="authors" v-if="book.authors && book.authors.length > 0" >
+    <p class="authors" v-if="book.authors && book.authors.length > 0">
       {{ book.authors | join }}
     </p>
     <p v-if="book.year">
@@ -35,9 +35,7 @@
     <p class="tags" v-if="book.tags && book.tags.length > 0">
       <span>{{ $t("book.entity.tags") }}:</span>
 
-      <span class="value">{{
-        book.tags | capital | join
-      }}</span>
+      <span class="value">{{ book.tags | capital | join }}</span>
     </p>
     <div v-if="shouldShowProgress" class="progressing-bar">
       <h6>{{ $t("book.entity.progress") }}:</h6>
@@ -123,12 +121,14 @@
 
 <script>
 import {
-  BOOK_GET_BY_GUID_ACTION,
+  BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION,
   BOOK_DELETE_ACTION,
   NOTIFICATION_SUCCESS_ACTION,
   NOTIFICATION_DANGER_ACTION,
+  NOTIFICATION_WARNING_ACTION,
 } from "@/store/naming";
 import store from "@/store";
+import i18n from "@/i18n";
 import {
   TO_READ_STATUS,
   IN_PROGRESS_STATUS,
@@ -137,6 +137,7 @@ import {
   ELECTRONIC_BOOK_TYPE,
   AUDIO_BOOK_TYPE,
 } from "@/models/book";
+import { NETWORK_ERROR } from "@/http/client";
 import bookEntityMixin from "@/mixins/book-entity-mixin";
 import ProgressBar from "@/components/book-module/book/ProgressBar.vue";
 import BookHeader from "@/components/book-module/book/BookHeader.vue";
@@ -171,29 +172,44 @@ export default {
     },
   },
   methods: {
-    deleteBook() {
-      this.$store
-        .dispatch(BOOK_DELETE_ACTION, this.book.guid)
-        .then(() => {
+    async deleteBook() {
+      try {
+        await this.$store.dispatch(BOOK_DELETE_ACTION, this.book.guid);
+        history.back();
+        this.$store.dispatch(
+          NOTIFICATION_SUCCESS_ACTION,
+          this.$t("book.notification.delete.success")
+        );
+      } catch (e) {
+        if (e == NETWORK_ERROR) {
           history.back();
           this.$store.dispatch(
-            NOTIFICATION_SUCCESS_ACTION,
-            this.$t("book.notification.delete.success")
+            NOTIFICATION_WARNING_ACTION,
+            this.$t("book.notification.delete.offline")
           );
-        })
-        .catch(() =>
+        } else {
           this.$store.dispatch(
             NOTIFICATION_DANGER_ACTION,
             this.$t("book.notification.delete.fail")
-          )
-        );
-    },
+          );
+        }
+      }
+    }
   },
-  beforeRouteEnter(to, from, next) {
+  async beforeRouteEnter(to, from, next) {
     const bookGuid = to.params.guid;
-    store.dispatch(BOOK_GET_BY_GUID_ACTION, bookGuid).then((book) => {
+    try {
+      const book = await store.dispatch(
+        BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION,
+        bookGuid
+      );
       next((vm) => (vm.book = book));
-    });
+    } catch (e) {
+      store.dispatch(
+        NOTIFICATION_DANGER_ACTION,
+        i18n.t("book.notification.load.fail")
+      );
+    }
   },
 };
 </script>

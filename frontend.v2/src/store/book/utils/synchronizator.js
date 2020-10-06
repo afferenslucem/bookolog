@@ -30,79 +30,80 @@ export class BookSynchronizator {
         return now;
     }
 
-    async saveBook(book, onOffline = () => { }, onOnline = () => { }) {
+    async saveBook(book) {
         try {
             book.createDate = this.now;
             book.modifyDate = this.now;
 
             book = await this.client.create(book);
-            await onOnline();
+
+            await this.repository.saveBook(book);
+
+            return book;
         } catch (e) {
             logger.debug(e);
 
             if (e == NETWORK_ERROR) {
                 book.shouldSync = true;
-                await onOffline();
+
+                await this.repository.saveBook(book);
             } else {
                 logger.error('Unexpected error:', e)
-                throw e
             }
-        }
 
-        return await this.repository.saveBook(book);
+            throw e;
+        }
     }
 
-    async updateBook(book, onOffline = () => { }, onOnline = () => { }) {
+    async updateBook(book) {
         book.modifyDate = this.now;
 
         try {
             book = await this.client.update(book);
-            await onOnline();
+            return book;
         } catch (e) {
             if (e == NETWORK_ERROR) {
                 book.shouldSync = true;
-                await onOffline();
             } else {
                 logger.error('Unexpected error:', e)
-                throw e;
             }
-        }
 
-        return await this.repository.updateBook(book);
+            throw e;
+        } finally {
+            await this.repository.updateBook(book)
+        }
     }
 
-    async deleteBook(guid, onOffline = () => { }, onOnline = () => { }) {
+    async deleteBook(guid) {
         try {
             await this.client.delete(guid);
-            await onOnline();
+
+            await this.repository.deleteBook(guid);
         } catch (e) {
             if (e == NETWORK_ERROR) {
-                await onOffline()
-                return;
+                //
             } else {
                 logger.error('Unexpected error:', e)
-                throw e;
             }
-        }
 
-        await this.repository.deleteBook(guid);
+            throw e;
+        }
     }
 
-    async loadBook(guid, onOffline = () => { }, onOnline = () => { }) {
+    async loadBook(guid) {
         try {
             const book = await this.client.getById(guid);
-            await onOnline();
 
             await this.repository.updateBook(book);
 
             return book;
         } catch (e) {
             if (e == NETWORK_ERROR) {
-                await onOffline()
+                //
             } else {
                 logger.error('Unexpected error:', e)
-                throw e;
             }
+            throw e;
         }
     }
 
@@ -113,32 +114,19 @@ export class BookSynchronizator {
 
         const originSynched = await this.syncRemote(diff);
 
-        await this.syncLocal(originSynched);
+        await this.syncLocal(originSynched, diff);
 
         return await this.repository.allBooks();
     }
 
-    async loadAllRemoteBooks(userId, onOffline = () => { }, onOnline = () => { }) {
-        try {
-            const origin = await this.client.getAll(userId);
-            await onOnline();
+    async loadAllRemoteBooks(userId) {
+        const origin = await this.client.getAll(userId);
 
-            return origin;
-        } catch (e) {
-            logger.warn(e);
-
-            if (e == NETWORK_ERROR) {
-                await onOffline();
-                return null;
-            } else {
-                logger.error('Unexpected error:', e)
-                throw e
-            }
-        }
+        return origin;
     }
 
     computeSyncData(local) {
-        const localUpdated = local.where(item => !!item.shouldSync).toArray();
+        const localUpdated = local.where(item => !!item.shouldSync && !item.deleted).toArray();
 
         const localDeleted = local.where(item => !!item.deleted).toArray();
 
@@ -155,8 +143,8 @@ export class BookSynchronizator {
         })
     }
 
-    syncLocal(originSynched) {
-        const deleteAwait = this.repository.deleteManyBooks(originSynched.delete);
+    syncLocal(originSynched, diff) {
+        const deleteAwait = this.repository.deleteManyBooks(originSynched.delete.concat(diff.localDeleted));
         const updateAwait = this.repository.updateManyBooks(originSynched.update);
 
         return Promise.all([updateAwait, deleteAwait])

@@ -200,7 +200,9 @@ import {
   BOOK_ADD_ACTION,
   NOTIFICATION_SUCCESS_ACTION,
   NOTIFICATION_DANGER_ACTION,
+  NOTIFICATION_WARNING_ACTION,
 } from "@/store/naming";
+import { NETWORK_ERROR } from "@/http/client";
 
 export default {
   components: {
@@ -221,42 +223,54 @@ export default {
       event.preventDefault();
       return false;
     },
-    submitAction() {
-      this.$store
-        .dispatch(BOOK_ADD_ACTION, this.book)
-        .then(() => {
+    async submitAction() {
+      try {
+        await this.$store.dispatch(BOOK_ADD_ACTION, this.book);
+        this.redirectForBook(this.book);
+        this.$store.dispatch(
+          NOTIFICATION_SUCCESS_ACTION,
+          this.$t("book.notification.save.success")
+        );
+      } catch (e) {
+        if (e == NETWORK_ERROR) {
           this.redirectForBook(this.book);
           this.$store.dispatch(
-            NOTIFICATION_SUCCESS_ACTION,
-            this.$t("book.notification.save.success")
+            NOTIFICATION_WARNING_ACTION,
+            this.$t("book.notification.save.offline")
           );
-        })
-        .catch(() =>
+        } else {
           this.$store.dispatch(
             NOTIFICATION_DANGER_ACTION,
             this.$t("book.notification.save.fail")
-          )
-        );
+          );
+        }
+      }
     },
     submit() {
       this.action = this.submitAction;
     },
-    submitAndAddAction() {
-      this.$store
-        .dispatch(BOOK_ADD_ACTION, this.book)
-        .then(() => {
-          this.renavigate();
+    async submitAndAddAction() {
+      try {
+        await this.$store.dispatch(BOOK_ADD_ACTION, this.book);
+        this.renavigate();
+        this.$store.dispatch(
+          NOTIFICATION_SUCCESS_ACTION,
+          this.$t("book.notification.save.success")
+        );
+      } catch (e) {
+        if (e == NETWORK_ERROR) {
           this.$store.dispatch(
-            NOTIFICATION_SUCCESS_ACTION,
-            this.$t("book.notification.save.success")
+            NOTIFICATION_WARNING_ACTION,
+            this.$t("book.notification.save.offline")
           );
-        })
-        .catch(() =>
+          this.renavigate();
+        } else {
           this.$store.dispatch(
             NOTIFICATION_DANGER_ACTION,
             this.$t("book.notification.save.fail")
-          )
-        );
+          );
+        }
+      }
     },
     submitAndAdd() {
       this.action = this.submitAndAddAction;
