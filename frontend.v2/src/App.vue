@@ -33,8 +33,8 @@ export default {
     Client.prototype.onNetworkError = () => this.turnOffline();
     Client.prototype.onUnauthorizedError = () =>
       this.$store.dispatch(USER_LOGOUT_ACTION);
-    Client.prototype.requestCanceled = () => this.hideLoader();
-    Client.prototype.requestStarted = () => this.showLoader();
+    Client.prototype.requestCanceled = (requestGuid) => this.hideLoader(requestGuid);
+    Client.prototype.requestStarted = (requestGuid) => this.showLoader(requestGuid);
     Client.prototype.retry = 2;
   },
   components: {
@@ -47,13 +47,13 @@ export default {
     };
   },
   methods: {
-    showLoader() {
+    showLoader(requestGuid) {
       clientLogger.debug("showLoader");
-      this.$store.dispatch(CONNECTION_LOAD_START_ACTION);
+      this.$store.dispatch(CONNECTION_LOAD_START_ACTION, requestGuid);
     },
-    hideLoader() {
+    hideLoader(requestGuid) {
       clientLogger.debug("hideLoader");
-      this.$store.dispatch(CONNECTION_LOAD_FINISH_ACTION);
+      this.$store.dispatch(CONNECTION_LOAD_FINISH_ACTION, requestGuid);
     },
     turnOffline() {
       clientLogger.debug("turnOffline");

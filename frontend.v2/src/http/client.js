@@ -2,6 +2,7 @@ import Axios from "axios";
 import {
     getLogger
 } from '../logger';
+import { UUIDGenerator } from "essents";
 
 export const NETWORK_ERROR = 'Error: Network Error';
 export const UNAUTHORIZED_ERROR = 'Error: Unauthorized';
@@ -69,18 +70,17 @@ export class Client {
     }
 
     async sendRequest(routine) {
-        this.logger.debug('request started');
-        this.requestStarted();
+        const requestGuid = new UUIDGenerator().generate();
+
+        this.requestStarted(requestGuid);
         try {
             const result = await this.runRequestRoutine(routine);
 
-            this.logger.debug('request success');
-            await this.onSuccess();
+            await this.onSuccess(requestGuid);
 
             return result;
         } finally {
-            this.logger.debug('request canceled');
-            this.requestCanceled();
+            this.requestCanceled(requestGuid);
         }
     }
 
