@@ -175,26 +175,38 @@ export default {
     async deleteBook() {
       try {
         await this.$store.dispatch(BOOK_DELETE_ACTION, this.book.guid);
-        history.back();
-        this.$store.dispatch(
-          NOTIFICATION_SUCCESS_ACTION,
-          this.$t("book.notification.delete.success")
-        );
+        this.goBack();
+        this.showDeleteSuccessNotification();
       } catch (e) {
         if (e == NETWORK_ERROR) {
-          history.back();
-          this.$store.dispatch(
-            NOTIFICATION_WARNING_ACTION,
-            this.$t("book.notification.delete.offline")
-          );
+          this.goBack();
+          this.showDeleteOfflineNotification();
         } else {
-          this.$store.dispatch(
-            NOTIFICATION_DANGER_ACTION,
-            this.$t("book.notification.delete.fail")
-          );
+          this.showDeleteFailNotification();
         }
       }
-    }
+    },
+    goBack() {
+      history.back();
+    },
+    showDeleteOfflineNotification() {
+      this.$store.dispatch(
+        NOTIFICATION_WARNING_ACTION,
+        this.$t("book.notification.delete.offline")
+      );
+    },
+    showDeleteSuccessNotification() {
+      this.$store.dispatch(
+        NOTIFICATION_SUCCESS_ACTION,
+        this.$t("book.notification.delete.success")
+      );
+    },
+    showDeleteFailNotification() {
+      this.$store.dispatch(
+        NOTIFICATION_DANGER_ACTION,
+        this.$t("book.notification.delete.fail")
+      );
+    },
   },
   async beforeRouteEnter(to, from, next) {
     const bookGuid = to.params.guid;

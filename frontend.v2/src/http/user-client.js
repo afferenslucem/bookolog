@@ -23,8 +23,6 @@ export class UserClient extends Client {
                 withCredentials: true
             });
 
-            this.logger.debug('loggedIn', answer);
-
             return answer.data;
         }
         catch (e) {
@@ -43,7 +41,7 @@ export class UserClient extends Client {
         {
             withCredentials: true
         });
-        this.logger.debug('registered', user);
+        
         return user;
     }
 
@@ -51,7 +49,7 @@ export class UserClient extends Client {
         const user = await super.get('user/me', {
             withCredentials: true
         });
-        this.logger.debug('me', user);
+        
         return user.data;
     }
 
@@ -81,6 +79,5 @@ export class UserClient extends Client {
         {
             withCredentials: true
         });
-        this.logger.debug('logout');
     }
 }

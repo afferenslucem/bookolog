@@ -1,5 +1,6 @@
 import {
-    expect, assert
+    expect,
+    assert
 } from 'chai'
 import {
     shallowMount
@@ -10,12 +11,16 @@ import {
     BOOKS_AUTHORS_COUNT_GETTER,
     BOOKS_GENRES_COUNT_GETTER,
     BOOK_UPDATE_ACTION,
+    BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION,
     NOTIFICATION_WARNING_ACTION,
     NOTIFICATION_DANGER_ACTION,
     NOTIFICATION_SUCCESS_ACTION,
 } from "@/store/naming";
 import sin from 'sinon';
-import { NETWORK_ERROR } from '../../../../src/store/naming';
+import {
+    NETWORK_ERROR
+} from '../../../../src/store/naming';
+import store from '@/store';
 
 describe('BookUpdate.vue', () => {
     let wrapper = null;
@@ -371,3 +376,83 @@ describe('BookUpdate.vue', () => {
         assert.isTrue(wrapper.vm.redirectForBook.notCalled);
     });
 });
+
+describe('BookUpdate.vue', () => {
+    describe('Before router enter', () => {
+        let wrapper = null;
+        let dispatch = null;
+
+        beforeEach(() => {
+            dispatch = sin.stub(store, 'dispatch');
+
+            wrapper = shallowMount(BookUpdate, {
+                mocks: {
+                    $t: () => '',
+                    $route: {
+                        params: {
+                            guid: 1
+                        }
+                    },
+                    $store: {
+                        getters: {
+                            [BOOKS_AUTHORS_COUNT_GETTER]: [],
+                            [BOOKS_TAGS_COUNT_GETTER]: [],
+                            [BOOKS_GENRES_COUNT_GETTER]: [],
+                        }
+                    },
+                }
+            });
+        })
+
+
+        afterEach(() => {
+            dispatch.restore();
+        })
+
+        it('should set book', async () => {
+            const book = 'book';
+            const bookGuid = 'bookGuid';
+
+            dispatch.resolves(book);
+
+            const next = sin.stub();
+
+            await BookUpdate.beforeRouteEnter.call(wrapper.vm, {
+                    params: {
+                        guid: bookGuid
+                    },
+                },
+                undefined,
+                next
+            );
+
+            await wrapper.vm.$nextTick();
+
+            assert.isTrue(store.dispatch.calledOnceWithExactly(BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION, bookGuid))
+            assert.isTrue(next.calledOnce);
+        })
+
+        it('should show error', async () => {
+            const bookGuid = 'bookGuid';
+
+            dispatch.rejects();
+
+            const next = sin.stub();
+
+            await BookUpdate.beforeRouteEnter.call(wrapper.vm, {
+                    params: {
+                        guid: bookGuid
+                    },
+                },
+                undefined,
+                next
+            );
+
+            await wrapper.vm.$nextTick();
+
+            assert.isTrue(store.dispatch.calledWithExactly(BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION, bookGuid));
+            assert.isTrue(store.dispatch.calledWith(NOTIFICATION_DANGER_ACTION));
+            assert.isTrue(next.notCalled);
+        })
+    });
+})

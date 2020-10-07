@@ -15,14 +15,12 @@ export class BookClient extends Client {
 
     async getAll(userId) {
         const data = await super.get(`book/user/${userId}`);
-        this.logger.debug('books', data);
 
         return _(data.data).select(item => new Book(item)).toArray();
     }
 
     async getById(bookId) {
         const book = await super.get(`book/get/${bookId}`);
-        this.logger.debug('book', book.data);
 
         return new Book(book.data);
     }
@@ -32,7 +30,6 @@ export class BookClient extends Client {
             withCredentials: true
         });
 
-        this.logger.debug('created', created.data);
         return new Book(created.data);
     }
 
@@ -41,7 +38,6 @@ export class BookClient extends Client {
             withCredentials: true
         });
 
-        this.logger.debug('update', update.data);
         return new Book(update.data);
     }
 
@@ -50,7 +46,6 @@ export class BookClient extends Client {
             withCredentials: true
         });
 
-        this.logger.debug('deleted', deleted.data);
         return new Book(deleted.data);
     }
 

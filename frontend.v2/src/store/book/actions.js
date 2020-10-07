@@ -113,7 +113,7 @@ export const actions = {
         dispatch,
     }, guid) => {
         try {
-            return await dispatch('BOOK_GET_AND_REFRESH_BY_GUID_ACTION', guid);
+            return await dispatch(BOOK_GET_AND_REFRESH_BY_GUID_ACTION, guid);
         } catch (e) {
             if (e == NETWORK_ERROR) {
                 return state[guid];

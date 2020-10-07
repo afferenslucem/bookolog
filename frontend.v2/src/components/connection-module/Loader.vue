@@ -1,5 +1,5 @@
 <template>
-    <div class="preloader" v-show="showLoader">
+    <div class="preloader" v-if="showLoader">
         <div class="overlay"></div>
         <div class="loader-placeholder">
             <div class="loader">

@@ -25,7 +25,7 @@ export const mutations = {
         logger.debug('Loading started', state);
     },
     [CONNECTION_LOAD_FINISH_MUTATION]: (state) => {
-        state.loadingCounter = Math.max(state.loadingCounter - 1, 0);
+        state.loadingCounter = state.loadingCounter - 1;
         logger.debug('Loading finished', state);
     },
 }

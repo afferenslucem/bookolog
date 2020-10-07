@@ -12,7 +12,10 @@ export class Client {
     #sender = null;
 
     constructor(backendAddress, sender) {
-        this.logger = getLogger('Client');
+        this.logger = getLogger({
+            namespace: 'Http',
+            loggerName: 'Client'
+          });
         this.#backendAddress = backendAddress;
         this.#sender = sender || Axios;
     }
@@ -66,14 +69,17 @@ export class Client {
     }
 
     async sendRequest(routine) {
+        this.logger.debug('request started');
         this.requestStarted();
         try {
             const result = await this.runRequestRoutine(routine);
 
+            this.logger.debug('request success');
             await this.onSuccess();
 
             return result;
         } finally {
+            this.logger.debug('request canceled');
             this.requestCanceled();
         }
     }
@@ -83,11 +89,17 @@ export class Client {
             const result = await routine();
             return result;
         } catch (e) {
-            if (retry === undefined) {
-                return this.runRequestRoutine(routine, this.retry);
-            } else if (retry > 1) {
-                return this.runRequestRoutine(routine, retry - 1)
-            } else {
+            if(e == NETWORK_ERROR) {
+                if (retry === undefined) {
+                    return this.runRequestRoutine(routine, this.retry);
+                } else if (retry > 1) {
+                    return this.runRequestRoutine(routine, retry - 1)
+                } else {
+                    await this.catchError(e);
+                    throw e;
+                }
+            }
+            else {
                 await this.catchError(e);
                 throw e;
             }

@@ -13,6 +13,7 @@ import {
     BOOK_UPDATE_ACTION,
     BOOK_UPDATE_MUTATION,
     BOOK_GET_AND_REFRESH_BY_GUID_ACTION,
+    BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION,
     BOOK_DELETE_ACTION,
     BOOK_DELETE_MUTATION,
     BOOKS_CLEAR_ACTION,
@@ -363,6 +364,74 @@ describe('Book Actions', () => {
 
             assert.isTrue(dispatch.calledOnceWithExactly('clearLocalBooks'));
             assert.isTrue(commit.calledOnceWithExactly(BOOKS_CLEAR_MUTATION));
+        });
+    });
+
+    describe('BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION', () => {
+        it('should return remote', async () => {
+            const remoteBook = 'remoteBook';
+            const localBook = 'localBook';
+
+            const dispatch = sin.stub().resolves(remoteBook);
+
+            const guid = 'guid'
+
+            const state = {
+                [guid]: localBook,
+            }
+
+            const result = await actions[BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION]({
+                dispatch,
+                state,
+            }, guid);
+
+            assert.isTrue(dispatch.calledOnceWithExactly(BOOK_GET_AND_REFRESH_BY_GUID_ACTION, guid));
+            assert.equal(remoteBook, result)
+        });
+
+        it('should return local for error', async () => {
+            const localBook = 'localBook';
+
+            const dispatch = sin.stub().rejects(NETWORK_ERROR);
+
+            const guid = 'guid'
+
+            const state = {
+                [guid]: localBook,
+            }
+
+            const result = await actions[BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION]({
+                dispatch,
+                state,
+            }, guid);
+
+            assert.isTrue(dispatch.calledOnceWithExactly(BOOK_GET_AND_REFRESH_BY_GUID_ACTION, guid));
+            assert.equal(localBook, result)
+        });
+
+        it('should throw error', async () => {
+            const localBook = 'localBook';
+
+            const dispatch = sin.stub().rejects();
+
+            const guid = 'guid'
+
+            const state = {
+                [guid]: localBook,
+            }
+
+            try {
+                await actions[BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION]({
+                    dispatch,
+                    state,
+                }, guid);
+
+                assert.fail();
+            } catch (e) {
+                //
+            }
+
+            assert.isTrue(dispatch.calledOnceWithExactly(BOOK_GET_AND_REFRESH_BY_GUID_ACTION, guid));
         });
     });
 })

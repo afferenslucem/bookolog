@@ -111,19 +111,34 @@ describe('Base Client', () => {
             });
         });
 
-        it('should run 3 times for exceptions', async () => {
+        it('should run 3 times for NETWORK_ERROR exceptions', async () => {
             Client.prototype.retry = 2;
     
             try {
                 await client.sendRequest(async () => {
                     await $delete();
-                    throw 'exc';
+                    throw NETWORK_ERROR;
                 });
             } catch (e) {
-                console.log();
+                //
             }
     
             expect($delete.callCount).to.equal(3);
+        })
+
+        it('should run 1 times for unexpected exceptions', async () => {
+            Client.prototype.retry = 2;
+    
+            try {
+                await client.sendRequest(async () => {
+                    await $delete();
+                    throw 'exeption';
+                });
+            } catch (e) {
+                //
+            }
+    
+            expect($delete.callCount).to.equal(1);
         })
 
         it('should use unauthorithed callback', async () => {

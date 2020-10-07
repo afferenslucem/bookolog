@@ -11,8 +11,8 @@ import {
   CONNECTION_ONLINE_ACTION,
   CONNECTION_OFFLINE_ACTION,
   USER_LOGOUT_ACTION,
-  CONNECTION_LOAD_START_MUTATION,
-  CONNECTION_LOAD_FINISH_MUTATION,
+  CONNECTION_LOAD_START_ACTION,
+  CONNECTION_LOAD_FINISH_ACTION,
 } from "@/store/naming";
 
 import AppLoader from "@/components/connection-module/Loader.vue";
@@ -20,7 +20,12 @@ import NotificationMessage from "@/components/notification-module/Message.vue";
 
 import { Client } from "@/http/client";
 
-import { Timer } from "essents";
+import { getLogger } from "@/logger";
+
+const clientLogger = getLogger({
+  namespace: "Http",
+  loggerName: "Client",
+});
 
 export default {
   async created() {
@@ -38,30 +43,25 @@ export default {
   },
   data() {
     return {
-      loadingTimer: new Timer(() => {
-        this.$store.commit(CONNECTION_LOAD_START_MUTATION);
-      }, 150),
-      hideLoadingTimer: new Timer(() => {
-        this.loadingTimer.kill();
-        this.$store.commit(CONNECTION_LOAD_FINISH_MUTATION);
-      }, 300),
       checked: false,
     };
   },
   methods: {
     showLoader() {
-      this.loadingTimer.start();
-      this.$forceUpdate();
+      clientLogger.debug("showLoader");
+      this.$store.dispatch(CONNECTION_LOAD_START_ACTION);
     },
     hideLoader() {
-      this.$forceUpdate();
-      this.hideLoadingTimer.start();
+      clientLogger.debug("hideLoader");
+      this.$store.dispatch(CONNECTION_LOAD_FINISH_ACTION);
     },
     turnOffline() {
+      clientLogger.debug("turnOffline");
       return this.$store.dispatch(CONNECTION_OFFLINE_ACTION);
     },
     async turnOnline() {
       try {
+        clientLogger.debug("turnOnline");
         await this.$store.dispatch(CONNECTION_ONLINE_ACTION);
       } catch (e) {
         //

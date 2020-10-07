@@ -197,6 +197,7 @@ import {
 } from "@/store/naming";
 import { NETWORK_ERROR } from "@/http/client";
 import store from "@/store";
+import i18n from "@/i18n";
 import { DONE_STATUS, IN_PROGRESS_STATUS, TO_READ_STATUS } from "@/models/book";
 
 export default {
@@ -298,17 +299,24 @@ export default {
       this.book.startDateDay = null;
     },
   },
-  beforeRouteEnter(to, from, next) {
+  async beforeRouteEnter(to, from, next) {
     const bookGuid = to.params.guid;
-    store
-      .dispatch(BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION, bookGuid)
-      .then((book) => {
-        next((vm) => {
-          vm.book = Object.assign({}, book);
-          vm.initialStatus = book.status;
-          vm.initialUnits = book.doneUnits;
-        });
+    try {
+      const book = await store.dispatch(
+        BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION,
+        bookGuid
+      );
+      next((vm) => {
+        vm.book = Object.assign({}, book);
+        vm.initialStatus = book.status;
+        vm.initialUnits = book.doneUnits;
       });
+    } catch (e) {
+      store.dispatch(
+        NOTIFICATION_DANGER_ACTION,
+        i18n.t("book.notification.load.fail")
+      );
+    }
   },
 };
 </script>
