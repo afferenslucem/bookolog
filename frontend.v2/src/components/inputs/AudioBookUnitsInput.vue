@@ -65,7 +65,6 @@ export default {
   },
   watch: {
     units(newValue) { 
-      console.log('units: ' + newValue),
       this.unitsToData(newValue || 0);
     }
   },

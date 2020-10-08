@@ -22,26 +22,6 @@ describe('Date Format Filter', () => {
         assert.equal(result, expected);
     })
 
-    it('should return formatted', () => {
-        const input = new Date('qwerty');
-
-        const result = dateFormat(input);
-
-        const expected = '';
-
-        assert.equal(result, expected);
-    })
-
-    it('should return formatted', () => {
-        const input = 'qwerty';
-
-        const result = dateFormat(input);
-
-        const expected = '';
-
-        assert.equal(result, expected);
-    })
-
     it('should return empty', () => {
         const input = '';
 

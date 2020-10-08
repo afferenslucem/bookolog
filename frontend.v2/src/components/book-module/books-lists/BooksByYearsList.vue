@@ -4,33 +4,33 @@
 
     <div v-if="!shouldShowList">{{ $t("book.lists.noOneBook") }}</div>
     <ul class="book-list" v-else>
-      <li v-for="group of booksByYears" :key="group.key">
-        <div class="top-year">
+      <li v-for="year of booksByYears" :key="year.key" :year="year.key">
+        <div class="top-year" @click="swapYearOpening(year)">
           <h5 class="header year-header mt-2 mb-2 d-block">
-            {{ group.key || $t("book.lists.byYear.yearNotSpecified") }}
+            {{ year.key || $t("book.lists.byYear.yearNotSpecified") }}
           </h5>
           <span class="book-count">
-            {{ group.group.length }}
+            {{ year.group.length }}
           </span>
         </div>
-        <ul>
-          <li v-for="book of group.group" class="mb-4" :key="book.guid">
-            <done-book :book="book"></done-book>
-          </li>
-        </ul>
+        <book-for-year :year="year" :opened="year.opened"></book-for-year>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import DoneBook from "@/components/book-module/book/DoneBook";
+import BookForYear from "./BookForYearList";
 import _ from "declarray";
+import { Timer } from "essents";
 
 export default {
   components: {
-    DoneBook,
+    BookForYear,
   },
+  data: () => ({
+    booksByYears: [],
+  }),
   props: {
     books: {
       type: Array,
@@ -41,26 +41,46 @@ export default {
       required: true,
     },
   },
+  methods: {
+    swapYearOpening(year) {
+      _(this.booksByYears)
+        .where((item) => item.key !== year.key)
+        .toArray()
+        .forEach((item) => {
+          item.opened = false;
+        });
+
+      year.opened = !year.opened;
+
+      this.$forceUpdate();
+
+      new Timer(() => {
+          this.scrollToHeader(year.key);
+      }, 0).start();
+    },
+    scrollToHeader(yearKey) {
+      this.$el.querySelector(`[year="${yearKey}"]`).scrollIntoView();
+    },
+  },
   computed: {
     shouldShowList() {
       return this.books != null && this.books.length > 0;
     },
-    booksByYears() {
-      return _(this.books)
-        .groupBy(
-          (item) => (item.endDateYear ? item.endDateYear : null),
-          (group) =>
-            group
-              .orderByDescending((item) => item.endDateYear || 0)
-              .thenByDescending((item) => item.endDateMonth || 0)
-              .thenByDescending((item) => item.endDateDay || 0)
-              .thenByDescending((item) => item.modifyDate)
-              .thenByDescending((item) => item.createDate)
-              .toArray()
-        )
-        .orderByDescending((item) => item.key || Number.MIN_SAFE_INTEGER)
-        .toArray();
-    },
+  },
+  created() {
+    this.booksByYears = _(this.books)
+      .groupBy(
+        (item) => item.endDateYear,
+        (group) => group.toArray()
+      )
+      .orderByDescending((item) => item.key || Number.MIN_SAFE_INTEGER)
+      .toArray();
+
+    if(this.booksByYears.length > 0) {
+      this.booksByYears[0].opened = true;
+
+      this.$forceUpdate();
+    }
   },
 };
 </script>
