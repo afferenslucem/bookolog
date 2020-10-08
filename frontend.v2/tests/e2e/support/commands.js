@@ -272,18 +272,20 @@ Cypress.Commands.add("compareToReadBookVue", (book) => {
     cy.get('.status').contains('К прочтению');
 });
 
+const dateFormat = 'DD.MM.YYYY';
+
 Cypress.Commands.add("compareDoneBookVue", (book) => {
     compareCommonView(book);
     cy.get('.progressing-bar').should('not.exist');
-    cy.get('.start-date').contains(moment(book.startDate).format('ll'));
-    cy.get('.end-date').contains(moment(book.endDate).format('ll'));
+    cy.get('.start-date').contains(moment(book.startDate).format(dateFormat));
+    cy.get('.end-date').contains(moment(book.endDate).format(dateFormat));
     cy.get('.status').contains('Прочитана');
 });
 
 Cypress.Commands.add("compareInProgressBookVue", (book) => {
     compareCommonView(book);
     cy.get('.progressing-bar').should('exist');
-    cy.get('.start-date').contains(moment(book.startDate).format('ll'));
+    cy.get('.start-date').contains(moment(book.startDate).format(dateFormat));
     cy.get('.end-date').should('not.exist');
     cy.get('.status').contains('Читаю');
 });

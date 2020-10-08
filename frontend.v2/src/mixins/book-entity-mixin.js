@@ -1,11 +1,16 @@
-import moment from 'moment';
 import {
     TO_READ_STATUS,
     IN_PROGRESS_STATUS,
     DONE_STATUS
 } from '@/models/book';
+import ProgressBar from "@/components/book-module/book/ProgressBar.vue";
+import NoWrapValues from "@/components/book-module/book/NoWrapValues.vue";
 
 export default {
+    components: {
+        ProgressBar,
+        NoWrapValues,
+    },
     methods: {
         goToEdit(guid) {
             this.$router.push({
@@ -54,11 +59,5 @@ export default {
         doneBook() {
             return this.book.status == DONE_STATUS;
         },
-        startDate() {
-            return moment(this.book.startDate).format('ll')
-        },
-        endDate() {
-            return moment(this.book.endDate).format('ll')
-        }
     }
 }

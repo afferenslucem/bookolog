@@ -1,5 +1,5 @@
 <template>
-  <form @submit="submit($event)" class="container mt-3" name="registration">
+  <form @submit="submit($event)" name="registration">
     <h4>{{ $t('auth.registrationForm.title') }}</h4>
     <div class="form-group">
       <input

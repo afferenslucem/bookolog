@@ -4,7 +4,8 @@
 @import 'styles/mixins.scss';
 @import 'styles/components.scss';
 
-ol, ul {
+ol,
+ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -35,10 +36,14 @@ ol, ul {
 
 .is-invalid {
     .invalid-feedback {
-      display: inline;
-      padding: 0.5rem 1rem;
+        display: inline;
+        padding: 0.5rem 1rem;
     }
-  
+
     background-color: #{$warning-color}33;
     border-radius: 0.25rem;
-  }
+}
+
+.no-wrap {
+    white-space: nowrap;
+}

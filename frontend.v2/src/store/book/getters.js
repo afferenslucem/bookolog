@@ -12,6 +12,11 @@ import {
     TO_READ_STATUS,
     DONE_STATUS
 } from '@/models/book';
+import {
+    stringComparer
+} from '@/utils/string-comparing';
+
+
 
 export const getters = {
     books: state => _(Object.values(state)).where(item => item.deleted == false || item.deleted == undefined).toArray(),
@@ -20,7 +25,7 @@ export const getters = {
     [BOOKS_DONE_GETTER]: (state, getters) => _(getters.books).where(item => item.status === DONE_STATUS).toArray(),
     [BOOKS_GENRES_COUNT_GETTER]: (state, getters) => _(getters[BOOKS_DONE_GETTER])
         .where(item => !!item.genre)
-        .groupBy(item => item.genre.toLowerCase(), group => group.count())
+        .groupBy(item => item.genre.toLowerCase(), stringComparer, group => group.count())
         .orderByDescending(item => item.group)
         .select(item => ({
             name: item.key,
@@ -33,7 +38,7 @@ export const getters = {
             .select(item => item.tags)
             .aggregate((a, b) => a.concat(b), []);
 
-        const result = _(tags).groupBy(item => item, group => group.count())
+        const result = _(tags).groupBy(item => item, stringComparer, group => group.count())
             .orderByDescending(item => item.group)
             .select(item => ({
                 name: item.key,
@@ -49,7 +54,7 @@ export const getters = {
             .select(item => item.authors)
             .aggregate((a, b) => a.concat(b), []);
 
-        const result = _(authors).groupBy(item => item, group => group.count())
+        const result = _(authors).groupBy(item => item, stringComparer, group => group.count())
             .orderByDescending(item => item.group)
             .select(item => ({
                 name: item.key,

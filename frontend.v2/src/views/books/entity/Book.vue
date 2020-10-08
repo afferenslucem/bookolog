@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div>
     <book-header :book="book"></book-header>
     <p class="authors" v-if="book.authors && book.authors.length > 0">
-      {{ book.authors | join }}
+      <no-wrap-values class="value" :values="book.authors | capital"></no-wrap-values>
     </p>
     <p v-if="book.year">
       <span>{{ $t("book.entity.year") }}:</span>
@@ -35,7 +35,7 @@
     <p class="tags" v-if="book.tags && book.tags.length > 0">
       <span>{{ $t("book.entity.tags") }}:</span>
 
-      <span class="value">{{ book.tags | capital | join }}</span>
+      <no-wrap-values class="value tags" :values="book.tags | capital"></no-wrap-values>
     </p>
     <div v-if="shouldShowProgress" class="progressing-bar">
       <h6>{{ $t("book.entity.progress") }}:</h6>
@@ -43,11 +43,11 @@
     </div>
     <p v-if="startedBook && book.startDate" class="start-date">
       <span>{{ $t("book.entity.started") }}:</span>
-      <span>{{ startDate }}</span>
+      <span>{{ book.startDate | dateFormat }}</span>
     </p>
     <p v-if="doneBook && book.endDate" class="end-date">
       <span>{{ $t("book.entity.finished") }}:</span>
-      <span>{{ endDate }}</span>
+      <span>{{ book.endDate | dateFormat }}</span>
     </p>
     <p v-if="book.note" class="note">
       <span>{{ $t("book.entity.notes") }}:</span>
@@ -139,12 +139,10 @@ import {
 } from "@/models/book";
 import { NETWORK_ERROR } from "@/http/client";
 import bookEntityMixin from "@/mixins/book-entity-mixin";
-import ProgressBar from "@/components/book-module/book/ProgressBar.vue";
 import BookHeader from "@/components/book-module/book/BookHeader.vue";
 
 export default {
   components: {
-    ProgressBar,
     BookHeader,
   },
   data: () => ({

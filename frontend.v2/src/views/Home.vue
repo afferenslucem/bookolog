@@ -7,7 +7,7 @@
     <div class="overlay" :class="{active: showOverlay}" @click="closeAllMenus()"></div>
     <div class="main">
       <Header class="top" @avatarClick="openRightMenu()" @menuClick="openLeftMenu()"></Header>
-      <div class="content">
+      <div class="content container pt-1">
         <router-view />
       </div>
     </div>

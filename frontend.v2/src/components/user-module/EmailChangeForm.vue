@@ -1,7 +1,6 @@
 <template>
   <form
     @submit="submit($event)"
-    class="container mt-3"
     name="email-change"
     autocomplete="off"
   >

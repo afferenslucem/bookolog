@@ -1,5 +1,5 @@
 <template>
-  <div class="container book-list">
+  <div class="book-list">
     <h4 class="pt-1 header">{{ $t("book.lists.byStatus.inProgress") }}</h4>
 
     <ul v-if="shouldShowList">

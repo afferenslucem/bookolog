@@ -14,6 +14,10 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+import moment from 'moment';
+
+moment.locale('ru');
+
 import './commands'
 
 // Alternatively you can use CommonJS syntax:

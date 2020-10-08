@@ -3,11 +3,21 @@
 </template>
 
 <script>
-import { USER_SYNC_DATA_ACTION } from '@/store/naming';
-import store from '@/store';
+import { USER_SYNC_DATA_ACTION } from "@/store/naming";
+import { NETWORK_ERROR } from "@/http/client";
+import store from "@/store";
 export default {
-  beforeRouteEnter (to, from, next) {
-    store.dispatch(USER_SYNC_DATA_ACTION).finally(() => next())
+  async beforeRouteEnter(to, from, next) {
+    try {
+      await store.dispatch(USER_SYNC_DATA_ACTION);
+      next();
+    } catch (e) {
+      if (e == NETWORK_ERROR) {
+        next();
+      } else {
+        next({ name: "Guest" });
+      }
+    }
   },
 };
 </script>

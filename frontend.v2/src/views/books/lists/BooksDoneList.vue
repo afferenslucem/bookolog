@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <books-by-years-list :books="books" :listname="$t('book.lists.byStatus.done')">
     </books-by-years-list>
   </div>

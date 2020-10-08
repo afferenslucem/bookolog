@@ -32,6 +32,11 @@
 import SelectableInput from "./AutoCompletableInput";
 import TagInputValue from "./TagInputValue";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
+import {
+    stringComparer
+} from '@/utils/string-comparing';
+import _ from 'declarray';
+
 export default {
   data: () => ({
     tagsValue: [],
@@ -68,7 +73,7 @@ export default {
   },
   methods: {
     appendTag(tag) {
-      if (this.tagsValue.every((item) => item != tag)) {
+      if (!_(this.tagsValue).contains(tag, stringComparer)) {
         this.tagsValue.push(tag);
         this.emitTagsChange();
       }

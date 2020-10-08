@@ -58,7 +58,7 @@ export default {
           name: this.$t('book.entity.type.audio')
         },
       ],
-      bookNamePattern: '[A-Za-zА-Яа-яЁё0-9\\s\\.\\\\,\\(\\)\\-\\:\\!\\#\\+\\$\\№]+',
+      bookNamePattern: '[A-Za-zА-Яа-яЁё0-9\\s\\.\\,\\(\\)\\-\\:\\!\\#\\+\\$\\№]+',
       bookTagsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\.\\,\\(\\)\\-\\#\\+]+',
       bookAuthorsPattern: '[A-Za-zА-Яа-яЁё0-9\\s\\.\\,\\(\\)\\-]+',
       genrePattern: '[A-Za-zА-Яа-яЁё\\s\\-]+',

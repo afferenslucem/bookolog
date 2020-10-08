@@ -1,12 +1,9 @@
 <template>
   <div class="book-line" @click="lineClick()">
     <book-inline-header :book="book"></book-inline-header>
-    <div v-if="showAuthors">
-      <span>{{book.authors | join}}</span>
-    </div>
-    <div class="date-range" v-if="book.startDate || book.endDate">
-      [
-      <small class="dark-text">{{range}}</small> ]
+    <no-wrap-values v-if="showAuthors" :values="book.authors"></no-wrap-values>
+    <div class="date-range dark-text" v-if="book.startDate || book.endDate">
+      [ <small>{{book.startDate | dateFormat('...')}} - {{book.endDate | dateFormat('...')}}</small> ]
     </div>
     <div v-if="book.note">
       <small class="dark-text">{{book.note}}</small>
@@ -23,16 +20,7 @@ export default {
   computed: {
     showAuthors() {
       return this.book.authors && this.book.authors.length > 0;
-    },
-    range() {
-      const start = this.book.startDate != null ? this.startDate : "...";
-      const end = this.book.endDate != null ? this.endDate : "...";
-
-      return `${start} - ${end}`;
-    },
-    hasRange() {
-      return this.book.startDate && this.book.endDate;
-    },
+    }
   },
   props: {
     book: {

@@ -1,9 +1,7 @@
 <template>
   <div class="book-line" @click="lineClick()">
     <book-inline-header :book="book"></book-inline-header>
-    <div v-if="showAuthors">
-      <span>{{book.authors | join}}</span>
-    </div>
+    <no-wrap-values v-if="showAuthors" :values="book.authors"></no-wrap-values>
     <progress-bar v-if="shouldShowProgress" :progress="progress" ></progress-bar>
   </div>
 </template>

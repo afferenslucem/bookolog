@@ -12,11 +12,16 @@
     <li class="nav-item" v-if="isLoggedIn" @click="onSettings()">
       <a class="nav-link" href="#" id="settingsButton">{{ $t('user.actions.settings') }}</a>
     </li>
+    <span class="version dark-text">
+      <small> Version: {{version}} </small>
+    </span>
   </ul>
+  
 </template>
 <script>
 import userMixin from '@/mixins/user-mixin';
 import sideMenuMixin from '@/mixins/side-menu-mixin';
+import {VERSION} from '@/config';
 
 export default {
   mixins: [userMixin, sideMenuMixin],
@@ -37,6 +42,17 @@ export default {
       await this.settings();
       this.emitClick();
     }
+  },
+  computed: {
+    version: () => VERSION,
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .version {
+    position: absolute;
+    left: .5rem;
+    bottom: 0.25rem;
+  }
+</style>

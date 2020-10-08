@@ -1,5 +1,5 @@
 <template>
-  <div class="container tags-list">
+  <div class="tags-list">
     <h4 class="mt-1 header">{{ $t('book.lists.statistic.tags') }}</h4>
 
     <ul v-if="shouldShowList">

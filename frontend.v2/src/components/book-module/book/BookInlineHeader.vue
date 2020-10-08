@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <strong>{{ book.name }}</strong>
+    <strong class="text-truncate header-text">{{ book.name }}</strong>
     <div class="actions">
       <should-sync-icon v-show="book.shouldSync"></should-sync-icon>
       <div @click="editClick($event)">
@@ -42,5 +42,8 @@ export default {
   > i:not(:last-child) {
     margin-right: 0.3rem;
   }
+}
+.header-text {
+  padding-right: .5rem;
 }
 </style>

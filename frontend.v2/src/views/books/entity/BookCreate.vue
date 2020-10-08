@@ -1,5 +1,5 @@
 <template>
-  <div class="container create-form">
+  <div class="create-form">
     <small class="dark-text">* {{ $t("book.form.titles.required") }}</small>
     <form class="needs-validation" @submit="prefill($event)">
       <div class="form-group">
