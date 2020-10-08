@@ -85,7 +85,7 @@ export default {
     height: calc(100vh - #{$header-height});
     width: 100%;
 
-    overflow: hidden;
+    overflow: auto;
     position: absolute;
     top: $header-height;
     left: 0;
