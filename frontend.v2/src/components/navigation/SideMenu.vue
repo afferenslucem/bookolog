@@ -1,14 +1,5 @@
-<template>
-    <div class="side-menu">
+<template functional>
+    <div class="side-menu" :class="data.class">
         <slot></slot>
     </div>
 </template>
-<style lang="scss" scoped>
-    @import '@/styles/variables';
-
-    .side-menu {
-        height: 100vh;
-
-        background-color: $bg-color;
-    }
-</style>

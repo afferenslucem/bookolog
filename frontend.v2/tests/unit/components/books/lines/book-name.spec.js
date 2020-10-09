@@ -1,7 +1,11 @@
 import { expect } from 'chai'
 import books from '../../../data/books'
 import { shallowMount } from '@vue/test-utils'
+import Vue from 'vue'
 import BookHeader from '@/components/book-module/book/BookHeader.vue';
+import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
+
+Vue.component('ShouldSyncIcon', ShouldSyncIcon);
 
 describe('BookHeader.vue', () => {
     it('Renders props.book.name', () => {
@@ -21,7 +25,7 @@ describe('BookHeader.vue', () => {
         const wrapper = shallowMount(BookHeader, {
             propsData: { book }
         })
-        expect(wrapper.find('should-sync-icon-stub').isVisible()).to.equal(true)
+        expect(wrapper.find('i').exists()).to.equal(true)
     })
 
     it('Dont renders sync icon', () => {
@@ -32,6 +36,6 @@ describe('BookHeader.vue', () => {
         const wrapper = shallowMount(BookHeader, {
             propsData: { book }
         })
-        expect(wrapper.find('should-sync-icon-stub').isVisible()).to.equal(false)
+        expect(wrapper.find('i').exists()).to.equal(false)
     })
 })
