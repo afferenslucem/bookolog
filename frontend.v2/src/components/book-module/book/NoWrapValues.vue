@@ -1,5 +1,5 @@
 <template functional>
-  <span>
+  <span :class="data.staticClass">
     <span class="no-wrap">{{ props.values[0] }}</span
     ><span v-if="props.values.length > 1"
       ><span v-for="tag of props.values.slice(1)" :key="tag"
