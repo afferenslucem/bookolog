@@ -6,12 +6,20 @@ import {
     shallowMount
 } from '@vue/test-utils'
 import ProgressingBook from '@/components/book-module/book/ProgressingBook.vue';
+import ProgressBar from '@/components/book-module/book/ProgressBar.vue'; 
+import BookInlineHeader from "@/components/book-module/book/BookInlineHeader.vue";
+import NoWrapValues from "@/components/book-module/book/NoWrapValues.vue";
+import EditIcon from "@/components/icons/EditIcon.vue";
+import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
 
 import Vue from 'vue';
 
-import join from '@/filters/join'
+Vue.component('ProgressBar', ProgressBar);
+Vue.component('BookInlineHeader', BookInlineHeader);
+Vue.component('NoWrapValues', NoWrapValues);
+Vue.component('EditIcon', EditIcon);
+Vue.component('ShouldSyncIcon', ShouldSyncIcon);
 
-Vue.filter('join', join);
 
 describe('ProgressingBook.vue', () => {
     it('Render props.book.name', () => {
@@ -21,7 +29,7 @@ describe('ProgressingBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`book-inline-header-stub`)
+        expect(wrapper.text()).to.include(book.name)
     })
 
     it('Render props.book.authors', () => {
@@ -31,7 +39,7 @@ describe('ProgressingBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`<no-wrap-values-stub values="Александр Пикуленко,Денис Орлов"></no-wrap-values-stub>`)
+        expect(wrapper.text()).to.include(book.authors.join(', '))
     })
 
     it('Render props.book.authors', () => {
@@ -41,7 +49,7 @@ describe('ProgressingBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`<no-wrap-values-stub values="Джордж Мартин"></no-wrap-values-stub>`)
+        expect(wrapper.text()).to.include(book.authors.join(', '))
     })
 
     it('Render props.book.progress', () => {
@@ -51,17 +59,7 @@ describe('ProgressingBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`<progress-bar-stub progress="50"></progress-bar-stub>`)
-    })
-
-    it('Render empty props.book.progress', () => {
-        const book = books[8];
-        const wrapper = shallowMount(ProgressingBook, {
-            propsData: {
-                book
-            }
-        })
-        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
+        expect(wrapper.html()).to.include(`aria-valuenow="50"`)
     })
 
     it('Render empty props.book.progress', () => {
@@ -71,7 +69,7 @@ describe('ProgressingBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
+        expect(wrapper.html()).to.include(`aria-valuenow="0"`)
     })
 
     it('Render empty props.book.progress', () => {
@@ -81,17 +79,7 @@ describe('ProgressingBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
-    })
-
-    it('Render empty props.book.progress', () => {
-        const book = books[11];
-        const wrapper = shallowMount(ProgressingBook, {
-            propsData: {
-                book
-            }
-        })
-        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
+        expect(wrapper.html()).to.include(`aria-valuenow="0"`)
     })
 
     it('Render empty props.book.progress', () => {
@@ -101,6 +89,6 @@ describe('ProgressingBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`<progress-bar-stub progress="0"></progress-bar-stub>`)
+        expect(wrapper.html()).to.include(`aria-valuenow="0"`)
     })
 })

@@ -3,14 +3,8 @@ import {
     IN_PROGRESS_STATUS,
     DONE_STATUS
 } from '@/models/book';
-import ProgressBar from "@/components/book-module/book/ProgressBar.vue";
-import NoWrapValues from "@/components/book-module/book/NoWrapValues.vue";
 
 export default {
-    components: {
-        ProgressBar,
-        NoWrapValues,
-    },
     methods: {
         goToEdit(guid) {
             this.$router.push({

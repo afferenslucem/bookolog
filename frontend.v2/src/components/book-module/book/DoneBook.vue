@@ -1,36 +1,35 @@
-<template>
-  <div class="book-line" @click="lineClick()">
-    <book-inline-header :book="book"></book-inline-header>
-    <no-wrap-values v-if="showAuthors" :values="book.authors"></no-wrap-values>
-    <div class="date-range dark-text" v-if="book.startDate || book.endDate">
-      [ <small>{{book.startDate | dateFormat('...')}} - {{book.endDate | dateFormat('...')}}</small> ]
+<template functional>
+  <div class="book-line" @click="listeners.bookClick" :class="data.staticClass">
+    <book-inline-header
+      :book="props.book"
+      @editIconClick="listeners.editIconClick"
+    ></book-inline-header>
+    <no-wrap-values v-if="props.book.authors" :values="props.book.authors" />
+    <div
+      class="date-range dark-text"
+      v-if="props.book.startDate || props.book.endDate"
+    >
+      [
+      <small
+        >{{ props.book.startDate | dateFormat("...") }} -
+        {{ props.book.endDate | dateFormat("...") }}</small
+      >
+      ]
     </div>
-    <div v-if="book.note">
-      <small class="dark-text">{{book.note}}</small>
+    <div v-if="props.book.note">
+      <small class="dark-text">{{ props.book.note }}</small>
     </div>
   </div>
 </template>
 
 <script>
-import BookInlineHeader from "@/components/book-module/book/BookInlineHeader.vue";
-import bookMixin from "@/mixins/book-entity-mixin";
-
 export default {
-  mixins: [bookMixin],
-  computed: {
-    showAuthors() {
-      return this.book.authors && this.book.authors.length > 0;
-    }
-  },
   props: {
     book: {
       required: true,
       type: Object,
     },
   },
-  components: {
-    BookInlineHeader
-  }
 };
 </script>
 

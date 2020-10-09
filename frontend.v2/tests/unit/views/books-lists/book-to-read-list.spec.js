@@ -32,15 +32,6 @@ describe('BooksToReadList.vue', () => {
         expect(items.length).to.equal(6)
     })
 
-    it('Compare books', () => {
-        const items = wrapper.findAllComponents(ToReadBook);
-
-        for(let i = 0; i < progressBooks.length; i++) {
-            const item = items.at(i);
-            expect(item.props().book.name).to.equal(progressBooks[i].name);
-        }
-    })
-
     it('Should show empty list message', () => {
         wrapper = shallowMount(BooksToReadList, {
             mocks: { 

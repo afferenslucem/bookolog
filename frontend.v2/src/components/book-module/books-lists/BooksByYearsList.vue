@@ -5,14 +5,7 @@
     <div v-if="!shouldShowList">{{ $t("book.lists.noOneBook") }}</div>
     <ul class="book-list" v-else>
       <li v-for="year of booksByYears" :key="year.key" :year="year.key">
-        <div class="top-year" @click="swapYearOpening(year)">
-          <h5 class="header year-header mt-2 mb-2 d-block">
-            {{ year.key || $t("book.lists.byYear.yearNotSpecified") }}
-          </h5>
-          <span class="book-count">
-            {{ year.group.length }}
-          </span>
-        </div>
+        <book-for-year-header @click="swapYearOpening(year)" :year="year" />
         <book-for-year :year="year" :opened="year.opened"></book-for-year>
       </li>
     </ul>
@@ -21,12 +14,14 @@
 
 <script>
 import BookForYear from "./BookForYearList";
+import BookForYearHeader from "./BookForYearListHeader";
 import _ from "declarray";
 import { Timer } from "essents";
 
 export default {
   components: {
     BookForYear,
+    BookForYearHeader,
   },
   data: () => ({
     booksByYears: [],
@@ -55,7 +50,7 @@ export default {
       this.$forceUpdate();
 
       new Timer(() => {
-          this.scrollToHeader(year.key);
+        this.scrollToHeader(year.key);
       }, 0).start();
     },
     scrollToHeader(yearKey) {
@@ -76,7 +71,7 @@ export default {
       .orderByDescending((item) => item.key || Number.MIN_SAFE_INTEGER)
       .toArray();
 
-    if(this.booksByYears.length > 0) {
+    if (this.booksByYears.length > 0) {
       this.booksByYears[0].opened = true;
 
       this.$forceUpdate();
@@ -100,5 +95,14 @@ export default {
 
   top: -1px;
   left: 0;
+
+  border-bottom: $split-line;
+}
+
+.book-count {
+  display: inline-block;
+  min-width: 2rem;
+
+  text-align: right;
 }
 </style>

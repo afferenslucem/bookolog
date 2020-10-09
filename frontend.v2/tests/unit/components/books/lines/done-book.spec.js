@@ -8,10 +8,17 @@ import {
 import DoneBook from '@/components/book-module/book/DoneBook.vue';
 import moment from 'moment';
 import Vue from 'vue';
+import BookInlineHeader from "@/components/book-module/book/BookInlineHeader.vue";
+import NoWrapValues from "@/components/book-module/book/NoWrapValues.vue";
+import EditIcon from "@/components/icons/EditIcon.vue";
+import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
+import dateFormat from '@/filters/format-date'
 
-import join from '@/filters/join'
-
-Vue.filter('join', join);
+Vue.filter('dateFormat', dateFormat);
+Vue.component('BookInlineHeader', BookInlineHeader);
+Vue.component('NoWrapValues', NoWrapValues);
+Vue.component('EditIcon', EditIcon);
+Vue.component('ShouldSyncIcon', ShouldSyncIcon);
 
 describe('DoneBook.vue', () => {
     it('Render props.book.name', () => {
@@ -21,7 +28,7 @@ describe('DoneBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`book-inline-header-stub`)
+        expect(wrapper.text()).to.include(book.name)
     })
 
     it('Render props.book.authors', () => {
@@ -31,7 +38,7 @@ describe('DoneBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`<no-wrap-values-stub values="Марк Аврелий"></no-wrap-values-stub>`)
+        expect(wrapper.text()).to.include(book.authors.join(', '))
     })
 
     it('Render props.book.authors', () => {
@@ -41,7 +48,7 @@ describe('DoneBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`<no-wrap-values-stub values="Николай Костомаров,Михаил Галустян"></no-wrap-values-stub>`)
+        expect(wrapper.text()).to.include(book.authors.join(', '))
     })
 
     it('Render no props.book.progress', () => {

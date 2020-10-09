@@ -1,6 +1,9 @@
 <template>
-    <books-by-years-list :books="books" :listname="$t('book.lists.byStatus.done')">
-    </books-by-years-list>
+  <books-by-years-list
+    :books="books"
+    :listname="$t('book.lists.byStatus.done')"
+  >
+  </books-by-years-list>
 </template>
 
 <script>
@@ -17,8 +20,8 @@ export default {
     },
     shouldShowList() {
       return this.books != null && this.books.length > 0;
-    }
-  }
+    },
+  },
 };
 </script>
 

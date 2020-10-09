@@ -4,8 +4,21 @@ import { shallowMount } from '@vue/test-utils'
 import BooksInProgressList from '@/views/books/lists/BooksInProgressList.vue';
 import { BOOKS_IN_PROGRESS_GETTER } from "@/store/naming";
 import {IN_PROGRESS_STATUS} from '@/models/book';
-import ProgressingBook from '@/components/book-module/book/ProgressingBook.vue';
 import _ from 'declarray';
+import ProgressingBook from '@/components/book-module/book/ProgressingBook.vue';
+import ProgressBar from '@/components/book-module/book/ProgressBar.vue'; 
+import BookInlineHeader from "@/components/book-module/book/BookInlineHeader.vue";
+import NoWrapValues from "@/components/book-module/book/NoWrapValues.vue";
+import EditIcon from "@/components/icons/EditIcon.vue";
+import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
+import Vue from 'vue';
+
+Vue.component('ProgressBar', ProgressBar);
+Vue.component('BookInlineHeader', BookInlineHeader);
+Vue.component('NoWrapValues', NoWrapValues);
+Vue.component('EditIcon', EditIcon);
+Vue.component('ShouldSyncIcon', ShouldSyncIcon);
+Vue.component('ProgressingBook', ProgressingBook);
 
 describe('BooksInProgressList.vue', () => {
     let wrapper = null;
@@ -30,15 +43,6 @@ describe('BooksInProgressList.vue', () => {
     it('Render correct count of books', () => {
         const items = wrapper.findAllComponents(ProgressingBook);
         expect(items.length).to.equal(8)
-    })
-
-    it('Compare books', () => {
-        const items = wrapper.findAllComponents(ProgressingBook);
-
-        for(let i = 0; i < progressBooks.length; i++) {
-            const item = items.at(i);
-            expect(item.props().book.name).to.equal(progressBooks[i].name);
-        }
     })
 
     it('Should show empty list message', () => {

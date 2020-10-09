@@ -3,8 +3,12 @@
     <h4 class="pt-1 header">{{ $t("book.lists.byStatus.toRead") }}</h4>
 
     <ul v-if="shouldShowList">
-      <li v-for="book of books" class="mb-4" :key="book.guid">
-        <to-read-book :book="book"></to-read-book>
+      <li v-for="book of books" class="mb-3" :key="book.guid">
+        <to-read-book
+          :book="book"
+          @bookClick="lineClick(book)"
+          @editIconClick="editClick(book, $event)"
+        />
       </li>
     </ul>
     <div v-else>{{ $t("book.lists.noOneBook") }}</div>
@@ -13,16 +17,18 @@
 
 <script>
 import { BOOKS_TO_READ_GETTER } from "@/store/naming";
+import bookList from "@/mixins/book-list-mixin.js";
 import ToReadBook from "@/components/book-module/book/ToReadBook";
-import u from "declarray";
+import _ from "declarray";
 
 export default {
   components: {
     ToReadBook,
   },
+  mixins: [bookList],
   computed: {
     books() {
-      return u(this.$store.getters[BOOKS_TO_READ_GETTER])
+      return _(this.$store.getters[BOOKS_TO_READ_GETTER])
         .orderByDescending((item) => item.modifyDate)
         .thenByDescending((item) => item.createDate)
         .thenByDescending((item) => item.name)

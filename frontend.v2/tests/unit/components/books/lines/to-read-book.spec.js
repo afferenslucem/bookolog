@@ -20,7 +20,7 @@ describe('ToReadBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`book-inline-header-stub`)
+        expect(wrapper.text()).to.include(book.name)
     })
 
     it('Render props.book.authors', () => {
@@ -31,7 +31,7 @@ describe('ToReadBook.vue', () => {
             }
         })
         
-        expect(wrapper.html()).to.include(`<no-wrap-values-stub values="Андрей Круз,Андрей Царев"></no-wrap-values-stub>`)
+        expect(wrapper.text()).to.include(`Андрей Круз, Андрей Царев`)
     })
 
     it('Render props.book.authors', () => {
@@ -41,6 +41,6 @@ describe('ToReadBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.include(`<no-wrap-values-stub values="Марк Аврелий"></no-wrap-values-stub>`)
+        expect(wrapper.html()).to.include(`Марк Аврелий`)
     })
 })

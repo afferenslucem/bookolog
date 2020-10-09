@@ -20,13 +20,6 @@ import NotificationMessage from "@/components/notification-module/Message.vue";
 
 import { Client } from "@/http/client";
 
-import { getLogger } from "@/logger";
-
-const clientLogger = getLogger({
-  namespace: "Http",
-  loggerName: "Client",
-});
-
 export default {
   async created() {
     Client.prototype.onSuccess = () => this.turnOnline();
@@ -48,20 +41,16 @@ export default {
   },
   methods: {
     showLoader(requestGuid) {
-      clientLogger.debug("showLoader");
       this.$store.dispatch(CONNECTION_LOAD_START_ACTION, requestGuid);
     },
     hideLoader(requestGuid) {
-      clientLogger.debug("hideLoader");
       this.$store.dispatch(CONNECTION_LOAD_FINISH_ACTION, requestGuid);
     },
     turnOffline() {
-      clientLogger.debug("turnOffline");
       return this.$store.dispatch(CONNECTION_OFFLINE_ACTION);
     },
     async turnOnline() {
       try {
-        clientLogger.debug("turnOnline");
         await this.$store.dispatch(CONNECTION_ONLINE_ACTION);
       } catch (e) {
         //
