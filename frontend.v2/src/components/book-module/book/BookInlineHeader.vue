@@ -2,7 +2,7 @@
   <div class="header">
     <strong class="text-truncate header-text">{{ book.name }}</strong>
     <div class="actions">
-      <should-sync-icon v-show="book.shouldSync"></should-sync-icon>
+      <should-sync-icon v-if="book.shouldSync"></should-sync-icon>
       <div @click="editClick($event)">
         <edit-icon class="fa-lg"></edit-icon>
       </div>
@@ -13,13 +13,11 @@
 <script>
 import bookMixin from "@/mixins/book-entity-mixin";
 import EditIcon from "@/components/icons/EditIcon.vue";
-import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
 
 export default {
   mixins: [bookMixin],
   components: {
     EditIcon,
-    ShouldSyncIcon,
   },
   props: {
     book: {

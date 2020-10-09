@@ -27,6 +27,7 @@
 import userMixin from "@/mixins/user-mixin";
 import SyncButton from "@/components/connection-module/SyncButton.vue";
 import Profile from "@/components/navigation/Profile.vue";
+
 export default {
   mixins: [userMixin],
   methods: {

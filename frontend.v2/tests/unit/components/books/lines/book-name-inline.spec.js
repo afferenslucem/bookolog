@@ -21,7 +21,7 @@ describe('BookInlineHeader.vue', () => {
         const wrapper = shallowMount(BookInlineHeader, {
             propsData: { book }
         })
-        expect(wrapper.find('should-sync-icon-stub').isVisible()).to.equal(true)
+        expect(wrapper.find('should-sync-icon-stub').exists()).to.equal(true)
     })
 
     it('Dont renders sync icon', () => {
@@ -32,6 +32,6 @@ describe('BookInlineHeader.vue', () => {
         const wrapper = shallowMount(BookInlineHeader, {
             propsData: { book }
         })
-        expect(wrapper.find('should-sync-icon-stub').isVisible()).to.equal(false)
+        expect(wrapper.find('should-sync-icon-stub').exists()).to.equal(false)
     })
 })

@@ -1,29 +1,12 @@
-<template>
+<template functional>
   <div class="progress mt-2">
     <div
       class="progress-bar"
       role="progressbar"
-      :style="{'width': progress + '%'}"
-      :aria-valuenow="progress"
+      :style="{'width': props.progress + '%'}"
+      :aria-valuenow="props.progressprogress"
       aria-valuemin="0"
       aria-valuemax="100"
     ></div>
   </div>
 </template>
-
-<script>
-export default {
-    props: {
-        progress: {
-            required: true,
-            type: Number
-        }
-    },
-    created() {
-      // console.log('progress', this.progress)
-    }
-};
-</script>
-
-<style>
-</style>

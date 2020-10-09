@@ -231,7 +231,7 @@ export default {
 }
 
 p,
-div:not(.book-header) {
+div:not(.book-header):not(.progress-bar) {
   margin-bottom: 0.75rem;
 }
 

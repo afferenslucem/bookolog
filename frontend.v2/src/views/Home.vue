@@ -1,17 +1,25 @@
 <template>
   <div class="window">
-    <side-menu class="left" :class="{opened: shouldShowLeftMenu}">
+    <side-menu :class="{ opened: shouldShowLeftMenu, left: true }">
       <book-menu @itemClick="closeAllMenus()"></book-menu>
       <statistic-menu @itemClick="closeAllMenus()"></statistic-menu>
     </side-menu>
-    <div class="overlay" :class="{active: showOverlay}" @click="closeAllMenus()"></div>
+    <div
+      class="overlay"
+      :class="{ active: showOverlay }"
+      @click="closeAllMenus()"
+    ></div>
     <div class="main">
-      <Header class="top" @avatarClick="openRightMenu()" @menuClick="openLeftMenu()"></Header>
+      <Header
+        class="top"
+        @avatarClick="openRightMenu()"
+        @menuClick="openLeftMenu()"
+      ></Header>
       <div class="content container pt-1">
         <router-view />
       </div>
     </div>
-    <side-menu class="right" :class="{opened: shouldShowRightMenu}">
+    <side-menu :class="{ opened: shouldShowRightMenu, right: true }">
       <user-menu @itemClick="closeAllMenus()"></user-menu>
     </side-menu>
   </div>
@@ -35,7 +43,7 @@ export default {
     SideMenu,
     BookMenu,
     UserMenu,
-    StatisticMenu
+    StatisticMenu,
   },
   data() {
     return {
@@ -63,8 +71,7 @@ export default {
       return this.shouldShowLeftMenu || this.shouldShowRightMenu;
     },
   },
-  created() {
-  },
+  created() {},
 };
 </script>
 
@@ -125,6 +132,10 @@ export default {
   position: fixed;
   top: 0;
   z-index: 1000;
+
+  height: 100vh;
+
+  background-color: $bg-color;
 
   $menu-open-time: 0.5s;
   $menu-open-animation: ease-in-out;

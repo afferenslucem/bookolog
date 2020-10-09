@@ -133,3 +133,26 @@
 .tags-list {
     @extend .statistic-list;
 }
+
+// Profile
+.profile {
+    position: relative;
+
+    >.marker {
+        position: absolute;
+
+        right: 0.1rem;
+        top: 0;
+    }
+
+    >.total-count {
+        left: 0;
+        bottom: 0;
+
+        font-size: 0.65rem;
+
+        transform: translate(5%, 0%);
+
+        position: absolute;
+    }
+}
