@@ -3,13 +3,13 @@
     <h5>{{ $t('book.lists.statistic.title') }}</h5>
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link" href="#" @click="goToGenres()">{{ $t('book.lists.statistic.genres') }}</a>
+        <a class="nav-link" id="genresListButton" href="#" @click="goToGenres()">{{ $t('book.lists.statistic.genres') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" @click="goToTags()">{{ $t('book.lists.statistic.tags') }}</a>
+        <a class="nav-link" id="tagsListButton" href="#" @click="goToTags()">{{ $t('book.lists.statistic.tags') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" @click="goToAuthors()">{{ $t('book.lists.statistic.authors') }}</a>
+        <a class="nav-link" id="authorsListButton" href="#" @click="goToAuthors()">{{ $t('book.lists.statistic.authors') }}</a>
       </li>
     </ul>
   </div>

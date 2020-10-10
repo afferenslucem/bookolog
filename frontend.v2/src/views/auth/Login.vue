@@ -1,7 +1,7 @@
 <template>
   <div>
     <form @submit="login($event)">
-      <h4>{{ $t('auth.loginForm.title') }}</h4>
+      <h4>{{ $t("auth.loginForm.title") }}</h4>
       <div class="form-group">
         <input
           class="form-control"
@@ -22,14 +22,20 @@
       </div>
 
       <div class="form-group" v-if="errors.incorrectCredentials">
-        <div class="alert alert-danger text-center">{{ $t('auth.loginForm.incorrectCredentials') }}</div>
+        <div class="alert alert-danger text-center">
+          {{ $t("auth.loginForm.incorrectCredentials") }}
+        </div>
       </div>
 
-      <div class="mt-2 mb-2">
-        <router-link :to="{name: 'RecoverPassword'}">Восстановить пароль</router-link>
+      <div class="mt-2 mb-2 password-recover-link">
+        <router-link :to="{ name: 'RecoverPassword' }"
+          >Восстановить пароль</router-link
+        >
       </div>
 
-      <button class="btn btn-primary w-100" type="submit">{{ $t('auth.loginForm.submit') }}</button>
+      <button class="btn btn-primary w-100" type="submit">
+        {{ $t("auth.loginForm.submit") }}
+      </button>
     </form>
   </div>
 </template>

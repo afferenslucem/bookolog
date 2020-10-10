@@ -69,9 +69,24 @@ Cypress.Commands.add("openToReadList", () => {
     cy.get('#toReadListButton').click();
 })
 
-Cypress.Commands.add("openToDoneList", () => {
+Cypress.Commands.add("openDoneList", () => {
     cy.openBooksMenu();
     cy.get('#toDoneListButton').click();
+})
+
+Cypress.Commands.add("openGenresList", () => {
+    cy.openBooksMenu();
+    cy.get('#genresListButton').click();
+})
+
+Cypress.Commands.add("openTagsList", () => {
+    cy.openBooksMenu();
+    cy.get('#tagsListButton').click();
+})
+
+Cypress.Commands.add("openAuthorsList", () => {
+    cy.openBooksMenu();
+    cy.get('#authorsListButton').click();
 })
 
 Cypress.Commands.add("goToCreateToReadBook", () => {
@@ -298,6 +313,14 @@ Cypress.Commands.add("compareBookLine", (index, book) => {
 
 Cypress.Commands.add("clickToFirstBookLineHeader", () => {
     cy.get(`.book-list ul:first-of-type > li:first-child > .book-line > .header > strong`).click();
+});
+
+Cypress.Commands.add("clickToFirstBookEditIcon", () => {
+    cy.get(`.book-list ul:first-of-type > li:first-child > .book-line .fa-edit`).click();
+});
+
+Cypress.Commands.add("getFirstBookLine", () => {
+    return cy.get(`.book-list ul:first-of-type > li:first-child > .book-line`)
 });
 
 Cypress.Commands.add("deleteBookFromView", () => {
