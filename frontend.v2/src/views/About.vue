@@ -27,6 +27,9 @@
           <a href="https://vk.com/hrodveetnir">Vk</a>
         </li>
         <li>
+          <a href="https://t.me/hrodveetnir">Telegram</a>
+        </li>
+        <li>
           <a
             href="mailto:hrodveetnir@protonmail.com?subject=Bookolog%20Feedback"
             >Email</a

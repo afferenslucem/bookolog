@@ -3,7 +3,7 @@ module.exports = {
     themeColor: '#51bbfe',
     name: 'Bookolog',
     manifestOptions: {
-      start_url: '.' // 'workspace/in-progress'
+      start_url: '.'
     }
   },
 

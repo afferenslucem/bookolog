@@ -47,27 +47,27 @@ describe('Links Check', () => {
 
         describe('In Progress', () => {
             it('List check', () => {
-                cy.pageIs('workspace/in-progress');
+                cy.pageIs('in-progress');
             });
 
             it('Book View Check', () => {
-                cy.pageIs('workspace/in-progress');
+                cy.pageIs('in-progress');
 
                 cy.getFirstBookLine().click();
 
-                cy.urlContains('workspace/book/');
+                cy.urlContains('book/');
 
                 cy.editBookFromView();
 
-                cy.urlContains('workspace/book/update/');
+                cy.urlContains('book/update/');
             });
 
             it('Book Edit View Check', () => {
-                cy.pageIs('workspace/in-progress');
+                cy.pageIs('in-progress');
 
                 cy.clickToFirstBookEditIcon();
 
-                cy.urlContains('workspace/book/update/');
+                cy.urlContains('book/update/');
             });
 
         });
@@ -78,27 +78,27 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('workspace/to-read');
+                cy.pageIs('to-read');
             });
 
             it('Book View Check', () => {
-                cy.pageIs('workspace/to-read');
+                cy.pageIs('to-read');
 
                 cy.getFirstBookLine().click();
 
-                cy.urlContains('workspace/book/');
+                cy.urlContains('book/');
 
                 cy.editBookFromView();
 
-                cy.urlContains('workspace/book/update/');
+                cy.urlContains('book/update/');
             });
 
             it('Book Edit View Check', () => {
-                cy.pageIs('workspace/to-read');
+                cy.pageIs('to-read');
 
                 cy.clickToFirstBookEditIcon();
 
-                cy.urlContains('workspace/book/update/');
+                cy.urlContains('book/update/');
             });
         });
 
@@ -108,27 +108,27 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('workspace/done');
+                cy.pageIs('done');
             });
 
             it('Book View Check', () => {
-                cy.pageIs('workspace/done');
+                cy.pageIs('done');
 
                 cy.getFirstBookLine().click();
 
-                cy.urlContains('workspace/book/');
+                cy.urlContains('book/');
 
                 cy.editBookFromView();
 
-                cy.urlContains('workspace/book/update/');
+                cy.urlContains('book/update/');
             });
 
             it('Book Edit View Check', () => {
-                cy.pageIs('workspace/done');
+                cy.pageIs('done');
 
                 cy.clickToFirstBookEditIcon();
 
-                cy.urlContains('workspace/book/update/');
+                cy.urlContains('book/update/');
             });
         });
 
@@ -138,11 +138,11 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('workspace/genres');
+                cy.pageIs('genres');
 
                 cy.get('.genres-list ul li:first-child a').click();
 
-                cy.urlContains('workspace/by-genre/');
+                cy.urlContains('by-genre/');
             });
         });
 
@@ -152,11 +152,11 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('workspace/tags');
+                cy.pageIs('tags');
 
                 cy.get('.tags-list ul li:first-child a').click();
 
-                cy.urlContains('workspace/by-tag/');
+                cy.urlContains('by-tag/');
             });
         });
 
@@ -166,11 +166,11 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('workspace/authors');
+                cy.pageIs('authors');
 
                 cy.get('.authors-list ul li:first-child a').click();
 
-                cy.urlContains('workspace/by-author/');
+                cy.urlContains('by-author/');
             });
         });
     })
@@ -190,7 +190,7 @@ describe('Links Check', () => {
 
         it('Email change test', () => {
             cy.goToSettings();
-            cy.pageIs('workspace/settings');
+            cy.pageIs('settings');
         });
     });
 });

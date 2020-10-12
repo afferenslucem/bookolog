@@ -19,11 +19,11 @@ describe('Email change test', () => {
   it('Email change test', () => {
     cy.login(emailChange.username, emailChange.password);
 
-    cy.pageIs('workspace/in-progress');
+    cy.pageIs('in-progress');
     cy.get('.profile').should('exist')
 
     cy.goToSettings();
-    cy.pageIs('workspace/settings');
+    cy.pageIs('settings');
 
     cy.get("#email-change").should('have.value', emailChange.email);
     cy.get("#email-change").clear();

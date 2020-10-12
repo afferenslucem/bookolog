@@ -19,7 +19,7 @@ describe('Book create test', () => {
 
   it('Create to read book test', () => {
     cy.goToCreateToReadBook();
-    cy.pageIs('workspace/book/create/0');
+    cy.pageIs('book/create/0');
 
     cy.get('#status').should('have.value', '0')
 
@@ -29,21 +29,21 @@ describe('Book create test', () => {
     cy.compareToReadBookForm(book);
     cy.get('.submit').click();
 
-    cy.pageIs('workspace/to-read');
+    cy.pageIs('to-read');
     cy.compareBookLine(0, book);
 
     cy.clickToFirstBookLineHeader();
-    cy.urlContains('workspace/book/');
+    cy.urlContains('book/');
 
     cy.compareToReadBookVue(book);
     cy.deleteBookFromView();
 
-    cy.pageIs('workspace/to-read');
+    cy.pageIs('to-read');
   });
 
   it('Create done book test', () => {
     cy.goToCreateDoneBook();
-    cy.pageIs('workspace/book/create/2');
+    cy.pageIs('book/create/2');
 
     cy.get('#status').should('have.value', '2')
 
@@ -51,34 +51,34 @@ describe('Book create test', () => {
     cy.compareDoneBookForm(books[1]);
     cy.get('.submit').click();
 
-    cy.pageIs('workspace/done');
+    cy.pageIs('done');
     cy.compareBookLine(0, books[1]);
     cy.clickToFirstBookLineHeader();
 
-    cy.urlContains('workspace/book/');
+    cy.urlContains('book/');
     cy.compareDoneBookVue(books[1]);
     cy.deleteBookFromView();
 
-    cy.pageIs('workspace/done');
+    cy.pageIs('done');
   });
 
   it('Create in progress book test', () => {
     cy.goToInProgressDoneBook();
-    cy.pageIs('workspace/book/create/1');
+    cy.pageIs('book/create/1');
     cy.get('#status').should('have.value', '1')
 
     cy.fillInProgressBookForm(books[2]);
     cy.compareInProgressBookForm(books[2]);
     cy.get('.submit').click();
 
-    cy.pageIs('workspace/in-progress');
+    cy.pageIs('in-progress');
     cy.compareBookLine(0, books[2]);
     cy.clickToFirstBookLineHeader();
 
-    cy.urlContains('workspace/book/');
+    cy.urlContains('book/');
     cy.compareInProgressBookVue(books[2]);
     cy.deleteBookFromView();
 
-    cy.pageIs('workspace/in-progress');
+    cy.pageIs('in-progress');
   });
 })

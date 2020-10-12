@@ -19,11 +19,11 @@ describe('Password change test', () => {
   it('Wrong Password Change', () => {
     cy.login(passwordChange.username, passwordChange.password);
 
-    cy.pageIs('workspace/in-progress');
+    cy.pageIs('in-progress');
     cy.get('.profile').should('exist')
 
     cy.goToSettings();
-    cy.pageIs('workspace/settings');
+    cy.pageIs('settings');
 
     cy.changePassword('123', '12345678')
 
@@ -35,11 +35,11 @@ describe('Password change test', () => {
   it('Different Passwords Change', () => {
     cy.login(passwordChange.username, passwordChange.password);
 
-    cy.pageIs('workspace/in-progress');
+    cy.pageIs('in-progress');
     cy.get('.profile').should('exist')
 
     cy.goToSettings();
-    cy.pageIs('workspace/settings');
+    cy.pageIs('settings');
 
     cy.changePassword(passwordChange.password, '12345678')
 
@@ -53,11 +53,11 @@ describe('Password change test', () => {
   it('Password change test', () => {
     cy.login(passwordChange.username, passwordChange.password);
 
-    cy.pageIs('workspace/in-progress');
+    cy.pageIs('in-progress');
     cy.get('.profile').should('exist')
 
     cy.goToSettings();
-    cy.pageIs('workspace/settings');
+    cy.pageIs('settings');
 
     cy.changePassword(passwordChange.password, '12345678')
 
@@ -67,6 +67,6 @@ describe('Password change test', () => {
 
     cy.login(passwordChange.username, '12345678');
     
-    cy.pageIs('workspace/in-progress');
+    cy.pageIs('in-progress');
   });
 })
