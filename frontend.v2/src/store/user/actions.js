@@ -8,6 +8,7 @@ import {
     USER_LOGOUT_MUTATION,
     USER_RECOVER_ACTION,
     USER_SYNC_DATA_ACTION,
+    USER_INIT_DATA_ACTION,
     USER_SYNC_BOOKS_ACTION,
     USER_LOGIN_ACTION,
     USER_LOGOUT_ACTION,
@@ -30,7 +31,8 @@ import {
     getUtcDate
 } from '@/utils/utc-date';
 import {
-    BOOK_RELOAD_TIMEOUT_HOURS
+    BOOK_RELOAD_TIMEOUT_SECONDS,
+    BOOK_RELOAD_DELAY_SECONDS,
 } from '@/config';
 
 const logger = getLogger({
@@ -38,13 +40,20 @@ const logger = getLogger({
     loggerName: 'Actions'
 });
 
-function dateHoursDiff(first, second) {
+function dateSecondDiff(first, second) {
     const date1 = new Date(first);
     const date2 = new Date(second);
 
     const diff = date1.getTime() - date2.getTime();
 
-    return diff / 1000 / 60 / 60;
+    return Math.abs(diff) / 1000;
+}
+
+function getSyncDiffTime(user) {
+    const now = getUtcDate();
+    const syncDiffTime = dateSecondDiff(user.lastSyncTime, now);
+
+    return syncDiffTime;
 }
 
 export const actions = {
@@ -82,18 +91,33 @@ export const actions = {
             return null;
         }
     },
-    [USER_SYNC_BOOKS_ACTION]: async ({
+    [USER_SYNC_DATA_ACTION]: async ({
         dispatch
-    }, user) => {
-        const now = getUtcDate();
+    }) => {
+        const recoveredUser = await dispatch('getLocalStoredUser');
 
-        if (dateHoursDiff(user.lastSyncDate, now) > BOOK_RELOAD_TIMEOUT_HOURS) {
-            await dispatch(BOOKS_LOAD_ACTION);
-        } else {
-            await dispatch(BOOKS_SYNC_ACTION)
+        try {
+            const syncDiffTime = getSyncDiffTime(recoveredUser);
+
+            if (syncDiffTime < BOOK_RELOAD_DELAY_SECONDS) return;
+
+            await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
+
+            const userCurrentState = await dispatch('getRemoteUser');
+
+            dispatch(USER_SAVE_ACTION, userCurrentState);
+        } catch (e) {
+            if (e == NETWORK_ERROR) {
+                const restoreAwait = dispatch(BOOKS_LOAD_LOCAL_ACTION);
+                dispatch(USER_SAVE_ACTION, recoveredUser);
+                await restoreAwait;
+
+                dispatch(NOTIFICATION_WARNING_ACTION, i18n.t('sync.offline'));
+            }
+            throw e;
         }
     },
-    [USER_SYNC_DATA_ACTION]: async ({
+    [USER_INIT_DATA_ACTION]: async ({
         dispatch
     }) => {
         const recoveredUser = await dispatch('getLocalStoredUser');
@@ -113,6 +137,18 @@ export const actions = {
                 dispatch(NOTIFICATION_WARNING_ACTION, i18n.t('sync.offline'));
             }
             throw e;
+        }
+    },
+    [USER_SYNC_BOOKS_ACTION]: async ({
+        dispatch
+    }, user) => {
+        const syncDiffTime = getSyncDiffTime(user);
+
+        if (syncDiffTime > BOOK_RELOAD_TIMEOUT_SECONDS) {
+            await dispatch(BOOKS_SYNC_ACTION)
+            await dispatch(BOOKS_LOAD_ACTION);
+        } else {
+            await dispatch(BOOKS_SYNC_ACTION)
         }
     },
     [USER_SAVE_ACTION]({

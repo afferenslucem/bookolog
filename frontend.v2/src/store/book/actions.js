@@ -112,11 +112,16 @@ export const actions = {
         state,
         dispatch,
     }, guid) => {
+        const currentState = state[guid];
         try {
+            if (currentState.shouldSync) {
+                await dispatch(BOOKS_SYNC_ACTION);
+            }
+
             return await dispatch(BOOK_GET_AND_REFRESH_BY_GUID_ACTION, guid);
         } catch (e) {
             if (e == NETWORK_ERROR) {
-                return state[guid];
+                return currentState;
             } else {
                 throw e;
             }

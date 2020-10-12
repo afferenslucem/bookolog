@@ -21,6 +21,7 @@
     </div>
     <side-menu :class="{ opened: shouldShowRightMenu, right: true }">
       <user-menu @itemClick="closeAllMenus()"></user-menu>
+      <bottom-menu class="bottom-menu" @itemClick="closeAllMenus()"></bottom-menu>
     </side-menu>
   </div>
 </template>
@@ -32,6 +33,7 @@ import SideMenu from "@/components/navigation/SideMenu";
 import BookMenu from "@/components/navigation/BookMenu";
 import StatisticMenu from "@/components/navigation/StatisticMenu";
 import UserMenu from "@/components/navigation/UserMenu";
+import BottomMenu from "@/components/navigation/BottomMenu";
 import { getLogger } from "@/logger";
 
 const logger = getLogger("HomePage");
@@ -44,6 +46,7 @@ export default {
     BookMenu,
     UserMenu,
     StatisticMenu,
+    BottomMenu,
   },
   data() {
     return {
@@ -158,5 +161,11 @@ export default {
       right: 0;
     }
   }
+}
+
+.bottom-menu {
+  position: absolute;
+
+  bottom: 0;
 }
 </style>

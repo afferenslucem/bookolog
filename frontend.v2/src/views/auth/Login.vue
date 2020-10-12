@@ -69,6 +69,8 @@ export default {
           this.$forceUpdate();
           this.errors.incorrectCredentials = true;
         }
+
+        console.log(e)
       }
     },
   },

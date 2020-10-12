@@ -12,6 +12,8 @@ export class Client {
     #backendAddress = '';
     #sender = null;
 
+    #baseOptions = {}
+
     constructor(backendAddress, sender) {
         this.logger = getLogger({
             namespace: 'Http',
@@ -19,6 +21,11 @@ export class Client {
           });
         this.#backendAddress = backendAddress;
         this.#sender = sender || Axios;
+
+        this.#baseOptions = {
+            withCredentials: true,
+            timeout: this.timeout,
+        };
     }
 
     getAddress(endpoint) {
@@ -26,6 +33,8 @@ export class Client {
     }
 
     get(url, options) {
+        options = this.mergeOptions(options);
+
         return this.sendRequest(() => {
             try {
                 return this.#sender.get(this.getAddress(url), options);
@@ -37,6 +46,8 @@ export class Client {
     }
 
     post(url, data, options) {
+        options = this.mergeOptions(options);
+
         return this.sendRequest(() => {
             try {
                 return this.#sender.post(this.getAddress(url), data, options);
@@ -48,6 +59,8 @@ export class Client {
     }
 
     put(url, data, options) {
+        options = this.mergeOptions(options);
+
         return this.sendRequest(() => {
             try {
                 return this.#sender.put(this.getAddress(url), data, options);
@@ -59,6 +72,8 @@ export class Client {
     }
 
     delete(url, options) {
+        options = this.mergeOptions(options);
+
         return this.sendRequest(() => {
             try {
                 return this.#sender.delete(this.getAddress(url), options);
@@ -67,6 +82,11 @@ export class Client {
                 throw e;
             }
         });
+    }
+
+    mergeOptions(options = {}) {
+        const temp = Object.assign({}, options);
+        return Object.assign(temp, this.#baseOptions);
     }
 
     async sendRequest(routine) {
@@ -107,7 +127,7 @@ export class Client {
     }
 
     async catchError(e) {
-        if (this.isNetworkError(e)) {
+        if (this.isNetworkError(e) || this.isTimeoutError(e)) {
             await this.onNetworkError();
             throw NETWORK_ERROR;
         } else if (this.isUnauthorizedError(e)) {
@@ -123,6 +143,10 @@ export class Client {
     isUnauthorizedError(e) {
         return (e.response?.data === '') && (e.response.status === 401);
     }
+
+    isTimeoutError(e) {
+        return (e.code === 'ECONNABORTED');
+    }
 }
 Client.prototype.onSuccess = () => {};
 Client.prototype.onNetworkError = () => {};
@@ -130,3 +154,4 @@ Client.prototype.onUnauthorizedError = () => {};
 Client.prototype.requestCanceled = () => {};
 Client.prototype.requestStarted = () => {};
 Client.prototype.retry = 0;
+Client.prototype.timeout = 30000;

@@ -3,7 +3,7 @@ import {
     CONNECTION_OFFLINE_MUTATION,
     CONNECTION_OFFLINE_ACTION,
     CONNECTION_ONLINE_ACTION,
-    BOOKS_SYNC_ACTION,
+    USER_SYNC_DATA_ACTION,
     CONNECTION_LOAD_START_ACTION,
     CONNECTION_LOAD_FINISH_ACTION,
     CONNECTION_LOAD_START_MUTATION,
@@ -26,7 +26,7 @@ export const actions = {
         commit(CONNECTION_ONLINE_MUTATION)
 
         if (wasOffline) {
-            await dispatch(BOOKS_SYNC_ACTION)
+            await dispatch(USER_SYNC_DATA_ACTION)
         }
     },
     [CONNECTION_OFFLINE_ACTION]: async ({

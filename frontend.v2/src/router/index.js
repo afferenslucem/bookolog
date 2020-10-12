@@ -113,7 +113,7 @@ const externalRoutes = [{
   path: '/',
   name: 'Main',
   props: false,
-  component: () => import('../views/Guest.vue'),
+  component: () => import('../views/Main.vue'),
 }, {
   path: '/about',
   name: 'About',

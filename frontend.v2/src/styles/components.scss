@@ -150,6 +150,10 @@
     @extend .statistic-list;
 }
 
+.authors-list {
+    @extend .statistic-list;
+}
+
 // Profile
 .profile {
     position: relative;

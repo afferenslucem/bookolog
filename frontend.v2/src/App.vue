@@ -15,6 +15,11 @@ import {
   CONNECTION_LOAD_FINISH_ACTION,
 } from "@/store/naming";
 
+import {
+  HTTP_TRYOUTS_COUNT,
+  HTTP_REQUEST_TIMEOUT_MS,
+} from './config'
+
 import AppLoader from "@/components/connection-module/Loader.vue";
 import NotificationMessage from "@/components/notification-module/Message.vue";
 
@@ -28,7 +33,8 @@ export default {
       this.$store.dispatch(USER_LOGOUT_ACTION);
     Client.prototype.requestCanceled = (requestGuid) => this.hideLoader(requestGuid);
     Client.prototype.requestStarted = (requestGuid) => this.showLoader(requestGuid);
-    Client.prototype.retry = 2;
+    Client.prototype.retry = HTTP_TRYOUTS_COUNT - 1;
+    Client.prototype.timeout = HTTP_REQUEST_TIMEOUT_MS;
   },
   components: {
     AppLoader,

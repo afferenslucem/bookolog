@@ -1,20 +1,11 @@
 <template>
   <ul class="nav flex-column">
-    <li class="nav-item" v-if="!isLoggedIn" @click="onLogin()">
-      <a class="nav-link" href="#" id="loginButton">{{ $t('auth.actions.login.title') }}</a>
-    </li>
-    <li class="nav-item" v-else @click="onLogout()">
+    <li class="nav-item" @click="onLogout()">
       <a class="nav-link" href="#" id="logoutButton">{{ $t('auth.actions.logout.title') }}</a>
     </li>
-    <li class="nav-item" v-if="!isLoggedIn" @click="onRegistration()">
-      <a class="nav-link" href="#" id="registrationButton">{{ $t('auth.actions.registration.title') }}</a>
-    </li>
-    <li class="nav-item" v-if="isLoggedIn" @click="onSettings()">
+    <li class="nav-item" @click="onSettings()">
       <a class="nav-link" href="#" id="settingsButton">{{ $t('user.actions.settings') }}</a>
     </li>
-    <span class="version dark-text">
-      <small> Version: {{version}} </small>
-    </span>
   </ul>
   
 </template>
@@ -48,11 +39,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .version {
-    position: absolute;
-    left: .5rem;
-    bottom: 0.25rem;
-  }
-</style>
