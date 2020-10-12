@@ -13,6 +13,7 @@ import {
   USER_LOGOUT_ACTION,
   CONNECTION_LOAD_START_ACTION,
   CONNECTION_LOAD_FINISH_ACTION,
+  USER_RECOVER_ACTION,
 } from "@/store/naming";
 
 import {
@@ -27,6 +28,11 @@ import { Client } from "@/http/client";
 
 export default {
   async created() {
+    this.$store.dispatch(USER_RECOVER_ACTION).then((user) => {
+      if (user) {
+          this.$router.push({name: 'InProgress'});
+      } 
+    });
     Client.prototype.onSuccess = () => this.turnOnline();
     Client.prototype.onNetworkError = () => this.turnOffline();
     Client.prototype.onUnauthorizedError = () =>
