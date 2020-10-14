@@ -2,8 +2,10 @@ import {
     USER_LOGGED_IN_GETTER,
     USER_LOGOUT_ACTION
 } from '@/store/naming';
-            
-import {BACKEND_AVATAR_PATH} from '@/config';
+
+import {
+    BACKEND_AVATAR_PATH
+} from '@/config';
 
 export default {
     methods: {
@@ -38,7 +40,11 @@ export default {
         },
 
         getAvatarLink(avatar) {
-            return BACKEND_AVATAR_PATH + avatar;
+            if (avatar) {
+                return BACKEND_AVATAR_PATH + avatar;
+            } else {
+                return null;
+            }
         }
     },
     computed: {

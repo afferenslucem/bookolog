@@ -15,12 +15,12 @@ services:
         dockerfile: DockerfileTest
         context: ../backend.v2/backend.v2/
     ports:
-      - "35080:80"
-      - "35081:81"
+      - "45080:80"
+      - "45081:81"
     depends_on: 
       - postgre
     volumes: 
-      - "C:\\Users\\a.shakirov\\Pictures\\Images:/imageStorage"
+      - "C:\\Users\\a.shakirov\\Pictures\\Images\\:/imageStorage"
 
   postgre:
     image: postgres:12.4-alpine
