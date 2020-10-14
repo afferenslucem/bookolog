@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using backend.Controllers;
 using backend.Models;
 using backend.Models.Authentication;
-using backend.Exceptions.Authentication;
+using backend.Exceptions.AuthenticationExceptions;
 using backend.Services;
 using backend.Storage;
 using Microsoft.AspNetCore.Mvc;

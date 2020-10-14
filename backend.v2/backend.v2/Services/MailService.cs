@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using backend.Exceptions.Authentication;
-using backend.Exceptions.Storage;
+using backend.Exceptions.AuthenticationExceptions;
+using backend.Exceptions.StorageExceptions;
 using backend.Models;
 using backend.Storage;
 using backend.Utils;

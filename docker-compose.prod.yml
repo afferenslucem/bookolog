@@ -20,6 +20,8 @@ services:
     depends_on: 
       - postgre
       - postfix
+    volumes: 
+      - "C:\\Users\\a.shakirov\\Pictures\\Images:/imageStorage"
 
   postfix:
     image: boky/postfix

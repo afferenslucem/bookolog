@@ -18,9 +18,6 @@ export class UserClient extends Client {
             const answer = await super.post('auth/login', {
                 login: username,
                 password: password
-            },
-            {
-                withCredentials: true
             });
 
             return answer.data;
@@ -37,18 +34,13 @@ export class UserClient extends Client {
             login: username,
             email: email,
             password: password
-        },
-        {
-            withCredentials: true
         });
         
         return user;
     }
 
     async me() {
-        const user = await super.get('user/me', {
-            withCredentials: true
-        });
+        const user = await super.get('user/me');
         
         return user.data;
     }
@@ -57,17 +49,11 @@ export class UserClient extends Client {
         await super.post('auth/changePassword', {
             oldPassword,
             newPassword,
-        },
-        {
-            withCredentials: true
         });
     }
 
     async emailChange(email) {
-        await super.get(`user/changeEmail/${email}`,
-        {
-            withCredentials: true
-        });
+        await super.get(`user/changeEmail/${email}`);
     }
 
     async passwordRecover(email) {
@@ -75,9 +61,23 @@ export class UserClient extends Client {
     }
 
     async logout() {
-        await super.get('auth/logout',
-        {
-            withCredentials: true
+        await super.get('auth/logout');
+    }
+
+    async loadUser(login) {
+        const user = await super.get(`user/${login}`);
+        
+        return user.data;
+    }
+
+    async uploadAvatar(formData) {
+        const user = await super.post(`user/uploadAvatar`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            timeout: 600000,
         });
+        
+        return user.data;
     }
 }

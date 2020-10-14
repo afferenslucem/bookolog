@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using backend.Exceptions.Authentication;
+using backend.Exceptions.AuthenticationExceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -19,6 +19,8 @@ services:
       - "35081:81"
     depends_on: 
       - postgre
+    volumes: 
+      - "C:\\Users\\a.shakirov\\Pictures\\Images:/imageStorage"
 
   postgre:
     image: postgres:12.4-alpine

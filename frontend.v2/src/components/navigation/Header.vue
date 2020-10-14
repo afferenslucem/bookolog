@@ -17,7 +17,7 @@
       <div class="actions" v-if="isLoggedIn">
         <sync-button></sync-button>
         <div @click="emitAvatarClick($event)">
-          <profile> </profile>
+          <profile :avatar="avatarLink" />
         </div>
       </div>
     </div>
@@ -47,7 +47,13 @@ export default {
       }
     },
   },
-  computed: {},
+  computed: {
+    avatarLink() {
+      const avatar = this.$store.state.user.avatar;
+
+      return this.getAvatarLink(avatar);
+    },
+  },
   components: {
     SyncButton,
     Profile,

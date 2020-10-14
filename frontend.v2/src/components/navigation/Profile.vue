@@ -1,7 +1,7 @@
 <template functional>
   <div class="icon profile">
-    <person-icon></person-icon>
-    <connection-marker class="marker"></connection-marker>
-    <total-read-count class="total-count"></total-read-count>
+    <profile-pic :avatar="props.avatar" />
+    <connection-marker class="marker" />
+    <total-read-count class="total-count" />
   </div>
 </template>

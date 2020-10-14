@@ -47,11 +47,11 @@ describe('Links Check', () => {
 
         describe('In Progress', () => {
             it('List check', () => {
-                cy.pageIs('in-progress');
+                cy.pageIs('me/in-progress');
             });
 
             it('Book View Check', () => {
-                cy.pageIs('in-progress');
+                cy.pageIs('me/in-progress');
 
                 cy.getFirstBookLine().click();
 
@@ -63,7 +63,7 @@ describe('Links Check', () => {
             });
 
             it('Book Edit View Check', () => {
-                cy.pageIs('in-progress');
+                cy.pageIs('me/in-progress');
 
                 cy.clickToFirstBookEditIcon();
 
@@ -78,11 +78,11 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('to-read');
+                cy.pageIs('me/to-read');
             });
 
             it('Book View Check', () => {
-                cy.pageIs('to-read');
+                cy.pageIs('me/to-read');
 
                 cy.getFirstBookLine().click();
 
@@ -94,7 +94,7 @@ describe('Links Check', () => {
             });
 
             it('Book Edit View Check', () => {
-                cy.pageIs('to-read');
+                cy.pageIs('me/to-read');
 
                 cy.clickToFirstBookEditIcon();
 
@@ -108,11 +108,11 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('done');
+                cy.pageIs('me/done');
             });
 
             it('Book View Check', () => {
-                cy.pageIs('done');
+                cy.pageIs('me/done');
 
                 cy.getFirstBookLine().click();
 
@@ -124,7 +124,7 @@ describe('Links Check', () => {
             });
 
             it('Book Edit View Check', () => {
-                cy.pageIs('done');
+                cy.pageIs('me/done');
 
                 cy.clickToFirstBookEditIcon();
 
@@ -138,7 +138,7 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('genres');
+                cy.pageIs('me/genres');
 
                 cy.get('.genres-list ul li:first-child a').click();
 
@@ -152,7 +152,7 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('tags');
+                cy.pageIs('me/tags');
 
                 cy.get('.tags-list ul li:first-child a').click();
 
@@ -166,7 +166,7 @@ describe('Links Check', () => {
             });
 
             it('List check', () => {
-                cy.pageIs('authors');
+                cy.pageIs('me/authors');
 
                 cy.get('.authors-list ul li:first-child a').click();
 
@@ -190,7 +190,7 @@ describe('Links Check', () => {
 
         it('Email change test', () => {
             cy.goToSettings();
-            cy.pageIs('settings');
+            cy.pageIs('me/settings');
         });
     });
 });

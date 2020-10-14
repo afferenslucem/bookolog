@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Extensions.Logging;
 using backend.Controllers;
 using backend.Exceptions.BookExceptions;
-using backend.Exceptions.Authentication;
+using backend.Exceptions.AuthenticationExceptions;
 using backend.Models;
 using backend.Services;
 using backend.Models.Authentication;

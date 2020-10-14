@@ -23,6 +23,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore;
 using Swashbuckle.Swagger;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace backend
 {
@@ -75,6 +76,11 @@ namespace backend
             });
 
             services.AddDistributedMemoryCache();
+            
+            services.Configure<FormOptions>(options =>
+            {
+                options.MemoryBufferThreshold = 2 * 1024 * 1024;
+            });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -96,6 +102,7 @@ namespace backend
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IUserSession, UserSession>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IFileService, FileService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
@@ -144,6 +151,8 @@ namespace backend
         {
             Config.ConnectionString = this.Configuration.GetConnectionString("DefaultConnection");
             Config.AllowedOrigins = this.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+            Config.FileStorage.StoragePath = this.Configuration.GetValue<string>("FileStorage:StoragePath");
+            Config.FileStorage.AllowedExtensions = this.Configuration.GetSection("FileStorage:AllowedExtensions").Get<string[]>();
             Config.SMTP.Host = this.Configuration.GetValue<string>("SMTP:Host");
             Config.SMTP.Port = this.Configuration.GetValue<int>("SMTP:Port");
             Config.SMTP.From = this.Configuration.GetValue<string>("SMTP:From");

@@ -19,6 +19,7 @@ import BookInlineHeader from "@/components/book-module/book/BookInlineHeader.vue
 import NoWrapValues from "@/components/book-module/book/NoWrapValues.vue";
 import EditIcon from "@/components/icons/EditIcon.vue";
 import ProgressBar from '@/components/book-module/book/ProgressBar.vue'; 
+import ProfilePic from '@/components/user/ProfilePic.vue'; 
 
 moment.locale('ru');
 Vue.filter('join', join);
@@ -36,6 +37,7 @@ Vue.component('NoWrapValues', NoWrapValues);
 Vue.component('ProgressBar', ProgressBar);
 Vue.component('CloseListIcon', CloseListIcon);
 Vue.component('OpenListIcon', OpenListIcon);
+Vue.component('ProfilePic', ProfilePic);
 
 Vue.config.productionTip = false
 

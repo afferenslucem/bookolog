@@ -10,6 +10,7 @@ namespace backend.Storage
     public class BookologContext : DbContext
     {
         public DbSet<Book> Books { get; set; }
+        public DbSet<File> Files { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
