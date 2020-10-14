@@ -68,17 +68,29 @@ namespace backend.Models
                 return new DateTime(this.EndDateYear ?? 1, this.EndDateMonth ?? 1, this.EndDateDay ?? 1);
             }
         }
-
         public bool Deleted {
             get {
                 return this.DeleteDate != null;
             }
         }
-
         public Type? Type { get; set; }
         public string Note { get; set; }
         public long UserId { get; set; }
-
         public User User { get; set; }
+
+        public ShortBook ToShortBook() {
+            return new ShortBook() {
+                Guid = this.Guid,
+                Name = this.Name,
+                Authors = this.Authors,
+                Status = this.Status,
+                EndDateDay = this.EndDateDay,
+                EndDateMonth = this.EndDateMonth,
+                EndDateYear = this.EndDateYear,
+                CreateDate = this.CreateDate,
+                ModifyDate = this.ModifyDate,
+                Note = this.Note,
+            };
+        }
     }
 }

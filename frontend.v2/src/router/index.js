@@ -2,12 +2,11 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 
-import ifAuthenticated from './guards/authenticated';
-
 import booksRoutes from './groups/book';
 import statisticRoutes from './groups/statistic';
 import readingRoutes from './groups/reading';
 import authRoutes from './groups/auth';
+import ifNotAuthenticated from './guards/not-authenticated';
 
 Vue.use(VueRouter);
 
@@ -26,29 +25,36 @@ const workspaceRoutes = [
 ];
 
 const externalRoutes = [{
+  path: 'about',
+  name: 'About',
+  props: false,
+  component: () => import('@/views/About.vue')
+}, {
+  path: 'user/:login',
+  name: 'User',
+  props: true,
+  component: () => import('@/views/user/User.vue')
+}, {
   path: '/',
   name: 'Main',
   props: false,
-  component: () => import('../views/Main.vue'),
-}, {
-  path: '/about',
-  name: 'About',
-  props: false,
-  component: () => import('../views/About.vue')
+  component: () => import('@/views/Main.vue'),
+  beforeEnter: ifNotAuthenticated,
 }, ];
 
 const routes = [{
   path: '/',
   component: Home,
   children: [{
-      path: '/',
-      name: 'Workspace',
-      component: () => import('../views/Workspace.vue'),
-      children: workspaceRoutes,
-      beforeEnter: ifAuthenticated
+      path: 'me',
+      props: false,
+      children: [
+        ...workspaceRoutes,
+      ],
+      component: () => import('@/views/Workspace.vue'),
     },
-    ...externalRoutes,
     ...authRoutes,
+    ...externalRoutes,
   ]
 }]
 

@@ -40,6 +40,9 @@ namespace backend.Services
             if (this.user != null) return this.user;
 
             this.user = await this.userService.GetByLogin(this.context.User.Identity.Name);
+
+            this.user.LastSyncTime = this.LastSyncTime;
+
             return this.user;
         }
 

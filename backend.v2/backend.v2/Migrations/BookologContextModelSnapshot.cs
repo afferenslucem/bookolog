@@ -92,6 +92,24 @@ namespace backend.v2.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("backend.Models.File", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.Property<long>("Id")
@@ -99,11 +117,11 @@ namespace backend.v2.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<long?>("AvatarId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Email")
                         .HasColumnType("varchar(128)");
-
-                    b.Property<DateTime?>("LastAction")
-                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Login")
                         .HasColumnType("varchar(128)");
@@ -115,6 +133,8 @@ namespace backend.v2.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AvatarId");
 
                     b.HasIndex("Email")
                         .IsUnique();
@@ -132,6 +152,13 @@ namespace backend.v2.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.User", b =>
+                {
+                    b.HasOne("backend.Models.File", "Avatar")
+                        .WithMany()
+                        .HasForeignKey("AvatarId");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,7 @@
 <template>
   <div>
     <h4>{{$t('settings.title')}}</h4>
+    <avatar-form class="mt-3"></avatar-form>
     <email-form class="mt-3"></email-form>
     <password-form class="mt-3"></password-form>
   </div>
@@ -9,10 +10,12 @@
 <script>
 import PasswordForm from '@/components/user-module/PasswordChangeForm.vue';
 import EmailForm from '@/components/user-module/EmailChangeForm.vue';
+import AvatarForm from '@/components/user-module/AvatarChangeForm.vue';
 export default {
   components: {
     PasswordForm,
-    EmailForm
+    AvatarForm,
+    EmailForm,
   }
 };
 </script>

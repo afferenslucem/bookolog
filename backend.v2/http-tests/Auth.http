@@ -17,3 +17,6 @@ Content-Type: application/json
   "password": "nullnullnull"
 }
 
+###############################################
+
+GET http://localhost:5000/user/2

@@ -1,5 +1,8 @@
 const state = {
-    login: undefined
+    login: undefined,
+    email: undefined,
+    id: undefined,
+    avatar: undefined
 }
 
 export default () => state;

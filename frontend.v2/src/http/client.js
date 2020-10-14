@@ -85,8 +85,8 @@ export class Client {
     }
 
     mergeOptions(options = {}) {
-        const temp = Object.assign({}, options);
-        return Object.assign(temp, this.#baseOptions);
+        const temp = Object.assign({}, this.#baseOptions);
+        return Object.assign(temp, options);
     }
 
     async sendRequest(routine) {
@@ -121,6 +121,7 @@ export class Client {
             }
             else {
                 await this.catchError(e);
+                console.log(e)
                 throw e;
             }
         }

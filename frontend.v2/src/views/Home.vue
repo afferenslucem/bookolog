@@ -74,7 +74,6 @@ export default {
       return this.shouldShowLeftMenu || this.shouldShowRightMenu;
     },
   },
-  created() {},
 };
 </script>
 

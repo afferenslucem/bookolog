@@ -1,4 +1,6 @@
-export const BACKEND_URL = 'http://localhost:35080/';
+export const BACKEND_URL = 'http://localhost:45080/';
+
+export const BACKEND_AVATAR_PATH = '/file/';
 
 export const NOTIFICATION_SHOW_TIME = 3000; // ms
 
@@ -12,4 +14,4 @@ export const VERSION = 'alpha-0.1.7';
 
 export const HTTP_TRYOUTS_COUNT = 3;
 
-export const HTTP_REQUEST_TIMEOUT_MS = 1000;
+export const HTTP_REQUEST_TIMEOUT_MS = 8000;

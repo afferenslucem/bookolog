@@ -14,7 +14,7 @@ describe('Login test', () => {
   it('Login/Logout test', () => {
     cy.login(emptyCredentials.username, emptyCredentials.password);
 
-    cy.pageIs('in-progress');
+    cy.pageIs('me/in-progress');
     cy.get('.profile').should('exist')
 
     cy.logout();

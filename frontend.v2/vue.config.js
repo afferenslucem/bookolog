@@ -4,7 +4,26 @@ module.exports = {
     name: 'Bookolog',
     manifestOptions: {
       start_url: '.'
-    }
+    },
+    workboxOptions: {
+      clientsClaim: true,
+      skipWaiting: true,
+      navigateFallback: 'index.html',
+      runtimeCaching: [
+        {
+          urlPattern: /\.(jpg|jpeg|svg|png)$/,
+          handler: 'cacheFirst',
+          options: {
+            cacheName: 'avatars',
+            expiration: {
+              maxEntries: 50,
+              maxAgeSeconds: 30 * 24 * 60 * 60,
+              purgeOnQuotaError: true,
+            },
+          },
+        },
+      ],
+    },
   },
 
   chainWebpack: (config) => {

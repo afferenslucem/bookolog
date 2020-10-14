@@ -19,12 +19,12 @@ describe('Book edit test', () => {
 
   it('Edit book test', () => {
     cy.goToReadingList();
-    cy.pageIs('to-read');
+    cy.pageIs('me/to-read');
 
     const bookStart = books[3];
 
     cy.clickToFirstBookLineHeader();
-    cy.pageIs(`book/${bookStart.guid}`);
+    cy.pageIs(`me/book/${bookStart.guid}`);
     cy.compareToReadBookVue(bookStart);
 
     cy.editBookFromView();
@@ -37,13 +37,13 @@ describe('Book edit test', () => {
     cy.fillDoneBookForm(bookEnd);
 
     cy.get('[type="submit"].submit').click();    
-    cy.pageIs('done');
+    cy.pageIs('me/done');
 
     cy.wait(2000);
     
     cy.compareBookLine(0, books[1]);
     
-    cy.visit(`book/${bookStart.guid}`);
+    cy.visit(`me/book/${bookStart.guid}`);
 
     cy.compareDoneBookVue(books[1]);
   });

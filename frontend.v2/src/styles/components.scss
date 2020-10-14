@@ -24,19 +24,6 @@
     background-color: $danger-color;
 }
 
-.icon.avatar {
-    img {
-        display: inherit;
-
-        padding: 0.3rem;
-
-        border-radius: 0.6rem;
-
-        height: 100%;
-        width: 100%;
-    }
-}
-
 // Application
 #app {
     max-width: 100%;
@@ -175,4 +162,16 @@
 
         position: absolute;
     }
+}
+
+
+img.avatar {
+    display: inherit;
+
+    padding: 0.3rem;
+
+    border-radius: 0.6rem;
+
+    height: 100%;
+    width: 100%;
 }
