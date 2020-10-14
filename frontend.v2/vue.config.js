@@ -11,10 +11,10 @@ module.exports = {
       navigateFallback: 'index.html',
       runtimeCaching: [
         {
-          urlPattern: /\.(jpg|svg|png)$/,
+          urlPattern: /\.(jpg|jpeg|svg|png)$/,
           handler: 'cacheFirst',
           options: {
-            cacheName: 'avapars',
+            cacheName: 'avatars',
             expiration: {
               maxEntries: 50,
               maxAgeSeconds: 30 * 24 * 60 * 60,
