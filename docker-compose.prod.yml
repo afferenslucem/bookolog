@@ -20,6 +20,8 @@ services:
     depends_on: 
       - postgre
       - postfix
+    volumes:
+      - "/imageStorage:/imageStorage"
 
   postfix:
     image: boky/postfix
