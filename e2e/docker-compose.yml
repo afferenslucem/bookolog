@@ -15,8 +15,8 @@ services:
         dockerfile: DockerfileTest
         context: ../backend.v2/backend.v2/
     ports:
-      - "45080:80"
-      - "45081:81"
+      - "35080:80"
+      - "35081:81"
     depends_on: 
       - postgre
     volumes: 
