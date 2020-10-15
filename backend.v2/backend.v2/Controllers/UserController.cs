@@ -34,11 +34,13 @@ namespace backend.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("[action]/{newMail}")]
+        [Route("[action]/{newMail:maxlength(128)}")]
         public async Task<IActionResult> ChangeEmail(string newMail)
         {
             try
             {
+                this.logger.LogDebug(String.Format("Change email {0}", newMail));
+
                 var emailRegExp = new Regex(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
 
                 if (emailRegExp.IsMatch(newMail))
@@ -46,6 +48,8 @@ namespace backend.Controllers
                     var user = await this.userSession.User;
 
                     user.Email = newMail;
+
+                    this.logger.LogDebug(String.Format("Change valid email {0} {1}", newMail, user.Login));
 
                     var result = await this.userService.Update(user);
 
@@ -56,9 +60,9 @@ namespace backend.Controllers
                     return BadRequest("Incorrect email");
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                this.logger.LogDebug(500, e, "Can't change email");
+                this.logger.LogError(500, ex.Message, ex);
                 return StatusCode(500, "Can't change email");
             }
         }
@@ -74,7 +78,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("{login}")]
+        [Route("{login:maxlength(128)}")]
         public async Task<IActionResult> Snapshot(string login)
         {
             try
@@ -92,6 +96,12 @@ namespace backend.Controllers
             }
             catch (StorageReadException ex)
             {
+                this.logger.LogError(500, ex.Message, ex);
+                return BadRequest();
+            } 
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex.Message, ex);
                 return BadRequest();
             }
         }
@@ -123,6 +133,7 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
+                this.logger.LogError(500, ex.Message, ex);
                 return BadRequest();
             }
         }

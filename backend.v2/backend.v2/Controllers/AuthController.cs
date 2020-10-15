@@ -39,21 +39,26 @@ namespace backend.Controllers
         {
             try
             {
+                this.logger.LogDebug(String.Format("Log user {0}", model.Login));
+
                 var user = await this.CheckUser(model.Login, model.Password);
 
                 await this.AuthenticateUser(user);
 
                 user.LastSyncTime = DateSessionUtils.Now;
 
+                this.logger.LogDebug("Logged user");
+
                 return Ok(user);
             }
             catch (IncorrectCredentianlsException)
             {
+                this.logger.LogInformation("Incorrect login or password", model.Login);
                 return Unauthorized("Incorrect login or password");
             }
             catch (Exception e)
             {
-                this.logger.LogDebug(500, e, "Can't log in user");
+                this.logger.LogError(500, e.Message, e, model.Login);
                 return StatusCode(500, e.Message);
             }
         }
@@ -64,25 +69,29 @@ namespace backend.Controllers
         {
             try
             {
+                this.logger.LogDebug(String.Format("Register user {0} {1}", user.Login, user.Email));
+
                 var result = await this.userService.RegisterUser(user);
 
                 var withoutPrivate = result.WithoutPrivate();
+
+                this.logger.LogDebug(String.Format("Registered user {0} {1}", user.Login, user.Email));
 
                 return Ok(withoutPrivate);
             }
             catch (UserWithSameEmailAlreadyExistsException e)
             {
-                this.logger.LogDebug(400, e, "User with same email already exisists", user);
+                this.logger.LogError(400, e, "User with same email already exisists", user);
                 return StatusCode(400, "User with same email already exisists");
             }
             catch (UserWithSameLoginAlreadyExistsException e)
             {
-                this.logger.LogDebug(400, e, "User with same login already exisists", user);
+                this.logger.LogError(400, e, "User with same login already exisists", user);
                 return StatusCode(400, "User with same login already exisists");
             }
             catch (Exception e)
             {
-                this.logger.LogDebug(500, e, "Can't register user", user);
+                this.logger.LogError(500, e.Message, e, user);
                 return StatusCode(500, "Can't register user");
             }
         }
@@ -92,21 +101,25 @@ namespace backend.Controllers
         [Route("[action]")]
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeModel changeData)
         {
+            var user = await this.userSession.User;
+
             try
             {
-                var id = (await this.userSession.User).Id;
+                this.logger.LogDebug(String.Format("Password change {0}", user.Login));
 
-                await this.userService.ChangePassword(id, changeData.OldPassword, changeData.NewPassword);
+                await this.userService.ChangePassword(user.Id, changeData.OldPassword, changeData.NewPassword);
 
                 return Ok();
             }
             catch (IncorrectCredentianlsException)
             {
+                this.logger.LogInformation("Incorrect old password", user.Login);
+
                 return StatusCode(403, "Incorrect old password");
             }
             catch (Exception e)
             {
-                this.logger.LogDebug(500, e, "Can't change password");
+                this.logger.LogError(500, e.Message, e, changeData);
                 return StatusCode(500, "Can't change password");
             }
         }
@@ -142,11 +155,13 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("[action]/{email}")]
+        [Route("[action]/{email:maxlength(128)}")]
         public async Task<IActionResult> RecoverPassword(string email)
         {
             try
             {
+                this.logger.LogInformation(String.Format("Password recover {0}", email));
+
                 var user = await this.userService.GetByEmail(email);
 
                 if (user.Email == email)
@@ -160,8 +175,8 @@ namespace backend.Controllers
             }
             catch (Exception e)
             {
-                this.logger.LogDebug(500, e, "Can't send to email", email);
-                return StatusCode(500, "Can't send to email");
+                this.logger.LogError(500, e.Message, e, email);
+                return StatusCode(500, "Can't send email");
             }
         }
     }

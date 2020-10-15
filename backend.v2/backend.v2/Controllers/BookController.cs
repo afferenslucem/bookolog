@@ -32,7 +32,11 @@ namespace backend.Controllers
         public async Task<IActionResult> Create([FromBody]Book model) {
             try
             {
+                this.logger.LogDebug(String.Format("Create book {0}", model.Name));
+
                 var book = await this.bookService.Save(model);
+
+                this.logger.LogDebug(String.Format("Created book"));
 
                 return Ok(book);
             }
@@ -56,7 +60,11 @@ namespace backend.Controllers
         public async Task<IActionResult> Update([FromBody]Book model) {
             try
             {
+                this.logger.LogDebug(String.Format("Update book {0}", model));
+
                 var book = await this.bookService.Update(model);
+
+                this.logger.LogDebug("Updated book");
 
                 return Ok(book);
             }
@@ -76,13 +84,17 @@ namespace backend.Controllers
     
         [HttpDelete]
         [Authorize]
-        [Route("[action]/{guid}")]
+        [Route("[action]/{guid:guid}")]
         public async Task<IActionResult> Delete(Guid guid) {
             try
             {
+                this.logger.LogDebug(String.Format("Delete book {0}", guid));
+
                 var book = await this.bookService.GetByGuid(guid);
             
                 await this.bookService.Delete(guid);
+
+                this.logger.LogDebug(String.Format("Deleted book {0}", guid));
 
                 return Ok(book);
             }
@@ -101,11 +113,15 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("[action]/{guid}")]
+        [Route("[action]/{guid:guid}")]
         public async Task<IActionResult> Get(Guid guid) {
             try
             {
+                this.logger.LogDebug(String.Format("Get book {0}", guid));
+
                 var book = await this.bookService.GetByGuid(guid);
+                
+                this.logger.LogDebug(String.Format("Geted book {0}", guid));
 
                 return Ok(book);
             }
@@ -118,10 +134,12 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("User/{userId}")]
+        [Route("User/{userId:long}")]
         public async Task<IActionResult> Get(long userId) {
             try
             {
+                this.logger.LogDebug(String.Format("Get books for user {0}", userId));
+
                 var books = await this.bookService.GetByUserId(userId);
 
                 this.session.UpdateLastSyncTime();
@@ -225,7 +243,7 @@ namespace backend.Controllers
             }
             catch (BookologException ex)
             {
-                this.logger.LogError((int)ex.Code, ex, ex.Message, data);
+                this.logger.LogError(500, ex, ex.Message, data);
 
                 return StatusCode(400, ex.Message);
             }

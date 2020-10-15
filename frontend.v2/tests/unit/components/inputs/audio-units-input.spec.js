@@ -74,8 +74,9 @@ describe('AudioBookUnitsInput.vue', () => {
 
         component.find('.minutes').setValue(12);
         component.find('.minutes').trigger('blur');
+        
+        component.find('form').trigger('blur');
 
-        expect(component.emitted()['update:units'][0]).deep.equal([120]);
-        expect(component.emitted()['update:units'][1]).deep.equal([132]);
+        expect(component.emitted()['update:units'][0]).deep.equal([132]);
     });
 });

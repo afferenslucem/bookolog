@@ -55,6 +55,8 @@ export const actions = {
     }, guid) => {
         const timer = state.timers[guid];
 
+        if(!timer) return;
+
         if(!timer.routineStarted) {
             timer.kill();
         } else {

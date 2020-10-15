@@ -1,5 +1,5 @@
 <template>
-  <div class="form-row">
+  <form class="form-row" @blur="onFormBlur()">
     <div class="col">
       <input
         type="number"
@@ -26,7 +26,7 @@
         step="1"
       />
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -37,35 +37,36 @@ export default {
   }),
   methods: {
     onHoursChange() {
-      this.$emit("update:units", this.unitsValue);
-      this.unitsToData(this.unitsValue);
+      this.unitsToProgress(this.unitsValue);
     },
     onMinutesChange() {
-      this.$emit("update:units", this.unitsValue);
-      this.unitsToData(this.unitsValue);
+      this.unitsToProgress(this.unitsValue);
     },
     onHoursClick() {
       if(this.hours === 0) {
         this.hours = null;
       }
     },
+    onFormBlur() {
+      this.$emit("update:units", this.unitsValue);
+    },
     onMinutesClick() {
       if(this.minutes === 0) {
         this.minutes = null;
       }
     },
-    unitsToData(units) {
+    unitsToProgress(units) {
       this.hours = Math.trunc(units / 60) || null;
       this.minutes = units % 60 || null;
     }
   },
   props: ["units"],
   created() {
-    this.unitsToData(this.units || 0);
+    this.unitsToProgress(this.units || 0);
   },
   watch: {
     units(newValue) { 
-      this.unitsToData(newValue || 0);
+      this.unitsToProgress(newValue || 0);
     }
   },
   computed: {

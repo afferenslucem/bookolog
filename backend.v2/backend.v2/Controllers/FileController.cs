@@ -32,8 +32,8 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("{filename}")]
-        public async Task<IActionResult> File(string filename)
+        [Route("{filename:maxlength(128)}")]
+        public IActionResult File(string filename)
         {
             try
             {
@@ -45,9 +45,10 @@ namespace backend.Controllers
 
                 return File(file, mediaType);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                this.logger.LogDebug(500, e, "Can't get file");
+                this.logger.LogError(500, ex, ex.Message, filename);
+
                 return StatusCode(500, "Can't get file");
             }
         }

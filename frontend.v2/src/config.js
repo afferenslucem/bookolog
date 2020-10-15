@@ -1,4 +1,4 @@
-export const BACKEND_URL = 'http://localhost:45080/';
+export const BACKEND_URL = 'http://localhost:35080/';
 
 export const BACKEND_AVATAR_PATH = '/file/';
 
@@ -10,7 +10,7 @@ export const BOOK_RELOAD_TIMEOUT_SECONDS = 43200;
 
 export const BOOK_RELOAD_DELAY_SECONDS = 10;
 
-export const VERSION = 'alpha-0.1.7';
+export const VERSION = 'alpha-0.1.9';
 
 export const HTTP_TRYOUTS_COUNT = 3;
 
