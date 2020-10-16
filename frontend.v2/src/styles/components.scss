@@ -71,7 +71,7 @@
     height: 100%;
     overflow: hidden;
 
-    >.header {
+    > .header {
         display: inline-block;
         width: 100%;
         height: $list-header-height;
@@ -102,6 +102,20 @@
 
     .year-header {
         font-weight: 700;
+    }
+
+    &__header {
+        height: $list-header-height;
+        border-bottom: $split-line;
+        margin-bottom: 0;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        > * {
+            flex: 0 0 auto;
+        }
     }
 }
 

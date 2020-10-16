@@ -5,7 +5,7 @@
       <should-sync-icon v-if="props.book.shouldSync" class="shouldSync"></should-sync-icon>
 
       <div @click="listeners.editIconClick">
-        <edit-icon class="fa-lg"></edit-icon>
+        <edit-icon  class="fa-lg"></edit-icon>
       </div>
     </div>
   </div>

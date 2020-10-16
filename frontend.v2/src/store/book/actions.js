@@ -13,6 +13,11 @@ import {
     BOOK_GET_AND_REFRESH_BY_GUID_ACTION,
     BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION,
     BOOKS_CLEAR_MUTATION,
+    BOOKS_UPDATE_MUTATION,
+    BOOKS_UPDATE_ACTION,
+    TAG_RENAME_ACTION,
+    AUTHOR_RENAME_ACTION,
+    GENRE_RENAME_ACTION,
 } from '../naming';
 import {
     BookRepository
@@ -26,6 +31,18 @@ import {
 import {
     NETWORK_ERROR
 } from "@/http/client";
+import _ from 'declarray';
+import {
+    getLogger
+} from '@/logger';
+import {
+    stringComparer
+} from '@/utils/string-comparing';
+
+const logger = getLogger({
+    namespace: 'Store',
+    loggerName: 'Books'
+})
 
 export const actions = {
     [BOOKS_SYNC_ACTION]: async ({
@@ -94,6 +111,97 @@ export const actions = {
         } finally {
             commit(BOOK_UPDATE_MUTATION, book)
         }
+    },
+
+    [BOOKS_UPDATE_ACTION]: async ({
+        commit,
+        dispatch,
+    }, books) => {
+        if (!books || !books.length) return;
+
+        logger.debug('Books update started');
+
+        try {
+            books = await dispatch('updateBooks', books);
+
+            logger.debug('Books updated');
+        } finally {
+            commit(BOOKS_UPDATE_MUTATION, books)
+        }
+    },
+
+    [TAG_RENAME_ACTION]: async ({
+        dispatch,
+        getters
+    }, {
+        oldName,
+        newName
+    }) => {
+        logger.debug('Tag rename action');
+
+        const books = _(getters.books)
+            .where(item => _(item.tags)
+                .contains(oldName, stringComparer))
+            .select(item => {
+                const book = Object.assign({}, item);
+                book.tags = _(book.tags).where(item => item != oldName).append(newName).sort().toArray();
+                return book;
+            }).toArray();
+
+        logger.debug('Tag renamed at items');
+
+        await dispatch(BOOKS_UPDATE_ACTION, books);
+
+        logger.debug('Tag renamed successfully');
+    },
+
+    [GENRE_RENAME_ACTION]: async ({
+        dispatch,
+        getters
+    }, {
+        oldName,
+        newName
+    }) => {
+        logger.debug('Genre rename action');
+
+        const books = _(getters.books)
+            .where(item => stringComparer.equal(item.genre, oldName))
+            .select(item => {
+                const book = Object.assign({}, item);
+                book.genre = newName;
+                return book;
+            }).toArray();
+
+        logger.debug('Genre renamed at items');
+
+        await dispatch(BOOKS_UPDATE_ACTION, books);
+
+        logger.debug('Genre renamed successfully');
+    },
+
+    [AUTHOR_RENAME_ACTION]: async ({
+        dispatch,
+        getters
+    }, {
+        oldName,
+        newName
+    }) => {
+        logger.debug('Author rename action');
+
+        const books = _(getters.books)
+            .where(item => _(item.authors)
+                .contains(oldName, stringComparer))
+            .select(item => {
+                const book = Object.assign({}, item);
+                book.authors = _(book.authors).where(item => item != oldName).append(newName).sort().toArray();
+                return book;
+            }).toArray();
+
+        logger.debug('Author renamed at items');
+
+        await dispatch(BOOKS_UPDATE_ACTION, books);
+
+        logger.debug('Author renamed successfully');
     },
 
     [BOOK_GET_AND_REFRESH_BY_GUID_ACTION]: async ({
@@ -168,6 +276,10 @@ export const actions = {
 
     async updateBook(context, book) {
         return await new BookSynchronizator().updateBook(book);
+    },
+
+    async updateBooks(context, books) {
+        return await new BookSynchronizator().updateBooks(books);
     },
 
     async updateLocalBook(context, book) {

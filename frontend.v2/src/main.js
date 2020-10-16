@@ -12,6 +12,7 @@ import moment from 'moment';
 import CloseListIcon from "@/components/icons/CloseListIcon.vue";
 import OpenListIcon from "@/components/icons/OpenListIcon.vue";
 import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
+import CrossIcon from "@/components/icons/CrossIcon.vue";
 import PersonIcon from "@/components/icons/PersonIcon.vue";
 import ConnectionMarker from "@/components/connection-module/ConnectionMarker.vue";
 import TotalReadCount from "@/components/statistic-module/TotalReadBooksCount.vue";
@@ -37,6 +38,7 @@ Vue.component('NoWrapValues', NoWrapValues);
 Vue.component('ProgressBar', ProgressBar);
 Vue.component('CloseListIcon', CloseListIcon);
 Vue.component('OpenListIcon', OpenListIcon);
+Vue.component('CrossIcon', CrossIcon);
 Vue.component('ProfilePic', ProfilePic);
 
 Vue.config.productionTip = false

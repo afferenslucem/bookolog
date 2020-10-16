@@ -41,6 +41,12 @@ export class BookClient extends Client {
         return new Book(update.data);
     }
 
+    async updateMany(books) {
+        const updated = await super.put(`book/updateMany`, books);
+
+        return _(updated.data).select(item => new Book(item)).toArray();
+    }
+
     async delete(bookId) {
         const deleted = await super.delete(`book/delete/${bookId}`, {
             withCredentials: true

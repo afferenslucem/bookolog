@@ -1,6 +1,40 @@
 <template>
   <div class="book-year-list">
-    <h4 class="pt-1 header">{{ listname | capital }}</h4>
+    <div class="book-year-list__header" v-if="mode == 'show'">
+      <h4 class="pt-1 header">{{ listname | capital }}</h4>
+      <div @click="turnEditMode()">
+        <edit-icon v-if="showEditButton" class="fa-lg" />
+      </div>
+    </div>
+    <div class="book-year-list__header pb-2" v-if="mode == 'edit'">
+      <form
+        class="form-inline w-100"
+        @submit="
+          $event.preventDefault();
+          return false;
+        "
+      >
+        <div class="form-group name">
+          <input class="form-control form-control-sm" v-model="newListName" />
+        </div>
+        <div class="form-group save">
+          <button
+            class="btn btn-primary btn-sm"
+            @click="
+              pushNameIfChanged();
+              turnShowMode();
+            "
+          >
+            {{ $t("book.lists.edit.saveButton") }}
+          </button>
+        </div>
+        <div class="form-group decline">
+          <button class="btn btn-danger btn-sm" @click="turnShowMode()">
+            <cross-icon />
+          </button>
+        </div>
+      </form>
+    </div>
 
     <div v-if="!shouldShowList">{{ $t("book.lists.noOneBook") }}</div>
     <ul class="book-list" v-else>
@@ -25,6 +59,8 @@ export default {
   },
   data: () => ({
     booksByYears: [],
+    mode: "show",
+    newListName: "",
   }),
   props: {
     books: {
@@ -34,6 +70,9 @@ export default {
     listname: {
       type: String,
       required: true,
+    },
+    showEditButton: {
+      default: false,
     },
   },
   methods: {
@@ -55,6 +94,18 @@ export default {
     },
     scrollToHeader(yearKey) {
       this.$el.querySelector(`[year="${yearKey}"]`).scrollIntoView();
+    },
+    turnEditMode() {
+      this.newListName = this.listname;
+      this.mode = "edit";
+    },
+    turnShowMode() {
+      this.mode = "show";
+    },
+    pushNameIfChanged() {
+      if (this.listname == this.newListName) return;
+
+      this.$emit("edit-name", this.newListName);
     },
   },
   computed: {
@@ -104,5 +155,17 @@ export default {
   min-width: 2rem;
 
   text-align: right;
+}
+
+.form-inline {
+  display: flex;
+
+  > *:not(:last-child) {
+    padding-right: 0.25rem;
+  }
+
+  .name {
+    flex: 1 1 auto;
+  }
 }
 </style>

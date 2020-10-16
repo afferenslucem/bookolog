@@ -74,6 +74,25 @@ export class BookSynchronizator {
         }
     }
 
+    async updateBooks(books) {
+        try {
+            books = await this.client.updateMany(books);
+            return books;
+        } catch (e) {
+            if (e == NETWORK_ERROR) {
+                _(books).select(book => {
+                    book.shouldSync = true;
+                }).toArray();
+            } else {
+                logger.error('Unexpected error:', e)
+            }
+
+            throw e;
+        } finally {
+            await this.repository.updateManyBooks(books)
+        }
+    }
+
     async deleteBook(guid) {
         try {
             await this.client.delete(guid);
