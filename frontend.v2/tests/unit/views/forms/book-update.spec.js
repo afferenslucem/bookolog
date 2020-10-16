@@ -7,9 +7,9 @@ import {
 } from '@vue/test-utils'
 import BookUpdate from '@/views/books/entity/BookUpdate.vue';
 import {
-    BOOKS_TAGS_COUNT_GETTER,
-    BOOKS_AUTHORS_COUNT_GETTER,
-    BOOKS_GENRES_COUNT_GETTER,
+    BOOKS_DONE_TAGS_COUNT_GETTER,
+    BOOKS_DONE_AUTHORS_COUNT_GETTER,
+    BOOKS_DONE_GENRES_COUNT_GETTER,
     BOOK_UPDATE_ACTION,
     BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION,
     NOTIFICATION_WARNING_ACTION,
@@ -35,9 +35,9 @@ describe('BookUpdate.vue', () => {
                 },
                 $store: {
                     getters: {
-                        [BOOKS_AUTHORS_COUNT_GETTER]: [],
-                        [BOOKS_TAGS_COUNT_GETTER]: [],
-                        [BOOKS_GENRES_COUNT_GETTER]: [],
+                        [BOOKS_DONE_AUTHORS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_TAGS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_GENRES_COUNT_GETTER]: [],
                     }
                 },
             }
@@ -284,9 +284,9 @@ describe('BookUpdate.vue', () => {
                 },
                 $store: {
                     getters: {
-                        [BOOKS_AUTHORS_COUNT_GETTER]: [],
-                        [BOOKS_TAGS_COUNT_GETTER]: [],
-                        [BOOKS_GENRES_COUNT_GETTER]: [],
+                        [BOOKS_DONE_AUTHORS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_TAGS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_GENRES_COUNT_GETTER]: [],
                     },
                     dispatch,
                 },
@@ -319,9 +319,9 @@ describe('BookUpdate.vue', () => {
                 },
                 $store: {
                     getters: {
-                        [BOOKS_AUTHORS_COUNT_GETTER]: [],
-                        [BOOKS_TAGS_COUNT_GETTER]: [],
-                        [BOOKS_GENRES_COUNT_GETTER]: [],
+                        [BOOKS_DONE_AUTHORS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_TAGS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_GENRES_COUNT_GETTER]: [],
                     },
                     dispatch,
                 },
@@ -354,9 +354,9 @@ describe('BookUpdate.vue', () => {
                 },
                 $store: {
                     getters: {
-                        [BOOKS_AUTHORS_COUNT_GETTER]: [],
-                        [BOOKS_TAGS_COUNT_GETTER]: [],
-                        [BOOKS_GENRES_COUNT_GETTER]: [],
+                        [BOOKS_DONE_AUTHORS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_TAGS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_GENRES_COUNT_GETTER]: [],
                     },
                     dispatch,
                 },
@@ -395,9 +395,9 @@ describe('BookUpdate.vue', () => {
                     },
                     $store: {
                         getters: {
-                            [BOOKS_AUTHORS_COUNT_GETTER]: [],
-                            [BOOKS_TAGS_COUNT_GETTER]: [],
-                            [BOOKS_GENRES_COUNT_GETTER]: [],
+                            [BOOKS_DONE_AUTHORS_COUNT_GETTER]: [],
+                            [BOOKS_DONE_TAGS_COUNT_GETTER]: [],
+                            [BOOKS_DONE_GENRES_COUNT_GETTER]: [],
                         }
                     },
                 }

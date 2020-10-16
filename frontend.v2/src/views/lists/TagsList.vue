@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import { BOOKS_TAGS_COUNT_GETTER } from "@/store/naming";
+import { BOOKS_DONE_TAGS_COUNT_GETTER } from "@/store/naming";
 
 export default {
   components: {},
   computed: {
     tags() {
-      return this.$store.getters[BOOKS_TAGS_COUNT_GETTER];
+      return this.$store.getters[BOOKS_DONE_TAGS_COUNT_GETTER];
     },
     shouldShowList() {
       return this.tags != null && this.tags.length > 0;

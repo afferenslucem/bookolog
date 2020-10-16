@@ -2,10 +2,10 @@ import { getters } from '@/store/book/getters'
 import { 
     BOOKS_IN_PROGRESS_GETTER,
     BOOKS_DONE_GETTER,
-    BOOKS_AUTHORS_COUNT_GETTER, 
-    BOOKS_TAGS_COUNT_GETTER,
+    BOOKS_DONE_AUTHORS_COUNT_GETTER, 
+    BOOKS_DONE_TAGS_COUNT_GETTER,
     BOOKS_TO_READ_GETTER, 
-    BOOKS_GENRES_COUNT_GETTER 
+    BOOKS_DONE_GENRES_COUNT_GETTER 
 } from '@/store/naming'
 import {TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS} from '@/models/book'
 import books, {getState} from '../../data/books'
@@ -81,7 +81,7 @@ describe('Book Getters', () => {
             [BOOKS_DONE_GETTER]: _(books).where(item => item.status === DONE_STATUS).toArray(),
         }
 
-        const result = _(getters[BOOKS_GENRES_COUNT_GETTER](state, mock))
+        const result = _(getters[BOOKS_DONE_GENRES_COUNT_GETTER](state, mock))
         .orderByDescending(item => item.count)
         .thenBy(item => item.name)
         .select(item => [item.name, item.count])
@@ -101,7 +101,7 @@ describe('Book Getters', () => {
             [BOOKS_DONE_GETTER]: _(books).where(item => item.status === DONE_STATUS).toArray(),
         }
 
-        const result = _(getters[BOOKS_TAGS_COUNT_GETTER](state, mock))
+        const result = _(getters[BOOKS_DONE_TAGS_COUNT_GETTER](state, mock))
         .orderByDescending(item => item.count)
         .thenBy(item => item.name)
         .select(item => [item.name, item.count])
@@ -124,7 +124,7 @@ describe('Book Getters', () => {
             [BOOKS_DONE_GETTER]: _(books).where(item => item.status === DONE_STATUS).toArray(),
         }
 
-        const result = _(getters[BOOKS_AUTHORS_COUNT_GETTER](state, mock))
+        const result = _(getters[BOOKS_DONE_AUTHORS_COUNT_GETTER](state, mock))
         .orderByDescending(item => item.count)
         .thenBy(item => item.name)
         .select(item => [item.name, item.count])

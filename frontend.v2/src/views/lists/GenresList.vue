@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import { BOOKS_GENRES_COUNT_GETTER } from "@/store/naming";
+import { BOOKS_DONE_GENRES_COUNT_GETTER } from "@/store/naming";
 
 export default {
   components: {},
   computed: {
     genres() {
-      return this.$store.getters[BOOKS_GENRES_COUNT_GETTER];
+      return this.$store.getters[BOOKS_DONE_GENRES_COUNT_GETTER];
     },
     shouldShowList() {
       return this.genres != null && this.genres.length > 0;

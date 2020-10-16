@@ -5,7 +5,7 @@ import {
     shallowMount
 } from '@vue/test-utils'
 import BookCreate from '@/views/books/entity/BookCreate.vue';
-import { BOOKS_TAGS_COUNT_GETTER, BOOKS_AUTHORS_COUNT_GETTER, BOOKS_GENRES_COUNT_GETTER } from "@/store/naming";
+import { BOOKS_DONE_TAGS_COUNT_GETTER, BOOKS_DONE_AUTHORS_COUNT_GETTER, BOOKS_DONE_GENRES_COUNT_GETTER } from "@/store/naming";
 
 describe('BookCreate.vue', () => {
     let wrapper = null;
@@ -21,9 +21,9 @@ describe('BookCreate.vue', () => {
                 },
                 $store: {
                     getters: {
-                        [BOOKS_AUTHORS_COUNT_GETTER]: [],
-                        [BOOKS_TAGS_COUNT_GETTER]: [],
-                        [BOOKS_GENRES_COUNT_GETTER]: [],
+                        [BOOKS_DONE_AUTHORS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_TAGS_COUNT_GETTER]: [],
+                        [BOOKS_DONE_GENRES_COUNT_GETTER]: [],
                     }
                 },
             }

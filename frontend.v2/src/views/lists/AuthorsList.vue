@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import { BOOKS_AUTHORS_COUNT_GETTER } from "@/store/naming";
+import { BOOKS_DONE_AUTHORS_COUNT_GETTER } from "@/store/naming";
 
 export default {
   components: {},
   computed: {
     authors() {
-      return this.$store.getters[BOOKS_AUTHORS_COUNT_GETTER];
+      return this.$store.getters[BOOKS_DONE_AUTHORS_COUNT_GETTER];
     },
     shouldShowList() {
       return this.authors != null && this.authors.length > 0;

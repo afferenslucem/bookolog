@@ -10,7 +10,11 @@ import moment from 'moment';
 import {
   PAGES_MAX_VALUE
 } from '../config';
-import { BOOKS_TAGS_COUNT_GETTER, BOOKS_AUTHORS_COUNT_GETTER, BOOKS_GENRES_COUNT_GETTER } from "@/store/naming";
+import {
+  BOOKS_DONE_TAGS_COUNT_GETTER,
+  BOOKS_DONE_AUTHORS_COUNT_GETTER,
+  BOOKS_DONE_GENRES_COUNT_GETTER
+} from "@/store/naming";
 
 export default {
   data: function () {
@@ -206,17 +210,17 @@ export default {
       return this.datesValid && this.unitsValid && this.nameValid
     },
     existingTags() {
-      return this.$store.getters[BOOKS_TAGS_COUNT_GETTER].map(
+      return this.$store.getters[BOOKS_DONE_TAGS_COUNT_GETTER].map(
         (item) => item.name
       );
     },
     existingAuthors() {
-      return this.$store.getters[BOOKS_AUTHORS_COUNT_GETTER].map(
+      return this.$store.getters[BOOKS_DONE_AUTHORS_COUNT_GETTER].map(
         (item) => item.name
       );
     },
     existingGenres() {
-      return this.$store.getters[BOOKS_GENRES_COUNT_GETTER].map(
+      return this.$store.getters[BOOKS_DONE_GENRES_COUNT_GETTER].map(
         (item) => item.name
       );
     },
