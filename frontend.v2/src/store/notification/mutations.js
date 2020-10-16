@@ -12,5 +12,7 @@ export const mutations = {
 
     [NOTIFICATION_HIDE_MUTATION]: (state) => {
         state.show = false;
+        state.text = '';
+        state.type = '';
     },
 }

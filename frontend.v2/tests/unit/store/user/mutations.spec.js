@@ -17,7 +17,7 @@ describe('User Mutations', () => {
         };
         mutations[USER_LOGOUT_MUTATION](state);
         
-        assert.equal(state.login, '');
+        assert.equal(state.login, null);
     })
   })
   
