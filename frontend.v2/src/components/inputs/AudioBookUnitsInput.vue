@@ -1,5 +1,5 @@
 <template>
-  <form class="form-row" @blur="onFormBlur()">
+  <form class="form-row" @focusout="onFormBlur()">
     <div class="col">
       <input
         type="number"
