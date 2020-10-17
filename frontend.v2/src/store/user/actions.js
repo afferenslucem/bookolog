@@ -94,20 +94,20 @@ export const actions = {
     [USER_SYNC_DATA_ACTION]: async ({
         dispatch
     }) => {
-        const recoveredUser = await dispatch('getLocalStoredUser');
 
         try {
-            const syncDiffTime = getSyncDiffTime(recoveredUser);
+            const userCurrentState = await dispatch('userCurrentState');
+
+            const syncDiffTime = getSyncDiffTime(userCurrentState);
 
             if (syncDiffTime < BOOK_RELOAD_DELAY_SECONDS) return;
 
-            await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
-
-            const userCurrentState = await dispatch('getRemoteUser');
+            await dispatch(USER_SYNC_BOOKS_ACTION, userCurrentState);
 
             dispatch(USER_SAVE_ACTION, userCurrentState);
         } catch (e) {
             if (e == NETWORK_ERROR) {
+                const recoveredUser = await dispatch('getLocalStoredUser');
                 const restoreAwait = dispatch(BOOKS_LOAD_LOCAL_ACTION);
                 dispatch(USER_SAVE_ACTION, recoveredUser);
                 await restoreAwait;
@@ -120,16 +120,15 @@ export const actions = {
     [USER_INIT_DATA_ACTION]: async ({
         dispatch
     }) => {
-        const recoveredUser = await dispatch('getLocalStoredUser');
-
         try {
-            await dispatch(USER_SYNC_BOOKS_ACTION, recoveredUser);
-
             const userCurrentState = await dispatch('getRemoteUser');
+
+            await dispatch(USER_SYNC_BOOKS_ACTION, userCurrentState);
 
             dispatch(USER_SAVE_ACTION, userCurrentState);
         } catch (e) {
             if (e == NETWORK_ERROR) {
+                const recoveredUser = await dispatch('getLocalStoredUser');
                 const restoreAwait = dispatch(BOOKS_LOAD_LOCAL_ACTION);
                 dispatch(USER_SAVE_ACTION, recoveredUser);
                 await restoreAwait;
