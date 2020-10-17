@@ -96,7 +96,7 @@ export const actions = {
     }) => {
 
         try {
-            const userCurrentState = await dispatch('userCurrentState');
+            const userCurrentState = await dispatch('getRemoteUser');
 
             const syncDiffTime = getSyncDiffTime(userCurrentState);
 

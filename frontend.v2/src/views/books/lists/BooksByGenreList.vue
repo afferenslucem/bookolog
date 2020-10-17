@@ -41,7 +41,6 @@ export default {
         });
 
         this.name = newName;
-
         this.selectBooks();
 
         this.$store.dispatch(
@@ -51,6 +50,8 @@ export default {
       } catch (e) {
         if (e == NETWORK_ERROR) {
           this.name = newName;
+          this.selectBooks();
+
           this.$store.dispatch(
             NOTIFICATION_WARNING_ACTION,
             this.$t("book.lists.genre.rename.offline")
