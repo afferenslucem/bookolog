@@ -13,6 +13,7 @@ import {
   USER_LOGOUT_ACTION,
   CONNECTION_LOAD_START_ACTION,
   CONNECTION_LOAD_FINISH_ACTION,
+  USER_INIT_DATA_ACTION,
 } from "@/store/naming";
 
 import { HTTP_TRYOUTS_COUNT, HTTP_REQUEST_TIMEOUT_MS } from "./config";
@@ -24,6 +25,12 @@ import { Client } from "@/http/client";
 
 export default {
   async created() {
+    try {
+      await this.$store.dispatch(USER_INIT_DATA_ACTION);
+    } catch (e) {
+      //
+    }
+
     Client.prototype.onSuccess = () => this.turnOnline();
     Client.prototype.onNetworkError = () => this.turnOffline();
     Client.prototype.onUnauthorizedError = () =>
