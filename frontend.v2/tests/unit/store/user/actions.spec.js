@@ -132,8 +132,8 @@ describe('User Actions', () => {
             const localUser = 'user';
 
             const dispatch = sin.stub();
-            dispatch.onCall(0).resolves(localUser);
-            dispatch.onCall(1).rejects(NETWORK_ERROR);
+            dispatch.onCall(0).rejects(NETWORK_ERROR);
+            dispatch.onCall(1).resolves(localUser);
 
             try {
                 await actions[USER_SYNC_DATA_ACTION]({
@@ -150,30 +150,27 @@ describe('User Actions', () => {
 
             assert.equal(dispatch.callCount, 5);
 
+            assert.isTrue(dispatch.calledWithExactly('getRemoteUser'))
             assert.isTrue(dispatch.calledWithExactly('getLocalStoredUser'))
-            assert.isTrue(dispatch.calledWithExactly(USER_SYNC_BOOKS_ACTION, localUser))
             assert.isTrue(dispatch.calledWithExactly(BOOKS_LOAD_LOCAL_ACTION))
             assert.isTrue(dispatch.calledWithExactly(USER_SAVE_ACTION, localUser))
             assert.isTrue(dispatch.calledWith(NOTIFICATION_WARNING_ACTION))
         });
 
         it('should use remote data', async () => {
-            const localUser = 'localUser';
             const remoteUser = 'remoteUser';
 
             const dispatch = sin.stub();
-            dispatch.onCall(0).resolves(localUser);
-            dispatch.onCall(2).resolves(remoteUser);
+            dispatch.onCall(0).resolves(remoteUser);
 
             await actions[USER_SYNC_DATA_ACTION]({
                 dispatch
             });
 
-            assert.equal(dispatch.callCount, 4);
+            assert.equal(dispatch.callCount, 3);
 
-            assert.isTrue(dispatch.calledWithExactly('getLocalStoredUser'))
-            assert.isTrue(dispatch.calledWithExactly(USER_SYNC_BOOKS_ACTION, localUser))
             assert.isTrue(dispatch.calledWithExactly('getRemoteUser'))
+            assert.isTrue(dispatch.calledWithExactly(USER_SYNC_BOOKS_ACTION, remoteUser))
             assert.isTrue(dispatch.calledWithExactly(USER_SAVE_ACTION, remoteUser))
         });
     })
