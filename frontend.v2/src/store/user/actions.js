@@ -1,6 +1,6 @@
 import {
     getLogger
-} from '../../logger';
+} from '@/logger';
 import {
     CONNECTION_OFFLINE_ACTION,
     NETWORK_ERROR,
@@ -108,13 +108,16 @@ export const actions = {
             
             logger.info('User current state', userCurrentState);
 
+            dispatch(USER_SAVE_ACTION, userCurrentState);
+
             const syncDiffTime = getSyncDiffTime(userCurrentState);
 
             if (syncDiffTime < BOOK_RELOAD_DELAY_SECONDS) return;
 
             await dispatch(USER_SYNC_BOOKS_ACTION, userCurrentState);
 
-            dispatch(USER_SAVE_ACTION, userCurrentState);
+            logger.info('Synced user')
+
         } catch (e) {
             if (e == NETWORK_ERROR) {
                 const recoveredUser = await dispatch('getLocalStoredUser');
@@ -140,6 +143,8 @@ export const actions = {
             await dispatch(USER_SYNC_BOOKS_ACTION, userCurrentState);
 
             dispatch(USER_SAVE_ACTION, userCurrentState);
+
+            logger.info('App inited')
         } catch (e) {
             if (e == NETWORK_ERROR) {
                 const recoveredUser = await dispatch('getLocalStoredUser');

@@ -27,6 +27,13 @@ const factory = new LoggerFactory([
             logLevel: LogLevel.Info,
             appenders: [new ConsoleAppender(), accumulator],
         },
+    },
+    {
+        name: 'App',
+        logger: {
+            logLevel: LogLevel.Info,
+            appenders: [new ConsoleAppender(), accumulator],
+        },
     }
 ])
 

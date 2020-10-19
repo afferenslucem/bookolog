@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="log in logs" :key="log.message">
+    <div class="mb-2" v-for="log in logs" :key="log.message">
       <small>
         <span>{{log.message}}</span>
         <span v-for="obj in log.objects" :key="obj.toString()">

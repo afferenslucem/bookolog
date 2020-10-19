@@ -1,6 +1,6 @@
 import {
     getLogger
-} from '../../../logger';
+} from '@/logger';
 import {
     BookRepository
 } from '../../../storage/book-repository';

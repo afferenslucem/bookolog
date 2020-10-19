@@ -3,7 +3,7 @@ import {
 } from '../naming';
 import {
     getLogger
-} from '../../logger';
+} from '@/logger';
 
 const logger = getLogger({
     namespace: 'UserModule',
