@@ -1,32 +1,34 @@
-import {ConsoleLoggerFactory, LogLevel} from 'waterlog';
+import {LoggerFactory, LogLevel, ConsoleAppender, AccumulatorAppender} from 'waterlog';
 
-const mode = 'dev';
+export const accumulator = new AccumulatorAppender();
 
-const factory = mode == 'dev' ? new ConsoleLoggerFactory([
+const factory = new LoggerFactory([
     {
-        logger: LogLevel.All,
-        name: 'default'
+        name: 'default',
+        logger: {
+            logLevel: LogLevel.Warn,
+            appenders: [new ConsoleAppender()],
+        },
     },
     {
         name: {
-            namespace: 'Storage',
+            namespace: 'UserModule'
         },
-        logger: LogLevel.Disable
+        logger: {
+            logLevel: LogLevel.Info,
+            appenders: [new ConsoleAppender(), accumulator],
+        },
     },
     {
         name: {
             namespace: 'Http',
         },
-        logger: LogLevel.All
-    },
-    {
-        name: {
-            namespace: 'ConnectionModule',
-            loggerName: 'Mutations'
+        logger: {
+            logLevel: LogLevel.Info,
+            appenders: [new ConsoleAppender(), accumulator],
         },
-        logger: LogLevel.Disable
     }
-]) : new ConsoleLoggerFactory([{name: 'default', logger: LogLevel.Disable}]);
+])
 
 export function getLogger(name) {
     return factory.getLogger(name);

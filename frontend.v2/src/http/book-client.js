@@ -16,6 +16,8 @@ export class BookClient extends Client {
     async getAll(userId) {
         const data = await super.get(`book/user/${userId}`);
 
+        this.logger.info('Loaded books for user:', userId);
+
         return _(data.data).select(item => new Book(item)).toArray();
     }
 

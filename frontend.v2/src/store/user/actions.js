@@ -61,6 +61,8 @@ export const actions = {
         dispatch
     }, payload) => {
         try {
+            logger.info('login', payload.username)
+
             const user = await dispatch('sendLogin', payload);
 
             if (user == undefined) {
@@ -85,9 +87,13 @@ export const actions = {
     }) => {
         try {
             const recoveredUser = dispatch('getLocalStoredUser');
+            
+            logger.info('Recover user', recoveredUser)
 
             return recoveredUser;
         } catch (e) {
+            logger.info('Could not recover user')
+
             return null;
         }
     },
@@ -96,7 +102,11 @@ export const actions = {
     }) => {
 
         try {
+            logger.info('Sync user')
+
             const userCurrentState = await dispatch('getRemoteUser');
+            
+            logger.info('User current state', userCurrentState);
 
             const syncDiffTime = getSyncDiffTime(userCurrentState);
 
@@ -121,7 +131,11 @@ export const actions = {
         dispatch
     }) => {
         try {
+            logger.info('Init app')
+
             const userCurrentState = await dispatch('getRemoteUser');
+            
+            logger.info('User current state', userCurrentState);
 
             await dispatch(USER_SYNC_BOOKS_ACTION, userCurrentState);
 

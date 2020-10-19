@@ -9,12 +9,14 @@ export class UserClient extends Client {
         super(BACKEND_URL);
         this.logger = getLogger({
             namespace: 'Http',
-            loggerName: 'UserClient'
+            loggerName: 'User'
         });
     }
 
     async login(username, password) {
         try {
+            this.logger.info('Login user', username);
+
             const answer = await super.post('auth/login', {
                 login: username,
                 password: password
@@ -41,6 +43,8 @@ export class UserClient extends Client {
 
     async me() {
         const user = await super.get('user/me');
+
+        this.logger.info('Got me', user.data.login);
         
         return user.data;
     }

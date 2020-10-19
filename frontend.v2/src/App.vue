@@ -3,6 +3,8 @@
     <notification-message></notification-message>
     <router-view />
     <app-loader></app-loader>
+    <div class="logButton" @click="goToLogs()">
+    </div>
   </div>
 </template>
 
@@ -61,6 +63,9 @@ export default {
     turnOffline() {
       return this.$store.dispatch(CONNECTION_OFFLINE_ACTION);
     },
+    goToLogs() {
+      this.$router.push({name: 'Logs'})
+    },
     async turnOnline() {
       try {
         await this.$store.dispatch(CONNECTION_ONLINE_ACTION);
@@ -74,4 +79,12 @@ export default {
 
 <style lang="scss">
 @import "styles";
+.logButton {
+  position: fixed;
+  height: 1cm;
+  width: 0.5cm;
+
+  right: 0;
+  bottom: 0;
+}
 </style>

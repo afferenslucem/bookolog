@@ -40,6 +40,11 @@ const externalRoutes = [{
   props: false,
   component: () => import('@/views/Main.vue'),
   beforeEnter: ifNotAuthenticated,
+}, {
+  path: '/logs',
+  name: 'Logs',
+  props: false,
+  component: () => import('@/views/Logs.vue'),
 }, ];
 
 const routes = [{
