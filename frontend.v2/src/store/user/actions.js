@@ -137,12 +137,10 @@ export const actions = {
             logger.info('Init app')
 
             const userCurrentState = await dispatch('getRemoteUser');
-            
             logger.info('User current state', userCurrentState);
+            dispatch(USER_SAVE_ACTION, userCurrentState);            
 
             await dispatch(USER_SYNC_BOOKS_ACTION, userCurrentState);
-
-            dispatch(USER_SAVE_ACTION, userCurrentState);
 
             logger.info('App inited')
         } catch (e) {
@@ -163,7 +161,6 @@ export const actions = {
         const syncDiffTime = getSyncDiffTime(user);
 
         if (syncDiffTime > BOOK_RELOAD_TIMEOUT_SECONDS) {
-            await dispatch(BOOKS_SYNC_ACTION)
             await dispatch(BOOKS_LOAD_ACTION);
         } else {
             await dispatch(BOOKS_SYNC_ACTION)
