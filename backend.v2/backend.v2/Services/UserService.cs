@@ -44,7 +44,7 @@ namespace backend.Services
             {
                 var user = await this.GetByLogin(login);
 
-                if (user.PasswordHash == this.hasher.GetSHA256Hash(password, user.Salt))
+                if (this.CheckHash(user, password))
                 {
                     return user.WithoutPrivate();
                 }
@@ -57,6 +57,10 @@ namespace backend.Services
             {
                 throw new IncorrectCredentianlsException();
             }
+        }
+
+        public bool CheckHash(User user, string password) {
+            return user.PasswordHash == this.hasher.GetSHA256Hash(password, user.Salt);
         }
 
         public async Task<User> Authenticate(long id, string password)
