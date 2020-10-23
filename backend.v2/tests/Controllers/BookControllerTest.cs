@@ -19,147 +19,163 @@ namespace tests.Controllers
     [TestClass]
     public class BookControllerTests
     {
-        IBookStorage bookStorage;
-
-        private IUserSession userSession;
-
-        BookController controller;
-
-        [TestInitialize]
-        public void BeforeEach() {
-            var logger = new Mock<ILogger<BookController>>();
-            
-            this.bookStorage = new BookStorageMock();
-            
-            this.userSession = new UserSessionMock();
-
-            var bookService = new BookService(this.bookStorage, this.userSession);
-
-            this.controller = new BookController(bookService, this.userSession, logger.Object);
-        }
-
         [TestMethod]
         public async Task ShouldSave()
         {
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
+
             var book = new Book
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name"
             };
 
-            var saved = await this.controller.Create(book) as OkObjectResult;
-            
+            bookService.Setup(item => item.Save(It.IsAny<Book>())).Returns(Task.Run(() => book));
+
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var saved = await controller.Create(book) as OkObjectResult;
+
             Assert.IsNotNull(saved);
             Assert.AreEqual(200, saved.StatusCode);
+
+            bookService.Verify(item => item.Save(book), Times.Once);
         }
 
         [TestMethod]
         public async Task ShouldSaveMany()
         {
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
+
+            var books = new Book[] {
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name"
+                }
+            };
+            
+            bookService.Setup(item => item.SaveMany(It.IsAny<Book[]>())).Returns(Task.Run(() => books));
+
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var saved = await controller.CreateMany(books) as OkObjectResult;
+
+            Assert.IsNotNull(saved);
+            Assert.AreEqual(200, saved.StatusCode);            
+            
+            bookService.Verify(item => item.SaveMany(books), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task ShouldUpdate()
+        {
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
+
             var book = new Book
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name"
             };
 
-            var saved = await this.controller.CreateMany(new Book[] {book}) as OkObjectResult;
-            
+            bookService.Setup(item => item.Update(It.IsAny<Book>())).Returns(Task.Run(() => book));
+
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var saved = await controller.Update(book) as OkObjectResult;
+
             Assert.IsNotNull(saved);
             Assert.AreEqual(200, saved.StatusCode);
 
-            var storage = this.bookStorage.GetByGuid(book.Guid.Value);
-
-            Assert.IsNotNull(storage);
+            bookService.Verify(item => item.Update(book), Times.Once);
         }
 
         [TestMethod]
         public async Task ShouldUpdateMany()
         {
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
+
+            var books = new Book[] {
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name"
+                }
+            };
+            
+            bookService.Setup(item => item.UpdateMany(It.IsAny<Book[]>())).Returns(Task.Run(() => books));
+
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var saved = await controller.UpdateMany(books) as OkObjectResult;
+
+            Assert.IsNotNull(saved);
+            Assert.AreEqual(200, saved.StatusCode);            
+            
+            bookService.Verify(item => item.UpdateMany(books), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task ShouldDelete()
+        {
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
+
             var book = new Book
             {
                 Guid = Guid.NewGuid(),
                 Name = "Name"
             };
 
-            var book2 = new Book
-            {
-                Guid = book.Guid,
-                Name = "Name2"
-            };
+            var guid = Guid.NewGuid();
 
-            var saved = await this.controller.CreateMany(new Book[] {book}) as OkObjectResult;
-            var updated = await this.controller.UpdateMany(new Book[] {book2}) as OkObjectResult;
-        
-            var storage = this.bookStorage.GetByGuid(book.Guid.Value);
+            bookService.Setup(item => item.Delete(It.IsAny<Guid>())).Returns(Task.Run(() => book));
 
-            Assert.AreEqual(book2.Name, "Name2");
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var saved = await controller.Delete(guid) as OkObjectResult;
+
+            Assert.IsNotNull(saved);
+            Assert.AreEqual(200, saved.StatusCode);
+
+            bookService.Verify(item => item.Delete(guid), Times.Once);
         }
 
         [TestMethod]
         public async Task ShouldDeleteMany()
         {
-            var book = new Book
-            {
-                Guid = Guid.NewGuid(),
-                Name = "Name"
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
+
+            var books = new Book[] {
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name"
+                }
             };
-
-            var book2 = new Book
-            {
-                Guid = Guid.NewGuid(),
-                Name = "Name2"
-            };
-
-            var saved = await this.controller.CreateMany(new Book[] {book, book2}) as OkObjectResult;
-
-            Console.WriteLine(book.Guid);
-            Console.WriteLine(book2.Guid);
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(saved.Value));
-
-            var updated = await this.controller.DeleteMany(new Guid[] {book.Guid.Value, book2.Guid.Value}) as OkObjectResult;
-        
-            var user = await this.userSession.User;
-
-            var storage = await this.bookStorage.GetByUserId(user.Id);
-
-            Assert.AreEqual(storage.Count(), 0);
-        }
-        
-
-        [TestMethod]
-        public async Task ShouldSaveWithStartDate()
-        {
-            var book = new Book
-            {
-                Guid = Guid.NewGuid(),
-                Name = "Name",
-                StartDateYear = 2012,
-                StartDateMonth = 07,
-                StartDateDay = 12,
-            };
-
-            var saved = await this.controller.Create(book) as OkObjectResult;
             
-            Assert.IsNotNull(saved);
-            Assert.AreEqual(200, saved.StatusCode);
-        }
-
-        [TestMethod]
-        public async Task ShouldSaveWithEndDate()
-        {
-            var book = new Book
-            {
-                Guid = Guid.NewGuid(),
-                Name = "Name",
-                EndDateYear = 2012,
-                EndDateMonth = 08,
-                EndDateDay = 12,
+            var guids = new Guid[] {
+                Guid.NewGuid()
             };
-
-            var saved = await this.controller.Create(book) as OkObjectResult;
             
-            Assert.IsNotNull(saved);
-            Assert.AreEqual(200, saved.StatusCode);
+            bookService.Setup(item => item.DeleteMany(It.IsAny<Guid[]>())).Returns(Task.Run(() => books));
+
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var saved = await controller.DeleteMany(guids) as OkObjectResult;
+
+            bookService.Verify(item => item.DeleteMany(guids), Times.Once());
         }
 
         [TestMethod]
@@ -173,7 +189,7 @@ namespace tests.Controllers
             };
 
             var saved = await this.controller.Create(book) as OkObjectResult;
-            
+
             Assert.IsNotNull(saved);
             Assert.AreEqual(200, saved.StatusCode);
         }
@@ -189,102 +205,101 @@ namespace tests.Controllers
             };
 
             var saved = await this.controller.Create(book) as OkObjectResult;
-            
+
             Assert.IsNotNull(saved);
             Assert.AreEqual(200, saved.StatusCode);
         }
-        
+
         [TestMethod]
         public async Task ShouldThrowUnitsException()
         {
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
+
             var book = new Book
             {
                 Guid = Guid.NewGuid(),
-                Name = "Name",
-                TotalUnits = 10,
-                DoneUnits = 20
+                Name = "Name"
             };
-            
-            var result = await this.controller.Create(book) as ObjectResult;
-            
+
+            bookService.Setup(item => item.Save(It.IsAny<Book>())).Throws(new BookWrongUnitsException());
+
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var result = await controller.Create(book) as ObjectResult;
+
             Assert.IsNotNull(result);
             Assert.AreEqual(400, result.StatusCode);
             Assert.AreEqual(BookWrongUnitsException.ErrorMessage, result.Value);
         }
-        
+
         [TestMethod]
         public async Task ShouldThrowDatesException()
         {
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
+
             var book = new Book
             {
                 Guid = Guid.NewGuid(),
-                Name = "Name",
-                StartDateYear = 2012,
-                StartDateMonth = 09,
-                StartDateDay = 12,
-                EndDateYear = 2012,
-                EndDateMonth = 08,
-                EndDateDay = 12,
+                Name = "Name"
             };
 
-            var result = await this.controller.Create(book) as ObjectResult;
-            
+            bookService.Setup(item => item.Save(It.IsAny<Book>())).Throws(new BookWrongDatesException());
+
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var result = await controller.Create(book) as ObjectResult;
+
             Assert.IsNotNull(result);
             Assert.AreEqual(400, result.StatusCode);
+
             Assert.AreEqual(BookWrongDatesException.ErrorMessage, result.Value);
         }
-        
+
         [TestMethod]
         public async Task ShouldUpdateException()
         {
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
+
             var book = new Book
             {
                 Guid = Guid.NewGuid(),
-                Name = "Name",
-                StartDateYear = 2012,
-                StartDateMonth = 07,
-                StartDateDay = 12,
-                EndDateYear = 2012,
-                EndDateMonth = 08,
-                EndDateDay = 12,
+                Name = "Name"
             };
 
-            await this.controller.Create(book);
-            
-            book.UserId = 2;
-            
-            var updateResult = await this.controller.Update(book);
+            bookService.Setup(item => item.Update(It.IsAny<Book>())).Throws(new BookCouldNotAccessSomeoneElsesException());
 
-            var result = updateResult as ObjectResult;
-            
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var result = await controller.Update(book) as ObjectResult;
+
             Assert.IsNotNull(result);
             Assert.AreEqual(400, result.StatusCode);
+
             Assert.AreEqual(BookCouldNotAccessSomeoneElsesException.ErrorMessage, result.Value);
         }
-        
+
         [TestMethod]
         public async Task ShouldDeleteException()
         {
-            var book = new Book
-            {
-                Guid = Guid.NewGuid(),
-                Name = "Name",
-                StartDateYear = 2012,
-                StartDateMonth = 07,
-                StartDateDay = 12,
-                EndDateYear = 2012,
-                EndDateMonth = 08,
-                EndDateDay = 12,
-            };
+            var logger = new Mock<ILogger<BookController>>();
+            var userSession = new UserSessionMock();
+            var bookService = new Mock<IBookService>();
 
-            await this.controller.Create(book);
-            
-            book.UserId = 2;
-            
-            var result = await this.controller.Delete(book.Guid.Value) as ObjectResult;
-            
+            bookService.Setup(item => item.Delete(It.IsAny<Guid>())).Throws(new BookCouldNotAccessSomeoneElsesException());
+
+            var controller = new BookController(bookService.Object, userSession, logger.Object);
+
+            var result = await controller.Delete(Guid.NewGuid()) as ObjectResult;
+
             Assert.IsNotNull(result);
             Assert.AreEqual(400, result.StatusCode);
+
             Assert.AreEqual(BookCouldNotAccessSomeoneElsesException.ErrorMessage, result.Value);
         }
     }
