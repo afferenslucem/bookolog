@@ -66,8 +66,6 @@ namespace backend.Services
             
             await this.CheckAccess(currentState);
             this.CheckEntity(book);
-
-            book.UserId = (await this.session.User).Id;
             
             return await this.storage.Update(book);
         }
@@ -80,16 +78,18 @@ namespace backend.Services
             return await this.storage.Delete(guid);
         }
         
-        private async Task CheckAccess(Book book)
+        public async Task CheckAccess(Book book)
         {
-            if (book.UserId != (await this.session.User).Id)
+            var currentUser = await this.session.User;
+
+            if (book.UserId != currentUser.Id)
             {
                 throw new BookCouldNotAccessSomeoneElsesException();
             }
         }
         
-        private void CheckAccess(long userId, Book book)
-        {
+        public void CheckAccess(long userId, Book book)
+        {   
             if (book.UserId != userId)
             {
                 throw new BookCouldNotAccessSomeoneElsesException();

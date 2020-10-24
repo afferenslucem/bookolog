@@ -24,9 +24,10 @@ namespace tests.Services
         private IUserSession userSession;
 
         [TestInitialize]
-        public void BeforeEach() {
+        public void BeforeEach()
+        {
             this.bookStorage = new BookStorageMock();
-            
+
             this.userSession = new UserSessionMock();
 
             service = new BookService(this.bookStorage, this.userSession);
@@ -50,27 +51,185 @@ namespace tests.Services
             var bookService = new BookService(bookStorage.Object, userSession.Object);
 
             var result = await bookService.Save(book);
-            
+
             Assert.AreEqual(result.Guid, book.Guid);
-            
+
             userSession.Verify(item => item.User, Times.Once());
             bookStorage.Verify(item => item.Save(book), Times.Once());
         }
+
+        [TestMethod]
+        public async Task ShouldUpdate()
+        {
+            var book = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name",
+                UserId = 1,
+            };
+
+            var bookStorage = new Mock<IBookStorage>();
+            var userSession = new Mock<IUserSession>();
+
+            bookStorage.Setup(item => item.Update(It.IsAny<Book>())).ReturnsAsync(book);
+            bookStorage.Setup(item => item.GetByGuid(It.Is<Guid>(guid => guid == book.Guid.Value))).ReturnsAsync(book);
+            userSession.Setup(item => item.User).ReturnsAsync(new User { Id = 1 });
+
+            var bookService = new BookService(bookStorage.Object, userSession.Object);
+
+            var result = await bookService.Update(book);
+
+            Assert.AreEqual(result.Guid, book.Guid);
+
+            userSession.Verify(item => item.User, Times.Once());
+            bookStorage.Verify(item => item.Update(book), Times.Once());
+            bookStorage.Verify(item => item.GetByGuid(book.Guid.Value), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task ShouldDelete()
+        {
+            var book = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name",
+                UserId = 1,
+            };
+
+            var bookStorage = new Mock<IBookStorage>();
+            var userSession = new Mock<IUserSession>();
+
+            bookStorage.Setup(item => item.Delete(It.Is<Guid>(guid => guid == book.Guid.Value))).ReturnsAsync(book);
+            bookStorage.Setup(item => item.GetByGuid(It.Is<Guid>(guid => guid == book.Guid.Value))).ReturnsAsync(book);
+            userSession.Setup(item => item.User).ReturnsAsync(new User { Id = 1 });
+
+            var bookService = new BookService(bookStorage.Object, userSession.Object);
+
+            var result = await bookService.Delete(book.Guid.Value);
+
+            Assert.AreEqual(result.Guid, book.Guid);
+
+            userSession.Verify(item => item.User, Times.Once());
+            bookStorage.Verify(item => item.Delete(book.Guid.Value), Times.Once());
+            bookStorage.Verify(item => item.GetByGuid(book.Guid.Value), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task ShouldDeleteManyByBooks()
+        {
+            var books = new Book[] {
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name",
+                    UserId = 1,
+                },
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name2",
+                    UserId = 1,
+                }
+            };
+
+            var bookStorage = new Mock<IBookStorage>();
+            var userSession = new Mock<IUserSession>();
+
+            bookStorage.Setup(item => item.DeleteMany(It.IsAny<Book[]>())).ReturnsAsync(books);
+            userSession.Setup(item => item.User).ReturnsAsync(new User { Id = 1 });
+
+            var bookService = new BookService(bookStorage.Object, userSession.Object);
+
+            await bookService.DeleteMany(books);
+
+            userSession.Verify(item => item.User, Times.Once());
+            bookStorage.Verify(item => item.DeleteMany(books), Times.Once());
+        }
     }
-    
+
+    [TestClass]
+    public class BookServiceAccessCheckingTests
+    {
+        private BookService service;
+
+        [TestInitialize]
+        public void BeforeEach()
+        {
+            var bookStorage = new Mock<IBookStorage>();
+            var userSession = new Mock<IUserSession>();
+
+            userSession.Setup(item => item.User).ReturnsAsync(new User { Id = 1 });
+
+            this.service = new BookService(bookStorage.Object, userSession.Object);
+        }
+
+        [TestMethod]
+        public async Task ShouldPassWithSameIds()
+        {
+            var book = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name",
+                UserId = 1,
+            };
+
+            await this.service.CheckAccess(book);
+        }
+
+        [TestMethod]
+        public async Task ShouldDeclineWithDiffIds()
+        {
+            var book = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name",
+                UserId = 2,
+            };
+
+            await Assert.ThrowsExceptionAsync<BookCouldNotAccessSomeoneElsesException>(() => this.service.CheckAccess(book));
+        }
+
+        [TestMethod]
+        public void ShouldPassWithSameIdsWithoutSession()
+        {
+            var book = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name",
+                UserId = 2,
+            };
+
+            this.service.CheckAccess(2, book);
+        }
+
+        [TestMethod]
+        public void ShouldDeclineWithDiffIdsWithoutSession()
+        {
+            var book = new Book
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Name",
+                UserId = 2,
+            };
+
+            Assert.ThrowsException<BookCouldNotAccessSomeoneElsesException>(() => this.service.CheckAccess(1, book));
+        }
+    }
+
     [TestClass]
     public class BookServiceEntityCheckingTests
     {
         private BookService service;
 
         [TestInitialize]
-        public void BeforeEach() {
+        public void BeforeEach()
+        {
             var bookStorage = new Mock<IBookStorage>();
             var userSession = new Mock<IUserSession>();
 
             this.service = new BookService(bookStorage.Object, userSession.Object);
         }
-        
+
 
         [TestMethod]
         public void ShouldPassWithStartDate()
@@ -101,7 +260,7 @@ namespace tests.Services
 
             this.service.CheckEntity(book);
         }
-        
+
 
         [TestMethod]
         public void ShouldSaveWithTotalUnits()
@@ -128,7 +287,7 @@ namespace tests.Services
 
             this.service.CheckEntity(book);
         }
-        
+
         [TestMethod]
         public void ShouldThrowUnitsException()
         {
@@ -142,7 +301,7 @@ namespace tests.Services
 
             Assert.ThrowsException<BookWrongUnitsException>(() => this.service.CheckEntity(book));
         }
-        
+
         [TestMethod]
         public void ShouldThrowDatesException()
         {
