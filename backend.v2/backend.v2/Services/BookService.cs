@@ -1,5 +1,5 @@
 ﻿using backend.Models;
-using backend.Storage;
+using backend.Storages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -128,11 +128,11 @@ namespace backend.Services
         }
 
         private async Task<Synched<Book>> GetDifferenceForSession() {
-            var tres = this.session.LastSyncTime;
+            var thres = this.session.LastSyncTime;
             var user = await this.session.User;
 
-            var updateAwait = this.storage.GetChangedAfter(user.Id, tres);
-            var deleteAwait = this.storage.GetDeletedAfter(user.Id, tres);
+            var updateAwait = this.storage.GetChangedAfter(user.Id, thres);
+            var deleteAwait = this.storage.GetDeletedAfter(user.Id, thres);
 
             var diff = await Task.WhenAll(updateAwait, deleteAwait);
 
@@ -149,7 +149,7 @@ namespace backend.Services
             return await this.storage.SaveMany(books);
         }
 
-        private async Task<Book[]> CheckForSave(Book[] books) {
+        public async Task<Book[]> CheckForSave(Book[] books) {
             var user = await this.session.User;
 
             foreach(var item in books) {
@@ -167,7 +167,7 @@ namespace backend.Services
             return await this.storage.UpdateMany(books);
         }
 
-        private async Task<Book[]> CheckForUpdate(Book[] books) {
+        public async Task<Book[]> CheckForUpdate(Book[] books) {
             var user = await this.session.User;
             var toUpdateAwait = this.storage.GetByGuids(books.Select(item => item.Guid.Value).ToArray());
 

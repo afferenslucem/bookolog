@@ -7,7 +7,7 @@ using backend.Models;
 using backend.Models.Authentication;
 using backend.Exceptions.AuthenticationExceptions;
 using backend.Services;
-using backend.Storage;
+using backend.Storages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using tests.Services;

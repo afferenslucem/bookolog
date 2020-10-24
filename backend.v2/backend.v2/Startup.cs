@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using backend.Storage;
+using backend.Storages;
 using backend.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -99,6 +99,8 @@ namespace backend
             services.AddDbContext<BookologContext>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFileSystemService, FileSystemService>();
+            services.AddScoped<IConfigService, ConfigService>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IUserSession, UserSession>();
             services.AddScoped<IMailService, MailService>();

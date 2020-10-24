@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using backend.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using backend.Services;
-using backend.Storage;
+using backend.Storages;
 using backend.Utils;
 
 namespace tests.Storage

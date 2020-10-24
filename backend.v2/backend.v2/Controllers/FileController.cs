@@ -37,7 +37,7 @@ namespace backend.Controllers
         {
             try
             {
-                var file = this.fileService.LoadFSFile(filename);
+                var file = this.fileService.ReadFile(filename);
 
                 var ext = this.fileService.GetExtentionFromFilename(filename);
 

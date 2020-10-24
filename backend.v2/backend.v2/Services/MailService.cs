@@ -2,7 +2,7 @@
 using backend.Exceptions.AuthenticationExceptions;
 using backend.Exceptions.StorageExceptions;
 using backend.Models;
-using backend.Storage;
+using backend.Storages;
 using backend.Utils;
 using System;
 using System.Collections.Generic;

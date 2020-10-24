@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace backend.Storage
+namespace backend.Storages
 {
     public class BookologContext : DbContext
     {
