@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Extensions.Logging;
@@ -144,6 +145,101 @@ namespace tests.Services
 
             userSession.Verify(item => item.User, Times.Once());
             bookStorage.Verify(item => item.DeleteMany(books), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task ShouldDeleteManyByGuids()
+        {
+            var books = new Book[] {
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name",
+                    UserId = 1,
+                },
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name2",
+                    UserId = 1,
+                }
+            };
+
+            var bookStorage = new Mock<IBookStorage>();
+            var userSession = new Mock<IUserSession>();
+
+            bookStorage.Setup(item => item.DeleteMany(It.IsAny<Book[]>())).ReturnsAsync(books);
+            bookStorage.Setup(item => item.GetByGuids(It.IsAny<Guid[]>())).ReturnsAsync(books);
+            userSession.Setup(item => item.User).ReturnsAsync(new User { Id = 1 });
+
+            var bookService = new BookService(bookStorage.Object, userSession.Object);
+
+            await bookService.DeleteMany(books.Select(item => item.Guid.Value).ToArray());
+
+            userSession.Verify(item => item.User, Times.Once());
+            bookStorage.Verify(item => item.DeleteMany(books), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task ShouldUpdateManyBooks()
+        {
+            var books = new Book[] {
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name",
+                    UserId = 1,
+                },
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name2",
+                    UserId = 1,
+                }
+            };
+
+            var bookStorage = new Mock<IBookStorage>();
+            var userSession = new Mock<IUserSession>();
+
+            bookStorage.Setup(item => item.UpdateMany(It.IsAny<Book[]>())).ReturnsAsync(books);
+            userSession.Setup(item => item.User).ReturnsAsync(new User { Id = 1 });
+
+            var bookService = new BookService(bookStorage.Object, userSession.Object);
+
+            await bookService.UpdateMany(books);
+
+            userSession.Verify(item => item.User, Times.Once());
+            bookStorage.Verify(item => item.UpdateMany(books), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task ShouldSaveManyBooks()
+        {
+            var books = new Book[] {
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name",
+                },
+                new Book
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Name2",
+                }
+            };
+
+            var bookStorage = new Mock<IBookStorage>();
+            var userSession = new Mock<IUserSession>();
+
+            bookStorage.Setup(item => item.SaveMany(It.IsAny<Book[]>())).ReturnsAsync(books);
+            userSession.Setup(item => item.User).ReturnsAsync(new User { Id = 1 });
+
+            var bookService = new BookService(bookStorage.Object, userSession.Object);
+
+            await bookService.SaveMany(books);
+
+            userSession.Verify(item => item.User, Times.Once());
+            bookStorage.Verify(item => item.SaveMany(books), Times.Once());
         }
     }
 
