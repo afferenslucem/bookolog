@@ -25,9 +25,11 @@ namespace backend.Services
         private readonly IFileSystemService fileSystem;
         private readonly IConfigService configService;
 
-        public FileService()
+        public FileService(IFileSystemService fileSystem, IConfigService configService)
         {
             this.storage = new FileStorage();
+            this.configService = configService;
+            this.fileSystem = fileSystem;
         }
         public FileService(IFileStorage storage, IFileSystemService fileSystem, IConfigService configService)
         {
