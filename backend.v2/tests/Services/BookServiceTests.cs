@@ -7,7 +7,7 @@ using backend.Controllers;
 using backend.Exceptions.BookExceptions;
 using backend.Models;
 using backend.Services;
-using backend.Storage;
+using backend.Storages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using tests.Services;
@@ -19,21 +19,6 @@ namespace tests.Services
     [TestClass]
     public class BookServicesTests
     {
-        IBookStorage bookStorage;
-        private IBookService service;
-
-        private IUserSession userSession;
-
-        [TestInitialize]
-        public void BeforeEach()
-        {
-            this.bookStorage = new BookStorageMock();
-
-            this.userSession = new UserSessionMock();
-
-            service = new BookService(this.bookStorage, this.userSession);
-        }
-
         [TestMethod]
         public async Task ShouldSave()
         {

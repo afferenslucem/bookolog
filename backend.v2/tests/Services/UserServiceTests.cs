@@ -8,7 +8,7 @@ using backend.Exceptions.AuthenticationExceptions;
 using backend.Models;
 using backend.Services;
 using backend.Models.Authentication;
-using backend.Storage;
+using backend.Storages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using tests.Services;
