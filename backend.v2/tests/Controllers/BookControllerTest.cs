@@ -179,38 +179,6 @@ namespace tests.Controllers
         }
 
         [TestMethod]
-        public async Task ShouldSaveWithTotalUnits()
-        {
-            var book = new Book
-            {
-                Guid = Guid.NewGuid(),
-                Name = "Name",
-                TotalUnits = 100
-            };
-
-            var saved = await this.controller.Create(book) as OkObjectResult;
-
-            Assert.IsNotNull(saved);
-            Assert.AreEqual(200, saved.StatusCode);
-        }
-
-        [TestMethod]
-        public async Task ShouldSaveWithDoneUnits()
-        {
-            var book = new Book
-            {
-                Guid = Guid.NewGuid(),
-                Name = "Name",
-                DoneUnits = 100
-            };
-
-            var saved = await this.controller.Create(book) as OkObjectResult;
-
-            Assert.IsNotNull(saved);
-            Assert.AreEqual(200, saved.StatusCode);
-        }
-
-        [TestMethod]
         public async Task ShouldThrowUnitsException()
         {
             var logger = new Mock<ILogger<BookController>>();

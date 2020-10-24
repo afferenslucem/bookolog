@@ -41,15 +41,39 @@ namespace tests.Services
                 Name = "Name"
             };
 
-            var result = await this.service.Save(book);
-            var saved = await this.bookStorage.GetByGuid(result.Guid.Value);
+            var bookStorage = new Mock<IBookStorage>();
+            var userSession = new Mock<IUserSession>();
+
+            bookStorage.Setup(item => item.Save(It.IsAny<Book>())).ReturnsAsync(book);
+            userSession.Setup(item => item.User).ReturnsAsync(new User { Id = 1 });
+
+            var bookService = new BookService(bookStorage.Object, userSession.Object);
+
+            var result = await bookService.Save(book);
             
-            Assert.AreEqual(result.Guid, saved.Guid);
-            Assert.AreEqual(result.UserId, 1);
+            Assert.AreEqual(result.Guid, book.Guid);
+            
+            userSession.Verify(item => item.User, Times.Once());
+            bookStorage.Verify(item => item.Save(book), Times.Once());
         }
+    }
+    
+    [TestClass]
+    public class BookServiceEntityCheckingTests
+    {
+        private BookService service;
+
+        [TestInitialize]
+        public void BeforeEach() {
+            var bookStorage = new Mock<IBookStorage>();
+            var userSession = new Mock<IUserSession>();
+
+            this.service = new BookService(bookStorage.Object, userSession.Object);
+        }
+        
 
         [TestMethod]
-        public async Task ShouldSaveWithStartDate()
+        public void ShouldPassWithStartDate()
         {
             var book = new Book
             {
@@ -60,11 +84,11 @@ namespace tests.Services
                 StartDateDay = 12,
             };
 
-            var result = await this.service.Save(book);
+            this.service.CheckEntity(book);
         }
 
         [TestMethod]
-        public async Task ShouldSaveWithEndDate()
+        public void ShouldPassWithEndDate()
         {
             var book = new Book
             {
@@ -75,11 +99,12 @@ namespace tests.Services
                 EndDateDay = 12,
             };
 
-            var result = await this.service.Save(book);
+            this.service.CheckEntity(book);
         }
+        
 
         [TestMethod]
-        public async Task ShouldSaveWithTotalUnits()
+        public void ShouldSaveWithTotalUnits()
         {
             var book = new Book
             {
@@ -88,11 +113,11 @@ namespace tests.Services
                 TotalUnits = 100
             };
 
-            var result = await this.service.Save(book);
+            this.service.CheckEntity(book);
         }
 
         [TestMethod]
-        public async Task ShouldSaveWithDoneUnits()
+        public void ShouldSaveWithDoneUnits()
         {
             var book = new Book
             {
@@ -101,11 +126,11 @@ namespace tests.Services
                 DoneUnits = 100
             };
 
-            var result = await this.service.Save(book);
+            this.service.CheckEntity(book);
         }
         
         [TestMethod]
-        public async Task ShouldThrowUnitsException()
+        public void ShouldThrowUnitsException()
         {
             var book = new Book
             {
@@ -115,11 +140,11 @@ namespace tests.Services
                 DoneUnits = 20
             };
 
-            await Assert.ThrowsExceptionAsync<BookWrongUnitsException>(() => this.service.Save(book));
+            Assert.ThrowsException<BookWrongUnitsException>(() => this.service.CheckEntity(book));
         }
         
         [TestMethod]
-        public async Task ShouldThrowDatesException()
+        public void ShouldThrowDatesException()
         {
             var book = new Book
             {
@@ -133,7 +158,7 @@ namespace tests.Services
                 EndDateDay = 12,
             };
 
-            await Assert.ThrowsExceptionAsync<BookWrongDatesException>(() => this.service.Save(book));
+            Assert.ThrowsException<BookWrongDatesException>(() => this.service.CheckEntity(book));
         }
     }
 }

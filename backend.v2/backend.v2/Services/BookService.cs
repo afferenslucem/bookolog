@@ -96,7 +96,7 @@ namespace backend.Services
             }
         }
 
-        private void CheckEntity(Book book)
+        public void CheckEntity(Book book)
         {
             if (book.DoneUnits != null && book.TotalUnits != null && book.DoneUnits > book.TotalUnits)
             {
