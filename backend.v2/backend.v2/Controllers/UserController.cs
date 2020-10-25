@@ -23,7 +23,14 @@ namespace backend.Controllers
         private readonly ILogger<AuthController> logger;
         private readonly IUserSession userSession;
 
-        public UserController(IUserService userService, IUserSession userSession, IBookService bookService, IFileService fileService, ILogger<AuthController> logger)
+        public UserController
+        (
+            IUserService userService,
+            IUserSession userSession,
+            IBookService bookService,
+            IFileService fileService,
+            ILogger<AuthController> logger
+        )
         {
             this.userService = userService;
             this.bookService = bookService;
@@ -98,7 +105,7 @@ namespace backend.Controllers
             {
                 this.logger.LogError(500, ex.Message, ex);
                 return BadRequest();
-            } 
+            }
             catch (Exception ex)
             {
                 this.logger.LogError(500, ex.Message, ex);
