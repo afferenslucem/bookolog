@@ -1,3 +1,4 @@
+using backend.Exceptions.FileExceptions;
 using backend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace backend.Services {
+namespace backend.Services
+{
     public interface IFileSystemService
     {
         Task WrileFile(IFormFile file, string path);
@@ -25,7 +27,18 @@ namespace backend.Services {
 
         public FileStream GetFileStream(string path)
         {
-            return System.IO.File.OpenRead(path);
+            try
+            {
+                return System.IO.File.OpenRead(path);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                throw new FileReadException(ex);
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new FileReadException(ex);
+            }
         }
 
         public async Task WrileFile(IFormFile file, string path)
@@ -35,7 +48,8 @@ namespace backend.Services {
             await file.CopyToAsync(stream);
         }
 
-        public string GetRandomFileName() {
+        public string GetRandomFileName()
+        {
             return Path.GetRandomFileName();
         }
     }

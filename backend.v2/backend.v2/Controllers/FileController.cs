@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using backend.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using backend.Exceptions.FileExceptions;
 
 namespace backend.Controllers
 {
@@ -23,9 +24,9 @@ namespace backend.Controllers
             {".svg", "image/svg+xml"},
         };
         private readonly IFileService fileService;
-        private readonly ILogger<AuthController> logger;
+        private readonly ILogger<FileController> logger;
 
-        public FileController(IFileService fileService, ILogger<AuthController> logger)
+        public FileController(IFileService fileService, ILogger<FileController> logger)
         {
             this.fileService = fileService;
             this.logger = logger;
@@ -38,18 +39,24 @@ namespace backend.Controllers
             try
             {
                 var file = this.fileService.ReadFile(filename);
-
+                
                 var ext = this.fileService.GetExtentionFromFilename(filename);
 
                 var mediaType = this.contentMap[ext];
 
                 return File(file, mediaType);
             }
+            catch (FileReadException ex)
+            {
+                this.logger.LogError(404, ex, ex.Message, filename);
+
+                return StatusCode(404, "Can't get file");
+            }
             catch (Exception ex)
             {
                 this.logger.LogError(500, ex, ex.Message, filename);
 
-                return StatusCode(500, "Can't get file");
+                return StatusCode(500, "Something went wrong");
             }
         }
     }
