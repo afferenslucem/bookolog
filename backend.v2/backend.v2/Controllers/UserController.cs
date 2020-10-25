@@ -20,7 +20,7 @@ namespace backend.Controllers
         private readonly IUserService userService;
         private readonly IBookService bookService;
         private readonly IFileService fileService;
-        private readonly ILogger<AuthController> logger;
+        private readonly ILogger<UserController> logger;
         private readonly IUserSession userSession;
 
         public UserController
@@ -29,7 +29,7 @@ namespace backend.Controllers
             IUserSession userSession,
             IBookService bookService,
             IFileService fileService,
-            ILogger<AuthController> logger
+            ILogger<UserController> logger
         )
         {
             this.userService = userService;
