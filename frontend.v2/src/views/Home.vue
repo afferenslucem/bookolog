@@ -1,170 +1,172 @@
 <template>
-  <div class="window">
-    <side-menu :class="{ opened: shouldShowLeftMenu, left: true }">
-      <book-menu @itemClick="closeAllMenus()"></book-menu>
-      <statistic-menu @itemClick="closeAllMenus()"></statistic-menu>
-    </side-menu>
-    <div
-      class="overlay"
-      :class="{ active: showOverlay }"
-      @click="closeAllMenus()"
-    ></div>
-    <div class="main">
-      <Header
-        class="top"
-        @avatarClick="openRightMenu()"
-        @menuClick="openLeftMenu()"
-      ></Header>
-      <div class="content container pt-1">
-        <router-view />
-      </div>
+    <div class="window">
+        <side-menu :class="{ opened: shouldShowLeftMenu, left: true }">
+            <book-menu @itemClick="closeAllMenus()"></book-menu>
+            <statistic-menu @itemClick="closeAllMenus()"></statistic-menu>
+        </side-menu>
+        <div
+                class="overlay"
+                :class="{ active: showOverlay }"
+                @click="closeAllMenus()"
+        ></div>
+        <div class="main">
+            <Header
+                    class="top"
+                    @avatarClick="openRightMenu()"
+                    @menuClick="openLeftMenu()"
+            ></Header>
+            <div class="content container pt-1">
+                <router-view/>
+            </div>
+        </div>
+        <side-menu :class="{ opened: shouldShowRightMenu, right: true }">
+            <user-menu @itemClick="closeAllMenus()"></user-menu>
+            <bottom-menu class="bottom-menu" @itemClick="closeAllMenus()"></bottom-menu>
+        </side-menu>
     </div>
-    <side-menu :class="{ opened: shouldShowRightMenu, right: true }">
-      <user-menu @itemClick="closeAllMenus()"></user-menu>
-      <bottom-menu class="bottom-menu" @itemClick="closeAllMenus()"></bottom-menu>
-    </side-menu>
-  </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import Header from "@/components/navigation/Header";
-import SideMenu from "@/components/navigation/SideMenu";
-import BookMenu from "@/components/navigation/BookMenu";
-import StatisticMenu from "@/components/navigation/StatisticMenu";
-import UserMenu from "@/components/navigation/UserMenu";
-import BottomMenu from "@/components/navigation/BottomMenu";
-import { getLogger } from "@/logger";
+    // @ is an alias to /src
+    import Header from "@/components/navigation/Header";
+    import SideMenu from "@/components/navigation/SideMenu";
+    import BookMenu from "@/components/navigation/BookMenu";
+    import StatisticMenu from "@/components/navigation/StatisticMenu";
+    import UserMenu from "@/components/navigation/UserMenu";
+    import BottomMenu from "@/components/navigation/BottomMenu";
+    import {getLogger} from "@/logger";
 
-const logger = getLogger("HomePage");
+    const logger = getLogger("HomePage");
 
-export default {
-  name: "Home",
-  components: {
-    Header,
-    SideMenu,
-    BookMenu,
-    UserMenu,
-    StatisticMenu,
-    BottomMenu,
-  },
-  data() {
-    return {
-      shouldShowLeftMenu: false,
-      shouldShowRightMenu: false,
+    export default {
+        name: "Home",
+        components: {
+            Header,
+            SideMenu,
+            BookMenu,
+            UserMenu,
+            StatisticMenu,
+            BottomMenu,
+        },
+        data() {
+            return {
+                shouldShowLeftMenu: false,
+                shouldShowRightMenu: false,
+            };
+        },
+        methods: {
+            openLeftMenu() {
+                this.shouldShowLeftMenu = true;
+                logger.debug("Opened left menu");
+            },
+            openRightMenu() {
+                this.shouldShowRightMenu = true;
+                logger.debug("Opened right menu");
+            },
+            closeAllMenus() {
+                this.shouldShowLeftMenu = false;
+                this.shouldShowRightMenu = false;
+                logger.debug("Closed all menus");
+            },
+        },
+        computed: {
+            showOverlay() {
+                return this.shouldShowLeftMenu || this.shouldShowRightMenu;
+            },
+        },
     };
-  },
-  methods: {
-    openLeftMenu() {
-      this.shouldShowLeftMenu = true;
-      logger.debug("Opened left menu");
-    },
-    openRightMenu() {
-      this.shouldShowRightMenu = true;
-      logger.debug("Opened right menu");
-    },
-    closeAllMenus() {
-      this.shouldShowLeftMenu = false;
-      this.shouldShowRightMenu = false;
-      logger.debug("Closed all menus");
-    },
-  },
-  computed: {
-    showOverlay() {
-      return this.shouldShowLeftMenu || this.shouldShowRightMenu;
-    },
-  },
-};
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/variables";
-.window {
-  height: 100vh;
-  width: 100%;
+    @import "@/styles/variables";
 
-  position: relative;
-}
+    .window {
+        height: 100vh;
+        width: 100%;
 
-.main {
-  height: 100vh;
-  width: 100%;
-
-  .content {
-    height: calc(100vh - #{$header-height});
-    width: 100%;
-
-    overflow: auto;
-    position: absolute;
-    top: $header-height;
-    left: 0;
-
-    .container {
-      height: 100%;
-      overflow: auto;
+        position: relative;
     }
-  }
-}
 
-.overlay {
-  height: 100%;
-  width: 100%;
+    .main {
+        height: 100vh;
+        width: 100%;
 
-  visibility: hidden;
+        .content {
+            height: calc(100vh - #{$header-height});
+            width: 100%;
 
-  opacity: 0;
+            overflow: auto;
+            position: absolute;
+            top: $header-height;
+            left: 0;
 
-  transition: opacity 0.5s ease-in-out;
-
-  position: fixed;
-
-  z-index: 500;
-
-  background-color: $overlay-color;
-
-  &.active {
-    visibility: visible;
-    opacity: 1;
-  }
-}
-
-.side-menu {
-  width: 75%;
-
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-
-  height: 100vh;
-
-  background-color: $bg-color;
-
-  $menu-open-time: 0.5s;
-  $menu-open-animation: ease-in-out;
-
-  &.left {
-    left: -100%;
-
-    transition: left $menu-open-time $menu-open-animation;
-
-    &.opened {
-      left: 0;
+            .container {
+                height: 100%;
+                overflow: auto;
+            }
+        }
     }
-  }
-  &.right {
-    right: -100%;
 
-    transition: right $menu-open-time $menu-open-animation;
+    .overlay {
+        height: 100%;
+        width: 100%;
 
-    &.opened {
-      right: 0;
+        visibility: hidden;
+
+        opacity: 0;
+
+        transition: opacity 0.5s ease-in-out;
+
+        position: fixed;
+
+        z-index: 500;
+
+        background-color: $overlay-color;
+
+        &.active {
+            visibility: visible;
+            opacity: 1;
+        }
     }
-  }
-}
 
-.bottom-menu {
-  position: absolute;
+    .side-menu {
+        width: 75%;
 
-  bottom: 0;
-}
+        position: fixed;
+        top: 0;
+        z-index: 10000;
+
+        height: 100vh;
+
+        background-color: $bg-color;
+
+        $menu-open-time: 0.5s;
+        $menu-open-animation: ease-in-out;
+
+        &.left {
+            left: -100%;
+
+            transition: left $menu-open-time $menu-open-animation;
+
+            &.opened {
+                left: 0;
+            }
+        }
+
+        &.right {
+            right: -100%;
+
+            transition: right $menu-open-time $menu-open-animation;
+
+            &.opened {
+                right: 0;
+            }
+        }
+    }
+
+    .bottom-menu {
+        position: absolute;
+
+        bottom: 0;
+    }
 </style>
