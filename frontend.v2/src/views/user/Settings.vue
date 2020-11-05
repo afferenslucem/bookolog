@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import PasswordForm from '@/components/user-module/PasswordChangeForm.vue';
-import EmailForm from '@/components/user-module/EmailChangeForm.vue';
-import AvatarForm from '@/components/user-module/AvatarChangeForm.vue';
+import PasswordForm from '@/components/user/PasswordChangeForm.vue';
+import EmailForm from '@/components/user/EmailChangeForm.vue';
+import AvatarForm from '@/components/user/AvatarChangeForm.vue';
 export default {
   components: {
     PasswordForm,

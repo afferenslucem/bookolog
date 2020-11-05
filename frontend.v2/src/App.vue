@@ -18,8 +18,8 @@ import {
   USER_INIT_DATA_ACTION,
 } from "@/store/naming";
 import { HTTP_TRYOUTS_COUNT, HTTP_REQUEST_TIMEOUT_MS } from "./config";
-import AppLoader from "@/components/connection-module/Loader.vue";
-import NotificationMessage from "@/components/notification-module/Message.vue";
+import AppLoader from "@/components/connection/Loader.vue";
+import NotificationMessage from "@/components/notification/Message.vue";
 import { Client } from "@/http/client";
 import {
     getLogger

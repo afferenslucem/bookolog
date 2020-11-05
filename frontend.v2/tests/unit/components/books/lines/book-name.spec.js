@@ -2,8 +2,8 @@ import { expect } from 'chai'
 import books from '../../../data/books'
 import { shallowMount } from '@vue/test-utils'
 import Vue from 'vue'
-import BookHeader from '@/components/book-module/book/BookHeader.vue';
-import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
+import BookHeader from '@/components/book/book/BookHeader.vue';
+import ShouldSyncIcon from "@/components/icon/ShouldSyncIcon.vue";
 
 Vue.component('ShouldSyncIcon', ShouldSyncIcon);
 

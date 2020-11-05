@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
-import DateInput from '@/components/inputs/BookDateInput'//'@/components/inputs/BookDateInput.vue';
+import DateInput from '@/components/input/BookDateInput'//'@/components/input/BookDateInput.vue';
 
 describe('BookDataInput.vue', () => {
     it('Renders empty props for nulls', () => {

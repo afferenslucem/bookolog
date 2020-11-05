@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
-import NoWrapValues from '@/components/book-module/book/NoWrapValues.vue';
+import NoWrapValues from '@/components/book/book/NoWrapValues.vue';
 
 describe('BookHeader.vue', () => {
     it('Renders one value', () => {

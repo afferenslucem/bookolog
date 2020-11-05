@@ -11,7 +11,7 @@ import {
   NOTIFICATION_DANGER_ACTION,
   NOTIFICATION_WARNING_ACTION,
 } from "@/store/naming";
-import SyncIcon from "@/components/icons/SyncIcon.vue";
+import SyncIcon from "@/components/icon/SyncIcon.vue";
 import { NETWORK_ERROR } from "@/http/client";
 export default {
   components: {

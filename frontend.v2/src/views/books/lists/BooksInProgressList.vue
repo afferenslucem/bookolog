@@ -18,7 +18,7 @@
 <script>
 import { BOOKS_IN_PROGRESS_GETTER } from "@/store/naming";
 import bookList from "@/mixins/book-list-mixin.js";
-import ProgressingBook from "@/components/book-module/book/ProgressingBook";
+import ProgressingBook from "@/components/book/book/ProgressingBook";
 import u from "declarray";
 
 export default {

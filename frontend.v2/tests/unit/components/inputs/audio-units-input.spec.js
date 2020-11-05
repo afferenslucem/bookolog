@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
-import AudioBookUnitsInput from '@/components/inputs/AudioBookUnitsInput.vue';
+import AudioBookUnitsInput from '@/components/input/AudioBookUnitsInput.vue';
 
 describe('AudioBookUnitsInput.vue', () => {
     it('Renders empty props for nulls', () => {

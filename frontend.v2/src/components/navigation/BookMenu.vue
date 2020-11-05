@@ -27,7 +27,7 @@
 <script>
 import sideMenuMixin from "@/mixins/side-menu-mixin";
 import { TO_READ_STATUS, IN_PROGRESS_STATUS, DONE_STATUS } from "@/models/book";
-import PlusIcon from "@/components/icons/PlusIcon.vue";
+import PlusIcon from "@/components/icon/PlusIcon.vue";
 
 export default {
   mixins: [sideMenuMixin],

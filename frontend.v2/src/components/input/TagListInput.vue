@@ -31,7 +31,7 @@
 <script>
 import SelectableInput from "./AutoCompletableInput";
 import TagInputValue from "./TagInputValue";
-import PlusIcon from "@/components/icons/PlusIcon.vue";
+import PlusIcon from "@/components/icon/PlusIcon.vue";
 import {
     stringComparer
 } from '@/utils/string-comparing';

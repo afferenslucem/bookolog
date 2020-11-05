@@ -4,7 +4,7 @@ import { shallowMount } from '@vue/test-utils'
 import BooksToReadList from '@/views/books/lists/BooksToReadList.vue';
 import { BOOKS_TO_READ_GETTER } from "@/store/naming";
 import {TO_READ_STATUS} from '@/models/book';
-import ToReadBook from '@/components/book-module/book/ToReadBook.vue';
+import ToReadBook from '@/components/book/book/ToReadBook.vue';
 import _ from 'declarray';
 
 describe('BooksToReadList.vue', () => {

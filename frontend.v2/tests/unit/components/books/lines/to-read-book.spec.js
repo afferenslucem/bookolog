@@ -5,7 +5,7 @@ import books from '../../../data/books'
 import {
     shallowMount
 } from '@vue/test-utils'
-import ToReadBook from '@/components/book-module/book/ToReadBook.vue';
+import ToReadBook from '@/components/book/book/ToReadBook.vue';
 import Vue from 'vue';
 
 import join from '@/filters/join'

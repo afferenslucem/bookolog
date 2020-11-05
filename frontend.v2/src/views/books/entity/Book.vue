@@ -139,7 +139,7 @@ import {
 } from "@/models/book";
 import { NETWORK_ERROR } from "@/http/client";
 import bookEntityMixin from "@/mixins/book-entity-mixin";
-import BookHeader from "@/components/book-module/book/BookHeader.vue";
+import BookHeader from "@/components/book/book/BookHeader.vue";
 
 export default {
   components: {

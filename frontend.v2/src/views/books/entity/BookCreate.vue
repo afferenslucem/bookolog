@@ -1,55 +1,68 @@
 <template>
   <div class="create-form">
-    <small class="dark-text">* {{ $t("book.form.titles.required") }}</small>
     <form class="needs-validation" @submit="prefill($event)">
       <div class="form-group">
+        <label class="required" for="name">{{ $t('book.form.titles.name') }}</label>
         <input
           type="text"
           name="name"
           id="name"
           class="form-control"
-          :placeholder="`${$t('book.form.titles.name')}*`"
           :pattern="bookNamePattern"
           required
           v-model.trim="book.name"
           autocomplete="off"
+          placeholder="Война и Мир"
         />
       </div>
-      <tag-list-input
-        id="authors"
-        class="form-group"
-        :placeholder="$t('book.form.titles.authors')"
-        :datalist="existingAuthors"
-        :tags.sync="book.authors"
-        name="authors"
-      ></tag-list-input>
+
       <div class="form-group">
+        <label for="authors">{{ $t('book.form.titles.authors') }}</label>
+        <tag-list-input
+          id="authors"
+          :datalist="existingAuthors"
+          :tags.sync="book.authors"
+          name="authors"
+          placeholder="Лев Толстой"
+        ></tag-list-input>
+      </div>
+
+      <div class="form-group">
+        <label for="year">{{ $t('book.form.titles.year') }}</label>
         <input
           type="number"
           name="year"
           id="year"
           class="form-control"
           v-model.number="book.year"
-          :placeholder="$t('book.form.titles.year')"
+          placeholder="2020"
         />
       </div>
+
       <div class="form-group">
+        <label for="genre">{{ $t('book.form.titles.genre') }}</label>
         <completable-input
           id="genre"
           name="genre"
-          :placeholder="$t('book.form.titles.genre')"
           :value.sync="book.genre"
           :datalist="existingGenres"
+          placeholder="Эпопея"
         ></completable-input>
       </div>
-      <tag-list-input
-        id="tags"
-        class="form-group"
-        :placeholder="$t('book.form.titles.tags')"
-        :datalist="existingTags"
-        :tags.sync="book.tags"
-        name="tags"
-      ></tag-list-input>
+
+      <div class="form-group">
+        <label for="tags">
+          {{ $t('book.form.titles.tags') }}
+        </label>
+        <tag-list-input
+                id="tags"
+                :datalist="existingTags"
+                :tags.sync="book.tags"
+                name="tags"
+                placeholder="Война"
+        ></tag-list-input>
+      </div>
+
       <div class="form-group">
         <label for="status">{{ $t("book.form.titles.status") }}</label>
         <select
@@ -67,6 +80,7 @@
           </option>
         </select>
       </div>
+
       <div class="form-group">
         <label for="type">{{ $t("book.form.titles.type") }}</label>
         <select
@@ -85,7 +99,7 @@
         </select>
       </div>
       <div
-        class="row progress-row form-group"
+        class="progress-row form-group form-row"
         :class="{ 'is-invalid': !unitsValid }"
         v-show="showProgress"
       >
@@ -132,26 +146,26 @@
           {{ progressError }}
         </div>
       </div>
-      <div class="row form-group dates" :class="{ 'is-invalid': !datesValid }">
-        <div class="col-12 col-md-6" v-show="showStartDate">
-          <div class="start-date">
-            <label for="startDate">{{ $t("book.form.titles.started") }}</label>
-            <date-input
-              :year.sync="book.startDateYear"
-              :month.sync="book.startDateMonth"
-              :day.sync="book.startDateDay"
-            ></date-input>
-          </div>
+      <div class="form-row dates" :class="{ 'is-invalid': !datesValid }">
+        <div class="col-12 col-md-6 form-group" v-show="showStartDate">
+          <label for="startDate">{{ $t("book.form.titles.started") }}</label>
+          <date-input
+            id="startDate"
+            class="start-date"
+            :year.sync="book.startDateYear"
+            :month.sync="book.startDateMonth"
+            :day.sync="book.startDateDay"
+          />
         </div>
-        <div class="col-12 col-md-6" v-show="showEndDate">
-          <div class="end-date">
+        <div class="col-12 col-md-6 form-group" v-show="showEndDate">
             <label for="endDate">{{ $t("book.form.titles.finished") }}</label>
             <date-input
+              id="endDate"
+              class="end-date"
               :year.sync="book.endDateYear"
               :month.sync="book.endDateMonth"
               :day.sync="book.endDateDay"
-            ></date-input>
-          </div>
+            />
         </div>
         <div class="invalid-feedback">
           {{ $t("book.form.titles.dateInput.error") }}
@@ -192,10 +206,10 @@
 
 <script>
 import bookMixin from "@/mixins/book-form-mixin";
-import DateInput from "@/components/inputs/BookDateInput.vue";
-import AudioBookUnitsInput from "@/components/inputs/AudioBookUnitsInput.vue";
-import CompletableInput from "@/components/inputs/AutoCompletableInput.vue";
-import TagListInput from "@/components/inputs/TagListInput.vue";
+import DateInput from "@/components/input/BookDateInput.vue";
+import AudioBookUnitsInput from "@/components/input/AudioBookUnitsInput.vue";
+import CompletableInput from "@/components/input/AutoCompletableInput.vue";
+import TagListInput from "@/components/input/TagListInput.vue";
 import {
   BOOK_ADD_ACTION,
   NOTIFICATION_SUCCESS_ACTION,

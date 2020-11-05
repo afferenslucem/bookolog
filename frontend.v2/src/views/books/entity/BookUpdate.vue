@@ -184,10 +184,10 @@
 
 <script>
 import bookMixin from "@/mixins/book-form-mixin";
-import DateInput from "@/components/inputs/BookDateInput.vue";
-import AudioBookUnitsInput from "@/components/inputs/AudioBookUnitsInput.vue";
-import TagListInput from "@/components/inputs/TagListInput.vue";
-import CompletableInput from "@/components/inputs/AutoCompletableInput.vue";
+import DateInput from "@/components/input/BookDateInput.vue";
+import AudioBookUnitsInput from "@/components/input/AudioBookUnitsInput.vue";
+import TagListInput from "@/components/input/TagListInput.vue";
+import CompletableInput from "@/components/input/AutoCompletableInput.vue";
 import {
   BOOK_UPDATE_ACTION,
   BOOK_GET_FRESHEST_BOOK_BY_GUID_ACTION,

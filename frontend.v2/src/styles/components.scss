@@ -178,7 +178,6 @@
     }
 }
 
-
 img.avatar {
     display: inherit;
 
@@ -188,4 +187,47 @@ img.avatar {
 
     height: 100%;
     width: 100%;
+}
+
+// Form
+.form-group {
+    position: relative;
+    padding-top: 0.35rem;
+
+    label {
+        position: absolute;
+
+        width: auto;
+        height: 0.9rem;
+        line-height: 0.9rem;
+
+        margin: 0;
+
+        padding: 0 0.3rem;
+
+        font-size: 0.85rem;
+        top: -0.25em;
+        left: 0.5rem;
+
+        z-index: 1000;
+
+        background: $bg-color;
+    }
+}
+
+.form-group {
+    label {
+        color: $secondary-text-color;
+
+        &.required {
+            &::after {
+                content: "*";
+                color: $required-color;
+
+                position: relative;
+
+                left: 0.1rem;
+            }
+        }
+    }
 }

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import DoneBook from "@/components/book-module/book/DoneBook";
+import DoneBook from "@/components/book/book/DoneBook";
 import bookList from "@/mixins/book-list-mixin.js";
 import _ from "declarray";
 export default {

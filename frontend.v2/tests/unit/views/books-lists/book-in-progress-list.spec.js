@@ -5,12 +5,12 @@ import BooksInProgressList from '@/views/books/lists/BooksInProgressList.vue';
 import { BOOKS_IN_PROGRESS_GETTER } from "@/store/naming";
 import {IN_PROGRESS_STATUS} from '@/models/book';
 import _ from 'declarray';
-import ProgressingBook from '@/components/book-module/book/ProgressingBook.vue';
-import ProgressBar from '@/components/book-module/book/ProgressBar.vue'; 
-import BookInlineHeader from "@/components/book-module/book/BookInlineHeader.vue";
-import NoWrapValues from "@/components/book-module/book/NoWrapValues.vue";
-import EditIcon from "@/components/icons/EditIcon.vue";
-import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
+import ProgressingBook from '@/components/book/book/ProgressingBook.vue';
+import ProgressBar from '@/components/book/book/ProgressBar.vue';
+import BookInlineHeader from "@/components/book/book/BookInlineHeader.vue";
+import NoWrapValues from "@/components/book/book/NoWrapValues.vue";
+import EditIcon from "@/components/icon/EditIcon.vue";
+import ShouldSyncIcon from "@/components/icon/ShouldSyncIcon.vue";
 import Vue from 'vue';
 
 Vue.component('ProgressBar', ProgressBar);

@@ -9,18 +9,18 @@ import dateFormat from '@/filters/format-date'
 import capitalFirst from '@/filters/capital-first'
 import i18n from './i18n'
 import moment from 'moment';
-import CloseListIcon from "@/components/icons/CloseListIcon.vue";
-import OpenListIcon from "@/components/icons/OpenListIcon.vue";
-import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
-import CrossIcon from "@/components/icons/CrossIcon.vue";
-import PersonIcon from "@/components/icons/PersonIcon.vue";
-import ConnectionMarker from "@/components/connection-module/ConnectionMarker.vue";
-import TotalReadCount from "@/components/statistic-module/TotalReadBooksCount.vue";
-import BookInlineHeader from "@/components/book-module/book/BookInlineHeader.vue";
-import NoWrapValues from "@/components/book-module/book/NoWrapValues.vue";
-import EditIcon from "@/components/icons/EditIcon.vue";
-import ProgressBar from '@/components/book-module/book/ProgressBar.vue'; 
-import ProfilePic from '@/components/user/ProfilePic.vue'; 
+import CloseListIcon from "@/components/icon/CloseListIcon.vue";
+import OpenListIcon from "@/components/icon/OpenListIcon.vue";
+import ShouldSyncIcon from "@/components/icon/ShouldSyncIcon.vue";
+import CrossIcon from "@/components/icon/CrossIcon.vue";
+import PersonIcon from "@/components/icon/PersonIcon.vue";
+import ConnectionMarker from "@/components/connection/ConnectionMarker.vue";
+import TotalReadCount from "@/components/statistic/TotalReadBooksCount.vue";
+import BookInlineHeader from "@/components/book/book/BookInlineHeader.vue";
+import NoWrapValues from "@/components/book/book/NoWrapValues.vue";
+import EditIcon from "@/components/icon/EditIcon.vue";
+import ProgressBar from '@/components/book/book/ProgressBar.vue';
+import ProfilePic from '@/components/user/ProfilePic.vue';
 
 moment.locale('ru');
 Vue.filter('join', join);

@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
-import SelectableInput from '@/components/inputs/AutoCompletableInput.vue'
+import SelectableInput from '@/components/input/AutoCompletableInput.vue'
 
 describe('SelectableInput.vue', () => {
     it('Should emit by input', async () => {

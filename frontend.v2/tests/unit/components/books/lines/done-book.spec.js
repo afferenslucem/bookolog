@@ -5,13 +5,13 @@ import books from '../../../data/books'
 import {
     shallowMount
 } from '@vue/test-utils'
-import DoneBook from '@/components/book-module/book/DoneBook.vue';
+import DoneBook from '@/components/book/book/DoneBook.vue';
 import moment from 'moment';
 import Vue from 'vue';
-import BookInlineHeader from "@/components/book-module/book/BookInlineHeader.vue";
-import NoWrapValues from "@/components/book-module/book/NoWrapValues.vue";
-import EditIcon from "@/components/icons/EditIcon.vue";
-import ShouldSyncIcon from "@/components/icons/ShouldSyncIcon.vue";
+import BookInlineHeader from "@/components/book/book/BookInlineHeader.vue";
+import NoWrapValues from "@/components/book/book/NoWrapValues.vue";
+import EditIcon from "@/components/icon/EditIcon.vue";
+import ShouldSyncIcon from "@/components/icon/ShouldSyncIcon.vue";
 import dateFormat from '@/filters/format-date'
 
 Vue.filter('dateFormat', dateFormat);

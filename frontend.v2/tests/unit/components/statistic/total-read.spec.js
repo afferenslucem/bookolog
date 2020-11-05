@@ -4,7 +4,7 @@ import {
 import {
     shallowMount
 } from '@vue/test-utils'
-import TotalReadBooks from '@/components/statistic-module/TotalReadBooksCount.vue';
+import TotalReadBooks from '@/components/statistic/TotalReadBooksCount.vue';
 import _ from 'declarray';
 import books from '../../data/books';
 import {

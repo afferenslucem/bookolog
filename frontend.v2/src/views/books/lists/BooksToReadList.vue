@@ -18,7 +18,7 @@
 <script>
 import { BOOKS_TO_READ_GETTER } from "@/store/naming";
 import bookList from "@/mixins/book-list-mixin.js";
-import ToReadBook from "@/components/book-module/book/ToReadBook";
+import ToReadBook from "@/components/book/book/ToReadBook";
 import _ from "declarray";
 
 export default {

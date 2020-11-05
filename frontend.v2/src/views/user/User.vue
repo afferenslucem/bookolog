@@ -23,7 +23,7 @@
 import userMixin from "@/mixins/user-mixin";
 import { NOTIFICATION_DANGER_ACTION } from "@/store/naming";
 import { UserClient } from "@/http/user-client";
-import BooksByYearsList from "@/components/book-module/books-lists/BooksByYearsList";
+import BooksByYearsList from "@/components/book/books-lists/BooksByYearsList";
 import store from "@/store";
 import i18n from "@/i18n";
 export default {

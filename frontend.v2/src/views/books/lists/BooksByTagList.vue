@@ -13,7 +13,7 @@
 
 <script>
 import { BOOKS_DONE_GETTER, TAG_RENAME_ACTION } from "@/store/naming";
-import BooksByYearsList from "@/components/book-module/books-lists/BooksByYearsList";
+import BooksByYearsList from "@/components/book/books-lists/BooksByYearsList";
 import _ from "declarray";
 import {
   NOTIFICATION_SUCCESS_ACTION,
