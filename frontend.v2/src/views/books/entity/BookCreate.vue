@@ -12,7 +12,7 @@
                         required
                         v-model.trim="book.name"
                         autocomplete="off"
-                        placeholder="Война и Мир"
+                        placeholder="Война и мир"
                 />
             </div>
 
@@ -35,7 +35,7 @@
                         id="year"
                         class="form-control"
                         v-model.number="book.year"
-                        placeholder="2020"
+                        placeholder="1965"
                 />
             </div>
 
@@ -59,7 +59,7 @@
                         :datalist="existingTags"
                         :tags.sync="book.tags"
                         name="tags"
-                        placeholder="Война"
+                        placeholder="Классика"
                 ></tag-list-input>
             </div>
 
@@ -165,6 +165,7 @@
                     {{ $t("book.form.titles.dateInput.error") }}
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="note">{{ $t("book.form.titles.notes") }}</label>
                 <textarea
@@ -176,6 +177,7 @@
                         v-model.trim="book.note"
                 ></textarea>
             </div>
+
             <div class="form-group">
                 <button
                         class="btn btn-primary w-100 submit"
@@ -303,6 +305,7 @@
         justify-content: space-between;
 
         .from {
+            align-self: center;
             text-align: center;
         }
     }
