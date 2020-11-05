@@ -38,10 +38,6 @@ describe('BooksByYearsList.vue', () => {
     //     expect(items.length).to.equal(3)
     // })
 
-    it('Render name', () => {
-        expect(wrapper.text()).to.include('ListName')
-    })
-
     // it('Compare books', () => {
     //     const items = wrapper.findAllComponents(DoneBook);
 

@@ -1,36 +1,35 @@
 <template>
   <form @submit="submit($event)" name="registration">
-    <h4>{{ $t('auth.registrationForm.title') }}</h4>
     <div class="form-group">
+      <label for="login-registration">{{ $t('auth.registrationForm.username') }}</label>
       <input
         class="form-control"
-        :placeholder="$t('auth.registrationForm.username')"
         id="login-registration"
         v-model="user.username"
       />
     </div>
     <div class="form-group">
+      <label for="login-registration">{{ $t('auth.registrationForm.email') }}</label>
       <input
         class="form-control"
-        :placeholder="$t('auth.registrationForm.email')"
         id="email-registration"
         v-model="user.email"
         type="email"
       />
     </div>
     <div class="form-group">
+      <label for="login-registration">{{ $t('auth.registrationForm.password') }}</label>
       <input
         type="password"
-        :placeholder="$t('auth.registrationForm.password')"
         class="form-control"
         id="password-registration"
         v-model="user.password"
       />
     </div>
     <div class="form-group">
+      <label for="login-registration">{{ $t('auth.registrationForm.confirmPassword') }}</label>
       <input
         type="password"
-        :placeholder="$t('auth.registrationForm.confirmPassword')"
         class="form-control"
         id="confirmation-registration"
         v-model="user.confirmation"

@@ -1,7 +1,5 @@
 <template>
   <div class="genres-list">
-    <h4 class="mt-1 header">{{ $t('book.lists.statistic.genres') }}</h4>
-
     <ul v-if="shouldShowList">
       <li
         v-for="genre of genres"

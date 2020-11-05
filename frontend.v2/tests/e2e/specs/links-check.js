@@ -7,8 +7,7 @@ describe('Links Check', () => {
 
     describe('Auth', () => {
         beforeEach(() => {
-            cy.visit('/login');
-            cy.get('.logo').click();
+            cy.visit('/');
         });
 
         it('Login Page', () => {

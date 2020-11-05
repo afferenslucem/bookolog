@@ -1,16 +1,15 @@
 <template>
   <form @submit="submit($event)" name="registration">
-    <h4>{{ $t('auth.recaveryPasswordForm.title') }}</h4>
     <div class="form-group">
+      <label for="email-recover">{{ $t('auth.recoveryPasswordForm.email') }}</label>
       <input
         class="form-control"
-        :placeholder="$t('auth.recaveryPasswordForm.email')"
         id="email-recover"
         v-model.trim="email"
         type="email"
       />
     </div>
-    <button class="btn btn-primary w-100" type="submit" :disabled="email === ''" >{{ $t('auth.recaveryPasswordForm.submit') }}</button>
+    <button class="btn btn-primary w-100" type="submit" :disabled="email === ''" >{{ $t('auth.recoveryPasswordForm.submit') }}</button>
   </form>
 </template>
 
@@ -28,7 +27,7 @@ export default {
         this.$router.push({ name: "Login" });
         this.$store.dispatch(
           NOTIFICATION_INFO_ACTION,
-          this.$t("auth.recaveryPasswordForm.success")
+          this.$t("auth.recoveryPasswordForm.success")
         ); 
       });
 
@@ -41,7 +40,7 @@ export default {
       } catch (e) {
           this.$store.dispatch(
             NOTIFICATION_DANGER_ACTION,
-            this.$t("auth.recaveryPasswordForm.errors.error")
+            this.$t("auth.recoveryPasswordForm.errors.error")
           );   
           throw e;       
         }

@@ -6,6 +6,7 @@
     },
     "book": {
         "entity": {
+            "header": "О книге",
             "status": {
                 "done": "Прочитана",
                 "inProgress": "Читаю",
@@ -27,6 +28,10 @@
             "notes": "Заметки"
         },
         "form": {
+            "headers": {
+                "create": "Создать книгу",
+                "update": "Редактировать книгу"
+            },
             "titles": {
                 "progress": {
                     "read": {
@@ -186,7 +191,7 @@
                 "passwordMatching": "Пароли не совпадают."
             }
         },
-        "recaveryPasswordForm": {
+        "recoveryPasswordForm": {
             "title": "Восстановление пароля",
             "email": "Почта",
             "submit": "Отправить письмо",

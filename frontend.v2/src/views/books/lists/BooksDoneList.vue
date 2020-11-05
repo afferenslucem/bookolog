@@ -1,7 +1,6 @@
 <template>
   <books-by-years-list
     :books="books"
-    :listname="$t('book.lists.byStatus.done')"
   >
   </books-by-years-list>
 </template>
@@ -25,5 +24,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+

@@ -81,11 +81,9 @@
         margin-bottom: 0;
     }
 
-
-
     >ul {
         overflow-y: auto;
-        height: calc(100% - #{$list-header-height});
+        height: 100%;
 
         >li {
             margin-top: 0.2rem;
@@ -125,6 +123,8 @@
 
 .statistic-list {
     ul {
+        height: 100%;
+
         li {
             display: flex;
             justify-content: space-between;

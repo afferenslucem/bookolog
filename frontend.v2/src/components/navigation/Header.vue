@@ -9,9 +9,9 @@
       >
         <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
-      <div @click="headerClick()" class="logo ml-1">
-        <span>BKLG</span>
-      </div>
+    </div>
+    <div class="title pl-2">
+      {{title | capital}}
     </div>
     <div>
       <div class="actions" v-if="isLoggedIn">
@@ -30,6 +30,12 @@ import Profile from "@/components/navigation/Profile.vue";
 
 export default {
   mixins: [userMixin],
+  props: {
+    title: {
+      type: String,
+      default: '',
+    },
+  },
   methods: {
     emitAvatarClick(event) {
       event.stopPropagation();
@@ -38,14 +44,7 @@ export default {
     emitMenuClick(event) {
       event.stopPropagation();
       this.$emit("menuClick");
-    },
-    headerClick() {
-      if (this.isLoggedIn) {
-        this.$router.push({ name: "InProgress" });
-      } else {
-        this.$router.push({ name: "Main" });
-      }
-    },
+    }
   },
   computed: {
     avatarLink() {
@@ -57,7 +56,7 @@ export default {
   components: {
     SyncButton,
     Profile,
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -102,6 +101,12 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.header .title {
+  flex: 1 0 auto;
+  font-size: $big-font-size;
+  font-weight: $fat-font-weight;
 }
 
 .actions {

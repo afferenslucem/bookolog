@@ -2,17 +2,21 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 
-import booksRoutes from './groups/book';
-import statisticRoutes from './groups/statistic';
+import booksRoutes from './groups/statistic';
+import statisticRoutes from './groups/book';
 import readingRoutes from './groups/reading';
 import authRoutes from './groups/auth';
 import ifNotAuthenticated from './guards/not-authenticated';
+import i18n from "@/i18n";
 
 Vue.use(VueRouter);
 
 const settingsRoutes = [{
   path: 'settings',
   name: 'Settings',
+  meta: {
+    title: i18n.t('settings.title'),
+  },
   props: false,
   component: () => import('../views/user/Settings.vue')
 }, ]
@@ -27,6 +31,9 @@ const workspaceRoutes = [
 const externalRoutes = [{
   path: 'about',
   name: 'About',
+  meta: {
+    title: i18n.t('about.title'),
+  },
   props: false,
   component: () => import('@/views/About.vue')
 }, {

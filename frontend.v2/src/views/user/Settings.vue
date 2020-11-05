@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h4>{{$t('settings.title')}}</h4>
     <avatar-form class="mt-3"></avatar-form>
     <email-form class="mt-3"></email-form>
     <password-form class="mt-3"></password-form>

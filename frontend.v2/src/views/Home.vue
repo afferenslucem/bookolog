@@ -14,7 +14,8 @@
                     class="top"
                     @avatarClick="openRightMenu()"
                     @menuClick="openLeftMenu()"
-            ></Header>
+                    :title="title"
+            />
             <div class="content container pt-1">
                 <router-view/>
             </div>
@@ -50,6 +51,7 @@
         },
         data() {
             return {
+                title: '',
                 shouldShowLeftMenu: false,
                 shouldShowRightMenu: false,
             };
@@ -73,6 +75,13 @@
             showOverlay() {
                 return this.shouldShowLeftMenu || this.shouldShowRightMenu;
             },
+        },
+        beforeRouteEnter(to, from, next) {
+            next(vm => vm.title = to.meta?.title || to.params.name || '');
+        },
+        beforeRouteUpdate(to, from, next) {
+            this.title = to.meta?.title || to.params.name || '';
+            next();
         },
     };
 </script>
@@ -119,7 +128,7 @@
 
         position: fixed;
 
-        z-index: 500;
+        z-index: 5000;
 
         background-color: $overlay-color;
 

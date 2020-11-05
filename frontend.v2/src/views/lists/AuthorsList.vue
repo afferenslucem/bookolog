@@ -1,7 +1,5 @@
 <template>
   <div class="authors-list">
-    <h4 class="mt-1 header">{{ $t('book.lists.statistic.authors') }}</h4>
-
     <ul v-if="shouldShowList">
       <li
         v-for="author of authors"

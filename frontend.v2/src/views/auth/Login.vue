@@ -1,17 +1,18 @@
 <template>
   <div>
     <form @submit="login($event)">
-      <h4>{{ $t("auth.loginForm.title") }}</h4>
       <div class="form-group">
+        <label for="login">{{ $t('auth.loginForm.username') }}</label>
         <input
           class="form-control"
-          :placeholder="$t('auth.loginForm.username')"
+          placeholder="Имя пользователя"
           id="login"
           aria-describedby="emailHelp"
           v-model="username"
         />
       </div>
       <div class="form-group">
+        <label for="password">{{ $t('auth.loginForm.password') }}</label>
         <input
           type="password"
           class="form-control"

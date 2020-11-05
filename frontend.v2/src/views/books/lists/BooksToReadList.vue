@@ -1,7 +1,5 @@
 <template>
   <div class="book-list">
-    <h4 class="pt-1 header">{{ $t("book.lists.byStatus.toRead") }}</h4>
-
     <ul v-if="shouldShowList">
       <li v-for="book of books" class="mb-3" :key="book.guid">
         <to-read-book
@@ -40,6 +38,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
