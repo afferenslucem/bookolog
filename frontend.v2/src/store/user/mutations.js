@@ -12,6 +12,7 @@ export const mutations = {
         state.id = payload.id;
         state.email = payload.email;
         state.avatar = payload.avatarName;
+        state.lastSyncTime = payload.lastSyncTime;
     },
     [USER_SET_EMAIL_MUTATION]: (state, email) => {
         state.email = email;
@@ -24,5 +25,6 @@ export const mutations = {
         state.id = null;
         state.email = null;
         state.avatar = null;
+        state.lastSyncTime = null;
     }
 }

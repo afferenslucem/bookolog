@@ -46,17 +46,17 @@ Cypress.Commands.add("login", (username, password) => {
 })
 
 Cypress.Commands.add("logout", () => {
-    cy.get('.profile').click();
+    cy.get('#menuButton').click();
     cy.get('#logoutButton').click();
 })
 
 Cypress.Commands.add("goToSettings", () => {
-    cy.get('.profile').click();
+    cy.get('#menuButton').click();
     cy.get('#settingsButton').click();
 })
 
 Cypress.Commands.add("openBooksMenu", () => {
-    cy.get('#booksLists').click();
+    cy.get('#menuButton').click();
 });
 
 Cypress.Commands.add("openInProgressList", () => {
@@ -334,7 +334,7 @@ Cypress.Commands.add("editBookFromView", () => {
 });
 
 Cypress.Commands.add("goToReadingList", () => {
-    cy.get(`#booksLists`).click();
+    cy.get(`#menuButton`).click();
 
     cy.get(`#toReadListButton`).click();
 });

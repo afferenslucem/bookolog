@@ -1,4 +1,6 @@
 <template functional>
     <img class="avatar" v-if="props.avatar" :src="props.avatar" />
-    <person-icon v-else ></person-icon>
+    <div v-else class="icon-place">
+        <person-icon></person-icon>
+    </div>
 </template>

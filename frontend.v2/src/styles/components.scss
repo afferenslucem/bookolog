@@ -231,3 +231,25 @@ img.avatar {
         }
     }
 }
+
+// Menu
+
+.side-menu {
+    .nav-item {
+        line-height: 1rem;
+    }
+
+    .icon.nav-link {
+        height: 30px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu {
+        h5 {
+            font-size: $normal-font-size;
+        }
+    }
+}

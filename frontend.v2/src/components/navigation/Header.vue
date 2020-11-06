@@ -3,7 +3,7 @@
     <div class="left">
       <div
         class="icon"
-        id="booksLists"
+        id="menuButton"
         v-if="isLoggedIn"
         @click="emitMenuClick($event)"
       >
@@ -13,20 +13,10 @@
     <div class="title pl-2">
       {{title | capital}}
     </div>
-    <div>
-      <div class="actions" v-if="isLoggedIn">
-        <sync-button></sync-button>
-        <div @click="emitAvatarClick($event)">
-          <profile :avatar="avatarLink" />
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
 import userMixin from "@/mixins/user-mixin";
-import SyncButton from "@/components/connection/SyncButton.vue";
-import Profile from "@/components/navigation/Profile.vue";
 
 export default {
   mixins: [userMixin],
@@ -37,26 +27,11 @@ export default {
     },
   },
   methods: {
-    emitAvatarClick(event) {
-      event.stopPropagation();
-      this.$emit("avatarClick");
-    },
     emitMenuClick(event) {
       event.stopPropagation();
       this.$emit("menuClick");
     }
   },
-  computed: {
-    avatarLink() {
-      const avatar = this.$store.state.user.avatar;
-
-      return this.getAvatarLink(avatar);
-    },
-  },
-  components: {
-    SyncButton,
-    Profile,
-  }
 };
 </script>
 <style lang="scss" scoped>

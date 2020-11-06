@@ -5,8 +5,6 @@ describe('Email change test', () => {
   beforeEach(() => {
     cy.viewport('iphone-6')
     cy.visit('/login');
-
-    cy.get('.profile').should('not.exist')
   });
   
   afterEach(() => {
@@ -20,7 +18,6 @@ describe('Email change test', () => {
     cy.login(emailChange.username, emailChange.password);
 
     cy.pageIs('me/in-progress');
-    cy.get('.profile').should('exist')
 
     cy.goToSettings();
     cy.pageIs('me/settings');

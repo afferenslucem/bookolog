@@ -90,6 +90,9 @@
                 "tags": "Теги",
                 "authors": "Авторы"
             },
+            "user": {
+                "title": "Аккаунт"
+            },
             "noOneBook": "Здесь пока ничего нет.",
             "byYear": {
                 "yearNotSpecified": "Год не указан"

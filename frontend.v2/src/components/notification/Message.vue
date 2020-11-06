@@ -50,7 +50,7 @@ export default {
 
     #notification {
         .notification-message {
-            z-index: 5000;
+            z-index: 15000;
             width: 80%;
             top: 1rem;
             position: fixed;

@@ -5,8 +5,6 @@ describe('Password change test', () => {
   beforeEach(() => {
     cy.viewport('iphone-6')
     cy.visit('/login');
-
-    cy.get('.profile').should('not.exist')
   });
   
   afterEach(() => {
@@ -20,7 +18,6 @@ describe('Password change test', () => {
     cy.login(passwordChange.username, passwordChange.password);
 
     cy.pageIs('me/in-progress');
-    cy.get('.profile').should('exist')
 
     cy.goToSettings();
     cy.pageIs('me/settings');
@@ -36,7 +33,6 @@ describe('Password change test', () => {
     cy.login(passwordChange.username, passwordChange.password);
 
     cy.pageIs('me/in-progress');
-    cy.get('.profile').should('exist')
 
     cy.goToSettings();
     cy.pageIs('me/settings');
@@ -54,7 +50,6 @@ describe('Password change test', () => {
     cy.login(passwordChange.username, passwordChange.password);
 
     cy.pageIs('me/in-progress');
-    cy.get('.profile').should('exist')
 
     cy.goToSettings();
     cy.pageIs('me/settings');

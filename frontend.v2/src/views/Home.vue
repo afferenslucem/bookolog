@@ -1,8 +1,11 @@
 <template>
     <div class="window">
-        <side-menu :class="{ opened: shouldShowLeftMenu, left: true }">
-            <book-menu @itemClick="closeAllMenus()"></book-menu>
-            <statistic-menu @itemClick="closeAllMenus()"></statistic-menu>
+        <side-menu :class="{ opened: shouldShowSideMenu, left: true }">
+            <user-info />
+            <book-menu @itemClick="closeAllMenus()" />
+            <statistic-menu @itemClick="closeAllMenus()" />
+            <user-menu @itemClick="closeAllMenus()" />
+            <bottom-menu class="bottom-menu" @itemClick="closeAllMenus()" />
         </side-menu>
         <div
                 class="overlay"
@@ -12,7 +15,6 @@
         <div class="main">
             <Header
                     class="top"
-                    @avatarClick="openRightMenu()"
                     @menuClick="openLeftMenu()"
                     :title="title"
             />
@@ -20,15 +22,10 @@
                 <router-view/>
             </div>
         </div>
-        <side-menu :class="{ opened: shouldShowRightMenu, right: true }">
-            <user-menu @itemClick="closeAllMenus()"></user-menu>
-            <bottom-menu class="bottom-menu" @itemClick="closeAllMenus()"></bottom-menu>
-        </side-menu>
     </div>
 </template>
 
 <script>
-    // @ is an alias to /src
     import Header from "@/components/navigation/Header";
     import SideMenu from "@/components/navigation/SideMenu";
     import BookMenu from "@/components/navigation/BookMenu";
@@ -36,12 +33,14 @@
     import UserMenu from "@/components/navigation/UserMenu";
     import BottomMenu from "@/components/navigation/BottomMenu";
     import {getLogger} from "@/logger";
+    import UserInfo from "@/components/user/UserInfo";
 
     const logger = getLogger("HomePage");
 
     export default {
         name: "Home",
         components: {
+            UserInfo,
             Header,
             SideMenu,
             BookMenu,
@@ -52,28 +51,22 @@
         data() {
             return {
                 title: '',
-                shouldShowLeftMenu: false,
-                shouldShowRightMenu: false,
+                shouldShowSideMenu: false,
             };
         },
         methods: {
             openLeftMenu() {
-                this.shouldShowLeftMenu = true;
+                this.shouldShowSideMenu = true;
                 logger.debug("Opened left menu");
             },
-            openRightMenu() {
-                this.shouldShowRightMenu = true;
-                logger.debug("Opened right menu");
-            },
             closeAllMenus() {
-                this.shouldShowLeftMenu = false;
-                this.shouldShowRightMenu = false;
+                this.shouldShowSideMenu = false;
                 logger.debug("Closed all menus");
             },
         },
         computed: {
             showOverlay() {
-                return this.shouldShowLeftMenu || this.shouldShowRightMenu;
+                return this.shouldShowSideMenu;
             },
         },
         beforeRouteEnter(to, from, next) {
@@ -177,5 +170,7 @@
         position: absolute;
 
         bottom: 0;
+
+        width: 100%;
     }
 </style>

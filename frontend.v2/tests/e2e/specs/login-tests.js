@@ -5,8 +5,6 @@ describe('Login test', () => {
   beforeEach(() => {
     cy.viewport('iphone-6')
     cy.visit('/login');
-
-    cy.get('.profile').should('not.exist')
   });
 
   const emptyCredentials = credentials.emptyUserAccount;
@@ -15,7 +13,6 @@ describe('Login test', () => {
     cy.login(emptyCredentials.username, emptyCredentials.password);
 
     cy.pageIs('me/in-progress');
-    cy.get('.profile').should('exist')
 
     cy.logout();
     cy.pageIs('');
