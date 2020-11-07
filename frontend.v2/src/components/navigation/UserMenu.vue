@@ -1,13 +1,9 @@
 <template>
     <div class="menu">
-        <h5>{{ $t('book.lists.user.title') }}</h5>
-        <ul class="nav flex-column">
-            <li class="nav-item" @click="onSettings()">
-                <a class="nav-link" href="#" id="settingsButton">{{ $t('user.actions.settings') }}</a>
-            </li>
-            <li class="nav-item" @click="onLogout()">
-                <a class="nav-link" href="#" id="logoutButton">{{ $t('auth.actions.logout.title') }}</a>
-            </li>
+        <span class="menu__header">{{ $t('book.lists.user.title') }}</span>
+        <ul class="menu__body">
+            <li class="menu-item" @click="onSettings()" id="settingsButton">{{ $t('user.actions.settings') }}</li>
+            <li class="menu-item" @click="onLogout()" id="logoutButton">{{ $t('auth.actions.logout.title') }}</li>
         </ul>
     </div>
 </template>

@@ -1,11 +1,11 @@
 <template>
-    <div class="window">
+    <div>
         <side-menu :class="{ opened: shouldShowSideMenu, left: true }">
-            <user-info />
-            <book-menu @itemClick="closeAllMenus()" />
-            <statistic-menu @itemClick="closeAllMenus()" />
-            <user-menu @itemClick="closeAllMenus()" />
-            <bottom-menu class="bottom-menu" @itemClick="closeAllMenus()" />
+            <user-info/>
+            <book-menu @itemClick="closeAllMenus()"/>
+            <statistic-menu @itemClick="closeAllMenus()"/>
+            <user-menu @itemClick="closeAllMenus()"/>
+            <bottom-menu class="bottom-menu" @itemClick="closeAllMenus()"/>
         </side-menu>
         <div
                 class="overlay"
@@ -82,13 +82,6 @@
 <style lang="scss" scoped>
     @import "@/styles/variables";
 
-    .window {
-        height: 100vh;
-        width: 100%;
-
-        position: relative;
-    }
-
     .main {
         height: 100vh;
         width: 100%;
@@ -154,16 +147,6 @@
                 left: 0;
             }
         }
-
-        &.right {
-            right: -100%;
-
-            transition: right $menu-open-time $menu-open-animation;
-
-            &.opened {
-                right: 0;
-            }
-        }
     }
 
     .bottom-menu {
@@ -172,5 +155,28 @@
         bottom: 0;
 
         width: 100%;
+    }
+</style>
+
+<style lang="scss">
+    @import "@/styles/variables";
+
+    .menu {
+        &__header {
+            font-weight: $fat-font-weight;
+            font-size: $large-font-size;
+        }
+
+        &__body {
+            padding-left: 1rem;
+
+            .menu-item {
+                color: $link-color;
+
+                cursor: pointer;
+
+                height: 2em;
+            }
+        }
     }
 </style>

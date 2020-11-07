@@ -1,24 +1,24 @@
 <template>
   <div class="menu">
-    <h5>{{ $t('book.lists.byStatus.title') }}</h5>
-    <ul class="nav flex-column">
-      <li class="nav-item in-progress">
-        <a class="nav-link" href="#" id="inProgressListButton" @click="goToInProgress()">{{ $t('book.lists.byStatus.inProgress') }}</a>
-        <a class="icon nav-link" href="#" @click="goToAddInProgress()">
+    <span class="menu__header">{{ $t('book.lists.byStatus.title') }}</span>
+    <ul class="menu__body">
+      <li class="menu-item in-progress">
+        <span id="inProgressListButton" @click="goToInProgress()">{{ $t('book.lists.byStatus.inProgress') }}</span>
+        <span class="icon" @click="goToAddInProgress()">
           <plus-icon class="fa-lg"></plus-icon>
-        </a>
+        </span>
       </li>
-      <li class="nav-item to-read">
-        <a class="nav-link" href="#" id="toReadListButton" @click="goToToRead()">{{ $t('book.lists.byStatus.toRead') }}</a>
-        <a class="icon nav-link" href="#" @click="goToAddToRead()">
+      <li class="menu-item to-read">
+        <span id="toReadListButton" @click="goToToRead()">{{ $t('book.lists.byStatus.toRead') }}</span>
+        <span class="icon" @click="goToAddToRead()">
           <plus-icon class="fa-lg"></plus-icon>
-        </a>
+        </span>
       </li>
-      <li class="nav-item done">
-        <a class="nav-link" href="#" id="toDoneListButton" @click="goToDone()">{{ $t('book.lists.byStatus.done') }}</a>
-        <a class="icon nav-link" href="#" @click="goToAddDone()">
+      <li class="menu-item done">
+        <span id="toDoneListButton" @click="goToDone()">{{ $t('book.lists.byStatus.done') }}</span>
+        <span class="icon" @click="goToAddDone()">
           <plus-icon class="fa-lg"></plus-icon>
-        </a>
+        </span>
       </li>
     </ul>
   </div>
