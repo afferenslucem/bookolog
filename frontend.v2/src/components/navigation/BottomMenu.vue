@@ -1,31 +1,34 @@
 <template>
-    <ul class="nav flex-column">
-        <!--li class="nav-item" @click="onAbout()">
-            <a class="nav-link" href="#" id="aboutButton">{{ $t('about.title') }}</a>
-        </li-->
+    <div class="menu">
+        <ul class="menu__body">
+            <!--li class="nav-item" @click="onAbout()">
+                <a class="nav-link" href="#" id="aboutButton">{{ $t('about.title') }}</a>
+            </li-->
 
-        <li class="nav-item sync">
-            <div class="sync-button">
-                <sync-button></sync-button>
-            </div>
-            <small class="last-sync-time secondary-text">
-                Синхр. {{syncTimeFormatted}}
-            </small>
-        </li>
+            <li class="menu-item sync-item">
+                <div class="sync-item__button">
+                    <sync-button></sync-button>
+                </div>
 
-        <li class="version dark-text">
-            <small> {{version}} </small>
-        </li>
-    </ul>
+                <small class="sync-item__time secondary-text">
+                    Синхр. {{syncTimeFormatted}}
+                </small>
+            </li>
+
+            <li class="version dark-text">
+                <small> {{version}} </small>
+            </li>
+        </ul>
+    </div>
 
 </template>
+
 <script>
     import SyncButton from "@/components/connection/SyncButton.vue";
     import sideMenuMixin from '@/mixins/side-menu-mixin';
     import userMixin from '@/mixins/user-mixin';
     import {VERSION} from '@/config';
     import moment from 'moment';
-
 
     export default {
         mixins: [sideMenuMixin, userMixin],
@@ -56,20 +59,7 @@
 <style lang="scss" scoped>
     @import "@/styles/variables";
 
-    .sync-button {
-        border: 1px solid $secondary-text-color;
-        color: $secondary-text-color;
-
-        border-radius: 0.25rem;
-
-        padding: 0.35rem;
-
-        display: flex;
-        justify-content: center;
-        align-content: center;
-    }
-
-    .sync {
+    .sync-item {
         width: 100%;
 
         display: flex;
@@ -83,7 +73,19 @@
             flex: 0 0 auto;
         }
 
-        .last-sync-time {
+        &__button {
+            border: 1px solid $secondary-text-color;
+            color: $secondary-text-color;
+
+            border-radius: 0.25rem;
+            padding: 0.35rem;
+
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+
+        &__time {
             flex: 1 0 auto;
             text-align: center;
 
@@ -101,5 +103,9 @@
         position: absolute;
 
         bottom: -2px;
+    }
+
+    .menu__body {
+        padding: 0;
     }
 </style>

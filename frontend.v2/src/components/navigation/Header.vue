@@ -1,98 +1,55 @@
 <template>
-  <div class="header">
-    <div class="left">
-      <div
-        class="icon"
-        id="menuButton"
-        v-if="isLoggedIn"
-        @click="emitMenuClick($event)"
-      >
-        <i class="fa fa-bars" aria-hidden="true"></i>
-      </div>
+    <div class="header">
+        <div class="header__menu-button">
+            <div class="icon"
+                 id="menuButton"
+                 v-if="isLoggedIn"
+                 @click="emitMenuClick($event)"
+            >
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="header__title pl-2">
+            {{title | capital}}
+        </div>
     </div>
-    <div class="title pl-2">
-      {{title | capital}}
-    </div>
-  </div>
 </template>
 <script>
-import userMixin from "@/mixins/user-mixin";
+    import userMixin from "@/mixins/user-mixin";
 
-export default {
-  mixins: [userMixin],
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
-  },
-  methods: {
-    emitMenuClick(event) {
-      event.stopPropagation();
-      this.$emit("menuClick");
-    }
-  },
-};
+    export default {
+        mixins: [userMixin],
+        props: {
+            title: {
+                type: String,
+                default: '',
+            },
+        },
+        methods: {
+            emitMenuClick(event) {
+                event.stopPropagation();
+                this.$emit("menuClick");
+            }
+        },
+    };
 </script>
 <style lang="scss" scoped>
-@import "@/styles/variables";
+    @import "@/styles/variables";
 
-.header {
-  width: 100%;
+    .header {
+        width: 100%;
 
-  position: fixed;
-  top: 0;
-  left: 0;
+        height: $header-height;
 
-  z-index: 100;
+        display: flex;
+        align-items: center;
 
-  height: $header-height;
+        background-color: $header-color;
+        color: $header-text-color;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  > div {
-    flex: 0 0 auto;
-  }
-
-  background-color: $header-color;
-  color: $header-text-color;
-
-  .profile {
-    justify-self: end;
-  }
-}
-
-.logo {
-  padding: 0.15rem;
-
-  color: $white;
-
-  font-weight: $fat-font-weight;
-}
-
-.left {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.header .title {
-  flex: 1 0 auto;
-  font-size: $big-font-size;
-  font-weight: $fat-font-weight;
-}
-
-.actions {
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  > *:not(:last-child) {
-    margin-right: 0.5rem;
-  }
-}
+        &__title {
+            font-weight: $fat-font-weight;
+            font-size: $large-font-size;
+        }
+    }
 </style>

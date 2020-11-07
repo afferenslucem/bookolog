@@ -1,7 +1,7 @@
 <template>
     <div class="preloader" v-if="showLoader">
         <div class="overlay"></div>
-        <div class="loader-placeholder">
+        <div class="loader-placeholder flex-centered">
             <div class="loader">
             </div>
         </div>        
@@ -41,12 +41,6 @@ export default {
 
     .loader-placeholder {
         @extend .preloader;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
 
         .loader {
             background-image: url('/img/loader.svg');

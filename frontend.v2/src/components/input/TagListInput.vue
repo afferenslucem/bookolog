@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div class="tags-input">
         <form class="input-group" @submit="submit($event)">
-            <selectable-input
-                    :datalist="datalist"
-                    :placeholder="placeholder"
-                    :name="name"
-                    :value.sync="value"
-            ></selectable-input>
+            <selectable-input :datalist="datalist"
+                              :placeholder="placeholder"
+                              :name="name"
+                              :value.sync="value"
+            />
+
             <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">
                     <plus-icon></plus-icon>
@@ -14,21 +14,19 @@
             </div>
         </form>
 
-        <div class="tags">
-            <tag-input-value
-                    :name="tag"
-                    @closed="deleteTag(tag)"
-                    v-for="tag in tagsValue"
-                    :key="tag"
-            >
-            </tag-input-value>
+        <div class="tags-input__values">
+            <tag-input-value :name="tag"
+                             @closed="deleteTag(tag)"
+                             v-for="tag in tagsValue"
+                             :key="tag"
+            />
         </div>
     </div>
 </template>
 
 <script>
     import SelectableInput from "./AutoCompletableInput";
-    import TagInputValue from "./TagInputValue";
+    import TagInputValue from "./TagValue";
     import PlusIcon from "@/components/icon/PlusIcon.vue";
     import {
         stringComparer
@@ -99,22 +97,24 @@
 </script>
 
 <style lang="scss" scoped>
-    .tags {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
+    .tags-input {
+        &__values {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
 
-        > * {
-            flex: 0 0 auto;
+            margin-bottom: 1rem;
 
-            &:not(:last-child) {
-                margin-right: 0.5rem;
+            > * {
+                flex: 0 0 auto;
+
+                &:not(:last-child) {
+                    margin-right: 0.5rem;
+                }
+
+                margin-top: 0.5rem;
             }
-
-            margin-top: 0.5rem;
         }
-
-        margin-bottom: 1rem;
     }
 
     .form-group {

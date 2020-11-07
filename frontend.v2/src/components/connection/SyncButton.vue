@@ -1,5 +1,5 @@
 <template>
-  <div @click="runSync()">
+  <div class="sync-button flex-centered" @click="runSync()">
     <sync-icon></sync-icon>
   </div>
 </template>
@@ -50,5 +50,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+    .sync-button {
+        height: 1.2rem;
+        width: 1.2rem;
+    }
 </style>

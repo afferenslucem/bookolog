@@ -91,17 +91,17 @@ Cypress.Commands.add("openAuthorsList", () => {
 
 Cypress.Commands.add("goToCreateToReadBook", () => {
     cy.openBooksMenu();
-    cy.get('.nav-item.to-read > .icon.nav-link').click();
+    cy.get('.menu-item.to-read > .icon').click();
 })
 
 Cypress.Commands.add("goToCreateDoneBook", () => {
     cy.openBooksMenu();
-    cy.get('.nav-item.done > .icon.nav-link').click();
+    cy.get('.menu-item.done > .icon').click();
 })
 
 Cypress.Commands.add("goToInProgressDoneBook", () => {
     cy.openBooksMenu();
-    cy.get('.nav-item.in-progress > .icon.nav-link').click();
+    cy.get('.menu-item.in-progress > .icon').click();
 })
 
 function fillTagInputAuthors(id, tags) {
@@ -163,7 +163,7 @@ Cypress.Commands.add("fillInProgressBookForm", (book) => {
 });
 
 Cypress.Commands.add('getTagList', (id) => {
-    return cy.get(`${id} .tags .tag`);
+    return cy.get(`${id} .tags-input__values .tag`);
 });
 
 Cypress.Commands.add('tagCrossClick', () => {
@@ -196,14 +196,14 @@ function compareCommonForm(book) {
     cy.get('#name').should('have.value', book.name);
 
     const authors = [];
-    cy.get('#authors .tags .tag small').each(el => authors.push(el.text())).then(() => {
+    cy.get('#authors .tags-input__values .tag small').each(el => authors.push(el.text())).then(() => {
         assert.equal(authors.join(', ').toLowerCase(), book.authors.join(', ').toLowerCase());
     })
 
     cy.get('#genre input').should('have.value', book.genre);
 
     const tags = [];
-    cy.get('#tags .tags .tag small').each(el => tags.push(el.text())).then(() => {
+    cy.get('#tags .tags-input__values .tag small').each(el => tags.push(el.text())).then(() => {
         assert.equal(tags.join(', ').toLowerCase(), book.tags.join(', ').toLowerCase());
     })
 
