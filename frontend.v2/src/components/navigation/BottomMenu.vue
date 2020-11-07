@@ -96,7 +96,7 @@
     .version {
         font-size: 0.8rem;
 
-        width: 100%;
+        width: 95%;
 
         text-align: right;
 
