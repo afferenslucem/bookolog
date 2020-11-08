@@ -138,9 +138,12 @@ export const actions = {
 
             const userCurrentState = await dispatch('getRemoteUser');
             logger.info('User current state', userCurrentState);
-            dispatch(USER_SAVE_ACTION, userCurrentState);            
 
             await dispatch(USER_SYNC_BOOKS_ACTION, userCurrentState);
+
+            userCurrentState.lastSyncTime = new Date();
+
+            dispatch(USER_SAVE_ACTION, userCurrentState);
 
             logger.info('App inited')
         } catch (e) {

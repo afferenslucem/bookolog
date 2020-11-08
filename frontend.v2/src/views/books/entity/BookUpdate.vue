@@ -99,8 +99,8 @@
                 </select>
             </div>
 
-            <div v-show="showProgress" class="progress-row" :class="{ 'is-invalid': !unitsValid }">
-                <div v-if="book.type === 2" class="form-group form-row">
+            <div v-show="showProgress" class="progress-input" :class="{ 'is-invalid': !unitsValid }">
+                <div v-if="book.type === 2" class="form-group progress-row form-row">
                     <label>{{ $t('book.form.titles.progress.listen.title') }}</label>
                     <audio-book-units-input
                             id="doneUnits"

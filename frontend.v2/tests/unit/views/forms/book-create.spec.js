@@ -87,7 +87,7 @@ describe('BookCreate.vue', () => {
         expect(wrapper.vm.showProgress).equal(true);
         expect(wrapper.vm.unitsValid).equal(false);
         expect(wrapper.vm.formValid).equal(false);
-        expect(wrapper.find('.progress-row').classes()).to.contains('is-invalid');
+        expect(wrapper.find('.progress-input').classes()).to.contains('is-invalid');
 
         wrapper.vm.book.doneUnits = 44;
         wrapper.vm.book.totalUnits = 88;
@@ -96,7 +96,7 @@ describe('BookCreate.vue', () => {
 
         expect(wrapper.vm.unitsValid).equal(true);
         expect(wrapper.vm.formValid).equal(true);
-        expect(wrapper.find('.progress-row').classes()).not.contains('is-invalid');
+        expect(wrapper.find('.progress-input').classes()).not.contains('is-invalid');
     })
 
     it('Should return invalid dates', async () => {
