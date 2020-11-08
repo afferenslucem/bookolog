@@ -36,30 +36,10 @@
 }
 
 .book-line {
-    .header {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
+    &__authors {
+        display: inline-block;
 
-        .fa {
-            font-size: 1.5rem;
-        }
-
-        .actions {
-            display: flex;
-
-            align-items: baseline;
-
-            justify-content: flex-end;
-
-            >i:not(:last-child) {
-                margin-right: 0.3rem;
-            }
-        }
-
-        .header-text {
-            padding-right: .5rem;
-        }
+        max-width: 100%;
     }
 }
 

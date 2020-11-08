@@ -1,10 +1,11 @@
 <template functional>
     <div class="book-line" @click="listeners.bookClick" :class="data.staticClass">
-        <book-inline-header :book="props.book"
+        <book-inline-header class="book-line__header"
+                            :book="props.book"
                             @editIconClick="listeners.editIconClick"
-        ></book-inline-header>
-        <no-wrap-values v-if="props.book.authors" :values="props.book.authors"/>
-        <div class="date-range dark-text"
+        />
+        <no-wrap-values class="book-line__authors text-truncate" v-if="props.book.authors" :values="props.book.authors"/>
+        <div class="book-line__date-range dark-text"
              v-if="props.book.startDate || props.book.endDate"
         >
             [
@@ -31,5 +32,10 @@
     };
 </script>
 
-<style>
+<style lang="scss">
+    .book-line {
+        &__date-range {
+            line-height: 80%;
+        }
+    }
 </style>

@@ -164,7 +164,7 @@ export const actions = {
         const syncDiffTime = getSyncDiffTime(user);
 
         if (syncDiffTime > BOOK_RELOAD_TIMEOUT_SECONDS) {
-            await dispatch(BOOKS_LOAD_ACTION);
+            await dispatch(BOOKS_LOAD_ACTION, user);
         } else {
             await dispatch(BOOKS_SYNC_ACTION)
         }

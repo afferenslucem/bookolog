@@ -1,5 +1,5 @@
 <template functional>
-    <div class="progress mt-2">
+    <div class="progress">
         <div class="progress-bar"
              role="progressbar"
              :style="{'width': props.progress + '%'}"

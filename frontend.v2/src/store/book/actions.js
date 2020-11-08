@@ -68,8 +68,8 @@ export const actions = {
         commit,
         rootState,
         dispatch
-    }) => {
-        const books = await dispatch('loadAllRemoteBooks', rootState.user.id);
+    }, user) => {
+        const books = await dispatch('loadAllRemoteBooks', user?.id || rootState.user.id);
 
         await dispatch('clearLocalBooks');
         await dispatch('saveManyBooks', books);

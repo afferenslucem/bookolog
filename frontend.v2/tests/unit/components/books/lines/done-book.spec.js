@@ -98,6 +98,6 @@ describe('DoneBook.vue', () => {
                 book
             }
         })
-        expect(wrapper.html()).to.not.include('<div class="date-range')
+        expect(wrapper.html()).to.not.include('<div class="book-line__date-range')
     })
 })

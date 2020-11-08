@@ -1,10 +1,10 @@
 <template functional>
     <div class="book-line" @click="listeners.bookClick" :class="data.staticClass">
-        <book-inline-header :book="props.book"
+        <book-inline-header class="book-line__name" :book="props.book"
                             @editIconClick="listeners.editIconClick"
         />
-        <no-wrap-values v-if="props.book.authors" :values="props.book.authors"/>
-        <progress-bar :progress="Math.min(
+        <no-wrap-values class="book-line__authors text-truncate" v-if="props.book.authors" :values="props.book.authors"/>
+        <progress-bar class="book-line__progress" :progress="Math.min(
               Math.round(
                 ((props.book.doneUnits || 0) / (props.book.totalUnits || 1)) * 100
               ),

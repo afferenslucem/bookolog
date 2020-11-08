@@ -1,6 +1,6 @@
 <template functional>
   <div class="book-header">
-    <h4>{{ props.book.name }}</h4>
+    <h4 class="book-header__text">{{ props.book.name }}</h4>
     <should-sync-icon v-if="props.book.shouldSync"></should-sync-icon>
   </div>
 </template>
