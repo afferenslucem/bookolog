@@ -41,6 +41,18 @@
 
         max-width: 100%;
     }
+
+    &__date-range {
+        line-height: 80%;
+    }
+
+    &__progress-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        margin-top:  0.5rem;
+    }
 }
 
 // Lists

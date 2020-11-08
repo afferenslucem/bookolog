@@ -5,7 +5,7 @@ export default [{
   path: 'book/create/:status',
   name: 'CreateBook',
   meta: {
-    title: i18n.t('book.form.headers.create'),
+    title: i18n.t('book.form.header.create'),
   },
   component: () => import('@/views/books/entity/BookCreate.vue'),
   props: true,
@@ -14,7 +14,7 @@ export default [{
   path: 'book/update/:guid',
   name: 'UpdateBook',
   meta: {
-    title: i18n.t('book.form.headers.update'),
+    title: i18n.t('book.form.header.update'),
   },
   component: () => import('@/views/books/entity/BookUpdate.vue'),
   props: true,

@@ -7,6 +7,8 @@ import join from '@/filters/join'
 import wrap from '@/filters/wrap'
 import dateFormat from '@/filters/format-date'
 import capitalFirst from '@/filters/capital-first'
+import chooseForm from '@/filters/choose-form'
+import unitsToTime from '@/filters/units-to-time'
 import i18n from './i18n'
 import moment from 'moment';
 import CloseListIcon from "@/components/icon/CloseListIcon.vue";
@@ -17,6 +19,9 @@ import PersonIcon from "@/components/icon/PersonIcon.vue";
 import ConnectionMarker from "@/components/connection/ConnectionMarker.vue";
 import TotalReadCount from "@/components/statistic/TotalReadBooksCount.vue";
 import BookInlineHeader from "@/components/book/book/BookInlineHeader.vue";
+import BookDateRange from "@/components/book/book/BookDateRange.vue";
+import BookPageProgress from "@/components/book/book/BookPageProgress.vue";
+import BookTimeProgress from "@/components/book/book/BookTimeProgress.vue";
 import NoWrapValues from "@/components/book/book/NoWrapValues.vue";
 import EditIcon from "@/components/icon/EditIcon.vue";
 import ProgressBar from '@/components/book/book/ProgressBar.vue';
@@ -27,6 +32,8 @@ Vue.filter('join', join);
 Vue.filter('dateFormat', dateFormat);
 Vue.filter('wrap', wrap);
 Vue.filter('capital', capitalFirst);
+Vue.filter('formify', chooseForm);
+Vue.filter('timify', unitsToTime);
 
 Vue.component('EditIcon', EditIcon);
 Vue.component('ShouldSyncIcon', ShouldSyncIcon);
@@ -40,6 +47,9 @@ Vue.component('CloseListIcon', CloseListIcon);
 Vue.component('OpenListIcon', OpenListIcon);
 Vue.component('CrossIcon', CrossIcon);
 Vue.component('ProfilePic', ProfilePic);
+Vue.component('BookDateRange', BookDateRange);
+Vue.component('BookPageProgress', BookPageProgress);
+Vue.component('BookTimeProgress', BookTimeProgress);
 
 Vue.config.productionTip = false
 
