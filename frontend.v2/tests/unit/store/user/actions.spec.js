@@ -14,7 +14,8 @@ import {
     NETWORK_ERROR
 } from '@/http/client'
 import {
-    assert
+    assert,
+    expect
 } from 'chai';
 import sin from 'sinon';
 import {
@@ -129,7 +130,7 @@ describe('User Actions', () => {
 
     describe('USER_SYNC_DATA_ACTION', async () => {
         it('should use cached data for NETWORK_ERROR', async () => {
-            const localUser = 'user';
+            const localUser = {};
 
             const dispatch = sin.stub();
             dispatch.onCall(0).rejects(NETWORK_ERROR);
@@ -158,7 +159,7 @@ describe('User Actions', () => {
         });
 
         it('should use remote data', async () => {
-            const remoteUser = 'remoteUser';
+            const remoteUser = {};
 
             const dispatch = sin.stub();
             dispatch.onCall(0).resolves(remoteUser);
@@ -168,6 +169,7 @@ describe('User Actions', () => {
             });
 
             assert.equal(dispatch.callCount, 3);
+            expect(remoteUser.lastSyncTime).not.equal(undefined);
 
             assert.isTrue(dispatch.calledWithExactly('getRemoteUser'))
             assert.isTrue(dispatch.calledWithExactly(USER_SYNC_BOOKS_ACTION, remoteUser))

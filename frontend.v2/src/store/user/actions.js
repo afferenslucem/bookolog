@@ -105,14 +105,13 @@ export const actions = {
             logger.info('Sync user')
 
             const userCurrentState = await dispatch('getRemoteUser');
-            
-            logger.info('User current state', userCurrentState);
-
-            dispatch(USER_SAVE_ACTION, userCurrentState);
+            logger.info('User current state', userCurrentState)
 
             const syncDiffTime = getSyncDiffTime(userCurrentState);
-
             if (syncDiffTime < BOOK_RELOAD_DELAY_SECONDS) return;
+
+            userCurrentState.lastSyncTime = new Date();
+            dispatch(USER_SAVE_ACTION, userCurrentState);
 
             await dispatch(USER_SYNC_BOOKS_ACTION, userCurrentState);
 
@@ -142,7 +141,6 @@ export const actions = {
             await dispatch(USER_SYNC_BOOKS_ACTION, userCurrentState);
 
             userCurrentState.lastSyncTime = new Date();
-
             dispatch(USER_SAVE_ACTION, userCurrentState);
 
             logger.info('App inited')
