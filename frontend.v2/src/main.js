@@ -11,6 +11,7 @@ import chooseForm from '@/filters/choose-form'
 import unitsToTime from '@/filters/units-to-time'
 import i18n from './i18n'
 import moment from 'moment';
+import CameraIcon from "@/components/icon/CameraIcon.vue";
 import CloseListIcon from "@/components/icon/CloseListIcon.vue";
 import OpenListIcon from "@/components/icon/OpenListIcon.vue";
 import ShouldSyncIcon from "@/components/icon/ShouldSyncIcon.vue";
@@ -35,6 +36,7 @@ Vue.filter('capital', capitalFirst);
 Vue.filter('formify', chooseForm);
 Vue.filter('timify', unitsToTime);
 
+Vue.component('CameraIcon', CameraIcon);
 Vue.component('EditIcon', EditIcon);
 Vue.component('ShouldSyncIcon', ShouldSyncIcon);
 Vue.component('PersonIcon', PersonIcon);

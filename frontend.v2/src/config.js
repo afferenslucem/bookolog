@@ -10,7 +10,7 @@ export const BOOK_RELOAD_TIMEOUT_SECONDS = 43200;
 
 export const BOOK_RELOAD_DELAY_SECONDS = 10;
 
-export const VERSION = 'alpha-0.1.21';
+export const VERSION = 'alpha-0.1.22';
 
 export const HTTP_TRYOUTS_COUNT = 3;
 

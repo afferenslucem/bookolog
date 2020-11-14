@@ -9,7 +9,7 @@
     .avatar {
         background-origin: content-box;
 
-        background-position: 50% 50%;
+        background-position: center center;
         background-size: 100% auto;
 
         border-radius: 50%;
