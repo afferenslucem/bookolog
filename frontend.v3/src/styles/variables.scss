@@ -1,0 +1,103 @@
+// Color Names
+$black: #000000;
+$white: #FFFFFF;
+
+$cadet: #637074;
+$space-cadet: #222E50;
+
+$bdazzled-blue: #415a77;
+$blue-sapphire: #175676;
+$lapis-lazuli: #1C5D99;
+$maya-blue: #51bbfe;
+$blue-ryb: #4056F4;
+$vavid-sky-blue: #49C6E5;
+$spanish-blue: #2373BE;
+$blue-jeans: #0BA1FE;
+$azure: #007BFF;
+
+$tea-green: #C2EABD;
+$bud-green: #79B473;
+$illuminating-emerald: #00916E;
+$polished-pine: #439A86;
+
+$fire-opal: #DE6449;
+$bittersweet: #FF6666;
+$paradise-pink: #E63462;
+$vermilion: #D84727;
+$dark-sienna: #230903;
+$persian-orange: #DC965A;
+
+// Colors
+$split-color: $bdazzled-blue;
+$header-color: $maya-blue;
+
+$header-text-color: $white;
+$secondary-text-color: $cadet;
+
+$required-color: $bittersweet;
+
+$bg-color: $white;
+$overlay-color: #{$bdazzled-blue}55;
+
+$progress-bar-color: $polished-pine;
+
+$info-color: $spanish-blue;
+$danger-color: $vermilion;
+$warning-color: $bittersweet;
+$alert-color: $paradise-pink;
+$primary-color: $blue-jeans;
+
+$link-color: $azure;
+
+// Lines
+$split-line: 1px solid $split-color;
+
+// Header
+$header-height: 2.7rem;
+
+// Lists
+$list-header-height: 2.2rem;
+
+// Icons
+$icon-size: 2.5rem;
+
+// Media
+$phone-screen-width: 768px;
+
+// Font
+$micro-font-size: 0.5rem;
+$small-font-size: 0.75rem;
+$normal-font-size: 1rem;
+$large-font-size: 1.1rem;
+$big-font-size: 1.25rem;
+$huge-font-size: 1.5rem;
+
+$tiny-font-weight: 300;
+$normal-font-weight: 400;
+$fat-font-weight: 500;
+
+// Connection
+$connected-marker-color: $bud-green;
+$not-connected-marker-color: $bittersweet;
+
+// Loader
+$loader-overlay-color: #{$bdazzled-blue}CC;
+
+// Total Count
+$total-placeholder-color: $blue-ryb;
+
+$user-info-bg-color: $blue-ryb;
+
+// Indents
+
+$base-indent: 0.25rem;
+
+$ind-1: $base-indent * 1;
+$ind-2: $base-indent * 2;
+$ind-3: $base-indent * 3;
+$ind-4: $base-indent * 4;
+$ind-5: $base-indent * 5;
+$ind-6: $base-indent * 6;
+$ind-7: $base-indent * 7;
+$ind-8: $base-indent * 8;
+

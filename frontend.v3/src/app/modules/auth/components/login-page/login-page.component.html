@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <span>Bookolog</span>
+</mat-toolbar>
+<div class="content">
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Логин</mat-label>
+      <input matInput formControlName="login" required/>
+      <mat-error *ngIf="form.get('login').invalid">
+        Это обязательное поле
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Пароль</mat-label>
+      <input matInput type="password" formControlName="password" required/>
+      <mat-error *ngIf="form.get('password').invalid">
+        Это обязательное поле
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button
+            color="primary"
+            class="w-100"
+            [disabled]="form.invalid"
+            (click)="submit($event)">
+      Войти
+    </button>
+  </form>
+</div>

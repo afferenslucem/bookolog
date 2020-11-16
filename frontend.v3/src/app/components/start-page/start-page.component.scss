@@ -1,0 +1,13 @@
+@import "../../../styles/variables";
+
+.actions {
+  display: flex;
+
+  flex-flow: column;
+
+  button {
+    &:not(:first-child) {
+      margin-top: $ind-2;
+    }
+  }
+}
