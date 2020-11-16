@@ -52,6 +52,10 @@
         align-items: baseline;
 
         margin-top:  0.5rem;
+
+        &__separator {
+            flex: 1 1 auto;
+        }
     }
 }
 

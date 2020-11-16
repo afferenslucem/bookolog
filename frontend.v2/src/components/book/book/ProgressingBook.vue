@@ -13,8 +13,12 @@
         )"
         />
         <div class="book-line__progress-info">
-            <book-time-progress class="dark-text" :book="props.book" v-if="props.book.type == 2"/>
-            <book-page-progress class="dark-text" :book="props.book" v-else/>
+            <div v-if="props.book.doneUnits">
+                <book-time-progress class="dark-text" :book="props.book" v-if="props.book.type == 2"/>
+                <book-page-progress class="dark-text" :book="props.book" v-else/>
+            </div>
+
+            <div class="book-line__progress-info__separator"></div>
 
             <book-date-range class="book-line__date-range" :book="props.book"/>
         </div>
