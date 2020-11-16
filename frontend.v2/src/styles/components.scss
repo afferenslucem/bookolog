@@ -3,249 +3,253 @@
 
 // Icons 
 .icon {
-    display: block;
+  display: block;
 
-    height: $icon-size;
-    width: $icon-size;
+  height: $icon-size;
+  width: $icon-size;
 
-    line-height: $icon-size - 0.1rem;
-    font-size: $icon-size / 2;
+  line-height: $icon-size - 0.1rem;
+  font-size: $icon-size / 2;
 
-    text-align: center;
+  text-align: center;
 }
 
 // Buttons
 .btn-outline-danger {
-    color: $danger-color;
-    border-color: $danger-color;
+  color: $danger-color;
+  border-color: $danger-color;
 }
 
 .btn-danger {
-    background-color: $danger-color;
+  background-color: $danger-color;
 }
 
 // Application
 #app {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 //Progress Bar
 .progress-bar {
-    background-color: $progress-bar-color;
+  background-color: $progress-bar-color;
 }
 
 .book-line {
-    &__authors {
-        display: inline-block;
+  &__authors {
+    display: inline-block;
 
-        max-width: 100%;
+    max-width: 100%;
+  }
+
+  &__date-range {
+    line-height: 80%;
+  }
+
+  &__progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    margin-top: 0.5rem;
+
+    &__separator {
+      flex: 1 1 auto;
     }
-
-    &__date-range {
-        line-height: 80%;
-    }
-
-    &__progress-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-
-        margin-top:  0.5rem;
-
-        &__separator {
-            flex: 1 1 auto;
-        }
-    }
+  }
 }
 
 // Lists
 
 .book-list-standard {
-    display: block;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  > .header {
+    display: inline-block;
     width: 100%;
+    height: $list-header-height;
+
+    border-bottom: $split-line;
+
+    margin-bottom: 0;
+  }
+
+  > ul {
+    overflow-y: auto;
     height: 100%;
-    overflow: hidden;
 
-    > .header {
-        display: inline-block;
-        width: 100%;
-        height: $list-header-height;
-
-        border-bottom: $split-line;
-
-        margin-bottom: 0;
+    > li {
+      margin-top: 0.2rem;
     }
-
-    >ul {
-        overflow-y: auto;
-        height: 100%;
-
-        >li {
-            margin-top: 0.2rem;
-        }
-    }
+  }
 }
 
 .book-list {
-    @extend .book-list-standard;
+  @extend .book-list-standard;
 }
 
 .book-year-list {
-    @extend .book-list-standard;
+  @extend .book-list-standard;
 
-    .year-header {
-        font-weight: 700;
+  .year-header {
+    font-weight: 700;
+  }
+
+  &__header {
+    height: $list-header-height;
+    border-bottom: $split-line;
+    margin-bottom: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    > * {
+      flex: 0 0 auto;
     }
-
-    &__header {
-        height: $list-header-height;
-        border-bottom: $split-line;
-        margin-bottom: 0;
-
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-
-        > * {
-            flex: 0 0 auto;
-        }
-    }
+  }
 }
 
 .menu {
-    padding: 0.5rem;
+  padding: 0.5rem;
 }
 
 .statistic-list {
-    ul {
-        height: 100%;
+  ul {
+    height: 100%;
 
-        li {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
 
-            .name {
-                font-size: $big-font-size;
-                font-weight: $fat-font-weight;
-            }
+      .name {
+        font-size: $big-font-size;
+        font-weight: $fat-font-weight;
+      }
 
-            .count {
-                font-size: $big-font-size;
-                font-weight: $fat-font-weight;
-            }
-        }
+      .count {
+        font-size: $big-font-size;
+        font-weight: $fat-font-weight;
+      }
     }
+  }
 }
 
 .genres-list {
-    @extend .statistic-list;
+  @extend .statistic-list;
 }
 
 .tags-list {
-    @extend .statistic-list;
+  @extend .statistic-list;
 }
 
 .authors-list {
-    @extend .statistic-list;
+  @extend .statistic-list;
 }
 
 // Profile
 .profile {
-    position: relative;
+  position: relative;
 
-    >.marker {
-        position: absolute;
+  > .marker {
+    position: absolute;
 
-        right: 0.1rem;
-        top: 0;
-    }
+    right: 0.1rem;
+    top: 0;
+  }
 
-    >.total-count {
-        left: 0;
-        bottom: 0;
+  > .total-count {
+    left: 0;
+    bottom: 0;
 
-        font-size: 0.65rem;
+    font-size: 0.65rem;
 
-        transform: translate(5%, 0%);
+    transform: translate(5%, 0%);
 
-        position: absolute;
-    }
+    position: absolute;
+  }
 }
 
 img.avatar {
-    display: inherit;
+  display: inherit;
 
-    padding: 0.3rem;
+  padding: 0.3rem;
 
-    border-radius: 0.6rem;
+  border-radius: 0.6rem;
 
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 // Form
 .form-group {
-    position: relative;
-    padding-top: 0.35rem;
+  position: relative;
+  padding-top: 0.35rem;
 
-    label {
-        position: absolute;
+  label {
+    position: absolute;
 
-        width: auto;
-        height: 0.9rem;
-        line-height: 0.9rem;
+    width: auto;
+    height: 0.9rem;
+    line-height: 0.9rem;
 
-        margin: 0;
+    margin: 0;
 
-        padding: 0 0.3rem;
+    padding: 0 0.3rem;
 
-        font-size: 0.85rem;
-        top: -0.25em;
-        left: 0.5rem;
+    font-size: 0.85rem;
+    top: -0.25em;
+    left: 0.5rem;
 
-        z-index: 1000;
+    z-index: 1000;
 
-        background: $bg-color;
-    }
+    background: $bg-color;
+  }
 }
 
 .form-group {
-    label {
-        color: $secondary-text-color;
+  label {
+    color: $secondary-text-color;
 
-        &.required {
-            &::after {
-                content: "*";
-                color: $required-color;
+    &.required {
+      &::after {
+        content: "*";
+        color: $required-color;
 
-                position: relative;
+        position: relative;
 
-                left: 0.1rem;
-            }
-        }
+        left: 0.1rem;
+      }
     }
+  }
 }
 
 // Menu
 
 .side-menu {
-    .nav-item {
-        line-height: 1rem;
-    }
+  .nav-item {
+    line-height: 1rem;
+  }
 
-    .icon.nav-link {
-        height: 30px;
+  .icon.nav-link {
+    height: 30px;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .menu {
-        h5 {
-            font-size: $normal-font-size;
-        }
+  .menu {
+    h5 {
+      font-size: $normal-font-size;
     }
+  }
+}
+
+a[href] {
+  font-weight: $fat-font-weight;
 }

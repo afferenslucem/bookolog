@@ -1,7 +1,7 @@
 <template>
     <span class="tag">
         <small class="tag__text">{{ name | capital }}</small>
-        <i class="tag__close-button" @click="crossClick()">
+        <i v-if="!hideButton" class="tag__close-button" @click="crossClick()">
             <cross-icon></cross-icon>
         </i>
     </span>
@@ -13,6 +13,10 @@
             name: {
                 type: String,
                 required: true,
+            },
+            hideButton: {
+                type: Boolean,
+                default: false,
             },
         },
         methods: {
@@ -34,6 +38,8 @@
         height: 1.75rem;
 
         padding: 0.2rem 0.4rem;
+
+        line-height: 80%;
 
         &__close-button {
             margin-left: 0.3rem;

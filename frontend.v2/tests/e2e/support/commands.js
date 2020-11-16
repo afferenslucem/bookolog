@@ -254,55 +254,59 @@ Cypress.Commands.add("compareInProgressBookForm", (book) => {
 
 function compareCommonView(book) {
     cy.get('h4').contains(book.name);
-    cy.get('.authors').contains(book.authors.join(', '));
+    cy.get('.book__authors').contains(book.authors.join(', '));
 
     switch (book.type) {
         case 0: {
-            cy.get('.book-type').contains('Бумажная книга');
+            cy.get('.book__book-type').contains('Бумажная книга');
             break;
         }
         case 1: {
-            cy.get('.book-type').contains('Электронная книга');
+            cy.get('.book__book-type').contains('Электронная книга');
             break;
         }
         case 2: {
-            cy.get('.book-type').contains('Аудиокнига');
+            cy.get('.book__book-type').contains('Аудиокнига');
             break;
         }
     }
 
-    cy.get('.genre').contains(capitalFirst(book.genre));
-    cy.get('.tags').contains(book.tags.map(item => capitalFirst(item)).join(', '));
+    cy.get('.book__genre').contains(capitalFirst(book.genre));
+
+    book.tags.forEach(tag => {
+        const temp = tag.slice(0, 1).toUpperCase() + tag.slice(1);
+        cy.get('.book__tags').contains(temp);
+    });
 
     if (book.note) {
-        cy.get('.note').contains(book.note);
+        cy.get('.book__note').contains(book.note);
     }
 }
 
 Cypress.Commands.add("compareToReadBookVue", (book) => {
     compareCommonView(book);
-    cy.get('.progressing-bar').should('not.exist');
-    cy.get('.start-date').should('not.exist');
-    cy.get('.end-date').should('not.exist');
-    cy.get('.status').contains('К прочтению');
+    cy.get('.book__progressing-bar').should('not.exist');
+    cy.get('.book__start-date').should('not.exist');
+    cy.get('.book__end-date').should('not.exist');
+    cy.get('.book__status').contains('К прочтению');
 });
 
 const dateFormat = 'DD.MM.YYYY';
 
 Cypress.Commands.add("compareDoneBookVue", (book) => {
     compareCommonView(book);
-    cy.get('.progressing-bar').should('not.exist');
-    cy.get('.start-date').contains(moment(book.startDate).format(dateFormat));
-    cy.get('.end-date').contains(moment(book.endDate).format(dateFormat));
-    cy.get('.status').contains('Прочитана');
+    cy.get('.book__progressing-bar').should('not.exist');
+    cy.get('.book__start-date').contains(moment(book.startDate).format(dateFormat));
+    cy.get('.book__end-date').contains(moment(book.endDate).format(dateFormat));
+    cy.get('.book__status').contains('Прочитана');
 });
 
 Cypress.Commands.add("compareInProgressBookVue", (book) => {
     compareCommonView(book);
-    cy.get('.progressing-bar').should('exist');
-    cy.get('.start-date').contains(moment(book.startDate).format(dateFormat));
-    cy.get('.end-date').should('not.exist');
-    cy.get('.status').contains('Читаю');
+    cy.get('.book__progressing-bar').should('exist');
+    cy.get('.book__start-date').contains(moment(book.startDate).format(dateFormat));
+    cy.get('.book__end-date').should('not.exist');
+    cy.get('.book__status').contains('Читаю');
 });
 
 Cypress.Commands.add("compareBookLine", (index, book) => {
