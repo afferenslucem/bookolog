@@ -4,26 +4,35 @@
 <div class="content">
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
-      <mat-label>Логин</mat-label>
+      <mat-label i18n>Логин</mat-label>
       <input matInput formControlName="login" required/>
-      <mat-error *ngIf="form.get('login').invalid">
+      <mat-error *ngIf="form.get('login').invalid" i18n>
         Это обязательное поле
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Пароль</mat-label>
+      <mat-label i18n>Пароль</mat-label>
       <input matInput type="password" formControlName="password" required/>
-      <mat-error *ngIf="form.get('password').invalid">
+      <mat-error *ngIf="form.get('password').invalid" i18n>
         Это обязательное поле
       </mat-error>
     </mat-form-field>
+
+    <mat-error i18n="Login error message" *ngIf="error !== null" class="login-error">
+      {error, plural,
+        =0 {Неверные логин или пароль}
+        other {Неизвестная ошибка}
+      }
+    </mat-error>
 
     <button mat-flat-button
             color="primary"
             class="w-100"
             [disabled]="form.invalid"
-            (click)="submit($event)">
+            (click)="submit($event)"
+            i18n
+    >
       Войти
     </button>
   </form>

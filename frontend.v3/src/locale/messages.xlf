@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="f516f670f322709f16879defac208d1feeba672d" datatype="html">
+        <source>Вход</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/start-page/start-page.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9313958545203394ce206f6f0f8f70b85eaccc24" datatype="html">
+        <source>Регистрация</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/start-page/start-page.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6414b201e5534a5b2ebf2445663f3bea95577234" datatype="html">
+        <source>Логин</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/login-page/login-page.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5eb9d177ec974f9b5c9abb9093d10650a469449a" datatype="html">
+        <source>Пароль</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/login-page/login-page.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8b534cd381f835b00af4ce29da5354a2028c6a5d" datatype="html">
+        <source> Войти </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/login-page/login-page.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ef0d5bad87db26d743da344b01e23e9d33ad2b7d" datatype="html">
+        <source> Это обязательное поле </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/login-page/login-page.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/login-page/login-page.component.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="818a7a9df7bff6b173b3c6fea2ea61985d105e33" datatype="html">
+        <source>{VAR_PLURAL, plural, =0 {Неверные логин или пароль} other {Неизвестная ошибка}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/login-page/login-page.component.html</context>
+          <context context-type="linenumber">23,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c479155cc83c0a7afdbf6f3465c85ec9886ced53" datatype="html">
+        <source> <x id="ICU" equiv-text="{error, plural,
+        =0 {Неверные логин или пароль}
+        other {Неизвестная ошибка}
+      }
+    "/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/login-page/login-page.component.html</context>
+          <context context-type="linenumber">23,27</context>
+        </context-group>
+        <note priority="1" from="description">Login error message</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

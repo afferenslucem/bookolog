@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { interceptors } from './app.interceptors';
 import { AuthModule } from './modules/auth/auth.module';
+import { BookModule } from './modules/book/book.module';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,9 @@ import { AuthModule } from './modules/auth/auth.module';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    AuthModule,
     HttpClientModule,
+    AuthModule,
+    BookModule
   ],
   providers: [
     interceptors,

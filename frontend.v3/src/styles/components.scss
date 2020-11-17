@@ -14,7 +14,7 @@ app-root {
 }
 
 form {
-  mat-form-field {
+  mat-form-field, mat-error {
     width: 100%;
 
     &:not(:last-child) {
