@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SyncService } from '../../synchronization/services/sync.service';
+import _ from 'declarray';
+import { SyncService } from '../../../main/services/sync.service';
 import { Book } from '../models/book';
 import { BookOriginService } from './book.origin.service';
 import { BookStorageService } from './book.storage.service';
@@ -12,12 +13,12 @@ export class BookService {
   }
 
   public async getBooks(): Promise<Book[]> {
-    return await this.origin.getAll();
+    const data = await this.syncService.getData(
+      () => this.storage.getAll(),
+      () => this.origin.getAll(),
+      books => this.storage.restore(books)
+    );
 
-    // return await this.syncService.getData(
-    //   () => this.storage.getAll(),
-    //   () => this.origin.getAll(),
-    //   books => this.storage.restore(books)
-    // );
+    return _(data).select(item => new Book(item)).toArray();
   }
 }

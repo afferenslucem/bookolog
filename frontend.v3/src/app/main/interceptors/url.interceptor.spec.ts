@@ -1,6 +1,5 @@
+import { environment } from '../../../environments/environment';
 import { UrlInterceptor } from './url.interceptor';
-import {HttpRequest} from '@angular/common/http';
-import {environment} from '../../environments/environment';
 
 describe('UrlInterceptor', () => {
   it('should create an instance', () => {

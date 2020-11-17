@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { UserService } from '../../user/services/user.service';
+import { environment } from '../../../environments/environment';
+import { UserService } from '../../modules/user/services/user.service';
 import addSeconds from 'date-fns/addSeconds';
 import addMinutes from 'date-fns/addMinutes';
 
@@ -22,7 +22,7 @@ export class SyncService {
   public get shouldSync(): boolean {
     const nextSync = addSeconds(this.userService.lastSyncDate, environment.synchTimeSeconds);
 
-    return nextSync <= this.currentUTC;
+    return nextSync <= this.currentUTC || true;
   }
 
   public get currentUTC(): Date {
