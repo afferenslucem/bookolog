@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import _ from 'declarray';
 import { getLogger } from '../../../app.logging';
 import { Book } from '../models/book';
+import { BookStatus } from '../models/book-status';
+import { BookService } from '../services/book.service';
 
 @Injectable({providedIn: 'root'})
-export class InProgressBooksResolver implements Resolve<Book> {
+export class InProgressBooksResolver implements Resolve<Book[]> {
   private logger = getLogger({
     loggerName: 'InProgressBooksResolver',
     namespace: 'Resolver',
   });
 
-  public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Book> | Promise<Book> | Book {
-    this.logger.debug('Woo-hoo');
-    return undefined;
+  public constructor(private bookService: BookService) {
+  }
+
+  public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Book[]> {
+    const books = await this.bookService.getBooks();
+
+    this.logger.debug('Books result: ', books);
+
+    return _(books).where(item => item.status === BookStatus.InProgress).toArray();
   }
 }

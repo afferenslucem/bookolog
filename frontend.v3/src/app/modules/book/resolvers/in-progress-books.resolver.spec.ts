@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { BookOriginService } from '../services/book.origin.service';
 import { InProgressBooksResolver } from './in-progress-books.resolver';
 
 describe('InProgressBooksResolver', () => {
-  let resolver: BookOriginService;
+  let resolver: InProgressBooksResolver;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

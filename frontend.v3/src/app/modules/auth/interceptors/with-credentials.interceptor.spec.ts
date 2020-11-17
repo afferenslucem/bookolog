@@ -1,7 +1,7 @@
 import { WithCredentialsInterceptor } from './with-credentials.interceptor';
 import {environment} from '../../../../environments/environment';
 
-describe('WithCredentials.Interceptor', () => {
+describe('WithCredentialsInterceptor', () => {
   it('should create an instance', () => {
     expect(new WithCredentialsInterceptor()).toBeTruthy();
   });

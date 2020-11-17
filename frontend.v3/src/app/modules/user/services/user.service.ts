@@ -30,4 +30,8 @@ export class UserService {
   public get user(): User {
     return this._user;
   }
+
+  public get lastSyncDate(): Date {
+    return new Date(this.user.lastSyncTime);
+  }
 }

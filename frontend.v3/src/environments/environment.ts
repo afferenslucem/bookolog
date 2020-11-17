@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'http://localhost:35080'
+  serverUrl: 'http://localhost:35080',
+  synchTimeSeconds: 60
 };
 
 /*
