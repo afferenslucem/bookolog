@@ -17,8 +17,8 @@ export class Book {
   public genre?: string;
   public started: BookDate;
   public finished: BookDate;
-  public modifyDate: string;
-  public createDate: string;
+  public modifyDate: Date;
+  public createDate: Date;
   public type: BookType;
   public note?: string;
 
@@ -35,22 +35,16 @@ export class Book {
     this.started = {
       year: data.startDateYear,
       month: data.startDateMonth,
-      day: data.endDateDay,
+      day: data.startDateDay,
     };
     this.finished = {
       year: data.endDateYear,
       month: data.endDateMonth,
       day: data.endDateDay,
     };
-    this.modifyDate = this.toUtcDate(data.modifyDate);
-    this.createDate = this.toUtcDate(data.createDate);
+    this.modifyDate = new Date(data.modifyDate);
+    this.createDate = new Date(data.createDate);
     this.type = data.type;
     this.note = data.note;
-  }
-
-  private toUtcDate(date: Date | string): string {
-    const temp = new Date(date);
-
-    return format(addMinutes(temp, temp.getTimezoneOffset()), 'yyyy-MM-dd HH:mm:ss');
   }
 }
