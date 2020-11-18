@@ -1,22 +1,22 @@
 import { Book } from '../../models/book';
 
 export class BookComponent {
-  protected _book: Book;
+  public innerBook: Book;
 
   public get name(): string {
-    return this._book.name;
+    return this.innerBook.name;
   }
 
   public get authors(): string[] {
-    return this._book.authors;
+    return this.innerBook.authors;
   }
 
   public get done(): number {
-    return this._book.doneUnits;
+    return this.innerBook.doneUnits;
   }
 
   public get total(): number {
-    return this._book.totalUnits;
+    return this.innerBook.totalUnits;
   }
 
   public get progressValue(): number {
@@ -28,10 +28,10 @@ export class BookComponent {
   }
 
   public get startDate(): Date {
-    return this._book.startDate;
+    return this.innerBook.startDate;
   }
 
   public get guid(): string {
-    return this._book.guid;
+    return this.innerBook.guid;
   }
 }

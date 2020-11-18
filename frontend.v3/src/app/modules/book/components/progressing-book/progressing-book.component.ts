@@ -11,7 +11,7 @@ import { BookComponent } from '../book/book.component';
 export class ProgressingBookComponent extends BookComponent implements OnInit {
   @Input()
   public set book(v: Book) {
-    this._book = v;
+    this.innerBook = v;
   }
 
   constructor() {
