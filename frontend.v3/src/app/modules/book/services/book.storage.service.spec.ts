@@ -26,7 +26,7 @@ describe('BookStorageService', () => {
   });
 
   it('getAll', async () => {
-    const iDB = TestBed.get(IndexedDbService);
+    const iDB = TestBed.inject(IndexedDbService);
 
     const spyAll = jasmine.createSpy();
 
@@ -54,7 +54,7 @@ describe('BookStorageService', () => {
   });
 
   it('saveMany', async () => {
-    const iDB = TestBed.get(IndexedDbService);
+    const iDB = TestBed.inject(IndexedDbService);
 
     iDB.open = jasmine.createSpy();
     iDB.close = jasmine.createSpy();
@@ -74,7 +74,7 @@ describe('BookStorageService', () => {
   });
 
   it('clear', async () => {
-    const iDB = TestBed.get(IndexedDbService);
+    const iDB = TestBed.inject(IndexedDbService);
 
     iDB.open = jasmine.createSpy();
     iDB.close = jasmine.createSpy();

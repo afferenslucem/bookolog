@@ -1,7 +1,11 @@
 <mat-toolbar color="primary">
   <span i18n>Читаю сейчас</span>
 </mat-toolbar>
-<div *ngIf="(books$ | async) as books">
-  <app-progressing-book [book]="book" *ngFor="let book of books">
-  </app-progressing-book>
+
+<div class="book-list" *ngIf="(books$ | async) as books">
+  <div *ngFor="let book of books; let last = last">
+    <app-progressing-book [book]="book">
+    </app-progressing-book>
+    <mat-divider *ngIf="!last"></mat-divider>
+  </div>
 </div>
