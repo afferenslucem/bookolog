@@ -1,4 +1,4 @@
-import { LoggerFactory, LogLevel, ConsoleAppender, ILogger, ILoggerName } from 'waterlog';
+import { ConsoleAppender, ILogger, ILoggerName, LoggerFactory, LogLevel } from 'waterlog';
 
 const factory = new LoggerFactory([
   {
@@ -8,6 +8,17 @@ const factory = new LoggerFactory([
       appenders: [new ConsoleAppender()],
     },
   },
+  {
+    name: 'SyncService',
+    logger: LogLevel.Disable
+  },
+  {
+    name: {
+      namespace: 'Storage',
+      loggerName: 'IndexedDb'
+    },
+    logger: LogLevel.Disable
+  }
 ]);
 
 export function getLogger(name: string | ILoggerName): ILogger {
