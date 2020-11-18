@@ -26,7 +26,16 @@ form {
     margin-bottom: $ind-1;
   }
 
-  .progress-data {
+  &__name {
+    font-weight: $fat-font-weight;
+  }
+
+  &__authors {
+    font-weight: $fat-font-weight;
+    font-size: $small-font-size;
+  }
+
+  &__progress-data {
     display: flex;
     align-items: baseline;
     justify-content: space-between;

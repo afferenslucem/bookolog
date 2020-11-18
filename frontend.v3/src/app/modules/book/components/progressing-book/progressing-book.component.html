@@ -1,7 +1,7 @@
-<div>{{name}}</div>
-<div *ngIf="authors.length > 0">{{authors | join}}</div>
+<div class="book__name truncate-text">{{name}}</div>
+<div class="book__authors truncate-text" *ngIf="authors.length > 0">{{authors | join}}</div>
 <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
-<div class="progress-data dark-text" *ngIf="progressValue || startDate">
+<div class="book__progress-data dark-text" *ngIf="progressValue || startDate">
   <small class="progress" *ngIf="progressValue">
     <span>{{done}} </span>
     <span i18n="book progress|прогресс прочитанных единиц из общего кол-ва">из</span>

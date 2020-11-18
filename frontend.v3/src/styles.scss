@@ -24,6 +24,18 @@ app-root {
   color: $secondary-text-color;
 }
 
+.no-wrap {
+  white-space: nowrap;
+}
+
+.truncate-text {
+  @extend .no-wrap;
+
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
 // Sizes
 
 .w-100 {
