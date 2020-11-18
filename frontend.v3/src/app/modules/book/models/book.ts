@@ -2,8 +2,6 @@ import { BookData } from './book-data';
 import { BookDate } from './book-date';
 import { BookStatus } from './book-status';
 import { BookType } from './book-type';
-import format from 'date-fns/format';
-import addMinutes from 'date-fns/addMinutes';
 
 export class Book {
   public guid: string;
@@ -16,7 +14,9 @@ export class Book {
   public doneUnits: number;
   public genre?: string;
   public started: BookDate;
+  public startDate?: Date;
   public finished: BookDate;
+  public endDate?: Date;
   public modifyDate: Date;
   public createDate: Date;
   public type: BookType;
@@ -37,11 +37,13 @@ export class Book {
       month: data.startDateMonth,
       day: data.startDateDay,
     };
+    this.startDate = data.startDate ? new Date(data.startDate) : null;
     this.finished = {
       year: data.endDateYear,
       month: data.endDateMonth,
       day: data.endDateDay,
     };
+    this.endDate = data.endDate ? new Date(data.endDate) : null;
     this.modifyDate = new Date(data.modifyDate);
     this.createDate = new Date(data.createDate);
     this.type = data.type;

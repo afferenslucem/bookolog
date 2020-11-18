@@ -11,9 +11,11 @@ export interface BookData {
   startDateYear?: number;
   startDateMonth?: number;
   startDateDay?: number;
+  startDate?: string;
   endDateYear?: number;
   endDateMonth?: number;
   endDateDay?: number;
+  endDate?: string;
   modifyDate: string;
   createDate: string;
   type: number;

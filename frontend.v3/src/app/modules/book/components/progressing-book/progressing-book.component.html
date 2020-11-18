@@ -1,0 +1,13 @@
+<div>{{name}}</div>
+<div>{{authors | join}}</div>
+<mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+<div>
+  <div class="progress">
+    <span>{{done}} </span>
+    <span i18n="book progress|прогресс прочитанных единиц из общего кол-ва">из</span>
+    <span> {{total}}</span>
+  </div>
+  <div>
+    {{startDate | date: 'shortDate'}}
+  </div>
+</div>

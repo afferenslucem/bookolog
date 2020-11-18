@@ -50,6 +50,8 @@ describe('Book', () => {
     expect(book.modifyDate).toEqual(new Date('2020-11-18 10:57:00'), 'Different modify dates');
     expect(book.createDate).toEqual(new Date('2020-11-18 09:57:00'), 'Different create dates');
     expect(book.note).toEqual(undefined, 'Different notes');
+    expect(book.startDate).toEqual(null);
+    expect(book.endDate).toEqual(null);
   });
 
   it('map full correct', () => {
@@ -73,6 +75,8 @@ describe('Book', () => {
       type: 1,
       modifyDate: '2020-11-18 10:57',
       createDate: '2020-11-18 09:57',
+      startDate: '2020-11-10 10:34',
+      endDate: '2020-11-11 11:11'
     };
 
     const book = new Book(data);
@@ -100,5 +104,7 @@ describe('Book', () => {
     expect(book.modifyDate).toEqual(new Date('2020-11-18 10:57:00'), 'Different modify dates');
     expect(book.createDate).toEqual(new Date('2020-11-18 09:57:00'), 'Different create dates');
     expect(book.note).toEqual(data.note, 'Different notes');
+    expect(book.startDate).toEqual(new Date(data.startDate));
+    expect(book.endDate).toEqual(new Date(data.endDate));
   });
 });

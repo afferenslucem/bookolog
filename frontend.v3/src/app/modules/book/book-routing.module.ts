@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { InProgressBooksComponent } from './components/in-progress-books/in-progress-books.component';
+import { InProgressBooksListComponent } from './components/in-progress-books-list/in-progress-books-list.component';
 import { InProgressBooksResolver } from './resolvers/in-progress-books.resolver';
 
 export const routes: Routes = [
   {
-    component: InProgressBooksComponent,
+    component: InProgressBooksListComponent,
     path: 'in-progress',
     pathMatch: 'full',
     resolve: {

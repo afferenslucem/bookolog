@@ -1,0 +1,7 @@
+<mat-toolbar color="primary">
+  <span i18n>Читаю сейчас</span>
+</mat-toolbar>
+<div *ngIf="(books$ | async) as books">
+  <app-progressing-book [book]="book" *ngFor="let book of books">
+  </app-progressing-book>
+</div>
