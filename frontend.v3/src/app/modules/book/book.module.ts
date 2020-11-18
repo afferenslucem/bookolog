@@ -8,10 +8,15 @@ import { FormattingModule } from '../formatting/formatting.module';
 import { routes } from './book-routing.module';
 import { InProgressBooksListComponent } from './components/in-progress-books-list/in-progress-books-list.component';
 import { ProgressingBookComponent } from './components/progressing-book/progressing-book.component';
+import { DateRangeComponent } from './components/date-range/date-range.component';
 
 
 @NgModule({
-  declarations: [InProgressBooksListComponent, ProgressingBookComponent],
+  declarations: [
+    InProgressBooksListComponent,
+    ProgressingBookComponent,
+    DateRangeComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

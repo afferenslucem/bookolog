@@ -11,6 +11,6 @@
 
   </div>
   <small *ngIf="startDate">
-    [ {{startDate | date: 'shortDate'}} - ... ]
+    <app-date-range [startDate]="startDate" [endDate]="null"></app-date-range>
   </small>
 </div>

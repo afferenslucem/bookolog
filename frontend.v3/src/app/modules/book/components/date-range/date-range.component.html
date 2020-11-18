@@ -1,0 +1,9 @@
+[ <ng-container *ngIf="!!startDate; else noDate">
+  {{startDate | date: 'shortDate'}}
+</ng-container>
+-
+<ng-container *ngIf="!!endDate; else noDate">
+  {{endDate | date: 'shortDate'}}
+</ng-container> ]
+
+<ng-template #noDate>…</ng-template>
