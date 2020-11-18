@@ -5,4 +5,8 @@ describe('ChooseFormPipe', () => {
     const pipe = new ChooseFormPipe();
     expect(pipe).toBeTruthy();
   });
+  it('create an instance', () => {
+    const pipe = new ChooseFormPipe();
+    expect(pipe).toBeTruthy();
+  });
 });
