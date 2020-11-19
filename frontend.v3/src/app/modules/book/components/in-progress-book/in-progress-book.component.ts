@@ -3,12 +3,12 @@ import { Book } from '../../models/book';
 import { BookComponent } from '../book/book.component';
 
 @Component({
-  selector: 'app-progressing-book',
-  templateUrl: './progressing-book.component.html',
-  styleUrls: ['./progressing-book.component.scss'],
+  selector: 'app-in-progress-book',
+  templateUrl: './in-progress-book.component.html',
+  styleUrls: ['./in-progress-book.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProgressingBookComponent extends BookComponent implements OnInit {
+export class InProgressBookComponent extends BookComponent implements OnInit {
   @Input()
   public set book(v: Book) {
     this.innerBook = v;

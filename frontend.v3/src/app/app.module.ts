@@ -1,5 +1,4 @@
 import { registerLocaleData } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 
@@ -16,12 +15,16 @@ import { interceptors } from './main/app.interceptors';
 import { AuthModule } from './modules/auth/auth.module';
 import { BookModule } from './modules/book/book.module';
 import localeRu from '@angular/common/locales/ru';
+import { InnerAreaComponent } from './main/components/inner-area/inner-area.component';
+import { UiModule } from './modules/ui/ui.module';
+
 registerLocaleData(localeRu, 'ru');
 
 @NgModule({
   declarations: [
     AppComponent,
     StartPageComponent,
+    InnerAreaComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,14 +35,15 @@ registerLocaleData(localeRu, 'ru');
     MatButtonModule,
     HttpClientModule,
     AuthModule,
-    BookModule
+    BookModule,
+    UiModule,
   ],
   providers: [
     interceptors,
     {
       provide: LOCALE_ID,
-      useValue: 'ru'
-    }
+      useValue: 'ru',
+    },
   ],
   bootstrap: [AppComponent],
 })

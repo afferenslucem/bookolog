@@ -9,16 +9,16 @@ import { BookPagesProgressComponent } from '../book-pages-progress/book-pages-pr
 import { BookTimeProgressComponent } from '../book-time-progress/book-time-progress.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
 
-import { ProgressingBookComponent } from './progressing-book.component';
+import { InProgressBookComponent } from './in-progress-book.component';
 
-describe('ProgressingBookComponent', () => {
-  let component: ProgressingBookComponent;
-  let fixture: ComponentFixture<ProgressingBookComponent>;
+describe('InProgressBookComponent', () => {
+  let component: InProgressBookComponent;
+  let fixture: ComponentFixture<InProgressBookComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        ProgressingBookComponent,
+        InProgressBookComponent,
         BookTimeProgressComponent,
         BookPagesProgressComponent,
         DateRangeComponent
@@ -35,7 +35,7 @@ describe('ProgressingBookComponent', () => {
 
   describe('Creation', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(ProgressingBookComponent);
+      fixture = TestBed.createComponent(InProgressBookComponent);
       component = fixture.componentInstance;
 
       const book = new Book({
@@ -60,7 +60,7 @@ describe('ProgressingBookComponent', () => {
     let element: HTMLElement = null;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(ProgressingBookComponent);
+      fixture = TestBed.createComponent(InProgressBookComponent);
       component = fixture.componentInstance;
       element = fixture.nativeElement;
     });

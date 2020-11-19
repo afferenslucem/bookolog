@@ -15,11 +15,6 @@ form {
   }
 }
 
-.book-list {
-  padding: $ind-1;
-}
-
-
 // Books
 .book {
   > *:not(:last-child) {
@@ -49,6 +44,6 @@ form {
   }
 }
 
-app-progressing-book {
+app-in-progress-book {
   @extend .book;
 }

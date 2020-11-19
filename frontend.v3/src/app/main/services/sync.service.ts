@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { UserService } from '../../modules/user/services/user.service';
+import { UserService } from './user.service';
 import addSeconds from 'date-fns/addSeconds';
 import addMinutes from 'date-fns/addMinutes';
 import { getLogger } from '../app.logging';

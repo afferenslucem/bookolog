@@ -1,0 +1,7 @@
+<span *ngIf="(title$ | async) as title">
+  {title, plural,
+    =1    {Вход}
+    =100  {Читаю сейчас}
+    other {Bookolog}
+  }
+</span>

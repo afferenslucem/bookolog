@@ -1,0 +1,22 @@
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TitleText } from '../../models/title-text';
+import { TitleService } from '../../service/title.service';
+
+@Component({
+  selector: 'app-title',
+  templateUrl: './title.component.html',
+  styleUrls: ['./title.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class TitleComponent implements OnInit {
+  constructor(private titleService: TitleService) {
+  }
+
+  ngOnInit(): void {
+  }
+
+  public get title$(): Observable<TitleText> {
+    return this.titleService.title$;
+  }
+}

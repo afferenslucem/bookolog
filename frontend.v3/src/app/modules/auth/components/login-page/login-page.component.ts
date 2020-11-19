@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TitleService } from '../../../ui/service/title.service';
 import { CredentialsException } from '../../exceptions/credentials.exception';
 import { Credentials } from '../../models/credentials';
 import { AuthService } from '../../services/auth.service';
@@ -23,10 +24,11 @@ export class LoginPageComponent implements OnInit {
     password: new FormControl(null, [Validators.required]),
   });
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private title: TitleService) {
   }
 
   ngOnInit(): void {
+    this.title.setLogin();
   }
 
   public async submit(event?: Event): Promise<void> {

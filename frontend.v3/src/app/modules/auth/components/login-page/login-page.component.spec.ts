@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { UiModule } from '../../../ui/ui.module';
 import { CredentialsException } from '../../exceptions/credentials.exception';
 import { AuthService } from '../../services/auth.service';
 
@@ -24,13 +25,13 @@ describe('LoginPageComponent', () => {
         useValue: {}
       }],
       imports: [
-        MatToolbarModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        UiModule
       ]
     })
     .compileComponents();

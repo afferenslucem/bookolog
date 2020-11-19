@@ -7,19 +7,23 @@ import { RouterModule } from '@angular/router';
 import { FormattingModule } from '../formatting/formatting.module';
 import { routes } from './book-routing.module';
 import { InProgressBooksListComponent } from './components/in-progress-books-list/in-progress-books-list.component';
-import { ProgressingBookComponent } from './components/progressing-book/progressing-book.component';
+import { InProgressBookComponent } from './components/in-progress-book/in-progress-book.component';
 import { DateRangeComponent } from './components/date-range/date-range.component';
 import { BookPagesProgressComponent } from './components/book-pages-progress/book-pages-progress.component';
 import { BookTimeProgressComponent } from './components/book-time-progress/book-time-progress.component';
+import { ToReadBooksListComponent } from './components/to-read-books-list/to-read-books-list.component';
+import { ToReadBookComponent } from './components/to-read-book/to-read-book.component';
 
 
 @NgModule({
   declarations: [
     InProgressBooksListComponent,
-    ProgressingBookComponent,
+    InProgressBookComponent,
     DateRangeComponent,
     BookPagesProgressComponent,
     BookTimeProgressComponent,
+    ToReadBooksListComponent,
+    ToReadBookComponent,
   ],
   imports: [
     CommonModule,
