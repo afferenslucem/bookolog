@@ -5,7 +5,10 @@
 <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
 <div class="book__progress-data dark-text" *ngIf="progressValue || startDate">
   <small class="progress" *ngIf="progressValue">
-    <app-book-pages-progress [done]="done" [total]="total"></app-book-pages-progress>
+    <ng-container [ngSwitch]="type">
+      <app-book-time-progress *ngSwitchCase="BookType.Audio" [done]="done" [total]="total"></app-book-time-progress>
+      <app-book-pages-progress *ngSwitchDefault [done]="done" [total]="total"></app-book-pages-progress>
+    </ng-container>
   </small>
   <div class="separator">
 

@@ -10,6 +10,7 @@ import { InProgressBooksListComponent } from './components/in-progress-books-lis
 import { ProgressingBookComponent } from './components/progressing-book/progressing-book.component';
 import { DateRangeComponent } from './components/date-range/date-range.component';
 import { BookPagesProgressComponent } from './components/book-pages-progress/book-pages-progress.component';
+import { BookTimeProgressComponent } from './components/book-time-progress/book-time-progress.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { BookPagesProgressComponent } from './components/book-pages-progress/boo
     ProgressingBookComponent,
     DateRangeComponent,
     BookPagesProgressComponent,
+    BookTimeProgressComponent,
   ],
   imports: [
     CommonModule,

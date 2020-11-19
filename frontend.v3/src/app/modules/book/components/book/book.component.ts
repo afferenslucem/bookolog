@@ -1,6 +1,10 @@
 import { Book } from '../../models/book';
+import { BookType } from '../../models/book-type';
 
 export class BookComponent {
+
+  public BookType: typeof BookType = BookType;
+
   public innerBook: Book;
 
   public get name(): string {
@@ -33,5 +37,9 @@ export class BookComponent {
 
   public get guid(): string {
     return this.innerBook.guid;
+  }
+
+  public get type(): BookType {
+    return this.innerBook.type;
   }
 }
