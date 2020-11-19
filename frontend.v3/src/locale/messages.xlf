@@ -5,14 +5,14 @@
       <trans-unit id="f516f670f322709f16879defac208d1feeba672d" datatype="html">
         <source>Вход</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/start-page/start-page.component.html</context>
+          <context context-type="sourcefile">src/app/main/components/start-page/start-page.component.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9313958545203394ce206f6f0f8f70b85eaccc24" datatype="html">
         <source>Регистрация</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/start-page/start-page.component.html</context>
+          <context context-type="sourcefile">src/app/main/components/start-page/start-page.component.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
@@ -66,6 +66,45 @@
           <context context-type="linenumber">23,27</context>
         </context-group>
         <note priority="1" from="description">Login error message</note>
+      </trans-unit>
+      <trans-unit id="ee1f97964fa05250c774b70c9a12791f6f5c9048" datatype="html">
+        <source>Читаю сейчас</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/book/components/in-progress-books-list/in-progress-books-list.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5837ed74990f2e32be83e28e252befb6250f1f97" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {страница} =2 {страницы} =3 {страниц} other {}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/book/components/book-pages-progress/book-pages-progress.component.html</context>
+          <context context-type="linenumber">4,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d0509a41f238597f37e691334683be176eb34676" datatype="html">
+        <source> <x id="ICU" equiv-text="{pagesForm, plural,
+    =1{страница}
+    =2{страницы}
+    =3{страниц}
+    other {}
+    }"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/book/components/book-pages-progress/book-pages-progress.component.html</context>
+          <context context-type="linenumber">4,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="from" datatype="html">
+        <source>из</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/book/components/book-pages-progress/book-pages-progress.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/book/components/book-time-progress/book-time-progress.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">done units from total</note>
+        <note priority="1" from="meaning">progress</note>
       </trans-unit>
     </body>
   </file>
