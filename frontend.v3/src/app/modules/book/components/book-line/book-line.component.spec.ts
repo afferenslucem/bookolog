@@ -1,17 +1,17 @@
 import { Book } from '../../models/book';
-import { BookComponent } from './book.component';
+import { BookLineComponent } from './book-line.component';
 
-describe('BookComponent', () => {
+describe('BookLineComponent', () => {
   it('should create an instance', () => {
-    expect(new BookComponent()).toBeTruthy();
+    expect(new BookLineComponent()).toBeTruthy();
   });
 
   describe('Full filled book', () => {
-    let component: BookComponent = null;
+    let component: BookLineComponent = null;
     let book: Book = null;
 
     beforeEach(() => {
-      component = new BookComponent();
+      component = new BookLineComponent();
       book = new Book({
         guid: 'guid',
         name: 'name',
@@ -42,11 +42,11 @@ describe('BookComponent', () => {
   });
 
   describe('Min filled book', () => {
-    let component: BookComponent = null;
+    let component: BookLineComponent = null;
     let book: Book = null;
 
     beforeEach(() => {
-      component = new BookComponent();
+      component = new BookLineComponent();
       book = new Book({
         guid: 'guid',
         name: 'name',

@@ -15,6 +15,7 @@ import { ToReadBooksListComponent } from './components/to-read-books-list/to-rea
 import { ToReadBookComponent } from './components/to-read-book/to-read-book.component';
 import { DoneBooksListComponent } from './components/done-books-list/done-books-list.component';
 import { DoneBookComponent } from './components/done-book/done-book.component';
+import { BookViewComponent } from './components/book-view/book-view.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { DoneBookComponent } from './components/done-book/done-book.component';
     ToReadBookComponent,
     DoneBooksListComponent,
     DoneBookComponent,
+    BookViewComponent,
   ],
   imports: [
     CommonModule,

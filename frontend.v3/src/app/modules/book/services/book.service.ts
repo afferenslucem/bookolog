@@ -21,4 +21,10 @@ export class BookService {
 
     return _(data).select(item => new Book(item)).toArray();
   }
+
+  public async getByGuid(guid: string): Promise<Book> {
+    const data = await this.storage.getByGuid(guid);
+
+    return new Book(data);
+  }
 }

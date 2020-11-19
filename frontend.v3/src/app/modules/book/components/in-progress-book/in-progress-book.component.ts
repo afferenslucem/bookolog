@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Book } from '../../models/book';
-import { BookComponent } from '../book/book.component';
+import { BookLineComponent } from '../book-line/book-line.component';
 
 @Component({
   selector: 'app-in-progress-book',
@@ -8,7 +8,7 @@ import { BookComponent } from '../book/book.component';
   styleUrls: ['./in-progress-book.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InProgressBookComponent extends BookComponent implements OnInit {
+export class InProgressBookComponent extends BookLineComponent implements OnInit {
   constructor() {
     super();
   }

@@ -156,6 +156,19 @@ export class IndexedDbService {
     });
   }
 
+  public get(storeName: string, id: string): Promise<Event> {
+    const transaction = this.openRWTransaction(storeName);
+
+    return new Promise((resolve, reject) => {
+      const store = transaction.objectStore(storeName);
+
+      const request = store.get(id);
+
+      request.onerror = (event) => reject(event);
+      request.onsuccess = (event) => resolve(event);
+    });
+  }
+
   public clear(storeName: string): Promise<Event> {
     const transaction = this.openRWTransaction(storeName);
 

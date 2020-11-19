@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
+import { BookViewComponent } from './components/book-view/book-view.component';
 import { DoneBooksListComponent } from './components/done-books-list/done-books-list.component';
 import { InProgressBooksListComponent } from './components/in-progress-books-list/in-progress-books-list.component';
 import { ToReadBooksListComponent } from './components/to-read-books-list/to-read-books-list.component';
+import { BookResolver } from './resolvers/book.resolver';
 import { DoneBooksResolver } from './resolvers/done-books.resolver';
 import { InProgressBooksResolver } from './resolvers/in-progress-books.resolver';
 import { ToReadBooksResolver } from './resolvers/to-read-books.resolver';
@@ -29,6 +31,14 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: DoneBooksResolver,
+    }
+  },
+  {
+    component: BookViewComponent,
+    path: 'book/:guid',
+    pathMatch: 'full',
+    resolve: {
+      book: BookResolver,
     }
   },
 ];

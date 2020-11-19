@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Book } from '../../models/book';
-import { BookComponent } from '../book/book.component';
+import { BookLineComponent } from '../book-line/book-line.component';
 
 @Component({
   selector: 'app-to-read-book',
   templateUrl: './to-read-book.component.html',
   styleUrls: ['./to-read-book.component.scss']
 })
-export class ToReadBookComponent extends BookComponent implements OnInit {
+export class ToReadBookComponent extends BookLineComponent implements OnInit {
   constructor() {
     super();
   }
