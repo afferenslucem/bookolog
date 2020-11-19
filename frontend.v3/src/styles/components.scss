@@ -55,6 +55,13 @@ app-in-progress-book {
   @extend .book;
 }
 
+app-to-read-book {
+  @extend .book;
+}
+
+app-done-book {
+  @extend .book;
+}
 
 // Header
 mat-toolbar {
