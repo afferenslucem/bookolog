@@ -17,7 +17,8 @@ describe('BookComponent', () => {
         name: 'name',
         createDate: '2020-11-18 16:04',
         modifyDate: '2020-11-18 16:04',
-        startDate: '2020-11-18 16:10',
+        startDate: '2020-11-18',
+        endDate: '2020-11-19',
         doneUnits: 100,
         totalUnits: 200,
         authors: ['author1', 'author2'],
@@ -31,6 +32,7 @@ describe('BookComponent', () => {
     it('check fields', () => {
       expect(component.name).toEqual(book.name);
       expect(component.startDate).toEqual(book.startDate);
+      expect(component.endDate).toEqual(book.endDate);
       expect(component.progressValue).toEqual(50);
       expect(component.total).toEqual(book.totalUnits);
       expect(component.done).toEqual(book.doneUnits);
@@ -60,6 +62,7 @@ describe('BookComponent', () => {
     it('check fields', () => {
       expect(component.name).toEqual(book.name);
       expect(component.startDate).toEqual(null);
+      expect(component.endDate).toEqual(null);
       expect(component.progressValue).toEqual(0);
       expect(component.total).toEqual(book.totalUnits);
       expect(component.done).toEqual(book.doneUnits);

@@ -37,16 +37,27 @@ export class Book {
       month: data.startDateMonth,
       day: data.startDateDay,
     };
-    this.startDate = data.startDate ? new Date(data.startDate) : null;
+    this.startDate = this.getDate(data.startDate, this.started);
     this.finished = {
       year: data.endDateYear,
       month: data.endDateMonth,
       day: data.endDateDay,
     };
-    this.endDate = data.endDate ? new Date(data.endDate) : null;
+    this.endDate = this.getDate(data.endDate, this.finished);
     this.modifyDate = new Date(data.modifyDate);
     this.createDate = new Date(data.createDate);
     this.type = data.type;
     this.note = data.note;
+  }
+
+  private getDate(date: string | Date, bDate: BookDate): Date {
+    if (!!date) {
+      return new Date(date);
+    } else if (bDate.day || bDate.month || bDate.year) {
+      const month = bDate.month ? bDate.month - 1 : 0
+      return new Date(bDate.year, month, bDate.day || 1);
+    } else {
+      return null;
+    }
   }
 }
