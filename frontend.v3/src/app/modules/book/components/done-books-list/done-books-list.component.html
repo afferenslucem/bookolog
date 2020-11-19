@@ -1,6 +1,6 @@
 <div class="book-list" *ngIf="(books$ | async) as books">
   <div *ngFor="let book of books; let last = last">
-    <span class="book-list__item">{{book.name}}</span>
+    <app-done-book class="book-list__item" [book]="book"></app-done-book>
     <mat-divider *ngIf="!last"></mat-divider>
   </div>
 </div>

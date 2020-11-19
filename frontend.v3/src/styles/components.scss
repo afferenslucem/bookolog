@@ -54,3 +54,9 @@ form {
 app-in-progress-book {
   @extend .book;
 }
+
+
+// Header
+mat-toolbar {
+  height: $header-height !important;
+}

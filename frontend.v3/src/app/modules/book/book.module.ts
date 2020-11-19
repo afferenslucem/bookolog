@@ -14,6 +14,7 @@ import { BookTimeProgressComponent } from './components/book-time-progress/book-
 import { ToReadBooksListComponent } from './components/to-read-books-list/to-read-books-list.component';
 import { ToReadBookComponent } from './components/to-read-book/to-read-book.component';
 import { DoneBooksListComponent } from './components/done-books-list/done-books-list.component';
+import { DoneBookComponent } from './components/done-book/done-book.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { DoneBooksListComponent } from './components/done-books-list/done-books-
     ToReadBooksListComponent,
     ToReadBookComponent,
     DoneBooksListComponent,
+    DoneBookComponent,
   ],
   imports: [
     CommonModule,

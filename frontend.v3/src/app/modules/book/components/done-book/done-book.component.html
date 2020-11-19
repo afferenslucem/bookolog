@@ -1,0 +1,9 @@
+<div class="book__name truncate-text">{{name}}</div>
+<div class="book__authors truncate-text" *ngIf="authors.length > 0">
+  <small>{{authors | join}}</small>
+</div>
+<div class="book__progress-data dark-text">
+  <small *ngIf="startDate">
+    <app-date-range [startDate]="startDate" [endDate]="endDate"></app-date-range>
+  </small>
+</div>

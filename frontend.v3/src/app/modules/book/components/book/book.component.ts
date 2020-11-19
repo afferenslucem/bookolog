@@ -35,6 +35,10 @@ export class BookComponent {
     return this.innerBook.startDate;
   }
 
+  public get endDate(): Date {
+    return this.innerBook.startDate;
+  }
+
   public get guid(): string {
     return this.innerBook.guid;
   }

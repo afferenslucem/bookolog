@@ -2,12 +2,12 @@
   <mat-drawer #drawer mode="over">
     <app-side-menu (navigated)="drawer.close()"></app-side-menu>
   </mat-drawer>
-  <mat-drawer-content>
-    <mat-toolbar color="primary">
+  <mat-drawer-content class="main">
+    <mat-toolbar color="primary" class="main__header">
       <app-menu-icon (click)="drawer.open()"></app-menu-icon>
       <app-title></app-title>
     </mat-toolbar>
-    <div class="content inner">
+    <div class="content main__body">
       <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>
