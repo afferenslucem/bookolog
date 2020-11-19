@@ -1,5 +1,6 @@
 export enum TitleText {
   Login = 1,
-  InProgress = 100,
-  ToRead = 110,
+  InProgressList = 100,
+  ToReadList = 110,
+  DoneList = 120,
 }

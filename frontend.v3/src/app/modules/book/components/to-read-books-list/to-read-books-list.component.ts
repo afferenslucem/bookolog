@@ -21,7 +21,7 @@ export class ToReadBooksListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.setToRead();
+    this.title.setToReadList();
   }
 
 }

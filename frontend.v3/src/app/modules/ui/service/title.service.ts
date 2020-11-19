@@ -10,12 +10,16 @@ export class TitleService {
 
   constructor() { }
 
-  public setInProgress(): void {
-    this._title.next(TitleText.InProgress);
+  public setDoneList(): void {
+    this._title.next(TitleText.DoneList);
   }
 
-  public setToRead(): void {
-    this._title.next(TitleText.ToRead);
+  public setInProgressList(): void {
+    this._title.next(TitleText.InProgressList);
+  }
+
+  public setToReadList(): void {
+    this._title.next(TitleText.ToReadList);
   }
 
   public setLogin(): void {

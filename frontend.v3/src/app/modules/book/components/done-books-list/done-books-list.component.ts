@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -6,12 +6,11 @@ import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 
 @Component({
-  selector: 'app-in-progress',
-  templateUrl: './in-progress-books-list.component.html',
-  styleUrls: ['./in-progress-books-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-done-books-list',
+  templateUrl: './done-books-list.component.html',
+  styleUrls: ['./done-books-list.component.scss']
 })
-export class InProgressBooksListComponent implements OnInit {
+export class DoneBooksListComponent implements OnInit {
   public books$: Observable<Book[]>;
 
   constructor(public route: ActivatedRoute, private title: TitleService) {
@@ -22,6 +21,6 @@ export class InProgressBooksListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.setInProgressList();
+    this.title.setDoneList();
   }
 }
