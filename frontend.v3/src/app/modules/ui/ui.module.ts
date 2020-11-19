@@ -4,13 +4,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TitleComponent } from './components/title/title.component';
 import { MenuIconComponent } from './components/menu-icon/menu-icon.component';
+import { PlusIconComponent } from './components/plus-icon/plus-icon.component';
 
 
 @NgModule({
-    declarations: [TitleComponent, MenuIconComponent],
+    declarations: [TitleComponent, MenuIconComponent, PlusIconComponent],
   exports: [
     TitleComponent,
     MenuIconComponent,
+    PlusIconComponent,
   ],
   imports: [
     CommonModule,

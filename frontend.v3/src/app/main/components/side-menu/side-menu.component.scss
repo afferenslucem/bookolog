@@ -1,0 +1,14 @@
+:host {
+  display: block;
+
+  min-width: 250px;
+}
+
+.book-list-item {
+  display: flex;
+
+  align-items: baseline;
+  justify-content: space-between;
+
+  width: 100%;
+}
