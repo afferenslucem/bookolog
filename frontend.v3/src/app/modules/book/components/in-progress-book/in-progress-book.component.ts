@@ -6,16 +6,16 @@ import { BookComponent } from '../book/book.component';
   selector: 'app-in-progress-book',
   templateUrl: './in-progress-book.component.html',
   styleUrls: ['./in-progress-book.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InProgressBookComponent extends BookComponent implements OnInit {
+  constructor() {
+    super();
+  }
+
   @Input()
   public set book(v: Book) {
     this.innerBook = v;
-  }
-
-  constructor() {
-    super();
   }
 
   ngOnInit(): void {

@@ -1,4 +1,3 @@
-import { ElementRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';

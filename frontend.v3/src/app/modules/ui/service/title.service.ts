@@ -14,6 +14,10 @@ export class TitleService {
     this._title.next(TitleText.InProgress);
   }
 
+  public setToRead(): void {
+    this._title.next(TitleText.ToRead);
+  }
+
   public setLogin(): void {
     this._title.next(TitleText.Login);
   }

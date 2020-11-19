@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import { MatIconModule } from '@angular/material/icon';
 
 import { PlusIconComponent } from './plus-icon.component';
 
@@ -9,7 +9,10 @@ describe('PlusIconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlusIconComponent ]
+      declarations: [ PlusIconComponent ],
+      imports: [
+        MatIconModule
+      ]
     })
     .compileComponents();
   });

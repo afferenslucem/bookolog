@@ -1,8 +1,7 @@
 @import "~src/styles/variables";
 
-
 .content {
-  padding: $ind-2;
+  padding: $ind-1 $ind-2;
 }
 
 form {
@@ -12,6 +11,14 @@ form {
     &:not(:last-child) {
       margin-bottom: $ind-2;
     }
+  }
+}
+
+// Book lists
+
+.book-list {
+  &__item {
+    padding: $ind-1;
   }
 }
 

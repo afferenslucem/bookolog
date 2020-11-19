@@ -28,6 +28,7 @@ describe('LoginPageComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
+        MatToolbarModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
         RouterTestingModule,

@@ -18,6 +18,12 @@ const factory = new LoggerFactory([
       loggerName: 'IndexedDb'
     },
     logger: LogLevel.Disable
+  },
+  {
+    name: {
+      namespace: 'Resolver'
+    },
+    logger: LogLevel.Debug
   }
 ]);
 

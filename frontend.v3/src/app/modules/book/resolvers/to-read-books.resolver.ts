@@ -7,9 +7,9 @@ import { BookStatus } from '../models/book-status';
 import { BookService } from '../services/book.service';
 
 @Injectable({providedIn: 'root'})
-export class InProgressBooksResolver implements Resolve<Book[]> {
+export class ToReadBooksResolver implements Resolve<Book[]> {
   private logger = getLogger({
-    loggerName: 'InProgressBooksResolver',
+    loggerName: 'ToReadBooksResolver',
     namespace: 'Resolver',
   });
 
@@ -19,7 +19,7 @@ export class InProgressBooksResolver implements Resolve<Book[]> {
   public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Book[]> {
     const books = await this.bookService.getBooks();
 
-    const result = _(books).where(item => item.status === BookStatus.InProgress).toArray();
+    const result = _(books).where(item => item.status === BookStatus.ToRead).toArray();
 
     this.logger.debug('Books result: ', result);
 

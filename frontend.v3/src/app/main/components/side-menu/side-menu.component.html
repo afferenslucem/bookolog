@@ -2,16 +2,22 @@
   <div class="navigation">
     <div class="navigation__header" i18n>Списки</div>
     <div class="navigation__body">
-      <mat-list role="list" (click)="navigated.emit()">
+      <mat-list class="book-nav" (click)="navigated.emit()">
         <mat-list-item>
-          <div class="book-list-item">
+          <div class="book-nav__item">
             <span [routerLink]="['/in-progress']" i18n="book menu|in progress">Читаю сейчас</span>
             <app-plus-icon></app-plus-icon>
           </div>
         </mat-list-item>
         <mat-list-item>
-          <div class="book-list-item">
+          <div class="book-nav__item">
             <span [routerLink]="['/to-read']" i18n="book menu|to read">Буду читать</span>
+            <app-plus-icon></app-plus-icon>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <div class="book-nav__item">
+            <span [routerLink]="['/done']" i18n="book menu|done">Прочитаные</span>
             <app-plus-icon></app-plus-icon>
           </div>
         </mat-list-item>

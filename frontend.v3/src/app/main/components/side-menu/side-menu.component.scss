@@ -1,14 +1,29 @@
+@import "~src/styles/variables";
+
 :host {
   display: block;
 
   min-width: 250px;
 }
 
-.book-list-item {
+.book-nav__item {
   display: flex;
 
   align-items: baseline;
   justify-content: space-between;
 
   width: 100%;
+}
+
+.navigation {
+  &__header {
+    font-size: $large-font-size;
+    font-weight: $fat-font-weight;
+  }
+}
+
+mat-list {
+  mat-list-item {
+    height: 2.2rem;
+  }
 }
