@@ -1,4 +1,5 @@
 import { registerLocaleData } from '@angular/common';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 
@@ -33,6 +34,7 @@ registerLocaleData(localeRu, 'ru');
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+    MatSidenavModule,
     HttpClientModule,
     AuthModule,
     BookModule,

@@ -6,7 +6,6 @@ import { TitleComponent } from './components/title/title.component';
 import { MenuIconComponent } from './components/menu-icon/menu-icon.component';
 
 
-
 @NgModule({
     declarations: [TitleComponent, MenuIconComponent],
   exports: [

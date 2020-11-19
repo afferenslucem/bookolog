@@ -1,7 +1,12 @@
-<mat-toolbar color="primary">
-  <app-menu-icon></app-menu-icon>
-  <app-title></app-title>
-</mat-toolbar>
-<div class="content inner">
-  <router-outlet></router-outlet>
-</div>
+<mat-drawer-container [hasBackdrop]="true">
+  <mat-drawer #drawer mode="over">I'm a drawer</mat-drawer>
+  <mat-drawer-content>
+    <mat-toolbar color="primary">
+      <app-menu-icon (click)="drawer.toggle()"></app-menu-icon>
+      <app-title></app-title>
+    </mat-toolbar>
+    <div class="content inner">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
