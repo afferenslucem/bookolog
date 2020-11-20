@@ -2,6 +2,7 @@ import { BookData } from './book-data';
 import { BookDate } from './book-date';
 import { BookStatus } from './book-status';
 import { BookType } from './book-type';
+import format from 'date-fns/format';
 
 export class Book {
   public guid: string;
@@ -21,6 +22,8 @@ export class Book {
   public createDate: Date;
   public type: BookType;
   public note?: string;
+  public deleted?: boolean;
+  public shouldSync?: boolean;
 
   public constructor(data: BookData) {
     this.guid = data.guid;
@@ -48,16 +51,44 @@ export class Book {
     this.createDate = new Date(data.createDate);
     this.type = data.type;
     this.note = data.note;
+    this.deleted = data.deleted;
+    this.shouldSync = data.shouldSync;
   }
 
   private getDate(date: string | Date, bDate: BookDate): Date {
     if (!!date) {
       return new Date(date);
     } else if (bDate.day || bDate.month || bDate.year) {
-      const month = bDate.month ? bDate.month - 1 : 0
+      const month = bDate.month ? bDate.month - 1 : 0;
       return new Date(bDate.year, month, bDate.day || 1);
     } else {
       return null;
     }
+  }
+
+  public convertToDTO(): BookData {
+    const data: BookData = {
+      guid: this.guid,
+      name: this.name,
+      authors: Array.from(this.authors),
+      year: this.year,
+      status: this.status,
+      tags: Array.from(this.tags),
+      totalUnits: this.totalUnits,
+      doneUnits: this.doneUnits,
+      genre: this.genre,
+      startDateYear: this.started.year,
+      startDateMonth: this.started.month,
+      startDateDay: this.started.day,
+      endDateYear: this.finished.year,
+      endDateMonth: this.finished.month,
+      endDateDay: this.finished.day,
+      type: this.type,
+      note: this.note,
+      modifyDate: format(this.modifyDate, 'yyyy-MM-dd HH:mm:ss'),
+      createDate: format(this.createDate, 'yyyy-MM-dd HH:mm:ss'),
+    };
+
+    return data;
   }
 }

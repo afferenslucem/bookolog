@@ -20,4 +20,6 @@ export interface BookData {
   createDate: string;
   type: number;
   note?: string;
+  deleted?: boolean;
+  shouldSync?: boolean;
 }

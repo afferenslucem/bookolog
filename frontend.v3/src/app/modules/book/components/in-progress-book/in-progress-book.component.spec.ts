@@ -4,6 +4,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormattingModule } from '../../../formatting/formatting.module';
 import { Book } from '../../models/book';
+import { BookHeaderComponent } from '../book-header/book-header.component';
 import { BookPagesProgressComponent } from '../book-pages-progress/book-pages-progress.component';
 import { BookTimeProgressComponent } from '../book-time-progress/book-time-progress.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
@@ -20,7 +21,8 @@ describe('InProgressBookComponent', () => {
         InProgressBookComponent,
         BookTimeProgressComponent,
         BookPagesProgressComponent,
-        DateRangeComponent
+        DateRangeComponent,
+        BookHeaderComponent,
       ],
       imports: [
         FormattingModule,
@@ -77,14 +79,14 @@ describe('InProgressBookComponent', () => {
 
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLDivElement>('.book__name')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__name').innerText).toEqual(book.name);
+      expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
-      expect(element.querySelector<HTMLDivElement>('.book__authors')).toBeFalsy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeFalsy();
 
       expect(element.querySelector<HTMLElement>('mat-progress-bar').getAttribute('aria-valuenow')).toEqual('0');
 
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data')).toBeFalsy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data')).toBeFalsy();
 
       expect(component).toBeTruthy();
     });
@@ -103,15 +105,15 @@ describe('InProgressBookComponent', () => {
 
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLDivElement>('.book__name')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__name').innerText).toEqual(book.name);
+      expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
-      expect(element.querySelector<HTMLDivElement>('.book__authors')).toBeFalsy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeFalsy();
 
       expect(element.querySelector<HTMLElement>('mat-progress-bar').getAttribute('aria-valuenow')).toEqual('0');
 
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data app-date-range')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data app-date-range').innerText).toContain('10/10/20');
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range').innerText).toContain('10/10/20');
 
       expect(component).toBeTruthy();
     });
@@ -131,17 +133,17 @@ describe('InProgressBookComponent', () => {
 
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLDivElement>('.book__name')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__name').innerText).toEqual(book.name);
+      expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
-      expect(element.querySelector<HTMLDivElement>('.book__authors')).toBeFalsy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeFalsy();
 
       expect(element.querySelector<HTMLElement>('mat-progress-bar').getAttribute('aria-valuenow')).toEqual('50');
 
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data')).toBeTruthy();
 
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data .progress').innerText).toContain('50');
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data .progress').innerText).toContain('100');
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data .progress').innerText).toContain('50');
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data .progress').innerText).toContain('100');
 
       expect(component).toBeTruthy();
     });
@@ -163,22 +165,22 @@ describe('InProgressBookComponent', () => {
 
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLDivElement>('.book__name')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__name').innerText).toEqual(book.name);
+      expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
-      expect(element.querySelector<HTMLDivElement>('.book__authors')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__authors').innerText).toContain('author1');
-      expect(element.querySelector<HTMLDivElement>('.book__authors').innerText).toContain('author2');
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('author1');
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('author2');
 
       expect(element.querySelector<HTMLElement>('mat-progress-bar').getAttribute('aria-valuenow')).toEqual('50');
 
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data')).toBeTruthy();
 
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data .progress').innerText).toContain('00:50');
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data .progress').innerText).toContain('01:40');
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data .progress').innerText).toContain('00:50');
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data .progress').innerText).toContain('01:40');
 
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data app-date-range')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__progress-data app-date-range').innerText).toContain('10/10/20');
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range').innerText).toContain('10/10/20');
 
       expect(component).toBeTruthy();
     });

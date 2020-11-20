@@ -1,0 +1,17 @@
+<h1 mat-dialog-title i18n="book-delete-dialog__title">Удалить книгу?</h1>
+<div mat-dialog-content>
+  <p i18n="book-delete-dialog__content-1">
+    Вы уверены, что хотите удалить книгу?
+  </p>
+  <p i18n="book-delete-dialog__content-2">
+    Это действие будет нельзя отменить.
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button color="primary" mat-dialog-close (click)="cancel()" i18n="book-delete-dialog__close-button">
+    Закрыть
+  </button>
+  <button mat-flat-button color="warn" mat-dialog-close (click)="delete()" i18n="book-delete-dialog__delete-button">
+    Удалить
+  </button>
+</div>

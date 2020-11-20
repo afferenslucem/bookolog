@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { getLogger } from '../../../main/app.logging';
 import { IndexedDbService } from '../../../main/services/indexed-db.service';
 import { BookData } from '../models/book-data';
 import { UUIDGenerator } from 'essents';
@@ -9,6 +10,7 @@ import { BookStatus } from '../models/book-status';
   providedIn: 'root',
 })
 export class BookStorageService {
+  private logger = getLogger('BookStorageService');
 
   private readonly generator = new UUIDGenerator();
   private readonly dbName = 'bookolog.db';
@@ -81,6 +83,30 @@ export class BookStorageService {
     try {
       await this.indexedDb.open(this.dbName);
       await this.indexedDb.clear(this.booksStore);
+    } finally {
+      this.indexedDb.close();
+    }
+  }
+
+  public async delete(guid: string): Promise<void> {
+    try {
+      await this.indexedDb.open(this.dbName);
+
+      await this.indexedDb.delete(this.booksStore, guid);
+    } finally {
+      this.indexedDb.close();
+    }
+  }
+
+  public async update(book: BookData): Promise<BookData> {
+    try {
+      this.logger.debug('book update');
+
+      await this.indexedDb.open(this.dbName);
+
+      const data: any = await this.indexedDb.update(this.booksStore, book);
+
+      return book;
     } finally {
       this.indexedDb.close();
     }

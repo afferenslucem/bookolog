@@ -81,5 +81,5 @@
   </div>
 
   <button class="w-100 edit-button" mat-flat-button color="primary" i18n>Редактировать</button>
-  <button class="w-100" mat-flat-button color="warn" i18n>Удалить</button>
+  <button class="w-100" mat-flat-button color="warn" i18n (click)="openDeleteDialog(book)">Удалить</button>
 </ng-container>

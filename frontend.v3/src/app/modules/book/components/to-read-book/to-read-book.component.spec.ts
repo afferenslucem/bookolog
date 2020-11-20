@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormattingModule } from '../../../formatting/formatting.module';
 import { Book } from '../../models/book';
-import { InProgressBookComponent } from '../in-progress-book/in-progress-book.component';
+import { BookHeaderComponent } from '../book-header/book-header.component';
 
 import { ToReadBookComponent } from './to-read-book.component';
 
@@ -11,7 +11,10 @@ describe('ToReadBookComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToReadBookComponent ],
+      declarations: [
+        ToReadBookComponent,
+        BookHeaderComponent,
+      ],
       imports: [
         FormattingModule
       ]
@@ -64,10 +67,10 @@ describe('ToReadBookComponent', () => {
 
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLDivElement>('.book__name')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__name').innerText).toEqual(book.name);
+      expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
-      expect(element.querySelector<HTMLDivElement>('.book__authors')).toBeFalsy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeFalsy();
     });
 
     it('Should render with full filled data', () => {
@@ -87,12 +90,12 @@ describe('ToReadBookComponent', () => {
 
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLDivElement>('.book__name')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__name').innerText).toEqual(book.name);
+      expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
-      expect(element.querySelector<HTMLDivElement>('.book__authors')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book__authors').innerText).toContain('author1');
-      expect(element.querySelector<HTMLDivElement>('.book__authors').innerText).toContain('author2');
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('author1');
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('author2');
 
       expect(component).toBeTruthy();
     });

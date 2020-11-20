@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookViewComponent } from './book-view.component';
+import { BookDeleteDialogComponent } from './book-delete-dialog.component';
 
-describe('BookViewComponent', () => {
-  let component: BookViewComponent;
-  let fixture: ComponentFixture<BookViewComponent>;
+describe('BookDeleteDielogComponent', () => {
+  let component: BookDeleteDialogComponent;
+  let fixture: ComponentFixture<BookDeleteDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookViewComponent ]
+      declarations: [ BookDeleteDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookViewComponent);
+    fixture = TestBed.createComponent(BookDeleteDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

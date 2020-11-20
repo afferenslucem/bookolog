@@ -23,4 +23,8 @@ export class BookOriginService {
       tap(books => this.logger.debug('Loaded books: ', books)),
     ).toPromise();
   }
+
+  public async delete(guid: string): Promise<void> {
+    return await this.httpClient.delete<void>('/book/delete/' + guid).toPromise();
+  }
 }
