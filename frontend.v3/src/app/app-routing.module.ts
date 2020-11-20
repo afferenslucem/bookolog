@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { InnerAreaComponent } from './main/components/inner-area/inner-area.component';
 import {StartPageComponent} from './main/components/start-page/start-page.component';
 import { routes as bookListRoutes } from './modules/book/book-routing.module';
+import { BookSyncResolver } from './modules/book/resolvers/book-sync.resolver';
 
 const routes: Routes = [
   {
@@ -17,7 +18,10 @@ const routes: Routes = [
 
     children: [
       ...bookListRoutes
-    ]
+    ],
+    resolve: {
+      sync: BookSyncResolver
+    }
   }
 ];
 

@@ -5,6 +5,16 @@ import { getLogger } from '../../../main/app.logging';
 import { UserService } from '../../../main/services/user.service';
 import { BookData } from '../models/book-data';
 
+export interface SyncData {
+  localUpdated: BookData[];
+  localDeleted: BookData[];
+}
+
+export interface RemoteSyncData {
+  update: BookData[];
+  delete: BookData[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,5 +36,9 @@ export class BookOriginService {
 
   public async delete(guid: string): Promise<void> {
     return await this.httpClient.delete<void>('/book/delete/' + guid).toPromise();
+  }
+
+  public async sync(data: SyncData): Promise<RemoteSyncData> {
+    return await this.httpClient.post<RemoteSyncData>('/book/synchronize/', data).toPromise();
   }
 }

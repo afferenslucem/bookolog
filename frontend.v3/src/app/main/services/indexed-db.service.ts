@@ -37,7 +37,7 @@ export class IndexedDbService {
       };
 
       request.onupgradeneeded = (event: any) => {
-        this.upgradeDatabase(event);
+        this.upgradeDatabase(request, event);
 
         this.database = event.target.result;
         const transaction = event.target.transaction;
@@ -53,7 +53,7 @@ export class IndexedDbService {
     this.database = null;
   }
 
-  private upgradeDatabase(dbEvent: any): void {
+  private upgradeDatabase(request: IDBRequest, dbEvent: any): void {
     const db = dbEvent.target.result;
 
     if (dbEvent.oldVersion < 1) {
@@ -62,6 +62,8 @@ export class IndexedDbService {
       objectStore.createIndex('type', 'type', {unique: false});
       objectStore.createIndex('genre', 'genre', {unique: false});
       objectStore.createIndex('status', 'status', {unique: false});
+      objectStore.createIndex('shouldSync', 'shouldSync', {unique: false});
+      objectStore.createIndex('deleted', 'deleted', {unique: false});
     }
   }
 
@@ -174,13 +176,15 @@ export class IndexedDbService {
     });
   }
 
-  public get(storeName: string, id: string): Promise<Event> {
-    const transaction = this.openTransaction(storeName);
+  public get(storeName: string, propName: string, id: string): Promise<Event> {
+    const transaction = this.openTransaction(storeName, 'readonly');
 
     return new Promise((resolve, reject) => {
       const store = transaction.objectStore(storeName);
 
-      const request = store.get(id);
+      const index = store.index(propName);
+
+      const request = index.get(IDBKeyRange.only(id));
 
       request.onerror = (event) => reject(event);
       request.onsuccess = (event) => resolve(event);

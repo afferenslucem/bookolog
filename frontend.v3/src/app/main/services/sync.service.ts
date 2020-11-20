@@ -14,7 +14,7 @@ export class SyncService {
   constructor(private userService: UserService) { }
 
   public async getData<T>(getLocal: () => Promise<T>, getRemote: () => Promise<T>, updateLocal: (data: T) => Promise<void>): Promise<T> {
-    if (this.shouldSync) {
+    if (this.shouldRestore) {
       const remote = await getRemote();
       await updateLocal(remote);
       this.logger.debug('Return remote');
@@ -25,10 +25,10 @@ export class SyncService {
     return await getLocal();
   }
 
-  public get shouldSync(): boolean {
-    const nextSync = addSeconds(this.userService.lastSyncDate, environment.synchTimeSeconds);
+  public get shouldRestore(): boolean {
+    const nextSync = addSeconds(this.userService.lastSyncDate, environment.restoreTimeSeconds);
 
-    return nextSync <= this.nowUTC || true;
+    return nextSync <= this.nowUTC;
   }
 
   public get nowUTC(): Date {

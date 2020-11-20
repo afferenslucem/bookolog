@@ -32,7 +32,7 @@ describe('SyncService', () => {
 
   describe('getData', () => {
     it('should return fresh', async () => {
-      const spyShouldSync = spyOnProperty(service, 'shouldSync', 'get').and.returnValue(true);
+      const spyShouldSync = spyOnProperty(service, 'shouldRestore', 'get').and.returnValue(true);
 
       const spyLocal = jasmine.createSpy();
 
@@ -51,7 +51,7 @@ describe('SyncService', () => {
     });
 
     it('should return local', async () => {
-      const spyShouldSync = spyOnProperty(service, 'shouldSync', 'get').and.returnValue(false);
+      const spyShouldSync = spyOnProperty(service, 'shouldRestore', 'get').and.returnValue(false);
 
       const spyLocal = jasmine.createSpy();
       const spyRemote = jasmine.createSpy();
@@ -74,7 +74,7 @@ describe('SyncService', () => {
       const spyNow = spyOnProperty(service, 'nowUTC', 'get').and.returnValue(utcNow);
       const spyLastDate = spyOnProperty(userService, 'lastSyncDate', 'get').and.returnValue(lastDate);
 
-      const result = service.shouldSync;
+      const result = service.shouldRestore;
 
       expect(result).toBeTrue();
 
@@ -89,7 +89,7 @@ describe('SyncService', () => {
       const spyNow = spyOnProperty(service, 'nowUTC', 'get').and.returnValue(utcNow);
       const spyLastDate = spyOnProperty(userService, 'lastSyncDate', 'get').and.returnValue(lastDate);
 
-      const result = service.shouldSync;
+      const result = service.shouldRestore;
 
       expect(result).toBeFalse();
 

@@ -17,7 +17,7 @@ const factory = new LoggerFactory([
       namespace: 'Storage',
       loggerName: 'IndexedDb'
     },
-    logger: LogLevel.Disable
+    logger: LogLevel.All
   },
   {
     name: {

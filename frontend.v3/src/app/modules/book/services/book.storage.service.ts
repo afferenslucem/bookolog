@@ -41,10 +41,32 @@ export class BookStorageService {
     }
   }
 
+  public async getDeleted(): Promise<BookData[]> {
+    try {
+      await this.indexedDb.open(this.dbName);
+      const data: any = await this.indexedDb.allWithProperty(this.booksStore, 'deleted', true);
+
+      return data.target.result;
+    } finally {
+      this.indexedDb.close();
+    }
+  }
+
+  public async getShouldSync(): Promise<BookData[]> {
+    try {
+      await this.indexedDb.open(this.dbName);
+      const data: any = await this.indexedDb.allWithProperty(this.booksStore, 'shouldSync', true);
+
+      return data.target.result;
+    } finally {
+      this.indexedDb.close();
+    }
+  }
+
   public async getByGuid(guid: string): Promise<BookData> {
     try {
       await this.indexedDb.open(this.dbName);
-      const data: any = await this.indexedDb.get(this.booksStore, guid);
+      const data: any = await this.indexedDb.get(this.booksStore, 'guid', guid);
 
       return data.target.result;
     } finally {
@@ -61,12 +83,44 @@ export class BookStorageService {
       await this.indexedDb.open(this.dbName);
 
       books.forEach(item => {
-        if (!!item.guid) {
+        if (!item.guid) {
           item.guid = this.generator.generate();
         }
       });
 
       await this.indexedDb.saveMany(this.booksStore, books);
+
+      return books;
+    } finally {
+      this.indexedDb.close();
+    }
+  }
+
+  public async updateMany(books: BookData[]): Promise<BookData[]> {
+    if (books.length === 0) {
+      return [];
+    }
+
+    try {
+      await this.indexedDb.open(this.dbName);
+
+      await this.indexedDb.updateMany(this.booksStore, books);
+
+      return books;
+    } finally {
+      this.indexedDb.close();
+    }
+  }
+
+  public async deleteMany(books: BookData[]): Promise<BookData[]> {
+    if (books.length === 0) {
+      return [];
+    }
+
+    try {
+      await this.indexedDb.open(this.dbName);
+
+      await this.indexedDb.deleteMany(this.booksStore, books.map(item => item.guid));
 
       return books;
     } finally {

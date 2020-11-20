@@ -87,6 +87,8 @@ export class Book {
       note: this.note,
       modifyDate: format(this.modifyDate, 'yyyy-MM-dd HH:mm:ss'),
       createDate: format(this.createDate, 'yyyy-MM-dd HH:mm:ss'),
+      deleted: this.deleted,
+      shouldSync: this.shouldSync,
     };
 
     return data;
