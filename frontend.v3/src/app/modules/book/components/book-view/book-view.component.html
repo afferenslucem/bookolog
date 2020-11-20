@@ -14,6 +14,13 @@
     <label i18n="book authors label@@book__label_authors">Авторы</label>
   </div>
 
+  <div class="book__year property" *ngIf="!!book.year">
+    <div class="property__value">
+      {{book.year}}
+    </div>
+    <label i18n="book year label@@book__label_year">Год выпуска</label>
+  </div>
+
   <div class="book__type property">
     <div class="property__value">
       <span [ngSwitch]="book.type">
