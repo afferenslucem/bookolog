@@ -1,4 +1,4 @@
-<div class="book-line__name truncate-text">{{name}}</div>
+<app-book-header [book]="innerBook"></app-book-header>
 <div class="book-line__authors truncate-text" *ngIf="authors.length > 0">
   <small>{{authors | join}}</small>
 </div>

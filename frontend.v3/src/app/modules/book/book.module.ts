@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { FormattingModule } from '../formatting/formatting.module';
+import { UiModule } from '../ui/ui.module';
 import { routes } from './book-routing.module';
 import { InProgressBooksListComponent } from './components/in-progress-books-list/in-progress-books-list.component';
 import { InProgressBookComponent } from './components/in-progress-book/in-progress-book.component';
@@ -17,6 +19,7 @@ import { ToReadBookComponent } from './components/to-read-book/to-read-book.comp
 import { DoneBooksListComponent } from './components/done-books-list/done-books-list.component';
 import { DoneBookComponent } from './components/done-book/done-book.component';
 import { BookViewComponent } from './components/book-view/book-view.component';
+import { BookHeaderComponent } from './components/book-header/book-header.component';
 
 
 @NgModule({
@@ -31,16 +34,19 @@ import { BookViewComponent } from './components/book-view/book-view.component';
     DoneBooksListComponent,
     DoneBookComponent,
     BookViewComponent,
+    BookHeaderComponent,
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        FormattingModule,
-        MatToolbarModule,
-        MatProgressBarModule,
-        MatDividerModule,
-        MatButtonModule,
-    ],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    FormattingModule,
+    MatToolbarModule,
+    MatProgressBarModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatIconModule,
+    UiModule,
+  ],
 })
 export class BookModule {
 }

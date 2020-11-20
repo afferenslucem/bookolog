@@ -4,12 +4,14 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
+import { BookActionService } from '../../services/book-action.service';
 
 @Component({
   selector: 'app-in-progress',
   templateUrl: './in-progress-books-list.component.html',
   styleUrls: ['./in-progress-books-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [BookActionService],
 })
 export class InProgressBooksListComponent implements OnInit {
   public books$: Observable<Book[]>;
