@@ -1,0 +1,36 @@
+@import "~src/styles/variables";
+
+.tag {
+  &:not(:first-child) {
+    margin-right: $ind-1;
+  }
+}
+
+.property {
+  &:not(:last-child) {
+    margin-bottom: $ind-4;
+  }
+
+  &__value {
+    margin-bottom: $ind-1;
+  }
+
+  &__label, label {
+    font-size: $few-font-size;
+    font-weight: $fat-font-weight;
+
+    margin-left: $ind-1;
+  }
+}
+
+.book__name {
+  font-size: $large-font-size;
+}
+
+.book__authors {
+  font-size: $normal-font-size;
+}
+
+.edit-button {
+  margin-bottom: $ind-2;
+}

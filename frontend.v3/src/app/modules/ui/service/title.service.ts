@@ -10,6 +10,10 @@ export class TitleService {
 
   constructor() { }
 
+  public setBook(): void {
+    this._title.next(TitleText.Book);
+  }
+
   public setDoneList(): void {
     this._title.next(TitleText.DoneList);
   }

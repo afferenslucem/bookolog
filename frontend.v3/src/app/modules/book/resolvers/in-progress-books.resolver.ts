@@ -17,9 +17,7 @@ export class InProgressBooksResolver implements Resolve<Book[]> {
   }
 
   public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Book[]> {
-    const books = await this.bookService.getBooks();
-
-    const result = _(books).where(item => item.status === BookStatus.InProgress).toArray();
+    const result = await this.bookService.getByStatus(BookStatus.InProgress);
 
     this.logger.debug('Books result: ', result);
 

@@ -59,11 +59,14 @@ export class IndexedDbService {
     if (dbEvent.oldVersion < 1) {
       const objectStore = db.createObjectStore('BooksStore', {keyPath: 'guid'});
       objectStore.createIndex('guid', 'guid', {unique: true});
+      objectStore.createIndex('type', 'type', {unique: false});
+      objectStore.createIndex('genre', 'genre', {unique: false});
+      objectStore.createIndex('status', 'status', {unique: false});
     }
   }
 
   public save(storeName: string, object: any): Promise<Event> {
-    const transaction = this.openRWTransaction(storeName);
+    const transaction = this.openTransaction(storeName);
 
     return new Promise<Event>((resolve, reject) => {
 
@@ -77,7 +80,7 @@ export class IndexedDbService {
   }
 
   public saveMany(storeName: string, objects: any[]): Promise<Event> {
-    const transaction = this.openRWTransaction(storeName);
+    const transaction = this.openTransaction(storeName);
 
     return new Promise<Event>((resolve, reject) => {
       const store = transaction.objectStore(storeName);
@@ -90,7 +93,7 @@ export class IndexedDbService {
   }
 
   public update(storeName: string, object: any): Promise<Event> {
-    const transaction = this.openRWTransaction(storeName);
+    const transaction = this.openTransaction(storeName);
 
     return new Promise<Event>((resolve, reject) => {
 
@@ -104,7 +107,7 @@ export class IndexedDbService {
   }
 
   public updateMany(storeName: string, objects: any[]): Promise<Event> {
-    const transaction = this.openRWTransaction(storeName);
+    const transaction = this.openTransaction(storeName);
 
     return new Promise<Event>((resolve, reject) => {
       const store = transaction.objectStore(storeName);
@@ -117,7 +120,7 @@ export class IndexedDbService {
   }
 
   public delete(storeName: string, id: any): Promise<Event> {
-    const transaction = this.openRWTransaction(storeName);
+    const transaction = this.openTransaction(storeName);
 
     return new Promise((resolve, reject) => {
 
@@ -131,7 +134,7 @@ export class IndexedDbService {
   }
 
   public deleteMany(storeName: string, ids: any[]): Promise<Event> {
-    const transaction = this.openRWTransaction(storeName);
+    const transaction = this.openTransaction(storeName);
 
     return new Promise<Event>((resolve, reject) => {
       const store = transaction.objectStore(storeName);
@@ -144,7 +147,7 @@ export class IndexedDbService {
   }
 
   public all(storeName: string): Promise<Event> {
-    const transaction = this.openRWTransaction(storeName);
+    const transaction = this.openTransaction(storeName, 'readonly');
 
     return new Promise((resolve, reject) => {
       const store = transaction.objectStore(storeName);
@@ -156,8 +159,23 @@ export class IndexedDbService {
     });
   }
 
+  public allWithProperty(storeName: string, propName: string, value: any): Promise<Event> {
+    const transaction = this.openTransaction(storeName, 'readonly');
+
+    return new Promise((resolve, reject) => {
+      const store = transaction.objectStore(storeName);
+
+      const index = store.index(propName);
+
+      const request = index.getAll(IDBKeyRange.only(value));
+
+      request.onerror = (event) => reject(event);
+      request.onsuccess = (event) => resolve(event);
+    });
+  }
+
   public get(storeName: string, id: string): Promise<Event> {
-    const transaction = this.openRWTransaction(storeName);
+    const transaction = this.openTransaction(storeName);
 
     return new Promise((resolve, reject) => {
       const store = transaction.objectStore(storeName);
@@ -170,7 +188,7 @@ export class IndexedDbService {
   }
 
   public clear(storeName: string): Promise<Event> {
-    const transaction = this.openRWTransaction(storeName);
+    const transaction = this.openTransaction(storeName);
 
     return new Promise((resolve, reject) => {
       const store = transaction.objectStore(storeName);
@@ -182,8 +200,8 @@ export class IndexedDbService {
     });
   }
 
-  private openRWTransaction(objectStore: string): IDBTransaction {
-    const transaction = this.database.transaction([objectStore], 'readwrite');
+  private openTransaction(objectStore: string, transactionType: 'readwrite' | 'readonly' = 'readwrite'): IDBTransaction {
+    const transaction = this.database.transaction([objectStore], transactionType);
 
     transaction.onerror = (event) => {
       this.logger.error(`Transaction failed: `, event);

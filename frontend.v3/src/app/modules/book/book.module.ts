@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -31,14 +32,15 @@ import { BookViewComponent } from './components/book-view/book-view.component';
     DoneBookComponent,
     BookViewComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    FormattingModule,
-    MatToolbarModule,
-    MatProgressBarModule,
-    MatDividerModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        FormattingModule,
+        MatToolbarModule,
+        MatProgressBarModule,
+        MatDividerModule,
+        MatButtonModule,
+    ],
 })
 export class BookModule {
 }

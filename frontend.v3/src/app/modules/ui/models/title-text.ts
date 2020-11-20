@@ -3,4 +3,5 @@ export enum TitleText {
   InProgressList = 100,
   ToReadList = 110,
   DoneList = 120,
+  Book = 130,
 }

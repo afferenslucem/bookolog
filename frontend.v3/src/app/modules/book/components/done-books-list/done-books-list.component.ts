@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import _ from 'declarray';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
-import _ from 'declarray';
 
 @Component({
   selector: 'app-done-books-list',
   templateUrl: './done-books-list.component.html',
-  styleUrls: ['./done-books-list.component.scss']
+  styleUrls: ['./done-books-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DoneBooksListComponent implements OnInit {
   public books$: Observable<Book[]>;

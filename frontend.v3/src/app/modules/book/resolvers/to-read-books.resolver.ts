@@ -17,9 +17,7 @@ export class ToReadBooksResolver implements Resolve<Book[]> {
   }
 
   public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Book[]> {
-    const books = await this.bookService.getBooks();
-
-    const result = _(books).where(item => item.status === BookStatus.ToRead).toArray();
+    const result = await this.bookService.getByStatus(BookStatus.ToRead);
 
     this.logger.debug('Books result: ', result);
 

@@ -28,7 +28,7 @@ export class SyncService {
   public get shouldSync(): boolean {
     const nextSync = addSeconds(this.userService.lastSyncDate, environment.synchTimeSeconds);
 
-    return nextSync <= this.nowUTC && false;
+    return nextSync <= this.nowUTC || true;
   }
 
   public get nowUTC(): Date {

@@ -3,6 +3,7 @@ import { IndexedDbService } from '../../../main/services/indexed-db.service';
 import { BookData } from '../models/book-data';
 import { UUIDGenerator } from 'essents';
 import _ from 'declarray';
+import { BookStatus } from '../models/book-status';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,17 @@ export class BookStorageService {
     try {
       await this.indexedDb.open(this.dbName);
       const data: any = await this.indexedDb.all(this.booksStore);
+
+      return data.target.result;
+    } finally {
+      this.indexedDb.close();
+    }
+  }
+
+  public async getAllByStatus(status: BookStatus): Promise<BookData[]> {
+    try {
+      await this.indexedDb.open(this.dbName);
+      const data: any = await this.indexedDb.allWithProperty(this.booksStore, 'status', status);
 
       return data.target.result;
     } finally {
