@@ -1,0 +1,37 @@
+<form [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <mat-label i18n="book name label@@book__label_name">Название</mat-label>
+    <input matInput formControlName="name" type="text" required/>
+    <mat-error *ngIf="form.get('name').invalid" i18n>
+      Это обязательное поле
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label i18n="book year label@@book__label_year">Год выпуска</mat-label>
+    <input matInput formControlName="year" type="text"/>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label i18n="book genre label@@book__label_genre">Жанр</mat-label>
+    <input matInput formControlName="genre" type="text"/>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label i18n="book status label@@book__label_status">Статус</mat-label>
+    <mat-select formControlName="status">
+      <mat-option [value]="BookStatus.ToRead" i18n="book status@@book__status_to-read">К прочтению</mat-option>
+      <mat-option [value]="BookStatus.InProgress" i18n="book status@@book__status_in-progress">Читаю</mat-option>
+      <mat-option [value]="BookStatus.Done" i18n="book status@@book__status_done">Прочитана</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label i18n="book authors label@@book__label_type">Тип книги</mat-label>
+    <mat-select formControlName="type">
+      <mat-option [value]="BookStatus.ToRead" i18n="book status@@book__status_to-read">К прочтению</mat-option>
+      <mat-option [value]="BookStatus.InProgress" i18n="book status@@book__status_in-progress">Читаю</mat-option>
+      <mat-option [value]="BookStatus.Done" i18n="book status@@book__status_done">Прочитана</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

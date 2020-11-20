@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { SyncService } from '../../../main/services/sync.service';
 import { BookOriginService } from './book.origin.service';
@@ -23,6 +24,9 @@ describe('BookService', () => {
           provide: SyncService,
           useValue: {}
         },
+      ],
+      imports: [
+        HttpClientTestingModule,
       ]
     });
     service = TestBed.inject(BookService);

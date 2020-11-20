@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { BookEditViewComponent } from './components/book-edit-view/book-edit-view.component';
 import { BookViewComponent } from './components/book-view/book-view.component';
 import { DoneBooksListComponent } from './components/done-books-list/done-books-list.component';
 import { InProgressBooksListComponent } from './components/in-progress-books-list/in-progress-books-list.component';
@@ -36,6 +37,14 @@ export const routes: Routes = [
   {
     component: BookViewComponent,
     path: 'book/:guid',
+    pathMatch: 'full',
+    resolve: {
+      book: BookResolver,
+    }
+  },
+  {
+    component: BookEditViewComponent,
+    path: 'book/edit/:guid',
     pathMatch: 'full',
     resolve: {
       book: BookResolver,

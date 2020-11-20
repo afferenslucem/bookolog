@@ -60,9 +60,13 @@ describe('BookStorageService', () => {
     iDB.close = jasmine.createSpy();
     iDB.saveMany = jasmine.createSpy();
 
-    const values: any = [1, 2, 3];
+    const values: any = [{}, {}, {}];
 
     await service.saveMany(values);
+
+    values.forEach((item: any) => {
+      expect(item.guid).toBeTruthy();
+    });
 
     expect(iDB.saveMany).toHaveBeenCalledTimes(1);
     expect(iDB.saveMany).toHaveBeenCalledWith(booksStore, values);

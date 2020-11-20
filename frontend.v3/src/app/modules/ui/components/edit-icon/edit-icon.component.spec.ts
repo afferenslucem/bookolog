@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
 
 import { EditIconComponent } from './edit-icon.component';
 
@@ -8,7 +9,10 @@ describe('EditIconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditIconComponent ]
+      declarations: [ EditIconComponent ],
+      imports: [
+        MatIconModule
+      ]
     })
     .compileComponents();
   });
