@@ -16,6 +16,12 @@ export class BookService {
   constructor(private syncService: SyncService, private storage: BookStorageService, private origin: BookOriginService) {
   }
 
+  public async getAll(): Promise<Book[]> {
+    const data = await this.storage.getAll();
+
+    return _(data).select(item => new Book(item)).toArray();
+  }
+
   public async getByGuid(guid: string): Promise<Book> {
     const data = await this.storage.getByGuid(guid);
 

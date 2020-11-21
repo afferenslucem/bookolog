@@ -49,8 +49,10 @@ export class IndexedDbService {
   }
 
   public close(): void {
-    this.database.close();
-    this.database = null;
+    if (this.database !== null) {
+      this.database.close();
+      this.database = null;
+    }
   }
 
   private upgradeDatabase(request: IDBRequest, dbEvent: any): void {

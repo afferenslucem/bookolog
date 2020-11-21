@@ -14,7 +14,16 @@
 
   <mat-form-field appearance="fill">
     <mat-label i18n="book genre label@@book__label_genre">Жанр</mat-label>
-    <input matInput formControlName="genre" type="text"/>
+    <input matInput
+           formControlName="genre"
+           type="text"
+           [matAutocomplete]="genreAutocomplete">
+
+    <mat-autocomplete #genreAutocomplete="matAutocomplete">
+      <mat-option *ngFor="let genre of genres" [value]="genre | capitalize">
+        {{genre | capitalize}}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field appearance="fill">

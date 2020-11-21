@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -58,6 +59,7 @@ import { BookEditViewComponent } from './components/book-edit-view/book-edit-vie
     MatIconModule,
     MatSelectModule,
     MatDialogModule,
+    MatAutocompleteModule,
     UiModule,
     MatFormFieldModule,
     ReactiveFormsModule,

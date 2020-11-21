@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { CapitalizePipe } from '../../../formatting/pipes/capitalize.pipe';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
 import { BookService } from '../../services/book.service';
+import _ from 'declarray';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -16,7 +16,6 @@ import { BookService } from '../../services/book.service';
   styleUrls: ['./book-edit-view.component.scss'],
 })
 export class BookEditViewComponent implements OnInit {
-  public book$: Observable<Book> = new Observable<Book>();
   public book: Book;
 
   public BookType: typeof BookType = BookType;
@@ -25,15 +24,51 @@ export class BookEditViewComponent implements OnInit {
 
   public form: FormGroup = null;
 
+  private _genres: string[] = [];
+
+  private _filteredGenres: string[] = [];
+
+  public authors: string[] = [];
+
   constructor(private activatedRoute: ActivatedRoute, public titleService: TitleService, public dialog: MatDialog, private bookService: BookService) {
     activatedRoute.data.subscribe(data => {
-      this.book = data.book;
-      this.formFromBook(this.book);
+      if (data.book) {
+        this.book = data.book;
+        this.formFromBook(this.book);
+      }
+      if (data.allBooks) {
+        this.readAutocompleteData(data.allBooks);
+      }
     });
   }
 
   ngOnInit(): void {
     this.titleService.setBookEdit();
+  }
+
+  private readAutocompleteData(books: Book[]): void {
+    this._genres = this.sortGenresByCount(books);
+    this._filteredGenres = this._genres;
+  }
+
+  private sortGenresByCount(books: Book[]): string[] {
+    const genresCount = _(books)
+      .select(item => item.genre)
+      .where(item => !!item)
+      .aggregate((acc: {[key: string]: number}, item: string) => {
+        const key = item.toLowerCase();
+
+        const counter: number = acc[key] || 0;
+
+        acc[key] = counter + 1;
+
+        return acc;
+      }, {});
+
+    return _(Object.entries(genresCount))
+      .orderByDescending(item => item[1])
+      .select(item => item[0])
+      .toArray();
   }
 
   private formFromBook(book: Book): void {
@@ -48,6 +83,16 @@ export class BookEditViewComponent implements OnInit {
       done: new FormControl(book.doneUnits),
       total: new FormControl(book.totalUnits),
     });
+
+    this.form.get('genre').valueChanges.subscribe(genre => {
+      this._filteredGenres = this.filterGenres(genre.toLowerCase());
+    });
+  }
+
+  private filterGenres(genre: string): string[] {
+    return _(this._genres)
+      .where(item => item.indexOf(genre) !== -1)
+      .toArray();
   }
 
   public get status(): BookStatus {
@@ -56,5 +101,13 @@ export class BookEditViewComponent implements OnInit {
 
   public get type(): BookType {
     return this.form.get('type').value;
+  }
+
+  public get genre(): string {
+    return this.form.get('genre').value;
+  }
+
+  public get genres(): string[] {
+    return this._filteredGenres;
   }
 }
