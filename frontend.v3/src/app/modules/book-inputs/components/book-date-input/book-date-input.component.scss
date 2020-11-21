@@ -1,0 +1,10 @@
+form {
+  display: flex;
+
+  justify-content: space-between;
+
+  > * {
+    flex: 0 0 30%;
+    width: 30%;
+  }
+}

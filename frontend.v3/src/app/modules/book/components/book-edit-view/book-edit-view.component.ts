@@ -38,6 +38,7 @@ export class BookEditViewComponent implements OnInit {public book$: Observable<B
       genre: new FormControl(book.genre),
       status: new FormControl(book.status),
       type: new FormControl(book.type),
+      startDate: new FormControl(book.started),
     });
   }
 

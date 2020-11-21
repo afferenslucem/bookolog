@@ -12,6 +12,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { BookInputsModule } from '../book-inputs/book-inputs.module';
 import { FormattingModule } from '../formatting/formatting.module';
 import { UiModule } from '../ui/ui.module';
 import { routes } from './book-routing.module';
@@ -62,6 +63,7 @@ import { BookEditViewComponent } from './components/book-edit-view/book-edit-vie
     ReactiveFormsModule,
     MatInputModule,
     MatOptionModule,
+    BookInputsModule,
   ],
 })
 export class BookModule {
