@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { CapitalizePipe } from '../../../formatting/pipes/capitalize.pipe';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
@@ -85,14 +86,8 @@ export class BookEditViewComponent implements OnInit {
     });
 
     this.form.get('genre').valueChanges.subscribe(genre => {
-      this._filteredGenres = this.filterGenres(genre.toLowerCase());
+      this._filteredGenres = new FuzzySearch().search(this._genres, genre.toLowerCase());
     });
-  }
-
-  private filterGenres(genre: string): string[] {
-    return _(this._genres)
-      .where(item => item.indexOf(genre) !== -1)
-      .toArray();
   }
 
   public get status(): BookStatus {
