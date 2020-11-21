@@ -13,9 +13,10 @@ import { BookService } from '../../services/book.service';
 @Component({
   selector: 'app-book-edit-view',
   templateUrl: './book-edit-view.component.html',
-  styleUrls: ['./book-edit-view.component.scss']
+  styleUrls: ['./book-edit-view.component.scss'],
 })
-export class BookEditViewComponent implements OnInit {public book$: Observable<Book> = new Observable<Book>();
+export class BookEditViewComponent implements OnInit {
+  public book$: Observable<Book> = new Observable<Book>();
   public book: Book;
 
   public BookType: typeof BookType = BookType;
@@ -31,6 +32,10 @@ export class BookEditViewComponent implements OnInit {public book$: Observable<B
     });
   }
 
+  ngOnInit(): void {
+    this.titleService.setBookEdit();
+  }
+
   private formFromBook(book: Book): void {
     this.form = new FormBuilder().group({
       name: new FormControl(book.name, [Validators.required]),
@@ -39,10 +44,17 @@ export class BookEditViewComponent implements OnInit {public book$: Observable<B
       status: new FormControl(book.status),
       type: new FormControl(book.type),
       startDate: new FormControl(book.started),
+      endDate: new FormControl(book.finished),
+      done: new FormControl(book.doneUnits),
+      total: new FormControl(book.totalUnits),
     });
   }
 
-  ngOnInit(): void {
-    this.titleService.setBookEdit();
+  public get status(): BookStatus {
+    return this.form.get('status').value;
+  }
+
+  public get type(): BookType {
+    return this.form.get('type').value;
   }
 }

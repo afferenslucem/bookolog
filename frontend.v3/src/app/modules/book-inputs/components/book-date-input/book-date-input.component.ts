@@ -36,14 +36,6 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
   ngOnInit(): void {
   }
 
-  public toModel(): BookDate {
-    return {
-      year: this.form.get('year').value,
-      month: this.form.get('month').value,
-      day: this.form.get('day').value,
-    };
-  }
-
   public dayValidator(formGroup: FormGroup): ValidationErrors | null {
     let formErrors: ValidationErrors = null;
 
@@ -95,8 +87,6 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
       month: value.month,
       day: value.day,
     });
-
-    super.writeValue(value);
   }
 
   public emitTouch(event: MouseEvent | TouchEvent): void {

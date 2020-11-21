@@ -29,11 +29,50 @@
   <mat-form-field appearance="fill">
     <mat-label i18n="book authors label@@book__label_type">Тип книги</mat-label>
     <mat-select formControlName="type">
-      <mat-option [value]="BookStatus.ToRead" i18n="book status@@book__status_to-read">К прочтению</mat-option>
-      <mat-option [value]="BookStatus.InProgress" i18n="book status@@book__status_in-progress">Читаю</mat-option>
-      <mat-option [value]="BookStatus.Done" i18n="book status@@book__status_done">Прочитана</mat-option>
+      <mat-option [value]="BookType.Paper" i18n="book type paper@@book__type_paper">Бумажная книга</mat-option>
+      <mat-option [value]="BookType.Electronic" i18n="book type electronic@@book__type_electronic">Электронная книга</mat-option>
+      <mat-option [value]="BookType.Audio" i18n="book type audio@@book__type_audio">Аудиокнига</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <app-book-date-input formControlName="startDate"></app-book-date-input>
+  <div class="book-edit__progress" [ngSwitch]="type" *ngIf="status == BookStatus.InProgress">
+    <div class="book-edit__progress_audio" *ngSwitchCase="BookType.Audio">
+      <div>
+        <mat-label i18n="book edit audio progress label@@book-edit__label_audio-progress">Прослушано</mat-label>
+        <app-book-time-input formControlName="done"></app-book-time-input>
+      </div>
+
+      <div>
+        <mat-label i18n="book edit audio total label@@book-edit__label_total-audio-progress">Всего</mat-label>
+        <app-book-time-input formControlName="total"></app-book-time-input>
+      </div>
+    </div>
+    <div class="book-edit__progress_audio" *ngSwitchDefault>
+      <mat-form-field appearance="fill">
+        <mat-label i18n="book edit paper progress label@@book-edit__label_paper-progress">Прочитано</mat-label>
+        <input matInput type="number" formControlName="done" min="0" step="1" max="6000"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label i18n="book edit paper total label@@book-edit__label_total-paper-progress">Всего</mat-label>
+        <input matInput type="number" formControlName="total" min="0" step="1" max="6000"/>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div *ngIf="status == BookStatus.Done || status == BookStatus.InProgress">
+    <mat-label i18n="book start date label@@book__label_start-date">Начало чтения</mat-label>
+    <app-book-date-input formControlName="startDate"></app-book-date-input>
+  </div>
+
+  <div *ngIf="status == BookStatus.Done">
+    <mat-label i18n="book end date label@@book__label_end-date">Окончание чтения</mat-label>
+    <app-book-date-input formControlName="endDate"></app-book-date-input>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label i18n="book note label@@book__label_note">Заметки</mat-label>
+    <textarea matInput rows="4"></textarea>
+  </mat-form-field>
+
 </form>
