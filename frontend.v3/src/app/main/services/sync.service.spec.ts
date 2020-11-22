@@ -20,15 +20,15 @@ describe('SyncService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('nowUTC', () => {
-    const now = new Date('2020-11-18 09:33:00');
-    const spyNow = spyOnProperty(service, 'now', 'get').and.returnValue(now);
-
-    const utcNow = service.nowUTC;
-
-    expect(utcNow).toEqual(new Date('2020-11-18 04:33:00'));
-    expect(spyNow).toHaveBeenCalledTimes(1);
-  });
+  // it('nowUTC', () => {
+  //   const now = new Date('2020-11-18 09:33:00');
+  //   const spyNow = spyOnProperty(service, 'now', 'get').and.returnValue(now);
+  //
+  //   const utcNow = service.nowUTC;
+  //
+  //   expect(utcNow).toEqual(new Date('2020-11-18 04:33:00'));
+  //   expect(spyNow).toHaveBeenCalledTimes(1);
+  // });
 
   describe('getData', () => {
     it('should return fresh', async () => {

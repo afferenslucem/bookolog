@@ -45,7 +45,7 @@ export const routes: Routes = [
   },
   {
     component: BookEditViewComponent,
-    path: 'book/edit/:guid',
+    path: 'book/:action/:guid',
     pathMatch: 'full',
     resolve: {
       book: BookResolver,
