@@ -96,6 +96,22 @@ export class BookStorageService {
     }
   }
 
+  public async save(book: BookData): Promise<BookData> {
+    try {
+      await this.indexedDb.open(this.dbName);
+
+      if (!book.guid) {
+        book.guid = this.generator.generate();
+      }
+
+      await this.indexedDb.save(this.booksStore, book);
+
+      return book;
+    } finally {
+      this.indexedDb.close();
+    }
+  }
+
   public async updateMany(books: BookData[]): Promise<BookData[]> {
     if (books.length === 0) {
       return [];

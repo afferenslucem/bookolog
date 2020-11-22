@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { DateUtils } from '../../../../main/utils/date-utils';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
-import { CapitalizePipe } from '../../../formatting/pipes/capitalize.pipe';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookStatus } from '../../models/book-status';
@@ -24,18 +24,19 @@ export class BookEditViewComponent implements OnInit {
   public BookStatus: typeof BookStatus = BookStatus;
 
   public form: FormGroup = null;
-
-  private _genres: string[] = [];
-
-  private _filteredGenres: string[] = [];
-
   public authors: string[] = [];
   public tags: string[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, public titleService: TitleService, public dialog: MatDialog, private bookService: BookService) {
+  private _filteredGenres: string[] = [];
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    public titleService: TitleService,
+    private bookService: BookService
+  ) {
     activatedRoute.data.subscribe(data => {
       if (data.book) {
-        this.book = data.book;
+        this.book = Object.assign({}, data.book);
         this.formFromBook(this.book);
       }
       if (data.allBooks) {
@@ -44,8 +45,36 @@ export class BookEditViewComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  private _genres: string[] = [];
+
+  public get genres(): string[] {
+    return this._filteredGenres;
+  }
+
+  public get status(): BookStatus {
+    return this.form.get('status').value;
+  }
+
+  public get type(): BookType {
+    return this.form.get('type').value;
+  }
+
+  public get genre(): string {
+    return this.form.get('genre').value;
+  }
+
+  public ngOnInit(): void {
     this.titleService.setBookEdit();
+  }
+
+  public async submit(): Promise<void> {
+    const data = Object.assign(this.book, this.form.value) as Book;
+
+    data.modifyDate = DateUtils.nowUTC;
+
+    await this.bookService.saveOrUpdate(data);
+
+    history.back();
   }
 
   private readAutocompleteData(books: Book[]): void {
@@ -60,7 +89,7 @@ export class BookEditViewComponent implements OnInit {
     const genresCount = _(books)
       .select(item => item.genre)
       .where(item => !!item)
-      .aggregate((acc: {[key: string]: number}, item: string) => {
+      .aggregate((acc: { [key: string]: number }, item: string) => {
         const key = item.toLowerCase();
 
         const counter: number = acc[key] || 0;
@@ -80,7 +109,7 @@ export class BookEditViewComponent implements OnInit {
     const authorsCount = _(books)
       .selectMany(item => item.authors)
       .where(item => !!item)
-      .aggregate((acc: {[key: string]: number}, item: string) => {
+      .aggregate((acc: { [key: string]: number }, item: string) => {
         const key = item;
 
         const counter: number = acc[key] || 0;
@@ -100,7 +129,7 @@ export class BookEditViewComponent implements OnInit {
     const tagsCount = _(books)
       .selectMany(item => item.tags)
       .where(item => !!item)
-      .aggregate((acc: {[key: string]: number}, item: string) => {
+      .aggregate((acc: { [key: string]: number }, item: string) => {
         const key = item.toLowerCase();
 
         const counter: number = acc[key] || 0;
@@ -116,7 +145,6 @@ export class BookEditViewComponent implements OnInit {
       .toArray();
   }
 
-
   private formFromBook(book: Book): void {
     this.form = new FormBuilder().group({
       name: new FormControl(book.name, [Validators.required]),
@@ -124,10 +152,10 @@ export class BookEditViewComponent implements OnInit {
       genre: new FormControl(book.genre),
       status: new FormControl(book.status),
       type: new FormControl(book.type),
-      startDate: new FormControl(book.started),
-      endDate: new FormControl(book.finished),
-      done: new FormControl(book.doneUnits),
-      total: new FormControl(book.totalUnits),
+      started: new FormControl(book.started),
+      finished: new FormControl(book.finished),
+      doneUnits: new FormControl(book.doneUnits),
+      totalUnits: new FormControl(book.totalUnits),
       authors: new FormControl(book.authors),
       tags: new FormControl(book.tags),
     });
@@ -135,21 +163,5 @@ export class BookEditViewComponent implements OnInit {
     this.form.get('genre').valueChanges.subscribe(genre => {
       this._filteredGenres = new FuzzySearch().search(this._genres, genre.toLowerCase());
     });
-  }
-
-  public get status(): BookStatus {
-    return this.form.get('status').value;
-  }
-
-  public get type(): BookType {
-    return this.form.get('type').value;
-  }
-
-  public get genre(): string {
-    return this.form.get('genre').value;
-  }
-
-  public get genres(): string[] {
-    return this._filteredGenres;
   }
 }

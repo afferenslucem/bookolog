@@ -51,10 +51,8 @@
   </div>
 
   <div class="book__tags property" *ngIf="book.tags.length > 0">
-    <div class="property__value">
-      <span class="tag" *ngFor="let tag of book.tags">
-        {{tag}}
-      </span>
+    <div class="property__value tags">
+        <app-tag-value *ngFor="let tag of book.tags" [name]="tag | capitalize" showCross="false"></app-tag-value>
     </div>
     <label i18n="book tags label@@book__label_tags">Теги</label>
   </div>

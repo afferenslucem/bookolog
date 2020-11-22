@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import format from "date-fns/format";
 import _ from 'declarray';
 import { getLogger } from '../../../main/app.logging';
 import { SyncService } from '../../../main/services/sync.service';
 import { Book } from '../models/book';
+import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import { BookOriginService } from './book.origin.service';
 import { BookStorageService } from './book.storage.service';
@@ -20,6 +22,20 @@ export class BookService {
     const data = await this.storage.getAll();
 
     return _(data).select(item => new Book(item)).toArray();
+  }
+
+  public async saveOrUpdate(book: Book): Promise<Book> {
+    const dto = this.convertToDTO(book);
+
+    if (book.guid) {
+      await this.storage.update(dto);
+
+      return book;
+    } else {
+      const saved = await this.storage.save(dto);
+
+      return new Book(saved);
+    }
   }
 
   public async getByGuid(guid: string): Promise<Book> {
@@ -51,7 +67,7 @@ export class BookService {
   private async softDelete(book: Book): Promise<void> {
     book.deleted = true;
 
-    const dto = book.convertToDTO();
+    const dto = this.convertToDTO(book);
 
     await this.storage.update(dto);
   }
@@ -88,5 +104,33 @@ export class BookService {
     const updating = this.storage.updateMany(toUpdate);
 
     await Promise.all([updating, deleting]);
+  }
+
+  private convertToDTO(book: Book): BookData {
+    const data: BookData = {
+      guid: book.guid,
+      name: book.name,
+      authors: Array.from(book.authors),
+      year: book.year,
+      status: book.status,
+      tags: Array.from(book.tags),
+      totalUnits: book.totalUnits,
+      doneUnits: book.doneUnits,
+      genre: book.genre,
+      startDateYear: book.started.year,
+      startDateMonth: book.started.month,
+      startDateDay: book.started.day,
+      endDateYear: book.finished.year,
+      endDateMonth: book.finished.month,
+      endDateDay: book.finished.day,
+      type: book.type,
+      note: book.note,
+      modifyDate: format(book.modifyDate, 'yyyy-MM-dd HH:mm:ss'),
+      createDate: format(book.createDate, 'yyyy-MM-dd HH:mm:ss'),
+      deleted: book.deleted,
+      shouldSync: book.shouldSync,
+    };
+
+    return data;
   }
  }

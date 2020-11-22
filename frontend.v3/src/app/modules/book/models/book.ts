@@ -65,32 +65,4 @@ export class Book {
       return null;
     }
   }
-
-  public convertToDTO(): BookData {
-    const data: BookData = {
-      guid: this.guid,
-      name: this.name,
-      authors: Array.from(this.authors),
-      year: this.year,
-      status: this.status,
-      tags: Array.from(this.tags),
-      totalUnits: this.totalUnits,
-      doneUnits: this.doneUnits,
-      genre: this.genre,
-      startDateYear: this.started.year,
-      startDateMonth: this.started.month,
-      startDateDay: this.started.day,
-      endDateYear: this.finished.year,
-      endDateMonth: this.finished.month,
-      endDateDay: this.finished.day,
-      type: this.type,
-      note: this.note,
-      modifyDate: format(this.modifyDate, 'yyyy-MM-dd HH:mm:ss'),
-      createDate: format(this.createDate, 'yyyy-MM-dd HH:mm:ss'),
-      deleted: this.deleted,
-      shouldSync: this.shouldSync,
-    };
-
-    return data;
-  }
 }

@@ -69,3 +69,21 @@ app-done-book {
 mat-toolbar {
   height: $header-height !important;
 }
+
+.tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  app-tag-value {
+    flex: 0 0 auto;
+
+    &:not(:last-child) {
+      margin-right: $ind-1;
+    }
+    margin-bottom: $ind-1;
+  }
+}

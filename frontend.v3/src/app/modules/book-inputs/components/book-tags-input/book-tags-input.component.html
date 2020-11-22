@@ -15,6 +15,6 @@
   </button>
 </form>
 
-<div class="tags-input__value" *ngIf="tags.length > 0">
+<div class="tags-input__value tags" *ngIf="tags.length > 0">
   <app-tag-value [name]="tag | capitalize" *ngFor="let tag of tags" (crossClick)="removeTag(tag)"></app-tag-value>
 </div>

@@ -28,10 +28,11 @@ import { TagValueComponent } from './components/tag-value/tag-value.component';
     MatAutocompleteModule,
     FormattingModule,
   ],
-  exports: [
-    BookDateInputComponent,
-    BookTimeInputComponent,
-    BookTagsInputComponent,
-  ],
+    exports: [
+        BookDateInputComponent,
+        BookTimeInputComponent,
+        BookTagsInputComponent,
+        TagValueComponent,
+    ],
 })
 export class BookInputsModule { }

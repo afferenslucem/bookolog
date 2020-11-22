@@ -40,21 +40,21 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
 
     if (!!value && !_(this.tags).contains(value, new StringComparer())) {
       this.tags.push(value);
+
+      this.emitChangeValue(this.tags);
     }
 
     this.tag = '';
-  }
-
-  public writeValue(value: string[]): void {
-    this.tags = _(value).distinct(new StringComparer()).toArray();
-
-    this.emitChangeValue(this.tags);
   }
 
   public removeTag(tag: string): void {
     this.tags = _(this.tags).where(item => !new StringComparer().equal(item, tag)).toArray();
 
     this.emitChangeValue(this.tags);
+  }
+
+  public writeValue(value: string[]): void {
+    this.tags = _(value).distinct(new StringComparer()).toArray();
   }
 
   public get tag(): string {

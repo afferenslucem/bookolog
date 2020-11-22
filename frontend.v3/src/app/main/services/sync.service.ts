@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { DateUtils } from '../utils/date-utils';
 import { UserService } from './user.service';
 import addSeconds from 'date-fns/addSeconds';
-import addMinutes from 'date-fns/addMinutes';
 import { getLogger } from '../app.logging';
 
 @Injectable({
@@ -32,12 +32,10 @@ export class SyncService {
   }
 
   public get nowUTC(): Date {
-    const now = this.now;
-
-    return addMinutes(now, now.getTimezoneOffset());
+    return DateUtils.nowUTC;
   }
 
   public get now(): Date {
-    return new Date();
+    return DateUtils.now;
   }
 }
