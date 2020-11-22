@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { StringComparer } from '../../../../main/utils/string.comparer';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
 import _ from 'declarray';
@@ -62,5 +63,15 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
 
   public set tag(v: string) {
     this.form.get('input').setValue(v);
+  }
+
+  public get availableTags(): string[] {
+    const tags = _(this.list).except(this.tags, new StringComparer()).toArray();
+
+    if (this.tag) {
+      return new FuzzySearch().search(tags, this.tag);
+    } else {
+      return tags;
+    }
   }
 }

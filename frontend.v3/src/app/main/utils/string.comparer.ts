@@ -6,6 +6,6 @@ export class StringComparer implements IEqualityComparer<string>{
   }
 
   public getHashCode(object: string): string | number {
-    return object;
+    return object.toLowerCase();
   }
 }

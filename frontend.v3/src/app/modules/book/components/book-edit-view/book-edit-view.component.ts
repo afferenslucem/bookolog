@@ -30,6 +30,7 @@ export class BookEditViewComponent implements OnInit {
   private _filteredGenres: string[] = [];
 
   public authors: string[] = [];
+  public tags: string[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, public titleService: TitleService, public dialog: MatDialog, private bookService: BookService) {
     activatedRoute.data.subscribe(data => {
@@ -50,6 +51,9 @@ export class BookEditViewComponent implements OnInit {
   private readAutocompleteData(books: Book[]): void {
     this._genres = this.sortGenresByCount(books);
     this._filteredGenres = this._genres;
+
+    this.authors = this.sortAuthorsByCount(books);
+    this.tags = this.sortTagsByCount(books);
   }
 
   private sortGenresByCount(books: Book[]): string[] {
@@ -71,6 +75,47 @@ export class BookEditViewComponent implements OnInit {
       .select(item => item[0])
       .toArray();
   }
+
+  private sortAuthorsByCount(books: Book[]): string[] {
+    const authorsCount = _(books)
+      .selectMany(item => item.authors)
+      .where(item => !!item)
+      .aggregate((acc: {[key: string]: number}, item: string) => {
+        const key = item;
+
+        const counter: number = acc[key] || 0;
+
+        acc[key] = counter + 1;
+
+        return acc;
+      }, {});
+
+    return _(Object.entries(authorsCount))
+      .orderByDescending(item => item[1])
+      .select(item => item[0])
+      .toArray();
+  }
+
+  private sortTagsByCount(books: Book[]): string[] {
+    const tagsCount = _(books)
+      .selectMany(item => item.tags)
+      .where(item => !!item)
+      .aggregate((acc: {[key: string]: number}, item: string) => {
+        const key = item.toLowerCase();
+
+        const counter: number = acc[key] || 0;
+
+        acc[key] = counter + 1;
+
+        return acc;
+      }, {});
+
+    return _(Object.entries(tagsCount))
+      .orderByDescending(item => item[1])
+      .select(item => item[0])
+      .toArray();
+  }
+
 
   private formFromBook(book: Book): void {
     this.form = new FormBuilder().group({

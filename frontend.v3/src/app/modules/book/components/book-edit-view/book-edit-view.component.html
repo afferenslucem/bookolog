@@ -7,7 +7,7 @@
     </mat-error>
   </mat-form-field>
 
-  <app-book-tags-input formControlName="authors" header="Авторы"></app-book-tags-input>
+  <app-book-tags-input [list]="authors" formControlName="authors" header="Авторы"></app-book-tags-input>
 
   <mat-form-field appearance="fill">
     <mat-label i18n="book year label@@book__label_year">Год выпуска</mat-label>
@@ -28,7 +28,7 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <app-book-tags-input formControlName="tags" header="Теги"></app-book-tags-input>
+  <app-book-tags-input [list]="tags" formControlName="tags" header="Теги"></app-book-tags-input>
 
   <mat-form-field appearance="fill">
     <mat-label i18n="book status label@@book__label_status">Статус</mat-label>
