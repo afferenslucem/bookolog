@@ -1,0 +1,41 @@
+@import "~src/styles/variables";
+
+.tags-input {
+  position: relative;
+
+  &__value {
+    position: relative;
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    top: -#{$ind-3};
+    padding-bottom: $ind-3;
+
+    app-tag-value {
+      flex: 0 0 auto;
+
+      &:not(:last-child) {
+        margin-right: $ind-1;
+      }
+      margin-bottom: $ind-1;
+    }
+  }
+}
+
+form {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+
+  button {
+    flex: 0 0 auto;
+
+    height: 60px;
+
+    margin-left: 1rem;
+  }
+}

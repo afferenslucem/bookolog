@@ -1,0 +1,14 @@
+<form [formGroup]="form" (ngSubmit)="append()">
+  <mat-form-field appearance="fill">
+    <mat-label>{{header}}</mat-label>
+    <input matInput formControlName="input" type="text"/>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" type="submit">
+    <app-plus-icon></app-plus-icon>
+  </button>
+</form>
+
+<div class="tags-input__value" *ngIf="tags.length > 0">
+  <app-tag-value [name]="tag" *ngFor="let tag of tags" (crossClick)="removeTag(tag)"></app-tag-value>
+</div>

@@ -83,6 +83,8 @@ export class BookEditViewComponent implements OnInit {
       endDate: new FormControl(book.finished),
       done: new FormControl(book.doneUnits),
       total: new FormControl(book.totalUnits),
+      authors: new FormControl(book.authors),
+      tags: new FormControl(book.tags),
     });
 
     this.form.get('genre').valueChanges.subscribe(genre => {

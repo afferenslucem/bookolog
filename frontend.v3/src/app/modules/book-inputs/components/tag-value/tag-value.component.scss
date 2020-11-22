@@ -1,0 +1,18 @@
+@import "~src/styles/variables";
+
+.tag {
+  display: flex;
+  align-items: center;
+
+  > * {
+    flex: 0 0 auto;
+  }
+
+  padding: $ind-1;
+
+  line-height: 1.3rem;
+
+  &__close {
+    margin-left: $ind-1;
+  }
+}

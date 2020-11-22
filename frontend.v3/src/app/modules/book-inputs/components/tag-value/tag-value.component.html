@@ -1,0 +1,5 @@
+<div class="tag mat-accent mat-flat-button">
+  <span class="tag__value">{{name}}</span>
+
+  <mat-icon class="tag__close" *ngIf="showCross !== 'false' && showCross !== false" (click)="crossClick.emit()">close</mat-icon>
+</div>
