@@ -149,65 +149,35 @@ export class BookEditViewComponent implements OnInit {
   }
 
   private sortGenresByCount(books: Book[]): string[] {
-    const genresCount = _(books)
+    return  _(books)
+      .where(item => !!item.genre)
       .select(item => item.genre)
-      .where(item => !!item)
-      .aggregate((acc: { [key: string]: number }, item: string) => {
-        const key = item.toLowerCase();
-
-        const counter: number = acc[key] || 0;
-
-        acc[key] = counter + 1;
-
-        return acc;
-      }, {});
-
-    return _(Object.entries(genresCount))
-      .orderByDescending(item => item[1])
-      .select(item => item[0])
-      .sort()
+      .groupBy(item => item.toLowerCase(), grouped => grouped.count())
+      .orderByDescending(item => item.group)
+      .thenBy(item => item)
+      .select(item => item.key)
       .toArray();
   }
 
   private sortAuthorsByCount(books: Book[]): string[] {
-    const authorsCount = _(books)
+    return  _(books)
+      .where(item => item.authors.length > 0)
       .selectMany(item => item.authors)
-      .where(item => !!item)
-      .aggregate((acc: { [key: string]: number }, item: string) => {
-        const key = item;
-
-        const counter: number = acc[key] || 0;
-
-        acc[key] = counter + 1;
-
-        return acc;
-      }, {});
-
-    return _(Object.entries(authorsCount))
-      .orderByDescending(item => item[1])
-      .select(item => item[0])
-      .sort()
+      .groupBy(item => item, grouped => grouped.count())
+      .orderByDescending(item => item.group)
+      .thenBy(item => item)
+      .select(item => item.key)
       .toArray();
   }
 
   private sortTagsByCount(books: Book[]): string[] {
-    const tagsCount = _(books)
+    return  _(books)
+      .where(item => item.tags.length > 0)
       .selectMany(item => item.tags)
-      .where(item => !!item)
-      .aggregate((acc: { [key: string]: number }, item: string) => {
-        const key = item.toLowerCase();
-
-        const counter: number = acc[key] || 0;
-
-        acc[key] = counter + 1;
-
-        return acc;
-      }, {});
-
-    return _(Object.entries(tagsCount))
-      .orderByDescending(item => item[1])
-      .select(item => item[0])
-      .sort()
+      .groupBy(item => item.toLowerCase(), grouped => grouped.count())
+      .orderByDescending(item => item.group)
+      .thenBy(item => item)
+      .select(item => item.key)
       .toArray();
   }
 

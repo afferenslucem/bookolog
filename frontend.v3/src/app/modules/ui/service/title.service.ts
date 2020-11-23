@@ -38,6 +38,18 @@ export class TitleService {
     this._title.next(TitleText.Login);
   }
 
+  public setTagsStatistic(): void {
+    this._title.next(TitleText.TagsStatistic);
+  }
+
+  public setGenresStatistic(): void {
+    this._title.next(TitleText.GenresStatistic);
+  }
+
+  public setAuthorsStatistic(): void {
+    this._title.next(TitleText.AuthorsStatistic);
+  }
+
   public get title$(): Observable<TitleText> {
     return this._title;
   }

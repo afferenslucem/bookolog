@@ -1,27 +1,51 @@
 <div class="content">
-  <div class="navigation">
-    <div class="navigation__header" i18n>Списки</div>
-    <div class="navigation__body">
-      <mat-list class="book-nav" (click)="navigated.emit()">
-        <mat-list-item>
-          <div class="book-nav__item">
-            <span [routerLink]="['/in-progress']" i18n="book menu|in progress">Читаю сейчас</span>
-            <app-plus-icon [routerLink]="['/book', 'create', BookStatus.InProgress]"></app-plus-icon>
-          </div>
-        </mat-list-item>
-        <mat-list-item>
-          <div class="book-nav__item">
-            <span [routerLink]="['/to-read']" i18n="book menu|to read">Буду читать</span>
-            <app-plus-icon [routerLink]="['/book', 'create', BookStatus.ToRead]"></app-plus-icon>
-          </div>
-        </mat-list-item>
-        <mat-list-item>
-          <div class="book-nav__item">
-            <span [routerLink]="['/done']" i18n="book menu|done">Прочитаные</span>
-            <app-plus-icon [routerLink]="['/book', 'create', BookStatus.Done]"></app-plus-icon>
-          </div>
-        </mat-list-item>
-      </mat-list>
+  <div (click)="navigated.emit()">
+    <div class="navigation">
+      <div class="navigation__header" i18n>Списки</div>
+      <div class="navigation__body">
+        <mat-list class="book-nav">
+          <mat-list-item>
+            <div class="book-nav__item">
+              <span class="link" [routerLink]="['/in-progress']" i18n="book menu|in progress">Читаю сейчас</span>
+              <app-plus-icon [routerLink]="['/book', 'create', BookStatus.InProgress]"></app-plus-icon>
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <div class="book-nav__item">
+              <span class="link" [routerLink]="['/to-read']" i18n="book menu|to read">Буду читать</span>
+              <app-plus-icon [routerLink]="['/book', 'create', BookStatus.ToRead]"></app-plus-icon>
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <div class="book-nav__item">
+              <span class="link" [routerLink]="['/done']" i18n="book menu|done">Прочитаные</span>
+              <app-plus-icon [routerLink]="['/book', 'create', BookStatus.Done]"></app-plus-icon>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+    <div class="navigation">
+      <div class="navigation__header" i18n>Статистика</div>
+      <div class="navigation__body">
+        <mat-list class="book-nav">
+          <mat-list-item>
+            <div class="book-nav__item">
+              <span class="link" [routerLink]="['/genres']" i18n="book menu|in progress">Жанры</span>
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <div class="book-nav__item">
+              <span class="link" [routerLink]="['/authors']" i18n="book menu|to read">Авторы</span>
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <div class="book-nav__item">
+              <span class="link" [routerLink]="['/tags']" i18n="book menu|done">Теги</span>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
     </div>
   </div>
 </div>

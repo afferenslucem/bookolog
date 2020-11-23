@@ -6,4 +6,7 @@ export enum TitleText {
   Book = 130,
   BookEdit = 140,
   BookCreate = 150,
+  TagsStatistic = 200,
+  GenresStatistic = 210,
+  AuthorsStatistic = 220,
 }
