@@ -49,7 +49,7 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="book-edit__progress" [ngSwitch]="type" *ngIf="status == BookStatus.InProgress">
+  <div class="book-edit__progress" [ngSwitch]="type" [hidden]="status !== BookStatus.InProgress">
     <div class="book-edit__progress_audio" *ngSwitchCase="BookType.Audio">
       <div>
         <mat-label i18n="book edit audio progress label@@book-edit__label_audio-progress">Прослушано</mat-label>
@@ -74,12 +74,12 @@
     </div>
   </div>
 
-  <div *ngIf="status == BookStatus.Done || status == BookStatus.InProgress">
+  <div [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
     <mat-label i18n="book start date label@@book__label_start-date">Начало чтения</mat-label>
     <app-book-date-input formControlName="started"></app-book-date-input>
   </div>
 
-  <div *ngIf="status == BookStatus.Done">
+  <div [hidden]="status != BookStatus.Done">
     <mat-label i18n="book end date label@@book__label_end-date">Окончание чтения</mat-label>
     <app-book-date-input formControlName="finished"></app-book-date-input>
   </div>

@@ -47,8 +47,8 @@ export class Book {
       day: data.endDateDay,
     };
     this.endDate = this.getDate(data.endDate, this.finished);
-    this.modifyDate = new Date(data.modifyDate);
-    this.createDate = new Date(data.createDate);
+    this.modifyDate = data.modifyDate ? new Date(data.modifyDate) : null;
+    this.createDate = data.modifyDate ? new Date(data.createDate) : null;
     this.type = data.type;
     this.note = data.note;
     this.deleted = data.deleted;

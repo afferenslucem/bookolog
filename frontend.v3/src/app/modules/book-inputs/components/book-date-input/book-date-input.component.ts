@@ -83,9 +83,9 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
 
   public writeValue(value: BookDate): void {
     this.form.setValue({
-      year: value.year,
-      month: value.month,
-      day: value.day,
+      year: value.year || '',
+      month: value.month || '',
+      day: value.day || '',
     });
   }
 

@@ -18,6 +18,10 @@ export class TitleService {
     this._title.next(TitleText.BookEdit);
   }
 
+  public setBookCreate(): void {
+    this._title.next(TitleText.BookCreate);
+  }
+
   public setDoneList(): void {
     this._title.next(TitleText.DoneList);
   }

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import _ from 'declarray';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
+import { BookData } from '../../models/book-data';
 import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
+import { Action } from '../../resolvers/action.resolver';
 import { BookService } from '../../services/book.service';
-import _ from 'declarray';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -27,21 +28,50 @@ export class BookEditViewComponent implements OnInit {
   public authors: string[] = [];
   public tags: string[] = [];
 
+  private action: Action;
+
+  private defaultValue: BookData = {
+    guid: '',
+    name: '',
+    status: BookStatus.ToRead,
+    type: BookType.Paper,
+    year: null,
+    genre: '',
+    authors: [],
+    tags: [],
+    note: '',
+    modifyDate: '',
+    createDate: '',
+    doneUnits: null,
+    totalUnits: null,
+    endDateYear: null,
+    endDateMonth: null,
+    endDateDay: null,
+    startDateYear: null,
+    startDateMonth: null,
+    startDateDay: null,
+  };
+
   private _filteredGenres: string[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public titleService: TitleService,
-    private bookService: BookService
+    private bookService: BookService,
+    private router: Router,
   ) {
     activatedRoute.data.subscribe(data => {
-      if (data.book) {
-        this.book = Object.assign({}, data.book);
-        this.formFromBook(this.book);
+      this.book = Object.assign({}, data.book || new Book(this.defaultValue));
+
+      if (data.status) {
+        this.book.status = data.status;
       }
-      if (data.allBooks) {
-        this.readAutocompleteData(data.allBooks);
-      }
+
+      this.formFromBook(this.book);
+
+      this.readAutocompleteData(data.allBooks);
+
+      this.readAction(data.action);
     });
   }
 
@@ -72,9 +102,32 @@ export class BookEditViewComponent implements OnInit {
 
     data.modifyDate = DateUtils.nowUTC;
 
+    if (!data.createDate) {
+      data.createDate = DateUtils.nowUTC;
+    }
+
+    data.shouldSync = true;
+
     await this.bookService.saveOrUpdate(data);
 
-    history.back();
+    await this.redirect();
+  }
+
+  private async redirect(): Promise<void> {
+    switch (this.book.status) {
+      case BookStatus.ToRead: {
+        await this.router.navigate(['/to-read']);
+        return;
+      }
+      case BookStatus.Done: {
+        await this.router.navigate(['done']);
+        return;
+      }
+      case BookStatus.InProgress: {
+        await this.router.navigate(['in-progress']);
+        return;
+      }
+    }
   }
 
   private readAutocompleteData(books: Book[]): void {
@@ -83,6 +136,16 @@ export class BookEditViewComponent implements OnInit {
 
     this.authors = this.sortAuthorsByCount(books);
     this.tags = this.sortTagsByCount(books);
+  }
+
+  private readAction(action: Action): void {
+    this.action = action;
+
+    if (this.action === Action.Create) {
+      this.titleService.setBookCreate();
+    } else if (this.action === Action.Edit) {
+      this.titleService.setBookEdit();
+    }
   }
 
   private sortGenresByCount(books: Book[]): string[] {
@@ -154,8 +217,8 @@ export class BookEditViewComponent implements OnInit {
       type: new FormControl(book.type),
       started: new FormControl(book.started),
       finished: new FormControl(book.finished),
-      doneUnits: new FormControl(book.doneUnits),
-      totalUnits: new FormControl(book.totalUnits),
+      doneUnits: new FormControl(book.doneUnits || null),
+      totalUnits: new FormControl(book.totalUnits || null),
       authors: new FormControl(book.authors),
       tags: new FormControl(book.tags),
     });

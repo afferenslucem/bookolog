@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
 import { getLogger } from '../../../main/app.logging';
 
 export enum Action {
@@ -15,11 +14,13 @@ export class ActionResolver implements Resolve<Action> {
     namespace: 'Resolver',
   });
 
-  public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Action> | Promise<Action> | Action {
-    const action = route.paramMap.get('action');
+  public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Action> {
+    // const action = route.get('action');
+    //
+    // this.logger.debug('action result: ', action);
+    //
+    // return action as Action;
 
-    this.logger.debug('action result: ', action);
-
-    return action as Action;
+    return null;
   }
 }

@@ -5,4 +5,5 @@ export enum TitleText {
   DoneList = 120,
   Book = 130,
   BookEdit = 140,
+  BookCreate = 150,
 }
