@@ -1,6 +1,6 @@
 <div class="book-list" *ngIf="years">
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let year of years">
+    <mat-expansion-panel *ngFor="let year of years; let first = first" [expanded]="first">
       <mat-expansion-panel-header>
         <mat-panel-title *ngIf="year.key != -1; else yearNotSpecified">
           {{year.key}}

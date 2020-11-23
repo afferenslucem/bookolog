@@ -11,7 +11,7 @@ import { TitleService } from '../../../ui/service/title.service';
 @Component({
   selector: 'app-tags-list',
   templateUrl: './tags-list.component.html',
-  styleUrls: ['./tags-list.component.scss']
+  styleUrls: ['./tags-list.component.scss'],
 })
 export class TagsListComponent implements OnInit {
   public tags$: Observable<IGroupedData<string, number>[]> = null;
@@ -27,17 +27,17 @@ export class TagsListComponent implements OnInit {
     this.titleService.setTagsStatistic();
   }
 
+  public async selectedTag(tag: string): Promise<void> {
+    await this.router.navigate(['/tag', tag]);
+  }
+
   private countTags(books: Book[]): IGroupedData<any, number>[] {
-    return  _(books)
+    return _(books)
       .where(item => item.tags.length > 0)
       .selectMany(item => item.tags)
       .groupBy(item => item, grouped => grouped.count())
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .toArray();
-  }
-
-  public async selectedTag(tag: string) {
-    await this.router.navigate(['/tag', tag]);
   }
 }

@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { AllBooksResolver } from '../book/resolvers/all-books.resolver';
+import { BooksByAuthorResolver } from '../book/resolvers/books-by-author.resolver';
+import { BooksByGenreResolver } from '../book/resolvers/books-by-genre.resolver';
 import { BooksByTagResolver } from '../book/resolvers/books-by-tag.resolver';
 import { AuthorsListComponent } from './component/authors-list/authors-list.component';
 import { BookFilteredComponent } from './component/book-filtered/book-filtered.component';
@@ -37,6 +39,22 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: BooksByTagResolver,
+    }
+  },
+  {
+    component: BookFilteredComponent,
+    path: 'author/:filter',
+    pathMatch: 'full',
+    resolve: {
+      books: BooksByAuthorResolver,
+    }
+  },
+  {
+    component: BookFilteredComponent,
+    path: 'genre/:filter',
+    pathMatch: 'full',
+    resolve: {
+      books: BooksByGenreResolver,
     }
   },
 ];

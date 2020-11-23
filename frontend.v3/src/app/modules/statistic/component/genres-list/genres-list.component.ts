@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ import { TitleService } from '../../../ui/service/title.service';
 export class GenresListComponent implements OnInit {
   public genres$: Observable<IGroupedData<string, number>[]> = null;
 
-  constructor(private activateRoute: ActivatedRoute, private titleService: TitleService) {
+  constructor(private activateRoute: ActivatedRoute, private titleService: TitleService, private router: Router) {
     this.genres$ = activateRoute.data.pipe(
       map(data => data.books as Book[]),
       map(data => this.countGenres(data)),
@@ -24,6 +24,10 @@ export class GenresListComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setGenresStatistic();
+  }
+
+  public async selectedGenre(tag: string): Promise<void> {
+    await this.router.navigate(['/genre', tag]);
   }
 
   private countGenres(books: Book[]): IGroupedData<any, number>[] {

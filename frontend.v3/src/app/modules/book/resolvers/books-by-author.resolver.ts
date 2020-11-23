@@ -7,9 +7,9 @@ import { BookService } from '../services/book.service';
 import _ from 'declarray';
 
 @Injectable({providedIn: 'root'})
-export class BooksByTagResolver implements Resolve<Book[]> {
+export class BooksByAuthorResolver implements Resolve<Book[]> {
   private logger = getLogger({
-    loggerName: 'BooksByTagResolver',
+    loggerName: 'BooksByAuthorResolver',
     namespace: 'Resolver',
   });
 
@@ -17,12 +17,12 @@ export class BooksByTagResolver implements Resolve<Book[]> {
   }
 
   public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Book[]> {
-    const targetTag = route.paramMap.get('filter');
+    const targetAuthor = route.paramMap.get('filter');
 
     const books = await this.bookService.getByStatus(BookStatus.Done);
 
     return _(books)
-      .where(item => _(item.tags).contains(targetTag))
+      .where(item => _(item.authors).contains(targetAuthor))
       .toArray();
   }
 }
