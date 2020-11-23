@@ -19,4 +19,8 @@ export class TitleComponent implements OnInit {
   public get title$(): Observable<TitleText> {
     return this.titleService.title$;
   }
+
+  public get custom$(): Observable<string> {
+    return this.titleService.custom$;
+  }
 }

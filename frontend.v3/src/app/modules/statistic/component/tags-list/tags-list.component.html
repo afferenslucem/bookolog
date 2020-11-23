@@ -1,1 +1,1 @@
-<app-statistic-list [data]="tags$ | async"></app-statistic-list>
+<app-statistic-list [data]="tags$ | async" (selected)="selectedTag($event)"></app-statistic-list>

@@ -7,51 +7,76 @@ import { TitleText } from '../models/title-text';
 })
 export class TitleService {
   private readonly _title = new BehaviorSubject<TitleText>(0);
+  private readonly _custom = new BehaviorSubject<string>('');
 
   constructor() { }
 
   public setBook(): void {
-    this._title.next(TitleText.Book);
+    this.setCustom(null);
+    this.setTitle(TitleText.Book);
   }
 
   public setBookEdit(): void {
-    this._title.next(TitleText.BookEdit);
+    this.setCustom(null);
+    this.setTitle(TitleText.BookEdit);
   }
 
   public setBookCreate(): void {
-    this._title.next(TitleText.BookCreate);
+    this.setCustom(null);
+    this.setTitle(TitleText.BookCreate);
   }
 
   public setDoneList(): void {
-    this._title.next(TitleText.DoneList);
+    this.setCustom(null);
+    this.setTitle(TitleText.DoneList);
   }
 
   public setInProgressList(): void {
-    this._title.next(TitleText.InProgressList);
+    this.setCustom(null);
+    this.setTitle(TitleText.InProgressList);
   }
 
   public setToReadList(): void {
-    this._title.next(TitleText.ToReadList);
+    this.setCustom(null);
+    this.setTitle(TitleText.ToReadList);
   }
 
   public setLogin(): void {
-    this._title.next(TitleText.Login);
+    this.setCustom(null);
+    this.setTitle(TitleText.Login);
   }
 
   public setTagsStatistic(): void {
-    this._title.next(TitleText.TagsStatistic);
+    this.setCustom(null);
+    this.setTitle(TitleText.TagsStatistic);
   }
 
   public setGenresStatistic(): void {
-    this._title.next(TitleText.GenresStatistic);
+    this.setCustom(null);
+    this.setTitle(TitleText.GenresStatistic);
   }
 
   public setAuthorsStatistic(): void {
-    this._title.next(TitleText.AuthorsStatistic);
+    this.setCustom(null);
+    this.setTitle(TitleText.AuthorsStatistic);
+  }
+
+  public setCustom(title: string): void {
+    this._custom.next(title);
+    this._title.next(null);
+  }
+
+  public setTitle(title: TitleText): void {
+    this._custom.next(null);
+    this._title.next(title);
   }
 
   public get title$(): Observable<TitleText> {
     return this._title;
+  }
+
+  public get custom$(): Observable<string> {
+    return this._custom;
   }
 
   public get title(): TitleText {

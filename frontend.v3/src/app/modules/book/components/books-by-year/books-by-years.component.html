@@ -1,0 +1,27 @@
+<div class="book-list" *ngIf="years">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let year of years">
+      <mat-expansion-panel-header>
+        <mat-panel-title *ngIf="year.key != -1; else yearNotSpecified">
+          {{year.key}}
+        </mat-panel-title>
+        <ng-template #yearNotSpecified>
+          <span i18n>Год не указан</span>
+        </ng-template>
+        <mat-panel-description>
+          <div class="years__meta w-100">
+            <div>
+              {{year.group.length}}
+            </div>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div>
+        <div *ngFor="let book of year.group; let last = last">
+          <app-done-book [routerLink]="['/book', book.guid]" class="book-list__item" [book]="book"></app-done-book>
+          <mat-divider *ngIf="!last"></mat-divider>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

@@ -1,3 +1,6 @@
+<span *ngIf="(custom$ | async) as custom">
+  {{custom}}
+</span>
 <span *ngIf="(title$ | async) as title">
   {title, plural,
     =1    {Вход}
@@ -11,5 +14,5 @@
     =210  {Жанры}
     =220  {Авторы}
     other {Bookolog}
-  }
+    }
 </span>

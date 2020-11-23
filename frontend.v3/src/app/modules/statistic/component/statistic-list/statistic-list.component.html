@@ -1,7 +1,7 @@
 <mat-list role="list">
   <mat-list-item *ngFor="let item of data">
     <div class="statistic-item w-100">
-      <span class="statistic-item__name link">{{item.key | capitalize}}</span>
+      <span class="statistic-item__name link" (click)="selected.emit(item.key)">{{item.key | capitalize}}</span>
       <span class="statistic-item__count">{{item.group}}</span>
     </div>
   </mat-list-item>

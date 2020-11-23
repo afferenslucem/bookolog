@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 
 @Component({
@@ -9,6 +9,9 @@ import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 export class StatisticListComponent implements OnInit {
   @Input()
   public data: IGroupedData<string, number>[];
+
+  @Output()
+  public selected = new EventEmitter<string>();
 
   constructor() { }
 

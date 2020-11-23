@@ -1,6 +1,6 @@
 import { group } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { TitleService } from '../../../ui/service/title.service';
 export class TagsListComponent implements OnInit {
   public tags$: Observable<IGroupedData<string, number>[]> = null;
 
-  constructor(private activateRoute: ActivatedRoute, private titleService: TitleService) {
+  constructor(private activateRoute: ActivatedRoute, private titleService: TitleService, private router: Router) {
     this.tags$ = activateRoute.data.pipe(
       map(data => data.books as Book[]),
       map(data => this.countTags(data)),
@@ -35,5 +35,9 @@ export class TagsListComponent implements OnInit {
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .toArray();
+  }
+
+  public async selectedTag(tag: string) {
+    await this.router.navigate(['/tag', tag]);
   }
 }
