@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserService } from '../../../main/services/user.service';
+import { BookService } from '../../book/services/book.service';
 import { CredentialsException } from '../exceptions/credentials.exception';
 import { Credentials } from '../models/credentials';
 import { HttpClient } from '@angular/common/http';
@@ -17,10 +18,18 @@ export class AuthService {
   constructor(
     private httpClient: HttpClient,
     private userService: UserService,
+    private bookService: BookService,
   ) {
   }
 
   public async login(credentials: Credentials): Promise<User> {
+    const user = await this.sendLogin(credentials);
+    await this.bookService.loadAll();
+
+    return user;
+  }
+
+  private async sendLogin(credentials: Credentials): Promise<User> {
     try {
       return await this.httpClient.post<User>('/auth/login', credentials, {
         responseType: 'json',

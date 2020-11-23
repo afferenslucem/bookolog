@@ -6,8 +6,8 @@ import { UserService } from '../../../main/services/user.service';
 import { BookData } from '../models/book-data';
 
 export interface SyncData {
-  localUpdated: BookData[];
-  localDeleted: BookData[];
+  update: BookData[];
+  deleteGuids: string[];
 }
 
 export interface RemoteSyncData {

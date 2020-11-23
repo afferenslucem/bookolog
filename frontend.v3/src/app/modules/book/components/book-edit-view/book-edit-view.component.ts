@@ -165,6 +165,7 @@ export class BookEditViewComponent implements OnInit {
     return _(Object.entries(genresCount))
       .orderByDescending(item => item[1])
       .select(item => item[0])
+      .sort()
       .toArray();
   }
 
@@ -185,6 +186,7 @@ export class BookEditViewComponent implements OnInit {
     return _(Object.entries(authorsCount))
       .orderByDescending(item => item[1])
       .select(item => item[0])
+      .sort()
       .toArray();
   }
 
@@ -205,6 +207,7 @@ export class BookEditViewComponent implements OnInit {
     return _(Object.entries(tagsCount))
       .orderByDescending(item => item[1])
       .select(item => item[0])
+      .sort()
       .toArray();
   }
 
