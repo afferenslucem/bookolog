@@ -4,4 +4,5 @@
       class="book-list__item" [book]="book"></app-in-progress-book>
     <mat-divider *ngIf="!last"></mat-divider>
   </div>
+  <span *ngIf="+(books?.length) === 0" i18n="@@empty-book-list">Здесь пока ничего нет</span>
 </div>
