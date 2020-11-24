@@ -111,6 +111,10 @@ export class BookService {
     await this.storage.restore(data);
   }
 
+  public async clear(): Promise<void> {
+    await this.storage.clear();
+  }
+
   private convertToDTO(book: Book): BookData {
     const data: BookData = {
       guid: book.guid,
