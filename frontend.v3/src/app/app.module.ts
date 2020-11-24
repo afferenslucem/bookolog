@@ -1,5 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
@@ -21,6 +22,7 @@ import { InnerAreaComponent } from './main/components/inner-area/inner-area.comp
 import { StatisticModule } from './modules/statistic/statistic.module';
 import { UiModule } from './modules/ui/ui.module';
 import { SideMenuComponent } from './main/components/side-menu/side-menu.component';
+import { PreloaderComponent } from './main/components/preloader/preloader.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -30,12 +32,14 @@ registerLocaleData(localeRu, 'ru');
     StartPageComponent,
     InnerAreaComponent,
     SideMenuComponent,
+    PreloaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,

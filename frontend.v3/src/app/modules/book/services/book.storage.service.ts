@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { getLogger } from '../../../main/app.logging';
 import { IndexedDbService } from '../../../main/services/indexed-db.service';
+import { PreloaderService } from '../../../main/services/preloader.service';
 import { BookData } from '../models/book-data';
 import { UUIDGenerator } from 'essents';
-import _ from 'declarray';
 import { BookStatus } from '../models/book-status';
 
 @Injectable({
@@ -16,61 +16,72 @@ export class BookStorageService {
   private readonly dbName = 'bookolog.db';
   private readonly booksStore = 'BooksStore';
 
-  constructor(private indexedDb: IndexedDbService) {
+  constructor(private indexedDb: IndexedDbService, private preloaderService: PreloaderService) {
   }
 
   public async getAll(): Promise<BookData[]> {
     try {
+      this.preloaderService.show();
+
       await this.indexedDb.open(this.dbName);
       const data: any = await this.indexedDb.all(this.booksStore);
 
       return data.target.result;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
   public async getAllByStatus(status: BookStatus): Promise<BookData[]> {
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
       const data: any = await this.indexedDb.allWithProperty(this.booksStore, 'status', status);
 
       return data.target.result;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
   public async getDeleted(): Promise<BookData[]> {
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
       const data: any = await this.indexedDb.allWithProperty(this.booksStore, 'deleted', true);
 
       return data.target.result;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
   public async getShouldSync(): Promise<BookData[]> {
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
       const data: any = await this.indexedDb.allWithProperty(this.booksStore, 'shouldSync', true);
 
       return data.target.result;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
   public async getByGuid(guid: string): Promise<BookData> {
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
       const data: any = await this.indexedDb.get(this.booksStore, 'guid', guid);
 
       return data.target.result;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
@@ -80,6 +91,7 @@ export class BookStorageService {
     }
 
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
 
       books.forEach(item => {
@@ -93,11 +105,13 @@ export class BookStorageService {
       return books;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
   public async save(book: BookData): Promise<BookData> {
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
 
       if (!book.guid) {
@@ -109,6 +123,7 @@ export class BookStorageService {
       return book;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
@@ -118,6 +133,7 @@ export class BookStorageService {
     }
 
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
 
       await this.indexedDb.updateMany(this.booksStore, books);
@@ -125,6 +141,7 @@ export class BookStorageService {
       return books;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
@@ -134,6 +151,7 @@ export class BookStorageService {
     }
 
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
 
       await this.indexedDb.deleteMany(this.booksStore, books.map(item => item.guid));
@@ -141,6 +159,7 @@ export class BookStorageService {
       return books;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
@@ -151,20 +170,24 @@ export class BookStorageService {
 
   public async clear(): Promise<void> {
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
       await this.indexedDb.clear(this.booksStore);
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
   public async delete(guid: string): Promise<void> {
     try {
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
 
       await this.indexedDb.delete(this.booksStore, guid);
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 
@@ -172,6 +195,7 @@ export class BookStorageService {
     try {
       this.logger.debug('book update');
 
+      this.preloaderService.show();
       await this.indexedDb.open(this.dbName);
 
       const data: any = await this.indexedDb.update(this.booksStore, book);
@@ -179,6 +203,7 @@ export class BookStorageService {
       return book;
     } finally {
       this.indexedDb.close();
+      this.preloaderService.hide();
     }
   }
 }
