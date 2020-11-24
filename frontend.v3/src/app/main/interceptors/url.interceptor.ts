@@ -7,6 +7,8 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class UrlInterceptor implements HttpInterceptor {
+  public constructor() {
+  }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const clone = req.clone({
       url: environment.serverUrl + req.url,

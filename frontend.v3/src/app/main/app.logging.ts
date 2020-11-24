@@ -21,10 +21,21 @@ const factory = new LoggerFactory([
   },
   {
     name: {
+      namespace: 'Interceptor',
+      loggerName: 'AuthorizedInterceptor'
+    },
+    logger: LogLevel.All
+  },
+  {
+    name: {
       namespace: 'Resolver'
     },
     logger: LogLevel.Debug
-  }
+  },
+  {
+    name: 'BookService',
+    logger: LogLevel.Warning
+  },
 ]);
 
 export function getLogger(name: string | ILoggerName): ILogger {

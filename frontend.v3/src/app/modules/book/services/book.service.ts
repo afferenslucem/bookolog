@@ -78,37 +78,45 @@ export class BookService {
   }
 
   public async sync(): Promise<void> {
-    const allBooks = await this.storage.getAll();
+    try {
+      const allBooks = await this.storage.getAll();
 
-    const deletedToSync = _(allBooks).where(item => item.deleted).toArray();
-    const updatedToSync = _(allBooks).where(item => item.shouldSync).toArray();
+      const deletedToSync = _(allBooks).where(item => item.deleted).toArray();
+      const updatedToSync = _(allBooks).where(item => item.shouldSync).toArray();
 
-    const remoteSyncData = await this.origin.sync({
-      deleteGuids: deletedToSync.map(item => item.guid),
-      update: updatedToSync
-    });
+      const remoteSyncData = await this.origin.sync({
+        deleteGuids: deletedToSync.map(item => item.guid),
+        update: updatedToSync
+      });
 
-    const toDelete = _(remoteSyncData.delete)
-      .concat(deletedToSync)
-      .toArray();
+      const toDelete = _(remoteSyncData.delete)
+        .concat(deletedToSync)
+        .toArray();
 
-    const toUpdate = _(updatedToSync)
-      .select(item => {
-        item.shouldSync = false;
-        return item;
-      })
-      .concat(remoteSyncData.update)
-      .toArray();
+      const toUpdate = _(updatedToSync)
+        .select(item => {
+          item.shouldSync = false;
+          return item;
+        })
+        .concat(remoteSyncData.update)
+        .toArray();
 
-    const deleting = this.storage.deleteMany(toDelete);
-    const updating = this.storage.updateMany(toUpdate);
+      const deleting = this.storage.deleteMany(toDelete);
+      const updating = this.storage.updateMany(toUpdate);
 
-    await Promise.all([updating, deleting]);
+      await Promise.all([updating, deleting]);
+    } catch (e) {
+      this.logger.error('Could not sync', e);
+    }
   }
 
   public async loadAll(): Promise<void> {
-    const data = await this.origin.getAll();
-    await this.storage.restore(data);
+    try {
+      const data = await this.origin.getAll();
+      await this.storage.restore(data);
+    } catch (e) {
+      this.logger.error('Could not load all books', e);
+    }
   }
 
   public async clear(): Promise<void> {
