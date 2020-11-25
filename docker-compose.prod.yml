@@ -6,7 +6,8 @@ services:
       - "40080:80"    
     depends_on: 
       - server
-  
+    volumes:
+      - "./tmp:/tmp"  
 
   server:
     build: 
