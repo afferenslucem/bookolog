@@ -2,6 +2,11 @@ FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+RUN npm install -g @angular/cli@11.0.1
+
 COPY . .
 RUN npm run build
 
