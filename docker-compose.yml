@@ -1,7 +1,7 @@
 version: "3"
 services:
   client:
-    build: frontend.v2/
+    build: frontend.v3/
     ports:
       - "40080:80"    
     depends_on: 
