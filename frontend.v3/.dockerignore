@@ -1,0 +1,15 @@
+**/dist
+**/.dockerignore
+**/.git
+**/.gitignore
+**/.idea
+**/.settings
+**/.toolstarget
+**/.vs
+**/.vscode
+**/*.*proj.user
+**/docker-compose*
+**/Dockerfile*
+**/node_modules
+LICENSE
+README.md
