@@ -1,4 +1,5 @@
 import { registerLocaleData } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -23,6 +24,7 @@ import { StatisticModule } from './modules/statistic/statistic.module';
 import { UiModule } from './modules/ui/ui.module';
 import { SideMenuComponent } from './main/components/side-menu/side-menu.component';
 import { PreloaderComponent } from './main/components/preloader/preloader.component';
+import { SyncInfoComponent } from './main/components/sync-info/sync-info.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -33,23 +35,25 @@ registerLocaleData(localeRu, 'ru');
     InnerAreaComponent,
     SideMenuComponent,
     PreloaderComponent,
+    SyncInfoComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    HttpClientModule,
-    AuthModule,
-    BookModule,
-    StatisticModule,
-    UiModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatListModule,
+        HttpClientModule,
+        AuthModule,
+        BookModule,
+        StatisticModule,
+        UiModule,
+        MatIconModule,
+    ],
   providers: [
     interceptors,
     {

@@ -28,21 +28,15 @@
     <div class="navigation">
       <div class="navigation__header" i18n>Статистика</div>
       <div class="navigation__body">
-        <mat-list class="book-nav">
+        <mat-list>
           <mat-list-item>
-            <div class="book-nav__item">
-              <span class="link" [routerLink]="['/genres']" i18n="book menu|in progress">Жанры</span>
-            </div>
+            <span class="link" [routerLink]="['/genres']" i18n="genres">Жанры</span>
           </mat-list-item>
           <mat-list-item>
-            <div class="book-nav__item">
-              <span class="link" [routerLink]="['/authors']" i18n="book menu|to read">Авторы</span>
-            </div>
+            <span class="link" [routerLink]="['/authors']" i18n="authors">Авторы</span>
           </mat-list-item>
           <mat-list-item>
-            <div class="book-nav__item">
-              <span class="link" [routerLink]="['/tags']" i18n="book menu|done">Теги</span>
-            </div>
+            <span class="link" [routerLink]="['/tags']" i18n="tags">Теги</span>
           </mat-list-item>
         </mat-list>
       </div>
@@ -50,13 +44,16 @@
     <div class="navigation">
       <div class="navigation__header" i18n>Аккаунт</div>
       <div class="navigation__body">
-        <mat-list class="book-nav">
+        <mat-list>
           <mat-list-item>
-            <div class="book-nav__item">
-              <span class="link" (click)="logout()" i18n="book menu|in progress">Выйти</span>
-            </div>
+            <span class="link" (click)="logout()" i18n="exit">Выйти</span>
           </mat-list-item>
         </mat-list>
+      </div>
+    </div>
+    <div class="navigation sync" (click)="$event.stopPropagation()">
+      <div class="navigation__body">
+        <app-sync-info></app-sync-info>
       </div>
     </div>
   </div>

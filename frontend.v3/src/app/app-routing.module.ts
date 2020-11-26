@@ -6,6 +6,7 @@ import { LoggedInGuard } from './modules/auth/guards/logged-in.guard';
 import { routes as bookListRoutes } from './modules/book/book-routing.module';
 import { routes as statisticRoutes } from './modules/statistic/statistic-routing.module';
 import { BookSyncResolver } from './modules/book/resolvers/book-sync.resolver';
+import { MeResolver } from './modules/user/resolvers/me.resolver';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
       ...statisticRoutes,
     ],
     resolve: {
-      sync: BookSyncResolver
+      sync: BookSyncResolver,
+      user: MeResolver,
     }
   }
 ];

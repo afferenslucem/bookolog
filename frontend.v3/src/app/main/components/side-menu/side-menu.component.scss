@@ -16,6 +16,8 @@
 }
 
 .navigation {
+  width: 100%;
+
   &__header {
     font-size: $large-font-size;
     font-weight: $fat-font-weight;
@@ -26,4 +28,11 @@ mat-list {
   mat-list-item {
     height: 2.2rem;
   }
+}
+
+.navigation.sync {
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
 }

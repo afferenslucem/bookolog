@@ -11,18 +11,12 @@ export class BookSyncResolver implements Resolve<boolean> {
     namespace: 'Resolver',
   });
 
-  public constructor(private bookService: BookService, private sync: SyncService) {
+  public constructor(private sync: SyncService) {
   }
 
   public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     try {
-      if (this.sync.shouldRestore) {
-        this.logger.debug('restore');
-        await this.bookService.restore();
-      } else {
-        this.logger.debug('sync');
-        await this.bookService.sync();
-      }
+      await this.sync.bookSync();
 
       return true;
     } catch (e) {

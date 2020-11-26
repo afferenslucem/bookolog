@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserService } from '../../../main/services/user.service';
+import { UserService } from '../../user/services/user.service';
 import { BookService } from '../../book/services/book.service';
 import { CredentialsException } from '../exceptions/credentials.exception';
 import { Credentials } from '../models/credentials';
@@ -23,46 +23,16 @@ export class AuthService {
   }
 
   public async login(credentials: Credentials): Promise<User> {
-    const user = await this.sendLogin(credentials);
+    const user = await this.userService.login(credentials);
     await this.bookService.loadAll();
     return user;
   }
 
-  private async sendLogin(credentials: Credentials): Promise<User> {
-    try {
-      return await this.httpClient.post<User>('/auth/login', credentials, {
-        responseType: 'json',
-      }).pipe(
-        tap((response) => this.logger.debug('Sent login', response)),
-        tap((user: User) => this.userService.user = user),
-      ).toPromise();
-    } catch (e) {
-      if (e.error === 'Incorrect login or password') {
-        this.logger.debug('Credentials error', e);
-        throw new CredentialsException();
-      } else {
-        throw e;
-      }
-    }
-  }
-
   public async logout(): Promise<void> {
     try {
-      await this.sendLogout();
-    } finally {
       await this.userService.logout();
+    } finally {
       await this.bookService.clear();
-    }
-  }
-
-  private async sendLogout(): Promise<void> {
-    try {
-      return await this.httpClient.get('/auth/logout').pipe(
-        tap(() => this.logger.debug('Sent logout')),
-      ).toPromise() as Promise<void>;
-    } catch (e) {
-      this.logger.error('Logout problem');
-      throw e;
     }
   }
 }

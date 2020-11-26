@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { getLogger } from '../../../main/app.logging';
-import { UserService } from '../../../main/services/user.service';
+import { UserService } from '../../user/services/user.service';
 import { BookData } from '../models/book-data';
 
 export interface SyncData {
