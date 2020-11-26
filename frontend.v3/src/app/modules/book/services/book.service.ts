@@ -24,6 +24,7 @@ export class BookService {
   }
 
   public async saveOrUpdate(book: Book): Promise<Book> {
+    book.shouldSync = true;
     const dto = this.convertToDTO(book);
 
     if (book.guid) {

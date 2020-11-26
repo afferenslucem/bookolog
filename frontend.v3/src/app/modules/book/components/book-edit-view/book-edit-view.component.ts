@@ -107,8 +107,6 @@ export class BookEditViewComponent implements OnInit {
       data.createDate = DateUtils.nowUTC;
     }
 
-    data.shouldSync = true;
-
     await this.bookService.saveOrUpdate(data);
 
     await this.redirect();
