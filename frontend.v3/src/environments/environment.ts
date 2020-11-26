@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   serverUrl: 'http://localhost:35080',
-  restoreTimeSeconds: 60
+  restoreTimeSeconds: 60,
+  version: '0.0.1'
 };
 
 /*
