@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
+import { StringComparer } from '../../../../main/utils/string.comparer';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookData } from '../../models/book-data';
@@ -152,7 +153,7 @@ export class BookEditViewComponent implements OnInit {
     return  _(books)
       .where(item => !!item.genre)
       .select(item => item.genre)
-      .groupBy(item => item.toLowerCase(), grouped => grouped.count())
+      .groupBy(item => item, new StringComparer(), grouped => grouped.count())
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .select(item => item.key)
@@ -163,7 +164,7 @@ export class BookEditViewComponent implements OnInit {
     return  _(books)
       .where(item => item.authors.length > 0)
       .selectMany(item => item.authors)
-      .groupBy(item => item, grouped => grouped.count())
+      .groupBy(item => item, new StringComparer(), grouped => grouped.count())
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .select(item => item.key)
@@ -174,7 +175,7 @@ export class BookEditViewComponent implements OnInit {
     return  _(books)
       .where(item => item.tags.length > 0)
       .selectMany(item => item.tags)
-      .groupBy(item => item.toLowerCase(), grouped => grouped.count())
+      .groupBy(item => item, new StringComparer(), grouped => grouped.count())
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .select(item => item.key)

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { StringComparer } from '../../../../main/utils/string.comparer';
 import { Book } from '../../../book/models/book';
 import _ from 'declarray';
 import { TitleService } from '../../../ui/service/title.service';
@@ -35,7 +36,7 @@ export class TagsListComponent implements OnInit {
     return _(books)
       .where(item => item.tags.length > 0)
       .selectMany(item => item.tags)
-      .groupBy(item => item, grouped => grouped.count())
+      .groupBy(item => item, new StringComparer(), grouped => grouped.count())
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .toArray();

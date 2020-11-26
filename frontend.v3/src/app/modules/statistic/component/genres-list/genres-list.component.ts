@@ -4,6 +4,7 @@ import _ from 'declarray';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { StringComparer } from '../../../../main/utils/string.comparer';
 import { Book } from '../../../book/models/book';
 import { TitleService } from '../../../ui/service/title.service';
 
@@ -34,7 +35,7 @@ export class GenresListComponent implements OnInit {
     return  _(books)
       .where(item => !!item.genre)
       .select(item => item.genre)
-      .groupBy(item => item, grouped => grouped.count())
+      .groupBy(item => item, new StringComparer(), grouped => grouped.count())
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .toArray();
