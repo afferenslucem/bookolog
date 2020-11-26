@@ -17,7 +17,7 @@ export class SyncInfoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public async sync(): Promise {
+  public async sync(): Promise<void> {
     await this.syncService.syncAll();
   }
 }
