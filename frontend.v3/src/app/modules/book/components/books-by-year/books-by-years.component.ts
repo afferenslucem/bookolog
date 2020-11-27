@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import _ from 'declarray';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 import { BookTrackBy } from '../../../../main/utils/book-track-by';
@@ -7,7 +7,8 @@ import { Book } from '../../models/book';
 @Component({
   selector: 'app-books-by-years',
   templateUrl: './books-by-years.component.html',
-  styleUrls: ['./books-by-years.component.scss']
+  styleUrls: ['./books-by-years.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksByYearsComponent implements OnInit {
   @Input()
