@@ -1,5 +1,5 @@
 <div class="book-list" *ngIf="(books$ | async) as books">
-  <div *ngFor="let book of books; let last = last">
+  <div *ngFor="let book of books; let last = last; trackBy: bookTrackBy">
     <app-in-progress-book [routerLink]="['/book', book.guid]"
       class="book-list__item" [book]="book"></app-in-progress-book>
     <mat-divider *ngIf="!last"></mat-divider>

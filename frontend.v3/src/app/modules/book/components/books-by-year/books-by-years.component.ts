@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import _ from 'declarray';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
+import { BookTrackBy } from '../../../../main/utils/book-track-by';
 import { Book } from '../../models/book';
 
 @Component({
@@ -30,5 +31,13 @@ export class BooksByYearsComponent implements OnInit {
       .groupBy(item => item.finished.year || -1, group => group.toArray())
       .orderByDescending(item => item.key)
       .toArray();
+  }
+
+  public bookTrackBy(index: number, item: Book): string {
+    return BookTrackBy.trackBy(index, item);
+  }
+
+  public yearTrackBy(index: number, item: IGroupedData<number, Book[]>): number {
+    return item.key;
   }
 }

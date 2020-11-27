@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { BookTrackBy } from '../../../../main/utils/book-track-by';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookActionService } from '../../services/book-action.service';
@@ -25,5 +26,9 @@ export class InProgressBooksListComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setInProgressList();
+  }
+
+  public bookTrackBy(index: number, item: Book): string {
+    return BookTrackBy.trackBy(index, item);
   }
 }
