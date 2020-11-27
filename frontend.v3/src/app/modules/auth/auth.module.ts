@@ -9,12 +9,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { UiModule } from '../ui/ui.module';
 import { routes } from './auth-routing.module';
-import { LoginPageComponent } from './components/login-page/login-page.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 
 
 @NgModule({
-  declarations: [LoginPageComponent],
+  declarations: [LoginComponent, RegistrationComponent],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),

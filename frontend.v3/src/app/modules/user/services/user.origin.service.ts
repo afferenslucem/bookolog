@@ -5,6 +5,7 @@ import { ILogger } from 'waterlog';
 import { getLogger } from '../../../main/app.logging';
 import { CredentialsException } from '../../auth/exceptions/credentials.exception';
 import { Credentials } from '../../auth/models/credentials';
+import { RegistrationData } from '../../auth/models/registration-data';
 import { User } from '../../auth/models/user';
 
 @Injectable({
@@ -53,5 +54,12 @@ export class UserOriginService {
       this.logger.error('me problem', e);
       throw e;
     }
+  }
+
+  public async registration(data: RegistrationData): Promise<User> {
+    return await this.httpClient.post<User>('/auth/register', data)
+      .pipe(
+        tap(item => this.logger.debug('Registered', item)),
+      ).toPromise();
   }
 }

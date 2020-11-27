@@ -7,16 +7,16 @@ import { Credentials } from '../../models/credentials';
 import { AuthService } from '../../services/auth.service';
 
 enum LoginError {
-  Undefined= -1,
+  Undefined = -1,
   Credential = 0,
 }
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginPageComponent implements OnInit {
+export class LoginComponent implements OnInit {
   public error: LoginError = null;
 
   public form: FormGroup = new FormGroup({

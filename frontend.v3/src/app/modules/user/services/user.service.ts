@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Credentials } from '../../auth/models/credentials';
+import { RegistrationData } from '../../auth/models/registration-data';
 import { User } from '../../auth/models/user';
 import { BookService } from '../../book/services/book.service';
 import { UserOriginService } from './user.origin.service';
@@ -49,6 +50,10 @@ export class UserService {
     this.user = me;
 
     return me;
+  }
+
+  public async registration(regData: RegistrationData): Promise<User> {
+    return await this.userOrigin.registration(regData);
   }
 
   private recoverUser(): User {

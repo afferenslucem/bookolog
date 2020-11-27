@@ -10,16 +10,16 @@ import { UiModule } from '../../../ui/ui.module';
 import { CredentialsException } from '../../exceptions/credentials.exception';
 import { AuthService } from '../../services/auth.service';
 
-import { LoginPageComponent } from './login-page.component';
+import { LoginComponent } from './login.component';
 
 describe('LoginPageComponent', () => {
-  let component: LoginPageComponent;
-  let fixture: ComponentFixture<LoginPageComponent>;
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
   let auther: AuthService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginPageComponent ],
+      declarations: [ LoginComponent ],
       providers: [{
         provide: AuthService,
         useValue: {}
@@ -39,7 +39,7 @@ describe('LoginPageComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginPageComponent);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
 

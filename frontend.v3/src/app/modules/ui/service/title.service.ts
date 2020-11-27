@@ -46,6 +46,11 @@ export class TitleService {
     this.setTitle(TitleText.Login);
   }
 
+  public setRegistration(): void {
+    this.setCustom(null);
+    this.setTitle(TitleText.Registration);
+  }
+
   public setTagsStatistic(): void {
     this.setCustom(null);
     this.setTitle(TitleText.TagsStatistic);

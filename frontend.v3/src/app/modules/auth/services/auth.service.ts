@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { getLogger } from '../../../main/app.logging';
 import { ILogger } from 'waterlog';
 import { catchError, mapTo, tap } from 'rxjs/operators';
+import { RegistrationData } from '../models/registration-data';
 import { User } from '../models/user';
 
 @Injectable({
@@ -16,7 +17,6 @@ export class AuthService {
   private logger: ILogger = getLogger('AuthService');
 
   constructor(
-    private httpClient: HttpClient,
     private userService: UserService,
     private bookService: BookService,
   ) {
@@ -34,5 +34,9 @@ export class AuthService {
     } finally {
       await this.bookService.clear();
     }
+  }
+
+  public async registration(regData: RegistrationData): Promise<void> {
+    await this.userService.registration(regData);
   }
 }
