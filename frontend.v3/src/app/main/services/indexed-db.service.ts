@@ -55,20 +55,6 @@ export class IndexedDbService {
     }
   }
 
-  private upgradeDatabase(request: IDBRequest, dbEvent: any): void {
-    const db = dbEvent.target.result;
-
-    if (dbEvent.oldVersion < 1) {
-      const objectStore = db.createObjectStore('BooksStore', {keyPath: 'guid'});
-      objectStore.createIndex('guid', 'guid', {unique: true});
-      objectStore.createIndex('type', 'type', {unique: false});
-      objectStore.createIndex('genre', 'genre', {unique: false});
-      objectStore.createIndex('status', 'status', {unique: false});
-      objectStore.createIndex('shouldSync', 'shouldSync', {unique: false});
-      objectStore.createIndex('deleted', 'deleted', {unique: false});
-    }
-  }
-
   public save(storeName: string, object: any): Promise<Event> {
     const transaction = this.openTransaction(storeName);
 
@@ -163,6 +149,21 @@ export class IndexedDbService {
     });
   }
 
+  public getCount(storeName: string, propName: string): Promise<Event> {
+    const transaction = this.openTransaction(storeName, 'readonly');
+
+    return new Promise((resolve, reject) => {
+      const store = transaction.objectStore(storeName);
+
+      const index = store.index(propName);
+
+      const request = index.count();
+
+      request.onerror = (event) => reject(event);
+      request.onsuccess = (event) => resolve(event);
+    });
+  }
+
   public allWithProperty(storeName: string, propName: string, value: any): Promise<Event> {
     const transaction = this.openTransaction(storeName, 'readonly');
 
@@ -204,6 +205,20 @@ export class IndexedDbService {
       request.onerror = (event) => reject(event);
       request.onsuccess = (event) => resolve(event);
     });
+  }
+
+  private upgradeDatabase(request: IDBRequest, dbEvent: any): void {
+    const db = dbEvent.target.result;
+
+    if (dbEvent.oldVersion < 1) {
+      const objectStore = db.createObjectStore('BooksStore', {keyPath: 'guid'});
+      objectStore.createIndex('guid', 'guid', {unique: true});
+      objectStore.createIndex('type', 'type', {unique: false});
+      objectStore.createIndex('genre', 'genre', {unique: false});
+      objectStore.createIndex('status', 'status', {unique: false});
+      objectStore.createIndex('shouldSync', 'shouldSync', {unique: false});
+      objectStore.createIndex('deleted', 'deleted', {unique: false});
+    }
   }
 
   private openTransaction(objectStore: string, transactionType: 'readwrite' | 'readonly' = 'readwrite'): IDBTransaction {

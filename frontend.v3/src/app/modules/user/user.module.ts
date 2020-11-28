@@ -1,12 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { FormattingModule } from '../formatting/formatting.module';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [UserInfoComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    MatIconModule,
+    FormattingModule,
+  ],
+  exports: [
+    UserInfoComponent,
+  ],
 })
 export class UserModule { }

@@ -23,6 +23,12 @@ export class BookService {
     return _(data).select(item => new Book(item)).toArray();
   }
 
+  public async getAllCount(): Promise<number> {
+    const data = await this.storage.count();
+
+    return data;
+  }
+
   public async saveOrUpdate(book: Book): Promise<Book> {
     book.shouldSync = true;
     const dto = this.convertToDTO(book);

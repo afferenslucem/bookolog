@@ -10,11 +10,12 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 @NgModule({
     declarations: [JoinPipe, ChooseFormPipe, PadStartPipe, TimifyUnitsPipe, CapitalizePipe],
-  exports: [
-    JoinPipe,
-    TimifyUnitsPipe,
-    CapitalizePipe,
-  ],
+    exports: [
+        JoinPipe,
+        TimifyUnitsPipe,
+        CapitalizePipe,
+        ChooseFormPipe,
+    ],
     imports: [
         CommonModule,
     ],

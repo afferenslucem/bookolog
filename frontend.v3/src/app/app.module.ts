@@ -25,6 +25,7 @@ import { UiModule } from './modules/ui/ui.module';
 import { SideMenuComponent } from './main/components/side-menu/side-menu.component';
 import { PreloaderComponent } from './main/components/preloader/preloader.component';
 import { SyncInfoComponent } from './main/components/sync-info/sync-info.component';
+import { UserModule } from './modules/user/user.module';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -53,6 +54,7 @@ registerLocaleData(localeRu, 'ru');
         StatisticModule,
         UiModule,
         MatIconModule,
+        UserModule,
     ],
   providers: [
     interceptors,
