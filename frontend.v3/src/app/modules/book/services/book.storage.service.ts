@@ -45,6 +45,18 @@ export class BookStorageService {
     }
   }
 
+  public async countByStatus(status: BookStatus): Promise<number> {
+    try {
+      await this.indexedDb.open(this.dbName);
+
+      const data: any = await this.indexedDb.getCount(this.booksStore, 'status', status);
+
+      return data.target.result;
+    } finally {
+      this.indexedDb.close();
+    }
+  }
+
   public async getAllByStatus(status: BookStatus): Promise<BookData[]> {
     try {
       this.preloaderService.show();

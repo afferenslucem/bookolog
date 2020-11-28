@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
+import { BookStatus } from '../../../book/models/book-status';
 import { BookService } from '../../../book/services/book.service';
 import { UserService } from '../../services/user.service';
 
@@ -14,7 +15,7 @@ export class UserInfoComponent implements OnInit {
   constructor(private userService: UserService, private bookService: BookService) { }
 
   ngOnInit(): void {
-    this.count$ = this.bookService.getAllCount();
+    this.count$ = this.bookService.getCountByStatus(BookStatus.Done);
   }
 
   public get login(): string {

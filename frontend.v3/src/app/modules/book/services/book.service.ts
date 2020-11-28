@@ -29,6 +29,12 @@ export class BookService {
     return data;
   }
 
+  public async getCountByStatus(status: BookStatus): Promise<number> {
+    const data = await this.storage.countByStatus(status);
+
+    return data;
+  }
+
   public async saveOrUpdate(book: Book): Promise<Book> {
     book.shouldSync = true;
     const dto = this.convertToDTO(book);

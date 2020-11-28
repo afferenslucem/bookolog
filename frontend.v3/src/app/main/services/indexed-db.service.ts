@@ -149,7 +149,7 @@ export class IndexedDbService {
     });
   }
 
-  public getCount(storeName: string, propName: string): Promise<Event> {
+  public getCount(storeName: string, propName: string, value?: any): Promise<Event> {
     const transaction = this.openTransaction(storeName, 'readonly');
 
     return new Promise((resolve, reject) => {
@@ -157,7 +157,7 @@ export class IndexedDbService {
 
       const index = store.index(propName);
 
-      const request = index.count();
+      const request = index.count(value);
 
       request.onerror = (event) => reject(event);
       request.onsuccess = (event) => resolve(event);
