@@ -13,24 +13,26 @@ import { Book } from '../../models/book';
 export class BooksByYearsComponent implements OnInit {
   @Input()
   public set books(v: Book[]) {
-    this.years = this.groupBooks(v);
+    this.years$ = this.groupBooks(v);
   }
 
-  public years: IGroupedData<number, Book[]>[];
+  public years$: Promise<IGroupedData<number, Book[]>[]>;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  private groupBooks(books: Book[]): IGroupedData<number, Book[]>[] {
+  private groupBooks(books: Book[]): Promise<IGroupedData<number, Book[]>[]> {
     return _(books)
       .orderByDescending(item => item.finished.year || -1)
       .orderByDescending(item => item.finished.month || -1)
       .orderByDescending(item => item.finished.day || -1)
       .orderByDescending(item => item.modifyDate)
+      .orderByDescending(item => item.createDate)
       .groupBy(item => item.finished.year || -1, group => group.toArray())
       .orderByDescending(item => item.key)
+      .promisify()
       .toArray();
   }
 

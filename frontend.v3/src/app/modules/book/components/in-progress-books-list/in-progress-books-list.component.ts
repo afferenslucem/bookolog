@@ -6,6 +6,7 @@ import { BookTrackBy } from '../../../../main/utils/book-track-by';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookActionService } from '../../services/book-action.service';
+import _ from 'declarray';
 
 @Component({
   selector: 'app-in-progress',
@@ -21,7 +22,15 @@ export class InProgressBooksListComponent implements OnInit {
     this.books$ = this.route.data.pipe(
       filter(item => !!item.books),
       map(item => item.books),
+      map(books => this.sortBooks(books)),
     );
+  }
+
+  private sortBooks(books: Book[]): Book[] {
+    return _(books)
+      .orderByDescending(item => item.modifyDate)
+      .orderByDescending(item => item.createDate)
+      .toArray();
   }
 
   ngOnInit(): void {

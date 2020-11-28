@@ -21,8 +21,9 @@ export class BooksByGenreResolver implements Resolve<Book[]> {
 
     const books = await this.bookService.getByStatus(BookStatus.Done);
 
-    return _(books)
+    return await _(books)
       .where(item => item.genre === targetGenre)
+      .promisify()
       .toArray();
   }
 }

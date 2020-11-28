@@ -21,8 +21,9 @@ export class BooksByAuthorResolver implements Resolve<Book[]> {
 
     const books = await this.bookService.getByStatus(BookStatus.Done);
 
-    return _(books)
+    return await _(books)
       .where(item => _(item.authors).contains(targetAuthor))
+      .promisify()
       .toArray();
   }
 }

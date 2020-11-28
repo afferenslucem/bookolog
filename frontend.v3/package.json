@@ -25,7 +25,7 @@
     "@angular/service-worker": "~11.0.0",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
-    "declarray": "^6.0.0",
+    "declarray": "^6.0.4",
     "essents": "^1.2.5",
     "moment": "^2.29.1",
     "rxjs": "~6.6.0",

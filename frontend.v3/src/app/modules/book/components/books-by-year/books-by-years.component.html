@@ -1,4 +1,4 @@
-<div class="book-list" *ngIf="years">
+<div class="book-list" *ngIf="(years$ | async) as years">
   <mat-accordion>
     <mat-expansion-panel *ngFor="let year of years; let first = first; trackBy: yearTrackBy" [expanded]="first">
       <mat-expansion-panel-header>
@@ -24,5 +24,5 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+  <span *ngIf="+(years?.length) === 0" i18n="@@empty-book-list">Здесь пока ничего нет</span>
 </div>
-<span *ngIf="+(years?.length) === 0" i18n="@@empty-book-list">Здесь пока ничего нет</span>
