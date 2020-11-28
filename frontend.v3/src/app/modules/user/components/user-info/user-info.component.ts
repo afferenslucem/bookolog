@@ -22,7 +22,7 @@ export class UserInfoComponent implements OnInit {
   }
 
   public get avatar(): string {
-    return this.userService.user.avatar;
+    return this.userService.user.avatarName;
   }
 
   public get avatarUrl(): string {

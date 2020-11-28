@@ -2,6 +2,6 @@ export interface User {
   login: string;
   email: string;
   id: number;
-  avatar: string;
+  avatarName: string;
   lastSyncTime: Date;
 }
