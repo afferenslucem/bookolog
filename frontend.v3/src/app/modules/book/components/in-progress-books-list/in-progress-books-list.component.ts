@@ -29,7 +29,7 @@ export class InProgressBooksListComponent implements OnInit {
   private sortBooks(books: Book[]): Book[] {
     return _(books)
       .orderByDescending(item => item.modifyDate)
-      .orderByDescending(item => item.createDate)
+      .thenByDescending(item => item.createDate)
       .toArray();
   }
 

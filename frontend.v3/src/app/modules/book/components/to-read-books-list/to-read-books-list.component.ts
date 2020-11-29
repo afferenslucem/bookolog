@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import _ from 'declarray';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { BookTrackBy } from '../../../../main/utils/book-track-by';
@@ -20,7 +21,15 @@ export class ToReadBooksListComponent implements OnInit {
     this.books$ = this.route.data.pipe(
       filter(item => !!item.books),
       map(item => item.books),
+      map(books => this.sortBooks(books)),
     );
+  }
+
+  private sortBooks(books: Book[]): Book[] {
+    return _(books)
+      .orderByDescending(item => item.modifyDate)
+      .thenByDescending(item => item.createDate)
+      .toArray();
   }
 
   ngOnInit(): void {

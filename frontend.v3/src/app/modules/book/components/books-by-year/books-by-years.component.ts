@@ -25,11 +25,10 @@ export class BooksByYearsComponent implements OnInit {
 
   private groupBooks(books: Book[]): Promise<IGroupedData<number, Book[]>[]> {
     return _(books)
-      .orderByDescending(item => item.finished.year || -1)
       .orderByDescending(item => item.finished.month || -1)
-      .orderByDescending(item => item.finished.day || -1)
-      .orderByDescending(item => item.modifyDate)
-      .orderByDescending(item => item.createDate)
+      .thenByDescending(item => item.finished.day || -1)
+      .thenByDescending(item => item.modifyDate)
+      .thenByDescending(item => item.createDate)
       .groupBy(item => item.finished.year || -1, group => group.toArray())
       .orderByDescending(item => item.key)
       .promisify()
