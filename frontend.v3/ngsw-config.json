@@ -25,16 +25,20 @@
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
       }
-    },
+    }
+  ],
+  "dataGroups": [
     {
       "name": "pictures",
-      "installMode": "prefetch",
-      "updateMode": "prefetch",
-      "resources": {
-        "files": [
-          "/file/*.(jpg|png)"
-        ]
-      }
+      "version": 1,
+      "cacheConfig": {
+        "maxSize": 100,
+        "maxAge": "100d",
+        "strategy": "performance"
+      },
+      "urls": [
+        "/file/*.(jpg|png)"
+      ]
     }
   ]
 }

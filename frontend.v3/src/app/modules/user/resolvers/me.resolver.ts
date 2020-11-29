@@ -15,8 +15,12 @@ export class MeResolver implements Resolve<User> {
   }
 
   public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<User> {
-    const user = await this.userService.loadMe();
+    try {
+      const user = await this.userService.loadMe();
 
-    return user;
+      return user;
+    } catch (e) {
+      return this.userService.user;
+    }
   }
 }
