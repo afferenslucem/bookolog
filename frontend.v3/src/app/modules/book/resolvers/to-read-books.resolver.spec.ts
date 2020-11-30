@@ -1,16 +1,20 @@
 import { TestBed } from '@angular/core/testing';
+import { BookStatus } from '../models/book-status';
 import { BookService } from '../services/book.service';
 import { ToReadBooksResolver } from './to-read-books.resolver';
 
 describe('ToReadBooksResolver', () => {
   let resolver: ToReadBooksResolver;
+  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         {
           provide: BookService,
-          useValue: {}
+          useValue: {
+            getByStatus: spy,
+          }
         }
       ]
     });
@@ -19,5 +23,12 @@ describe('ToReadBooksResolver', () => {
 
   it('should be created', () => {
     expect(resolver).toBeTruthy();
+  });
+
+  it('should requests ToRead', () => {
+    const books = resolver.resolve(null, null);
+
+    expect(spy).toHaveBeenCalledWith(BookStatus.ToRead);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

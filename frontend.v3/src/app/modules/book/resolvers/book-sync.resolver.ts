@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { getLogger } from '../../../main/app.logging';
 import { SyncService } from '../../../main/services/sync.service';
-import { BookService } from '../services/book.service';
 
 @Injectable({providedIn: 'root'})
 export class BookSyncResolver implements Resolve<boolean> {

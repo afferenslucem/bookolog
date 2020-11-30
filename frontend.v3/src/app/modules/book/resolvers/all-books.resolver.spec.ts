@@ -4,13 +4,16 @@ import { AllBooksResolver } from './all-books.resolver';
 
 describe('AllBooksResolver', () => {
   let resolver: AllBooksResolver;
+  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         {
           provide: BookService,
-          useValue: {}
+          useValue: {
+            getAll: spy,
+          }
         }
       ]
     });
@@ -19,5 +22,11 @@ describe('AllBooksResolver', () => {
 
   it('should create an instance', () => {
     expect(resolver).toBeTruthy();
+  });
+
+  it('should requests ToRead', async () => {
+    const books = await resolver.resolve(null, null);
+
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
