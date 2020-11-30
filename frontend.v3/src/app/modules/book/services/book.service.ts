@@ -42,7 +42,7 @@ export class BookService {
     if (book.guid) {
       await this.storage.update(dto);
     } else {
-      const saved = await this.storage.save(dto);
+      await this.storage.save(dto);
     }
 
     await this.sync();
@@ -136,23 +136,23 @@ export class BookService {
     await this.storage.clear();
   }
 
-  private convertToDTO(book: Book): BookData {
+  public convertToDTO(book: Book): BookData {
     const data: BookData = {
       guid: book.guid,
       name: book.name,
-      authors: Array.from(book.authors),
+      authors: book.authors ? Array.from(book.authors) : [],
       year: book.year,
       status: book.status,
-      tags: Array.from(book.tags),
+      tags: book.tags ? Array.from(book.tags) : [],
       totalUnits: book.totalUnits,
       doneUnits: book.doneUnits,
       genre: book.genre,
-      startDateYear: book.started.year,
-      startDateMonth: book.started.month,
-      startDateDay: book.started.day,
-      endDateYear: book.finished.year,
-      endDateMonth: book.finished.month,
-      endDateDay: book.finished.day,
+      startDateYear: book.started?.year,
+      startDateMonth: book.started?.month,
+      startDateDay: book.started?.day,
+      endDateYear: book.finished?.year,
+      endDateMonth: book.finished?.month,
+      endDateDay: book.finished?.day,
       type: book.type,
       note: book.note,
       modifyDate: this.formatDate(book.modifyDate),
@@ -165,7 +165,7 @@ export class BookService {
   }
 
   private formatDate(date: Date): string {
-    const temp = format(date, 'yyyy-MM-dd HH:mm:ss');
+    const temp = format(new Date(date), 'yyyy-MM-dd HH:mm:ss');
 
     return `${temp.slice(0, 10)}T${temp.slice(11, 19)}`;
   }
