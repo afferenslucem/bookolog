@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { Book } from '../models/book';
 import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
-import { BookType } from '../models/book-type';
 import { BookOriginService } from './book.origin.service';
 
 import { BookService } from './book.service';
@@ -17,7 +16,7 @@ describe('BookService', () => {
       providers: [BookStorageService, BookOriginService],
       imports: [
         HttpClientTestingModule,
-      ]
+      ],
     });
     service = TestBed.inject(BookService);
   });
@@ -79,8 +78,8 @@ describe('BookService', () => {
     });
   });
 
-  describe('saveOrUpdate', () => {
-    it('Get by guid',  async () => {
+  describe('getByGuid', () => {
+    it('Get by guid', async () => {
       const storage = TestBed.inject(BookStorageService);
 
       const data: BookData = {
@@ -107,6 +106,131 @@ describe('BookService', () => {
 
       expect(getByGuidSpy).toHaveBeenCalledWith('guid');
       expect(getByGuidSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('getByStatus', () => {
+    it('Get by status', async () => {
+      const storage = TestBed.inject(BookStorageService);
+
+      const data: BookData[] = [{
+        guid: 'guid1',
+        name: 'name1',
+        status: 1,
+        type: 1,
+        modifyDate: '2020-11-18 10:57',
+        createDate: '2020-11-18 09:57',
+      }, {
+        guid: 'guid2',
+        name: 'name2',
+        status: 1,
+        type: 1,
+        deleted: true,
+        modifyDate: '2020-11-18 10:57',
+        createDate: '2020-11-18 09:57',
+      }];
+
+      const getByGuidSpy = spyOn(storage, 'getAllByStatus').and.resolveTo(data);
+
+      const result = await service.getByStatus(BookStatus.InProgress);
+
+      expect(result).toEqual([
+        new Book({
+          guid: 'guid1',
+          name: 'name1',
+          status: 1,
+          type: 1,
+          modifyDate: '2020-11-18 10:57',
+          createDate: '2020-11-18 09:57',
+        }),
+      ]);
+
+      expect(getByGuidSpy).toHaveBeenCalledWith(BookStatus.InProgress);
+      expect(getByGuidSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('delete', () => {
+    it('Full delete', async () => {
+      const storage = TestBed.inject(BookStorageService);
+      const origin = TestBed.inject(BookOriginService);
+
+      const book: Book = {
+        guid: 'guid',
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+      } as any;
+
+      const dto = service.convertToDTO(book);
+
+      const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
+      const softDeleteSpy = spyOn(service, 'softDelete').and.resolveTo();
+      const originDeleteSpy = spyOn(origin, 'delete').and.resolveTo();
+
+      await service.deleteBook(book);
+
+      expect(storageDeleteSpy).toHaveBeenCalledWith(dto.guid);
+      expect(storageDeleteSpy).toHaveBeenCalledTimes(1);
+
+      expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
+      expect(originDeleteSpy).toHaveBeenCalledTimes(1);
+
+      expect(softDeleteSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it('Soft delete', async () => {
+      const storage = TestBed.inject(BookStorageService);
+      const origin = TestBed.inject(BookOriginService);
+
+      const book: Book = {
+        guid: 'guid',
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+      } as any;
+
+      const dto = service.convertToDTO(book);
+
+      const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
+      const softDeleteSpy = spyOn(service, 'softDelete').and.resolveTo();
+      const originDeleteSpy = spyOn(origin, 'delete').and.rejectWith();
+
+      await service.deleteBook(book);
+
+      expect(storageDeleteSpy).toHaveBeenCalledTimes(0);
+
+      expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
+      expect(originDeleteSpy).toHaveBeenCalledTimes(1);
+
+      expect(softDeleteSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('Soft delete after origin failure', async () => {
+      const storage = TestBed.inject(BookStorageService);
+
+      const book: Book = {
+        guid: 'guid',
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+      } as any;
+
+      const dto = service.convertToDTO(book);
+      dto.deleted = true;
+
+      const storageUpdateSpy = spyOn(storage, 'update').and.resolveTo();
+
+      await service.softDelete(book);
+
+      expect(storageUpdateSpy).toHaveBeenCalledTimes(1);
+      expect(storageUpdateSpy).toHaveBeenCalledWith(dto);
     });
   });
 });

@@ -76,7 +76,7 @@ export class BookService {
     }
   }
 
-  private async softDelete(book: Book): Promise<void> {
+  public async softDelete(book: Book): Promise<void> {
     book.deleted = true;
 
     const dto = this.convertToDTO(book);
