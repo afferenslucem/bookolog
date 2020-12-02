@@ -220,6 +220,10 @@ export class BookEditViewComponent implements OnInit {
         month: date.getMonth() + 1,
         day: date.getDate(),
       } as BookDate);
+
+      const total = this.form.get('totalUnits').value;
+
+      this.form.get('totalUnits').setValue(total);
     }
   }
 }
