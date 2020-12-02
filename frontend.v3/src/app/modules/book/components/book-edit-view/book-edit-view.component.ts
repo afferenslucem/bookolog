@@ -222,8 +222,7 @@ export class BookEditViewComponent implements OnInit {
       } as BookDate);
 
       const total = this.form.get('totalUnits').value;
-
-      this.form.get('totalUnits').setValue(total);
+      this.form.get('doneUnits').setValue(total);
     }
   }
 }
