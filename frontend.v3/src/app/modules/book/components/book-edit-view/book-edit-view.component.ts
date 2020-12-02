@@ -8,6 +8,7 @@ import { StringComparer } from '../../../../main/utils/string.comparer';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookData } from '../../models/book-data';
+import { BookDate } from '../../models/book-date';
 import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
 import { Action } from '../../resolvers/action.resolver';
@@ -148,7 +149,7 @@ export class BookEditViewComponent implements OnInit {
   }
 
   private sortGenresByCount(books: Book[]): string[] {
-    return  _(books)
+    return _(books)
       .where(item => !!item.genre)
       .select(item => item.genre)
       .groupBy(item => item, new StringComparer(), grouped => grouped.count())
@@ -159,7 +160,7 @@ export class BookEditViewComponent implements OnInit {
   }
 
   private sortAuthorsByCount(books: Book[]): string[] {
-    return  _(books)
+    return _(books)
       .where(item => item.authors.length > 0)
       .selectMany(item => item.authors)
       .groupBy(item => item, new StringComparer(), grouped => grouped.count())
@@ -170,7 +171,7 @@ export class BookEditViewComponent implements OnInit {
   }
 
   private sortTagsByCount(books: Book[]): string[] {
-    return  _(books)
+    return _(books)
       .where(item => item.tags.length > 0)
       .selectMany(item => item.tags)
       .groupBy(item => item, new StringComparer(), grouped => grouped.count())
@@ -198,5 +199,27 @@ export class BookEditViewComponent implements OnInit {
     this.form.get('genre').valueChanges.subscribe(genre => {
       this._filteredGenres = new FuzzySearch().search(this._genres, genre.toLowerCase());
     });
+
+    this.form.get('status').valueChanges.subscribe(status => this.onStatusChange(status));
+  }
+
+  private onStatusChange(status: BookStatus): void {
+    if (this.book.status === BookStatus.ToRead && status === BookStatus.InProgress) {
+      const date = new Date();
+
+      this.form.get('started').setValue({
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate(),
+      } as BookDate);
+    } else if (this.book.status === BookStatus.InProgress && status === BookStatus.Done) {
+      const date = new Date();
+
+      this.form.get('finished').setValue({
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate(),
+      } as BookDate);
+    }
   }
 }
