@@ -20,6 +20,7 @@ export const routes: Routes = [
     resolve: {
       books: InProgressBooksResolver,
     },
+    runGuardsAndResolvers: 'always'
   },
   {
     component: ToReadBooksListComponent,
@@ -27,7 +28,8 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: ToReadBooksResolver,
-    }
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     component: DoneBooksListComponent,
@@ -35,7 +37,8 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: DoneBooksResolver,
-    }
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     component: BookViewComponent,
@@ -43,7 +46,8 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       book: BookResolver,
-    }
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     component: BookEditViewComponent,
