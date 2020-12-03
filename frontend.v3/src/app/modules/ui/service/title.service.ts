@@ -3,13 +3,26 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { TitleText } from '../models/title-text';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TitleService {
   private readonly _title = new BehaviorSubject<TitleText>(0);
   private readonly _custom = new BehaviorSubject<string>('');
 
-  constructor() { }
+  constructor() {
+  }
+
+  public get title$(): Observable<TitleText> {
+    return this._title;
+  }
+
+  public get custom$(): Observable<string> {
+    return this._custom;
+  }
+
+  public get title(): TitleText {
+    return this._title.getValue();
+  }
 
   public setBook(): void {
     this.setCustom(null);
@@ -24,6 +37,11 @@ export class TitleService {
   public setBookCreate(): void {
     this.setCustom(null);
     this.setTitle(TitleText.BookCreate);
+  }
+
+  public setSettings(): void {
+    this.setCustom(null);
+    this.setTitle(TitleText.Settings);
   }
 
   public setDoneList(): void {
@@ -79,17 +97,5 @@ export class TitleService {
   public setTitle(title: TitleText): void {
     this._custom.next(null);
     this._title.next(title);
-  }
-
-  public get title$(): Observable<TitleText> {
-    return this._title;
-  }
-
-  public get custom$(): Observable<string> {
-    return this._custom;
-  }
-
-  public get title(): TitleText {
-    return this._title.getValue();
   }
 }

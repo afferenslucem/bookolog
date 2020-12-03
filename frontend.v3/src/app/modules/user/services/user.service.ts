@@ -60,6 +60,10 @@ export class UserService {
     await this.userOrigin.recovery(email);
   }
 
+  public async passwordChange(oldPassword: string, newPassword: string): Promise<void> {
+    await this.userOrigin.passwordChange(oldPassword, newPassword);
+  }
+
   private recoverUser(): User {
     const saved = localStorage.getItem('user');
 

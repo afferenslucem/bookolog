@@ -20,6 +20,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BookModule } from './modules/book/book.module';
 import localeRu from '@angular/common/locales/ru';
 import { InnerAreaComponent } from './main/components/inner-area/inner-area.component';
+import { SettingsModule } from './modules/settings/settings.module';
 import { StatisticModule } from './modules/statistic/statistic.module';
 import { UiModule } from './modules/ui/ui.module';
 import { SideMenuComponent } from './main/components/side-menu/side-menu.component';
@@ -38,24 +39,25 @@ registerLocaleData(localeRu, 'ru');
     PreloaderComponent,
     SyncInfoComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-        BrowserAnimationsModule,
-        MatProgressSpinnerModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatListModule,
-        HttpClientModule,
-        AuthModule,
-        BookModule,
-        StatisticModule,
-        UiModule,
-        MatIconModule,
-        UserModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule,
+    HttpClientModule,
+    AuthModule,
+    BookModule,
+    StatisticModule,
+    UiModule,
+    MatIconModule,
+    UserModule,
+    SettingsModule,
+  ],
   providers: [
     interceptors,
     {
