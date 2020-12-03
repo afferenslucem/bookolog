@@ -39,4 +39,8 @@ export class AuthService {
   public async registration(regData: RegistrationData): Promise<void> {
     await this.userService.registration(regData);
   }
+
+  public async recovery(email: string): Promise<void> {
+    await this.userService.recovery(email);
+  }
 }

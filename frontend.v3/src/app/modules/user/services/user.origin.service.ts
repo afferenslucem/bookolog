@@ -62,4 +62,8 @@ export class UserOriginService {
         tap(item => this.logger.debug('Registered', item)),
       ).toPromise();
   }
+
+  public async recovery(email: string): Promise<void> {
+    await this.httpClient.get('/auth/recoverPassword/' + email).toPromise();
+  }
 }

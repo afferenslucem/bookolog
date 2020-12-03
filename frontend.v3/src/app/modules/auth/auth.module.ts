@@ -11,11 +11,12 @@ import { UiModule } from '../ui/ui.module';
 import { routes } from './auth-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent],
+  declarations: [LoginComponent, RegistrationComponent, RecoverPasswordComponent],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),

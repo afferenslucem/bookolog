@@ -51,6 +51,11 @@ export class TitleService {
     this.setTitle(TitleText.Registration);
   }
 
+  public setRecoveryPassword(): void {
+    this.setCustom(null);
+    this.setTitle(TitleText.PasswordRecovery);
+  }
+
   public setTagsStatistic(): void {
     this.setCustom(null);
     this.setTitle(TitleText.TagsStatistic);

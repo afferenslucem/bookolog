@@ -56,6 +56,10 @@ export class UserService {
     return await this.userOrigin.registration(regData);
   }
 
+  public async recovery(email: string): Promise<void> {
+    await this.userOrigin.recovery(email);
+  }
+
   private recoverUser(): User {
     const saved = localStorage.getItem('user');
 
