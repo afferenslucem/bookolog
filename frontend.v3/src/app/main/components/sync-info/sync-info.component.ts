@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BookService } from '../../../modules/book/services/book.service';
+import { NotificationService } from '../../../modules/notification/services/notification.service';
 import { getLogger } from '../../app.logging';
 import { SyncService } from '../../services/sync.service';
 
@@ -11,7 +13,7 @@ import { SyncService } from '../../services/sync.service';
 export class SyncInfoComponent implements OnInit {
   private logger = getLogger('SyncInfoComponent');
 
-  constructor(private syncService: SyncService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private syncService: SyncService, private notificationService: NotificationService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   public get lastSyncTime(): Date {
     return this.syncService.lastSyncDate;
@@ -20,6 +22,7 @@ export class SyncInfoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  @HostListener('click')
   public async sync(): Promise<void> {
     try {
       await this.syncService.syncAll();

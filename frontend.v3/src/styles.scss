@@ -56,3 +56,15 @@ app-root {
 .link {
   color: #007BFF;
 }
+
+// Notifications
+
+app-notifications-area {
+  position: fixed;
+
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 1000;
+
+  width: calc(100% - 2rem);
+}

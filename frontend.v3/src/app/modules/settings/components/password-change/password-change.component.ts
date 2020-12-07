@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators
 import { Router } from '@angular/router';
 import { getLogger } from '../../../../main/app.logging';
 import { AuthService } from '../../../auth/services/auth.service';
+import { NotificationService } from '../../../notification/services/notification.service';
 import { UserService } from '../../../user/services/user.service';
 
 export enum ChangePasswordError {
@@ -28,7 +29,7 @@ export class PasswordChangeComponent implements OnInit {
 
   public error: ChangePasswordError = null;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
   }
@@ -52,6 +53,9 @@ export class PasswordChangeComponent implements OnInit {
 
     try {
       await this.authService.passwordChange(data.currentPassword, data.newPassword);
+
+      this.notificationService.createInfoNotification('Пароль успешно изменен');
+
       await this.router.navigate(['/in-progress']);
     } catch (e) {
       this.logger.debug('Error', e);

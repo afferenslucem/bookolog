@@ -45,7 +45,12 @@ export class BookService {
       await this.storage.save(dto);
     }
 
-    await this.sync();
+    try {
+      await this.sync();
+    }
+    catch (e) {
+      this.logger.warn('error sync', e);
+    }
 
     return new Book(dto);
   }
@@ -120,6 +125,7 @@ export class BookService {
       await Promise.all([updating, deleting]);
     } catch (e) {
       this.logger.error('Could not sync', e);
+      throw e;
     }
   }
 
