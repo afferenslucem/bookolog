@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
+import { getLogger } from '../../../../main/app.logging';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { StringComparer } from '../../../../main/utils/string.comparer';
+import { NotificationService } from '../../../notification/services/notification.service';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookData } from '../../models/book-data';
@@ -20,6 +22,8 @@ import { BookService } from '../../services/book.service';
   styleUrls: ['./book-edit-view.component.scss'],
 })
 export class BookEditViewComponent implements OnInit {
+  private logger = getLogger('BookEditViewComponent');
+
   public book: Book;
 
   public BookType: typeof BookType = BookType;
@@ -61,6 +65,7 @@ export class BookEditViewComponent implements OnInit {
     public titleService: TitleService,
     private bookService: BookService,
     private router: Router,
+    private notificationService: NotificationService,
   ) {
     activatedRoute.data.subscribe(data => {
       this.book = Object.assign({}, data.book || new Book(this.defaultValue));
@@ -100,17 +105,24 @@ export class BookEditViewComponent implements OnInit {
   }
 
   public async submit(): Promise<void> {
-    const data = Object.assign(this.book, this.form.value) as Book;
+    try {
+      const data = Object.assign(this.book, this.form.value) as Book;
 
-    data.modifyDate = DateUtils.nowUTC;
+      data.modifyDate = DateUtils.nowUTC;
 
-    if (!data.createDate) {
-      data.createDate = DateUtils.nowUTC;
+      if (!data.createDate) {
+        data.createDate = DateUtils.nowUTC;
+      }
+
+      await this.bookService.saveOrUpdate(data);
+
+      await this.redirect();
+    } catch (e) {
+      this.logger.error('Book save error', e);
+      this.notificationService.createErrorNotification('Не удалось сохранить книгу', {
+        autoclose: false
+      });
     }
-
-    await this.bookService.saveOrUpdate(data);
-
-    await this.redirect();
   }
 
   private async redirect(): Promise<void> {

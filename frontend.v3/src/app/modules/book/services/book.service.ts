@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import format from 'date-fns/format';
 import _ from 'declarray';
 import { getLogger } from '../../../main/app.logging';
+import { NotificationService } from '../../notification/services/notification.service';
 import { Book } from '../models/book';
 import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
@@ -14,7 +15,10 @@ import { BookStorageService } from './book.storage.service';
 export class BookService {
   private logger = getLogger('BookService');
 
-  constructor(private storage: BookStorageService, private origin: BookOriginService) {
+  constructor(private storage: BookStorageService,
+              private origin: BookOriginService,
+              private notificationService: NotificationService,
+  ) {
   }
 
   public async getAll(): Promise<Book[]> {
@@ -47,9 +51,9 @@ export class BookService {
 
     try {
       await this.sync();
-    }
-    catch (e) {
+    } catch (e) {
       this.logger.warn('error sync', e);
+      this.notificationService.createWarningNotification('Книга сохранена локально');
     }
 
     return new Book(dto);
@@ -78,6 +82,7 @@ export class BookService {
       await this.storage.delete(book.guid);
     } catch (e) {
       await this.softDelete(book);
+      this.notificationService.createWarningNotification('Книга удалена локально');
     }
   }
 
@@ -104,7 +109,7 @@ export class BookService {
 
       const remoteSyncData = await this.origin.sync({
         deleteGuids: deletedToSync.map(item => item.guid),
-        update: updatedToSync
+        update: updatedToSync,
       });
 
       const toDelete = _(remoteSyncData.delete)
@@ -175,4 +180,4 @@ export class BookService {
 
     return `${temp.slice(0, 10)}T${temp.slice(11, 19)}`;
   }
- }
+}

@@ -33,7 +33,7 @@ export class BookTimeInputComponent extends ValueAccessorBase<number>  implement
 
   public writeValue(value: number): void {
     const hours = Math.floor(value / 60) || null;
-    const minutes = value % 60;
+    const minutes = value % 60 || null;
 
     this.form.setValue({
       hours,

@@ -1,8 +1,8 @@
 <mat-card class="notification">
-  <div class="notification__content">
+  <div class="notification__text">
     {{notification.text}}
   </div>
-  <button class="notification__button" mat-button [color]="matColor" (click)="close()">
-    Закрыть
+  <button class="notification__button" mat-icon-button [color]="matColor" (click)="close()">
+    <mat-icon>close</mat-icon>
   </button>
 </mat-card>
