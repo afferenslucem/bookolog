@@ -68,3 +68,7 @@ app-notifications-area {
 
   width: calc(100% - 2rem);
 }
+
+[hidden] {
+  display: none !important;
+}

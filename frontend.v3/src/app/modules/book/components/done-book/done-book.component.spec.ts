@@ -74,9 +74,9 @@ describe('DoneBookComponent', () => {
       expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
       expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeFalsy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors').attributes.getNamedItem('hidden')).toBeTruthy();
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data')).toBeFalsy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data').attributes.getNamedItem('hidden')).toBeTruthy();
 
       expect(component).toBeTruthy();
     });
@@ -98,9 +98,9 @@ describe('DoneBookComponent', () => {
       expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
       expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeFalsy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors').attributes.getNamedItem('hidden')).toBeTruthy();
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data').attributes.getNamedItem('hidden')).toBeFalsy();
       expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range').innerText).toContain('10/10/20');
 
       expect(component).toBeTruthy();
@@ -123,9 +123,9 @@ describe('DoneBookComponent', () => {
       expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
       expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeFalsy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors').attributes.getNamedItem('hidden')).toBeTruthy();
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data')).toBeTruthy();
+      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data').attributes.getNamedItem('hidden')).toBeFalsy();
       expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range').innerText).toContain('10/11/20');
 
       expect(component).toBeTruthy();
