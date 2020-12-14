@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { TitleService } from '../../../ui/service/title.service';
   selector: 'app-book-filtered',
   templateUrl: './book-filtered.component.html',
   styleUrls: ['./book-filtered.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookFilteredComponent implements OnInit {
   public books$: Observable<Book[]> = null;

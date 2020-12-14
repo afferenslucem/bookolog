@@ -3,6 +3,7 @@ import { AllBooksResolver } from '../book/resolvers/all-books.resolver';
 import { BooksByAuthorResolver } from '../book/resolvers/books-by-author.resolver';
 import { BooksByGenreResolver } from '../book/resolvers/books-by-genre.resolver';
 import { BooksByTagResolver } from '../book/resolvers/books-by-tag.resolver';
+import { DoneBooksResolver } from '../book/resolvers/done-books.resolver';
 import { AuthorsListComponent } from './component/authors-list/authors-list.component';
 import { BookFilteredComponent } from './component/book-filtered/book-filtered.component';
 import { GenresListComponent } from './component/genres-list/genres-list.component';
@@ -14,7 +15,7 @@ export const routes: Routes = [
     path: 'tags',
     pathMatch: 'full',
     resolve: {
-      books: AllBooksResolver,
+      books: DoneBooksResolver,
     }
   },
   {
@@ -22,7 +23,7 @@ export const routes: Routes = [
     path: 'genres',
     pathMatch: 'full',
     resolve: {
-      books: AllBooksResolver,
+      books: DoneBooksResolver,
     }
   },
   {
@@ -30,7 +31,7 @@ export const routes: Routes = [
     path: 'authors',
     pathMatch: 'full',
     resolve: {
-      books: AllBooksResolver,
+      books: DoneBooksResolver,
     }
   },
   {

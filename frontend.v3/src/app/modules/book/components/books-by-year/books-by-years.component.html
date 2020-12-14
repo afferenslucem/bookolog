@@ -20,7 +20,7 @@
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="(undefinedYear$ | async) as year">
+    <mat-expansion-panel *ngIf="(undefinedYear$ | async) as year" [expanded]="(years$ | async)?.length === 1">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span i18n>Год не указан</span>

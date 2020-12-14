@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { getLogger } from '../../../main/app.logging';
+import { StringComparer } from '../../../main/utils/string.comparer';
 import { Book } from '../models/book';
 import { BookStatus } from '../models/book-status';
 import { BookService } from '../services/book.service';
@@ -22,7 +23,7 @@ export class BooksByAuthorResolver implements Resolve<Book[]> {
     const books = await this.bookService.getByStatus(BookStatus.Done);
 
     return await _(books)
-      .where(item => _(item.authors).contains(targetAuthor))
+      .where(item => _(item.authors).contains(targetAuthor, new StringComparer()))
       .promisify()
       .toArray();
   }

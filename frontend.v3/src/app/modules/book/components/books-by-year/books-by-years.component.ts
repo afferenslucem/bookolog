@@ -24,7 +24,7 @@ export class BooksByYearsComponent implements OnInit {
 
     this.years$ = this.orderedBooks.promisify().toArray();
 
-    this.definedYears$ = this.years$.then(() => this.orderedBooks.skipLast(1).toArray());
+    this.definedYears$ = this.years$.then(() => this.orderedBooks.where(item => item.key !== -1).toArray());
 
     this.undefinedYear$ = this.years$.then(() => this.orderedBooks.takeLast(1).firstOrDefault(null, item => item.key === -1));
   }

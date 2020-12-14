@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import _ from 'declarray';
 import { getLogger } from '../../../main/app.logging';
 import { Book } from '../models/book';
 import { BookStatus } from '../models/book-status';
