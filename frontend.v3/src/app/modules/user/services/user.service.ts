@@ -33,9 +33,13 @@ export class UserService {
     try {
       await this.userOrigin.logout();
     } finally {
-      localStorage.removeItem('user');
-      this._user = null;
+      this.clearStorage();
     }
+  }
+
+  public clearStorage(): void {
+    localStorage.removeItem('user');
+    this._user = null;
   }
 
   public async login(credentials: Credentials): Promise<User> {

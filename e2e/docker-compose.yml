@@ -3,7 +3,7 @@ services:
   client:
     build:
         dockerfile: DockerfileTest
-        context: ../frontend.v2/
+        context: ../frontend.v3
     ports:
       - "30080:80"    
     depends_on: 

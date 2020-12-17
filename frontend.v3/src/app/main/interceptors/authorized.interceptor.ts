@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { UserService } from '../../modules/user/services/user.service';
 import { getLogger } from '../app.logging';
 
 @Injectable({
@@ -14,13 +15,14 @@ export class AuthorizedInterceptor implements HttpInterceptor {
     namespace: 'Interceptor',
   });
 
-  public constructor(private router: Router) {
+  public constructor(private router: Router, private userService: UserService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse, caught) => {
         if (!err.error && err.status === 401) {
+          this.userService.clearStorage();
           const _ = this.router.navigate(['/login']);
         }
         this.logger.warn('error: ', err);
