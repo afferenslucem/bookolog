@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { StringComparer } from '../../../../main/utils/string.comparer';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
@@ -35,9 +36,17 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
   ngOnInit(): void {
   }
 
+  public onOptionSelected(event: MatAutocompleteSelectedEvent): void {
+    this.pushTag(event.option.value);
+  }
+
   public append(): void {
     const value = this.tag;
 
+    this.pushTag(value);
+  }
+
+  public pushTag(value: string): void {
     if (!!value && !_(this.tags).contains(value, new StringComparer())) {
       this.tags.push(value);
 

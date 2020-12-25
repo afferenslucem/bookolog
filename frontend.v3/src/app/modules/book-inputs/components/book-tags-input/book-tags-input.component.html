@@ -4,7 +4,7 @@
     <input matInput formControlName="input" type="text" [matAutocomplete]="tagsAutocomplete"/>
   </mat-form-field>
 
-  <mat-autocomplete #tagsAutocomplete="matAutocomplete">
+  <mat-autocomplete #tagsAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)">
     <mat-option *ngFor="let tag of availableTags" [value]="tag | capitalize">
       {{tag | capitalize}}
     </mat-option>
