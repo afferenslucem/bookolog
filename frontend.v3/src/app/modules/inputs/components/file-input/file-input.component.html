@@ -1,0 +1,21 @@
+<div class="pic-input" (click)="selectFile($event)">
+  <button
+    mat-flat-button
+    class="icon"
+    color="primary"
+    *ngIf="!fileUrl; else pic"
+    type="button"
+  >
+    <mat-icon>camera_enhance</mat-icon>
+  </button>
+  <ng-template #pic>
+    <div class="pic-input__result" [style.background-image]="fileUrl"></div>
+  </ng-template>
+</div>
+<input
+  hidden
+  type="file"
+  data-buttonText="Файл не выбран"
+  [accept]="accept"
+  (change)="onFileChange($event)"
+/>

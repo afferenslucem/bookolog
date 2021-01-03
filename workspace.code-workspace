@@ -1,16 +1,13 @@
 {
 	"folders": [
 		{
-			"path": "frontend.v2"
+			"path": "backend.v2"
 		},
 		{
 			"path": "database"
 		},
 		{
-			"path": "backend.v2"
-		},
-		{
-			"path": "e2e"
+			"path": "frontend.v3"
 		}
 	],
 	"settings": {}

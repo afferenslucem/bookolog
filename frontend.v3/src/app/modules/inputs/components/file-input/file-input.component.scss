@@ -1,0 +1,29 @@
+:host {
+    display: block;
+}
+
+.pic-input {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #AAAAAA;
+
+    button {
+        height: 100%;
+    }
+
+    &__placeholder {
+        font-size: 1.5rem;
+    }
+
+    &__result {
+        background-position: center center;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%;
+    }
+}

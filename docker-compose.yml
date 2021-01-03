@@ -17,7 +17,7 @@ services:
       - postgre
   #    - postfix
     volumes: 
-      - "C:\\Users\\a.shakirov\\Pictures\\Images:/imageStorage"
+      - "./images:/imageStorage"
 
   # postfix:
   #   image: boky/postfix

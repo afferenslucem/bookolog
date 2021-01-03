@@ -8,15 +8,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormattingModule } from '../formatting/formatting.module';
 import { UiModule } from '../ui/ui.module';
-import { BookDateInputComponent } from './components/book-date-input/book-date-input.component';
-import { BookTimeInputComponent } from './components/book-time-input/book-time-input.component';
-import { BookTagsInputComponent } from './components/book-tags-input/book-tags-input.component';
+import { BookDateInputComponent } from './components/date-input/book-date-input.component';
+import { BookTimeInputComponent } from './components/time-input/book-time-input.component';
+import { BookTagsInputComponent } from './components/tags-input/book-tags-input.component';
 import { TagValueComponent } from './components/tag-value/tag-value.component';
-
-
+import { FileInputComponent } from './components/file-input/file-input.component';
 
 @NgModule({
-  declarations: [BookDateInputComponent, BookTimeInputComponent, BookTagsInputComponent, TagValueComponent],
+  declarations: [
+    BookDateInputComponent,
+    BookTimeInputComponent,
+    BookTagsInputComponent,
+    TagValueComponent,
+    FileInputComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -28,11 +33,12 @@ import { TagValueComponent } from './components/tag-value/tag-value.component';
     MatAutocompleteModule,
     FormattingModule,
   ],
-    exports: [
-        BookDateInputComponent,
-        BookTimeInputComponent,
-        BookTagsInputComponent,
-        TagValueComponent,
-    ],
+  exports: [
+    BookDateInputComponent,
+    BookTimeInputComponent,
+    BookTagsInputComponent,
+    TagValueComponent,
+    FileInputComponent,
+  ],
 })
-export class BookInputsModule { }
+export class InputsModule {}

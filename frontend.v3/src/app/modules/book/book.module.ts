@@ -14,7 +14,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { BookInputsModule } from '../book-inputs/book-inputs.module';
+import { InputsModule } from '../inputs/inputs.module';
 import { FormattingModule } from '../formatting/formatting.module';
 import { UiModule } from '../ui/ui.module';
 import { routes } from './book-routing.module';
@@ -69,7 +69,7 @@ import { BooksByYearsComponent } from './components/books-by-year/books-by-years
         ReactiveFormsModule,
         MatInputModule,
         MatOptionModule,
-        BookInputsModule,
+        InputsModule,
     ],
   exports: [
     DoneBooksListComponent,

@@ -21,8 +21,7 @@ export class UserService {
 
   public set user(v: User) {
     this._user = v;
-
-    localStorage.setItem('user', JSON.stringify(this._user));
+    this.saveUser();
   }
 
   public get lastSyncDate(): Date {
@@ -68,6 +67,11 @@ export class UserService {
     await this.userOrigin.passwordChange(oldPassword, newPassword);
   }
 
+  public async setAvatar(avatar: File): Promise<void> {
+    this.user.avatarName = await this.userOrigin.loadAvatar(avatar);
+    this.saveUser();
+  }
+
   private recoverUser(): User {
     const saved = localStorage.getItem('user');
 
@@ -78,5 +82,9 @@ export class UserService {
     } else {
       return null;
     }
+  }
+
+  private saveUser(): void {
+    localStorage.setItem('user', JSON.stringify(this._user));
   }
 }

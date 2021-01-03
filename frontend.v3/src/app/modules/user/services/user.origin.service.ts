@@ -73,4 +73,17 @@ export class UserOriginService {
       newPassword,
     }).toPromise();
   }
-}
+
+  public async loadAvatar(file: File): Promise<string> {
+    const data = new FormData();
+    data.append("file", file);
+
+    const result = await this.httpClient.post('/user/uploadAvatar', data, {
+      headers: {
+        'timeout': '60000',
+      },
+    }).toPromise();
+
+    return result.toString();
+  }
+ }

@@ -1,0 +1,12 @@
+<div class="content">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <label class="form-header">Смена аватара</label>
+
+        <div class="form-content">
+            <app-file-input formControlName="image"></app-file-input>
+            <button *ngIf="image" mat-flat-button color="primary" type="submit">
+                Загрузить
+            </button>
+        </div>
+    </form>
+</div>
