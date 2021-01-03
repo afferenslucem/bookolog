@@ -82,6 +82,7 @@ export class UserOriginService {
       headers: {
         'timeout': '60000',
       },
+      responseType: 'text'
     }).toPromise();
 
     return result.toString();
