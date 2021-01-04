@@ -42,7 +42,7 @@ export class NotificationService {
     this.notificationQueue.add(notification);
   }
 
-  public createCloseTimer(guid: string, timeout: number): void {
+  private createCloseTimer(guid: string, timeout: number): void {
     new Timer(() => {
       this.notificationQueue.remove(guid);
     }, timeout).start();

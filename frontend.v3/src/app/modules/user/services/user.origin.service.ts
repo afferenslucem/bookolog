@@ -74,6 +74,10 @@ export class UserOriginService {
     }).toPromise();
   }
 
+  public async emailChange(email: string): Promise<void> {
+    await this.httpClient.get('/user/changeEmail/' + email).toPromise();
+  }
+
   public async loadAvatar(file: File): Promise<string> {
     const data = new FormData();
     data.append("file", file);

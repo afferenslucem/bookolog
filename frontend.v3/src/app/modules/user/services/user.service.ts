@@ -9,7 +9,7 @@ import { UserOriginService } from './user.origin.service';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(public userOrigin: UserOriginService) {
+  constructor(private userOrigin: UserOriginService) {
     this.recoverUser();
   }
 
@@ -65,6 +65,11 @@ export class UserService {
 
   public async passwordChange(oldPassword: string, newPassword: string): Promise<void> {
     await this.userOrigin.passwordChange(oldPassword, newPassword);
+  }
+
+  public async emailChange(email: string): Promise<void> {
+    await this.userOrigin.emailChange(email);
+    this.saveUser();
   }
 
   public async setAvatar(avatar: File): Promise<void> {

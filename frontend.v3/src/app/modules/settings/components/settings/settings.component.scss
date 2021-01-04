@@ -1,0 +1,7 @@
+@import "~src/styles/variables";
+
+:host {
+    > * {
+        margin-bottom: $ind-3;
+    }
+}

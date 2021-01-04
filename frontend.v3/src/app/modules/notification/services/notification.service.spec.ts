@@ -25,6 +25,8 @@ describe('NotificationService', () => {
   describe('Autoclose reactions', () => {
     it('should create timer', () => {
       const addSpy = spyOn(queue, 'add');
+
+      //@ts-ignore
       const timerSpy = spyOn(service, 'createCloseTimer');
 
       service.createNotification('text', NotificationType.Info, {
@@ -33,11 +35,15 @@ describe('NotificationService', () => {
 
       expect(addSpy).toHaveBeenCalledTimes(1);
       expect(timerSpy).toHaveBeenCalledTimes(1);
+      
+      // @ts-ignore
       expect(timerSpy).toHaveBeenCalledWith(jasmine.any(String), environment.notificationCloseTime);
     });
 
     it('should not create timer', () => {
       const addSpy = spyOn(queue, 'add');
+
+      // @ts-ignore
       const timerSpy = spyOn(service, 'createCloseTimer');
 
       service.createNotification('text', NotificationType.Info, {
