@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import format from 'date-fns/format';
 import _ from 'declarray';
+import { EntityService } from 'src/app/main/services/entity.service';
 import { getLogger } from '../../../main/app.logging';
 import { NotificationService } from '../../notification/services/notification.service';
 import { Book } from '../models/book';
@@ -12,13 +13,14 @@ import { BookStorageService } from './book.storage.service';
 @Injectable({
   providedIn: 'root',
 })
-export class BookService {
+export class BookService extends EntityService {
   private logger = getLogger('BookService');
 
   constructor(private storage: BookStorageService,
               private origin: BookOriginService,
               private notificationService: NotificationService,
   ) {
+    super();
   }
 
   public async getAll(): Promise<Book[]> {
@@ -102,32 +104,7 @@ export class BookService {
 
   public async sync(): Promise<void> {
     try {
-      const allBooks = await this.storage.getAll();
-
-      const deletedToSync = _(allBooks).where(item => item.deleted).toArray();
-      const updatedToSync = _(allBooks).where(item => item.shouldSync).toArray();
-
-      const remoteSyncData = await this.origin.sync({
-        deleteGuids: deletedToSync.map(item => item.guid),
-        update: updatedToSync,
-      });
-
-      const toDelete = _(remoteSyncData.delete)
-        .concat(deletedToSync)
-        .toArray();
-
-      const toUpdate = _(updatedToSync)
-        .select(item => {
-          item.shouldSync = false;
-          return item;
-        })
-        .concat(remoteSyncData.update)
-        .toArray();
-
-      const deleting = this.storage.deleteMany(toDelete);
-      const updating = this.storage.updateMany(toUpdate);
-
-      await Promise.all([updating, deleting]);
+      await this.genericSync(this.storage, this.origin);
     } catch (e) {
       this.logger.error('Could not sync', e);
       throw e;

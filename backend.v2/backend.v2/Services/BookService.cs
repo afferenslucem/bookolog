@@ -15,7 +15,7 @@ namespace backend.Services
         Task<Book> Save(Book book);
         Task<Book> Update(Book book);
         Task<Book> Delete(Guid guid);
-        Task<Synched<Book>> Synch(BookSyncModel data);
+        Task<Synched<Book>> Synch(SyncModel<Book> data);
         Task<Book[]> SaveMany(Book[] book);
         Task<Book[]> UpdateMany(Book[] book);
         Task<Book[]> DeleteMany(Guid[] book);
@@ -108,10 +108,10 @@ namespace backend.Services
             }
         }
 
-        public async Task<Synched<Book>> Synch(BookSyncModel data)
+        public async Task<Synched<Book>> Synch(SyncModel<Book> data)
         {
             try {
-                var toDeleteAwait = this.CheckAndLoadForDelete(data.DeleteGuids);
+                var toDeleteAwait = this.CheckAndLoadForDelete(data.Delete);
                 var toUpdateAwait = this.CheckForUpdate(data.Update);
 
                 var loaded = await Task.WhenAll(toUpdateAwait, toDeleteAwait);

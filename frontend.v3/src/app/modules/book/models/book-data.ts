@@ -1,5 +1,8 @@
-export interface BookData {
-  guid: string;
+import { IDeletable } from "src/app/main/models/i-deletable";
+import { IEntity } from "src/app/main/models/i-entity";
+import { IUpdatable } from "src/app/main/models/i-updatable";
+
+export interface BookData extends IDeletable, IUpdatable, IEntity {
   name: string;
   authors?: string[];
   year?: number;
@@ -20,6 +23,4 @@ export interface BookData {
   createDate: string;
   type: number;
   note?: string;
-  deleted?: boolean;
-  shouldSync?: boolean;
 }

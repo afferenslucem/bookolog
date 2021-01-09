@@ -75,7 +75,7 @@ namespace backend.Storages
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => item.Guid == guid && item.DeleteDate == null).SingleAsync();
+            var result = await context.Books.Where(item => item.Guid == guid).SingleAsync();
 
             return result;
         }
@@ -83,7 +83,7 @@ namespace backend.Storages
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => guids.Contains(item.Guid.Value) && item.DeleteDate == null).ToArrayAsync();
+            var result = await context.Books.Where(item => guids.Contains(item.Guid.Value)).ToArrayAsync();
 
             return result;
         }
@@ -101,7 +101,7 @@ namespace backend.Storages
         {
             using var context = new BookologContext();
 
-            var result = await context.Books.Where(item => (item.ModifyDate >= date || item.CreateDate >= date) && item.DeleteDate == null && item.UserId == userId).ToArrayAsync();
+            var result = await context.Books.Where(item => (item.ModifyDate >= date || item.CreateDate >= date) && item.UserId == userId).ToArrayAsync();
 
             return result;
         }

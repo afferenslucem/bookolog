@@ -20,7 +20,7 @@ namespace backend.Models
         Audio = 2
     }
 
-    public class Book
+    public class Book: IDeletable, IModifyable, ICreatable
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -68,14 +68,19 @@ namespace backend.Models
                 return new DateTime(this.EndDateYear ?? 1, this.EndDateMonth ?? 1, this.EndDateDay ?? 1);
             }
         }
+        
         public bool Deleted {
             get {
                 return this.DeleteDate != null;
             }
         }
+        
         public Type? Type { get; set; }
+        
         public string Note { get; set; }
+        
         public long UserId { get; set; }
+        
         public User User { get; set; }
 
         public ShortBook ToShortBook() {

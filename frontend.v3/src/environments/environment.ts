@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   serverUrl: 'http://localhost:45080',
   restoreTimeSeconds: 60,
-  version: '0.2.26',
+  version: '0.2.27',
   filePath: '/assets/',
   notificationCloseTime: 3000,
 };

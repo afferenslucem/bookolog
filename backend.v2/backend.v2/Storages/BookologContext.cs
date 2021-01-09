@@ -19,6 +19,8 @@ namespace backend.Storages
                 .HasIndex("Login").IsUnique();
             modelBuilder.Entity<User>()
                 .HasIndex("Email").IsUnique();
+
+            modelBuilder.Entity<Book>().HasQueryFilter(item => item.DeleteDate == null);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

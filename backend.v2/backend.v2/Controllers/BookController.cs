@@ -157,11 +157,11 @@ namespace backend.Controllers
         [HttpPost]
         [Route("[action]")]
         [Authorize]
-        public async Task<IActionResult> Synchronize([FromBody]BookSyncModel data) {
+        public async Task<IActionResult> Synchronize([FromBody]SyncModel<Book> data) {
             try
             {
                 data.Update = data.Update ?? new Book[] {};
-                data.DeleteGuids = data.DeleteGuids ?? new Guid[] {};
+                data.Delete = data.Delete ?? new Guid[] {};
 
                 var answer = await this.bookService.Synch(data);
 

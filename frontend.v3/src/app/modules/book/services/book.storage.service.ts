@@ -5,11 +5,12 @@ import { PreloaderService } from '../../../main/services/preloader.service';
 import { BookData } from '../models/book-data';
 import { UUIDGenerator } from 'essents';
 import { BookStatus } from '../models/book-status';
+import { IStorage } from 'src/app/main/services/i-storage';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BookStorageService {
+export class BookStorageService implements IStorage<BookData> {
   private logger = getLogger('BookStorageService');
 
   private readonly generator = new UUIDGenerator();
