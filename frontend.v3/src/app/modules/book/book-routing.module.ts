@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
+import { Action } from '../../main/resolvers/action.resolver';
+import { AllSeriesResolver } from '../collection/resolvers/all-series.resolver';
 import { BookEditViewComponent } from './components/book-edit-view/book-edit-view.component';
 import { BookViewComponent } from './components/book-view/book-view.component';
 import { DoneBooksListComponent } from './components/done-books-list/done-books-list.component';
 import { InProgressBooksListComponent } from './components/in-progress-books-list/in-progress-books-list.component';
 import { ToReadBooksListComponent } from './components/to-read-books-list/to-read-books-list.component';
-import { Action } from './resolvers/action.resolver';
 import { AllBooksResolver } from './resolvers/all-books.resolver';
 import { BookStatusResolver } from './resolvers/book-status.resolver';
 import { BookResolver } from './resolvers/book.resolver';
@@ -56,6 +57,7 @@ export const routes: Routes = [
     resolve: {
       book: BookResolver,
       allBooks: AllBooksResolver,
+      series: AllSeriesResolver,
     },
     data: {
       action: Action.Edit
@@ -67,7 +69,8 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       status: BookStatusResolver,
-      allBooks: AllBooksResolver
+      allBooks: AllBooksResolver,
+      series: AllSeriesResolver,
     },
     data: {
       action: Action.Create

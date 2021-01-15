@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { UserService } from '../../user/services/user.service';
-import { BookService } from '../../book/services/book.service';
-import { CredentialsException } from '../exceptions/credentials.exception';
-import { Credentials } from '../models/credentials';
-import { HttpClient } from '@angular/common/http';
-import { getLogger } from '../../../main/app.logging';
 import { ILogger } from 'waterlog';
-import { catchError, mapTo, tap } from 'rxjs/operators';
+import { getLogger } from '../../../main/app.logging';
+import { BookService } from '../../book/services/book.service';
+import { UserService } from '../../user/services/user.service';
+import { Credentials } from '../models/credentials';
 import { RegistrationData } from '../models/registration-data';
 import { User } from '../models/user';
 

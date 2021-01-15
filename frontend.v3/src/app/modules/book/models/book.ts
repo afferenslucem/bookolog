@@ -1,11 +1,11 @@
+import { Entity } from '../../../main/models/entity';
+import { Collection } from '../../collection/models/collection';
 import { BookData } from './book-data';
 import { BookDate } from './book-date';
 import { BookStatus } from './book-status';
 import { BookType } from './book-type';
-import format from 'date-fns/format';
 
-export class Book {
-  public guid: string;
+export class Book extends Entity {
   public name: string;
   public authors: string[];
   public year?: number;
@@ -14,19 +14,19 @@ export class Book {
   public totalUnits: number;
   public doneUnits: number;
   public genre?: string;
+  public collection?: Collection = null;
+  public collectionGuid?: string;
+  public collectionOrder?: number;
   public started: BookDate;
   public startDate?: Date;
   public finished: BookDate;
   public endDate?: Date;
-  public modifyDate: Date;
-  public createDate: Date;
   public type: BookType;
   public note?: string;
-  public deleted?: boolean;
-  public shouldSync?: boolean;
 
   public constructor(data: BookData) {
-    this.guid = data.guid;
+    super(data);
+
     this.name = data.name;
     this.authors = data.authors || [];
     this.year = data.year;
@@ -35,6 +35,8 @@ export class Book {
     this.totalUnits = data.totalUnits || 0;
     this.doneUnits = data.doneUnits || 0;
     this.genre = data.genre;
+    this.collectionGuid = data.collectionGuid;
+    this.collectionOrder = data.collectionOrder;
     this.started = {
       year: data.startDateYear,
       month: data.startDateMonth,
@@ -47,12 +49,8 @@ export class Book {
       day: data.endDateDay,
     };
     this.endDate = this.getDate(data.endDate, this.finished);
-    this.modifyDate = data.modifyDate ? new Date(data.modifyDate) : null;
-    this.createDate = data.modifyDate ? new Date(data.createDate) : null;
     this.type = data.type;
     this.note = data.note;
-    this.deleted = data.deleted;
-    this.shouldSync = data.shouldSync;
   }
 
   private getDate(date: string | Date, bDate: BookDate): Date {

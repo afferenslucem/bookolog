@@ -1,3 +1,5 @@
+@import "~src/styles/variables";
+
 .book-edit {
   &__progress {
     &_audio {
@@ -10,5 +12,20 @@
         width: 47.5%;
       }
     }
+  }
+}
+
+
+.collection-input {
+  display: flex;
+  justify-content: space-between;
+
+  .name {
+    flex: 0 0 calc(75% - #{$ind-1});
+  }
+
+  .order {
+    flex: 0 0 calc(25%);
+    width: 20%;
   }
 }

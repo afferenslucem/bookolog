@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import _ from 'declarray';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Notification } from '../models/notification';
-import _ from 'declarray';
 
 @Injectable({
   providedIn: 'root'

@@ -1,3 +1,3 @@
 export interface IDeletable {
-    deleted?: boolean;
+    deleted?: number;
 }

@@ -20,12 +20,13 @@ namespace backend.Models
         Audio = 2
     }
 
-    public class Book: IDeletable, IModifyable, ICreatable
+    public class Book: IEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Column(TypeName = "uuid")]
         public Guid? Guid { get; set; }
+        
         [Column(TypeName = "varchar(512)")]
         public string Name { get; set; }
         [Column(TypeName = "varchar(512)[]")]
@@ -34,6 +35,11 @@ namespace backend.Models
         [Column(TypeName = "varchar(256)[]")]
         public string[] Tags { get; set; }
         public short? DoneUnits { get; set; }
+
+        public Collection Collection {get; set;}
+        public Guid? CollectionGuid {get; set;}
+
+        public short? CollectionOrder {get; set;}
         public short? TotalUnits { get; set; }
         [Column(TypeName = "varchar(256)")]
         public string Genre { get; set; }

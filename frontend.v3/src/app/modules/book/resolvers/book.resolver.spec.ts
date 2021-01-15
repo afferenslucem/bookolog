@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { BookStatus } from '../models/book-status';
 import { BookService } from '../services/book.service';
 import { BookResolver } from './book.resolver';
 

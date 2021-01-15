@@ -100,6 +100,16 @@ namespace tests.Storage
             return result.ToArray();
         }
 
+        public async Task DeleteMany(Guid[] guids)
+        {
+            var result = new List<Book>();
+            
+            foreach (var guid in guids)
+            {
+               this.Delete(guid);
+            }
+        }
+
         public Task<Book[]> GetChangedAfter(long userId, DateTime date)
         {
             throw new NotImplementedException();

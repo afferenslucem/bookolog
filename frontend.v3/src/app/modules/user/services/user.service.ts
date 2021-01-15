@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { AppData } from '../../../main/models/app-data';
+import { AppSyncData } from '../../../main/models/app-sync-data';
 import { Credentials } from '../../auth/models/credentials';
 import { RegistrationData } from '../../auth/models/registration-data';
 import { User } from '../../auth/models/user';
-import { BookService } from '../../book/services/book.service';
 import { UserOriginService } from './user.origin.service';
 
 @Injectable({
@@ -70,6 +71,14 @@ export class UserService {
   public async emailChange(email: string): Promise<void> {
     await this.userOrigin.emailChange(email);
     this.saveUser();
+  }
+
+  public async synchronize(data: AppSyncData): Promise<AppSyncData> {
+    return await this.userOrigin.synchronize(data);
+  }
+
+  public async restore(): Promise<AppData> {
+    return await this.userOrigin.restore();
   }
 
   public async setAvatar(avatar: File): Promise<void> {

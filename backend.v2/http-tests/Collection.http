@@ -1,0 +1,55 @@
+POST http://localhost:45080/auth/login
+Content-Type: application/json
+
+{
+    "login": "fullUser",
+    "password": "970114"
+}
+
+###############################################
+
+POST http://localhost:45080/collection/create
+Content-Type: application/json
+
+{
+  "name": "Harry Potter",
+  "type": 0,
+  "userId": 1
+}
+
+###############################################
+
+PUT http://localhost:45080/collection/update
+Content-Type: application/json
+
+{
+  "guid": "177c5185-0777-40d6-a736-301561386976",
+  "name": "Гарри Поттер",
+  "type": 0
+}
+
+###############################################
+
+GET  http://localhost:45080/collection/get/177c5185-0777-40d6-a736-301561386976
+
+###############################################
+
+DELETE  http://localhost:45080/collection/delete/177c5185-0777-40d6-a736-301561386976
+
+###############################################
+
+GET  http://localhost:45080/collection/user/1
+
+###############################################
+
+POST http://localhost:45080/collection/synchronize
+Content-Type: application/json
+
+{
+  "update": [{
+      "guid": "2a826c25-e591-4a2a-9b15-6fd4c1f75c11",
+      "name": "S.T.A.L.K.E.R.", 
+      "type": 1
+  }],
+  "delete": ["3b006873-faab-403a-8db3-af33a6294dcc"]
+}

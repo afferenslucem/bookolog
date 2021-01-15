@@ -4,7 +4,7 @@ import { getLogger } from '../../../main/app.logging';
 import { SyncService } from '../../../main/services/sync.service';
 
 @Injectable({providedIn: 'root'})
-export class BookSyncResolver implements Resolve<boolean> {
+export class SyncResolver implements Resolve<boolean> {
   private logger = getLogger({
     loggerName: 'BookSyncResolver',
     namespace: 'Resolver',
@@ -15,7 +15,7 @@ export class BookSyncResolver implements Resolve<boolean> {
 
   public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     try {
-      await this.sync.bookSync();
+      await this.sync.sync();
 
       return true;
     } catch (e) {

@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { getLogger } from '../../../../main/app.logging';
+import { Action } from '../../../../main/resolvers/action.resolver';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { StringComparer } from '../../../../main/utils/string.comparer';
+import { Collection } from '../../../collection/models/collection';
 import { NotificationService } from '../../../notification/services/notification.service';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
@@ -13,7 +17,6 @@ import { BookData } from '../../models/book-data';
 import { BookDate } from '../../models/book-date';
 import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
-import { Action } from '../../resolvers/action.resolver';
 import { BookService } from '../../services/book.service';
 
 @Component({
@@ -22,18 +25,13 @@ import { BookService } from '../../services/book.service';
   styleUrls: ['./book-edit-view.component.scss'],
 })
 export class BookEditViewComponent implements OnInit {
-  private logger = getLogger('BookEditViewComponent');
-
   public book: Book;
-
   public BookType: typeof BookType = BookType;
-
   public BookStatus: typeof BookStatus = BookStatus;
-
   public form: FormGroup = null;
   public authors: string[] = [];
   public tags: string[] = [];
-
+  private logger = getLogger('BookEditViewComponent');
   private action: Action;
 
   private defaultValue: BookData = {
@@ -43,6 +41,7 @@ export class BookEditViewComponent implements OnInit {
     type: BookType.Paper,
     year: null,
     genre: '',
+    collectionGuid: null,
     authors: [],
     tags: [],
     note: '',
@@ -58,14 +57,17 @@ export class BookEditViewComponent implements OnInit {
     startDateDay: null,
   };
 
-  private _filteredGenres: string[] = [];
+  private _filteredGenres: Observable<string[]>;
+  private _genres: string[] = [];
+
+  private _series: Collection[] = [];
 
   constructor(
+    private notificationService: NotificationService,
     private activatedRoute: ActivatedRoute,
     public titleService: TitleService,
     private bookService: BookService,
     private router: Router,
-    private notificationService: NotificationService,
   ) {
     activatedRoute.data.subscribe(data => {
       this.book = Object.assign({}, data.book || new Book(this.defaultValue));
@@ -76,16 +78,18 @@ export class BookEditViewComponent implements OnInit {
 
       this.formFromBook(this.book);
 
-      this.readAutocompleteData(data.allBooks);
+      this.readAutocompleteData(data.allBooks, data.series);
 
       this.readAction(data.action);
     });
   }
 
-  private _genres: string[] = [];
-
-  public get genres(): string[] {
+  public get genres(): Observable<string[]> {
     return this._filteredGenres;
+  }
+
+  public get allSeries(): Collection[] {
+    return this._series;
   }
 
   public get status(): BookStatus {
@@ -98,6 +102,10 @@ export class BookEditViewComponent implements OnInit {
 
   public get genre(): string {
     return this.form.get('genre').value;
+  }
+
+  public get series(): string {
+    return this.form.get('series').value;
   }
 
   public ngOnInit(): void {
@@ -120,7 +128,7 @@ export class BookEditViewComponent implements OnInit {
     } catch (e) {
       this.logger.error('Book save error', e);
       this.notificationService.createErrorNotification('Не удалось сохранить книгу', {
-        autoclose: false
+        autoclose: false,
       });
     }
   }
@@ -142,12 +150,12 @@ export class BookEditViewComponent implements OnInit {
     }
   }
 
-  private readAutocompleteData(books: Book[]): void {
+  private readAutocompleteData(books: Book[], series: Collection[]): void {
     this._genres = this.sortGenresByCount(books);
-    this._filteredGenres = this._genres;
-
     this.authors = this.sortAuthorsByCount(books);
     this.tags = this.sortTagsByCount(books);
+
+    this._series = _(series).orderBy(item => item.name).toArray();
   }
 
   private readAction(action: Action): void {
@@ -198,6 +206,8 @@ export class BookEditViewComponent implements OnInit {
       name: new FormControl(book.name, [Validators.required]),
       year: new FormControl(book.year),
       genre: new FormControl(book.genre),
+      collectionGuid: new FormControl(book.collectionGuid),
+      collectionOrder: new FormControl(book.collectionOrder),
       status: new FormControl(book.status),
       type: new FormControl(book.type),
       started: new FormControl(book.started),
@@ -208,9 +218,10 @@ export class BookEditViewComponent implements OnInit {
       tags: new FormControl(book.tags),
     });
 
-    this.form.get('genre').valueChanges.subscribe(genre => {
-      this._filteredGenres = new FuzzySearch().search(this._genres, genre.toLowerCase());
-    });
+    this._filteredGenres = this.form.get('genre').valueChanges.pipe(
+      startWith(this.genre || ''),
+      map(item => new FuzzySearch().search(this._genres, item)),
+    );
 
     this.form.get('status').valueChanges.subscribe(status => this.onStatusChange(status));
   }

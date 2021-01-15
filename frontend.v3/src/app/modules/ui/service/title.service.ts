@@ -89,6 +89,21 @@ export class TitleService {
     this.setTitle(TitleText.AuthorsStatistic);
   }
 
+  public setCollectionCreate(): void {
+    this.setCustom(null);
+    this.setTitle(TitleText.CollectionCreate);
+  }
+
+  public setCollectionList(): void {
+    this.setCustom(null);
+    this.setTitle(TitleText.CollectionList);
+  }
+
+  public setCollectionView(): void {
+    this.setCustom(null);
+    this.setTitle(TitleText.CollectionView);
+  }
+
   public setCustom(title: string): void {
     this._custom.next(title);
     this._title.next(null);

@@ -11,6 +11,7 @@ using backend.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using backend.Exceptions.StorageExceptions;
+using backend.Exceptions;
 
 namespace backend.Controllers
 {
@@ -19,6 +20,7 @@ namespace backend.Controllers
     {
         private readonly IUserService userService;
         private readonly IBookService bookService;
+        private readonly ICollectionService collectionService;
         private readonly IFileService fileService;
         private readonly ILogger<UserController> logger;
         private readonly IUserSession userSession;
@@ -28,11 +30,13 @@ namespace backend.Controllers
             IUserService userService,
             IUserSession userSession,
             IBookService bookService,
+            ICollectionService collectionService,
             IFileService fileService,
             ILogger<UserController> logger
         )
         {
             this.userService = userService;
+            this.collectionService = collectionService;
             this.bookService = bookService;
             this.fileService = fileService;
             this.userSession = userSession;
@@ -142,6 +146,70 @@ namespace backend.Controllers
             {
                 this.logger.LogError(500, ex.Message, ex);
                 return BadRequest();
+            }
+        }
+    
+        [HttpPost]
+        [Route("[action]")]
+        [Authorize]
+        public async Task<IActionResult> Synchronize([FromBody]AppSyncData data) {
+            try
+            {
+                var collectionSync = await this.collectionService.Synch(data.Collections ?? new SyncData<Collection>());
+                var bookSync = await this.bookService.Synch(data.Books ?? new SyncData<Book>());
+
+                this.userSession.UpdateLastSyncTime();
+
+                return Ok(new AppSyncData {
+                    Books = bookSync,
+                    Collections = collectionSync,
+                });
+            }
+            catch (BookologException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex, ex.Message, data);
+
+                return StatusCode(400, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message, data);
+
+                return StatusCode(500);
+            }
+        }
+        
+        [HttpGet]
+        [Route("[action]")]
+        [Authorize]
+        public async Task<IActionResult> LoadAll() {
+            try
+            {
+                var user = await this.userSession.User;
+
+                var collectionLoad = this.collectionService.GetByUserId(user.Id);
+                var bookLoad = this.bookService.GetByUserId(user.Id);
+
+                await Task.WhenAll(bookLoad, collectionLoad);
+
+                this.userSession.UpdateLastSyncTime();
+
+                return Ok(new AppData {
+                    Books = bookLoad.Result,
+                    Collections = collectionLoad.Result,
+                });
+            }
+            catch (BookologException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex, ex.Message);
+
+                return StatusCode(400, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(500, ex, ex.Message);
+
+                return StatusCode(500);
             }
         }
     }

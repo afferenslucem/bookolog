@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
+import { ISyncableOrigin } from 'src/app/main/services/i-syncable-origin';
 import { getLogger } from '../../../main/app.logging';
+import { SyncData } from '../../../main/models/sync-data';
 import { UserService } from '../../user/services/user.service';
 import { BookData } from '../models/book-data';
-import { RemoteSyncData } from '../../../main/models/i-remote-sync-data';
-import { SyncData } from '../../../main/models/i-local-sync-data';
-import { ISyncableOrigin } from 'src/app/main/services/i-syncable-origin';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +30,7 @@ export class BookOriginService implements ISyncableOrigin<BookData> {
     return await this.httpClient.delete<void>('/book/delete/' + guid).toPromise();
   }
 
-  public async sync(data: SyncData<BookData>): Promise<RemoteSyncData<BookData>> {
-    return await this.httpClient.post<RemoteSyncData<BookData>>('/book/synchronize/', data).toPromise();
+  public async sync(data: SyncData<BookData>): Promise<SyncData<BookData>> {
+    return await this.httpClient.post<SyncData<BookData>>('/book/synchronize/', data).toPromise();
   }
 }

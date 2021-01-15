@@ -12,4 +12,7 @@ export enum TitleText {
   TagsStatistic = 200,
   GenresStatistic = 210,
   AuthorsStatistic = 220,
+  CollectionList = 310,
+  CollectionView = 340,
+  CollectionCreate = 350,
 }

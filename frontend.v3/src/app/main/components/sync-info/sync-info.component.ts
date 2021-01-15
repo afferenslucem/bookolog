@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookService } from '../../../modules/book/services/book.service';
 import { NotificationService } from '../../../modules/notification/services/notification.service';
 import { getLogger } from '../../app.logging';
 import { SyncService } from '../../services/sync.service';

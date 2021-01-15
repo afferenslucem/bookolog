@@ -153,7 +153,7 @@ namespace tests.Services
             var bookStorage = new Mock<IBookStorage>();
             var userSession = new Mock<IUserSession>();
 
-            bookStorage.Setup(item => item.DeleteMany(It.IsAny<Book[]>())).ReturnsAsync(books);
+            bookStorage.Setup(item => item.DeleteMany(It.IsAny<Guid[]>())).Returns(Task.CompletedTask);
             bookStorage.Setup(item => item.GetByGuids(It.IsAny<Guid[]>())).ReturnsAsync(books);
             userSession.Setup(item => item.User).ReturnsAsync(new User { Id = 1 });
 
@@ -162,7 +162,8 @@ namespace tests.Services
             await bookService.DeleteMany(books.Select(item => item.Guid.Value).ToArray());
 
             userSession.Verify(item => item.User, Times.Once());
-            bookStorage.Verify(item => item.DeleteMany(books), Times.Once());
+            bookStorage.Verify(item => item.GetByGuids(It.IsAny<Guid[]>()), Times.Once());
+            bookStorage.Verify(item => item.DeleteMany(It.IsAny<Guid[]>()), Times.Once());
         }
 
         [TestMethod]
@@ -193,7 +194,7 @@ namespace tests.Services
 
             await bookService.UpdateMany(books);
 
-            userSession.Verify(item => item.User, Times.Once());
+            userSession.Verify(item => item.User);
             bookStorage.Verify(item => item.UpdateMany(books), Times.Once());
         }
 
@@ -267,7 +268,7 @@ namespace tests.Services
                 UserId = 2,
             };
 
-            await Assert.ThrowsExceptionAsync<BookCouldNotAccessSomeoneElsesException>(() => this.service.CheckAccess(book));
+            await Assert.ThrowsExceptionAsync<EntityAccessDenied>(() => this.service.CheckAccess(book));
         }
 
         [TestMethod]
@@ -293,7 +294,7 @@ namespace tests.Services
                 UserId = 2,
             };
 
-            Assert.ThrowsException<BookCouldNotAccessSomeoneElsesException>(() => this.service.CheckAccess(1, book));
+            Assert.ThrowsException<EntityAccessDenied>(() => this.service.CheckAccess(1, book));
         }
     }
 

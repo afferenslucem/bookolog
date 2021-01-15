@@ -1,10 +1,10 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import _ from 'declarray';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { StringComparer } from '../../../../main/utils/string.comparer';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
-import _ from 'declarray';
 
 @Component({
   selector: 'app-book-tags-input',

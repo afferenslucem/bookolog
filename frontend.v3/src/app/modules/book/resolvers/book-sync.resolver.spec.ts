@@ -1,19 +1,19 @@
 import { TestBed } from '@angular/core/testing';
-import { BookSyncResolver } from './book-sync.resolver';
+import { SyncResolver } from './sync-resolver.service';
 
 describe('BookSyncResolver', () => {
-  let resolver: BookSyncResolver;
+  let resolver: SyncResolver;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: BookSyncResolver,
+          provide: SyncResolver,
           useValue: {},
         },
       ],
     });
-    resolver = TestBed.inject(BookSyncResolver);
+    resolver = TestBed.inject(SyncResolver);
   });
 
   it('should create an instance', () => {

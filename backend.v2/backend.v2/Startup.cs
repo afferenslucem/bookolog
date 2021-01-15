@@ -102,6 +102,7 @@ namespace backend
             services.AddScoped<IFileSystemService, FileSystemService>();
             services.AddScoped<IConfigService, ConfigService>();
             services.AddScoped<IBookService, BookService>();
+            services.AddScoped<ICollectionService, CollectionService>();
             services.AddScoped<IUserSession, UserSession>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IFileService, FileService>();

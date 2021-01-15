@@ -93,3 +93,10 @@ mat-toolbar {
     margin-bottom: $ind-1;
   }
 }
+
+// List
+.statistic-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

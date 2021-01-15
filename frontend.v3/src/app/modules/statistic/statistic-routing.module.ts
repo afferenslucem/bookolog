@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AllBooksResolver } from '../book/resolvers/all-books.resolver';
 import { BooksByAuthorResolver } from '../book/resolvers/books-by-author.resolver';
 import { BooksByGenreResolver } from '../book/resolvers/books-by-genre.resolver';
 import { BooksByTagResolver } from '../book/resolvers/books-by-tag.resolver';

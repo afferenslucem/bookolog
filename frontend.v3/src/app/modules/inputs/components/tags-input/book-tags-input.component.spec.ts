@@ -1,7 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { BookTagsInputComponent } from './book-tags-input.component';
-
 // describe('TagsInputComponent', () => {
 //   let component: BookTagsInputComponent;
 //   let fixture: ComponentFixture<BookTagsInputComponent>;

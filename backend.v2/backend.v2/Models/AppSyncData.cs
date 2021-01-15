@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace backend.Models
 {
-    public class Synched<TModel>
+    public class AppSyncData
     {
-        public TModel[] Update {get; set;}
-        public TModel[] Delete {get; set;}
+        public SyncData<Book> Books {get; set;}
+        public SyncData<Collection> Collections {get; set;}
     }
 }

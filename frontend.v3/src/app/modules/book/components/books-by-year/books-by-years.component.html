@@ -1,6 +1,6 @@
 <div class="book-list">
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let year of (definedYears$ | async); let first = first; trackBy: yearTrackBy" [expanded]="first">
+    <mat-expansion-panel *ngFor="let year of (definedYears$ | async); let first = first; trackBy: yearTrackBy" [expanded]="first" (opened)="onOpen(year.key)">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{year.key}}
@@ -13,14 +13,14 @@
           </div>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div>
+      <div *ngIf="yearOpened == year.key">
         <div *ngFor="let book of year.group; let last = last; trackBy: bookTrackBy">
           <app-done-book [routerLink]="['/book', book.guid]" class="book-list__item" [book]="book"></app-done-book>
           <mat-divider [hidden]="last"></mat-divider>
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="(undefinedYear$ | async) as year" [expanded]="(years$ | async)?.length === 1">
+    <mat-expansion-panel *ngIf="(undefinedYear$ | async) as year" [expanded]="(years$ | async)?.length === 1" (opened)="onOpen(undefined)">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span i18n>Год не указан</span>
@@ -33,7 +33,7 @@
           </div>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div>
+      <div *ngIf="yearOpened == undefined">
         <div *ngFor="let book of year.group; let last = last; trackBy: bookTrackBy">
           <app-done-book [routerLink]="['/book', book.guid]" class="book-list__item" [book]="book"></app-done-book>
           <mat-divider [hidden]="last"></mat-divider>

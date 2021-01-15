@@ -1,5 +1,4 @@
 import { WithCredentialsInterceptor } from './with-credentials.interceptor';
-import {environment} from '../../../../environments/environment';
 
 describe('WithCredentialsInterceptor', () => {
   it('should create an instance', () => {

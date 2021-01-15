@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { getLogger } from '../../../../main/app.logging';
 import { AuthService } from '../../../auth/services/auth.service';
 import { NotificationService } from '../../../notification/services/notification.service';
-import { UserService } from '../../../user/services/user.service';
 
 export enum ChangePasswordError {
   Undefined = -1,

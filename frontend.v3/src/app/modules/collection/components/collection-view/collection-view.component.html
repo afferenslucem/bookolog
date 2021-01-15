@@ -1,0 +1,12 @@
+<div *ngIf="collection$ | async as collection">
+  <div *ngIf="collection.description">
+    <span>{{collection.description}}</span>
+    <mat-divider></mat-divider>
+  </div>
+</div>
+<div class="book-list">
+  <div *ngFor="let book of books$ | async; let last = last; trackBy: bookTrackBy">
+    <app-to-read-book [routerLink]="['/book', book.guid]" class="book-list__item" [book]="book"></app-to-read-book>
+    <mat-divider *ngIf="!last"></mat-divider>
+  </div>
+</div>

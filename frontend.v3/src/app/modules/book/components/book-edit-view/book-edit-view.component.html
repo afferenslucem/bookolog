@@ -22,11 +22,28 @@
            [matAutocomplete]="genreAutocomplete">
 
     <mat-autocomplete #genreAutocomplete="matAutocomplete">
-      <mat-option *ngFor="let genre of genres" [value]="genre | capitalize">
+      <mat-option *ngFor="let genre of genres | async" [value]="genre | capitalize">
         {{genre | capitalize}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+
+  <div class="collection-input">
+    <mat-form-field appearance="fill" class="name">
+      <mat-label>Серия</mat-label>
+      <mat-select formControlName="collectionGuid">
+        <mat-option [value]="null">Отсутствует</mat-option>
+        <mat-option *ngFor="let item of allSeries" [value]="item.guid">
+          {{item.name | capitalize}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="order">
+      <mat-label>Порядок</mat-label>
+      <input matInput formControlName="collectionOrder" type="number" min="1" max="256" step="1"/>
+    </mat-form-field>
+  </div>
 
   <app-book-tags-input [list]="tags" formControlName="tags" header="Теги"></app-book-tags-input>
 

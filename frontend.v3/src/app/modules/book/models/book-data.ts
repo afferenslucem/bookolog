@@ -1,6 +1,6 @@
-import { IDeletable } from "src/app/main/models/i-deletable";
-import { IEntity } from "src/app/main/models/i-entity";
-import { IUpdatable } from "src/app/main/models/i-updatable";
+import { IDeletable } from 'src/app/main/models/i-deletable';
+import { IEntity } from 'src/app/main/models/i-entity';
+import { IUpdatable } from 'src/app/main/models/i-updatable';
 
 export interface BookData extends IDeletable, IUpdatable, IEntity {
   name: string;
@@ -11,6 +11,8 @@ export interface BookData extends IDeletable, IUpdatable, IEntity {
   totalUnits?: number;
   doneUnits?: number;
   genre?: string;
+  collectionGuid?: string;
+  collectionOrder?: number;
   startDateYear?: number;
   startDateMonth?: number;
   startDateDay?: number;
@@ -19,8 +21,6 @@ export interface BookData extends IDeletable, IUpdatable, IEntity {
   endDateMonth?: number;
   endDateDay?: number;
   endDate?: string;
-  modifyDate: string;
-  createDate: string;
   type: number;
   note?: string;
 }

@@ -28,6 +28,12 @@ namespace backend.v2.Migrations
                     b.Property<string[]>("Authors")
                         .HasColumnType("varchar(512)[]");
 
+                    b.Property<Guid?>("CollectionGuid")
+                        .HasColumnType("uuid");
+
+                    b.Property<short?>("CollectionOrder")
+                        .HasColumnType("smallint");
+
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("timestamptz");
 
@@ -87,9 +93,45 @@ namespace backend.v2.Migrations
 
                     b.HasKey("Guid");
 
+                    b.HasIndex("CollectionGuid");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("backend.Models.Collection", b =>
+                {
+                    b.Property<Guid?>("Guid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<long?>("CoverId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("varchar(2048)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(512)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Guid");
+
+                    b.HasIndex("CoverId");
+
+                    b.ToTable("Collections");
                 });
 
             modelBuilder.Entity("backend.Models.File", b =>
@@ -147,11 +189,22 @@ namespace backend.v2.Migrations
 
             modelBuilder.Entity("backend.Models.Book", b =>
                 {
+                    b.HasOne("backend.Models.Collection", "Collection")
+                        .WithMany("Books")
+                        .HasForeignKey("CollectionGuid");
+
                     b.HasOne("backend.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.Collection", b =>
+                {
+                    b.HasOne("backend.Models.File", "Cover")
+                        .WithMany()
+                        .HasForeignKey("CoverId");
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>

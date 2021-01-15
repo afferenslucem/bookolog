@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { finalize, timeout } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { getLogger } from '../app.logging';
 import { PreloaderService } from '../services/preloader.service';
 

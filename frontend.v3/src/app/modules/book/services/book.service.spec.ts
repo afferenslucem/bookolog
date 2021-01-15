@@ -57,7 +57,6 @@ describe('BookService', () => {
 
       const updateSpy = spyOn(storage, 'update').and.resolveTo();
       const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(service, 'sync').and.resolveTo();
 
       const book: Book = {
         name: 'name',
@@ -73,8 +72,6 @@ describe('BookService', () => {
       expect(saveSpy).toHaveBeenCalledTimes(1);
 
       expect(updateSpy).toHaveBeenCalledTimes(0);
-
-      expect(syncSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -125,7 +122,7 @@ describe('BookService', () => {
         name: 'name2',
         status: 1,
         type: 1,
-        deleted: true,
+        deleted: 1,
         modifyDate: '2020-11-18 10:57',
         createDate: '2020-11-18 09:57',
       }];
@@ -223,7 +220,7 @@ describe('BookService', () => {
       } as any;
 
       const dto = service.convertToDTO(book);
-      dto.deleted = true;
+      dto.deleted = 1;
 
       const storageUpdateSpy = spyOn(storage, 'update').and.resolveTo();
 

@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+
 namespace backend.Models
 {
-    public class SyncModel<T>
+    public class AppData
     {
-        public T[] Update { get; set; }
-        public Guid[] Delete { get; set; }
+        public IEnumerable<Book> Books {get; set;}
+        public IEnumerable<Collection> Collections {get; set;}
     }
 }

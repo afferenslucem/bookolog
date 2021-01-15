@@ -10,31 +10,7 @@ const factory = new LoggerFactory([
   },
   {
     name: 'SyncService',
-    logger: LogLevel.Disable
-  },
-  {
-    name: {
-      namespace: 'Storage',
-      loggerName: 'IndexedDb'
-    },
-    logger: LogLevel.All
-  },
-  {
-    name: {
-      namespace: 'Interceptor',
-      loggerName: 'AuthorizedInterceptor'
-    },
-    logger: LogLevel.All
-  },
-  {
-    name: {
-      namespace: 'Resolver'
-    },
     logger: LogLevel.Debug
-  },
-  {
-    name: 'BookService',
-    logger: LogLevel.Warning
   },
 ]);
 

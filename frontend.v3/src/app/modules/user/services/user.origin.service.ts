@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { ILogger } from 'waterlog';
 import { getLogger } from '../../../main/app.logging';
+import { AppData } from '../../../main/models/app-data';
+import { AppSyncData } from '../../../main/models/app-sync-data';
 import { CredentialsException } from '../../auth/exceptions/credentials.exception';
 import { Credentials } from '../../auth/models/credentials';
 import { RegistrationData } from '../../auth/models/registration-data';
@@ -80,15 +82,27 @@ export class UserOriginService {
 
   public async loadAvatar(file: File): Promise<string> {
     const data = new FormData();
-    data.append("file", file);
+    data.append('file', file);
 
     const result = await this.httpClient.post('/user/uploadAvatar', data, {
       headers: {
-        'timeout': '60000',
+        timeout: '60000',
       },
-      responseType: 'text'
+      responseType: 'text',
     }).toPromise();
 
     return result.toString();
   }
- }
+
+  public async synchronize(data: AppSyncData): Promise<AppSyncData> {
+    const result = await this.httpClient.post<AppSyncData>('/user/Synchronize', data).toPromise();
+
+    return result;
+  }
+
+  public async restore(): Promise<AppData> {
+    const result = await this.httpClient.get<AppData>('/user/loadAll').toPromise();
+
+    return result;
+  }
+}

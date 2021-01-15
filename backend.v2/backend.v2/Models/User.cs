@@ -21,9 +21,11 @@ namespace backend.Models
         public string Password { get; set; }
         [NotMapped]
         public DateTime? LastSyncTime { get; set; }
+        
         public string Salt { get; set; }
         public long? AvatarId { get; set; }
         public File Avatar { get; set; }     
+
         [NotMapped]
         public string AvatarName { get; set; }
 

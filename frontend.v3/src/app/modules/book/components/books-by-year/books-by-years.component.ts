@@ -31,6 +31,8 @@ export class BooksByYearsComponent implements OnInit {
 
   private orderedBooks: ISequence<IGroupedData<number, Book[]>>;
 
+  public yearOpened?: number;
+
   public years$: Promise<IGroupedData<number, Book[]>[]>;
 
   public definedYears$: Promise<IGroupedData<number, Book[]>[]>;
@@ -48,5 +50,9 @@ export class BooksByYearsComponent implements OnInit {
 
   public yearTrackBy(index: number, item: IGroupedData<number, Book[]>): number {
     return item.key;
+  }
+
+  public onOpen(year?: number) {
+    this.yearOpened = year;
   }
 }

@@ -2,8 +2,9 @@ FROM node:10-alpine as builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
+RUN npm install -g @angular/cli
 COPY . .
-RUN npm run build -- --output-path=dist/out
+RUN ng build -- --output-path=dist/out
 
 # этап production (production-stage)
 FROM nginx:stable-alpine as production-stage

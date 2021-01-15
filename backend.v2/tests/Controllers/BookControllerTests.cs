@@ -240,7 +240,7 @@ namespace tests.Controllers
                 Name = "Name"
             };
 
-            bookService.Setup(item => item.Update(It.IsAny<Book>())).Throws(new BookCouldNotAccessSomeoneElsesException());
+            bookService.Setup(item => item.Update(It.IsAny<Book>())).Throws(new EntityAccessDenied());
 
             var controller = new BookController(bookService.Object, userSession, logger.Object);
 
@@ -249,7 +249,7 @@ namespace tests.Controllers
             Assert.IsNotNull(result);
             Assert.AreEqual(400, result.StatusCode);
 
-            Assert.AreEqual(BookCouldNotAccessSomeoneElsesException.ErrorMessage, result.Value);
+            Assert.AreEqual(EntityAccessDenied.ErrorMessage, result.Value);
         }
 
         [TestMethod]
@@ -259,7 +259,7 @@ namespace tests.Controllers
             var userSession = new UserSessionMock();
             var bookService = new Mock<IBookService>();
 
-            bookService.Setup(item => item.Delete(It.IsAny<Guid>())).Throws(new BookCouldNotAccessSomeoneElsesException());
+            bookService.Setup(item => item.Delete(It.IsAny<Guid>())).Throws(new EntityAccessDenied());
 
             var controller = new BookController(bookService.Object, userSession, logger.Object);
 
@@ -268,7 +268,7 @@ namespace tests.Controllers
             Assert.IsNotNull(result);
             Assert.AreEqual(400, result.StatusCode);
 
-            Assert.AreEqual(BookCouldNotAccessSomeoneElsesException.ErrorMessage, result.Value);
+            Assert.AreEqual(EntityAccessDenied.ErrorMessage, result.Value);
         }
     }
 }

@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import _ from 'declarray';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { BookTrackBy } from '../../../../main/utils/book-track-by';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookActionService } from '../../services/book-action.service';
-import _ from 'declarray';
 
 @Component({
   selector: 'app-in-progress',

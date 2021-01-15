@@ -1,10 +1,10 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {WithCredentialsInterceptor} from '../modules/auth/interceptors/with-credentials.interceptor';
+import { WithCredentialsInterceptor } from '../modules/auth/interceptors/with-credentials.interceptor';
 import { AuthorizedInterceptor } from './interceptors/authorized.interceptor';
 import { PreloaderInterceptor } from './interceptors/preloader.interceptor';
 import { RetryInterceptor } from './interceptors/retry.interceptor';
 import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
-import {UrlInterceptor} from './interceptors/url.interceptor';
+import { UrlInterceptor } from './interceptors/url.interceptor';
 
 export const interceptors = [
   { provide: HTTP_INTERCEPTORS, useClass: PreloaderInterceptor, multi: true, },

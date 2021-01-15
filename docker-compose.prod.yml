@@ -1,7 +1,9 @@
 version: "3"
 services:
   client:
-    build: frontend.v3/
+    build:
+      context: frontend.v3/
+      dockerfile: DockerfileProd
     ports:
       - "40080:80"    
     depends_on: 

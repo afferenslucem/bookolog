@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { Notification } from '../models/notification';
 import _ from 'declarray';
+import { Notification } from '../models/notification';
 import { NotificationEqualityComparer } from '../models/notification-equality-comparer';
 import { NotificationQueueService } from './notification-queue.service';
 

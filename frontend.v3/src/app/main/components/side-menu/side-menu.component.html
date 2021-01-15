@@ -7,19 +7,19 @@
         <mat-list class="book-nav">
           <mat-list-item>
             <div class="book-nav__item">
-              <span class="link" [routerLink]="['/in-progress']" i18n="book menu|in progress">Читаю сейчас</span>
+              <span class="link" [routerLink]="['/in-progress']">Читаю сейчас</span>
               <app-plus-icon [routerLink]="['/book', 'create', BookStatus.InProgress]"></app-plus-icon>
             </div>
           </mat-list-item>
           <mat-list-item>
             <div class="book-nav__item">
-              <span class="link" [routerLink]="['/to-read']" i18n="book menu|to read">Буду читать</span>
+              <span class="link" [routerLink]="['/to-read']">Буду читать</span>
               <app-plus-icon [routerLink]="['/book', 'create', BookStatus.ToRead]"></app-plus-icon>
             </div>
           </mat-list-item>
           <mat-list-item>
             <div class="book-nav__item">
-              <span class="link" [routerLink]="['/done']" i18n="book menu|done">Прочитаные</span>
+              <span class="link" [routerLink]="['/done']">Прочитаные</span>
               <app-plus-icon [routerLink]="['/book', 'create', BookStatus.Done]"></app-plus-icon>
             </div>
           </mat-list-item>
@@ -29,15 +29,19 @@
     <div class="navigation">
       <div class="navigation__header" i18n>Статистика</div>
       <div class="navigation__body">
-        <mat-list>
+        <mat-list class="book-nav">
           <mat-list-item>
-            <span class="link" [routerLink]="['/genres']" i18n="genres">Жанры</span>
+            <span class="link book-nav__item" [routerLink]="['/series']">Серии</span>
+            <app-plus-icon [routerLink]="['/series', 'create']"></app-plus-icon>
           </mat-list-item>
           <mat-list-item>
-            <span class="link" [routerLink]="['/authors']" i18n="authors">Авторы</span>
+            <span class="link" [routerLink]="['/genres']">Жанры</span>
           </mat-list-item>
           <mat-list-item>
-            <span class="link" [routerLink]="['/tags']" i18n="tags">Теги</span>
+            <span class="link" [routerLink]="['/authors']">Авторы</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span class="link" [routerLink]="['/tags']">Теги</span>
           </mat-list-item>
         </mat-list>
       </div>
@@ -45,7 +49,7 @@
     <div class="navigation">
       <div class="navigation__header" i18n>Аккаунт</div>
       <div class="navigation__body">
-        <mat-list>
+        <mat-list class="book-nav">
           <mat-list-item>
             <span class="link" routerLink="/settings" i18n>Настройки</span>
           </mat-list-item>

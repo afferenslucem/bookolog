@@ -9,7 +9,7 @@ export class IndexedDbService {
     loggerName: 'IndexedDb',
     namespace: 'Storage',
   });
-  private readonly version = 1;
+  private readonly version = 5;
   private readonly indexedDB = window.indexedDB;
   private database: IDBDatabase;
 
@@ -209,6 +209,7 @@ export class IndexedDbService {
 
   private upgradeDatabase(request: IDBRequest, dbEvent: any): void {
     const db = dbEvent.target.result;
+    const upgradeTransaction = dbEvent.target.transaction;
 
     if (dbEvent.oldVersion < 1) {
       const objectStore = db.createObjectStore('BooksStore', {keyPath: 'guid'});
@@ -218,6 +219,26 @@ export class IndexedDbService {
       objectStore.createIndex('status', 'status', {unique: false});
       objectStore.createIndex('shouldSync', 'shouldSync', {unique: false});
       objectStore.createIndex('deleted', 'deleted', {unique: false});
+    }
+
+    if (dbEvent.oldVersion < 2) {
+      const objectStore = db.createObjectStore('CollectionsStore', {keyPath: 'guid'});
+      objectStore.createIndex('guid', 'guid', {unique: true});
+      objectStore.createIndex('type', 'type', {unique: false});
+      objectStore.createIndex('shouldSync', 'shouldSync', {unique: false});
+      objectStore.createIndex('deleted', 'deleted', {unique: false});
+    }
+
+    if (dbEvent.oldVersion < 4) {
+      const objectStore = db.createObjectStore('BookCollectionsRecordStore', {keyPath: 'guid'});
+      objectStore.createIndex('collectionId', 'collectionId', {unique: false});
+      objectStore.createIndex('bookId', 'bookId', {unique: false});
+    }
+
+    if (dbEvent.oldVersion < 5) {
+      db.deleteObjectStore('BookCollectionsRecordStore');
+      const objectStore = upgradeTransaction.objectStore('BooksStore');
+      objectStore.createIndex('collectionGuid', 'collectionGuid', {unique: false});
     }
   }
 
