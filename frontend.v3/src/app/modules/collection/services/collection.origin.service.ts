@@ -27,10 +27,10 @@ export class CollectionOriginService implements ISyncableOrigin<CollectionData> 
   }
 
   public async delete(guid: string): Promise<void> {
-    return await this.httpClient.delete<void>('/collection-view/delete/' + guid).toPromise();
+    return await this.httpClient.delete<void>('/collection/delete/' + guid).toPromise();
   }
 
   public async sync(data: SyncData<CollectionData>): Promise<SyncData<CollectionData>> {
-    return await this.httpClient.post<SyncData<CollectionData>>('/collection-view/synchronize/', data).toPromise();
+    return await this.httpClient.post<SyncData<CollectionData>>('/collection/synchronize/', data).toPromise();
   }
 }
