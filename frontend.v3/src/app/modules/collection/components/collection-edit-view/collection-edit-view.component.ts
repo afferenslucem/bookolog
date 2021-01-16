@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Action } from 'src/app/main/resolvers/action.resolver';
 import { ILogger } from 'waterlog';
 import { getLogger } from '../../../../main/app.logging';
 import { DateUtils } from '../../../../main/utils/date-utils';
@@ -45,6 +46,8 @@ export class CollectionEditViewComponent implements OnInit {
       this.collection = Object.assign({}, data.collection || new Collection(this.defaultData));
 
       this.formFromCollection(this.collection);
+
+      this.readAction(data.action);
     });
   }
 
@@ -56,7 +59,6 @@ export class CollectionEditViewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.titleService.setCollectionCreate();
   }
 
   public async submit(): Promise<void> {
@@ -82,5 +84,13 @@ export class CollectionEditViewComponent implements OnInit {
 
   private async redirect(): Promise<void> {
     await this.router.navigate(['/series']);
+  }
+
+  private readAction(action: Action): void {
+    if (action === Action.Create) {
+      this.titleService.setCollectionCreate();
+    } else if (action === Action.Edit) {
+      this.titleService.setCollectionEdit();
+    }
   }
 }

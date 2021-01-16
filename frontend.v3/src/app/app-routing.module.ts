@@ -6,7 +6,7 @@ import { LoggedInGuard } from './modules/auth/guards/logged-in.guard';
 import { LogoutGuard } from './modules/auth/guards/logout.guard';
 import { routes as bookListRoutes } from './modules/book/book-routing.module';
 import { SyncResolver } from './modules/book/resolvers/sync-resolver.service';
-import { routes as collectionRoutes } from './modules/collection/collection-routes';
+import { routes as collectionRoutes } from './modules/collection/collection-routes.model';
 import { routes as settingsRoutes } from './modules/settings/settings-routing.module';
 import { routes as statisticRoutes } from './modules/statistic/statistic-routing.module';
 import { MeResolver } from './modules/user/resolvers/me.resolver';

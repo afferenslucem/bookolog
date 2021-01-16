@@ -94,6 +94,12 @@ export class TitleService {
     this.setTitle(TitleText.CollectionCreate);
   }
 
+
+  public setCollectionEdit(): void {
+    this.setCustom(null);
+    this.setTitle(TitleText.CollectionEdit);
+  }
+
   public setCollectionList(): void {
     this.setCustom(null);
     this.setTitle(TitleText.CollectionList);

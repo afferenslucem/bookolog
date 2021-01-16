@@ -27,6 +27,11 @@ namespace backend.Storages
 
             modelBuilder.Entity<Collection>()
                 .HasQueryFilter(item => item.DeleteDate == null);
+
+            modelBuilder.Entity<Book>()
+            .HasOne(item => item.Collection)
+            .WithMany(item => item.Books)
+            .OnDelete(DeleteBehavior.SetNull);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

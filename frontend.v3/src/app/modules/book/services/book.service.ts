@@ -42,6 +42,17 @@ export class BookService extends EntityService<BookData, Book> {
     return book;
   }
 
+  public async deleteBooksFromCollection(guid: string): Promise<void> {
+    const books = await this.getBySeries(guid);
+
+    books.forEach(item => {
+      item.collectionGuid = null;
+      item.collectionOrder = null;
+    })
+
+    await this.saveOrUpdateMany(books);
+  }
+
   public async getByStatus(status: BookStatus): Promise<Book[]> {
     const data = await this.typedStorage.getAllByStatus(status);
 
@@ -60,9 +71,9 @@ export class BookService extends EntityService<BookData, Book> {
       .toArray();
   }
 
-  public async deleteBook(book: Book): Promise<void> {
+  public async delete(book: Book): Promise<void> {
     try {
-      await super.deleteBook(book);
+      await super.delete(book);
     } catch (e) {
       this.notificationService.createWarningNotification('Книга удалена локально');
     }

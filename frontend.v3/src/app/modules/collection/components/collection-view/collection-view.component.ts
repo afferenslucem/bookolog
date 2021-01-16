@@ -1,42 +1,85 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { BookTrackBy } from '../../../../main/utils/book-track-by';
 import { Book } from '../../../book/models/book';
 import { TitleService } from '../../../ui/service/title.service';
 import { Collection } from '../../models/collection';
 import _ from 'declarray';
+import { CollectionService } from '../../services/collection.service';
+import {
+  CollectionDeleteDialogComponent,
+  DeleteDialogResult,
+} from '../collection-delete-dialog/collection-delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { BookService } from 'src/app/modules/book/services/book.service';
 
 @Component({
   selector: 'app-collection',
   templateUrl: './collection-view.component.html',
-  styleUrls: ['./collection-view.component.scss']
+  styleUrls: ['./collection-view.component.scss'],
 })
 export class CollectionViewComponent implements OnInit {
   public books$: Observable<Book[]>;
   public collection$: Observable<Collection>;
 
-  constructor(activatedRoute: ActivatedRoute, private titleService: TitleService) {
+  constructor(
+    activatedRoute: ActivatedRoute,
+    private titleService: TitleService,
+    private collectionService: CollectionService,
+    private bookService: BookService,
+    private router: Router,
+    public dialog: MatDialog,
+  ) {
     const data$ = activatedRoute.data;
 
     this.books$ = data$.pipe(
-      filter(item => item.books),
-      map(item => item.books as Book[]),
-      map(item => _(item).orderBy(book => book.collectionOrder).toArray()),
+      filter((item) => item.books),
+      map((item) => item.books as Book[]),
+      map((item) =>
+        _(item)
+          .orderBy((book) => book.collectionOrder)
+          .toArray()
+      )
     );
 
     this.collection$ = data$.pipe(
-      filter(item => item.collection),
-      map(item => item.collection as Collection),
-      tap(item => this.titleService.setCustom(item.name))
+      filter((item) => item.collection),
+      map((item) => item.collection as Collection),
+      tap((item) => this.titleService.setCustom(item.name))
     );
   }
 
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {}
 
   public bookTrackBy(index: number, item: Book): string {
     return BookTrackBy.trackBy(index, item);
+  }
+
+  public async openDeleteDialog(collection: Collection): Promise<void> {
+    const dialogRef = this.dialog.open(CollectionDeleteDialogComponent, {
+      width: '90%',
+      maxWidth: '300px',
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter((item?: DeleteDialogResult) => item && item === 'delete'),
+      )
+      .subscribe(async () => {
+        await this.deleteCollection(collection);
+        await this.redirect();
+      });
+  }
+
+  public async deleteCollection(collection: Collection): Promise<void> {
+    await this.bookService.deleteBooksFromCollection(collection.guid)
+    await this.collectionService.delete(collection);
+  }
+
+  public async redirect(): Promise<void> {
+    await this.router.navigate(['/series']);
   }
 }

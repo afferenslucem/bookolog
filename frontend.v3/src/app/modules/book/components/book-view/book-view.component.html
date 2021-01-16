@@ -6,7 +6,7 @@
 
 <div class="book__authors property" *ngIf="book.authors.length > 0">
   <div class="property__value">
-      <span *ngFor="let author of book.authors; let last = last">
+      <span *ngFor="let author of book.authors | capitalize; let last = last" class="link" [routerLink]="['/author', author]">
         {{author}}<span *ngIf="!last">,</span>
       </span>
   </div>
@@ -32,18 +32,25 @@
 </div>
 
 <div class="book__genre property" *ngIf="!!book.genre">
-  <div class="property__value">
+  <div class="property__value link" [routerLink]="['/genre', book.genre]">
     {{book.genre}}
   </div>
   <label i18n="book genre label@@book__label_genre">Жанр</label>
 </div>
 
+<div class="book__collection property" *ngIf="!!book.collection">
+  <div class="property__value link" [routerLink]="['/series', book.collection.guid]">
+    {{book.collection.name | capitalize}}
+  </div>
+  <label i18n="book genre label@@book__label_genre">Серия</label>
+</div>
+
 <div class="book__status property">
   <div class="property__value">
       <span [ngSwitch]="book.status">
-        <span *ngSwitchCase="BookStatus.ToRead" i18n="book status@@book__status_to-read">К прочтению</span>
-        <span *ngSwitchCase="BookStatus.InProgress" i18n="book status@@book__status_in-progress">Читаю</span>
-        <span *ngSwitchCase="BookStatus.Done" i18n="book status@@book__status_done">Прочитана</span>
+        <span *ngSwitchCase="BookStatus.ToRead" class="link" [routerLink]="['/to-read']">К прочтению</span>
+        <span *ngSwitchCase="BookStatus.InProgress" class="link" [routerLink]="['/in-progress']">Читаю</span>
+        <span *ngSwitchCase="BookStatus.Done" class="link" [routerLink]="['/done']">Прочитана</span>
       </span>
   </div>
   <label i18n="book status label@@book__label_status">Статус</label>
@@ -51,7 +58,7 @@
 
 <div class="book__tags property" *ngIf="book.tags.length > 0">
   <div class="property__value tags">
-    <app-tag-value *ngFor="let tag of book.tags" [name]="tag | capitalize" showCross="false"></app-tag-value>
+    <app-tag-value *ngFor="let tag of book.tags" [name]="tag | capitalize" showCross="false" [routerLink]="['/tag', tag]"></app-tag-value>
   </div>
   <label i18n="book tags label@@book__label_tags">Теги</label>
 </div>

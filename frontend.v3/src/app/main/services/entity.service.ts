@@ -33,7 +33,7 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
       await this.storage.restore(data);
   }
 
-  public async deleteBook(entity: TEntity): Promise<void> {
+  public async delete(entity: TEntity): Promise<void> {
     try {
       await this.origin.delete(entity.guid);
       await this.storage.delete(entity.guid);
@@ -61,6 +61,25 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     await this.entitiesSync();
 
     return this.convertFromDTO(dto);
+  }
+
+  public async saveOrUpdateMany(entities: TEntity[]): Promise<TEntity[]> {
+
+    entities.forEach(item => item.shouldSync = 1);
+
+    const dtos = this.convertToDTOArray(entities);
+
+    const toSave = _(dtos).where(item => !item.guid).toArray();
+    const toUpdate = _(dtos).where(item => !!item.guid).toArray();
+
+    const updateAwait = this.storage.updateMany(toUpdate);
+    const saveAwait = this.storage.saveMany(toSave);
+
+    await Promise.all([updateAwait, saveAwait])
+
+    await this.entitiesSync();
+
+    return this.convertFromDTOArray(dtos);
   }
 
   public async softDelete(entity: TEntity): Promise<void> {

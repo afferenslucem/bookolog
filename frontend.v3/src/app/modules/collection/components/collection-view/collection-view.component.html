@@ -1,7 +1,11 @@
-<div *ngIf="collection$ | async as collection">
-  <div *ngIf="collection.description">
+<div *ngIf="collection$ | async as collection" class="collection">
+  <div *ngIf="collection.description" class="collection__description">
     <span>{{collection.description}}</span>
     <mat-divider></mat-divider>
+  </div>
+  <div class="collection__buttons">
+    <button mat-flat-button color="primary" [routerLink]="['/series', 'edit', collection.guid]">Редактировать</button>
+    <button mat-flat-button color="warn" (click)="openDeleteDialog(collection)">Удалить</button>
   </div>
 </div>
 <div class="book-list">

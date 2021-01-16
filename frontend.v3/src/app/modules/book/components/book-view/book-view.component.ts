@@ -66,7 +66,7 @@ export class BookViewComponent implements OnInit, OnDestroy {
   }
 
   public async deleteBook(book: Book): Promise<void> {
-    await this.bookService.deleteBook(book);
+    await this.bookService.delete(book);
   }
 
   public async redirect(): Promise<void> {

@@ -15,4 +15,5 @@ export enum TitleText {
   CollectionList = 310,
   CollectionView = 340,
   CollectionCreate = 350,
+  CollectionEdit = 360,
 }

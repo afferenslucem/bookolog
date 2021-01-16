@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityService } from '../../../main/services/entity.service';
+import { BookService } from '../../book/services/book.service';
 import { NotificationService } from '../../notification/services/notification.service';
 import { Collection } from '../models/collection';
 import { CollectionData } from '../models/collection-data';

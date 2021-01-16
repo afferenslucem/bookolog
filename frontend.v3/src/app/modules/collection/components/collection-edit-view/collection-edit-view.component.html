@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <mat-form-field appearance="fill">
     <mat-label>Название</mat-label>
-    <input matInput formControlName="name" type="text" required/>
+    <input matInput formControlName="name" type="text" required autocomplete="off"/>
     <mat-error *ngIf="form.get('name').invalid" i18n>
       Это обязательное поле
     </mat-error>
@@ -9,7 +9,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Описание</mat-label>
-    <textarea matInput formControlName="description" rows="5"></textarea>
+    <textarea matInput formControlName="description" rows="5" autocomplete="off"></textarea>
   </mat-form-field>
 
   <button class="w-100" mat-flat-button [disabled]="form.invalid" color="primary" type="submit">

@@ -167,7 +167,7 @@ describe('BookService', () => {
       const softDeleteSpy = spyOn(service, 'softDelete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.resolveTo();
 
-      await service.deleteBook(book);
+      await service.delete(book);
 
       expect(storageDeleteSpy).toHaveBeenCalledWith(dto.guid);
       expect(storageDeleteSpy).toHaveBeenCalledTimes(1);
@@ -197,7 +197,7 @@ describe('BookService', () => {
       const softDeleteSpy = spyOn(service, 'softDelete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.rejectWith();
 
-      await service.deleteBook(book);
+      await service.delete(book);
 
       expect(storageDeleteSpy).toHaveBeenCalledTimes(0);
 
