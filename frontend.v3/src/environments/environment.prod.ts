@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   serverUrl: 'https://api.hrodvitnir.pw',
   restoreTimeSeconds: 12 * 60 * 60,
-  version: '0.3.2',
+  version: '0.3.3',
   filePath: '/file/',
   notificationCloseTime: 3000,
 };

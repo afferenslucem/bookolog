@@ -1,17 +1,17 @@
-<h1 mat-dialog-title i18n="collection-delete-dialog__title">Удалить серию?</h1>
+<h1 mat-dialog-title>Удалить серию?</h1>
 <div mat-dialog-content>
-  <p i18n="collection-delete-dialog__content-1">
+  <p>
     Вы уверены, что хотите удалить серию?
   </p>
-  <p i18n="collection-delete-dialog__content-2">
+  <p>
     Это действие будет нельзя отменить.
   </p>
 </div>
 <div mat-dialog-actions>
-  <button mat-flat-button color="primary" mat-dialog-close (click)="cancel()" i18n="collection-delete-dialog__close-button">
+  <button mat-flat-button color="primary" mat-dialog-close (click)="cancel()">
     Закрыть
   </button>
-  <button mat-flat-button color="warn" mat-dialog-close (click)="delete()" i18n="collection-delete-dialog__delete-button">
+  <button mat-flat-button color="warn" mat-dialog-close (click)="delete()">
     Удалить
   </button>
 </div>
