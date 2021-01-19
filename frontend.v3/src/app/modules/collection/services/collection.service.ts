@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityService } from '../../../main/services/entity.service';
+import { Book } from '../../book/models/book';
 import { BookService } from '../../book/services/book.service';
 import { NotificationService } from '../../notification/services/notification.service';
 import { Collection } from '../models/collection';
@@ -21,6 +22,17 @@ export class CollectionService extends EntityService<CollectionData, Collection>
 
     this.typedStorage = storage;
   }
+
+  public async saveOrUpdate(collection: Collection): Promise<Collection> {
+    try {
+      collection = await super.saveOrUpdate(collection);
+    } catch (e) {
+      this.notificationService.createWarningNotification('Серия сохранена локально');
+    }
+
+    return collection;
+  }
+
 
   public convertFromDTO(dto: CollectionData): Collection {
     return new Collection(dto);

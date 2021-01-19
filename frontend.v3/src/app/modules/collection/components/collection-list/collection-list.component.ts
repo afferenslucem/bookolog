@@ -11,6 +11,7 @@ import _ from 'declarray';
 interface CollectionInfo {
   name: string;
   guid: string;
+  shouldSync: number;
   count: number;
 }
 
@@ -25,11 +26,7 @@ interface BookCollection {
   styleUrls: ['./collection-list.component.scss'],
 })
 export class CollectionListComponent implements OnInit {
-  public collections$: Observable<{
-    name: string,
-    guid: string,
-    count: number,
-  }[]>;
+  public collections$: Observable<CollectionInfo[]>;
 
   constructor(private activatedRoute: ActivatedRoute, private titleService: TitleService) {
     this.collections$ = activatedRoute.data.pipe(
@@ -46,6 +43,7 @@ export class CollectionListComponent implements OnInit {
           .select(item => ({
             name: item.collection.name,
             guid: item.collection.guid,
+            shouldSync: item.collection.shouldSync,
             count: item.booksForCollection.count(),
           }));
 
@@ -65,7 +63,11 @@ export class CollectionListComponent implements OnInit {
         }));
   }
 
-  public findCollectionsWithoutBooks(books: Book[], collections: Collection[], counted: ISequence<BookCollection>): ISequence<BookCollection> {
+  public findCollectionsWithoutBooks(
+    books: Book[],
+    collections: Collection[],
+    counted: ISequence<BookCollection>,
+  ): ISequence<BookCollection> {
     return _(collections)
       .except(counted.select(item => item.collection))
       .select(item => ({

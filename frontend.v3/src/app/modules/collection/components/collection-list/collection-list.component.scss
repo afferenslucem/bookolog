@@ -1,0 +1,21 @@
+@import "~src/styles/variables";
+
+.statistic-item {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+  }
+}
+
+
+.actions {
+  display: flex;
+
+  align-items: center;
+
+  > *:not(:first-child) {
+    margin-left: $ind-1;
+  }
+}
