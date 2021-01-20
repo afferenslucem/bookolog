@@ -18,6 +18,7 @@ import { BookDate } from '../../models/book-date';
 import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
 import { BookService } from '../../services/book.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -58,15 +59,13 @@ export class BookEditViewComponent implements OnInit {
   };
 
   private _filteredGenres: Observable<string[]>;
-  private _genres: string[] = [];
-
-  private _series: Collection[] = [];
 
   constructor(
     private notificationService: NotificationService,
     private activatedRoute: ActivatedRoute,
     public titleService: TitleService,
     private bookService: BookService,
+    private location: Location,
     private router: Router,
   ) {
     activatedRoute.data.subscribe(data => {
@@ -84,8 +83,16 @@ export class BookEditViewComponent implements OnInit {
     });
   }
 
+  private _genres: string[] = [];
+
   public get genres(): Observable<string[]> {
     return this._filteredGenres;
+  }
+
+  private _series: Collection[] = [];
+
+  public get series(): string {
+    return this.form.get('series').value;
   }
 
   public get allSeries(): Collection[] {
@@ -104,10 +111,6 @@ export class BookEditViewComponent implements OnInit {
     return this.form.get('genre').value;
   }
 
-  public get series(): string {
-    return this.form.get('series').value;
-  }
-
   public ngOnInit(): void {
     this.titleService.setBookEdit();
   }
@@ -124,7 +127,11 @@ export class BookEditViewComponent implements OnInit {
 
       await this.bookService.saveOrUpdate(data);
 
-      await this.redirect();
+      if (this.action === Action.Create) {
+        await this.redirect();
+      } else {
+        this.location.back();
+      }
     } catch (e) {
       this.logger.error('Book save error', e);
       this.notificationService.createErrorNotification('Не удалось сохранить книгу', {

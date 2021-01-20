@@ -10,6 +10,7 @@ import { TitleService } from '../../../ui/service/title.service';
 import { Collection } from '../../models/collection';
 import { CollectionData } from '../../models/collection-data';
 import { CollectionService } from '../../services/collection.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-collection-edit-view',
@@ -20,6 +21,7 @@ export class CollectionEditViewComponent implements OnInit {
   public form: FormGroup = null;
   public collection: Collection;
   private logger: ILogger = getLogger('CollectionEditViewComponent');
+  private action: Action;
 
   private defaultData: CollectionData = {
     name: '',
@@ -33,6 +35,7 @@ export class CollectionEditViewComponent implements OnInit {
               private collectionService: CollectionService,
               private notificationService: NotificationService,
               private activatedRoute: ActivatedRoute,
+              private location: Location,
               private router: Router) {
     this.collection = new Collection({
       name: '',
@@ -73,7 +76,11 @@ export class CollectionEditViewComponent implements OnInit {
 
       await this.collectionService.saveOrUpdate(data);
 
-      await this.redirect();
+      if (this.action === Action.Create) {
+        await this.redirect();
+      } else {
+        this.location.back();
+      }
     } catch (e) {
       this.logger.error('Book save error', e);
       this.notificationService.createErrorNotification('Не удалось сохранить серию', {
@@ -92,5 +99,7 @@ export class CollectionEditViewComponent implements OnInit {
     } else if (action === Action.Edit) {
       this.titleService.setCollectionEdit();
     }
+
+    this.action = action;
   }
 }
