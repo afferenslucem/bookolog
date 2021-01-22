@@ -1,11 +1,11 @@
 <form [formGroup]="form" (click)="emitTouch($event)">
   <mat-form-field appearance="fill">
     <mat-label i18n="book progress hours label@@book-progress__hours">Часы</mat-label>
-    <input matInput formControlName="hours" type="number" min="0" max="100" step="1"/>
+    <input matInput formControlName="hours" type="number" min="0" max="100" step="1" autocomplete="off"/>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label i18n="book progress minutes label@@book-progress__minutes">Минуты</mat-label>
-    <input matInput formControlName="minutes" type="number" min="0" max="59" step="1"/>
+    <input matInput formControlName="minutes" type="number" min="0" max="59" step="1" autocomplete="off"/>
   </mat-form-field>
 </form>

@@ -12,14 +12,14 @@ export class BookDeleteDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<BookDeleteDialogComponent>) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
-  delete() {
+  public delete(): void {
     this.dialogRef.close('delete');
   }
 
-  cancel() {
+  public cancel(): void {
     this.dialogRef.close('cancel');
   }
 }

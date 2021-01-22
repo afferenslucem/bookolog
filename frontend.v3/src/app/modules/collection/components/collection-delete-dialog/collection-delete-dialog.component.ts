@@ -6,20 +6,20 @@ export type DeleteDialogResult = 'delete' | 'cancel';
 @Component({
   selector: 'app-collection-delete-dialog',
   templateUrl: './collection-delete-dialog.component.html',
-  styleUrls: ['./collection-delete-dialog.component.scss']
+  styleUrls: ['./collection-delete-dialog.component.scss'],
 })
 export class CollectionDeleteDialogComponent implements OnInit {
-
-  constructor(public dialogRef: MatDialogRef<CollectionDeleteDialogComponent>) { }
-
-  ngOnInit(): void {
+  constructor(public dialogRef: MatDialogRef<CollectionDeleteDialogComponent>) {
   }
 
-  delete() {
+  public ngOnInit(): void {
+  }
+
+  public delete(): void {
     this.dialogRef.close('delete');
   }
 
-  cancel() {
+  public cancel(): void {
     this.dialogRef.close('cancel');
   }
 }

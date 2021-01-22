@@ -1,16 +1,16 @@
 <form [formGroup]="form" (click)="emitTouch($event)">
   <mat-form-field appearance="fill">
     <mat-label i18n="book date year label@@book-date__year">Год</mat-label>
-    <input matInput formControlName="year" type="number" min="1970" max="2030" step="1"/>
+    <input matInput formControlName="year" type="number" min="1970" max="2030" step="1" autocomplete="off"/>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label i18n="book date month label@@book-date__month">Месяц</mat-label>
-    <input matInput formControlName="month" type="number" min="1" max="12" step="1"/>
+    <input matInput formControlName="month" type="number" min="1" max="12" step="1" autocomplete="off"/>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label i18n="book date day label@@book-date__day">День</mat-label>
-    <input matInput formControlName="day" type="number" min="1" max="31" step="1"/>
+    <input matInput formControlName="day" type="number" min="1" max="31" step="1" autocomplete="off"/>
   </mat-form-field>
 </form>
