@@ -78,7 +78,7 @@ namespace backend.Services
             var pass = configService.FileStorage.AllowedExtensions.Any(ext => this.GetExtentionFromFilename(filename) == ext);
 
             if(!pass) {
-                throw new IncorrectFileTypeException();
+                throw new IncorrectFileTypeException(filename);
             }
         }
     

@@ -10,10 +10,15 @@ import { AvatarChangeComponent } from './components/avatar-change/avatar-change.
 import { EmailChangeComponent } from './components/email-change/email-change.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
 import { SettingsComponent } from './components/settings/settings.component';
-
+import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 
 @NgModule({
-  declarations: [SettingsComponent, PasswordChangeComponent, AvatarChangeComponent, EmailChangeComponent],
+  declarations: [
+    SettingsComponent,
+    PasswordChangeComponent,
+    AvatarChangeComponent,
+    EmailChangeComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -22,7 +27,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     MatButtonModule,
     MatIconModule,
     InputsModule,
+    NgxPhotoEditorModule,
   ],
 })
-export class SettingsModule {
-}
+export class SettingsModule {}

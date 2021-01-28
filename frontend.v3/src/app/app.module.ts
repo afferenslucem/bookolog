@@ -29,6 +29,7 @@ import { SettingsModule } from './modules/settings/settings.module';
 import { StatisticModule } from './modules/statistic/statistic.module';
 import { UiModule } from './modules/ui/ui.module';
 import { UserModule } from './modules/user/user.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -61,6 +62,7 @@ registerLocaleData(localeRu, 'ru');
     SettingsModule,
     NotificationModule,
     CollectionModule,
+    NgbModule,
   ],
   providers: [
     interceptors,

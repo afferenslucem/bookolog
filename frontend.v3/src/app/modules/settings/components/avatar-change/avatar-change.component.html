@@ -3,10 +3,19 @@
         <label class="form-header">Смена аватара</label>
 
         <div class="form-content">
-            <app-file-input formControlName="image"></app-file-input>
+            <app-file-input formControlName="image" [fileUrl]="base64" (fileChanged)="imageSelected($event)"></app-file-input>
             <button *ngIf="image" mat-flat-button color="primary" type="submit">
                 Загрузить
             </button>
         </div>
     </form>
 </div>
+<ngx-photo-editor
+  [imageChanedEvent]="fileEvent"
+  (imageCropped)="imageCropped($event)"
+  aspectRatio="1"
+  viewMode="3"
+  resizeToWidth="500"
+  modalSize="xl"
+  [canvasHeight]="cropHeight"
+></ngx-photo-editor>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
 
@@ -15,6 +15,14 @@ import { ValueAccessorBase } from '../value-accessor/value-accessor';
 export class FileInputComponent extends ValueAccessorBase<any> implements OnInit {
   @Input()
   public accept: string = null;
+
+  @Output()
+  public fileChanged = new EventEmitter<Event>();
+
+  @Input()
+  public set fileUrl(v: string) {
+    this._fileUrl = v;
+  }
 
   public get fileUrl(): string {
     return this._fileUrl ? `url(${this._fileUrl})` : null;
@@ -45,6 +53,8 @@ export class FileInputComponent extends ValueAccessorBase<any> implements OnInit
     this.readFile(file);
 
     this.writeValue(file);
+
+    this.fileChanged.emit(event);
   }
 
   private readFile(file: File) {
