@@ -5,7 +5,6 @@ RUN npm ci
 RUN npm install -g @angular/cli
 COPY . .
 RUN ng build -- --output-path=dist/out
-RUN tar -zcvf archive.tar.gz dist/out/*
 
 # этап production (production-stage)
 FROM nginx:stable-alpine as production-stage
