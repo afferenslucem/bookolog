@@ -13,9 +13,9 @@
 <ngx-photo-editor
   [imageChanedEvent]="fileEvent"
   (imageCropped)="imageCropped($event)"
-  aspectRatio="1"
-  viewMode="3"
-  resizeToWidth="500"
+  [aspectRatio]="1/1"
+  [viewMode]="3"
+  [resizeToWidth]="500"
   modalSize="xl"
   [canvasHeight]="cropHeight"
 ></ngx-photo-editor>
