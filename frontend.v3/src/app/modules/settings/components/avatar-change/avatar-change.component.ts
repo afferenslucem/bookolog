@@ -22,11 +22,11 @@ export class AvatarChangeComponent implements OnInit {
   constructor(public userService: UserService, private notification: NotificationService) {}
 
   public ngOnInit(): void {}
-  
+
   public imageSelected(event: Event): void {
     this.fileEvent = event;
   }
-  
+
   public imageCropped(event: CroppedEvent): void {
     this.base64 = event.base64;
     this.image = event.file;
@@ -42,6 +42,6 @@ export class AvatarChangeComponent implements OnInit {
   }
 
   public get cropHeight(): number {
-    return window.innerHeight * 0.75;
+    return window.outerHeight * 0.65;
   }
 }
