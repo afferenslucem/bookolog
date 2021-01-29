@@ -30,14 +30,14 @@
   "dataGroups": [
     {
       "name": "pictures",
-      "version": 1,
+      "version": 2,
       "cacheConfig": {
         "maxSize": 100,
         "maxAge": "100d",
         "strategy": "performance"
       },
       "urls": [
-        "/file/*.(jpg|png)"
+        "/file/*.(jpg|png|jpeg|svg)"
       ]
     }
   ]
