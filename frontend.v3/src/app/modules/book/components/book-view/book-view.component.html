@@ -84,6 +84,13 @@
   <label i18n="book end date label@@book__label_end-date">Окончена</label>
 </div>
 
+<div class="book__note property" *ngIf="book.note">
+  <div class="property__value">
+    {{book.note}}
+  </div>
+  <label>Заметки</label>
+</div>
+
 <button class="w-100 edit-button" [routerLink]="['/book/edit', book.guid]" mat-flat-button color="primary" i18n>
   Редактировать
 </button>

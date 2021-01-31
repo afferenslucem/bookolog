@@ -85,25 +85,25 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label i18n="book edit paper total label@@book-edit__label_total-paper-progress">Всего</mat-label>
+        <mat-label>Всего</mat-label>
         <input matInput type="number" formControlName="totalUnits" min="0" step="1" max="6000" autocomplete="off"/>
       </mat-form-field>
     </div>
   </div>
 
   <div [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
-    <mat-label i18n="book start date label@@book__label_start-date">Начало чтения</mat-label>
+    <mat-label>Начало чтения</mat-label>
     <app-book-date-input formControlName="started"></app-book-date-input>
   </div>
 
   <div [hidden]="status != BookStatus.Done">
-    <mat-label i18n="book end date label@@book__label_end-date">Окончание чтения</mat-label>
+    <mat-label>Окончание чтения</mat-label>
     <app-book-date-input formControlName="finished"></app-book-date-input>
   </div>
 
   <mat-form-field appearance="fill">
-    <mat-label i18n="book note label@@book__label_note">Заметки</mat-label>
-    <textarea matInput rows="4" autocomplete="off"></textarea>
+    <mat-label>Заметки</mat-label>
+    <textarea matInput rows="4" autocomplete="off" formControlName="note"></textarea>
   </mat-form-field>
 
   <button class="w-100" mat-flat-button [disabled]="form.invalid" color="primary" i18n="book-edit save label"

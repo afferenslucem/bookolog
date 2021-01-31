@@ -223,6 +223,7 @@ export class BookEditViewComponent implements OnInit {
       totalUnits: new FormControl(book.totalUnits || null),
       authors: new FormControl(book.authors),
       tags: new FormControl(book.tags),
+      note: new FormControl(book.note),
     });
 
     this._filteredGenres = this.form.get('genre').valueChanges.pipe(
