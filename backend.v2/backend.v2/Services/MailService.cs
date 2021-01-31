@@ -3,7 +3,7 @@ using backend.Exceptions.AuthenticationExceptions;
 using backend.Exceptions.StorageExceptions;
 using backend.Models;
 using backend.Storages;
-using backend.Utils;
+using backend.v2.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
 
-namespace backend.Services
+namespace backend.v2.Services
 {
     public interface IMailService
     {

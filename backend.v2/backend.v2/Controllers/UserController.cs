@@ -5,16 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using backend.Services;
+using backend.v2.Services;
 using Microsoft.Extensions.Logging;
 using backend.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using backend.Exceptions.StorageExceptions;
 using backend.Exceptions;
+using backend.v2.Authentication.Models;
 
 namespace backend.Controllers
 {
+    [Authorize(AuthenticationSchemes = JWTDefaults.AuthenticationScheme)]
     [Route("[controller]")]
     public class UserController : Controller
     {
@@ -44,7 +46,6 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [Route("[action]/{newMail:maxlength(128)}")]
         public async Task<IActionResult> ChangeEmail(string newMail)
         {
@@ -56,7 +57,7 @@ namespace backend.Controllers
 
                 if (emailRegExp.IsMatch(newMail))
                 {
-                    var user = await this.userSession.User;
+                    var user = this.userSession.User;
 
                     user.Email = newMail;
 
@@ -79,11 +80,10 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [Route("[action]")]
-        public async Task<IActionResult> Me()
+        public IActionResult Me()
         {
-            var user = await this.userSession.User;
+            var user = this.userSession.User;
 
             return Ok(user.WithoutPrivate());
         }
@@ -118,13 +118,12 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [Route("[action]")]
         public async Task<IActionResult> UploadAvatar()
         {
             try
             {
-                var user = await this.userSession.User;
+                var user = this.userSession.User;
 
                 var file = Request.Form.Files.First();
 
@@ -151,14 +150,13 @@ namespace backend.Controllers
     
         [HttpPost]
         [Route("[action]")]
-        [Authorize]
         public async Task<IActionResult> Synchronize([FromBody]AppSyncData data) {
             try
             {
                 var collectionSync = await this.collectionService.Synch(data.Collections ?? new SyncData<Collection>());
                 var bookSync = await this.bookService.Synch(data.Books ?? new SyncData<Book>());
 
-                this.userSession.UpdateLastSyncTime();
+                await this.userSession.UpdateLastSyncTime();
 
                 return Ok(new AppSyncData {
                     Books = bookSync,
@@ -181,18 +179,17 @@ namespace backend.Controllers
         
         [HttpGet]
         [Route("[action]")]
-        [Authorize]
         public async Task<IActionResult> LoadAll() {
             try
             {
-                var user = await this.userSession.User;
+                var user = this.userSession.User;
 
                 var collectionLoad = this.collectionService.GetByUserId(user.Id);
                 var bookLoad = this.bookService.GetByUserId(user.Id);
 
                 await Task.WhenAll(bookLoad, collectionLoad);
 
-                this.userSession.UpdateLastSyncTime();
+                await this.userSession.UpdateLastSyncTime();
 
                 return Ok(new AppData {
                     Books = bookLoad.Result,

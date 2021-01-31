@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace backend.Services
+namespace backend.v2.Services
 {
     public interface IFileSystemService
     {

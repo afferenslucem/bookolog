@@ -1,35 +1,33 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using backend.Storages;
-using backend.Services;
+using backend.v2.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore;
-using Swashbuckle.Swagger;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Authentication;
 
-namespace backend
+using Microsoft.Extensions.Options;
+using backend.v2.Configuration;
+using Microsoft.AspNetCore.CookiePolicy;
+using backend.v2.Authentication.Models;
+using backend.v2.Authentication.Services;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+
+namespace backend.v2
 {
     public class Startup
     {
-        string corsPolicy = "default";
+        private const string corsPolicy = "default";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,14 +40,7 @@ namespace backend
         {
             this.ReadConfig();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(corsPolicy, builder => builder
-                    .WithOrigins(Config.AllowedOrigins)
-                    .AllowCredentials()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-            });
+            services.AddCorsRules(corsPolicy);
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -57,26 +48,10 @@ namespace backend
                 options.SlidingExpiration = true;
             });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
-            {
-                o.LoginPath = new PathString("/Auth/Login/");
-                o.Cookie.Path = "/";
-                o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-                o.Cookie.HttpOnly = true;
-                o.LogoutPath = new PathString("/Auth/Logout/");
+            services
+            .AddAuthentication(JWTDefaults.AuthenticationScheme)
+            .AddJWT<JWTAuthenticationService>();
 
-                o.Events = new CookieAuthenticationEvents()
-                {
-                    OnRedirectToLogin = context =>
-                    {
-                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                        return Task.CompletedTask;
-                    },
-                };
-            });
-
-            services.AddDistributedMemoryCache();
-            
             services.Configure<FormOptions>(options =>
             {
                 options.MemoryBufferThreshold = 2 * 1024 * 1024;
@@ -86,14 +61,10 @@ namespace backend
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+                options.HttpOnly = HttpOnlyPolicy.Always;
             });
-
-            services.AddSession(options =>
-            {
-                options.Cookie.IsEssential = true;
-            });
-
+            
             services.AddControllers();
 
             services.AddDbContext<BookologContext>();
@@ -107,7 +78,12 @@ namespace backend
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IFileService, FileService>();
 
+            services.AddSingleton<ISessionService, SessionService>();
+            services.AddScoped<IAuthenticationService, JWTAuthenticationService>();
+            services.AddSingleton<IPostConfigureOptions<JWTAuthenticationOptions>, JWTAuthenticationPostConfigureOptions>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -118,16 +94,15 @@ namespace backend
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
-
             app.UseCors(corsPolicy);
 
             app.UseRouting();
 
-            app.UseSession();
+            app.UseXssProtection();
+            app.UseNoSniffProtection();
+            app.UseDenyFrameProtection();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -160,6 +135,8 @@ namespace backend
             Config.SMTP.Port = this.Configuration.GetValue<int>("SMTP:Port");
             Config.SMTP.From = this.Configuration.GetValue<string>("SMTP:From");
             Config.SMTP.User = this.Configuration.GetValue<string>("SMTP:User");
+            Config.SessionChiper.Key = this.Configuration.GetValue<string>("SessionCipher:Key");
+            Config.SessionChiper.Salt = this.Configuration.GetValue<string>("SessionCipher:Salt");
         }
     }
 }
