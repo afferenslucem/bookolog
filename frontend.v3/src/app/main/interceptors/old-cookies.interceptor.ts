@@ -17,7 +17,7 @@ export class OldCookiesInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.trySendRequest(req, next, 2);
+    return this.trySendRequest(req, next, 3);
   }
 
   private trySendRequest(req: HttpRequest<any>, next: HttpHandler, count: number): Observable<HttpEvent<any>> {
@@ -31,7 +31,7 @@ export class OldCookiesInterceptor implements HttpInterceptor {
           return throwError(err);
         }
       }),
-      timeout(250),
+      timeout(1500),
     );
   }
 }

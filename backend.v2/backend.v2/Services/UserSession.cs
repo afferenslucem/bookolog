@@ -13,7 +13,7 @@ namespace backend.v2.Services
         Task UpdateLastSyncTime();
         void SetSession(Session session);
         User User { get; }
-        DateTime LastSyncTime { get; }
+        DateTime? LastSyncTime { get; }
     }
 
     public class UserSession : IUserSession
@@ -53,13 +53,13 @@ namespace backend.v2.Services
             }
         }
 
-        public DateTime LastSyncTime
+        public DateTime? LastSyncTime
         {
             get
             {
                 var saved = this.session.Get("LastSyncTime");
 
-                return DateSessionUtils.Parse(saved) ?? DateTime.MinValue;
+                return DateSessionUtils.Parse(saved) ?? null;
             }
         }
     }

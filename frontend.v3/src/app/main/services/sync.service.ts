@@ -85,7 +85,7 @@ export class SyncService {
   }
 
   public get shouldRestore(): boolean {
-    const nextSync = addSeconds(this.userService.lastSyncDate, environment.restoreTimeSeconds);
+    const nextSync = !this.userService.lastSyncDate || addSeconds(this.userService.lastSyncDate, environment.restoreTimeSeconds);
 
     return nextSync <= this.nowUTC;
   }

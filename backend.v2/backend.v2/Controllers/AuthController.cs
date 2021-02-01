@@ -46,8 +46,6 @@ namespace backend.Controllers
 
                 await this.AuthenticateUser(user);
 
-                user.LastSyncTime = DateSessionUtils.Now;
-
                 this.logger.LogDebug($"{model.Login} was logged in");
 
                 return Ok(user);

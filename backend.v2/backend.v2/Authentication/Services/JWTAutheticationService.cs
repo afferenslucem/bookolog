@@ -35,59 +35,6 @@ namespace backend.v2.Authentication.Services
             this.logger = logger;
         }
 
-        public override async Task<AuthenticateResult> AuthenticateAsync(HttpContext context, string scheme)
-        {
-            try
-            {
-                if (!context.Request.Cookies.ContainsKey(JWTDefaults.CookieName))
-                {
-                    return AuthenticateResult.NoResult();
-                }
-
-                var cookie = context.Request.Cookies[JWTDefaults.CookieName];
-                var session = await this.sessionService.ParseToken(cookie);
-
-                if (session.RefreshExpired < DateTime.UtcNow)
-                {                    
-                    this.logger.LogDebug("Refresh time expired");
-                    return AuthenticateResult.NoResult();
-                }
-                else if (session.AccessExpired < DateTime.UtcNow)
-                {
-                    var token = await sessionService.UpdateToken(session);
-                    this.RenewCookie(context, token);
-                    
-                    this.logger.LogDebug("Accept time expired");
-                }
-
-                this.userSession.SetSession(session);
-
-                var claims = new Claim[] {
-                    new Claim(ClaimTypes.Name, session.Login),
-                    new Claim(ClaimTypes.NameIdentifier, session.UserId.ToString()),
-                };
-                var identity = new ClaimsIdentity(claims, scheme);
-                var principal = new ClaimsPrincipal(identity);
-                var ticket = new AuthenticationTicket(principal, scheme);
-
-                this.logger.LogDebug("Authenticated");
-
-                return AuthenticateResult.Success(ticket);
-            }
-            catch (CookieParseException e)
-            {
-                this.logger.LogInformation(409, e.Message, e);
-
-                context.Response.StatusCode = 409;
-                return AuthenticateResult.Fail("Cookies parse exception");
-            }
-            catch (Exception e)
-            {
-                this.logger.LogInformation(401, e.Message, e);
-                return AuthenticateResult.Fail("Cookies error");
-            }
-        }
-
         public override async Task ChallengeAsync(HttpContext context, string scheme, AuthenticationProperties properties)
         {
             if (context.Response.StatusCode == 409) return;
@@ -123,11 +70,6 @@ namespace backend.v2.Authentication.Services
                 MaxAge = age,
                 SameSite = SameSiteMode.Strict,
             });
-        }
-        private void RenewCookie(HttpContext context, string token)
-        {
-            context.Response.Cookies.Delete(".AspNetCore.History");
-            this.AppendCookie(context, token);
         }
 
         public override async Task SignOutAsync(HttpContext context, string scheme, AuthenticationProperties properties)

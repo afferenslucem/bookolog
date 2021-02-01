@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ILogger } from 'waterlog';
 import { getLogger } from '../../../main/app.logging';
-import { BookService } from '../../book/services/book.service';
 import { UserService } from '../../user/services/user.service';
 import { Credentials } from '../models/credentials';
 import { RegistrationData } from '../models/registration-data';
@@ -15,13 +14,11 @@ export class AuthService {
 
   constructor(
     private userService: UserService,
-    private bookService: BookService,
   ) {
   }
 
   public async login(credentials: Credentials): Promise<User> {
     const user = await this.userService.login(credentials);
-    await this.bookService.loadAll();
     return user;
   }
 
@@ -29,7 +26,6 @@ export class AuthService {
     try {
       await this.userService.logout();
     } finally {
-      await this.bookService.clear();
     }
   }
 

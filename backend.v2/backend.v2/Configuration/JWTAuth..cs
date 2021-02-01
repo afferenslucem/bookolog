@@ -34,8 +34,7 @@ namespace backend.v2.Configuration
             builder.Services.AddSingleton<IPostConfigureOptions<JWTAuthenticationOptions>, JWTAuthenticationPostConfigureOptions>();
             builder.Services.AddTransient<IAuthenticationService, TAuthService>();
 
-            return builder.AddScheme<JWTAuthenticationOptions, JWTAuthenticationHandler>(
-                authenticationScheme, configureOptions);
+            return builder.AddScheme<JWTAuthenticationOptions, JWTAuthenticationHandler>(authenticationScheme, configureOptions);
         }
     }
 }

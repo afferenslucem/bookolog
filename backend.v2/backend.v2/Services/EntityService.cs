@@ -148,7 +148,7 @@ namespace backend.v2.Services
         
         private async Task<SyncData<T>> GetDifferenceForSession()
         {
-            var thres = this.session.LastSyncTime;
+            var thres = this.session.LastSyncTime ?? DateTime.MinValue;
             var user = this.session.User;
 
             var updateAwait = this.storage.GetChangedAfter(user.Id, thres);
