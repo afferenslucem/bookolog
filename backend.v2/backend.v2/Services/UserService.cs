@@ -3,13 +3,13 @@ using backend.Exceptions.AuthenticationExceptions;
 using backend.Exceptions.StorageExceptions;
 using backend.Models;
 using backend.Storages;
-using backend.v2.Utils;
+using backend.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace backend.v2.Services
+namespace backend.Services
 {
     public interface IUserService
     {

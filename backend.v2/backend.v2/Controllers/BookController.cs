@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using backend.Exceptions;
 using backend.Models;
-using backend.v2.Services;
+using backend.Services;
 using Microsoft.Extensions.Logging;
 
 namespace backend.Controllers

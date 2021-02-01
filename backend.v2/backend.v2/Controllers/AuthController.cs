@@ -10,11 +10,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using backend.Models;
-using backend.v2.Utils;
+using backend.Utils;
 using backend.Models.Authentication;
-using backend.v2.Services;
+using backend.Services;
 using Microsoft.Extensions.Logging;
-using backend.v2.Authentication.Models;
 
 namespace backend.Controllers
 {
@@ -102,7 +101,7 @@ namespace backend.Controllers
         [Route("[action]")]
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeModel changeData)
         {
-            var user = this.userSession.User;
+            var user = await this.userSession.User;
 
             try
             {
@@ -135,7 +134,7 @@ namespace backend.Controllers
             var identity = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
             await HttpContext.SignInAsync(
-                JWTDefaults.AuthenticationScheme,
+                CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(identity),
                 new AuthenticationProperties
                 {

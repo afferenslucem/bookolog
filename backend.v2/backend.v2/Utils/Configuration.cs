@@ -12,13 +12,6 @@ public class StorageConfig
     public string[] AllowedExtensions { get; set; }
 }
 
-
-public class SessionChiperConfig
-{
-    public string Key { get; set; }
-    public string Salt { get; set; }
-}
-
 public static class Config
 {
     public static string ConnectionString { get; set; }
@@ -28,5 +21,4 @@ public static class Config
     public static SMTPConfig SMTP { get; set; } = new SMTPConfig();
 
     public static StorageConfig FileStorage { get; set; } = new StorageConfig();
-    public static SessionChiperConfig SessionChiper { get; set; } = new SessionChiperConfig();
 }

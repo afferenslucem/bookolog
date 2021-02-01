@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace backend.v2.Services {
+namespace backend.Services {
     public interface IConfigService
     {
         StorageConfig FileStorage { get; }

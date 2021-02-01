@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Exceptions.BookExceptions;
 
-namespace backend.v2.Services
+namespace backend.Services
 {
     public interface IEntityService<T> where T : IEntity
     {
@@ -48,7 +48,7 @@ namespace backend.v2.Services
         public virtual async Task<T> Save(T entity)
         {
             this.CheckEntity(entity);
-            this.SetUserId(entity);
+            await this.SetUserId(entity);
 
             var result = await this.storage.Save(entity);
 
@@ -60,7 +60,7 @@ namespace backend.v2.Services
             var prevState = await this.EntityAccessCheck(entity.Guid.Value);
 
             this.CopyMetadata(entity, prevState);
-            this.SetUserId(entity);
+            await this.SetUserId(entity);
 
             this.CheckEntity(entity);
 
@@ -76,7 +76,7 @@ namespace backend.v2.Services
 
         public virtual async Task<T[]> SaveMany(T[] entities)
         {
-            this.SetUserId(entities);
+            await this.SetUserId(entities);
 
             this.CheckEntity(entities);
 
@@ -87,7 +87,7 @@ namespace backend.v2.Services
         {
             var prevStates = await this.EntityAccessCheck(entities.Select(item => item.Guid.Value).ToArray());
             
-            this.SetUserId(entities);
+            await this.SetUserId(entities);
 
             this.CopyMetadata(entities, prevStates);
 
@@ -129,7 +129,7 @@ namespace backend.v2.Services
 
                 await Task.WhenAll(toUpdateAwait, toDeleteAwait);
 
-                this.SetUserId(data.Update);
+                await this.SetUserId(data.Update);
 
                 this.CopyMetadata(data.Update, toUpdateAwait.Result);
 
@@ -149,7 +149,7 @@ namespace backend.v2.Services
         private async Task<SyncData<T>> GetDifferenceForSession()
         {
             var thres = this.session.LastSyncTime;
-            var user = this.session.User;
+            var user = await this.session.User;
 
             var updateAwait = this.storage.GetChangedAfter(user.Id, thres);
             var deleteAwait = this.storage.GetDeletedAfter(user.Id, thres);
@@ -165,25 +165,29 @@ namespace backend.v2.Services
 
         private async Task<T> EntityAccessCheck(Guid guid)
         {
-            var currentState = await this.GetByGuid(guid);
+            var currentState = this.GetByGuid(guid);
             var user = this.session.User;
 
-            this.CheckAccess(user.Id, currentState);
+            await Task.WhenAll(currentState, user);
 
-            return currentState;
+            this.CheckAccess(user.Result.Id, currentState.Result);
+
+            return currentState.Result;
         }
 
         private async Task<T[]> EntityAccessCheck(Guid[] guids)
         {
-            var currentStates = await this.GetByGuids(guids);
+            var currentStates = this.GetByGuids(guids);
             var user = this.session.User;
 
-            foreach (var entity in currentStates)
+            await Task.WhenAll(currentStates, user);
+
+            foreach (var entity in currentStates.Result)
             {
-                this.CheckAccess(user.Id, entity);
+                this.CheckAccess(user.Result.Id, entity);
             }
 
-            return currentStates;
+            return currentStates.Result;
         }
 
         public abstract void CheckEntity(T entity);
@@ -204,9 +208,9 @@ namespace backend.v2.Services
             }
         }
         
-        public void CheckAccess(T book)
+        public async Task CheckAccess(T book)
         {
-            var currentUser = this.session.User;
+            var currentUser = await this.session.User;
 
             if (book.UserId != currentUser.Id)
             {
@@ -214,9 +218,9 @@ namespace backend.v2.Services
             }
         }
 
-        protected virtual void SetUserId(params T[] entities)
+        private async Task SetUserId(params T[] entities)
         {
-            var user = this.session.User;
+            var user = await this.session.User;
 
             foreach (var entity in entities)
             {

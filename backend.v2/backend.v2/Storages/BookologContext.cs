@@ -1,5 +1,4 @@
 ﻿using backend.Models;
-using backend.Models.Authentication;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ namespace backend.Storages
         public DbSet<Book> Books { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Session> Sessions { get; set; }
         public DbSet<Collection> Collections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -7,14 +7,11 @@ using System;
 using System.Threading.Tasks;
 using backend.Exceptions;
 using backend.Models;
-using backend.v2.Services;
+using backend.Services;
 using Microsoft.Extensions.Logging;
-using backend.v2.Authentication.Models;
 
 namespace backend.Controllers
 {
-    
-    [Authorize(AuthenticationSchemes = JWTDefaults.AuthenticationScheme)]
     public class EntityController<T> : Controller where T: class, IEntity
     {
         private readonly IEntityService<T> entityService;
@@ -29,6 +26,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("[action]")]
         public virtual async Task<IActionResult> Create([FromBody]T model) {
             try
@@ -53,6 +51,7 @@ namespace backend.Controllers
 
 
         [HttpPut]
+        [Authorize]
         [Route("[action]")]
         public virtual async Task<IActionResult> Update([FromBody]T model) {
             try
@@ -76,6 +75,7 @@ namespace backend.Controllers
         }
     
         [HttpDelete]
+        [Authorize]
         [Route("[action]/{guid:guid}")]
         public virtual async Task<IActionResult> Delete(Guid guid) {
             try
@@ -118,6 +118,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("[action]")]
         public virtual async Task<IActionResult> CreateMany([FromBody]T[] data) {
             try
@@ -141,6 +142,7 @@ namespace backend.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [Route("[action]")]
         public async Task<IActionResult> UpdateMany([FromBody]T[] data) {
             try
@@ -172,7 +174,7 @@ namespace backend.Controllers
 
                 var books = await this.entityService.GetByUserId(userId);
 
-                await this.session.UpdateLastSyncTime();
+                this.session.UpdateLastSyncTime();
 
                 return Ok(books);
             }
@@ -186,6 +188,7 @@ namespace backend.Controllers
     
         [HttpPost]
         [Route("[action]")]
+        [Authorize]
         public async Task<IActionResult> Synchronize([FromBody]SyncData<T> data) {
             try
             {
@@ -194,7 +197,7 @@ namespace backend.Controllers
 
                 var answer = await this.entityService.Synch(data);
 
-                await this.session.UpdateLastSyncTime();
+                this.session.UpdateLastSyncTime();
 
                 return Ok(answer);
             }
@@ -213,6 +216,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("[action]")]
         public async Task<IActionResult> DeleteMany([FromBody]Guid[] data) {
             try

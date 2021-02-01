@@ -6,7 +6,7 @@ using backend.Controllers;
 using backend.Exceptions.BookExceptions;
 using backend.Exceptions.AuthenticationExceptions;
 using backend.Models;
-using backend.v2.Services;
+using backend.Services;
 using backend.Models.Authentication;
 using backend.Storages;
 using Microsoft.AspNetCore.Mvc;

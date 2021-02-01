@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using backend.Controllers;
 using backend.Exceptions.BookExceptions;
 using backend.Models;
-using backend.v2.Services;
+using backend.Services;
 using backend.Storages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

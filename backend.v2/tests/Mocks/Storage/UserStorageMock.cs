@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using backend.v2.Services;
+using backend.Services;
 using backend.Storages;
-using backend.v2.Utils;
+using backend.Utils;
 
 namespace tests.Storage
 {

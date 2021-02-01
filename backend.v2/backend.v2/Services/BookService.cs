@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Exceptions.BookExceptions;
 
-namespace backend.v2.Services
+namespace backend.Services
 {
     public interface IBookService : IEntityService<Book>
     {

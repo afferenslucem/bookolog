@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace backend.v2.Utils
+namespace backend.Utils
 {
     public static class RandomString
     {

@@ -19,37 +19,6 @@ namespace backend.v2.Migrations
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("backend.Models.Authentication.Session", b =>
-                {
-                    b.Property<Guid?>("Guid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("AccessExpired")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("RefreshExpired")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("SessionKey")
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("SessionSalt")
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("StateJson")
-                        .HasColumnType("text");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Guid");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Sessions");
-                });
-
             modelBuilder.Entity("backend.Models.Book", b =>
                 {
                     b.Property<Guid?>("Guid")
@@ -203,7 +172,7 @@ namespace backend.v2.Migrations
                         .HasColumnType("varchar(256)");
 
                     b.Property<string>("Salt")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -216,15 +185,6 @@ namespace backend.v2.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("backend.Models.Authentication.Session", b =>
-                {
-                    b.HasOne("backend.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("backend.Models.Book", b =>
