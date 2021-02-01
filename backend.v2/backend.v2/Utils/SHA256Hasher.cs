@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace backend.Utils
+namespace backend.v2.Utils
 {
     public class SHA256Hasher
     {

@@ -4,53 +4,52 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Models.Authentication;
 
-namespace backend.Services
+namespace backend.v2.Services
 {
     public interface IUserSession
     {
-        void UpdateLastSyncTime();
-        Task<User> GetUser();
-        Task<User> User { get; }
+        Task UpdateLastSyncTime();
+        void SetSession(Session session);
+        User User { get; }
         DateTime LastSyncTime { get; }
     }
 
     public class UserSession : IUserSession
     {
         private HttpContext context;
-        IUserService userService;
+        private ISessionService sessionService;
 
-        private User user;
+        private Session session;
 
-        public UserSession(IHttpContextAccessor contextAccessor, IUserService userService)
+        public UserSession(ISessionService sessionService)
         {
-            this.context = contextAccessor.HttpContext;
-            this.userService = userService;
+            this.sessionService = sessionService;
         }
 
-        public void UpdateLastSyncTime()
+        public async Task UpdateLastSyncTime()
         {
             var now = DateSessionUtils.Now;
             var str = DateSessionUtils.Stringify(now);
-            this.Session.SetString("LastSyncTime", str);
+            this.session.Set("LastSyncTime", str);
+
+            await this.sessionService.Update(this.session);
         }
 
-        public async Task<User> GetUser()
+        public void SetSession(Session session)
         {
-            if (this.user != null) return this.user;
-
-            this.user = await this.userService.GetByLogin(this.context.User.Identity.Name);
-
-            this.user.LastSyncTime = this.LastSyncTime;
-
-            return this.user;
+            this.session = session;
         }
 
-        public Task<User> User
+        public User User
         {
             get
             {
-                return this.GetUser();
+                var result = this.session.User;
+                result.LastSyncTime = this.LastSyncTime;
+                
+                return result;
             }
         }
 
@@ -58,17 +57,9 @@ namespace backend.Services
         {
             get
             {
-                var saved = this.Session.GetString("LastSyncTime");
+                var saved = this.session.Get("LastSyncTime");
 
                 return DateSessionUtils.Parse(saved) ?? DateTime.MinValue;
-            }
-        }
-
-        private ISession Session
-        {
-            get
-            {
-                return this.context.Session;
             }
         }
     }

@@ -17,11 +17,14 @@ namespace backend.Models
 
         [Column(TypeName = "varchar(256)")]
         public string PasswordHash { get; set; }
+
         [NotMapped]
         public string Password { get; set; }
+        
         [NotMapped]
         public DateTime? LastSyncTime { get; set; }
         
+        [Column(TypeName = "varchar(256)")]
         public string Salt { get; set; }
         public long? AvatarId { get; set; }
         public File Avatar { get; set; }     

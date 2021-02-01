@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Exceptions.BookExceptions;
 
-namespace backend.Services
+namespace backend.v2.Services
 {
     public interface IEntityService<T> where T : IEntity
     {
@@ -48,7 +48,7 @@ namespace backend.Services
         public virtual async Task<T> Save(T entity)
         {
             this.CheckEntity(entity);
-            await this.SetUserId(entity);
+            this.SetUserId(entity);
 
             var result = await this.storage.Save(entity);
 
@@ -60,7 +60,7 @@ namespace backend.Services
             var prevState = await this.EntityAccessCheck(entity.Guid.Value);
 
             this.CopyMetadata(entity, prevState);
-            await this.SetUserId(entity);
+            this.SetUserId(entity);
 
             this.CheckEntity(entity);
 
@@ -76,7 +76,7 @@ namespace backend.Services
 
         public virtual async Task<T[]> SaveMany(T[] entities)
         {
-            await this.SetUserId(entities);
+            this.SetUserId(entities);
 
             this.CheckEntity(entities);
 
@@ -87,7 +87,7 @@ namespace backend.Services
         {
             var prevStates = await this.EntityAccessCheck(entities.Select(item => item.Guid.Value).ToArray());
             
-            await this.SetUserId(entities);
+            this.SetUserId(entities);
 
             this.CopyMetadata(entities, prevStates);
 
@@ -129,7 +129,7 @@ namespace backend.Services
 
                 await Task.WhenAll(toUpdateAwait, toDeleteAwait);
 
-                await this.SetUserId(data.Update);
+                this.SetUserId(data.Update);
 
                 this.CopyMetadata(data.Update, toUpdateAwait.Result);
 
@@ -149,7 +149,7 @@ namespace backend.Services
         private async Task<SyncData<T>> GetDifferenceForSession()
         {
             var thres = this.session.LastSyncTime;
-            var user = await this.session.User;
+            var user = this.session.User;
 
             var updateAwait = this.storage.GetChangedAfter(user.Id, thres);
             var deleteAwait = this.storage.GetDeletedAfter(user.Id, thres);
@@ -165,29 +165,25 @@ namespace backend.Services
 
         private async Task<T> EntityAccessCheck(Guid guid)
         {
-            var currentState = this.GetByGuid(guid);
+            var currentState = await this.GetByGuid(guid);
             var user = this.session.User;
 
-            await Task.WhenAll(currentState, user);
+            this.CheckAccess(user.Id, currentState);
 
-            this.CheckAccess(user.Result.Id, currentState.Result);
-
-            return currentState.Result;
+            return currentState;
         }
 
         private async Task<T[]> EntityAccessCheck(Guid[] guids)
         {
-            var currentStates = this.GetByGuids(guids);
+            var currentStates = await this.GetByGuids(guids);
             var user = this.session.User;
 
-            await Task.WhenAll(currentStates, user);
-
-            foreach (var entity in currentStates.Result)
+            foreach (var entity in currentStates)
             {
-                this.CheckAccess(user.Result.Id, entity);
+                this.CheckAccess(user.Id, entity);
             }
 
-            return currentStates.Result;
+            return currentStates;
         }
 
         public abstract void CheckEntity(T entity);
@@ -208,9 +204,9 @@ namespace backend.Services
             }
         }
         
-        public async Task CheckAccess(T book)
+        public void CheckAccess(T book)
         {
-            var currentUser = await this.session.User;
+            var currentUser = this.session.User;
 
             if (book.UserId != currentUser.Id)
             {
@@ -218,9 +214,9 @@ namespace backend.Services
             }
         }
 
-        private async Task SetUserId(params T[] entities)
+        protected virtual void SetUserId(params T[] entities)
         {
-            var user = await this.session.User;
+            var user = this.session.User;
 
             foreach (var entity in entities)
             {

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 using backend.Exceptions.FileExceptions;
 using System.IO;
 
-namespace backend.Services
+namespace backend.v2.Services
 {
     public interface IFileService
     {
