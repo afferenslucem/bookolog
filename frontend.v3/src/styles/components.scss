@@ -38,10 +38,12 @@ form {
 
   &__name {
     font-weight: $fat-font-weight;
+    margin-bottom: 0 !important;
   }
 
   &__authors {
     font-weight: $fat-font-weight;
+    line-height: normal;
   }
 
   &__progress-data {
