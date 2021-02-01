@@ -8,6 +8,8 @@ using backend.v2.Utils;
 using System.Collections.Generic;
 using System.Security.Claims;
 using backend.v2.Authentication.Models;
+using System.Security.Cryptography;
+using backend.Exceptions.AuthenticationExceptions;
 
 namespace backend.v2.Services
 {
@@ -20,21 +22,24 @@ namespace backend.v2.Services
         Task Update(Session session);
         Task Delete(Guid guid);
         Task<Session> ParseToken(string token);
-        Session UpdateSessionExpirationTime(Session session);
 
-        int RefrashHours { get; }
+        DateTime NextRefrashDate { get; }
     }
 
     public class SessionService : ISessionService
     {
-        public int HoursValidityTime { get; private set; } = 1;
-        public int RefrashRate { get; private set; } = 120;
-
-        public int RefrashHours
+        public DateTime NextAccessDate
         {
             get
             {
-                return HoursValidityTime * RefrashRate;
+                return DateTime.UtcNow.AddSeconds(Config.Cookie.AcceptTimeSeconds);
+            }
+        }
+        public DateTime NextRefrashDate
+        {
+            get
+            {
+                return DateTime.UtcNow.AddSeconds(Config.Cookie.RefrashTimeSeconds);
             }
         }
 
@@ -80,8 +85,8 @@ namespace backend.v2.Services
 
             var cookie = new CookieData
             {
-                AccessExpired = DateTime.UtcNow.AddDays(HoursValidityTime),
-                RefreshExpired = DateTime.UtcNow.AddDays(HoursValidityTime * RefrashRate),
+                AccessExpired = this.NextAccessDate,
+                RefreshExpired = this.NextRefrashDate,
                 Guid = Guid.NewGuid(),
                 TokenData = chiphrator.Encode(token),
             };
@@ -107,8 +112,8 @@ namespace backend.v2.Services
 
             var cookie = new CookieData
             {
-                AccessExpired = DateTime.UtcNow.AddDays(HoursValidityTime),
-                RefreshExpired = DateTime.UtcNow.AddDays(HoursValidityTime * RefrashRate),
+                AccessExpired = this.NextAccessDate,
+                RefreshExpired = this.NextRefrashDate,
                 Guid = session.Guid.Value,
                 TokenData = chiphrator.Encode(token),
             };
@@ -139,30 +144,29 @@ namespace backend.v2.Services
 
         public async Task<Session> ParseToken(string token)
         {
-            var cookieJson = this.CookieCrypter.Decode(token);
-            var cookie = JsonConvert.DeserializeObject<CookieData>(cookieJson);
+            try
+            {
+                var cookieJson = this.CookieCrypter.Decode(token);
+                var cookie = JsonConvert.DeserializeObject<CookieData>(cookieJson);
 
-            var session = await this.Get(cookie.Guid, true);
+                var session = await this.Get(cookie.Guid, true);
 
-            var crypter = new AESCrypter(session.SessionKey, session.SessionSalt);
+                var crypter = new AESCrypter(session.SessionKey, session.SessionSalt);
 
-            var tokenDataJson = crypter.Decode(cookie.TokenData);
-            var tokenData = JsonConvert.DeserializeObject<TokenData>(tokenDataJson);
+                var tokenDataJson = crypter.Decode(cookie.TokenData);
+                var tokenData = JsonConvert.DeserializeObject<TokenData>(tokenDataJson);
 
-            var result = this.GetSession(cookie, tokenData.UserId, crypter);
-            result.StateJson = session.StateJson;
-            result.User = session.User;
-            result.Login = tokenData.Login;
+                var result = this.GetSession(cookie, tokenData.UserId, crypter);
+                result.StateJson = session.StateJson;
+                result.User = session.User;
+                result.Login = tokenData.Login;
 
-            return result;
-        }
-
-        public Session UpdateSessionExpirationTime(Session session)
-        {
-            session.AccessExpired = DateTime.Now.AddHours(HoursValidityTime);
-            session.RefreshExpired = DateTime.Now.AddHours(HoursValidityTime * RefrashRate);
-
-            return session;
+                return result;
+            }
+            catch (CryptographicException ex)
+            {
+                throw new CookieParseException();
+            }
         }
 
         public async Task<Session> Get(Guid guid, bool withUser = false)
