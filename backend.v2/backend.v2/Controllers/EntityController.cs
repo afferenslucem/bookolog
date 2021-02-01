@@ -33,7 +33,6 @@ namespace backend.Controllers
         public virtual async Task<IActionResult> Create([FromBody]T model) {
             try
             {
-                this.logger.LogDebug("Create entity");
                 var book = await this.entityService.Save(model);
 
                 return Ok(book);
@@ -58,7 +57,6 @@ namespace backend.Controllers
         public virtual async Task<IActionResult> Update([FromBody]T model) {
             try
             {
-                this.logger.LogDebug("Update entity");
                 var book = await this.entityService.Update(model);
 
                 return Ok(book);
@@ -82,7 +80,6 @@ namespace backend.Controllers
         public virtual async Task<IActionResult> Delete(Guid guid) {
             try
             {
-                this.logger.LogDebug("Delete entity");
                 var book = await this.entityService.GetByGuid(guid);
             
                 await this.entityService.Delete(guid);
@@ -108,7 +105,6 @@ namespace backend.Controllers
         public virtual async Task<IActionResult> Get(Guid guid) {
             try
             {
-                this.logger.LogDebug("Get entity");
                 var book = await this.entityService.GetByGuid(guid);
 
                 return Ok(book);
@@ -172,7 +168,7 @@ namespace backend.Controllers
         public async Task<IActionResult> Get(long userId) {
             try
             {
-                this.logger.LogDebug(String.Format("Get all entities for user {0}", userId));
+                this.logger.LogDebug(String.Format("Get books for user {0}", userId));
 
                 var books = await this.entityService.GetByUserId(userId);
 
@@ -193,8 +189,6 @@ namespace backend.Controllers
         public async Task<IActionResult> Synchronize([FromBody]SyncData<T> data) {
             try
             {
-                this.logger.LogDebug("Sync entities");
-                
                 data.Update = data.Update ?? new T[] {};
                 data.Delete = data.Delete ?? new Guid[] {};
 

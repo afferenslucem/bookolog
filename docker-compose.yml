@@ -17,7 +17,7 @@ services:
       - postgre
   #    - postfix
     volumes: 
-      - "/imageStorage:/imageStorage"
+      - "./images:/imageStorage"
 
   # postfix:
   #   image: boky/postfix

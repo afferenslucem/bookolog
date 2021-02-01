@@ -42,6 +42,12 @@ namespace backend.v2
 
             services.AddCorsRules(corsPolicy);
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(14);
+                options.SlidingExpiration = true;
+            });
+
             services
             .AddAuthentication(JWTDefaults.AuthenticationScheme)
             .AddJWT<JWTAuthenticationService>();
@@ -131,8 +137,6 @@ namespace backend.v2
             Config.SMTP.User = this.Configuration.GetValue<string>("SMTP:User");
             Config.SessionChiper.Key = this.Configuration.GetValue<string>("SessionCipher:Key");
             Config.SessionChiper.Salt = this.Configuration.GetValue<string>("SessionCipher:Salt");
-            Config.Cookie.AcceptTimeSeconds = this.Configuration.GetValue<long>("Cookies:AcceptTimeSeconds");
-            Config.Cookie.RefrashTimeSeconds = this.Configuration.GetValue<long>("Cookies:RefrashTimeSeconds");
         }
     }
 }

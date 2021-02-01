@@ -83,17 +83,9 @@ namespace backend.Controllers
         [Route("[action]")]
         public IActionResult Me()
         {
-            try {
-                this.logger.LogDebug("Get me");
-                var user = this.userSession.User;
-                this.logger.LogDebug($"Fount user {user.Login}");
+            var user = this.userSession.User;
 
-                return Ok(user.WithoutPrivate());
-            }
-            catch(Exception ex) {
-                this.logger.LogError(500, ex.Message, ex);
-                return StatusCode(500, "Find user");
-            }
+            return Ok(user.WithoutPrivate());
         }
 
         [HttpGet]
@@ -161,13 +153,10 @@ namespace backend.Controllers
         public async Task<IActionResult> Synchronize([FromBody]AppSyncData data) {
             try
             {
-                this.logger.LogDebug("Started sync");
-
                 var collectionSync = await this.collectionService.Synch(data.Collections ?? new SyncData<Collection>());
                 var bookSync = await this.bookService.Synch(data.Books ?? new SyncData<Book>());
 
                 await this.userSession.UpdateLastSyncTime();
-                this.logger.LogDebug("Synced");
 
                 return Ok(new AppSyncData {
                     Books = bookSync,

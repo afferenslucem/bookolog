@@ -12,16 +12,11 @@ public class StorageConfig
     public string[] AllowedExtensions { get; set; }
 }
 
+
 public class SessionChiperConfig
 {
     public string Key { get; set; }
     public string Salt { get; set; }
-}
-
-public class CookieConfig
-{
-    public long AcceptTimeSeconds { get; set; }
-    public long RefrashTimeSeconds { get; set; }
 }
 
 public static class Config
@@ -34,5 +29,4 @@ public static class Config
 
     public static StorageConfig FileStorage { get; set; } = new StorageConfig();
     public static SessionChiperConfig SessionChiper { get; set; } = new SessionChiperConfig();
-    public static CookieConfig Cookie { get; set; } = new CookieConfig();
 }
