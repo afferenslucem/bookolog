@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using backend.Exceptions.AuthenticationExceptions;
 using backend.v2.Authentication.Models;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -54,7 +55,7 @@ namespace backend.v2.Authentication.Services
                 else if (session.AccessExpired < DateTime.UtcNow)
                 {
                     var token = await sessionService.UpdateToken(session);
-                    this.AppendCookie(context, token);
+                    this.RenewCookie(context, token);
                     
                     this.logger.LogDebug("Accept time expired");
                 }
@@ -73,6 +74,13 @@ namespace backend.v2.Authentication.Services
 
                 return AuthenticateResult.Success(ticket);
             }
+            catch (CookieParseException e)
+            {
+                this.logger.LogInformation(409, e.Message, e);
+
+                context.Response.StatusCode = 409;
+                return AuthenticateResult.Fail("Cookies parse exception");
+            }
             catch (Exception e)
             {
                 this.logger.LogInformation(401, e.Message, e);
@@ -82,7 +90,8 @@ namespace backend.v2.Authentication.Services
 
         public override async Task ChallengeAsync(HttpContext context, string scheme, AuthenticationProperties properties)
         {
-            this.logger.LogDebug("Challenged");
+            if (context.Response.StatusCode == 409) return;
+
             await base.ChallengeAsync(context, scheme, properties);
         }
 
@@ -107,12 +116,18 @@ namespace backend.v2.Authentication.Services
 
         private void AppendCookie(HttpContext context, string token)
         {
+            var age = TimeSpan.FromSeconds(Config.Cookie.RefrashTimeSeconds);
             context.Response.Cookies.Append(".AspNetCore.History", token, new CookieOptions
             {
                 HttpOnly = true,
-                MaxAge = TimeSpan.FromHours(sessionService.RefrashHours),
+                MaxAge = age,
                 SameSite = SameSiteMode.Strict,
             });
+        }
+        private void RenewCookie(HttpContext context, string token)
+        {
+            context.Response.Cookies.Delete(".AspNetCore.History");
+            this.AppendCookie(context, token);
         }
 
         public override async Task SignOutAsync(HttpContext context, string scheme, AuthenticationProperties properties)

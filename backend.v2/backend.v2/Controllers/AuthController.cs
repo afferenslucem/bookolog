@@ -40,7 +40,7 @@ namespace backend.Controllers
         {
             try
             {
-                this.logger.LogDebug(String.Format("Log user {0}", model.Login));
+                this.logger.LogDebug($"Log user {model.Login}");
 
                 var user = await this.CheckUser(model.Login, model.Password);
 
@@ -48,7 +48,7 @@ namespace backend.Controllers
 
                 user.LastSyncTime = DateSessionUtils.Now;
 
-                this.logger.LogDebug("Logged user");
+                this.logger.LogDebug($"{model.Login} was logged in");
 
                 return Ok(user);
             }
@@ -70,13 +70,13 @@ namespace backend.Controllers
         {
             try
             {
-                this.logger.LogDebug(String.Format("Register user {0} {1}", user.Login, user.Email));
+                this.logger.LogDebug($"Register user {user.Login} {user.Email}");
 
                 var result = await this.userService.RegisterUser(user);
 
                 var withoutPrivate = result.WithoutPrivate();
 
-                this.logger.LogDebug(String.Format("Registered user {0} {1}", user.Login, user.Email));
+                this.logger.LogDebug(String.Format($"Registered user {user.Login} {user.Email}"));
 
                 return Ok(withoutPrivate);
             }
@@ -106,7 +106,7 @@ namespace backend.Controllers
 
             try
             {
-                this.logger.LogDebug(String.Format("Password change {0}", user.Login));
+                this.logger.LogDebug(String.Format($"Password change for {user.Login}"));
 
                 await this.userService.ChangePassword(user.Id, changeData.OldPassword, changeData.NewPassword);
 

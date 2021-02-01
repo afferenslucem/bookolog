@@ -58,7 +58,7 @@ namespace backend.Storages
             var set = context.Sessions;
 
             if(withUser) {                
-                var session = await set.Include(item => item.User).Where(item => item.Guid == guid).FirstAsync();
+                var session = await set.Include(item => item.User).Include(item => item.User.Avatar).Where(item => item.Guid == guid).FirstAsync();
                 return session;
             }
             else {
