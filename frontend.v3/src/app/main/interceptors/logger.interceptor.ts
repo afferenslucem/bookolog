@@ -16,13 +16,13 @@ export class LoggerInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    counter++;
+    const id = counter++;
 
-    this.logger.info(`Request ${counter}`, req.method, req.url, `withCredentials: ${req.withCredentials}`, req.body)
+    this.logger.info(`Request ${id}`, req.method, req.url, `withCredentials: ${req.withCredentials}`, req.body)
     return next.handle(req).pipe(
       tap((data) => {
         if (data instanceof HttpResponse) {
-          this.logger.info(`Response ${counter}`, data.type, data.url, data.status, data.body)
+          this.logger.info(`Response ${id}`, data.url, data.status, data.body)
         }
       })
     )
