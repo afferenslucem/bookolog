@@ -1,0 +1,8 @@
+<div>
+    <div class="log" *ngFor="let log of logs">
+        <div>{{log.message}}</div>
+        <div *ngFor="let obj of log.objects">
+            {{obj | json}}
+        </div>
+    </div>
+</div>

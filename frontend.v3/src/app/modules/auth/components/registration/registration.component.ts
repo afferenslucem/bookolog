@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { getLogger } from '../../../../main/app.logging';
+import { getConsoleLogger } from '../../../../main/app.logging';
 import { TitleService } from '../../../ui/service/title.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -17,7 +17,7 @@ enum RegistrationError {
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent implements OnInit {
-  private logger = getLogger('RegistrationComponent');
+  private logger = getConsoleLogger('RegistrationComponent');
 
   public error: RegistrationError = null;
 

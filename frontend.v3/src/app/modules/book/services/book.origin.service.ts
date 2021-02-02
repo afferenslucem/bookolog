@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { ISyncableOrigin } from 'src/app/main/services/i-syncable-origin';
-import { getLogger } from '../../../main/app.logging';
+import { getConsoleLogger } from '../../../main/app.logging';
 import { SyncData } from '../../../main/models/sync-data';
 import { UserService } from '../../user/services/user.service';
 import { BookData } from '../models/book-data';
@@ -11,7 +11,7 @@ import { BookData } from '../models/book-data';
   providedIn: 'root',
 })
 export class BookOriginService implements ISyncableOrigin<BookData> {
-  private logger = getLogger({
+  private logger = getConsoleLogger({
     loggerName: 'BookOriginService',
     namespace: 'Origin',
   });

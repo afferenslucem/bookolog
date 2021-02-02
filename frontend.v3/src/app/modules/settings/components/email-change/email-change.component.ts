@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { getLogger } from 'src/app/main/app.logging';
+import { getConsoleLogger } from 'src/app/main/app.logging';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { UserService } from 'src/app/modules/user/services/user.service';
 import { ILogger } from 'waterlog';
@@ -13,7 +13,7 @@ import { ILogger } from 'waterlog';
 export class EmailChangeComponent implements OnInit {
   public form: FormGroup = null;
 
-  private logger: ILogger = getLogger('EmailChangeComponent');
+  private logger: ILogger = getConsoleLogger('EmailChangeComponent');
 
   constructor(public userService: UserService, private notification: NotificationService) { }
 

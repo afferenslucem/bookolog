@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { getLogger } from '../../../main/app.logging';
+import { getConsoleLogger } from '../../../main/app.logging';
 import { BookStatus } from '../models/book-status';
 
 @Injectable({providedIn: 'root'})
 export class BookStatusResolver implements Resolve<BookStatus> {
-  private logger = getLogger({
+  private logger = getConsoleLogger({
     loggerName: 'ActionResolver',
     namespace: 'Resolver',
   });

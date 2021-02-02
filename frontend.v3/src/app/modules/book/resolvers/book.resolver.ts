@@ -4,14 +4,14 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { getLogger } from '../../../main/app.logging';
+import { getConsoleLogger } from '../../../main/app.logging';
 import { CollectionService } from '../../collection/services/collection.service';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
 
 @Injectable({ providedIn: 'root' })
 export class BookResolver implements Resolve<Book> {
-  private logger = getLogger({
+  private logger = getConsoleLogger({
     loggerName: 'BookResolver',
     namespace: 'Resolver',
   });

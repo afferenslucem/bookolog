@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Action } from 'src/app/main/resolvers/action.resolver';
 import { ILogger } from 'waterlog';
-import { getLogger } from '../../../../main/app.logging';
+import { getConsoleLogger } from '../../../../main/app.logging';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { NotificationService } from '../../../notification/services/notification.service';
 import { TitleService } from '../../../ui/service/title.service';
@@ -20,7 +20,7 @@ import { Location } from '@angular/common';
 export class CollectionEditViewComponent implements OnInit {
   public form: FormGroup = null;
   public collection: Collection;
-  private logger: ILogger = getLogger('CollectionEditViewComponent');
+  private logger: ILogger = getConsoleLogger('CollectionEditViewComponent');
   private action: Action;
 
   private defaultData: CollectionData = {

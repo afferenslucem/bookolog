@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../modules/notification/services/notification.service';
-import { getLogger } from '../../app.logging';
+import { getConsoleLogger } from '../../app.logging';
 import { SyncService } from '../../services/sync.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { SyncService } from '../../services/sync.service';
   styleUrls: ['./sync-info.component.scss']
 })
 export class SyncInfoComponent implements OnInit {
-  private logger = getLogger('SyncInfoComponent');
+  private logger = getConsoleLogger('SyncInfoComponent');
 
   constructor(private syncService: SyncService, private notificationService: NotificationService, private router: Router, private activatedRoute: ActivatedRoute) { }
 

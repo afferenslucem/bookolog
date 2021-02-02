@@ -2,13 +2,13 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
-import { getLogger } from '../app.logging';
+import { getConsoleLogger } from '../app.logging';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TimeoutInterceptor implements HttpInterceptor {
-  private logger = getLogger({
+  private logger = getConsoleLogger({
     loggerName: 'TimeoutInterceptor',
     namespace: 'Interceptor',
   });

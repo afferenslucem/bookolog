@@ -5,7 +5,7 @@ import { BookService } from '../../modules/book/services/book.service';
 import { CollectionService } from '../../modules/collection/services/collection.service';
 import { NotificationService } from '../../modules/notification/services/notification.service';
 import { UserService } from '../../modules/user/services/user.service';
-import { getLogger } from '../app.logging';
+import { getConsoleLogger } from '../app.logging';
 import { AppSyncData } from '../models/app-sync-data';
 import { DateUtils } from '../utils/date-utils';
 
@@ -13,7 +13,7 @@ import { DateUtils } from '../utils/date-utils';
   providedIn: 'root'
 })
 export class SyncService {
-  private readonly logger = getLogger('SyncService');
+  private readonly logger = getConsoleLogger('SyncService');
 
   constructor(
     private userService: UserService,

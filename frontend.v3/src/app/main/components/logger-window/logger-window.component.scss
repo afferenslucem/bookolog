@@ -1,0 +1,6 @@
+.log {
+  > *:not(:last-child) {
+    margin-left: 0.5rem;
+    display: inline-block;
+  }
+}

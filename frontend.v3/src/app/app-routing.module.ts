@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InnerAreaComponent } from './main/components/inner-area/inner-area.component';
+import { LoggerWindowComponent } from './main/components/logger-window/logger-window.component';
 import { StartPageComponent } from './main/components/start-page/start-page.component';
 import { LoggedInGuard } from './modules/auth/guards/logged-in.guard';
 import { LogoutGuard } from './modules/auth/guards/logout.guard';
@@ -29,12 +30,17 @@ const routes: Routes = [
       ...bookListRoutes,
       ...statisticRoutes,
       ...settingsRoutes,
-      ...collectionRoutes,
+      ...collectionRoutes
     ],
     resolve: {
       sync: SyncResolver,
       user: MeResolver,
     },
+  },
+  {
+    component: LoggerWindowComponent,
+    path: 'logs',
+    pathMatch: 'full',
   },
 ];
 

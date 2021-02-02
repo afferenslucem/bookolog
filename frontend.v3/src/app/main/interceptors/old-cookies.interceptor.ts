@@ -2,13 +2,13 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
-import { getLogger } from '../app.logging';
+import { getConsoleLogger } from '../app.logging';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OldCookiesInterceptor implements HttpInterceptor {
-  private logger = getLogger({
+  private logger = getConsoleLogger({
     loggerName: 'OldCookiesInterceptor',
     namespace: 'Interceptor',
   });

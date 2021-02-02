@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { getLogger } from '../../../../main/app.logging';
+import { getConsoleLogger } from '../../../../main/app.logging';
 import { Action } from '../../../../main/resolvers/action.resolver';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
@@ -32,7 +32,7 @@ export class BookEditViewComponent implements OnInit {
   public form: FormGroup = null;
   public authors: string[] = [];
   public tags: string[] = [];
-  private logger = getLogger('BookEditViewComponent');
+  private logger = getConsoleLogger('BookEditViewComponent');
   private action: Action;
 
   private defaultValue: BookData = {

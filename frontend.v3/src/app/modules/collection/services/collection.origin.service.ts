@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { getLogger } from '../../../main/app.logging';
+import { getConsoleLogger } from '../../../main/app.logging';
 import { SyncData } from '../../../main/models/sync-data';
 import { ISyncableOrigin } from '../../../main/services/i-syncable-origin';
 import { UserService } from '../../user/services/user.service';
@@ -11,7 +11,7 @@ import { CollectionData } from '../models/collection-data';
   providedIn: 'root'
 })
 export class CollectionOriginService implements ISyncableOrigin<CollectionData> {
-  private logger = getLogger({
+  private logger = getConsoleLogger({
     loggerName: 'CollectionOrigin',
     namespace: 'Origin',
   });

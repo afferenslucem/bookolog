@@ -30,6 +30,7 @@ import { StatisticModule } from './modules/statistic/statistic.module';
 import { UiModule } from './modules/ui/ui.module';
 import { UserModule } from './modules/user/user.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoggerWindowComponent } from './main/components/logger-window/logger-window.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -41,6 +42,7 @@ registerLocaleData(localeRu, 'ru');
     SideMenuComponent,
     PreloaderComponent,
     SyncInfoComponent,
+    LoggerWindowComponent,
   ],
   imports: [
     BrowserModule,

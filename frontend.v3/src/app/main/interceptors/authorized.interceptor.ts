@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '../../modules/user/services/user.service';
-import { getLogger } from '../app.logging';
+import { getConsoleLogger } from '../app.logging';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizedInterceptor implements HttpInterceptor {
-  private logger = getLogger({
+  private logger = getConsoleLogger({
     loggerName: 'AuthorizedInterceptor',
     namespace: 'Interceptor',
   });

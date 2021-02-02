@@ -2,14 +2,14 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { getLogger } from '../app.logging';
+import { getConsoleLogger } from '../app.logging';
 import { PreloaderService } from '../services/preloader.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PreloaderInterceptor implements HttpInterceptor {
-  private logger = getLogger({
+  private logger = getConsoleLogger({
     loggerName: 'PreloaderInterceptor',
     namespace: 'Interceptor',
   });

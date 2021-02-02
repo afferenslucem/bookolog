@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { getLogger } from '../app.logging';
+import { getConsoleLogger } from '../app.logging';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IndexedDbService {
-  protected logger = getLogger({
+  protected logger = getConsoleLogger({
     loggerName: 'IndexedDb',
     namespace: 'Storage',
   });

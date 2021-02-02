@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import _ from 'declarray';
 import { EntityService } from 'src/app/main/services/entity.service';
-import { getLogger } from '../../../main/app.logging';
+import { getConsoleLogger } from '../../../main/app.logging';
 import { NotificationService } from '../../notification/services/notification.service';
 import { Book } from '../models/book';
 import { BookData } from '../models/book-data';
@@ -13,7 +13,7 @@ import { BookStorageService } from './book.storage.service';
   providedIn: 'root',
 })
 export class BookService extends EntityService<BookData, Book> {
-  private logger = getLogger('BookService');
+  private logger = getConsoleLogger('BookService');
 
   private typedStorage: BookStorageService;
 

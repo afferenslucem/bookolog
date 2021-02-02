@@ -1,6 +1,6 @@
-import { ConsoleAppender, ILogger, ILoggerName, LoggerFactory, LogLevel } from 'waterlog';
+import { AccumulatorAppender, ConsoleAppender, ILogger, ILoggerName, LoggerFactory, LogLevel } from 'waterlog';
 
-const factory = new LoggerFactory([
+const consoleFactory = new LoggerFactory([
   {
     name: 'default',
     logger: {
@@ -14,6 +14,26 @@ const factory = new LoggerFactory([
   },
 ]);
 
-export function getLogger(name: string | ILoggerName): ILogger {
-  return factory.getLogger(name);
+const accumulator = new AccumulatorAppender();
+
+const requestFactory = new LoggerFactory([
+  {
+    name: 'default',
+    logger: {
+      logLevel: LogLevel.Debug,
+      appenders: [accumulator],
+    },
+  },
+]);
+
+export function getConsoleLogger(name: string | ILoggerName): ILogger {
+  return consoleFactory.getLogger(name);
+}
+
+export function getRequestLogger(name: string | ILoggerName): ILogger {
+  return requestFactory.getLogger(name);
+}
+
+export function getAccumulated(): AccumulatorAppender {
+  return accumulator;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { getLogger } from '../../../../main/app.logging';
+import { getConsoleLogger } from '../../../../main/app.logging';
 import { AuthService } from '../../../auth/services/auth.service';
 import { NotificationService } from '../../../notification/services/notification.service';
 
@@ -16,7 +16,7 @@ export enum ChangePasswordError {
   styleUrls: ['./password-change.component.scss']
 })
 export class PasswordChangeComponent implements OnInit {
-  public logger = getLogger('PasswordChangeComponent');
+  public logger = getConsoleLogger('PasswordChangeComponent');
 
   public form = new FormBuilder().group({
     currentPassword: new FormControl(null, [Validators.required]),

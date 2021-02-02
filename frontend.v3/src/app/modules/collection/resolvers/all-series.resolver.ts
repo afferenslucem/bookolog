@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { getLogger } from '../../../main/app.logging';
+import { getConsoleLogger } from '../../../main/app.logging';
 import { Collection } from '../models/collection';
 import { CollectionService } from '../services/collection.service';
 
 @Injectable({providedIn: 'root'})
 export class AllSeriesResolver implements Resolve<Collection[]> {
-  private logger = getLogger({
+  private logger = getConsoleLogger({
     loggerName: 'ToReadBooksResolver',
     namespace: 'Resolver',
   });

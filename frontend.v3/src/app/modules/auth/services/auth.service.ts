@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ILogger } from 'waterlog';
-import { getLogger } from '../../../main/app.logging';
+import { getConsoleLogger } from '../../../main/app.logging';
 import { UserService } from '../../user/services/user.service';
 import { Credentials } from '../models/credentials';
 import { RegistrationData } from '../models/registration-data';
@@ -10,7 +10,7 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class AuthService {
-  private logger: ILogger = getLogger('AuthService');
+  private logger: ILogger = getConsoleLogger('AuthService');
 
   constructor(
     private userService: UserService,
