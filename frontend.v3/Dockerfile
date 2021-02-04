@@ -1,15 +1,14 @@
 FROM node:10-alpine as builder
 WORKDIR /app
-COPY package*.json ./
+COPY frontend.v3/package*.json ./
 RUN npm ci
-RUN npm install -g @angular/cli
-COPY . .
-RUN ng build -- --output-path=dist/out
+COPY frontend.v3/ ./
+RUN npm run build -- --output-path=dist/out
 
 # этап production (production-stage)
 FROM nginx:stable-alpine as production-stage
 COPY --from=builder /app/dist/out /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx/nginx.conf /etc/nginx/conf.d
+COPY nginx/client.nginx.conf /etc/nginx/conf.d/nginx.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
