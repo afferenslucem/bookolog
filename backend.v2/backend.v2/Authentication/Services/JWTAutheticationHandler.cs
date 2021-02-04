@@ -20,7 +20,6 @@ namespace backend.v2.Authentication.Services
 {
     public class JWTAuthenticationHandler : AuthenticationHandler<JWTAuthenticationOptions>
     {
-        private readonly ILogger<JWTAuthenticationService> jwtLogger;
         private readonly IAuthenticationService authenticationService;
         private readonly ISessionService sessionService;
         private readonly IUserSession userSession;
@@ -36,74 +35,96 @@ namespace backend.v2.Authentication.Services
             )
             : base(options, logger, encoder, clock)
         {
-            this.jwtLogger = jwtLogger;
             this.sessionService = sessionService;
             this.userSession = userSession;
             this.authenticationService = authenticationService;
         }
         protected async override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            var context = Request.HttpContext;
+            this.Logger.LogDebug($"Authenticate {this.CurrentUri}");
+
             try
             {
-                if (!context.Request.Cookies.ContainsKey(JWTDefaults.CookieName))
+                if (!Context.Request.Cookies.ContainsKey(JWTDefaults.CookieName))
                 {
                     return AuthenticateResult.NoResult();
                 }
 
-                var cookie = context.Request.Cookies[JWTDefaults.CookieName];
+                var cookie = Context.Request.Cookies[JWTDefaults.CookieName];
                 var session = await this.sessionService.ParseToken(cookie);
 
                 if (session.RefreshExpired < DateTime.UtcNow)
                 {
-                    this.jwtLogger.LogDebug("Refresh time expired");
+                    this.OnRefreshExpired();
                     return AuthenticateResult.NoResult();
                 }
                 else if (session.AccessExpired < DateTime.UtcNow)
                 {
-                    var token = await sessionService.UpdateToken(session);
-                    this.RenewCookie(context, token);
-
-                    this.jwtLogger.LogDebug("Accept time expired");
+                    await this.OnAccessExpired(session);
                 }
 
-                this.userSession.SetSession(session);
-
-                var claims = new Claim[] {
-                    new Claim(ClaimTypes.Name, session.Login),
-                    new Claim(ClaimTypes.NameIdentifier, session.UserId.ToString()),
-                };
-                var identity = new ClaimsIdentity(claims, JWTDefaults.AuthenticationScheme);
-                var principal = new ClaimsPrincipal(identity);
-                var ticket = new AuthenticationTicket(principal, JWTDefaults.AuthenticationScheme);
-
-                this.jwtLogger.LogDebug("Authenticated");
+                var ticket = this.Authenticate(session);
 
                 return AuthenticateResult.Success(ticket);
             }
             catch (CookieParseException e)
             {
-                this.jwtLogger.LogInformation(409, e.Message, e);
+                this.Logger.LogInformation(409, e.Message, e);
 
-                context.Response.StatusCode = 409;
+                Context.Response.StatusCode = 409;
                 return AuthenticateResult.Fail("Cookies parse exception");
             }
             catch (Exception e)
             {
-                this.jwtLogger.LogInformation(401, e.Message, e);
+                this.Logger.LogInformation(401, e.Message, e);
                 return AuthenticateResult.Fail("Cookies error");
             }
         }
 
-        private void RenewCookie(HttpContext context, string token)
+        private void OnRefreshExpired()
         {
-            context.Response.Cookies.Delete(".AspNetCore.History");
-            this.AppendCookie(context, token);
+            this.Logger.LogDebug("Refresh time expired");
+            this.DeleteCookies();
+            this.Logger.LogDebug("Cookies deleted");
         }
-        private void AppendCookie(HttpContext context, string token)
+
+        private async Task OnAccessExpired(Session session)
+        {
+            this.Logger.LogDebug("Accept time expired");
+            var token = await sessionService.UpdateToken(session);
+            this.RenewCookie(token);
+            this.Logger.LogDebug("Cookies renewed");
+        }
+
+        private AuthenticationTicket Authenticate(Session session)
+        {
+            this.userSession.SetSession(session);
+
+            var claims = new Claim[] {
+                    new Claim(ClaimTypes.Name, session.Login),
+                    new Claim(ClaimTypes.NameIdentifier, session.UserId.ToString()),
+                };
+            var identity = new ClaimsIdentity(claims, JWTDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+            var ticket = new AuthenticationTicket(principal, JWTDefaults.AuthenticationScheme);
+
+            return ticket;
+        }
+
+        private void RenewCookie(string token)
+        {
+            this.DeleteCookies();
+            this.AppendCookie(token);
+        }
+
+        private void DeleteCookies()
+        {
+            Context.Response.Cookies.Delete(".AspNetCore.History");
+        }
+        private void AppendCookie(string token)
         {
             var age = TimeSpan.FromSeconds(Config.Cookie.RefrashTimeSeconds);
-            context.Response.Cookies.Append(".AspNetCore.History", token, new CookieOptions
+            Context.Response.Cookies.Append(".AspNetCore.History", token, new CookieOptions
             {
                 HttpOnly = true,
                 MaxAge = age,
