@@ -13,7 +13,8 @@ import { DateUtils } from '../utils/date-utils';
   providedIn: 'root'
 })
 export class SyncService {
-  private readonly logger = getConsoleLogger('SyncService');
+  private readonly consoleLogger = getConsoleLogger('SyncService');
+  private readonly requestLogger = getConsoleLogger('SyncService');
 
   constructor(
     private userService: UserService,
@@ -35,6 +36,7 @@ export class SyncService {
       }
 
     } catch (e) {
+      this.requestLogger.error('Failed sync', e);
       this.notificationService.createErrorNotification('Синхронизация неудалась');
     }
   }
@@ -63,7 +65,7 @@ export class SyncService {
 
       await Promise.all([bookSync, collectionsSync, userSync]);
     } catch (e) {
-      this.logger.error('syncAll error', e);
+      this.consoleLogger.error('syncAll error', e);
       this.notificationService.createErrorNotification('Синхронизация неудалась');
     }
   }
