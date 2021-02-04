@@ -1,8 +1,8 @@
 <div>
-    <div class="log" *ngFor="let log of logs">
-        <div>{{log.message}}</div>
-        <div *ngFor="let obj of log.objects">
-            {{obj | json}}
-        </div>
+  <div class="log" *ngFor="let log of logs">
+    <div class="log__id">{{ log.message }}</div>
+    <div class="log__obj" *ngFor="let obj of log.objects">
+      {{ obj | json | maxLength: 40 }}
     </div>
+  </div>
 </div>

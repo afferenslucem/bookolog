@@ -1,6 +1,20 @@
+:host {
+  display: block;
+
+  width: 100%;
+
+  font-size: 12px;
+}
+
 .log {
-  > *:not(:last-child) {
-    margin-left: 0.5rem;
-    display: inline-block;
+  margin-top: 0.5rem;
+  width: 100%;
+
+  &__id {
+
+  }
+
+  &__obj {
+
   }
 }

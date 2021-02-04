@@ -40,13 +40,13 @@ namespace backend.Controllers
             }
             catch (BookologException ex)
             {
-                this.logger.LogError((int)ex.Code, ex, ex.Message, model);
+                this.logger.LogError((int)ex.Code, ex.Message, ex, model);
 
                 return StatusCode(400, ex.Message);
             }
             catch (Exception ex)
             {
-                this.logger.LogError(500, ex, ex.Message, model);
+                this.logger.LogError(500, ex.Message, ex, model);
 
                 return StatusCode(500);
             }
@@ -65,13 +65,13 @@ namespace backend.Controllers
             }
             catch (BookologException ex)
             {
-                this.logger.LogError((int)ex.Code, ex, ex.Message, model);
+                this.logger.LogError((int)ex.Code, ex.Message, ex, model);
 
                 return StatusCode(400, ex.Message);
             }
             catch (Exception ex)
             {
-                this.logger.LogError(500, ex, ex.Message, model);
+                this.logger.LogError(500, ex.Message, ex, model);
 
                 return StatusCode(500);
             }
@@ -91,13 +91,13 @@ namespace backend.Controllers
             }
             catch (BookologException ex)
             {
-                this.logger.LogError((int)ex.Code, ex, ex.Message, guid);
+                this.logger.LogError((int)ex.Code, ex.Message, ex, guid);
 
                 return StatusCode(400, ex.Message);
             }
             catch (Exception ex)
             {
-                this.logger.LogError(500, ex, ex.Message, guid);
+                this.logger.LogError(500, ex.Message, ex, guid);
 
                 return StatusCode(500);
             }
@@ -115,7 +115,7 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                this.logger.LogError(500, ex, ex.Message, guid);
+                this.logger.LogError(500, ex.Message, ex, guid);
 
                 return StatusCode(500);
             }
@@ -132,13 +132,13 @@ namespace backend.Controllers
             }
             catch (BookologException ex)
             {
-                this.logger.LogError((int)ex.Code, ex, ex.Message, data);
+                this.logger.LogError((int)ex.Code, ex.Message, ex, data);
 
                 return StatusCode(400, ex.Message);
             }
             catch (Exception ex)
             {
-                this.logger.LogError(500, ex, ex.Message, data);
+                this.logger.LogError(500, ex.Message, ex, data);
 
                 return StatusCode(500);
             }
@@ -155,13 +155,13 @@ namespace backend.Controllers
             }
             catch (BookologException ex)
             {
-                this.logger.LogError((int)ex.Code, ex, ex.Message, data);
+                this.logger.LogError((int)ex.Code, ex.Message, ex, data);
 
                 return StatusCode(400, ex.Message);
             }
             catch (Exception ex)
             {
-                this.logger.LogError(500, ex, ex.Message, data);
+                this.logger.LogError(500, ex.Message, ex, data);
 
                 return StatusCode(500);
             }

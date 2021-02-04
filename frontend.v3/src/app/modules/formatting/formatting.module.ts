@@ -5,15 +5,17 @@ import { ChooseFormPipe } from './pipes/choose-form.pipe';
 import { JoinPipe } from './pipes/join.pipe';
 import { PadStartPipe } from './pipes/pad-start.pipe';
 import { TimifyUnitsPipe } from './pipes/timify-units.pipe';
+import { MaxLengthPipe } from './pipes/max-length.pipe';
 
 
 @NgModule({
-    declarations: [JoinPipe, ChooseFormPipe, PadStartPipe, TimifyUnitsPipe, CapitalizePipe],
+    declarations: [JoinPipe, ChooseFormPipe, PadStartPipe, TimifyUnitsPipe, CapitalizePipe, MaxLengthPipe],
     exports: [
         JoinPipe,
         TimifyUnitsPipe,
         CapitalizePipe,
         ChooseFormPipe,
+        MaxLengthPipe
     ],
     imports: [
         CommonModule,

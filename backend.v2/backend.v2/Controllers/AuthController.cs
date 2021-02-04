@@ -80,12 +80,12 @@ namespace backend.Controllers
             }
             catch (UserWithSameEmailAlreadyExistsException e)
             {
-                this.logger.LogError(400, e, "User with same email already exisists", user);
+                this.logger.LogError(400, e.Message, user, e);
                 return StatusCode(400, "User with same email already exisists");
             }
             catch (UserWithSameLoginAlreadyExistsException e)
             {
-                this.logger.LogError(400, e, "User with same login already exisists", user);
+                this.logger.LogError(400, e.Message, user, e);
                 return StatusCode(400, "User with same login already exisists");
             }
             catch (Exception e)

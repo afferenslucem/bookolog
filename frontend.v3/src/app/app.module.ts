@@ -31,6 +31,7 @@ import { UiModule } from './modules/ui/ui.module';
 import { UserModule } from './modules/user/user.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoggerWindowComponent } from './main/components/logger-window/logger-window.component';
+import { FormattingModule } from './modules/formatting/formatting.module';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -65,6 +66,7 @@ registerLocaleData(localeRu, 'ru');
     NotificationModule,
     CollectionModule,
     NgbModule,
+    FormattingModule,
   ],
   providers: [
     interceptors,
