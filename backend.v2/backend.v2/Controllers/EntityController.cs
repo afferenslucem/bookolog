@@ -176,7 +176,7 @@ namespace backend.Controllers
 
                 var books = await this.entityService.GetByUserId(userId);
 
-                await this.session.UpdateLastSyncTime();
+                this.session.UpdateLastSyncTime();
 
                 return Ok(books);
             }
@@ -200,7 +200,7 @@ namespace backend.Controllers
 
                 var answer = await this.entityService.Synch(data);
 
-                await this.session.UpdateLastSyncTime();
+                this.session.UpdateLastSyncTime();
 
                 return Ok(answer);
             }

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 
 namespace backend.v2.Configuration
 {
-    public static class DenyFrameMiddlewareExtensions
+    public static class UseDenyFrameMiddlewareExtensions
     {
         public static void UseDenyFrameProtection(this IApplicationBuilder app)
         {

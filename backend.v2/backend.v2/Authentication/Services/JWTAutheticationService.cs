@@ -74,10 +74,10 @@ namespace backend.v2.Authentication.Services
 
         public override async Task SignOutAsync(HttpContext context, string scheme, AuthenticationProperties properties)
         {
-            await this.RemoveCookie(context);
+            await this.RemoveSession(context);
             this.logger.LogDebug("Logged out successful");
         }
-        private async Task RemoveCookie(HttpContext context)
+        private async Task RemoveSession(HttpContext context)
         {
             if (!context.Request.Cookies.ContainsKey(JWTDefaults.CookieName))
             {

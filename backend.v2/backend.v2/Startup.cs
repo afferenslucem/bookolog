@@ -2,26 +2,17 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using backend.Storages;
-using backend.v2.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Authentication;
 
-using Microsoft.Extensions.Options;
 using backend.v2.Configuration;
-using Microsoft.AspNetCore.CookiePolicy;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
+using backend.v2.Configuration.Middlewares;
 
 namespace backend.v2
 {
@@ -46,38 +37,15 @@ namespace backend.v2
             .AddAuthentication(JWTDefaults.AuthenticationScheme)
             .AddJWT<JWTAuthenticationService>();
 
-            services.Configure<FormOptions>(options =>
-            {
-                options.MemoryBufferThreshold = 2 * 1024 * 1024;
-            });
+            services.ConfigureFormOptions();
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.Strict;
-                options.HttpOnly = HttpOnlyPolicy.Always;
-            });
+            services.ConfigureCookiesPolicy();
             
             services.AddControllers();
 
             services.AddDbContext<BookologContext>();
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IFileSystemService, FileSystemService>();
-            services.AddScoped<IConfigService, ConfigService>();
-            services.AddScoped<IBookService, BookService>();
-            services.AddScoped<ICollectionService, CollectionService>();
-            services.AddScoped<IUserSession, UserSession>();
-            services.AddScoped<IMailService, MailService>();
-            services.AddScoped<IFileService, FileService>();
-
-            services.AddSingleton<ISessionService, SessionService>();
-            services.AddScoped<IAuthenticationService, JWTAuthenticationService>();
-            services.AddSingleton<IPostConfigureOptions<JWTAuthenticationOptions>, JWTAuthenticationPostConfigureOptions>();
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            services.ConfigureDI();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,6 +65,7 @@ namespace backend.v2
             app.UseDenyFrameProtection();
 
             app.UseAuthentication();
+            app.UseMiddleware<SessionMiddleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

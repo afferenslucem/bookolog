@@ -13,6 +13,7 @@ namespace backend.Storages
         Task<Session> Get(Guid guid, bool withUser = false);
         Task<Session> Save(Session session);
         Task Update(Session session);
+        Task UpdateState(Session session);
         Task Delete(Guid guid);
     }
 
@@ -36,6 +37,19 @@ namespace backend.Storages
             var set = context.Sessions;
 
             set.Update(session);
+
+            await context.SaveChangesAsync();
+        }
+        
+        public async Task UpdateState(Session session)
+        {
+            using var context = new BookologContext();
+            var set = context.Sessions;
+
+            var entity = new Session {Guid = session.Guid, StateJson = session.StateJson};
+
+            set.Attach(entity);
+            context.Entry(entity).Property(item => item.StateJson).IsModified = true;
 
             await context.SaveChangesAsync();
         }

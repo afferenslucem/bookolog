@@ -166,7 +166,8 @@ namespace backend.Controllers
                 var collectionSync = await this.collectionService.Synch(data.Collections ?? new SyncData<Collection>());
                 var bookSync = await this.bookService.Synch(data.Books ?? new SyncData<Book>());
 
-                await this.userSession.UpdateLastSyncTime();
+                this.userSession.UpdateLastSyncTime();
+
                 this.logger.LogDebug("Synced");
 
                 return Ok(new AppSyncData {
@@ -200,7 +201,7 @@ namespace backend.Controllers
 
                 await Task.WhenAll(bookLoad, collectionLoad);
 
-                await this.userSession.UpdateLastSyncTime();
+                this.userSession.UpdateLastSyncTime();
 
                 return Ok(new AppData {
                     Books = bookLoad.Result,

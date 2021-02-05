@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 
 namespace backend.v2.Configuration
 {
-    public static class XssMiddlewareExtensions
+    public static class UseCustomSessionExtensions
     {
         public static void UseXssProtection(this IApplicationBuilder app)
         {

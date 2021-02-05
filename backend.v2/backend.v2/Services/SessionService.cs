@@ -20,6 +20,7 @@ namespace backend.v2.Services
         Task<Session> Get(Guid guid, bool withUser = false);
         Task<Session> Save(Session session);
         Task Update(Session session);
+        Task UpdateState(Session session);
         Task Delete(Guid guid);
         Task<Session> ParseToken(string token);
 
@@ -182,6 +183,11 @@ namespace backend.v2.Services
         public async Task Update(Session session)
         {
             await this.storage.Update(session);
+        }
+
+        public async Task UpdateState(Session session)
+        {
+            await this.storage.UpdateState(session);
         }
 
         public async Task Delete(Guid guid)

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 
 namespace backend.v2.Configuration
 {
-    public static class NoSniffMiddlewareExtensions
+    public static class UseNoSniffProtectionExtensions
     {
         public static void UseNoSniffProtection(this IApplicationBuilder app)
         {

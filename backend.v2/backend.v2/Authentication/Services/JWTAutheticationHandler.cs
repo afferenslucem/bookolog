@@ -98,7 +98,7 @@ namespace backend.v2.Authentication.Services
 
         private AuthenticationTicket Authenticate(Session session)
         {
-            this.userSession.SetSession(session);
+            this.userSession.Session = session;
 
             var claims = new Claim[] {
                     new Claim(ClaimTypes.Name, session.Login),

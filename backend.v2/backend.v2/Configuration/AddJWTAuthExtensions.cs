@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace backend.v2.Configuration
 {
-    public static class JWTAuthExtensions
+    public static class AddJWTAuthExtensions
     {
         public static AuthenticationBuilder AddJWT<TAuthService>(this AuthenticationBuilder builder)
         where TAuthService : class, IAuthenticationService

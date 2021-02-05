@@ -10,8 +10,8 @@ namespace backend.v2.Services
 {
     public interface IUserSession
     {
-        Task UpdateLastSyncTime();
-        void SetSession(Session session);
+        void UpdateLastSyncTime();
+        Session Session { get; set; }
         User User { get; }
         DateTime? LastSyncTime { get; }
     }
@@ -19,27 +19,27 @@ namespace backend.v2.Services
     public class UserSession : IUserSession
     {
         private HttpContext context;
-        private ISessionService sessionService;
 
         private Session session;
 
         public UserSession(ISessionService sessionService)
         {
-            this.sessionService = sessionService;
         }
 
-        public async Task UpdateLastSyncTime()
+        public Session Session {
+            get {
+                return this.session;
+            }
+            set {
+                this.session = value;
+            }
+        }
+
+        public void UpdateLastSyncTime()
         {
             var now = DateSessionUtils.Now;
             var str = DateSessionUtils.Stringify(now);
             this.session.Set("LastSyncTime", str);
-
-            await this.sessionService.Update(this.session);
-        }
-
-        public void SetSession(Session session)
-        {
-            this.session = session;
         }
 
         public User User
