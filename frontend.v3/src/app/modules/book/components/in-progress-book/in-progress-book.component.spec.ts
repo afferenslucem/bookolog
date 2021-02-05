@@ -8,7 +8,7 @@ import { BookHeaderComponent } from '../book-header/book-header.component';
 import { BookPagesProgressComponent } from '../book-pages-progress/book-pages-progress.component';
 import { BookTimeProgressComponent } from '../book-time-progress/book-time-progress.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { InProgressBookComponent } from './in-progress-book.component';
 
 describe('InProgressBookComponent', () => {
@@ -29,9 +29,10 @@ describe('InProgressBookComponent', () => {
         MatToolbarModule,
         MatProgressBarModule,
         MatDividerModule,
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   describe('Creation', () => {

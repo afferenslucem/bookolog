@@ -8,27 +8,30 @@ services:
       - "40080:80"    
     depends_on: 
       - server
-  
+    volumes:
+      - "./tmp:/tmp"  
 
   server:
-    build: backend.v2/backend.v2
+    build: 
+      dockerfile: Dockerfile
+      context: backend.v2/backend.v2/
     ports:
       - "45080:80"
       - "45081:81"
     depends_on: 
       - postgre
-  #    - postfix
+      - postfix
     volumes: 
       - "/imageStorage:/imageStorage"
 
-  # postfix:
-  #   image: boky/postfix
-  #   environment:
-  #     POSTFIX_myhostname: hrodvitnir.pw
-  #     POSTFIX_myorigin: hrodvitnir.pw
-  #     ALLOWED_SENDER_DOMAINS: hrodvitnir.pw
-  #   ports:
-  #     - "45587:587"
+  postfix:
+    image: boky/postfix
+    environment:
+      POSTFIX_myhostname: hrodvitnir.pw
+      POSTFIX_myorigin: hrodvitnir.pw
+      ALLOWED_SENDER_DOMAINS: hrodvitnir.pw
+    ports:
+      - "45587:587"
 
   postgre:
     image: postgres:12.4-alpine

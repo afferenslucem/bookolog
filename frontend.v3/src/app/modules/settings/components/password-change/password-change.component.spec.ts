@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PasswordChangeComponent } from './password-change.component';
 
 describe('PasswordChangeComponent', () => {
@@ -8,9 +8,10 @@ describe('PasswordChangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PasswordChangeComponent ]
+      declarations: [ PasswordChangeComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

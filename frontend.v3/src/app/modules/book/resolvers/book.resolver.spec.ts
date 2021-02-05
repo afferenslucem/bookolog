@@ -1,11 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { CollectionService } from '../../collection/services/collection.service';
 import { BookService } from '../services/book.service';
 import { BookResolver } from './book.resolver';
 
 describe('BookResolver', () => {
   let resolver: BookResolver;
-  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
+  let bookSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo({
+    collectionGuid: 'collectionGuid'
+  });
+  let collectionSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo({});
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,7 +17,13 @@ describe('BookResolver', () => {
         {
           provide: BookService,
           useValue: {
-            getByGuid: spy,
+            getByGuid: bookSpy,
+          }
+        },
+        {
+          provide: CollectionService,
+          useValue: {
+            getByGuid: collectionSpy,
           }
         }
       ]
@@ -36,8 +46,11 @@ describe('BookResolver', () => {
 
     const status = await resolver.resolve(route, null);
 
-    expect(spy).toHaveBeenCalledWith('guid1');
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(bookSpy).toHaveBeenCalledWith('guid1');
+    expect(bookSpy).toHaveBeenCalledTimes(1);
+
+    expect(collectionSpy).toHaveBeenCalledWith('collectionGuid');
+    expect(collectionSpy).toHaveBeenCalledTimes(1);
 
     expect(guidSpy).toHaveBeenCalledWith('guid');
     expect(guidSpy).toHaveBeenCalledTimes(1);

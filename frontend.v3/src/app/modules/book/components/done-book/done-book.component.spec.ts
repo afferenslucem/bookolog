@@ -4,7 +4,7 @@ import { FormattingModule } from '../../../formatting/formatting.module';
 import { Book } from '../../models/book';
 import { BookHeaderComponent } from '../book-header/book-header.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { DoneBookComponent } from './done-book.component';
 
 describe('DoneBookComponent', () => {
@@ -21,7 +21,8 @@ describe('DoneBookComponent', () => {
       imports: [
         FormattingModule,
         RouterTestingModule,
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   });
@@ -151,8 +152,8 @@ describe('DoneBookComponent', () => {
       expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
 
       expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('author1');
-      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('author2');
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('Author1');
+      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('Author2');
 
 
       expect(element.querySelector<HTMLDivElement>('.book-line__progress-data')).toBeTruthy();

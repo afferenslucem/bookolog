@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BookDeleteDialogComponent } from './book-delete-dialog.component';
 
 describe('BookDeleteDielogComponent', () => {
@@ -8,9 +8,10 @@ describe('BookDeleteDielogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookDeleteDialogComponent ]
+      declarations: [ BookDeleteDialogComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

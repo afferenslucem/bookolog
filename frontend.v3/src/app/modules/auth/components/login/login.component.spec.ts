@@ -9,7 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UiModule } from '../../../ui/ui.module';
 import { CredentialsException } from '../../exceptions/credentials.exception';
 import { AuthService } from '../../services/auth.service';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginComponent } from './login.component';
 
 describe('LoginPageComponent', () => {
@@ -33,9 +33,10 @@ describe('LoginPageComponent', () => {
         BrowserAnimationsModule,
         RouterTestingModule,
         UiModule
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

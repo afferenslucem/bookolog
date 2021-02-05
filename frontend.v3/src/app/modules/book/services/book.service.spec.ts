@@ -28,10 +28,11 @@ describe('BookService', () => {
   describe('saveOrUpdate', () => {
     it('should update book', async () => {
       const storage = TestBed.inject(BookStorageService);
+      const origin = TestBed.inject(BookOriginService);
 
       const updateSpy = spyOn(storage, 'update').and.resolveTo();
       const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(service, 'sync').and.resolveTo();
+      const syncSpy = spyOn(origin, 'sync').and.resolveTo();
 
       const book: Book = {
         guid: 'guid',
@@ -54,9 +55,11 @@ describe('BookService', () => {
 
     it('should save book', async () => {
       const storage = TestBed.inject(BookStorageService);
+      const origin = TestBed.inject(BookOriginService);
 
       const updateSpy = spyOn(storage, 'update').and.resolveTo();
       const saveSpy = spyOn(storage, 'save').and.resolveTo();
+      const syncSpy = spyOn(origin, 'sync').and.resolveTo();
 
       const book: Book = {
         name: 'name',

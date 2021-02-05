@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BookPagesProgressComponent } from './book-pages-progress.component';
 
 describe('BookPagesProgressComponent', () => {
@@ -8,9 +8,10 @@ describe('BookPagesProgressComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookPagesProgressComponent ]
+      declarations: [ BookPagesProgressComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

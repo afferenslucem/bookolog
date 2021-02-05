@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { InProgressBooksListComponent } from './in-progress-books-list.component';
 
 describe('InProgressBooksListComponent', () => {
@@ -8,9 +8,10 @@ describe('InProgressBooksListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InProgressBooksListComponent ]
+      declarations: [ InProgressBooksListComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

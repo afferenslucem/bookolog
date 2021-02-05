@@ -25,7 +25,7 @@ export class BookLineComponent {
 
   public get progressValue(): number {
     if (!!this.total && !!this.done) {
-      return Math.floor(this.done / this.total * 100);
+      return this.done / this.total * 100;
     } else {
       return 0;
     }

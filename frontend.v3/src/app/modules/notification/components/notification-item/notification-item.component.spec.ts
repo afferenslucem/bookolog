@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Notification } from '../../models/notification';
 import { NotificationType } from '../../models/notification-type';
@@ -14,6 +15,7 @@ describe('NotificationComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [NotificationItemComponent],
       providers: [NotificationService],
+      schemas: [ NO_ERRORS_SCHEMA ],
     })
       .compileComponents();
   });

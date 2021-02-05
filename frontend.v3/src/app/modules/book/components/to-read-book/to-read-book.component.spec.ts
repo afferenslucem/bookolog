@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormattingModule } from '../../../formatting/formatting.module';
 import { Book } from '../../models/book';
 import { BookHeaderComponent } from '../book-header/book-header.component';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ToReadBookComponent } from './to-read-book.component';
 
 describe('ToReadBookComponent', () => {
@@ -19,9 +19,10 @@ describe('ToReadBookComponent', () => {
       imports: [
         FormattingModule,
         RouterTestingModule,
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   describe('Creation', () => {

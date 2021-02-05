@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PlusIconComponent } from './plus-icon.component';
 
 describe('PlusIconComponent', () => {
@@ -12,9 +12,10 @@ describe('PlusIconComponent', () => {
       declarations: [ PlusIconComponent ],
       imports: [
         MatIconModule
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

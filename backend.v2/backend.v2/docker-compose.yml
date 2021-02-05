@@ -1,0 +1,19 @@
+version: "3"
+services:
+  server:
+    build: 
+      context: .
+      dockerfile: DockerfileDev
+    ports:
+      - "35000:5000"
+    volumes: 
+      - "/imageStorage:/imageStorage"
+
+  postgre:
+    image: postgres:12.4-alpine
+    environment:
+      POSTGRES_PASSWORD: masterkey
+    ports:
+      - "35432:5432"
+    volumes: 
+      - "../../database/init-db/:/docker-entrypoint-initdb.d/"

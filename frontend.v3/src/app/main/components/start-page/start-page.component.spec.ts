@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,6 +18,7 @@ describe('StartPageComponent', () => {
         MatButtonModule,
         RouterTestingModule,
       ],
+      schemas: [ NO_ERRORS_SCHEMA ],
     })
       .compileComponents();
   });

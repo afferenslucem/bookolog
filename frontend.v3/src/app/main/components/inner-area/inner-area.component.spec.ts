@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UiModule } from '../../../modules/ui/ui.module';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { InnerAreaComponent } from './inner-area.component';
 
@@ -23,9 +24,10 @@ describe('InnerAreaComponent', () => {
         MatSidenavModule,
         MatListModule,
         BrowserAnimationsModule,
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

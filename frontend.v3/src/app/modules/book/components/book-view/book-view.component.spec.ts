@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BookViewComponent } from './book-view.component';
 
 describe('BookViewComponent', () => {
@@ -14,9 +14,10 @@ describe('BookViewComponent', () => {
       imports: [
         MatDialogModule,
         RouterTestingModule,
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

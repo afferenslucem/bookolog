@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NotificationAreaComponent } from './notification-area.component';
 
 describe('NotificationsAreaComponent', () => {
@@ -8,9 +8,10 @@ describe('NotificationsAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotificationAreaComponent ]
+      declarations: [ NotificationAreaComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

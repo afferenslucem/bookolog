@@ -1,15 +1,40 @@
-FROM node:lts-alpine as build-stage
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-COPY config.test.js ./src/config.js
-RUN npm run build
+FROM ubuntu:20.04
 
-# этап production (production-stage)
-FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx/nginx.conf /etc/nginx/conf.d
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+ENV TZ=Europe/Kiev
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt-get update -yq \
+&& apt-get update -yq \
+&& apt-get install -yq \
+  software-properties-common \
+  curl \
+  wget \
+  fonts-liberation \
+  libasound2 \
+  libatk-bridge2.0-0 \
+  libatk1.0-0 \
+  libatspi2.0-0 \
+  libcairo2 \
+  libcups2 \
+  libdrm2 \
+  libgbm1 \
+  libgdk-pixbuf2.0-0 \
+  libgtk-3-0 \
+  libnspr4 \
+  libnss3 \
+  libpango-1.0-0 \
+  libx11-6 \
+  libxcb1 \
+  libxcomposite1 \
+  libxdamage1 \
+  libxext6 \
+  libxfixes3 \
+  libxkbcommon0 \
+  libxrandr2 \
+  xdg-utils \
+&& wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN dpkg -i google-chrome*.deb
+RUN curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh \
+&& bash nodesource_setup.sh \
+&& apt-get install -yq nodejs

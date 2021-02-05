@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DateRangeComponent } from './date-range.component';
@@ -9,6 +10,7 @@ describe('DateRangeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DateRangeComponent],
+      schemas: [ NO_ERRORS_SCHEMA ],
     })
       // .overrideComponent(DateRangeComponent, {
       //   set: {changeDetection: ChangeDetectionStrategy.Default},

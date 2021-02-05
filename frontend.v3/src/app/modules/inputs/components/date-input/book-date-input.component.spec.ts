@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BookDateInputComponent } from './book-date-input.component';
 
 describe('BookDateOnputComponent', () => {
@@ -8,9 +8,10 @@ describe('BookDateOnputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookDateInputComponent ]
+      declarations: [ BookDateInputComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { SyncInfoComponent } from './sync-info.component';
 
 describe('SyncInfoComponent', () => {
@@ -8,9 +8,10 @@ describe('SyncInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SyncInfoComponent ]
+      declarations: [ SyncInfoComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+.compileComponents();
   });
 
   beforeEach(() => {

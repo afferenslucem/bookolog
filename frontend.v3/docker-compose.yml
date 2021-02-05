@@ -1,0 +1,24 @@
+version: "3"
+services:
+  client-dev:
+    build:
+      context: .
+      dockerfile: DockerfileDev
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "4201:4200"
+    environment:
+      NG_CLI_ANALYTICS: 'off'
+
+  client-test:
+    build:
+      context: .
+      dockerfile: DockerfileTest
+    command: sh -c "npm i && npm t"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      NG_CLI_ANALYTICS: 'off'
