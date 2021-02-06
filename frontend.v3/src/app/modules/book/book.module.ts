@@ -75,6 +75,7 @@ import { ToReadBooksListComponent } from './components/to-read-books-list/to-rea
     ],
     exports: [
         DoneBooksListComponent,
+        DoneBookComponent,
         BooksByYearsComponent,
         ToReadBookComponent,
     ],

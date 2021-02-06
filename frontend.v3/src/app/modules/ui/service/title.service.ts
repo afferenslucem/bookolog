@@ -79,6 +79,11 @@ export class TitleService {
     this.setTitle(TitleText.TagsStatistic);
   }
 
+  public setYearsStatistic(): void {
+    this.setCustom(null);
+    this.setTitle(TitleText.YearsStatistic);
+  }
+
   public setGenresStatistic(): void {
     this.setCustom(null);
     this.setTitle(TitleText.GenresStatistic);

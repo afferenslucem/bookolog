@@ -4,6 +4,7 @@ import { IndexedDbService } from '../../../main/services/indexed-db.service';
 import { PreloaderService } from '../../../main/services/preloader.service';
 import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
+import _ from 'declarray';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,26 @@ export class BookStorageService extends EntityStorage<BookData> {
       const data: any = await this.indexedDb.allWithProperty(this.booksStore, 'status', status);
 
       return data.target.result;
+    } finally {
+      this.indexedDb.close();
+      this.preloaderService.hide();
+    }
+  }
+
+
+  public async getAllByYear(year: number): Promise<BookData[]> {
+    try {
+      this.preloaderService.show();
+
+      if (year != null) {
+        await this.indexedDb.open(this.dbName);
+        const data: any = await this.indexedDb.allWithProperty(this.booksStore, 'endDateYear', year);
+        return data.target.result;
+      } else {
+        const data = await this.getAll();
+        const result = await _(data || []).where(item => item.endDateYear == null).promisify().toArray();
+        return result;
+      }
     } finally {
       this.indexedDb.close();
       this.preloaderService.hide();

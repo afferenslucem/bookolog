@@ -62,6 +62,16 @@ export class BookService extends EntityService<BookData, Book> {
       .toArray();
   }
 
+  public async getByYear(year: number): Promise<Book[]> {
+    const data = await this.typedStorage.getAllByYear(year);
+
+    return _(data)
+      .orderByDescending(item => item.endDateMonth || -1)
+      .thenByDescending(item => item.endDateDay || -1)
+      .select(item => this.convertFromDTO(item))
+      .toArray();
+  }
+
   public async getBySeries(guid: string): Promise<Book[]> {
     const data = await this.typedStorage.getAllBySeries(guid);
 
