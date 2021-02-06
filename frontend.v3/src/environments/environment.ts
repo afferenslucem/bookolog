@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'http://localhost:5000',
+  serverUrl: 'http://localhost:35000',
   restoreTimeSeconds: 60,
-  version: '0.3.22',
+  version: '0.3.23',
   filePath: '/assets/',
   notificationCloseTime: 3000,
 };

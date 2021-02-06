@@ -1,3 +1,4 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -70,6 +71,7 @@ import { ToReadBooksListComponent } from './components/to-read-books-list/to-rea
         MatInputModule,
         MatOptionModule,
         InputsModule,
+        ScrollingModule,
     ],
     exports: [
         DoneBooksListComponent,

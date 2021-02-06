@@ -1,1 +1,6 @@
-<app-books-by-years [books]="books$ | async"></app-books-by-years>
+<cdk-virtual-scroll-viewport [itemSize]="72" [minBufferPx]="350" [minBufferPx]="490" class="book-list">
+    <div *cdkVirtualFor="let book of books$ | async; let last = last; trackBy: bookTrackBy">
+        <app-done-book [routerLink]="['/book', book.guid]" class="book-list__item" [book]="book"></app-done-book>
+        <mat-divider [hidden]="last"></mat-divider>
+    </div>
+</cdk-virtual-scroll-viewport>
