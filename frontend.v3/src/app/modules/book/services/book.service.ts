@@ -66,6 +66,7 @@ export class BookService extends EntityService<BookData, Book> {
     const data = await this.typedStorage.getAllByYear(year);
 
     return _(data)
+      .where(item => item.status === BookStatus.Done)
       .orderByDescending(item => item.endDateMonth || -1)
       .thenByDescending(item => item.endDateDay || -1)
       .select(item => this.convertFromDTO(item))

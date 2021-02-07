@@ -4,6 +4,12 @@
 
   height: 100%;
   width: 100%;
+
+  &::ng-deep {
+    .cdk-virtual-scroll-content-wrapper {
+      max-width: 100%;
+    }
+  }
 }
 
 .years__meta {
