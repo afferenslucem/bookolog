@@ -53,25 +53,25 @@ $link-color: $azure;
 $split-line: 1px solid $split-color;
 
 // Header
-$header-height: 2.7rem;
+$header-height: 43px;
 
 // Lists
-$list-header-height: 2.2rem;
+$list-header-height: 35px;
 
 // Icons
-$icon-size: 1.25rem;
+$icon-size: 20px;
 
 // Media
 $phone-screen-width: 768px;
 
 // Font
-$micro-font-size: 0.5rem;
-$small-font-size: 0.75rem;
-$few-font-size: 0.9rem;
-$normal-font-size: 1rem;
-$big-font-size: 1.15rem;
-$large-font-size: 1.25rem;
-$huge-font-size: 1.5rem;
+$micro-font-size: 8px;
+$small-font-size: 12px;
+$few-font-size: 14px;
+$normal-font-size: 16px;
+$big-font-size: 1.18px;
+$large-font-size: 20px;
+$huge-font-size: 24px;
 
 $tiny-font-weight: 300;
 $normal-font-weight: 400;
@@ -91,7 +91,7 @@ $user-info-bg-color: $blue-ryb;
 
 // Indents
 
-$base-indent: 0.25rem;
+$base-indent: 4px;
 
 $ind-1: $base-indent * 1;
 $ind-2: $base-indent * 2;

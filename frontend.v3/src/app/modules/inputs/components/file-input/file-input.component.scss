@@ -3,9 +3,9 @@
 }
 
 .pic-input {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 0.25rem;
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,7 +16,7 @@
     }
 
     &__placeholder {
-        font-size: 1.5rem;
+        font-size: 24px;
     }
 
     &__result {

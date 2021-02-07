@@ -62,11 +62,11 @@ app-root {
 app-notifications-area {
   position: fixed;
 
-  bottom: 1rem;
-  left: 1rem;
+  bottom: 16px;
+  left: 16px;
   z-index: 1000;
 
-  width: calc(100% - 2rem);
+  width: calc(100% - 32px);
 }
 
 [hidden] {

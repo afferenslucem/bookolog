@@ -30,7 +30,7 @@
 
 mat-list {
   mat-list-item {
-    height: 2.2rem;
+    height: 35px;
   }
 }
 
@@ -49,6 +49,6 @@ mat-list {
   @extend .bottom;
   font-size: 11px;
 
-  right: 0.25rem;
+  right: 4px;
   left: unset;
 }
