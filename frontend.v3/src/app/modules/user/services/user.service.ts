@@ -38,7 +38,7 @@ export class UserService {
   }
 
   public clearStorage(): void {
-    localStorage.removeItem('user');
+    localStorage.clear();
     this._user = null;
   }
 

@@ -12,7 +12,7 @@ namespace backend.v2.Services
     {
         void UpdateLastSyncTime();
         Session Session { get; set; }
-        User User { get; }
+        User User { get; set; }
         DateTime? LastSyncTime { get; }
     }
 
@@ -21,6 +21,7 @@ namespace backend.v2.Services
         private HttpContext context;
 
         private Session session;
+        private User user;
 
         public UserSession(ISessionService sessionService)
         {
@@ -45,11 +46,13 @@ namespace backend.v2.Services
         public User User
         {
             get
-            {
-                var result = this.session.User;
-                result.LastSyncTime = this.LastSyncTime;
-                
-                return result;
+            {             
+                user.LastSyncTime = this.LastSyncTime;   
+                return user;
+            }
+            set
+            {                
+                this.user = value;
             }
         }
 
@@ -57,7 +60,7 @@ namespace backend.v2.Services
         {
             get
             {
-                var saved = this.session.Get("LastSyncTime");
+                var saved = this.session != null ? this.session.Get("LastSyncTime") : null;
 
                 return DateSessionUtils.Parse(saved) ?? null;
             }

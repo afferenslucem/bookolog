@@ -21,22 +21,25 @@ namespace backend.v2.Authentication.Services
     public class JWTAuthenticationHandler : AuthenticationHandler<JWTAuthenticationOptions>
     {
         private readonly IAuthenticationService authenticationService;
-        private readonly ISessionService sessionService;
+        private readonly IJWTTokenManager tokenManager;
         private readonly IUserSession userSession;
+        private readonly IUserService userService;
 
         public JWTAuthenticationHandler(IOptionsMonitor<JWTAuthenticationOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
             IAuthenticationService authenticationService,
-            ISessionService sessionService,
             IUserSession userSession,
+            IUserService userService,
+            IJWTTokenManager tokenManager,
             ILogger<JWTAuthenticationService> jwtLogger
             )
             : base(options, logger, encoder, clock)
         {
-            this.sessionService = sessionService;
+            this.tokenManager = tokenManager;
             this.userSession = userSession;
+            this.userService = userService;
             this.authenticationService = authenticationService;
         }
         protected async override Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -45,34 +48,34 @@ namespace backend.v2.Authentication.Services
 
             try
             {
-                if (!Context.Request.Cookies.ContainsKey(JWTDefaults.CookieName))
+                if (!Context.Request.Headers.ContainsKey(JWTDefaults.AccessHeaderName) ||
+                    !Context.Request.Headers.ContainsKey(JWTDefaults.RefrashHeaderName))
                 {
                     return AuthenticateResult.NoResult();
                 }
 
-                var cookie = Context.Request.Cookies[JWTDefaults.CookieName];
-                var session = await this.sessionService.ParseToken(cookie);
+                var accessToken = Context.Request.Headers[JWTDefaults.AccessHeaderName];
+                var refrashToken = Context.Request.Headers[JWTDefaults.RefrashHeaderName];
 
-                if (session.RefreshExpired < DateTime.UtcNow)
+                var accessTokenData = this.tokenManager.ReadToken(accessToken);
+                var refrashTokenData = this.tokenManager.ReadToken(refrashToken);
+
+                if (refrashTokenData.ValidityDate < DateTime.UtcNow)
                 {
                     this.OnRefreshExpired();
                     return AuthenticateResult.NoResult();
                 }
-                else if (session.AccessExpired < DateTime.UtcNow)
+                else if (accessTokenData.ValidityDate < DateTime.UtcNow)
                 {
-                    await this.OnAccessExpired(session);
+                    this.OnAccessExpired(accessTokenData);
+                }
+                else {
+                    this.CopyTokens();
                 }
 
-                var ticket = this.Authenticate(session);
+                var ticket = await this.Authenticate(accessTokenData);
 
                 return AuthenticateResult.Success(ticket);
-            }
-            catch (CookieParseException e)
-            {
-                this.Logger.LogInformation(409, e.Message, e);
-
-                Context.Response.StatusCode = 409;
-                return AuthenticateResult.Fail("Cookies parse exception");
             }
             catch (Exception e)
             {
@@ -84,25 +87,41 @@ namespace backend.v2.Authentication.Services
         private void OnRefreshExpired()
         {
             this.Logger.LogDebug("Refresh time expired");
-            this.DeleteCookies();
+            this.DeleteTokens();
             this.Logger.LogDebug("Cookies deleted");
         }
 
-        private async Task OnAccessExpired(Session session)
+        private void OnAccessExpired(TokenData data)
         {
             this.Logger.LogDebug("Accept time expired");
-            var token = await sessionService.UpdateToken(session);
-            this.RenewCookie(token);
+
+            var accessToken = this.GetAccessToken(data);
+            var refrashToken = this.GetRefrashToken(data);
+
+            this.RenewTokens(accessToken, refrashToken);
             this.Logger.LogDebug("Cookies renewed");
         }
+        
+        private string GetAccessToken(TokenData data) {
+            data.ValidityDate = this.tokenManager.NextAccessTime;
 
-        private AuthenticationTicket Authenticate(Session session)
+            return tokenManager.GenerateToken(data);
+        }
+
+        private string GetRefrashToken(TokenData data) {
+            data.ValidityDate = this.tokenManager.NextRefrashTime;
+
+            return tokenManager.GenerateToken(data);
+        }
+
+        private async Task<AuthenticationTicket> Authenticate(TokenData data)
         {
-            this.userSession.Session = session;
+            var user = await this.userService.GetById(data.UserId);
+            this.userSession.User = user;
 
             var claims = new Claim[] {
-                    new Claim(ClaimTypes.Name, session.Login),
-                    new Claim(ClaimTypes.NameIdentifier, session.UserId.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, data.UserId.ToString()),
+                    new Claim(ClaimTypes.Sid, data.SessionGuid.ToString()),
                 };
             var identity = new ClaimsIdentity(claims, JWTDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
@@ -111,25 +130,25 @@ namespace backend.v2.Authentication.Services
             return ticket;
         }
 
-        private void RenewCookie(string token)
+        private void RenewTokens(string access, string refrash)
         {
-            this.DeleteCookies();
-            this.AppendCookie(token);
+            this.AppendTokens(access, refrash);
         }
 
-        private void DeleteCookies()
-        {
-            Context.Response.Cookies.Delete(".AspNetCore.History");
+        private void CopyTokens() {
+            this.Context.Response.Headers[JWTDefaults.AccessHeaderName] = this.Context.Request.Headers[JWTDefaults.AccessHeaderName];
+            this.Context.Response.Headers[JWTDefaults.RefrashHeaderName] = this.Context.Request.Headers[JWTDefaults.RefrashHeaderName];
         }
-        private void AppendCookie(string token)
+
+        private void DeleteTokens()
         {
-            var age = TimeSpan.FromSeconds(Config.Cookie.RefrashTimeSeconds);
-            Context.Response.Cookies.Append(".AspNetCore.History", token, new CookieOptions
-            {
-                HttpOnly = true,
-                MaxAge = age,
-                SameSite = SameSiteMode.Strict,
-            });
+            Context.Response.Headers.Remove(JWTDefaults.AccessHeaderName);
+            Context.Response.Headers.Remove(JWTDefaults.RefrashHeaderName);
+        }
+        private void AppendTokens(string access, string refrash)
+        {
+            Context.Response.Headers[JWTDefaults.AccessHeaderName] = access;
+            Context.Response.Headers[JWTDefaults.RefrashHeaderName] = refrash;
         }
     }
 }

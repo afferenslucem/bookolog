@@ -5,174 +5,35 @@ using System.Threading.Tasks;
 using backend.Models.Authentication;
 using Newtonsoft.Json;
 using backend.v2.Utils;
-using System.Collections.Generic;
-using System.Security.Claims;
 using backend.v2.Authentication.Models;
-using System.Security.Cryptography;
-using backend.Exceptions.AuthenticationExceptions;
 
 namespace backend.v2.Services
 {
     public interface ISessionService
     {
-        Task<string> GetToken(long userId, string login, ClaimsPrincipal principal);
-        Task<string> UpdateToken(Session session);
-        Task<Session> Get(Guid guid, bool withUser = false);
+        Task<Session> Get(Guid guid);
         Task<Session> Save(Session session);
         Task Update(Session session);
-        Task UpdateState(Session session);
         Task Delete(Guid guid);
-        Task<Session> ParseToken(string token);
-
-        DateTime NextRefrashDate { get; }
     }
 
     public class SessionService : ISessionService
     {
-        public DateTime NextAccessDate
-        {
-            get
-            {
-                return DateTime.UtcNow.AddSeconds(Config.Cookie.AcceptTimeSeconds);
-            }
-        }
-        public DateTime NextRefrashDate
-        {
-            get
-            {
-                return DateTime.UtcNow.AddSeconds(Config.Cookie.RefrashTimeSeconds);
-            }
-        }
-
-        private readonly AESCrypter CookieCrypter;
-
         private ISessionStorage storage;
 
         public SessionService()
         {
             this.storage = new SessionStorage();
-
-            this.CookieCrypter = new AESCrypter(
-                Config.SessionChiper.Key,
-                Config.SessionChiper.Salt
-                );
         }
 
         public SessionService(ISessionStorage storage)
         {
             this.storage = storage;
-
-
-            this.CookieCrypter = new AESCrypter(
-                Config.SessionChiper.Key,
-                Config.SessionChiper.Salt
-                );
         }
 
-        ~SessionService()
+        public async Task<Session> Get(Guid guid)
         {
-            this.CookieCrypter.Dispose();
-        }
-
-        public async Task<string> GetToken(long userId, string login, ClaimsPrincipal principal)
-        {
-            var token = JsonConvert.SerializeObject(new TokenData
-            {
-                Login = login,
-                UserId = userId
-            });
-
-            using var chiphrator = new AESCrypter();
-
-            var cookie = new CookieData
-            {
-                AccessExpired = this.NextAccessDate,
-                RefreshExpired = this.NextRefrashDate,
-                Guid = Guid.NewGuid(),
-                TokenData = chiphrator.Encode(token),
-            };
-
-            var cookieJson = JsonConvert.SerializeObject(cookie);
-
-            var session = this.GetSession(cookie, userId, chiphrator);
-
-            await this.Save(session);
-
-            return this.CookieCrypter.Encode(cookieJson);
-        }
-
-        public async Task<string> UpdateToken(Session session)
-        {
-            var token = JsonConvert.SerializeObject(new TokenData
-            {
-                Login = session.Login,
-                UserId = session.UserId
-            });
-
-            using var chiphrator = new AESCrypter();
-
-            var cookie = new CookieData
-            {
-                AccessExpired = this.NextAccessDate,
-                RefreshExpired = this.NextRefrashDate,
-                Guid = session.Guid.Value,
-                TokenData = chiphrator.Encode(token),
-            };
-
-            var cookieJson = JsonConvert.SerializeObject(cookie);
-
-            session.SessionKey = chiphrator.Key;
-            session.SessionSalt = chiphrator.IV;
-
-            await this.Update(session);
-
-            return this.CookieCrypter.Encode(cookieJson);
-        }
-
-
-        private Session GetSession(CookieData cookie, long userId, AESCrypter crypter)
-        {
-            return new Session
-            {
-                Guid = cookie.Guid,
-                AccessExpired = cookie.AccessExpired,
-                RefreshExpired = cookie.RefreshExpired,
-                UserId = userId,
-                SessionKey = crypter.Key,
-                SessionSalt = crypter.IV,
-            };
-        }
-
-        public async Task<Session> ParseToken(string token)
-        {
-            try
-            {
-                var cookieJson = this.CookieCrypter.Decode(token);
-                var cookie = JsonConvert.DeserializeObject<CookieData>(cookieJson);
-
-                var session = await this.Get(cookie.Guid, true);
-
-                var crypter = new AESCrypter(session.SessionKey, session.SessionSalt);
-
-                var tokenDataJson = crypter.Decode(cookie.TokenData);
-                var tokenData = JsonConvert.DeserializeObject<TokenData>(tokenDataJson);
-
-                var result = this.GetSession(cookie, tokenData.UserId, crypter);
-                result.StateJson = session.StateJson;
-                result.User = session.User;
-                result.Login = tokenData.Login;
-
-                return result;
-            }
-            catch (CryptographicException ex)
-            {
-                throw new CookieParseException();
-            }
-        }
-
-        public async Task<Session> Get(Guid guid, bool withUser = false)
-        {
-            return await this.storage.Get(guid, withUser);
+            return await this.storage.Get(guid);
         }
 
         public async Task<Session> Save(Session session)
@@ -183,11 +44,6 @@ namespace backend.v2.Services
         public async Task Update(Session session)
         {
             await this.storage.Update(session);
-        }
-
-        public async Task UpdateState(Session session)
-        {
-            await this.storage.UpdateState(session);
         }
 
         public async Task Delete(Guid guid)

@@ -9,32 +9,12 @@ namespace backend.Models.Authentication
 {
     public class Session
     {
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
         [Column(TypeName = "uuid")]
-        public Guid? Guid { get; set; }
+        public Guid Guid { get; set; }
 
-        public User User { get; set; }
-
-        public long UserId { get; set; }
-
-        [Column(TypeName = "varchar(256)")]
-        public string SessionKey { get; set; }
-
-        [Column(TypeName = "varchar(256)")]
-        public string SessionSalt { get; set; }
-
-        public DateTime AccessExpired { get; set; }
-        public DateTime RefreshExpired { get; set; }
+        public DateTime ValidityExpired {get; set;}
 
         public string StateJson { get; set; }
-
-        [NotMapped]
-        public IEnumerable<Claim> Claims  {get; set;}
-
-        [NotMapped]
-        public string Login {get; set;}
 
         [NotMapped]
         private Dictionary<string, string> State {
@@ -70,17 +50,6 @@ namespace backend.Models.Authentication
             state[key] = null;
 
             this.State = state;
-        }
-
-        public Session WithoutPrivate()
-        {
-            return new Session
-            {
-                Guid = this.Guid,
-                UserId = this.UserId,
-                AccessExpired = this.AccessExpired,
-                RefreshExpired = this.RefreshExpired,
-            };
         }
     }
 }

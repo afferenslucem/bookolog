@@ -1,3 +1,4 @@
+using backend.v2.Authentication.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,11 +10,14 @@ namespace backend.v2.Configuration
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(corsPolicy, builder => builder
-                    .WithOrigins(Config.AllowedOrigins)
-                    .AllowCredentials()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+                options.AddPolicy(corsPolicy, 
+                    builder => builder
+                        .WithOrigins(Config.AllowedOrigins)
+                        .AllowCredentials()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .WithExposedHeaders(JWTDefaults.AccessHeaderName, JWTDefaults.RefrashHeaderName)
+                );
             });
         }
     }

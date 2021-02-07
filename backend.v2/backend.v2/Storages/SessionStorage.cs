@@ -5,80 +5,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Models.Authentication;
+using Npgsql;
 
 namespace backend.Storages
 {
     public interface ISessionStorage
-    {   
-        Task<Session> Get(Guid guid, bool withUser = false);
+    {
+        Task<Session> Get(Guid guid);
         Task<Session> Save(Session session);
         Task Update(Session session);
-        Task UpdateState(Session session);
         Task Delete(Guid guid);
     }
 
-    public class SessionStorage: ISessionStorage
+    public class SessionStorage : ISessionStorage
     {
         public async Task<Session> Save(Session session)
         {
             using var context = new BookologContext();
-            var set = context.Sessions;
 
-            await set.AddAsync(session);
+            var guid = new NpgsqlParameter("guid", session.Guid);
+            var state = new NpgsqlParameter("state", (object)session.StateJson ?? DBNull.Value);
+            var validity = new NpgsqlParameter("validity", session.ValidityExpired);
 
-            await context.SaveChangesAsync();
+            _ = await context.Database.ExecuteSqlRawAsync("INSERT INTO \"Sessions\" VALUES(@guid, @state, @validity)", guid, state, validity);
 
             return session;
         }
-        
+
         public async Task Update(Session session)
         {
             using var context = new BookologContext();
-            var set = context.Sessions;
 
-            set.Update(session);
+            var guid = new NpgsqlParameter("guid", session.Guid);
+            var state = new NpgsqlParameter("state", (object)session.StateJson ?? DBNull.Value);
+            var validity = new NpgsqlParameter("validity", session.ValidityExpired);
 
-            await context.SaveChangesAsync();
+            _ = await context.Database.ExecuteSqlRawAsync("UPDATE \"Sessions\" SET \"StateJson\" = @state, \"ValidityExpired\" = @validity WHERE \"Guid\" = @guid", guid, state, validity);
         }
-        
-        public async Task UpdateState(Session session)
-        {
-            using var context = new BookologContext();
-            var set = context.Sessions;
 
-            var entity = new Session {Guid = session.Guid, StateJson = session.StateJson};
-
-            set.Attach(entity);
-            context.Entry(entity).Property(item => item.StateJson).IsModified = true;
-
-            await context.SaveChangesAsync();
-        }
-        
         public async Task Delete(Guid guid)
         {
             using var context = new BookologContext();
-            var set = context.Sessions;
 
-            var session = set.Where(item => item.Guid == guid).Take(1);
+            var guidParam = new NpgsqlParameter("guid", guid);
 
-            set.RemoveRange(session);
-
-            await context.SaveChangesAsync();
+            _ = await context.Database.ExecuteSqlRawAsync("DELETE FROM \"Sessions\" WHERE \"Guid\" = @guid", guidParam);
         }
-        
-        public async Task<Session> Get(Guid guid, bool withUser = false)
+
+        public async Task<Session> Get(Guid guid)
         {
             using var context = new BookologContext();
-            var set = context.Sessions;
 
-            if(withUser) {                
-                var session = await set.Include(item => item.User).Include(item => item.User.Avatar).Where(item => item.Guid == guid).FirstAsync();
-                return session;
-            }
-            else {
-                var session = await set.Where(item => item.Guid == guid).FirstAsync();
-                return session;
-            }
+            var session = await context.Sessions
+                .Where(item => item.Guid == guid)
+                .OrderByDescending(item => item.ValidityExpired)
+                .FirstOrDefaultAsync();
+
+            return session;
         }
     }
 }

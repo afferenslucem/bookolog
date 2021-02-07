@@ -17,21 +17,21 @@ namespace backend.v2.Authentication.Services
     public class JWTAuthenticationService : AuthenticationService, IAuthenticationService
     {
         private readonly ILogger<JWTAuthenticationService> logger;
-        private readonly ISessionService sessionService;        
-        private readonly IUserSession userSession;
+        private readonly ISessionService sessionService;
+        private readonly IJWTTokenManager tokenManager;
 
         public JWTAuthenticationService(
             IAuthenticationSchemeProvider schemes,
             IAuthenticationHandlerProvider handlers,
             IClaimsTransformation transform,
             IOptions<AuthenticationOptions> options,
+            IJWTTokenManager tokenManager,
             ISessionService sessionService,
-            IUserSession userSession,
             ILogger<JWTAuthenticationService> logger
             ): base(schemes, handlers, transform, options)
         {
+            this.tokenManager = tokenManager;
             this.sessionService = sessionService;
-            this.userSession = userSession;
             this.logger = logger;
         }
 
@@ -52,53 +52,65 @@ namespace backend.v2.Authentication.Services
 
         public override async Task SignInAsync(HttpContext context, string scheme, ClaimsPrincipal principal, AuthenticationProperties properties)
         {
-            var login = principal.FindFirstValue(ClaimTypes.Name);
-            var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var token = await this.sessionService.GetToken(long.Parse(userId), login, principal);
-
-            this.AppendCookie(context, token);
+            await Task.Run(() => this.SetTokens(context, principal));
             this.logger.LogDebug("Logged in successful");
-        }
-
-        private void AppendCookie(HttpContext context, string token)
-        {
-            var age = TimeSpan.FromSeconds(Config.Cookie.RefrashTimeSeconds);
-            context.Response.Cookies.Append(".AspNetCore.History", token, new CookieOptions
-            {
-                HttpOnly = true,
-                MaxAge = age,
-                SameSite = SameSiteMode.Strict,
-            });
         }
 
         public override async Task SignOutAsync(HttpContext context, string scheme, AuthenticationProperties properties)
         {
-            await this.RemoveSession(context);
+            await Task.Run(() => this.RemoveTokens(context));
+            this.RemoveSession(context);
             this.logger.LogDebug("Logged out successful");
         }
-        private async Task RemoveSession(HttpContext context)
-        {
-            if (!context.Request.Cookies.ContainsKey(JWTDefaults.CookieName))
-            {
-                return;
-            }
 
-            try
-            {
-                var cookie = context.Request.Cookies[JWTDefaults.CookieName];
-                var session = await this.sessionService.ParseToken(cookie);
+        private void RemoveSession(HttpContext context) {
+            var sId = context.User.FindFirstValue(ClaimTypes.Sid);
 
-                await this.sessionService.Delete(session.Guid.Value);
-            }
-            catch (Exception e)
-            {
-                this.logger.LogWarning("Could not delete cookies from DB", e);
-            }
-            finally {
-                context.Response.Cookies.Delete(".AspNetCore.History");
+            if (sId != null) {
+                var guid = new Guid(sId);
+
+                _ = this.sessionService.Delete(guid);
             }
         }
 
+        private void SetTokens(HttpContext context, ClaimsPrincipal principal) {
+            var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+            var sessionGuid = Guid.NewGuid();
+
+            var tokenData = this.GetTokenData(sessionGuid, long.Parse(userId));
+
+            var accessToken = this.GetAccessToken(tokenData);
+            var refrashToken = this.GetRefrashToken(tokenData);
+
+            this.AppendTokens(context, accessToken, refrashToken);
+        }
+
+        private TokenData GetTokenData(Guid sessionGuid, long userId) {
+            return new TokenData() {
+                UserId = userId,
+                SessionGuid = sessionGuid,
+            };
+        }
+
+        private string GetAccessToken(TokenData data) {
+            data.ValidityDate = this.tokenManager.NextAccessTime;
+
+            return tokenManager.GenerateToken(data);
+        }
+
+        private string GetRefrashToken(TokenData data) {
+            data.ValidityDate = this.tokenManager.NextRefrashTime;
+
+            return tokenManager.GenerateToken(data);
+        }
+
+        private void AppendTokens(HttpContext context, string access, string refrash) {
+            context.Response.Headers[JWTDefaults.AccessHeaderName] = access;
+            context.Response.Headers[JWTDefaults.RefrashHeaderName] = refrash;
+        }
+        private void RemoveTokens(HttpContext context) {
+            context.Response.Headers.Remove(JWTDefaults.AccessHeaderName);
+            context.Response.Headers.Remove(JWTDefaults.RefrashHeaderName);
+        }
     }
 }

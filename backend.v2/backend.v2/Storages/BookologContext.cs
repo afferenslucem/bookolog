@@ -34,6 +34,15 @@ namespace backend.Storages
             .HasOne(item => item.Collection)
             .WithMany(item => item.Books)
             .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Session>().HasQueryFilter(item => item.ValidityExpired > DateTime.Now);
+
+            modelBuilder.Entity<Session>()
+                .HasNoKey()
+                .HasIndex("ValidityExpired");
+
+            modelBuilder.Entity<Session>()
+                .HasIndex("Guid");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

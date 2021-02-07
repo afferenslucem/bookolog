@@ -26,6 +26,7 @@ namespace backend.v2.Configuration
 
             services.AddScoped<IAuthenticationService, JWTAuthenticationService>();
             services.AddSingleton<ISessionService, SessionService>();
+            services.AddSingleton<IJWTTokenManager, JWTTokenManager>();
             services.AddSingleton<IPostConfigureOptions<JWTAuthenticationOptions>, JWTAuthenticationPostConfigureOptions>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
