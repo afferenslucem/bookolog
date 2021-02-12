@@ -1,8 +1,10 @@
 <div class="book-list" *ngIf="(books$ | async) as books">
-  <div *ngFor="let book of books; let last = last; trackBy: bookTrackBy">
-    <app-in-progress-book [routerLink]="['/book', book.guid]"
-      class="book-list__item" [book]="book"></app-in-progress-book>
-    <mat-divider *ngIf="!last"></mat-divider>
-  </div>
-  <span *ngIf="+(books?.length) === 0" i18n="@@empty-book-list">Здесь пока ничего нет</span>
+  <cdk-virtual-scroll-viewport [itemSize]="80" [minBufferPx]="350" [maxBufferPx]="490" class="book-list">
+    <div *cdkVirtualFor="let book of books$ | async; let last = last; trackBy: bookTrackBy">
+      <app-in-progress-book [routerLink]="['/book', book.guid]"
+        class="book-list__item" [book]="book"></app-in-progress-book>
+      <mat-divider *ngIf="!last"></mat-divider>
+    </div>
+  </cdk-virtual-scroll-viewport>
+  <span *ngIf="+(books?.length) === 0">Здесь пока ничего нет</span>
 </div>

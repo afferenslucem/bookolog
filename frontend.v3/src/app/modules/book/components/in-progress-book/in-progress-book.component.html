@@ -1,19 +1,36 @@
 <app-book-header class="book-line__name" [book]="innerBook"></app-book-header>
-<div class="book-line__authors truncate-text" *ngIf="authors.length > 0">
-  <small>{{authors | join}}</small>
+<div class="book-line__authors truncate-text">
+  <small *ngIf="authors.length; else noAuthors">{{
+    authors | capitalize | join
+  }}</small>
+  <ng-template #noAuthors>
+    <small>Нет авторов</small>
+  </ng-template>
 </div>
 <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
-<div class="book-line__progress-data dark-text" *ngIf="progressValue || startDate">
-  <small class="progress" *ngIf="progressValue">
-    <ng-container [ngSwitch]="type">
-      <app-book-time-progress *ngSwitchCase="BookType.Audio" [done]="done" [total]="total"></app-book-time-progress>
-      <app-book-pages-progress *ngSwitchDefault [done]="done" [total]="total"></app-book-pages-progress>
+<div
+  class="book-line__progress-data dark-text"
+  *ngIf="progressValue || startDate; else noDates"
+>
+  <small class="progress">
+    <ng-container [ngSwitch]="type" *ngIf="done && total">
+      <app-book-time-progress
+        *ngSwitchCase="BookType.Audio"
+        [done]="done"
+        [total]="total"
+      ></app-book-time-progress>
+      <app-book-pages-progress
+        *ngSwitchDefault
+        [done]="done"
+        [total]="total"
+      ></app-book-pages-progress>
     </ng-container>
   </small>
-  <div class="separator">
-
-  </div>
+  <div class="separator"></div>
   <small *ngIf="startDate">
     <app-date-range [startDate]="startDate" [endDate]="null"></app-date-range>
   </small>
 </div>
+<ng-template #noDates>
+  <small class="book-line__progress-data dark-text">Нет даты</small>
+</ng-template>
