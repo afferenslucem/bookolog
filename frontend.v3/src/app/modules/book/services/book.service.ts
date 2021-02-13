@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import _ from 'declarray';
-import { EntityService } from 'src/app/main/services/entity.service';
-import { getConsoleLogger } from '../../../main/app.logging';
-import { NotificationService } from '../../notification/services/notification.service';
-import { Book } from '../models/book';
-import { BookData } from '../models/book-data';
-import { BookStatus } from '../models/book-status';
-import { BookOriginService } from './book.origin.service';
-import { BookStorageService } from './book.storage.service';
+import {EntityService} from 'src/app/main/services/entity.service';
+import {getConsoleLogger} from '../../../main/app.logging';
+import {NotificationService} from '../../notification/services/notification.service';
+import {Book} from '../models/book';
+import {BookData} from '../models/book-data';
+import {BookStatus} from '../models/book-status';
+import {BookOriginService} from './book.origin.service';
+import {BookStorageService} from './book.storage.service';
+import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +49,7 @@ export class BookService extends EntityService<BookData, Book> {
     books.forEach(item => {
       item.collectionGuid = null;
       item.collectionOrder = null;
-    })
+    });
 
     await this.saveOrUpdateMany(books);
   }
@@ -115,12 +116,17 @@ export class BookService extends EntityService<BookData, Book> {
       createDate: this.formatDate(book.createDate),
       deleted: book.deleted || 0,
       shouldSync: book.shouldSync || 0,
+      progressType: book.progressType
     };
 
     return data;
   }
 
   public convertFromDTO(data: BookData): Book {
+    if (data.progressType == null) {
+      data.progressType = ProgressAlgorithmType.Done;
+    }
+
     return new Book(data);
   }
 }

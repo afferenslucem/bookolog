@@ -60,6 +60,9 @@ namespace backend.Models
         [Column(TypeName = "timestamptz")]
         public DateTime? DeleteDate { get; set; }
 
+        [Column(TypeName = "varchar(16)")]
+        public string ProgressType { get; set; }
+
         public DateTime? StartDate { 
             get {
                 if (!this.StartDateYear.HasValue) return null;

@@ -1,9 +1,10 @@
-import { Entity } from '../../../main/models/entity';
-import { Collection } from '../../collection/models/collection';
-import { BookData } from './book-data';
-import { BookDate } from './book-date';
-import { BookStatus } from './book-status';
-import { BookType } from './book-type';
+import {Entity} from '../../../main/models/entity';
+import {Collection} from '../../collection/models/collection';
+import {BookData} from './book-data';
+import {BookDate} from './book-date';
+import {BookStatus} from './book-status';
+import {BookType} from './book-type';
+import {ProgressAlgorithmType} from './progress-algorithm-type';
 
 export class Book extends Entity {
   public name: string;
@@ -23,6 +24,23 @@ export class Book extends Entity {
   public endDate?: Date;
   public type: BookType;
   public note?: string;
+  public progressType: ProgressAlgorithmType;
+
+  public get done(): number {
+    if (this.progressType === ProgressAlgorithmType.Left) {
+      return this.totalUnits - this.doneUnits;
+    } else {
+      return this.doneUnits;
+    }
+  }
+
+  public set done(v: number) {
+    if (this.progressType === ProgressAlgorithmType.Left) {
+      this.doneUnits = this.totalUnits - v;
+    } else {
+      this.doneUnits = v;
+    }
+  }
 
   public constructor(data: BookData) {
     super(data);
@@ -51,6 +69,7 @@ export class Book extends Entity {
     this.endDate = this.getDate(data.endDate, this.finished);
     this.type = data.type;
     this.note = data.note;
+    this.progressType = data.progressType;
   }
 
   private getDate(date: string | Date, bDate: BookDate): Date {

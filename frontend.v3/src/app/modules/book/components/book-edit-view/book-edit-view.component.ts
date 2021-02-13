@@ -1,24 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import _ from 'declarray';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { getConsoleLogger } from '../../../../main/app.logging';
-import { Action } from '../../../../main/resolvers/action.resolver';
-import { DateUtils } from '../../../../main/utils/date-utils';
-import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
-import { StringComparer } from '../../../../main/utils/string.comparer';
-import { Collection } from '../../../collection/models/collection';
-import { NotificationService } from '../../../notification/services/notification.service';
-import { TitleService } from '../../../ui/service/title.service';
-import { Book } from '../../models/book';
-import { BookData } from '../../models/book-data';
-import { BookDate } from '../../models/book-date';
-import { BookStatus } from '../../models/book-status';
-import { BookType } from '../../models/book-type';
-import { BookService } from '../../services/book.service';
-import { Location } from '@angular/common';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {getConsoleLogger} from '../../../../main/app.logging';
+import {Action} from '../../../../main/resolvers/action.resolver';
+import {DateUtils} from '../../../../main/utils/date-utils';
+import {FuzzySearch} from '../../../../main/utils/fuzzy-search';
+import {StringComparer} from '../../../../main/utils/string.comparer';
+import {Collection} from '../../../collection/models/collection';
+import {NotificationService} from '../../../notification/services/notification.service';
+import {TitleService} from '../../../ui/service/title.service';
+import {Book} from '../../models/book';
+import {BookData} from '../../models/book-data';
+import {BookDate} from '../../models/book-date';
+import {BookStatus} from '../../models/book-status';
+import {BookType} from '../../models/book-type';
+import {BookService} from '../../services/book.service';
+import {Location} from '@angular/common';
+import {ProgressAlgorithmType} from '../../models/progress-algorithm-type';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -29,6 +30,7 @@ export class BookEditViewComponent implements OnInit {
   public book: Book;
   public BookType: typeof BookType = BookType;
   public BookStatus: typeof BookStatus = BookStatus;
+  public ProgressAlgorithm: typeof ProgressAlgorithmType = ProgressAlgorithmType;
   public form: FormGroup = null;
   public authors: string[] = [];
   public tags: string[] = [];
@@ -69,7 +71,7 @@ export class BookEditViewComponent implements OnInit {
     private router: Router,
   ) {
     activatedRoute.data.subscribe(data => {
-      this.book = Object.assign({}, data.book || new Book(this.defaultValue));
+      this.book = data.book || new Book(this.defaultValue);
 
       if (data.status) {
         this.book.status = data.status;
@@ -111,6 +113,18 @@ export class BookEditViewComponent implements OnInit {
     return this.form.get('genre').value;
   }
 
+  public get progressAlgorithm(): ProgressAlgorithmType {
+    return this.form.get('progressType').value;
+  }
+
+  public get progressAlgorithmPreference(): ProgressAlgorithmType {
+    return localStorage.getItem('progressAlgorithmPreference') as ProgressAlgorithmType;
+  }
+
+  public set progressAlgorithmPreference(v: ProgressAlgorithmType) {
+    localStorage.setItem('progressAlgorithmPreference', v);
+  }
+
   public ngOnInit(): void {
     this.titleService.setBookEdit();
   }
@@ -118,6 +132,8 @@ export class BookEditViewComponent implements OnInit {
   public async submit(): Promise<void> {
     try {
       const data = Object.assign(this.book, this.form.value) as Book;
+
+      data.done = data.doneUnits;
 
       data.modifyDate = DateUtils.nowUTC;
 
@@ -219,17 +235,20 @@ export class BookEditViewComponent implements OnInit {
       type: new FormControl(book.type),
       started: new FormControl(book.started),
       finished: new FormControl(book.finished),
-      doneUnits: new FormControl(book.doneUnits || null),
+      doneUnits: new FormControl(book.done || null),
       totalUnits: new FormControl(book.totalUnits || null),
       authors: new FormControl(book.authors),
       tags: new FormControl(book.tags),
       note: new FormControl(book.note),
+      progressType: new FormControl(this.book.progressType || this.progressAlgorithmPreference || ProgressAlgorithmType.Done),
     });
 
     this._filteredGenres = this.form.get('genre').valueChanges.pipe(
       startWith(this.genre || ''),
       map(item => new FuzzySearch().search(this._genres, item)),
     );
+
+    this.form.get('progressType').valueChanges.subscribe(v => this.progressAlgorithmPreference = v);
 
     this.form.get('status').valueChanges.subscribe(status => this.onStatusChange(status));
   }

@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <mat-form-field appearance="fill">
-    <mat-label i18n="book name label@@book__label_name">Название</mat-label>
+    <mat-label>Название</mat-label>
     <input matInput formControlName="name" type="text" required autocomplete="off"/>
     <mat-error *ngIf="form.get('name').invalid" i18n>
       Это обязательное поле
@@ -10,12 +10,12 @@
   <app-book-tags-input [list]="authors" formControlName="authors" header="Авторы"></app-book-tags-input>
 
   <mat-form-field appearance="fill">
-    <mat-label i18n="book year label@@book__label_year">Год выпуска</mat-label>
+    <mat-label>Год выпуска</mat-label>
     <input matInput formControlName="year" type="number"/>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label i18n="book genre label@@book__label_genre">Жанр</mat-label>
+    <mat-label>Жанр</mat-label>
     <input matInput
            formControlName="genre"
            type="text"
@@ -48,39 +48,47 @@
   <app-book-tags-input [list]="tags" formControlName="tags" header="Теги"></app-book-tags-input>
 
   <mat-form-field appearance="fill">
-    <mat-label i18n="book status label@@book__label_status">Статус</mat-label>
+    <mat-label>Статус</mat-label>
     <mat-select formControlName="status">
-      <mat-option [value]="BookStatus.ToRead" i18n="book status@@book__status_to-read">К прочтению</mat-option>
-      <mat-option [value]="BookStatus.InProgress" i18n="book status@@book__status_in-progress">Читаю</mat-option>
-      <mat-option [value]="BookStatus.Done" i18n="book status@@book__status_done">Прочитана</mat-option>
+      <mat-option [value]="BookStatus.ToRead">К прочтению</mat-option>
+      <mat-option [value]="BookStatus.InProgress">Читаю</mat-option>
+      <mat-option [value]="BookStatus.Done">Прочитана</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label i18n="book authors label@@book__label_type">Тип книги</mat-label>
+    <mat-label>Тип книги</mat-label>
     <mat-select formControlName="type">
-      <mat-option [value]="BookType.Paper" i18n="book type paper@@book__type_paper">Бумажная книга</mat-option>
-      <mat-option [value]="BookType.Electronic" i18n="book type electronic@@book__type_electronic">Электронная книга
+      <mat-option [value]="BookType.Paper">Бумажная книга</mat-option>
+      <mat-option [value]="BookType.Electronic">Электронная книга
       </mat-option>
-      <mat-option [value]="BookType.Audio" i18n="book type audio@@book__type_audio">Аудиокнига</mat-option>
+      <mat-option [value]="BookType.Audio">Аудиокнига</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" [hidden]="status !== BookStatus.InProgress">
+    <mat-label>Прогресс</mat-label>
+    <mat-select formControlName="progressType">
+      <mat-option [value]="ProgressAlgorithm.Done">{{type == BookType.Audio ? 'Прослушано' : 'Прочитано'}}</mat-option>
+      <mat-option [value]="ProgressAlgorithm.Left">Осталось</mat-option>
     </mat-select>
   </mat-form-field>
 
   <div class="book-edit__progress" [ngSwitch]="type" [hidden]="status !== BookStatus.InProgress">
     <div class="book-edit__progress_audio" *ngSwitchCase="BookType.Audio">
       <div>
-        <mat-label i18n="book edit audio progress label@@book-edit__label_audio-progress">Прослушано</mat-label>
+        <mat-label>Прослушано</mat-label>
         <app-book-time-input formControlName="doneUnits"></app-book-time-input>
       </div>
 
       <div>
-        <mat-label i18n="book edit audio total label@@book-edit__label_total-audio-progress">Всего</mat-label>
+        <mat-label>Всего</mat-label>
         <app-book-time-input formControlName="totalUnits"></app-book-time-input>
       </div>
     </div>
     <div class="book-edit__progress_audio" *ngSwitchDefault>
       <mat-form-field appearance="fill">
-        <mat-label i18n="book edit paper progress label@@book-edit__label_paper-progress">Прочитано</mat-label>
+        <mat-label>Страниц</mat-label>
         <input matInput type="number" formControlName="doneUnits" min="0" step="1" max="6000" autocomplete="off"/>
       </mat-form-field>
 
@@ -106,7 +114,7 @@
     <textarea matInput rows="4" autocomplete="off" formControlName="note"></textarea>
   </mat-form-field>
 
-  <button class="w-100" mat-flat-button [disabled]="form.invalid" color="primary" i18n="book-edit save label"
+  <button class="w-100" mat-flat-button [disabled]="form.invalid" color="primary"
           type="submit">Сохранить
   </button>
 </form>
