@@ -2,14 +2,16 @@ import { UUIDGenerator } from 'essents';
 import { IEntity } from '../models/i-entity';
 import { IStorage } from './i-storage';
 import { IndexedDbService } from './indexed-db.service';
+import { UserService } from '../../modules/user/services/user.service';
 
 export abstract class EntityStorage<T extends IEntity> implements IStorage<T> {
   protected readonly dbName = 'bookolog.db';
   private readonly generator = new UUIDGenerator();
   protected readonly storeName: string;
 
-  public constructor(storeName: string, protected indexedDb: IndexedDbService) {
+  public constructor(storeName: string, protected indexedDb: IndexedDbService, user: UserService) {
     this.storeName = storeName;
+    this.generator = new UUIDGenerator(user.user.login);
   }
 
   public async getAll(): Promise<T[]> {

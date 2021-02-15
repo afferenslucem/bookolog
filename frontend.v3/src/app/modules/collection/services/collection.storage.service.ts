@@ -3,13 +3,14 @@ import { EntityStorage } from '../../../main/services/entity.storage';
 import { IndexedDbService } from '../../../main/services/indexed-db.service';
 import { PreloaderService } from '../../../main/services/preloader.service';
 import { CollectionData } from '../models/collection-data';
+import { UserService } from '../../user/services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollectionStorageService extends EntityStorage<CollectionData>{
 
-  constructor(indexedDb: IndexedDbService, private preloaderService: PreloaderService) {
-    super('CollectionsStore', indexedDb);
+  constructor(indexedDb: IndexedDbService, private preloaderService: PreloaderService, userService: UserService) {
+    super('CollectionsStore', indexedDb, userService);
   }
 }
