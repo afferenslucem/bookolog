@@ -9,25 +9,25 @@ import { TitleService } from 'src/app/modules/ui/service/title.service';
 @Component({
   selector: 'app-year-statistic',
   templateUrl: './year-statistic.component.html',
-  styleUrls: ['./year-statistic.component.scss']
+  styleUrls: [ './year-statistic.component.scss' ]
 })
 export class YearStatisticComponent implements OnInit {
   public books$: Observable<Book[]>;
   private filter$: Observable<string> = null;
 
-  constructor(public route: ActivatedRoute, private title: TitleService) {    
+  constructor(public route: ActivatedRoute, private title: TitleService) {
     this.books$ = this.route.data.pipe(
       filter(item => !!item.books),
       map(item => item.books),
     );
-    
+
     this.filter$ = route.params.pipe(map(data => data.filter));
   }
 
   ngOnInit(): void {
     this.filter$.subscribe(item => this.title.setCustom(item));
   }
-  
+
   public bookTrackBy(index: number, item: Book): string {
     return BookTrackBy.trackBy(index, item);
   }
