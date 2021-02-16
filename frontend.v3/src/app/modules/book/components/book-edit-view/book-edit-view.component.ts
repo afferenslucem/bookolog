@@ -1,25 +1,25 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {getConsoleLogger} from '../../../../main/app.logging';
-import {Action} from '../../../../main/resolvers/action.resolver';
-import {DateUtils} from '../../../../main/utils/date-utils';
-import {FuzzySearch} from '../../../../main/utils/fuzzy-search';
-import {StringComparer} from '../../../../main/utils/string.comparer';
-import {Collection} from '../../../collection/models/collection';
-import {NotificationService} from '../../../notification/services/notification.service';
-import {TitleService} from '../../../ui/service/title.service';
-import {Book} from '../../models/book';
-import {BookData} from '../../models/book-data';
-import {BookDate} from '../../models/book-date';
-import {BookStatus} from '../../models/book-status';
-import {BookType} from '../../models/book-type';
-import {BookService} from '../../services/book.service';
-import {Location} from '@angular/common';
-import {ProgressAlgorithmType} from '../../models/progress-algorithm-type';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { getConsoleLogger } from '../../../../main/app.logging';
+import { Action } from '../../../../main/resolvers/action.resolver';
+import { DateUtils } from '../../../../main/utils/date-utils';
+import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
+import { StringComparer } from '../../../../main/utils/string.comparer';
+import { Collection } from '../../../collection/models/collection';
+import { NotificationService } from '../../../notification/services/notification.service';
+import { TitleService } from '../../../ui/service/title.service';
+import { Book } from '../../models/book';
+import { BookData } from '../../models/book-data';
+import { BookDate } from '../../models/book-date';
+import { BookStatus } from '../../models/book-status';
+import { BookType } from '../../models/book-type';
+import { BookService } from '../../services/book.service';
+import { Location } from '@angular/common';
+import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
 
 @Component({
   selector: 'app-book-edit-view',

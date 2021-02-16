@@ -1,17 +1,14 @@
-import { UUIDGenerator } from 'essents';
 import { IEntity } from '../models/i-entity';
 import { IStorage } from './i-storage';
 import { IndexedDbService } from './indexed-db.service';
-import { UserService } from '../../modules/user/services/user.service';
+import { UUIDGeneratorService } from './u-u-i-d-generator.service';
 
 export abstract class EntityStorage<T extends IEntity> implements IStorage<T> {
   protected readonly dbName = 'bookolog.db';
-  private readonly generator = new UUIDGenerator();
   protected readonly storeName: string;
 
-  public constructor(storeName: string, protected indexedDb: IndexedDbService, user: UserService) {
+  public constructor(storeName: string, protected indexedDb: IndexedDbService, private uuidGenerator: UUIDGeneratorService) {
     this.storeName = storeName;
-    this.generator = new UUIDGenerator(user.user.login);
   }
 
   public async getAll(): Promise<T[]> {
@@ -83,7 +80,7 @@ export abstract class EntityStorage<T extends IEntity> implements IStorage<T> {
 
       entities.forEach(item => {
         if (!item.guid) {
-          item.guid = this.generator.generate();
+          item.guid = this.uuidGenerator.generate();
         }
       });
 
@@ -100,7 +97,7 @@ export abstract class EntityStorage<T extends IEntity> implements IStorage<T> {
       await this.indexedDb.open(this.dbName);
 
       if (!entity.guid) {
-        entity.guid = this.generator.generate();
+        entity.guid = this.uuidGenerator.generate();
       }
 
       await this.indexedDb.save(this.storeName, entity);

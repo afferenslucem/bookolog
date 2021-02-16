@@ -1,7 +1,7 @@
 import { IDeletable } from 'src/app/main/models/i-deletable';
 import { IEntity } from 'src/app/main/models/i-entity';
 import { IUpdatable } from 'src/app/main/models/i-updatable';
-import {ProgressAlgorithmType} from './progress-algorithm-type';
+import { ProgressAlgorithmType } from './progress-algorithm-type';
 
 export interface BookData extends IDeletable, IUpdatable, IEntity {
   name: string;
