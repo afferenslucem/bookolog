@@ -2,25 +2,25 @@
   {{custom}}
 </span>
 <span *ngIf="(title$ | async) as title">
-  {title, plural,
-    =1    {Вход}
-    =2    {Регистрация}
-    =3    {Восстановление пароля}
-    =10   {Настройки}
-    =100  {Читаю сейчас}
-    =110  {Буду читать}
-    =120  {Прочитаные}
-    =130  {О книге}
-    =140  {Редактировать книгу}
-    =150  {Создать книгу}
-    =200  {Теги}
-    =210  {Жанры}
-    =220  {Авторы}
-    =230  {Года прочтения}
-    =310  {Серии}
-    =340  {О серии}
-    =350  {Создание серии}
-    =360  {Редактирование серии}
-    other {Bookolog}
-    }
+    <ng-container [ngSwitch]="title">
+      <span *ngSwitchCase="1">Вход</span>
+      <span *ngSwitchCase="2">Регистрация</span>
+      <span *ngSwitchCase="3">Восстановление пароля</span>
+      <span *ngSwitchCase="10">Настройки</span>
+      <span *ngSwitchCase="100">Читаю сейчас</span>
+      <span *ngSwitchCase="110">Буду читать</span>
+      <span *ngSwitchCase="120">Прочитаные</span>
+      <span *ngSwitchCase="130">О книге</span>
+      <span *ngSwitchCase="140">Редактировать книгу</span>
+      <span *ngSwitchCase="150">Создать книгу</span>
+      <span *ngSwitchCase="200">Теги</span>
+      <span *ngSwitchCase="210">Жанры</span>
+      <span *ngSwitchCase="220">Авторы</span>
+      <span *ngSwitchCase="230">Года прочтения</span>
+      <span *ngSwitchCase="310">Серии</span>
+      <span *ngSwitchCase="340">О серии</span>
+      <span *ngSwitchCase="350">Создание серии</span>
+      <span *ngSwitchCase="360">Редактирование серии</span>
+      <span *ngSwitchDefault>Bookolog</span>
+    </ng-container>
 </span>

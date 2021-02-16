@@ -27,6 +27,7 @@ export class PasswordChangeComponent implements OnInit {
   });
 
   public error: ChangePasswordError = null;
+  public ChangePasswordError: typeof ChangePasswordError = ChangePasswordError;
 
   constructor(private authService: AuthService, private router: Router, private notificationService: NotificationService) { }
 

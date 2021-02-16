@@ -2,7 +2,7 @@
   <mat-form-field appearance="fill">
     <mat-label>Название</mat-label>
     <input matInput formControlName="name" type="text" required autocomplete="off"/>
-    <mat-error *ngIf="form.get('name').invalid" i18n>
+    <mat-error *ngIf="form.get('name').invalid" >
       Это обязательное поле
     </mat-error>
   </mat-form-field>

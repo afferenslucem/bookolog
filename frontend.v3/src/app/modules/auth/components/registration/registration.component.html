@@ -4,46 +4,46 @@
 <div class="content">
   <form [formGroup]="form" (ngSubmit)="submit($event)">
     <mat-form-field appearance="fill">
-      <mat-label i18n>Логин</mat-label>
+      <mat-label >Логин</mat-label>
       <input matInput formControlName="login" required/>
-      <mat-error *ngIf="form.get('login').invalid" i18n>
+      <mat-error *ngIf="form.get('login').invalid" >
         Это обязательное поле
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label i18n>Почта</mat-label>
+      <mat-label >Почта</mat-label>
       <input matInput type="email" formControlName="email" required/>
-      <mat-error *ngIf="form.get('email').invalid" i18n>
+      <mat-error *ngIf="form.get('email').invalid" >
         Это обязательное поле
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label i18n>Пароль</mat-label>
+      <mat-label >Пароль</mat-label>
       <input matInput type="password" formControlName="password" required/>
-      <mat-error *ngIf="form.get('password').invalid" i18n>
+      <mat-error *ngIf="form.get('password').invalid" >
         Это обязательное поле
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label i18n>Подтверждение пароля</mat-label>
+      <mat-label >Подтверждение пароля</mat-label>
       <input matInput type="password" formControlName="confirmation" required/>
-      <mat-error *ngIf="form.get('confirmation')?.errors?.required" i18n>
+      <mat-error *ngIf="form.get('confirmation')?.errors?.required" >
         Это обязательное поле
       </mat-error>
-      <mat-error *ngIf="form.get('confirmation')?.errors?.passwordMatch && !form.get('confirmation')?.errors?.required" i18n>
+      <mat-error *ngIf="form.get('confirmation')?.errors?.passwordMatch && !form.get('confirmation')?.errors?.required" >
         Пароли не совпадают
       </mat-error>
     </mat-form-field>
 
-    <mat-error i18n="Login existing message" *ngIf="error !== null" class="login-error">
-      {error, plural,
-        =0 {Такой логин уже занят}
-        =1 {Такая почта уже занята}
-        other {Неизвестная ошибка}
-        }
+    <mat-error  *ngIf="error !== null" class="login-error">
+      <ng-container [ngSwitch]="error">
+        <span *ngSwitchCase="RegistrationError.LoginExists">Такой логин уже занят</span>
+        <span *ngSwitchCase="RegistrationError.EmailExists">Такая почта уже занята</span>
+        <span *ngSwitchDefault>Неизвестная ошибка</span>
+      </ng-container>
     </mat-error>
 
     <button mat-flat-button
@@ -51,7 +51,7 @@
             class="w-100"
             [disabled]="form.invalid"
             (click)="submit($event)"
-            i18n
+
     >
       Зарегистрироваться
     </button>

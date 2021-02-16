@@ -1,16 +1,16 @@
 <div class="content">
   <form [formGroup]="form" (ngSubmit)="submit()">
     <label class="form-header">Смена почты</label>
-    
+
     <mat-form-field appearance="fill">
-      <mat-label i18n>Почта</mat-label>
+      <mat-label >Почта</mat-label>
       <input
         matInput
         type="email"
         formControlName="email"
         required
       />
-      <mat-error *ngIf="form.get('email').invalid" i18n>
+      <mat-error *ngIf="form.get('email').invalid" >
         Это обязательное поле
       </mat-error>
     </mat-form-field>

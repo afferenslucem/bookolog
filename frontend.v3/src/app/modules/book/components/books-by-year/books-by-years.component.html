@@ -23,7 +23,7 @@
     <mat-expansion-panel *ngIf="(undefinedYear$ | async) as year" [expanded]="(years$ | async)?.length === 1" (opened)="onOpen(undefined)">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span i18n>Год не указан</span>
+          <span >Год не указан</span>
         </mat-panel-title>
         <mat-panel-description>
           <div class="years__meta w-100">
@@ -41,5 +41,5 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <span *ngIf="(years$ | async)?.length === 0" i18n="@@empty-book-list">Здесь пока ничего нет</span>
+  <span *ngIf="(years$ | async)?.length === 0" >Здесь пока ничего нет</span>
 </div>

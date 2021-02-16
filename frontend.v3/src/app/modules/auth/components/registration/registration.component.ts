@@ -20,6 +20,7 @@ export class RegistrationComponent implements OnInit {
   private logger = getConsoleLogger('RegistrationComponent');
 
   public error: RegistrationError = null;
+  public RegistrationError: typeof RegistrationError = RegistrationError;
 
   public form: FormGroup = new FormGroup({
     login: new FormControl(null, [Validators.required, Validators.minLength(1)]),

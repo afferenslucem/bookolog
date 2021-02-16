@@ -18,6 +18,7 @@ enum LoginError {
 })
 export class LoginComponent implements OnInit {
   public error: LoginError = null;
+  public LoginError: typeof LoginError = LoginError;
 
   public form: FormGroup = new FormGroup({
     login: new FormControl(null, [Validators.required, Validators.minLength(1)]),

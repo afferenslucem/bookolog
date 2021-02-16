@@ -10,39 +10,39 @@
         {{author}}<span *ngIf="!last">,</span>
       </span>
   </div>
-  <label i18n="book authors label@@book__label_authors">Авторы</label>
+  <label >Авторы</label>
 </div>
 
 <div class="book__year property" *ngIf="!!book.year">
   <div class="property__value">
     {{book.year}}
   </div>
-  <label i18n="book year label@@book__label_year">Год выпуска</label>
+  <label >Год выпуска</label>
 </div>
 
 <div class="book__type property">
   <div class="property__value">
       <span [ngSwitch]="book.type">
-        <span *ngSwitchCase="BookType.Paper" i18n="book type@@book__type_paper">Бумажная книга</span>
-        <span *ngSwitchCase="BookType.Electronic" i18n="book type@@book__type_electronic">Электронная книга</span>
-        <span *ngSwitchCase="BookType.Audio" i18n="book type@@book__type_audio">Аудиокнига</span>
+        <span *ngSwitchCase="BookType.Paper" >Бумажная книга</span>
+        <span *ngSwitchCase="BookType.Electronic" >Электронная книга</span>
+        <span *ngSwitchCase="BookType.Audio" >Аудиокнига</span>
       </span>
   </div>
-  <label i18n="book authors label@@book__label_type">Тип книги</label>
+  <label >Тип книги</label>
 </div>
 
 <div class="book__genre property" *ngIf="!!book.genre">
   <div class="property__value link" [routerLink]="['/genre', book.genre]">
     {{book.genre}}
   </div>
-  <label i18n="book genre label@@book__label_genre">Жанр</label>
+  <label >Жанр</label>
 </div>
 
 <div class="book__collection property" *ngIf="!!book.collection">
   <div class="property__value link" [routerLink]="['/series', book.collection.guid]">
     {{book.collection.name | capitalize}}
   </div>
-  <label i18n="book genre label@@book__label_genre">Серия</label>
+  <label >Серия</label>
 </div>
 
 <div class="book__status property">
@@ -53,35 +53,35 @@
         <span *ngSwitchCase="BookStatus.Done" class="link" [routerLink]="['/done']">Прочитана</span>
       </span>
   </div>
-  <label i18n="book status label@@book__label_status">Статус</label>
+  <label >Статус</label>
 </div>
 
 <div class="book__tags property" *ngIf="book.tags.length > 0">
   <div class="property__value tags">
     <app-tag-value *ngFor="let tag of book.tags" [name]="tag | capitalize" showCross="false" [routerLink]="['/tag', tag]"></app-tag-value>
   </div>
-  <label i18n="book tags label@@book__label_tags">Теги</label>
+  <label >Теги</label>
 </div>
 
 <div class="book__progress property" *ngIf="book.doneUnits && book.totalUnits">
   <div class="property__value">
     <mat-progress-bar [value]="getProgressValue(book)"></mat-progress-bar>
   </div>
-  <label i18n="book progress label@@book__label_progress">Прогресс</label>
+  <label >Прогресс</label>
 </div>
 
 <div class="book__start-date property" *ngIf="book.startDate">
   <div class="property__value">
     {{book.startDate | date: 'shortDate'}}
   </div>
-  <label i18n="book start date label@@book__label_start-date">Начата</label>
+  <label >Начата</label>
 </div>
 
 <div class="book__end-date property" *ngIf="book.endDate">
   <div class="property__value">
     {{book.endDate | date: 'shortDate'}}
   </div>
-  <label i18n="book end date label@@book__label_end-date">Окончена</label>
+  <label >Окончена</label>
 </div>
 
 <div class="book__note property" *ngIf="book.note">
@@ -91,7 +91,7 @@
   <label>Заметки</label>
 </div>
 
-<button class="w-100 edit-button" [routerLink]="['/book/edit', book.guid]" mat-flat-button color="primary" i18n>
+<button class="w-100 edit-button" [routerLink]="['/book/edit', book.guid]" mat-flat-button color="primary" >
   Редактировать
 </button>
-<button class="w-100" mat-flat-button color="warn" i18n (click)="openDeleteDialog(book)">Удалить</button>
+<button class="w-100" mat-flat-button color="warn"  (click)="openDeleteDialog(book)">Удалить</button>
