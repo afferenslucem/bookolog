@@ -13,7 +13,7 @@ export class BookHeaderComponent implements OnInit {
   public book: Book;
 
   @Input()
-  public truncate: boolean = true;
+  public truncate = true;
 
   constructor(public actionService: BookActionService) { }
 
@@ -22,5 +22,13 @@ export class BookHeaderComponent implements OnInit {
 
   public get editAllowed(): boolean {
     return this.actionService.editAllowed;
+  }
+
+  public get shouldSync(): boolean {
+    return Boolean(this.book.shouldSync);
+  }
+
+  public get name(): string {
+    return this.book.name;
   }
 }

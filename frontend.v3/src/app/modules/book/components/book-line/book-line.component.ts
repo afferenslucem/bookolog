@@ -15,28 +15,8 @@ export class BookLineComponent {
     return this.innerBook.authors;
   }
 
-  public get done(): number {
-    return this.innerBook.doneUnits;
-  }
-
-  public get total(): number {
-    return this.innerBook.totalUnits;
-  }
-
-  public get progressValue(): number {
-    if (!!this.total && !!this.done) {
-      return this.done / this.total * 100;
-    } else {
-      return 0;
-    }
-  }
-
   public get startDate(): Date {
     return this.innerBook.startDate;
-  }
-
-  public get endDate(): Date {
-    return this.innerBook.endDate;
   }
 
   public get guid(): string {

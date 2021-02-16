@@ -18,6 +18,10 @@ export class DoneBookComponent extends BookLineComponent implements OnInit {
     this.innerBook = v;
   }
 
+  public get endDate(): Date {
+    return this.innerBook.endDate;
+  }
+
   ngOnInit(): void {
   }
 }
