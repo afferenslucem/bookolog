@@ -25,7 +25,7 @@ describe('DoneBookComponent', () => {
         RouterTestingModule,
       ],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   describe('Creation', () => {
@@ -48,6 +48,45 @@ describe('DoneBookComponent', () => {
 
     it('should create', () => {
       expect(component).toBeTruthy();
+    });
+  });
+
+  describe('Properties', () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(DoneBookComponent);
+      component = fixture.componentInstance;
+    });
+
+    it('Should return book name', () => {
+      component.book = new Book({
+        name: 'book name'
+      } as any);
+
+      expect(component.name).toEqual('book name');
+    });
+
+    it('Should return book authors', () => {
+      component.book = new Book({
+        authors: [ 'One', 'Two' ]
+      } as any);
+
+      expect(component.authors).toEqual([ 'One', 'Two' ]);
+    });
+
+    it('Should return book startDate', () => {
+      component.book = new Book({
+        startDate: new Date('2011-01-02')
+      } as any);
+
+      expect(component.startDate).toEqual(new Date('2011-01-02'));
+    });
+
+    it('Should return book endDate', () => {
+      component.book = new Book({
+        endDate: new Date('2011-01-02')
+      } as any);
+
+      expect(component.endDate).toEqual(new Date('2011-01-02'));
     });
   });
 
@@ -123,9 +162,8 @@ describe('DoneBookComponent', () => {
       expect(component).toBeTruthy();
     });
 
-    it('Should render progress dates for no one date', () => {
-      component.book = new Book({
-      } as any);
+    it('Should not render progress dates for no one date', () => {
+      component.book = new Book({} as any);
 
       fixture.detectChanges();
 
@@ -134,4 +172,5 @@ describe('DoneBookComponent', () => {
       expect(component).toBeTruthy();
     });
   });
-});
+})
+

@@ -8,7 +8,7 @@
   *ngIf="progressValue || startDate; else noDates"
 >
   <small class="progress">
-    <ng-container [ngSwitch]="type" *ngIf="done && total">
+    <ng-container [ngSwitch]="type" *ngIf="progressValue">
       <app-book-time-progress
         *ngSwitchCase="BookType.Audio"
         [done]="done"

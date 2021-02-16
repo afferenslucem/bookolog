@@ -73,7 +73,7 @@ export class Book extends Entity {
   }
 
   private getDate(date: string | Date, bDate: BookDate): Date {
-    if (!!date) {
+    if (date) {
       return new Date(date);
     } else if (bDate.day || bDate.month || bDate.year) {
       const month = bDate.month ? bDate.month - 1 : 0;

@@ -18,8 +18,4 @@ export class BookPagesProgressComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  public get pagesForm(): number {
-    return new ChooseFormPipe().transform(this.done, 1, 2, 3);
-  }
 }
