@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import _ from 'declarray';
 import { getConsoleLogger } from '../../../main/app.logging';
-import { StringComparer } from '../../../main/utils/string.comparer';
 import { Book } from '../models/book';
-import { BookStatus } from '../models/book-status';
 import { BookService } from '../services/book.service';
 
 @Injectable({providedIn: 'root'})

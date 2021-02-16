@@ -54,6 +54,14 @@ export const routes: Routes = [
   },
   {
     component: BookFilteredComponent,
+    path: 'genre/:filter',
+    pathMatch: 'full',
+    resolve: {
+      books: BooksByGenreResolver,
+    }
+  },
+  {
+    component: BookFilteredComponent,
     path: 'author/:filter',
     pathMatch: 'full',
     resolve: {

@@ -5,6 +5,7 @@ import { PreloaderService } from '../../../main/services/preloader.service';
 import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import _ from 'declarray';
+import { UUIDGeneratorService } from '../../../main/services/u-u-i-d-generator.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ import _ from 'declarray';
 export class BookStorageService extends EntityStorage<BookData> {
   private readonly booksStore = 'BooksStore';
 
-  constructor(indexedDb: IndexedDbService, private preloaderService: PreloaderService) {
-    super('BooksStore', indexedDb);
+  constructor(indexedDb: IndexedDbService, private preloaderService: PreloaderService, uuidGenerator: UUIDGeneratorService) {
+    super('BooksStore', indexedDb, uuidGenerator);
   }
 
   public async getAll(): Promise<BookData[]> {

@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, } from '@angular/router';
 import { getConsoleLogger } from '../../../main/app.logging';
 import { CollectionService } from '../../collection/services/collection.service';
 import { Book } from '../models/book';

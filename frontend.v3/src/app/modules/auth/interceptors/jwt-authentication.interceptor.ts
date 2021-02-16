@@ -4,7 +4,6 @@ import {
   HttpHeaders,
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
   HttpResponseBase,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';

@@ -1,7 +1,7 @@
 FROM node:14-alpine as builder
 WORKDIR /app
 COPY frontend.v3/package*.json ./
-RUN npm ci
+RUN npm install
 COPY frontend.v3/ ./
 RUN npm run build -- --output-path=dist/out
 
