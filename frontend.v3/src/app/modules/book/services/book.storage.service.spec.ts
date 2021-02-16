@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { IndexedDbService } from '../../../main/services/indexed-db.service';
 
 import { BookStorageService } from './book.storage.service';
+import { UserService } from '../../user/services/user.service';
 
 describe('BookStorageService', () => {
   let service: BookStorageService;
@@ -15,7 +16,8 @@ describe('BookStorageService', () => {
         {
           provide: IndexedDbService,
           useValue: {}
-        }
+        },
+        { provide: UserService, useValue: { user: { login: '' } } }
       ]
     });
     service = TestBed.inject(BookStorageService);
@@ -30,7 +32,7 @@ describe('BookStorageService', () => {
 
     const spyAll = jasmine.createSpy();
 
-    const values = [1, 2, 3];
+    const values = [ 1, 2, 3 ];
     spyAll.and.resolveTo({
       target: {
         result: values
@@ -60,7 +62,7 @@ describe('BookStorageService', () => {
     iDB.close = jasmine.createSpy();
     iDB.saveMany = jasmine.createSpy();
 
-    const values: any = [{}, {}, {}];
+    const values: any = [ {}, {}, {} ];
 
     await service.saveMany(values);
 
@@ -97,7 +99,7 @@ describe('BookStorageService', () => {
   it('restore', async () => {
     const booksService: any = service;
 
-    const values: any = [1, 2, 3];
+    const values: any = [ 1, 2, 3 ];
 
     booksService.clear = jasmine.createSpy();
     booksService.saveMany = jasmine.createSpy();

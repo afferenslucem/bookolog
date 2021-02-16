@@ -1,0 +1,6 @@
+<small *ngIf="authors?.length; else noAuthors">{{
+  authors | capitalize | join
+  }}</small>
+<ng-template #noAuthors>
+  <small>Нет авторов</small>
+</ng-template>

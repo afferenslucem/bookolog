@@ -1,11 +1,6 @@
 <app-book-header class="book-line__name" [book]="innerBook"></app-book-header>
 <div class="book-line__authors truncate-text">
-  <small *ngIf="authors.length; else noAuthors">{{
-    authors | capitalize | join
-  }}</small>
-  <ng-template #noAuthors>
-    <small>Нет авторов</small>
-  </ng-template>
+  <app-book-authors [authors]="authors"></app-book-authors>
 </div>
 <div class="book-line__progress-data dark-text">
   <small *ngIf="startDate || endDate; else noDates">

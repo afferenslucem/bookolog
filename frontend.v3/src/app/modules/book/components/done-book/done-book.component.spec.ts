@@ -4,9 +4,9 @@ import { FormattingModule } from '../../../formatting/formatting.module';
 import { Book } from '../../models/book';
 import { BookHeaderComponent } from '../book-header/book-header.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { DoneBookComponent } from './done-book.component';
 import { TestCore } from '../../../../main/test/test-core.spec';
+import { BookAuthorsComponent } from '../book-authors/book-authors.component';
 
 describe('DoneBookComponent', () => {
   let component: DoneBookComponent;
@@ -18,12 +18,12 @@ describe('DoneBookComponent', () => {
         DoneBookComponent,
         DateRangeComponent,
         BookHeaderComponent,
+        BookAuthorsComponent,
       ],
       imports: [
         FormattingModule,
         RouterTestingModule,
       ],
-      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   });
@@ -60,35 +60,76 @@ describe('DoneBookComponent', () => {
       element = fixture.nativeElement;
     });
 
-    it('Should render with full filled data', () => {
-      const book = new Book({
-        guid: 'guid',
-        name: 'name',
-        createDate: '2020-11-18 16:04',
-        modifyDate: '2020-11-18 16:04',
-        startDate: '2020-10-10',
-        endDate: '2020-10-11',
-        authors: ['author1', 'author2'],
-        status: 1,
-        type: 2,
+    describe('Name', () => {
+      it('Should render book name', () => {
+        component.book = new Book({} as any);
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLDivElement>('app-book-header')).toBeTruthy();
+
+        expect(component).toBeTruthy();
       });
-      component.book = book;
+    });
+
+    describe('Authors', () => {
+      it('Should render authors', () => {
+        component.book = new Book({} as any);
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLDivElement>('app-book-authors')).toBeTruthy();
+
+        expect(component).toBeTruthy();
+      });
+    });
+
+    describe('Dates', () => {
+      it('Should render progress dates for only start date', () => {
+        component.book = new Book({
+          startDate: '2011-01-01'
+        } as any);
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLDivElement>('app-date-range')).toBeTruthy();
+
+        expect(component).toBeTruthy();
+      });
+    });
+
+    it('Should render progress dates for only end date', () => {
+      component.book = new Book({
+        endDate: '2011-01-01'
+      } as any);
 
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__name')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book-line__name').innerText).toContain(book.name);
+      expect(element.querySelector<HTMLDivElement>('app-date-range')).toBeTruthy();
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__authors')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('Author1');
-      expect(element.querySelector<HTMLDivElement>('.book-line__authors').innerText).toContain('Author2');
+      expect(component).toBeTruthy();
+    });
 
+    it('Should render progress dates for both dates', () => {
+      component.book = new Book({
+        startDate: '2011-01-01',
+        endDate: '2011-01-01',
+      } as any);
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data')).toBeTruthy();
+      fixture.detectChanges();
 
-      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range')).toBeTruthy();
-      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range').innerText).toContain('10/10/20');
-      expect(element.querySelector<HTMLDivElement>('.book-line__progress-data app-date-range').innerText).toContain('10/11/20');
+      expect(element.querySelector<HTMLDivElement>('app-date-range')).toBeTruthy();
+
+      expect(component).toBeTruthy();
+    });
+
+    it('Should render progress dates for no one date', () => {
+      component.book = new Book({
+      } as any);
+
+      fixture.detectChanges();
+
+      expect(element.querySelector<HTMLDivElement>('app-date-range')).toBeFalsy();
 
       expect(component).toBeTruthy();
     });

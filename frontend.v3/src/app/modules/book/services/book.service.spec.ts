@@ -7,13 +7,19 @@ import { BookOriginService } from './book.origin.service';
 
 import { BookService } from './book.service';
 import { BookStorageService } from './book.storage.service';
+import { UUIDGeneratorService } from '../../../main/services/u-u-i-d-generator.service';
+import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
 
 describe('BookService', () => {
   let service: BookService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BookStorageService, BookOriginService],
+      providers: [
+        BookStorageService,
+        BookOriginService,
+        { provide: UUIDGeneratorService, useValue: {} }
+      ],
       imports: [
         HttpClientTestingModule,
       ],
@@ -89,6 +95,7 @@ describe('BookService', () => {
         type: 1,
         modifyDate: '2020-11-18 10:57',
         createDate: '2020-11-18 09:57',
+        progressType: ProgressAlgorithmType.Done,
       };
 
       const getByGuidSpy = spyOn(storage, 'getByGuid').and.resolveTo(data);
@@ -102,6 +109,7 @@ describe('BookService', () => {
         type: 1,
         modifyDate: '2020-11-18 10:57',
         createDate: '2020-11-18 09:57',
+        progressType: ProgressAlgorithmType.Done,
       }));
 
       expect(getByGuidSpy).toHaveBeenCalledWith('guid');
@@ -113,13 +121,14 @@ describe('BookService', () => {
     it('Get by status', async () => {
       const storage = TestBed.inject(BookStorageService);
 
-      const data: BookData[] = [{
+      const data: BookData[] = [ {
         guid: 'guid1',
         name: 'name1',
         status: 1,
         type: 1,
         modifyDate: '2020-11-18 10:57',
         createDate: '2020-11-18 09:57',
+        progressType: ProgressAlgorithmType.Done,
       }, {
         guid: 'guid2',
         name: 'name2',
@@ -128,7 +137,8 @@ describe('BookService', () => {
         deleted: 1,
         modifyDate: '2020-11-18 10:57',
         createDate: '2020-11-18 09:57',
-      }];
+        progressType: ProgressAlgorithmType.Done,
+      } ];
 
       const getByGuidSpy = spyOn(storage, 'getAllByStatus').and.resolveTo(data);
 
@@ -142,6 +152,7 @@ describe('BookService', () => {
           type: 1,
           modifyDate: '2020-11-18 10:57',
           createDate: '2020-11-18 09:57',
+          progressType: ProgressAlgorithmType.Done,
         }),
       ]);
 
@@ -162,6 +173,7 @@ describe('BookService', () => {
         status: 1,
         modifyDate: '2020-11-18 10:57:00',
         createDate: '2020-11-18 10:57:00',
+        progressType: ProgressAlgorithmType.Done,
       } as any;
 
       const dto = service.convertToDTO(book);
@@ -192,6 +204,7 @@ describe('BookService', () => {
         status: 1,
         modifyDate: '2020-11-18 10:57:00',
         createDate: '2020-11-18 10:57:00',
+        progressType: ProgressAlgorithmType.Done,
       } as any;
 
       const dto = service.convertToDTO(book);
@@ -220,6 +233,7 @@ describe('BookService', () => {
         status: 1,
         modifyDate: '2020-11-18 10:57:00',
         createDate: '2020-11-18 10:57:00',
+        progressType: ProgressAlgorithmType.Done,
       } as any;
 
       const dto = service.convertToDTO(book);

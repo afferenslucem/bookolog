@@ -3,6 +3,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 export class TestCore {
   public static configureTestingModule(meta: TestModuleMetadata): TestBedStatic {
+    meta.schemas = meta.schemas || [];
     meta.schemas.push(NO_ERRORS_SCHEMA);
     return TestBed.configureTestingModule(meta);
   }

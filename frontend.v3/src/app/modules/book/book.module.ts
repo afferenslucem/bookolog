@@ -33,6 +33,8 @@ import { InProgressBookComponent } from './components/in-progress-book/in-progre
 import { InProgressBooksListComponent } from './components/in-progress-books-list/in-progress-books-list.component';
 import { ToReadBookComponent } from './components/to-read-book/to-read-book.component';
 import { ToReadBooksListComponent } from './components/to-read-books-list/to-read-books-list.component';
+import { BookAuthorsComponent } from './components/book-authors/book-authors.component';
+import { BookDateProgressComponent } from './components/book-date-progress/book-date-progress.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { ToReadBooksListComponent } from './components/to-read-books-list/to-rea
         BookDeleteDialogComponent,
         BookEditViewComponent,
         BooksByYearsComponent,
+        BookAuthorsComponent,
+        BookDateProgressComponent,
     ],
     imports: [
         CommonModule,
