@@ -1,14 +1,13 @@
 {
   "name": "frontend",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host=0.0.0.0",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "i18n": "ng extract-i18n --output-path src/locale"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -18,7 +17,6 @@
     "@angular/compiler": "~11.0.0",
     "@angular/core": "~11.0.0",
     "@angular/forms": "~11.0.0",
-    "@angular/localize": "~11.0.0",
     "@angular/material": "^11.0.0",
     "@angular/platform-browser": "~11.0.0",
     "@angular/platform-browser-dynamic": "~11.0.0",
@@ -39,9 +37,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.1",
-    "@angular/cli": "~11.0.1",
+    "@angular/cli": "^11.2.0",
     "@angular/compiler-cli": "~11.0.0",
-    "@angular/localize": "^11.0.0",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
