@@ -27,11 +27,11 @@ export class InProgressBookComponent extends BookLineComponent implements OnInit
   }
 
   public get progressValue(): number {
-    if (!!this.total && !!this.done) {
-      return this.done / this.total * 100;
-    } else {
+    if (!this.innerBook) {
       return 0;
     }
+
+    return this.innerBook.progressPercents;
   }
 
   ngOnInit(): void {

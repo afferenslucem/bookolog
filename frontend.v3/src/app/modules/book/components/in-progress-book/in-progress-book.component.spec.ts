@@ -8,6 +8,7 @@ import { TestCore } from '../../../../main/test/test-core.spec';
 import { BookAuthorsComponent } from '../book-authors/book-authors.component';
 import { InProgressBookComponent } from './in-progress-book.component';
 import { BookType } from '../../models/book-type';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 describe('InProgressBookComponent', () => {
   let component: InProgressBookComponent;
@@ -26,6 +27,11 @@ describe('InProgressBookComponent', () => {
         RouterTestingModule,
       ],
     })
+      .overrideComponent(InProgressBookComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default
+        }
+      })
       .compileComponents();
   });
 
@@ -124,7 +130,9 @@ describe('InProgressBookComponent', () => {
           totalUnits: 25
         } as any);
 
-        expect(component.progressValue).toEqual(20);
+        const progressValue = component.progressValue;
+
+        expect(progressValue).toEqual(20);
       });
     });
   });

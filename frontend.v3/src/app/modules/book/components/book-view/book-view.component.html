@@ -65,7 +65,7 @@
 
 <div class="book__progress property" *ngIf="book.doneUnits && book.totalUnits">
   <div class="property__value">
-    <mat-progress-bar [value]="getProgressValue(book)"></mat-progress-bar>
+    <mat-progress-bar [value]="progressValue"></mat-progress-bar>
   </div>
   <label >Прогресс</label>
 </div>

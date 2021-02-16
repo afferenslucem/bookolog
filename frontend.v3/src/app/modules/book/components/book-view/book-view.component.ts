@@ -13,7 +13,7 @@ import { BookDeleteDialogComponent, DeleteDialogResult } from '../book-delete-di
 @Component({
   selector: 'app-book-view',
   templateUrl: './book-view.component.html',
-  styleUrls: ['./book-view.component.scss'],
+  styleUrls: [ './book-view.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookViewComponent implements OnInit, OnDestroy {
@@ -42,12 +42,8 @@ export class BookViewComponent implements OnInit, OnDestroy {
     this.titleService.setBook();
   }
 
-  public getProgressValue(book: Book): number {
-    if (!!book.totalUnits && !!book.doneUnits) {
-      return Math.floor(book.doneUnits / book.totalUnits * 100);
-    } else {
-      return 0;
-    }
+  public get progressValue(): number {
+    return this.book.progressPercents;
   }
 
   public async openDeleteDialog(book: Book): Promise<void> {
@@ -72,15 +68,15 @@ export class BookViewComponent implements OnInit, OnDestroy {
   public async redirect(): Promise<void> {
     switch (this.book.status) {
       case BookStatus.InProgress: {
-        await this.router.navigate(['/in-progress']);
+        await this.router.navigate([ '/in-progress' ]);
         break;
       }
       case BookStatus.Done: {
-        await this.router.navigate(['/done']);
+        await this.router.navigate([ '/done' ]);
         break;
       }
       case BookStatus.ToRead: {
-        await this.router.navigate(['/to-read']);
+        await this.router.navigate([ '/to-read' ]);
         break;
       }
     }

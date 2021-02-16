@@ -42,6 +42,14 @@ export class Book extends Entity {
     }
   }
 
+  public get progressPercents(): number {
+    if (this.totalUnits && this.doneUnits) {
+      return Math.floor((this.doneUnits / this.totalUnits) * 100);
+    } else {
+      return 0;
+    }
+  }
+
   public constructor(data: BookData) {
     super(data);
 
