@@ -8,10 +8,19 @@ import { Book } from '../../models/book';
 @Component({
   selector: 'app-books-by-years',
   templateUrl: './books-by-years.component.html',
-  styleUrls: ['./books-by-years.component.scss'],
+  styleUrls: [ './books-by-years.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksByYearsComponent implements OnInit {
+  public yearOpened?: number;
+  public years$: Promise<IGroupedData<number, Book[]>[]>;
+  public definedYears$: Promise<IGroupedData<number, Book[]>[]>;
+  public undefinedYear$: Promise<IGroupedData<number, Book[]>>;
+  private orderedBooks: ISequence<IGroupedData<number, Book[]>>;
+
+  constructor() {
+  }
+
   @Input()
   public set books(v: Book[]) {
     this.orderedBooks = _(v)
@@ -29,18 +38,6 @@ export class BooksByYearsComponent implements OnInit {
     this.undefinedYear$ = this.years$.then(() => this.orderedBooks.takeLast(1).firstOrDefault(null, item => item.key === -1));
   }
 
-  private orderedBooks: ISequence<IGroupedData<number, Book[]>>;
-
-  public yearOpened?: number;
-
-  public years$: Promise<IGroupedData<number, Book[]>[]>;
-
-  public definedYears$: Promise<IGroupedData<number, Book[]>[]>;
-
-  public undefinedYear$: Promise<IGroupedData<number, Book[]>>;
-
-  constructor() { }
-
   ngOnInit(): void {
   }
 
@@ -52,7 +49,7 @@ export class BooksByYearsComponent implements OnInit {
     return item.key;
   }
 
-  public onOpen(year?: number) {
+  public onOpen(year?: number): void {
     this.yearOpened = year;
   }
 }

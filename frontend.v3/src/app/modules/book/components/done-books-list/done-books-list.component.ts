@@ -11,16 +11,16 @@ import _ from 'declarray';
 @Component({
   selector: 'app-done-books-list',
   templateUrl: './done-books-list.component.html',
-  styleUrls: ['./done-books-list.component.scss'],
+  styleUrls: [ './done-books-list.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [BookActionService],
+  providers: [ BookActionService ],
 })
 export class DoneBooksListComponent implements OnInit {
   public books$: Observable<Book[]>;
 
   constructor(public route: ActivatedRoute, private title: TitleService) {
     this.books$ = this.route.data.pipe(
-      filter(item => !!item.books),
+      filter(item => item.books),
       map(item => this.sortBooks(item.books)),
     );
   }
@@ -28,17 +28,17 @@ export class DoneBooksListComponent implements OnInit {
   public ngOnInit(): void {
     this.title.setDoneList();
   }
-  
+
   public sortBooks(books: Book[]): Book[] {
     return _(books)
-    .orderByDescending(item => item.finished.year || -1)
-    .thenByDescending(item => item.finished.month || -1)
-    .thenByDescending(item => item.finished.year || -1)
-    .thenByDescending(item => +item.modifyDate || -1)
-    .thenByDescending(item => +item.createDate || -1)
-    .toArray();
+      .orderByDescending(item => item.finished.year || -1)
+      .thenByDescending(item => item.finished.month || -1)
+      .thenByDescending(item => item.finished.day || -1)
+      .thenByDescending(item => +item.modifyDate || -1)
+      .thenByDescending(item => +item.createDate || -1)
+      .toArray();
   }
-  
+
   public bookTrackBy(index: number, item: Book): string {
     return BookTrackBy.trackBy(index, item);
   }
