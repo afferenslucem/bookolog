@@ -42,10 +42,6 @@ export class BookViewComponent implements OnInit, OnDestroy {
     this.titleService.setBook();
   }
 
-  public get progressValue(): number {
-    return this.book.progressPercents;
-  }
-
   public async openDeleteDialog(book: Book): Promise<void> {
     const dialogRef = this.dialog.open(BookDeleteDialogComponent, {
       width: '90%',
