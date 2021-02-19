@@ -30,7 +30,6 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
 
   public async loadAll(): Promise<void> {
       const data = await this.origin.getAll();
-
       await this.storage.restore(data);
   }
 
