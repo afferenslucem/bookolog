@@ -126,10 +126,9 @@ export abstract class EntityStorage<T extends IEntity> implements IStorage<T> {
 
   public async update(entity: T): Promise<T> {
     try {
-
       await this.indexedDb.open(this.dbName);
 
-      const data: any = await this.indexedDb.update(this.storeName, entity);
+      await this.indexedDb.update(this.storeName, entity);
 
       return entity;
     } finally {

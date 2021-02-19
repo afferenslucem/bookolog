@@ -75,7 +75,7 @@ export class BookService extends EntityService<BookData, Book> {
   }
 
   public async getBySeries(guid: string): Promise<Book[]> {
-    const data = await this.typedStorage.getAllBySeries(guid);
+    const data = await this.typedStorage.getAllByCollection(guid);
 
     return _(data)
       .where(item => !item.deleted)
