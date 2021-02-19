@@ -19,7 +19,6 @@ export class ToReadBooksListComponent implements OnInit {
 
   constructor(public route: ActivatedRoute, private title: TitleService) {
     this.books$ = this.route.data.pipe(
-      filter(item => !!item.books),
       map(item => item.books),
       map(books => this.sortBooks(books)),
     );

@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { Book } from '../../models/book';
-import { DoneBooksListComponent } from './done-books-list.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { InProgressBooksListComponent } from './in-progress-books-list.component';
 import { TitleService } from '../../../ui/service/title.service';
 import { TitleText } from '../../../ui/models/title-text';
 
-describe('DoneBooksListComponent', () => {
-  let component: DoneBooksListComponent;
-  let fixture: ComponentFixture<DoneBooksListComponent>;
+describe('InProgressBooksListComponent', () => {
+  let component: InProgressBooksListComponent;
+  let fixture: ComponentFixture<InProgressBooksListComponent>;
   let books: Book[] = [
     new Book({
       name: 'name0',
@@ -22,70 +22,41 @@ describe('DoneBooksListComponent', () => {
     } as any),
     new Book({
       endDateYear: 2020,
-      name: 'name2'
+      name: 'name2',
+      createDate: '2021-01-02',
     } as any),
     new Book({
       endDateYear: 2020,
       endDateMonth: 10,
+      createDate: '2021-01-03',
       name: 'name3'
     } as any),
     new Book({
       endDateYear: 2020,
       endDateMonth: 10,
       endDateDay: 22,
-      name: 'name4'
-    } as any),
-    new Book({
-      endDateYear: 2021,
-      endDateMonth: 10,
-      endDateDay: 23,
-      name: 'name5'
-    } as any),
-    new Book({
-      endDateYear: 2021,
-      endDateMonth: 11,
-      endDateDay: 23,
-      name: 'name6'
-    } as any),
-    new Book({
-      endDateYear: 2021,
-      endDateMonth: 11,
-      endDateDay: 23,
-      name: 'name6.1',
-      modifyDate: '2021-01-03',
-      createDate: '2021-01-02',
-    } as any),
-    new Book({
-      endDateYear: 2021,
-      endDateMonth: 11,
-      endDateDay: 23,
-      name: 'name6.2',
       createDate: '2021-01-03',
-    } as any),
-    new Book({
-      endDateYear: 2021,
-      endDateMonth: 11,
-      endDateDay: 22,
-      name: 'name7'
+      modifyDate: '2021-01-04',
+      name: 'name4'
     } as any),
   ];
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ DoneBooksListComponent ],
+      declarations: [ InProgressBooksListComponent ],
       providers: [
         {
           provide: ActivatedRoute, useValue: {
             data: of({ books })
           }
-        },
+        }
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DoneBooksListComponent);
+    fixture = TestBed.createComponent(InProgressBooksListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -94,7 +65,7 @@ describe('DoneBooksListComponent', () => {
     expect(component).toBeTruthy();
     const title = TestBed.inject(TitleService);
 
-    expect(title.title).toEqual(TitleText.DoneList);
+    expect(title.title).toEqual(TitleText.InProgressList);
   });
 
   describe('Books sorting', () => {
@@ -103,7 +74,7 @@ describe('DoneBooksListComponent', () => {
         first()
       ).toPromise();
 
-      expect(sorted.map(item => item.name)).toEqual(['name6.1', 'name6.2', 'name6', 'name7', 'name5', 'name4', 'name3', 'name2', 'name1', 'name0']);
+      expect(sorted.map(item => item.name)).toEqual(['name4', 'name1', 'name0', 'name3', 'name2']);
     });
   });
 });
