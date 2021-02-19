@@ -5,6 +5,8 @@ import { filter, map } from 'rxjs/operators';
 import { BookTrackBy } from 'src/app/main/utils/book-track-by';
 import { Book } from 'src/app/modules/book/models/book';
 import { TitleService } from 'src/app/modules/ui/service/title.service';
+import _ from 'declarray';
+import {BookStatus} from '../../../book/models/book-status';
 
 @Component({
   selector: 'app-year-statistic',
@@ -30,5 +32,13 @@ export class YearStatisticComponent implements OnInit {
 
   public bookTrackBy(index: number, item: Book): string {
     return BookTrackBy.trackBy(index, item);
+  }
+
+  public sortBooks(books: Book[]): Book[] {
+    return _(books)
+      .where(item => item.status === BookStatus.Done)
+      .orderByDescending(item => item.finished.month || -1)
+      .thenByDescending(item => item.finished.month || -1)
+      .toArray();
   }
 }
