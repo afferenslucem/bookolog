@@ -1,10 +1,10 @@
-import { Entity } from '../../../main/models/entity';
-import { Collection } from '../../collection/models/collection';
-import { BookData } from './book-data';
-import { BookDate } from './book-date';
-import { BookStatus } from './book-status';
-import { BookType } from './book-type';
-import { ProgressAlgorithmType } from './progress-algorithm-type';
+import {Entity} from '../../../main/models/entity';
+import {Collection} from '../../collection/models/collection';
+import {BookData} from './book-data';
+import {BookDate} from './book-date';
+import {BookStatus} from './book-status';
+import {BookType} from './book-type';
+import {ProgressAlgorithmType} from './progress-algorithm-type';
 
 export class Book extends Entity {
   public name: string;
@@ -77,7 +77,7 @@ export class Book extends Entity {
     this.endDate = this.getDate(data.endDate, this.finished);
     this.type = data.type;
     this.note = data.note;
-    this.progressType = data.progressType;
+    this.progressType = data.progressType || ProgressAlgorithmType.Done;
   }
 
   private getDate(date: string | Date, bDate: BookDate): Date {

@@ -156,32 +156,56 @@ describe('BookStorageService', () => {
     expect(closeSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('getAllByYear', async () => {
-    const openSpy = spyOn(indexedDbService, 'open');
+  describe('getAllByYear', () => {
+    it('should search by property', async () => {
+      const openSpy = spyOn(indexedDbService, 'open');
 
-    const allWithPropertySpy = spyOn(indexedDbService, 'allWithProperty').and.resolveTo({
-      target: {
-        result: [{
-          guid: 'id1'
-        }, {
-          guid: 'id2'
-        }, ]
-      }
-    } as any);
+      const allWithPropertySpy = spyOn(indexedDbService, 'allWithProperty').and.resolveTo({
+        target: {
+          result: [{
+            guid: 'id1'
+          }, {
+            guid: 'id2'
+          }, ]
+        }
+      } as any);
 
-    const closeSpy = spyOn(indexedDbService, 'close');
+      const closeSpy = spyOn(indexedDbService, 'close');
 
-    const result = await service.getAllByYear(2007);
+      const result = await service.getAllByYear(2007);
 
-    expect(result).toEqual([ {
-      guid: 'id1'
-    }, {
-      guid: 'id2'
-    }, ] as any);
+      expect(result).toEqual([ {
+        guid: 'id1'
+      }, {
+        guid: 'id2'
+      }, ] as any);
 
-    expect(openSpy).toHaveBeenCalledTimes(1);
-    expect(allWithPropertySpy).toHaveBeenCalledOnceWith('BooksStore', 'endDateYear', 2007);
-    expect(closeSpy).toHaveBeenCalledTimes(1);
+      expect(openSpy).toHaveBeenCalledTimes(1);
+      expect(allWithPropertySpy).toHaveBeenCalledOnceWith('BooksStore', 'endDateYear', 2007);
+      expect(closeSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should search by null', async () => {
+      const closeSpy = spyOn(indexedDbService, 'close');
+      const getAll = spyOn(service, 'getAll').and.resolveTo([{
+        endDateYear: 1997,
+      }, {
+        endDateYear: 1998,
+      }, {
+        endDateYear: null,
+      }, {
+      }] as any);
+
+      const result = await service.getAllByYear(null);
+
+      expect(result).toEqual([ {
+        endDateYear: null,
+      }, {
+      }] as any);
+
+      expect(getAll).toHaveBeenCalledTimes(1);
+      expect(closeSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('getAllByCollection', async () => {

@@ -110,7 +110,7 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
 
   public abstract convertFromDTO(dto: TDTO): TEntity;
 
-  private async entitiesSync(): Promise<void> {
+  public async entitiesSync(): Promise<void> {
     const local = await this.getToSync();
 
     const remote = await this.origin.sync(local);

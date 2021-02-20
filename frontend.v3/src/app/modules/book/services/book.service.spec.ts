@@ -347,4 +347,175 @@ describe('BookService', () => {
       guid: 'id1',
     }] as any);
   });
+
+  describe('saveOrUpdate', () => {
+    it('should update', async () => {
+      const storage = TestBed.inject(BookStorageService);
+
+      const saveSpy = spyOn(storage, 'save');
+      const updateSpy = spyOn(storage, 'update');
+      const syncSpy = spyOn(bookService, 'entitiesSync');
+
+      const book: Book = {
+        guid: 'guid',
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+        progressType: ProgressAlgorithmType.Done,
+      } as any;
+
+      const result = await bookService.saveOrUpdate(book);
+
+      const expected = new Book({
+        ...book,
+        shouldSync: 1,
+      } as any);
+
+      expect(result).toEqual(expected);
+
+      const dto = bookService.convertToDTO(book);
+      dto.shouldSync = 1;
+
+      expect(saveSpy).toHaveBeenCalledTimes(0);
+      expect(updateSpy).toHaveBeenCalledOnceWith(dto);
+      expect(syncSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should save', async () => {
+      const storage = TestBed.inject(BookStorageService);
+
+      const saveSpy = spyOn(storage, 'save');
+      const updateSpy = spyOn(storage, 'update');
+      const syncSpy = spyOn(bookService, 'entitiesSync');
+
+      const book: Book = {
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+        progressType: ProgressAlgorithmType.Done,
+      } as any;
+
+      const result = await bookService.saveOrUpdate(book);
+
+      const expected = new Book({
+        ...book,
+        shouldSync: 1,
+      } as any);
+
+      expect(result).toEqual(expected);
+
+      const dto = bookService.convertToDTO(book);
+      dto.shouldSync = 1;
+
+      expect(saveSpy).toHaveBeenCalledOnceWith(dto);
+      expect(updateSpy).toHaveBeenCalledTimes(0);
+      expect(syncSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('deleteBooksFromCollection', async () => {
+    const seriesSpy = spyOn(bookService, 'getByCollection').and.resolveTo([{
+      collectionGuid: 'id1',
+      collectionOrder: 0,
+    }, {
+      collectionGuid: 'id1',
+      collectionOrder: 1,
+    }, {
+      collectionGuid: 'id1',
+      collectionOrder: 2,
+    }] as any);
+    const saveOrUpdateMany = spyOn(bookService, 'saveOrUpdateMany');
+
+    await bookService.deleteBooksFromCollection('id1');
+
+    expect(seriesSpy).toHaveBeenCalledOnceWith('id1');
+    expect(saveOrUpdateMany).toHaveBeenCalledOnceWith([{
+      collectionGuid: null,
+      collectionOrder: null,
+    }, {
+      collectionGuid: null,
+      collectionOrder: null,
+    }, {
+      collectionGuid: null,
+      collectionOrder: null,
+    }]);
+  });
+
+  it('getByStatus', async () => {
+    const byStatusSpy = spyOn(bookStorage, 'getAllByStatus').and.resolveTo([{
+      name: 'name1',
+      guid: 'id1',
+      deleted: 1,
+      status: BookStatus.Done
+    }, {
+      name: 'name2',
+      guid: 'id2',
+      status: BookStatus.Done
+    }, ] as any);
+
+    const done = await bookService.getByStatus(BookStatus.Done);
+
+    expect(done).toEqual([new Book({
+      name: 'name2',
+      guid: 'id2',
+      status: BookStatus.Done,
+      progressType: 'Done'
+    } as any)]);
+
+    expect(byStatusSpy).toHaveBeenCalledOnceWith(BookStatus.Done);
+  });
+
+  it('getAllByYear', async () => {
+    const byYearSpy = spyOn(bookStorage, 'getAllByYear').and.resolveTo([{
+      name: 'name1',
+      guid: 'id1',
+      deleted: 1,
+      endDateYear: 1997
+    }, {
+      name: 'name2',
+      guid: 'id2',
+      status: BookStatus.Done,
+      endDateYear: 1997
+    }, ] as any);
+
+    const done = await bookService.getByYear(1997);
+
+    expect(done).toEqual([new Book({
+      name: 'name2',
+      guid: 'id2',
+      status: BookStatus.Done,
+      endDateYear: 1997
+    } as any)]);
+
+    expect(byYearSpy).toHaveBeenCalledOnceWith(1997);
+  });
+
+  it('getByCollection', async () => {
+    const byCollectionSpy = spyOn(bookStorage, 'getAllByCollection').and.resolveTo([{
+      name: 'name1',
+      guid: 'id1',
+      deleted: 1,
+      collectionGuid: 'id1'
+    }, {
+      name: 'name2',
+      guid: 'id2',
+      status: BookStatus.Done,
+      collectionGuid: 'id1'
+    }, ] as any);
+
+    const done = await bookService.getByCollection('id1');
+
+    expect(done).toEqual([new Book({
+      name: 'name2',
+      guid: 'id2',
+      status: BookStatus.Done,
+      collectionGuid: 'id1'
+    } as any)]);
+
+    expect(byCollectionSpy).toHaveBeenCalledOnceWith('id1');
+  });
 });
