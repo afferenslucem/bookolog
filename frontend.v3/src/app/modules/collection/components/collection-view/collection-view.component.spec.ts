@@ -1,26 +1,87 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { NO_ERRORS_SCHEMA } from '@angular/core';
-// import { CollectionViewComponent } from './collection-view.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CollectionViewComponent } from './collection-view.component';
+import { TestCore } from '../../../../main/test/test-core.spec';
+import { ActivatedRoute } from '@angular/router';
+import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generator.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { of } from 'rxjs';
+import { TitleService } from '../../../ui/service/title.service';
+import { BookService } from '../../../book/services/book.service';
+import { CollectionService } from '../../services/collection.service';
 
-// describe('CollectionComponent', () => {
-//   let component: CollectionViewComponent;
-//   let fixture: ComponentFixture<CollectionViewComponent>;
+describe('CollectionComponent', () => {
+  let component: CollectionViewComponent;
+  let fixture: ComponentFixture<CollectionViewComponent>;
+  let titleService: TitleService;
+  let bookService: BookService;
+  let collectionService: CollectionService;
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [ CollectionViewComponent ],
-//       schemas: [ NO_ERRORS_SCHEMA ]
-//     })
-// .compileComponents();
-//   });
+  beforeEach(async () => {
+    await TestCore.configureTestingModule({
+      declarations: [CollectionViewComponent],
+      providers: [
+        {
+          provide: ActivatedRoute, useValue: {
+            data: of({
+              collection: {
+                name: 'name',
+                description: 'description',
+              },
+              books: [{
+                guid: 'id1',
+              }, {
+                guid: 'id2',
+              }, {
+                guid: 'id3',
+              }]
+            })
+          }
+        },
+        { provide: UUIDGeneratorService, useValue: {} },
+      ],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        MatDialogModule,
+      ]
+    })
+      .compileComponents();
+  });
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(CollectionViewComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CollectionViewComponent);
+    component = fixture.componentInstance;
+    titleService = TestBed.inject(TitleService);
+    bookService = TestBed.inject(BookService);
+    collectionService = TestBed.inject(CollectionService);
+    fixture.detectChanges();
+  });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should set title', () => {
+    const spy = spyOn(titleService, 'setCustom');
+
+    component.setTitle('name');
+
+    expect(spy).toHaveBeenCalledOnceWith('name');
+  });
+
+  it('delete', async () => {
+    const deleteBooksSpy = spyOn(bookService, 'deleteBooksFromCollection');
+    const deleteSpy = spyOn(collectionService, 'delete');
+
+    await component.deleteCollection({
+      guid: 'id1',
+    } as any);
+
+    expect(deleteBooksSpy).toHaveBeenCalledOnceWith('id1');
+    expect(deleteSpy).toHaveBeenCalledOnceWith({
+      guid: 'id1',
+    } as any);
+  });
+});
