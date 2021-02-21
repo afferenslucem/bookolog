@@ -64,7 +64,6 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
   }
 
   public async saveOrUpdateMany(entities: TEntity[]): Promise<TEntity[]> {
-
     entities.forEach(item => item.shouldSync = 1);
 
     const dtos = this.convertToDTOArray(entities);
@@ -75,7 +74,7 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     const updateAwait = this.storage.updateMany(toUpdate);
     const saveAwait = this.storage.saveMany(toSave);
 
-    await Promise.all([updateAwait, saveAwait])
+    await Promise.all([updateAwait, saveAwait]);
 
     await this.entitiesSync();
 

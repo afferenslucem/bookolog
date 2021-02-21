@@ -4,7 +4,7 @@ import { getConsoleLogger } from '../../../main/app.logging';
 import { SyncService } from '../../../main/services/sync.service';
 
 @Injectable({providedIn: 'root'})
-export class SyncResolver implements Resolve<boolean> {
+export class BookSyncResolver implements Resolve<boolean> {
   private logger = getConsoleLogger({
     loggerName: 'BookSyncResolver',
     namespace: 'Resolver',

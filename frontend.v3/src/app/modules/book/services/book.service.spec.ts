@@ -348,7 +348,7 @@ describe('BookService', () => {
     }] as any);
   });
 
-  describe('saveOrUpdate', () => {
+  describe('saveOrUpdate', async () => {
     it('should update', async () => {
       const storage = TestBed.inject(BookStorageService);
 
@@ -415,6 +415,27 @@ describe('BookService', () => {
       expect(updateSpy).toHaveBeenCalledTimes(0);
       expect(syncSpy).toHaveBeenCalledTimes(1);
     });
+  });
+
+  it('saveOrUpdateMany', async () => {
+    const updateManySpy = spyOn(bookStorage, 'updateMany');
+    const saveManySpy = spyOn(bookStorage, 'saveMany');
+    const entitiesSyncSpy = spyOn(bookService, 'entitiesSync');
+
+    const newBook = new Book({
+      name: 'name1',
+    } as any);
+
+    const oldBook = new Book({
+      name: 'name2',
+      guid: 'id2',
+    } as any);
+
+    await bookService.saveOrUpdateMany([newBook, oldBook]);
+
+    expect(updateManySpy).toHaveBeenCalledOnceWith([bookService.convertToDTO(oldBook)]);
+    expect(saveManySpy).toHaveBeenCalledOnceWith([bookService.convertToDTO(newBook)]);
+    expect(entitiesSyncSpy).toHaveBeenCalledTimes(1);
   });
 
   it('deleteBooksFromCollection', async () => {
