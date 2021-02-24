@@ -13,4 +13,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Client tests
-      run: docker-compose build client-test && docker-compose up client-test
+      run: cd frontend.v3 && docker-compose build client-test && docker-compose up client-test
