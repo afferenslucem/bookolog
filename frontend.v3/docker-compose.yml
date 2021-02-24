@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: DockerfileTest
-    command: sh -c "npm i && npm t"
+    command: sh -c "npm ci && npm run test:prod"
     working_dir: /app
     volumes:
       - ./:/app
