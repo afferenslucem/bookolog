@@ -68,7 +68,7 @@ export class UserService {
     await this.userOrigin.passwordChange(oldPassword, newPassword);
   }
 
-  public async emailChange(email: string): Promise<void> {
+  public async changeEmail(email: string): Promise<void> {
     await this.userOrigin.emailChange(email);
     this.saveUser();
   }
