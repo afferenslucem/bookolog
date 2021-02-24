@@ -37,7 +37,7 @@ export class ValueAccessorBase<T> implements ValueAccessor {
     this.emitChangeValue(value);
   }
 
-  protected emitChangeValue(value: T): void {
+  public emitChangeValue(value: T): void {
     this.changeListeners.forEach(item => {
       item(value);
     });
