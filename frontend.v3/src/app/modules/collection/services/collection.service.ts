@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { EntityService } from '../../../main/services/entity.service';
-import { Book } from '../../book/models/book';
-import { BookService } from '../../book/services/book.service';
 import { NotificationService } from '../../notification/services/notification.service';
 import { Collection } from '../models/collection';
 import { CollectionData } from '../models/collection-data';
 import { CollectionOriginService } from './collection.origin.service';
 import { CollectionStorageService } from './collection.storage.service';
+import { Book } from '../../book/models/book';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +20,14 @@ export class CollectionService extends EntityService<CollectionData, Collection>
     super(storage, origin);
 
     this.typedStorage = storage;
+  }
+
+  public async delete(collection: Collection): Promise<void> {
+    try {
+      await super.delete(collection);
+    } catch (e) {
+      this.notificationService.createWarningNotification('Серия удалена локально');
+    }
   }
 
   public async saveOrUpdate(collection: Collection): Promise<Collection> {
