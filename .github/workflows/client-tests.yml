@@ -5,7 +5,7 @@ name: Client Tests
 
 on:
   push:
-    branches: [ master, develop, tests ]
+    branches: [ master, develop, tests, task/*, feat/*, bugfix/* ]
   pull_request:
     branches: [ master, develop ]
 
