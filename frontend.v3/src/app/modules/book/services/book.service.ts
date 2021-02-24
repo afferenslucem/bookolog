@@ -8,7 +8,6 @@ import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import { BookOriginService } from './book.origin.service';
 import { BookStorageService } from './book.storage.service';
-import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
 
 @Injectable({
   providedIn: 'root',

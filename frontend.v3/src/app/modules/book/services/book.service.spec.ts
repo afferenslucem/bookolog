@@ -1,14 +1,14 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
-import {Book} from '../models/book';
-import {BookData} from '../models/book-data';
-import {BookStatus} from '../models/book-status';
-import {BookOriginService} from './book.origin.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { Book } from '../models/book';
+import { BookData } from '../models/book-data';
+import { BookStatus } from '../models/book-status';
+import { BookOriginService } from './book.origin.service';
 
-import {BookService} from './book.service';
-import {BookStorageService} from './book.storage.service';
-import {UUIDGeneratorService} from '../../../main/services/u-u-i-d-generator.service';
-import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
+import { BookService } from './book.service';
+import { BookStorageService } from './book.storage.service';
+import { UUIDGeneratorService } from '../../../main/services/u-u-i-d-generator.service';
+import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
 
 describe('BookService', () => {
   let bookService: BookService;

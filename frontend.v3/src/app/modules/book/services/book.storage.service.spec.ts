@@ -3,8 +3,8 @@ import { IndexedDbService } from '../../../main/services/indexed-db.service';
 
 import { BookStorageService } from './book.storage.service';
 import { UserService } from '../../user/services/user.service';
-import {BookStatus} from '../models/book-status';
-import {UUIDGeneratorService} from '../../../main/services/u-u-i-d-generator.service';
+import { BookStatus } from '../models/book-status';
+import { UUIDGeneratorService } from '../../../main/services/u-u-i-d-generator.service';
 
 describe('BookStorageService', () => {
   let service: BookStorageService;

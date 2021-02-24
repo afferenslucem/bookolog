@@ -38,15 +38,14 @@ export class FileInputComponent extends ValueAccessorBase<any> implements OnInit
 
   public selectFile(event: Event): void {
     this.elRef.nativeElement
-      .querySelector('input[type="file"]')
-      // @ts-ignore
+      .querySelector<HTMLElement>('input[type="file"]')
       .click();
   }
 
   public onFileChange(event: any): void {
-    var files = event.target.files || event.dataTransfer.files;
+    const files = event.target.files || event.dataTransfer.files;
 
-    if (!files.length) return;
+    if (!files.length) { return; }
 
     const file = files[0];
 
@@ -57,8 +56,8 @@ export class FileInputComponent extends ValueAccessorBase<any> implements OnInit
     this.fileChanged.emit(event);
   }
 
-  private readFile(file: File) {
-    var reader = new FileReader();
+  private readFile(file: File): void {
+    const reader = new FileReader();
 
     reader.onloadend = () => {
       this._fileUrl = reader.result;

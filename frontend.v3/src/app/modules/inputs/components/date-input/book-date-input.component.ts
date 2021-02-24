@@ -30,7 +30,7 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     this.form.valueChanges.subscribe(data => {
       this.emitChangeValue(data);
       console.log(data);
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
   public dayValidator(formGroup: FormGroup): ValidationErrors | null {
     let formErrors: ValidationErrors = null;
 
-    if (!formGroup.get('month').value && !!formGroup.get('day').value) {
+    if (!formGroup.get('month').value && formGroup.get('day').value) {
       const error = {
         invalidMonth: true,
       };
@@ -49,7 +49,7 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
       formErrors = Object.assign({}, error);
     }
 
-    if (!formGroup.get('year').value && !!formGroup.get('day').value) {
+    if (!formGroup.get('year').value && formGroup.get('day').value) {
       const error = {
         invalidYear: true,
       };
@@ -67,7 +67,7 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
   }
 
   public monthValidator(formGroup: FormGroup): ValidationErrors | null {
-    if ((!formGroup.get('year').value && !!formGroup.get('month').value)) {
+    if ((!formGroup.get('year').value && formGroup.get('month').value)) {
       const error = {
         invalidYear: true,
       };
