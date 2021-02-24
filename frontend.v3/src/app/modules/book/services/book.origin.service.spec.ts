@@ -4,7 +4,6 @@ import {TestBed} from '@angular/core/testing';
 import {BookOriginService} from './book.origin.service';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from '../../user/services/user.service';
-import {Book} from '../models/book';
 import {of} from 'rxjs';
 
 describe('BookOriginService', () => {
