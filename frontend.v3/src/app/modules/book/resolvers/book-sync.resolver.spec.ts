@@ -1,8 +1,8 @@
-import {TestBed} from '@angular/core/testing';
-import {BookSyncResolver} from './book-sync.resolver';
-import {SyncService} from '../../../main/services/sync.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {UUIDGeneratorService} from '../../../main/services/u-u-i-d-generator.service';
+import { TestBed } from '@angular/core/testing';
+import { BookSyncResolver } from './book-sync.resolver';
+import { SyncService } from '../../../main/services/sync.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { UUIDGeneratorService } from '../../../main/services/u-u-i-d-generator.service';
 
 describe('BookSyncResolver', () => {
   let resolver: BookSyncResolver;
