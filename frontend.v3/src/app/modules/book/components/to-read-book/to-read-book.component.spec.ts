@@ -4,18 +4,18 @@ import { FormattingModule } from '../../../formatting/formatting.module';
 import { Book } from '../../models/book';
 import { BookHeaderComponent } from '../book-header/book-header.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
-import { DoneBookComponent } from './done-book.component';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { BookAuthorsComponent } from '../book-authors/book-authors.component';
+import { ToReadBookComponent } from './to-read-book.component';
 
-describe('DoneBookComponent', () => {
-  let component: DoneBookComponent;
-  let fixture: ComponentFixture<DoneBookComponent>;
+describe('InProgressBookComponent', () => {
+  let component: ToReadBookComponent;
+  let fixture: ComponentFixture<ToReadBookComponent>;
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [
-        DoneBookComponent,
+        ToReadBookComponent,
         DateRangeComponent,
         BookHeaderComponent,
         BookAuthorsComponent,
@@ -30,7 +30,7 @@ describe('DoneBookComponent', () => {
 
   describe('Creation', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(DoneBookComponent);
+      fixture = TestBed.createComponent(ToReadBookComponent);
       component = fixture.componentInstance;
 
       const book = new Book({
@@ -51,9 +51,10 @@ describe('DoneBookComponent', () => {
     });
   });
 
+
   describe('Properties', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(DoneBookComponent);
+      fixture = TestBed.createComponent(ToReadBookComponent);
       component = fixture.componentInstance;
     });
 
@@ -72,29 +73,13 @@ describe('DoneBookComponent', () => {
 
       expect(component.authors).toEqual([ 'One', 'Two' ]);
     });
-
-    it('Should return book startDate', () => {
-      component.book = new Book({
-        startDate: new Date('2011-01-02')
-      } as any);
-
-      expect(component.startDate).toEqual(new Date('2011-01-02'));
-    });
-
-    it('Should return book endDate', () => {
-      component.book = new Book({
-        endDate: new Date('2011-01-02')
-      } as any);
-
-      expect(component.endDate).toEqual(new Date('2011-01-02'));
-    });
   });
 
   describe('Rendering', () => {
     let element: HTMLElement = null;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(DoneBookComponent);
+      fixture = TestBed.createComponent(ToReadBookComponent);
       component = fixture.componentInstance;
       element = fixture.nativeElement;
     });
@@ -122,55 +107,5 @@ describe('DoneBookComponent', () => {
         expect(component).toBeTruthy();
       });
     });
-
-    describe('Dates', () => {
-      it('Should render progress dates for only start date', () => {
-        component.book = new Book({
-          startDate: '2011-01-01'
-        } as any);
-
-        fixture.detectChanges();
-
-        expect(element.querySelector<HTMLDivElement>('app-date-range')).toBeTruthy();
-
-        expect(component).toBeTruthy();
-      });
-    });
-
-    it('Should render progress dates for only end date', () => {
-      component.book = new Book({
-        endDate: '2011-01-01'
-      } as any);
-
-      fixture.detectChanges();
-
-      expect(element.querySelector<HTMLDivElement>('app-date-range')).toBeTruthy();
-
-      expect(component).toBeTruthy();
-    });
-
-    it('Should render progress dates for both dates', () => {
-      component.book = new Book({
-        startDate: '2011-01-01',
-        endDate: '2011-01-01',
-      } as any);
-
-      fixture.detectChanges();
-
-      expect(element.querySelector<HTMLDivElement>('app-date-range')).toBeTruthy();
-
-      expect(component).toBeTruthy();
-    });
-
-    it('Should not render progress dates for no one date', () => {
-      component.book = new Book({} as any);
-
-      fixture.detectChanges();
-
-      expect(element.querySelector<HTMLDivElement>('app-date-range')).toBeFalsy();
-
-      expect(component).toBeTruthy();
-    });
   });
 });
-

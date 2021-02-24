@@ -30,7 +30,6 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
 
   public async loadAll(): Promise<void> {
       const data = await this.origin.getAll();
-
       await this.storage.restore(data);
   }
 
@@ -65,7 +64,6 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
   }
 
   public async saveOrUpdateMany(entities: TEntity[]): Promise<TEntity[]> {
-
     entities.forEach(item => item.shouldSync = 1);
 
     const dtos = this.convertToDTOArray(entities);
@@ -76,7 +74,7 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     const updateAwait = this.storage.updateMany(toUpdate);
     const saveAwait = this.storage.saveMany(toSave);
 
-    await Promise.all([updateAwait, saveAwait])
+    await Promise.all([updateAwait, saveAwait]);
 
     await this.entitiesSync();
 
@@ -111,7 +109,7 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
 
   public abstract convertFromDTO(dto: TDTO): TEntity;
 
-  private async entitiesSync(): Promise<void> {
+  public async entitiesSync(): Promise<void> {
     const local = await this.getToSync();
 
     const remote = await this.origin.sync(local);

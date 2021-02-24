@@ -6,7 +6,7 @@ import { StartPageComponent } from './main/components/start-page/start-page.comp
 import { LoggedInGuard } from './modules/auth/guards/logged-in.guard';
 import { LogoutGuard } from './modules/auth/guards/logout.guard';
 import { routes as bookListRoutes } from './modules/book/book-routing.module';
-import { SyncResolver } from './modules/book/resolvers/sync-resolver.service';
+import { BookSyncResolver } from './modules/book/resolvers/book-sync.resolver';
 import { routes as collectionRoutes } from './modules/collection/collection-routes.model';
 import { routes as settingsRoutes } from './modules/settings/settings-routing.module';
 import { routes as statisticRoutes } from './modules/statistic/statistic-routing.module';
@@ -33,7 +33,7 @@ const routes: Routes = [
       ...collectionRoutes
     ],
     resolve: {
-      sync: SyncResolver,
+      sync: BookSyncResolver,
       user: MeResolver,
     },
   },

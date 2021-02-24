@@ -52,6 +52,7 @@ describe('Book', () => {
     expect(book.note).toEqual(undefined, 'Different notes');
     expect(book.startDate).toEqual(null);
     expect(book.endDate).toEqual(null);
+    expect(book.progressPercents).toEqual(0);
   });
 
   it('map full correct', () => {
@@ -62,8 +63,8 @@ describe('Book', () => {
       year: 2020,
       status: 1,
       tags: ['tag1', 'tag2'],
-      totalUnits: 100,
-      doneUnits: 200,
+      totalUnits: 200,
+      doneUnits: 100,
       genre: 'genre',
       startDateYear: 2019,
       startDateMonth: 1,
@@ -106,6 +107,7 @@ describe('Book', () => {
     expect(book.note).toEqual(data.note, 'Different notes');
     expect(book.startDate).toEqual(new Date(data.startDate));
     expect(book.endDate).toEqual(new Date(data.endDate));
+    expect(book.progressPercents).toEqual(50);
   });
 
   it('map without dates correct', () => {

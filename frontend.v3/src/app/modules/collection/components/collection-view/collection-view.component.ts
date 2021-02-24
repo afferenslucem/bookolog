@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { BookTrackBy } from '../../../../main/utils/book-track-by';
 import { Book } from '../../../book/models/book';
 import { TitleService } from '../../../ui/service/title.service';
@@ -23,6 +23,7 @@ import { BookService } from 'src/app/modules/book/services/book.service';
 export class CollectionViewComponent implements OnInit {
   public books$: Observable<Book[]>;
   public collection$: Observable<Collection>;
+  public collection: Collection;
 
   constructor(
     activatedRoute: ActivatedRoute,
@@ -34,7 +35,7 @@ export class CollectionViewComponent implements OnInit {
   ) {
     const data$ = activatedRoute.data;
 
-    this.books$ = data$.pipe(
+    this.books$ = activatedRoute.data.pipe(
       filter((item) => item.books),
       map((item) => item.books as Book[]),
       map((item) =>
@@ -47,7 +48,8 @@ export class CollectionViewComponent implements OnInit {
     this.collection$ = data$.pipe(
       filter((item) => item.collection),
       map((item) => item.collection as Collection),
-      tap((item) => this.titleService.setCustom(item.name))
+      tap((item) => this.setTitle(item.name)),
+      tap(item => this.collection = item),
     );
   }
 
@@ -75,11 +77,15 @@ export class CollectionViewComponent implements OnInit {
   }
 
   public async deleteCollection(collection: Collection): Promise<void> {
-    await this.bookService.deleteBooksFromCollection(collection.guid)
+    await this.bookService.deleteBooksFromCollection(collection.guid);
     await this.collectionService.delete(collection);
   }
 
   public async redirect(): Promise<void> {
     await this.router.navigate(['/series']);
+  }
+
+  public setTitle(title: string): void {
+    this.titleService.setCustom(title);
   }
 }

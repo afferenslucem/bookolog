@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Action } from 'src/app/main/resolvers/action.resolver';
-import { ILogger } from 'waterlog';
-import { getConsoleLogger } from '../../../../main/app.logging';
-import { DateUtils } from '../../../../main/utils/date-utils';
-import { NotificationService } from '../../../notification/services/notification.service';
-import { TitleService } from '../../../ui/service/title.service';
-import { Collection } from '../../models/collection';
-import { CollectionData } from '../../models/collection-data';
-import { CollectionService } from '../../services/collection.service';
-import { Location } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Action} from 'src/app/main/resolvers/action.resolver';
+import {ILogger} from 'waterlog';
+import {getConsoleLogger} from '../../../../main/app.logging';
+import {DateUtils} from '../../../../main/utils/date-utils';
+import {NotificationService} from '../../../notification/services/notification.service';
+import {TitleService} from '../../../ui/service/title.service';
+import {Collection} from '../../models/collection';
+import {CollectionData} from '../../models/collection-data';
+import {CollectionService} from '../../services/collection.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-collection-edit-view',
@@ -21,7 +21,7 @@ export class CollectionEditViewComponent implements OnInit {
   public form: FormGroup = null;
   public collection: Collection;
   private logger: ILogger = getConsoleLogger('CollectionEditViewComponent');
-  private action: Action;
+  public action: Action;
 
   private defaultData: CollectionData = {
     name: '',
@@ -65,9 +65,13 @@ export class CollectionEditViewComponent implements OnInit {
   }
 
   public async submit(): Promise<void> {
-    try {
-      const data = Object.assign(this.collection, this.form.value) as Collection;
+    const data = Object.assign(this.collection, this.form.value) as Collection;
 
+    await this.saveOrUpdate(data);
+  }
+
+  public async saveOrUpdate(data: Collection): Promise<void> {
+    try {
       data.modifyDate = DateUtils.nowUTC;
 
       if (!data.createDate) {
@@ -89,11 +93,11 @@ export class CollectionEditViewComponent implements OnInit {
     }
   }
 
-  private async redirect(): Promise<void> {
+  public async redirect(): Promise<void> {
     await this.router.navigate(['/series']);
   }
 
-  private readAction(action: Action): void {
+  public readAction(action: Action): void {
     if (action === Action.Create) {
       this.titleService.setCollectionCreate();
     } else if (action === Action.Edit) {

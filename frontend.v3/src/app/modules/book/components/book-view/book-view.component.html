@@ -13,7 +13,7 @@
   <label >Авторы</label>
 </div>
 
-<div class="book__year property" *ngIf="!!book.year">
+<div class="book__year property" *ngIf="book.year">
   <div class="property__value">
     {{book.year}}
   </div>
@@ -31,14 +31,14 @@
   <label >Тип книги</label>
 </div>
 
-<div class="book__genre property" *ngIf="!!book.genre">
+<div class="book__genre property" *ngIf="book.genre">
   <div class="property__value link" [routerLink]="['/genre', book.genre]">
-    {{book.genre}}
+    {{book.genre | capitalize}}
   </div>
   <label >Жанр</label>
 </div>
 
-<div class="book__collection property" *ngIf="!!book.collection">
+<div class="book__collection property" *ngIf="book.collection">
   <div class="property__value link" [routerLink]="['/series', book.collection.guid]">
     {{book.collection.name | capitalize}}
   </div>
@@ -65,7 +65,7 @@
 
 <div class="book__progress property" *ngIf="book.doneUnits && book.totalUnits">
   <div class="property__value">
-    <mat-progress-bar [value]="getProgressValue(book)"></mat-progress-bar>
+    <mat-progress-bar [value]="book.progressPercents"></mat-progress-bar>
   </div>
   <label >Прогресс</label>
 </div>

@@ -44,7 +44,7 @@ export class BookService extends EntityService<BookData, Book> {
   }
 
   public async deleteBooksFromCollection(guid: string): Promise<void> {
-    const books = await this.getBySeries(guid);
+    const books = await this.getByCollection(guid);
 
     books.forEach(item => {
       item.collectionGuid = null;
@@ -67,15 +67,13 @@ export class BookService extends EntityService<BookData, Book> {
     const data = await this.typedStorage.getAllByYear(year);
 
     return _(data)
-      .where(item => item.status === BookStatus.Done)
-      .orderByDescending(item => item.endDateMonth || -1)
-      .thenByDescending(item => item.endDateDay || -1)
+      .where(item => !item.deleted)
       .select(item => this.convertFromDTO(item))
       .toArray();
   }
 
-  public async getBySeries(guid: string): Promise<Book[]> {
-    const data = await this.typedStorage.getAllBySeries(guid);
+  public async getByCollection(guid: string): Promise<Book[]> {
+    const data = await this.typedStorage.getAllByCollection(guid);
 
     return _(data)
       .where(item => !item.deleted)
@@ -123,10 +121,6 @@ export class BookService extends EntityService<BookData, Book> {
   }
 
   public convertFromDTO(data: BookData): Book {
-    if (data.progressType == null) {
-      data.progressType = ProgressAlgorithmType.Done;
-    }
-
     return new Book(data);
   }
 }

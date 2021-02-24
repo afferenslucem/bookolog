@@ -17,7 +17,7 @@ export class BooksBySeriesResolver implements Resolve<Book[]> {
   public async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Book[]> {
     const seriesGuid = route.paramMap.get('guid');
 
-    const books = await this.bookService.getBySeries(seriesGuid);
+    const books = await this.bookService.getByCollection(seriesGuid);
 
     return books;
   }

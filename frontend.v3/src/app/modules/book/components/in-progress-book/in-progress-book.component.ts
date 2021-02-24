@@ -18,6 +18,22 @@ export class InProgressBookComponent extends BookLineComponent implements OnInit
     this.innerBook = v;
   }
 
+  public get done(): number {
+    return this.innerBook.doneUnits;
+  }
+
+  public get total(): number {
+    return this.innerBook.totalUnits;
+  }
+
+  public get progressValue(): number {
+    if (!this.innerBook) {
+      return 0;
+    }
+
+    return this.innerBook.progressPercents;
+  }
+
   ngOnInit(): void {
   }
 }
