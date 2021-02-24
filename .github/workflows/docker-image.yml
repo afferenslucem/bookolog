@@ -1,0 +1,16 @@
+name: Client tests
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Client tests
+      run: docker build frontend.v3 --file Dockerfile --tag client-tests:$(date +%s)
