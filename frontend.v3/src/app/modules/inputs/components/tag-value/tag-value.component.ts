@@ -20,5 +20,4 @@ export class TagValueComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

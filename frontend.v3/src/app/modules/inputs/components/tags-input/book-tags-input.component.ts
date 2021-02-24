@@ -47,7 +47,7 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
   }
 
   public pushTag(value: string): void {
-    if (!!value && !_(this.tags).contains(value, new StringComparer())) {
+    if (value && !_(this.tags).contains(value, new StringComparer())) {
       this.tags.push(value);
 
       this.emitChangeValue(this.tags);
