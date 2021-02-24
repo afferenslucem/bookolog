@@ -13,4 +13,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Client tests
-      run: docker build . --dockerfile ./frontend.v3/Dockerfile --tag client-tests:$(date +%s)
+      run: docker build . --Dockerfile ./frontend.v3/Dockerfile --tag client-tests:$(date +%s)
