@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
     try {
       await this.authService.login(data);
-      this.router.navigate(['/in-progress']);
+      await this.router.navigate(['/in-progress']);
     } catch (e) {
       if (e instanceof CredentialsException) {
         this.error = LoginError.Credential;

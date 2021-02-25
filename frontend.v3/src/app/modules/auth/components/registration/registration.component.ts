@@ -37,7 +37,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   public async submit(event?: Event): Promise<void> {
-    event.preventDefault();
+    event?.preventDefault();
 
     const data = this.form.value;
     delete data.confirmation;

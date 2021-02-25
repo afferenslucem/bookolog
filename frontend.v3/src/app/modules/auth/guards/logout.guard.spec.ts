@@ -5,9 +5,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '../../user/services/user.service';
 import { Router, UrlTree } from '@angular/router';
+import { LogoutGuard } from './logout.guard';
 
-describe('LoggedInGuard', () => {
-  let guard: LoggedInGuard;
+describe('LogoutGuard', () => {
+  let guard: LogoutGuard;
   let user: UserService;
   let router: Router;
 
@@ -18,7 +19,7 @@ describe('LoggedInGuard', () => {
         RouterTestingModule,
       ]
     });
-    guard = TestBed.inject(LoggedInGuard);
+    guard = TestBed.inject(LogoutGuard);
     user = TestBed.inject(UserService);
     router = TestBed.inject(Router);
   });
@@ -27,7 +28,8 @@ describe('LoggedInGuard', () => {
     expect(guard).toBeTruthy();
   });
 
-  it('should pass user', () => {
+  it('should redirect user', () => {
+    const parseSpy = spyOn(router, 'parseUrl');
     user.user = {
       id: 1,
       login: 'login',
@@ -37,17 +39,15 @@ describe('LoggedInGuard', () => {
     };
 
     const result = guard.canActivateChild(null, null);
-
-    expect(result).toBeTrue();
+    expect(parseSpy).toHaveBeenCalledOnceWith('/in-progress');
   });
 
-  it('should redirect user', () => {
+  it('should pass user', () => {
     // @ts-ignore
     user._user = null;
 
-    const parseSpy = spyOn(router, 'parseUrl');
     const result = guard.canActivateChild(null, null);
 
-    expect(parseSpy).toHaveBeenCalledOnceWith('/login');
+    expect(result).toBeTrue();
   });
 });
