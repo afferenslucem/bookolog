@@ -51,7 +51,7 @@ describe('RecoverPasswordComponent', () => {
   });
 
   it('should send recovery',  async () => {
-    const recoverySpy = spyOn(auth, 'recovery');
+    const recoverySpy = spyOn(auth, 'recoveryPassword');
 
     component.form.get('email').setValue('alexshakirov74@gmail.com');
 

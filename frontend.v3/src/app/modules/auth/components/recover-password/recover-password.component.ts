@@ -25,7 +25,7 @@ export class RecoverPasswordComponent implements OnInit {
     const value = this.form.value;
 
     try {
-      await this.authService.recovery(value.email);
+      await this.authService.recoveryPassword(value.email);
 
       this.notificationService.createInfoNotification('Письмо с паролем отправлено на почту');
 

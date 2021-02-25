@@ -95,7 +95,7 @@ describe('UserService', () => {
   it('passwordChange',  async () => {
     const passwordChangeSpy = spyOn(origin, 'passwordChange');
 
-    await service.passwordChange('qwerty', 'uiop');
+    await service.changePassword('qwerty', 'uiop');
 
     expect(passwordChangeSpy).toHaveBeenCalledOnceWith('qwerty', 'uiop');
   });
