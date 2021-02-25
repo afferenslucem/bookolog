@@ -24,6 +24,10 @@ export class TitleService {
     return this._title.getValue();
   }
 
+  public get custom(): string {
+    return this._custom.getValue();
+  }
+
   public setBook(): void {
     this.setCustom(null);
     this.setTitle(TitleText.Book);

@@ -6,7 +6,7 @@
 //
 // describe('AppComponent', () => {
 //   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
+//     await TestCore.configureTestingModule({
 //       imports: [
 //         RouterTestingModule,
 //         MatToolbarModule,

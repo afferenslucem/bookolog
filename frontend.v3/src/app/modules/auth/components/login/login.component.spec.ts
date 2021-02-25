@@ -11,6 +11,7 @@ import { CredentialsException } from '../../exceptions/credentials.exception';
 import { AuthService } from '../../services/auth.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginComponent } from './login.component';
+import { TestCore } from '../../../../main/test/test-core.spec';
 
 describe('LoginPageComponent', () => {
   let component: LoginComponent;
@@ -18,7 +19,7 @@ describe('LoginPageComponent', () => {
   let auther: AuthService;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    await TestCore.configureTestingModule({
       declarations: [ LoginComponent ],
       providers: [{
         provide: AuthService,

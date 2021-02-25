@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BookTimeInputComponent } from './book-time-input.component';
+import { TestCore } from '../../../../main/test/test-core.spec';
 
 describe('BookTimeInputComponent', () => {
   let component: BookTimeInputComponent;
   let fixture: ComponentFixture<BookTimeInputComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    await TestCore.configureTestingModule({
       declarations: [ BookTimeInputComponent ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import { TagValueComponent } from './tag-value.component';
 import { first, mapTo } from 'rxjs/operators';
+import { TestCore } from '../../../../main/test/test-core.spec';
 
 describe('TagValueComponent', () => {
   let component: TagValueComponent;
@@ -9,7 +10,7 @@ describe('TagValueComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    await TestCore.configureTestingModule({
       declarations: [TagValueComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })

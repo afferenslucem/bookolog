@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
@@ -11,7 +11,8 @@ import { TitleService } from '../../../ui/service/title.service';
 @Component({
   selector: 'app-genres-list',
   templateUrl: './genres-list.component.html',
-  styleUrls: ['./genres-list.component.scss']
+  styleUrls: ['./genres-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenresListComponent implements OnInit {
   public genres$: Observable<IGroupedData<string, number>[]> = null;
@@ -31,7 +32,7 @@ export class GenresListComponent implements OnInit {
     await this.router.navigate(['/genre', tag]);
   }
 
-  private countGenres(books: Book[]): IGroupedData<any, number>[] {
+  public countGenres(books: Book[]): IGroupedData<any, number>[] {
     return  _(books)
       .where(item => !!item.genre)
       .select(item => item.genre)
