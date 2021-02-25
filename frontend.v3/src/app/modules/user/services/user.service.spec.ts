@@ -39,6 +39,8 @@ describe('UserService', () => {
       const saveUserSpy = spyOn(service, 'saveUser');
       const uploadAvatarSpy = spyOn(origin, 'loadAvatar');
 
+      // @ts-ignore
+      service._user = {} as any;
       await service.setAvatar({} as any);
 
       expect(saveUserSpy).toHaveBeenCalledTimes(1);
