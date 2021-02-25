@@ -1,7 +1,7 @@
-<span *ngIf="(custom$ | async) as custom">
+<span *ngIf="(custom$ | async) as custom" class="custom-title">
   {{custom}}
 </span>
-<span *ngIf="(title$ | async) as title">
+<span *ngIf="(title$ | async) as title" class="title">
     <ng-container [ngSwitch]="title">
       <span *ngSwitchCase="1">Вход</span>
       <span *ngSwitchCase="2">Регистрация</span>

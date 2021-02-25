@@ -11,14 +11,13 @@ describe('MenuIconComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ MenuIconComponent ],
+      declarations: [MenuIconComponent],
       imports: [
         MatIconModule,
         MatButtonModule,
-      ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      ]
     })
-.compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

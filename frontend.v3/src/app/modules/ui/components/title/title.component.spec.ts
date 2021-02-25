@@ -9,10 +9,9 @@ describe('TitleComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ TitleComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      declarations: [TitleComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

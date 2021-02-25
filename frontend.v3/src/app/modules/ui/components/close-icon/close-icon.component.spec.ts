@@ -9,10 +9,9 @@ describe('CloseIconComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ CloseIconComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      declarations: [CloseIconComponent],
     })
-.compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

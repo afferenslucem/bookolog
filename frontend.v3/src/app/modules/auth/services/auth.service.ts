@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   public async recovery(email: string): Promise<void> {
-    await this.userService.recovery(email);
+    await this.userService.recoveryPassword(email);
   }
 
   public async changePassword(oldPassword: string, newPassword: string): Promise<void> {

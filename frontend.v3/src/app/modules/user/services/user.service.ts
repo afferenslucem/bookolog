@@ -50,7 +50,7 @@ export class UserService {
   }
 
   public async loadMe(): Promise<User> {
-    const me = await this.userOrigin.me();
+    const me = await this.userOrigin.loadMe();
     this.user = me;
 
     return me;
@@ -60,8 +60,8 @@ export class UserService {
     return await this.userOrigin.registration(regData);
   }
 
-  public async recovery(email: string): Promise<void> {
-    await this.userOrigin.recovery(email);
+  public async recoveryPassword(email: string): Promise<void> {
+    await this.userOrigin.recoveryPassword(email);
   }
 
   public async passwordChange(oldPassword: string, newPassword: string): Promise<void> {
@@ -69,7 +69,7 @@ export class UserService {
   }
 
   public async changeEmail(email: string): Promise<void> {
-    await this.userOrigin.emailChange(email);
+    await this.userOrigin.changeEmail(email);
     this.saveUser();
   }
 
@@ -98,7 +98,7 @@ export class UserService {
     }
   }
 
-  private saveUser(): void {
+  public saveUser(): void {
     localStorage.setItem('user', JSON.stringify(this._user));
   }
 }

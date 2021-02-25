@@ -10,13 +10,12 @@ describe('EditIconComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ EditIconComponent ],
+      declarations: [EditIconComponent],
       imports: [
         MatIconModule
-      ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      ]
     })
-.compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
