@@ -1,0 +1,15 @@
+name: Server Tests
+
+on:
+  push:
+    branches: [ develop, master ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build backend.v2 --file DockerfileTests
