@@ -5,6 +5,7 @@ import { NotificationType } from '../../models/notification-type';
 import { NotificationService } from '../../services/notification.service';
 
 import { NotificationItemComponent } from './notification-item.component';
+import { TestCore } from '../../../../main/test/test-core.spec';
 
 describe('NotificationComponent', () => {
   let component: NotificationItemComponent;
@@ -12,7 +13,7 @@ describe('NotificationComponent', () => {
   let elRef: HTMLElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    await TestCore.configureTestingModule({
       declarations: [NotificationItemComponent],
       providers: [NotificationService],
       schemas: [ NO_ERRORS_SCHEMA ],

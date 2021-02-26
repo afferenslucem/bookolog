@@ -21,12 +21,8 @@
 
     <mat-error  *ngIf="error !== null" class="login-error">
       <ng-container [ngSwitch]="error">
-        <span *ngSwitchCase="LoginError.Credential">
-          Неверные логин или пароль
-        </span>
-        <span *ngSwitchDefault>
-          Неизвестная ошибка
-        </span>
+        <span *ngSwitchCase="LoginError.Credential">Неверные логин или пароль</span>
+        <span *ngSwitchDefault>Неизвестная ошибка</span>
       </ng-container>
     </mat-error>
 
@@ -34,10 +30,9 @@
 
     <button mat-flat-button
             color="primary"
-            class="w-100"
+            class="w-100 submit"
             [disabled]="form.invalid"
             (click)="submit($event)"
-
     >
       Войти
     </button>

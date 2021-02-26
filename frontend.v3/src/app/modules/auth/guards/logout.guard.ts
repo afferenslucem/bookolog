@@ -27,5 +27,4 @@ export class LogoutGuard implements CanActivateChild, CanActivate {
       return this.router.parseUrl('/in-progress');
     }
   }
-
 }

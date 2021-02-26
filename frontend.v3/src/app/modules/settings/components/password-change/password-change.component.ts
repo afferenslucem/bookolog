@@ -52,7 +52,7 @@ export class PasswordChangeComponent implements OnInit {
     const data = this.form.value;
 
     try {
-      await this.authService.passwordChange(data.currentPassword, data.newPassword);
+      await this.authService.changePassword(data.currentPassword, data.newPassword);
 
       this.notificationService.createInfoNotification('Пароль успешно изменен');
 

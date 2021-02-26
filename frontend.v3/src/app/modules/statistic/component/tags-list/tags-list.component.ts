@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
@@ -12,6 +12,7 @@ import { TitleService } from '../../../ui/service/title.service';
   selector: 'app-tags-list',
   templateUrl: './tags-list.component.html',
   styleUrls: ['./tags-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagsListComponent implements OnInit {
   public tags$: Observable<IGroupedData<string, number>[]> = null;
@@ -31,7 +32,7 @@ export class TagsListComponent implements OnInit {
     await this.router.navigate(['/tag', tag]);
   }
 
-  private countTags(books: Book[]): IGroupedData<any, number>[] {
+  public countTags(books: Book[]): IGroupedData<any, number>[] {
     return _(books)
       .where(item => item.tags.length > 0)
       .selectMany(item => item.tags)

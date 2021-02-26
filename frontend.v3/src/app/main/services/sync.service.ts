@@ -23,7 +23,7 @@ export class SyncService {
     private notificationService: NotificationService
   ) { }
 
-  public async userSync(): Promise<void> {
+  public async syncUser(): Promise<void> {
     await this.userService.loadMe();
   }
 
@@ -41,7 +41,7 @@ export class SyncService {
     }
   }
 
-  private async restoreAll(): Promise<void> {
+  public async restoreAll(): Promise<void> {
     await this.syncAll();
 
     const data = await this.userService.restore();
@@ -58,19 +58,18 @@ export class SyncService {
 
       const data = await this.userService.synchronize(syncData);
 
-      const bookSync = this.bookService.sync(syncData.books, data.books);
+      const booksSync = this.bookService.sync(syncData.books, data.books);
       const collectionsSync = this.collectionService.sync(syncData.collections, data.collections);
+      const userSync = await this.syncUser();
 
-      const userSync = await this.userSync();
-
-      await Promise.all([bookSync, collectionsSync, userSync]);
+      await Promise.all([booksSync, collectionsSync, userSync]);
     } catch (e) {
       this.consoleLogger.error('syncAll error', e);
       this.notificationService.createErrorNotification('Синхронизация неудалась');
     }
   }
 
-  private async getSyncData(): Promise<AppSyncData> {
+  public async getSyncData(): Promise<AppSyncData> {
     const booksToSync = this.bookService.getToSync();
     const collectionsToSync = this.collectionService.getToSync();
 

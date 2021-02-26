@@ -13,4 +13,18 @@ describe('PreloaderService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should increment index', () => {
+    service.show();
+
+    // @ts-ignore
+    expect(service._shouldShow).toEqual(1);
+  });
+
+  it('should increment index', () => {
+    service.hide();
+
+    // @ts-ignore
+    expect(service._shouldShow).toEqual(-1);
+  });
 });

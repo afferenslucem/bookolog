@@ -31,8 +31,8 @@ export class AuthorsListComponent implements OnInit {
     await this.router.navigate(['/author', tag]);
   }
 
-  private countAuthors(books: Book[]): IGroupedData<any, number>[] {
-    return  _(books)
+  public countAuthors(books: Book[]): IGroupedData<any, number>[] {
+    return _(books)
       .where(item => item.authors.length > 0)
       .selectMany(item => item.authors)
       .groupBy(item => item, new StringComparer(), grouped => grouped.count())

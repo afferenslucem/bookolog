@@ -3,21 +3,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MenuIconComponent } from './menu-icon.component';
+import { TestCore } from '../../../../main/test/test-core.spec';
 
 describe('MenuIconComponent', () => {
   let component: MenuIconComponent;
   let fixture: ComponentFixture<MenuIconComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ MenuIconComponent ],
+    await TestCore.configureTestingModule({
+      declarations: [MenuIconComponent],
       imports: [
         MatIconModule,
         MatButtonModule,
-      ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      ]
     })
-.compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

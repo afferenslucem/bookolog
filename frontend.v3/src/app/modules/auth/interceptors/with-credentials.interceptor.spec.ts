@@ -6,7 +6,7 @@ describe('WithCredentialsInterceptor', () => {
   });
 
   it('should withCredentials', () => {
-    const int = new WithCredentialsInterceptor();
+    const interceptor = new WithCredentialsInterceptor();
 
     const req: any = {
       withCredentials: false,
@@ -17,7 +17,7 @@ describe('WithCredentialsInterceptor', () => {
       handle: jasmine.createSpy(),
     };
 
-    int.intercept(req, next);
+    interceptor.intercept(req, next);
 
     expect(req.clone).toHaveBeenCalledWith({
       withCredentials: true

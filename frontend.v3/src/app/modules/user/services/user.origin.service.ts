@@ -47,7 +47,7 @@ export class UserOriginService {
     }
   }
 
-  public async me(): Promise<User> {
+  public async loadMe(): Promise<User> {
     try {
       return await this.httpClient.get<User>('/user/me').pipe(
         tap((user) => this.logger.debug('Me', user)),
@@ -65,7 +65,7 @@ export class UserOriginService {
       ).toPromise();
   }
 
-  public async recovery(email: string): Promise<void> {
+  public async recoveryPassword(email: string): Promise<void> {
     await this.httpClient.get('/auth/recoverPassword/' + email).toPromise();
   }
 
@@ -76,7 +76,7 @@ export class UserOriginService {
     }).toPromise();
   }
 
-  public async emailChange(email: string): Promise<void> {
+  public async changeEmail(email: string): Promise<void> {
     await this.httpClient.get('/user/changeEmail/' + email).toPromise();
   }
 

@@ -23,21 +23,18 @@ export class AuthService {
   }
 
   public async logout(): Promise<void> {
-    try {
-      await this.userService.logout();
-    } finally {
-    }
+    await this.userService.logout();
   }
 
   public async registration(regData: RegistrationData): Promise<void> {
     await this.userService.registration(regData);
   }
 
-  public async recovery(email: string): Promise<void> {
-    await this.userService.recovery(email);
+  public async recoveryPassword(email: string): Promise<void> {
+    await this.userService.recoveryPassword(email);
   }
 
-  public async passwordChange(oldPassword: string, newPassword: string): Promise<void> {
-    await this.userService.passwordChange(oldPassword, newPassword);
+  public async changePassword(oldPassword: string, newPassword: string): Promise<void> {
+    await this.userService.changePassword(oldPassword, newPassword);
   }
 }

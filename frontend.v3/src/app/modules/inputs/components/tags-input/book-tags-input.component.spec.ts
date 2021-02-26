@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookTagsInputComponent } from './book-tags-input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { TestCore } from '../../../../main/test/test-core.spec';
 
 describe('TagsInputComponent', () => {
   let component: BookTagsInputComponent;
   let fixture: ComponentFixture<BookTagsInputComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    await TestCore.configureTestingModule({
       declarations: [BookTagsInputComponent],
       imports: [
         MatAutocompleteModule,

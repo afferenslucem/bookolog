@@ -2,13 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormattingModule } from '../../../formatting/formatting.module';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BookTimeProgressComponent } from './book-time-progress.component';
+import { TestCore } from '../../../../main/test/test-core.spec';
 
 describe('BookTimeProgressComponent', () => {
   let component: BookTimeProgressComponent;
   let fixture: ComponentFixture<BookTimeProgressComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    await TestCore.configureTestingModule({
       declarations: [ BookTimeProgressComponent ],
       imports: [
         FormattingModule,

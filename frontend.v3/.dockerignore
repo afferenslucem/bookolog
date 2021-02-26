@@ -13,3 +13,5 @@
 **/node_modules
 LICENSE
 README.md
+**/node_modules
+**/*.spec.ts

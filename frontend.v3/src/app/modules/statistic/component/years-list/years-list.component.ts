@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 import { Observable } from 'rxjs';
@@ -10,7 +10,8 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-years-list',
   templateUrl: './years-list.component.html',
-  styleUrls: ['./years-list.component.scss']
+  styleUrls: ['./years-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class YearsListComponent implements OnInit {
   public years$: Observable<IGroupedData<string, number>[]> = null;
@@ -30,7 +31,7 @@ export class YearsListComponent implements OnInit {
     await this.router.navigate(['/year', year]);
   }
 
-  private countYears(books: Book[]): IGroupedData<string, number>[] {
+  public countYears(books: Book[]): IGroupedData<string, number>[] {
     return _(books)
       .groupBy(item => item.finished.year || null, grouped => grouped.count())
       .orderByDescending(item => item.key)

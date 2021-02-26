@@ -5,13 +5,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { StartPageComponent } from './start-page.component';
+import { TestCore } from '../../test/test-core.spec';
 
 describe('StartPageComponent', () => {
   let component: StartPageComponent;
   let fixture: ComponentFixture<StartPageComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    await TestCore.configureTestingModule({
       declarations: [StartPageComponent],
       imports: [
         MatToolbarModule,

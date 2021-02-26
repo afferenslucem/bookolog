@@ -18,4 +18,10 @@ describe('UUIDGeneratorService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should return guid', () => {
+    const uuid = service.generate();
+
+    expect(uuid).toBeTruthy();
+  });
 });
