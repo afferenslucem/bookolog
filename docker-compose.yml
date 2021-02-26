@@ -1,15 +1,11 @@
 version: "3"
 services:
   client:
-    build:
-      context: .
-      dockerfile: frontend.v3/Dockerfile
+    image: docker.pkg.github.com/afferenslucem/bookolog/client:latest
     ports:
       - "40080:80"    
     depends_on: 
       - server
-    volumes:
-      - "./tmp:/tmp"  
 
   server:
     build: 
