@@ -20,7 +20,6 @@ describe('SyncService', () => {
         HttpClientTestingModule,
       ]
     });
-    service = TestBed.inject(SyncService);
     userService = TestBed.inject(UserService);
 
     userService.user = {
@@ -28,6 +27,8 @@ describe('SyncService', () => {
       email: 'alexshakirov74@gmail.com',
       id: 1
     } as any;
+
+    service = TestBed.inject(SyncService);
 
     bookService = TestBed.inject(BookService);
     collectionService = TestBed.inject(CollectionService);
