@@ -5,9 +5,9 @@ name: Client Tests
 
 on:
   push:
-    branches: [ master, develop, tests, task/*, feat/*, bugfix/* ]
+    branches: [ master, develop, tests ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ develop ]
 
 jobs:
   build:

@@ -2,7 +2,7 @@ name: Server Tests
 
 on:
   push:
-    branches: [ develop, master ]
+    branches: [ develop, master, tests ]
   pull_request:
     branches: [ develop ]
 
