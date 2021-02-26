@@ -1,6 +1,6 @@
 using System;
 
-namespace backend.Exceptions
+namespace backend.v2.Exceptions
 {
     public enum ErrorCodes
     {

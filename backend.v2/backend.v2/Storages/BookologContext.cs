@@ -1,12 +1,9 @@
-﻿using backend.Models;
-using backend.Models.Authentication;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using backend.v2.Models;
+using backend.v2.Models.Authentication;
 
-namespace backend.Storages
+namespace backend.v2.Storages
 {
     public class BookologContext : DbContext
     {

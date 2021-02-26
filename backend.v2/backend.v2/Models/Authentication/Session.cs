@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Claims;
 using Newtonsoft.Json;
 
-namespace backend.Models.Authentication
+namespace backend.v2.Models.Authentication
 {
     public class Session
     {

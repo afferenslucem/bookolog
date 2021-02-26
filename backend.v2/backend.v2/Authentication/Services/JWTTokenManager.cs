@@ -1,9 +1,7 @@
 using System;
-using backend.v2.Authentication.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Options;
-using backend.v2.Utils;
 using System.Text;
+using backend.v2.Authentication.Models;
+using backend.v2.Utils;
 
 namespace backend.v2.Authentication.Services
 {

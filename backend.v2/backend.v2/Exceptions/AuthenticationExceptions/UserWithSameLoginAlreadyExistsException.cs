@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace backend.Exceptions.AuthenticationExceptions
+namespace backend.v2.Exceptions.AuthenticationExceptions
 {
     public class UserWithSameLoginAlreadyExistsException : Exception
     {

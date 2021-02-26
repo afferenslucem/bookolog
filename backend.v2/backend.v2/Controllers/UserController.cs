@@ -1,20 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using backend.v2.Services;
 using Microsoft.Extensions.Logging;
-using backend.Models;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using backend.Exceptions.StorageExceptions;
-using backend.Exceptions;
+using backend.v2.Exceptions;
+using backend.v2.Models;
 using backend.v2.Authentication.Models;
+using backend.v2.Services;
 
-namespace backend.Controllers
+namespace backend.v2.Controllers
 {
     [Authorize(AuthenticationSchemes = JWTDefaults.AuthenticationScheme)]
     [Route("[controller]")]
@@ -93,35 +89,6 @@ namespace backend.Controllers
             catch(Exception ex) {
                 this.logger.LogError(500, ex.Message, ex);
                 return StatusCode(500, "Find user");
-            }
-        }
-
-        [HttpGet]
-        [Route("{login:maxlength(128)}")]
-        public async Task<IActionResult> Snapshot(string login)
-        {
-            try
-            {
-                var user = await this.userService.GetByLogin(login);
-                var books = await this.bookService.GetByUserId(user.Id);
-
-                var result = new UserSnapshot
-                {
-                    Books = books.Where(item => item.Status == Status.Done).Select(item => item.ToShortBook()),
-                    User = user.WithoutPrivate()
-                };
-
-                return Ok(result);
-            }
-            catch (StorageReadException ex)
-            {
-                this.logger.LogError(500, ex.Message, ex);
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(500, ex.Message, ex);
-                return BadRequest();
             }
         }
 

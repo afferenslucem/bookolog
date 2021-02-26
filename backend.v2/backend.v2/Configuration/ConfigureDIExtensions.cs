@@ -2,8 +2,6 @@ using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

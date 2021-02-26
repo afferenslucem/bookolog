@@ -1,11 +1,7 @@
-﻿using backend.Models;
-using backend.Storages;
-using System;
+﻿using System;
 using System.Threading.Tasks;
-using backend.Models.Authentication;
-using Newtonsoft.Json;
-using backend.v2.Utils;
-using backend.v2.Authentication.Models;
+using backend.v2.Models.Authentication;
+using backend.v2.Storages;
 
 namespace backend.v2.Services
 {

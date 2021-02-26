@@ -1,5 +1,5 @@
-using backend.Models;
-using backend.Models.Authentication;
+using backend.v2.Models;
+using backend.v2.Models.Authentication;
 
 namespace backend.v2.Authentication.Models
 {

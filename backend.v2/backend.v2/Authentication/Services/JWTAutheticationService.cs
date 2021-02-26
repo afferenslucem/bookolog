@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using backend.Exceptions.AuthenticationExceptions;
 using backend.v2.Authentication.Models;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -106,11 +102,11 @@ namespace backend.v2.Authentication.Services
 
         private void AppendTokens(HttpContext context, string access, string refrash) {
             context.Response.Headers[JWTDefaults.AccessHeaderName] = access;
-            context.Response.Headers[JWTDefaults.RefrashHeaderName] = refrash;
+            context.Response.Headers[JWTDefaults.RefreshHeaderName] = refrash;
         }
         private void RemoveTokens(HttpContext context) {
             context.Response.Headers.Remove(JWTDefaults.AccessHeaderName);
-            context.Response.Headers.Remove(JWTDefaults.RefrashHeaderName);
+            context.Response.Headers.Remove(JWTDefaults.RefreshHeaderName);
         }
     }
 }

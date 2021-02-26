@@ -1,20 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using backend.Models.Authentication;
-using backend.v2.Utils;
-using backend.v2.Authentication.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+using backend.v2.Authentication.Models;
 using backend.v2.Services;
-using backend.Exceptions.AuthenticationExceptions;
 
 namespace backend.v2.Authentication.Services
 {
@@ -25,7 +17,8 @@ namespace backend.v2.Authentication.Services
         private readonly IUserSession userSession;
         private readonly IUserService userService;
 
-        public JWTAuthenticationHandler(IOptionsMonitor<JWTAuthenticationOptions> options,
+        public JWTAuthenticationHandler(
+            IOptionsMonitor<JWTAuthenticationOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
@@ -34,38 +27,46 @@ namespace backend.v2.Authentication.Services
             IUserService userService,
             IJWTTokenManager tokenManager,
             ILogger<JWTAuthenticationService> jwtLogger
-            )
-            : base(options, logger, encoder, clock)
+        ) : base(options, logger, encoder, clock)
         {
             this.tokenManager = tokenManager;
             this.userSession = userSession;
             this.userService = userService;
             this.authenticationService = authenticationService;
         }
-        protected async override Task<AuthenticateResult> HandleAuthenticateAsync()
+        
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            this.Logger.LogDebug($"Authenticate {this.CurrentUri}");
+            return await HandleAuthenticate();
+        }
 
+        public async Task<AuthenticateResult> HandleAuthenticate()
+        {
+            if (!Context.Request.Headers.ContainsKey(JWTDefaults.AccessHeaderName) ||
+                !Context.Request.Headers.ContainsKey(JWTDefaults.RefreshHeaderName))
+            {
+                return AuthenticateResult.NoResult();
+            }
+
+            var accessToken = Context.Request.Headers[JWTDefaults.AccessHeaderName];
+            var refreshToken = Context.Request.Headers[JWTDefaults.RefreshHeaderName];
+
+            return await this.AuthenticateByTokens(accessToken, refreshToken);
+        }
+
+        public async Task<AuthenticateResult> AuthenticateByTokens(string accessToken, string refreshToken)
+        {
             try
             {
-                if (!Context.Request.Headers.ContainsKey(JWTDefaults.AccessHeaderName) ||
-                    !Context.Request.Headers.ContainsKey(JWTDefaults.RefrashHeaderName))
-                {
-                    return AuthenticateResult.NoResult();
-                }
-
-                var accessToken = Context.Request.Headers[JWTDefaults.AccessHeaderName];
-                var refrashToken = Context.Request.Headers[JWTDefaults.RefrashHeaderName];
-
-                var accessTokenData = this.tokenManager.ReadToken(accessToken);
-                var refrashTokenData = this.tokenManager.ReadToken(refrashToken);
-
-                if (refrashTokenData.ValidityDate < DateTime.UtcNow)
+                var refreshTokenData = this.tokenManager.ReadToken(refreshToken);
+                if (refreshTokenData.ValidityDate < this.Clock.UtcNow)
                 {
                     this.OnRefreshExpired();
                     return AuthenticateResult.NoResult();
                 }
-                else if (accessTokenData.ValidityDate < DateTime.UtcNow)
+                
+                var accessTokenData = this.tokenManager.ReadToken(accessToken);
+                if (accessTokenData.ValidityDate < this.Clock.UtcNow)
                 {
                     this.OnAccessExpired(accessTokenData);
                 }
@@ -79,42 +80,36 @@ namespace backend.v2.Authentication.Services
             }
             catch (Exception e)
             {
-                this.Logger.LogInformation(401, e.Message, e);
                 return AuthenticateResult.Fail("Cookies error");
             }
         }
 
-        private void OnRefreshExpired()
+        public virtual void OnRefreshExpired()
         {
-            this.Logger.LogDebug("Refresh time expired");
             this.DeleteTokens();
-            this.Logger.LogDebug("Cookies deleted");
         }
 
-        private void OnAccessExpired(TokenData data)
+        public virtual void OnAccessExpired(TokenData data)
         {
-            this.Logger.LogDebug("Accept time expired");
-
             var accessToken = this.GetAccessToken(data);
-            var refrashToken = this.GetRefrashToken(data);
+            var refreshToken = this.GetRefreshToken(data);
 
-            this.RenewTokens(accessToken, refrashToken);
-            this.Logger.LogDebug("Cookies renewed");
+            this.RenewTokens(accessToken, refreshToken);
         }
         
-        private string GetAccessToken(TokenData data) {
+        public virtual string GetAccessToken(TokenData data) {
             data.ValidityDate = this.tokenManager.NextAccessTime;
 
             return tokenManager.GenerateToken(data);
         }
 
-        private string GetRefrashToken(TokenData data) {
+        public virtual string GetRefreshToken(TokenData data) {
             data.ValidityDate = this.tokenManager.NextRefrashTime;
 
             return tokenManager.GenerateToken(data);
         }
 
-        private async Task<AuthenticationTicket> Authenticate(TokenData data)
+        public async Task<AuthenticationTicket> Authenticate(TokenData data)
         {
             var user = await this.userService.GetById(data.UserId);
             this.userSession.User = user;
@@ -130,25 +125,25 @@ namespace backend.v2.Authentication.Services
             return ticket;
         }
 
-        private void RenewTokens(string access, string refrash)
+        public virtual void RenewTokens(string access, string refresh)
         {
-            this.AppendTokens(access, refrash);
+            this.AppendTokens(access, refresh);
         }
 
-        private void CopyTokens() {
+        public virtual void CopyTokens() {
             this.Context.Response.Headers[JWTDefaults.AccessHeaderName] = this.Context.Request.Headers[JWTDefaults.AccessHeaderName];
-            this.Context.Response.Headers[JWTDefaults.RefrashHeaderName] = this.Context.Request.Headers[JWTDefaults.RefrashHeaderName];
+            this.Context.Response.Headers[JWTDefaults.RefreshHeaderName] = this.Context.Request.Headers[JWTDefaults.RefreshHeaderName];
         }
 
-        private void DeleteTokens()
+        public virtual void DeleteTokens()
         {
             Context.Response.Headers.Remove(JWTDefaults.AccessHeaderName);
-            Context.Response.Headers.Remove(JWTDefaults.RefrashHeaderName);
+            Context.Response.Headers.Remove(JWTDefaults.RefreshHeaderName);
         }
-        private void AppendTokens(string access, string refrash)
+        public virtual void AppendTokens(string access, string refresh)
         {
             Context.Response.Headers[JWTDefaults.AccessHeaderName] = access;
-            Context.Response.Headers[JWTDefaults.RefrashHeaderName] = refrash;
+            Context.Response.Headers[JWTDefaults.RefreshHeaderName] = refresh;
         }
     }
 }

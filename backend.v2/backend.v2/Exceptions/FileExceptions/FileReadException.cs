@@ -1,6 +1,6 @@
 using System;
 
-namespace backend.Exceptions.FileExceptions
+namespace backend.v2.Exceptions.FileExceptions
 {
     public class FileReadException : Exception
     {

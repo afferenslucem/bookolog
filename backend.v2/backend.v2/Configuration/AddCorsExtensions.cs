@@ -1,5 +1,4 @@
 using backend.v2.Authentication.Models;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace backend.v2.Configuration
@@ -16,7 +15,7 @@ namespace backend.v2.Configuration
                         .AllowCredentials()
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        .WithExposedHeaders(JWTDefaults.AccessHeaderName, JWTDefaults.RefrashHeaderName)
+                        .WithExposedHeaders(JWTDefaults.AccessHeaderName, JWTDefaults.RefreshHeaderName)
                 );
             });
         }

@@ -1,18 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using backend.v2.Services;
 using Microsoft.Extensions.Logging;
-using backend.Models;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using backend.Exceptions.FileExceptions;
+using backend.v2.Exceptions.FileExceptions;
+using backend.v2.Services;
 
-namespace backend.Controllers
+namespace backend.v2.Controllers
 {
     [Route("[controller]")]
     public class FileController : Controller

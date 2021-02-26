@@ -1,17 +1,14 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using backend.Exceptions.AuthenticationExceptions;
 using System;
 using System.Threading.Tasks;
-using backend.Exceptions;
-using backend.Models;
-using backend.v2.Services;
 using Microsoft.Extensions.Logging;
+using backend.v2.Exceptions;
+using backend.v2.Models;
 using backend.v2.Authentication.Models;
+using backend.v2.Services;
 
-namespace backend.Controllers
+namespace backend.v2.Controllers
 {
     
     [Authorize(AuthenticationSchemes = JWTDefaults.AuthenticationScheme)]
@@ -51,8 +48,7 @@ namespace backend.Controllers
                 return StatusCode(500);
             }
         }
-
-
+        
         [HttpPut]
         [Route("[action]")]
         public virtual async Task<IActionResult> Update([FromBody]T model) {
@@ -121,52 +117,6 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("[action]")]
-        public virtual async Task<IActionResult> CreateMany([FromBody]T[] data) {
-            try
-            {
-                var result = await this.entityService.SaveMany(data);
-
-                return Ok(result);
-            }
-            catch (BookologException ex)
-            {
-                this.logger.LogError((int)ex.Code, ex.Message, ex, data);
-
-                return StatusCode(400, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(500, ex.Message, ex, data);
-
-                return StatusCode(500);
-            }
-        }
-
-        [HttpPut]
-        [Route("[action]")]
-        public async Task<IActionResult> UpdateMany([FromBody]T[] data) {
-            try
-            {
-                var result = await this.entityService.UpdateMany(data);
-
-                return Ok(result);
-            }
-            catch (BookologException ex)
-            {
-                this.logger.LogError((int)ex.Code, ex.Message, ex, data);
-
-                return StatusCode(400, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(500, ex.Message, ex, data);
-
-                return StatusCode(500);
-            }
-        }
-
         [HttpGet]
         [Route("User/{userId:long}")]
         public async Task<IActionResult> Get(long userId) {
@@ -207,29 +157,6 @@ namespace backend.Controllers
             catch (BookologException ex)
             {
                 this.logger.LogError((int)ex.Code, ex, ex.Message, data);
-
-                return StatusCode(400, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(500, ex, ex.Message, data);
-
-                return StatusCode(500);
-            }
-        }
-
-        [HttpDelete]
-        [Route("[action]")]
-        public async Task<IActionResult> DeleteMany([FromBody]Guid[] data) {
-            try
-            {
-                await this.entityService.DeleteMany(data);
-
-                return Ok();
-            }
-            catch (BookologException ex)
-            {
-                this.logger.LogError(500, ex, ex.Message, data);
 
                 return StatusCode(400, ex.Message);
             }

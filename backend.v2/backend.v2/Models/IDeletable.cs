@@ -1,6 +1,6 @@
 using System;
 
-namespace backend.Models
+namespace backend.v2.Models
 {
     public interface IDeletable {
         bool Deleted { get; }

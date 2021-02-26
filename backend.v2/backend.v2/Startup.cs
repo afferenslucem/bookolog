@@ -1,7 +1,3 @@
-using System;
-using System.Net;
-using System.Threading.Tasks;
-using backend.Storages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using backend.v2.Configuration;
+using backend.v2.Storages;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
 using backend.v2.Configuration.Middlewares;

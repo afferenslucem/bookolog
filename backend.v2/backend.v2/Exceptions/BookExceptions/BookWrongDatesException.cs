@@ -1,4 +1,4 @@
-namespace backend.Exceptions.BookExceptions
+namespace backend.v2.Exceptions.BookExceptions
 {
     public class BookWrongDatesException : BookException
     {

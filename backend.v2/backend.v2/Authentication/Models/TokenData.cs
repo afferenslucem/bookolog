@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace backend.v2.Authentication.Models
 {

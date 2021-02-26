@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using backend.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using backend.Models.Authentication;
+﻿using System;
+using backend.v2.Models;
+using backend.v2.Models.Authentication;
 
 namespace backend.v2.Services
 {
@@ -18,8 +14,6 @@ namespace backend.v2.Services
 
     public class UserSession : IUserSession
     {
-        private HttpContext context;
-
         private Session session;
         private User user;
 

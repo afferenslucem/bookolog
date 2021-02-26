@@ -2,7 +2,6 @@ using System;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 

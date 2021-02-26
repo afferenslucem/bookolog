@@ -1,11 +1,9 @@
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using backend.Models.Authentication;
+using backend.v2.Models.Authentication;
 using backend.v2.Services;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace backend.v2.Configuration.Middlewares

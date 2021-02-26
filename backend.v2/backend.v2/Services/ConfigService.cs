@@ -1,12 +1,3 @@
-using backend.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace backend.v2.Services {
     public interface IConfigService
     {

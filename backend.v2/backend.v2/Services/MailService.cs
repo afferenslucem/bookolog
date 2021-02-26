@@ -1,13 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using backend.Exceptions.AuthenticationExceptions;
-using backend.Exceptions.StorageExceptions;
-using backend.Models;
-using backend.Storages;
-using backend.v2.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using backend.v2.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
 

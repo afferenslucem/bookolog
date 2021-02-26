@@ -1,22 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using backend.Exceptions.AuthenticationExceptions;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using backend.Models;
-using backend.v2.Utils;
-using backend.Models.Authentication;
-using backend.v2.Services;
 using Microsoft.Extensions.Logging;
+using backend.v2.Exceptions.AuthenticationExceptions;
+using backend.v2.Models;
+using backend.v2.Models.Authentication;
 using backend.v2.Authentication.Models;
+using backend.v2.Services;
+using backend.v2.Utils;
 
-namespace backend.Controllers
+namespace backend.v2.Controllers
 {
     [Route("[controller]")]
     public class AuthController : Controller

@@ -1,16 +1,9 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using backend.Exceptions.AuthenticationExceptions;
-using System;
-using System.Threading.Tasks;
-using backend.Exceptions;
-using backend.Models;
+using backend.v2.Models;
 using backend.v2.Services;
 using Microsoft.Extensions.Logging;
 
-namespace backend.Controllers
+namespace backend.v2.Controllers
 {
     [Route("[controller]")]
     public class BookController : EntityController<Book>

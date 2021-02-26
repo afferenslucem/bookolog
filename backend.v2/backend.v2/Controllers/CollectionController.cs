@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using backend.Models;
+using backend.v2.Models;
 using backend.v2.Services;
 using Microsoft.Extensions.Logging;
 
-namespace backend.Controllers
+namespace backend.v2.Controllers
 {
     [Route("[controller]")]
     public class CollectionController : EntityController<Collection>

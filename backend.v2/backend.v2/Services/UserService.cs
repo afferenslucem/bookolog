@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using backend.Exceptions.AuthenticationExceptions;
-using backend.Exceptions.StorageExceptions;
-using backend.Models;
-using backend.Storages;
-using backend.v2.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
+using backend.v2.Exceptions.AuthenticationExceptions;
+using backend.v2.Exceptions.StorageExceptions;
+using backend.v2.Models;
+using backend.v2.Storages;
+using backend.v2.Utils;
 
 namespace backend.v2.Services
 {

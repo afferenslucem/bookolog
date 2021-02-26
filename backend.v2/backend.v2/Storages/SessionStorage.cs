@@ -1,13 +1,11 @@
-﻿using backend.Models;
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using backend.Models.Authentication;
+using backend.v2.Models.Authentication;
 using Npgsql;
 
-namespace backend.Storages
+namespace backend.v2.Storages
 {
     public interface ISessionStorage
     {

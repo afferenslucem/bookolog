@@ -1,11 +1,11 @@
-using backend.Models;
 using System;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.v2.Models;
 
-namespace backend.Storages
+namespace backend.v2.Storages
 {
     public interface IEntityStorage<T> where T: class, IEntity
     {
