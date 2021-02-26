@@ -22,6 +22,13 @@ describe('SyncService', () => {
     });
     service = TestBed.inject(SyncService);
     userService = TestBed.inject(UserService);
+
+    userService.user = {
+      login: 'hrodvitnir',
+      email: 'alexshakirov74@gmail.com',
+      id: 1
+    } as any;
+
     bookService = TestBed.inject(BookService);
     collectionService = TestBed.inject(CollectionService);
   });
