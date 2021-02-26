@@ -41,6 +41,10 @@ form {
     margin-bottom: 0 !important;
   }
 
+  &__icons {
+    flex: 0 0 auto;
+  }
+
   &__authors {
     font-weight: $fat-font-weight;
     line-height: normal;

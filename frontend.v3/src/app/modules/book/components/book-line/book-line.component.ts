@@ -2,7 +2,6 @@ import { Book } from '../../models/book';
 import { BookType } from '../../models/book-type';
 
 export class BookLineComponent {
-
   public BookType: typeof BookType = BookType;
 
   public innerBook: Book;
