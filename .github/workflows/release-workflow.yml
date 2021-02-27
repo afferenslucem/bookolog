@@ -8,7 +8,8 @@ on:
 
 
 env:
-  IMAGE_NAME: client
+  CLIENT_IMAGE_NAME: client
+  SERVER_IMAGE_NAME: server
 
 jobs:
   client-push-image:
@@ -26,14 +27,14 @@ jobs:
       - name: Push client image
         run: |
           echo IMAGE_NAME=client
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$CLIENT_IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
           echo IMAGE_ID=$IMAGE_ID
 
-          docker tag $IMAGE_NAME $IMAGE_ID:latest
+          docker tag $CLIENT_IMAGE_NAME $IMAGE_ID:latest
           docker push $IMAGE_ID:latest
 
 
@@ -52,12 +53,13 @@ jobs:
       - name: Push server image
         run: |
           echo IMAGE_NAME=server
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$SERVER_IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
           echo IMAGE_ID=$IMAGE_ID
 
-          docker tag $IMAGE_NAME $IMAGE_ID:latest
+          docker tag $SERVER_IMAGE_NAME $IMAGE_ID:latest
           docker push $IMAGE_ID:latest
+
