@@ -1,4 +1,4 @@
 # IDEs and editors
-/.idea
-/tmp
-/images
+.idea/
+/tmp/
+/images/
