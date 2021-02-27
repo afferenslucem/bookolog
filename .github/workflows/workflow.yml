@@ -36,9 +36,9 @@ jobs:
 
   client-push-image:
     needs: client-tests
+    if: github.event_name == 'release'
 
     runs-on: ubuntu-latest
-    if: github.event_name == 'release'
 
     steps:
       - uses: actions/checkout@v2
@@ -74,9 +74,9 @@ jobs:
 
   server-push-image:
     needs: server-tests
+    if: github.event_name == 'release'
 
     runs-on: ubuntu-latest
-    if: github.event_name == 'release'
 
     steps:
       - uses: actions/checkout@v2
