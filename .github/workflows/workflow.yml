@@ -37,6 +37,8 @@ jobs:
   client-push-image:
     runs-on: ubuntu-latest
 
+    if: github.event_name == 'release'
+
     steps:
       - uses: actions/checkout@v2
 
@@ -71,6 +73,7 @@ jobs:
 
   server-push-image:
     runs-on: ubuntu-latest
+    if: github.event_name == 'release'
 
     steps:
       - uses: actions/checkout@v2
@@ -93,11 +96,3 @@ jobs:
 
           docker tag $IMAGE_NAME $IMAGE_ID:latest
           docker push $IMAGE_ID:latest
-
-  tests:
-    if: github.event_name == 'push'
-    needs: client-tests, server-tests
-
-  push:
-    if: github.event_name == 'release'
-    needs: tests, client-push-image, server-push-image
