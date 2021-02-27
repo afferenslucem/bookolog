@@ -5,9 +5,9 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["../backend.v2/backend.v2.csproj", "backend.v2.csproj"]
+COPY ["backend.v2.csproj", "backend.v2.csproj"]
 RUN dotnet restore "backend.v2.csproj"
-COPY ../backend.v2 .
+COPY . .
 RUN dotnet build "backend.v2.csproj" -c Release -o /app/build
 
 FROM build AS publish
