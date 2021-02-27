@@ -61,12 +61,13 @@ jobs:
 
   server-tests:
     runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-          - name: Build the Docker image
-            run: |
-              docker build -t bookolog/tests backend.v2 --file backend.v2/DockerfileTests
-              docker run bookolog/tests
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: |
+          docker build -t bookolog/tests backend.v2 --file backend.v2/DockerfileTests
+          docker run bookolog/tests
 
   server-push-image:
     runs-on: ubuntu-latest
