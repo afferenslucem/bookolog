@@ -40,12 +40,16 @@ jobs:
 
   server-push-image:
     runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: backend.v2/backend.v2
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Build image
-        run: docker build . --file backend.v2/backend.v2/Dockerfile --tag $SERVER_IMAGE_NAME
+        run: docker build . --tag $SERVER_IMAGE_NAME
 
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_PUB }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
