@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Tests client use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
@@ -32,7 +32,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Build the Docker image
-        run: |
-          docker build -t bookolog/tests backend.v2 --file backend.v2/DockerfileTests
-          docker run bookolog/tests
+      - name: Build server tests Docker image
+        run: docker build -t bookolog/tests backend.v2 --file backend.v2/DockerfileTests
+        
+      - name: Run server tests
+        run: docker run bookolog/tests
+
+
+
+
+
+
