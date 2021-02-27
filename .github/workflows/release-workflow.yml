@@ -1,4 +1,4 @@
-name: CI
+name: Bookolog Publish
 
 on:
   release:
@@ -23,7 +23,7 @@ jobs:
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_PUB }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
-      - name: Push image
+      - name: Push client image
         run: |
           echo IMAGE_NAME=client
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
@@ -49,7 +49,7 @@ jobs:
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_PUB }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
-      - name: Push image
+      - name: Push server image
         run: |
           echo IMAGE_NAME=server
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
