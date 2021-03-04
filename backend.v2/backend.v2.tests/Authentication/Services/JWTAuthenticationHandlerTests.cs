@@ -117,7 +117,7 @@ namespace backend.v2.tests.Authentication.Services
         public async Task ShouldReturnNoResultForOldTokens()
         {
             tokenManagerMock 
-                .Setup(m => m.ReadToken(It.IsAny<string>())).Returns(new TokenData()
+                .Setup(m => m.DecodeToken(It.IsAny<string>())).Returns(new TokenData()
                 {
                     ValidityDate = new DateTime(2021, 2, 26, 4, 4, 0, DateTimeKind.Utc)
                 });
@@ -130,7 +130,7 @@ namespace backend.v2.tests.Authentication.Services
 
             var result = await service.Object.AuthenticateByTokens(null, null);
             
-            tokenManagerMock.Verify(m => m.ReadToken(It.IsAny<string>()), Times.Once());
+            tokenManagerMock.Verify(m => m.DecodeToken(It.IsAny<string>()), Times.Once());
             clockMock.VerifyGet(m => m.UtcNow, Times.Once());
             service.Verify(m => m.OnRefreshExpired(), Times.Once());
             service.Verify(m => m.CopyTokens(), Times.Never());
@@ -143,7 +143,7 @@ namespace backend.v2.tests.Authentication.Services
         public async Task ShouldRenewTokensForOldTokens()
         {
             tokenManagerMock 
-                .Setup(m => m.ReadToken(It.IsAny<string>()))
+                .Setup(m => m.DecodeToken(It.IsAny<string>()))
                 .Returns(
                     new Queue<TokenData>(new TokenData[] {
                         new TokenData()
@@ -167,7 +167,7 @@ namespace backend.v2.tests.Authentication.Services
 
             var result = await service.Object.AuthenticateByTokens(null, null);
             
-            tokenManagerMock.Verify(m => m.ReadToken(It.IsAny<string>()), Times.Exactly(2));
+            tokenManagerMock.Verify(m => m.DecodeToken(It.IsAny<string>()), Times.Exactly(2));
             clockMock.VerifyGet(m => m.UtcNow, Times.Exactly(2));
             service.Verify(m => m.OnRefreshExpired(), Times.Never());
             service.Verify(m => m.CopyTokens(), Times.Never());
@@ -180,7 +180,7 @@ namespace backend.v2.tests.Authentication.Services
         public async Task ShouldNotRenewForValidTokens()
         {
             tokenManagerMock 
-                .Setup(m => m.ReadToken(It.IsAny<string>()))
+                .Setup(m => m.DecodeToken(It.IsAny<string>()))
                 .Returns(
                     new Queue<TokenData>(new TokenData[] {
                         new TokenData()
@@ -204,7 +204,7 @@ namespace backend.v2.tests.Authentication.Services
 
             var result = await service.Object.AuthenticateByTokens(null, null);
             
-            tokenManagerMock.Verify(m => m.ReadToken(It.IsAny<string>()), Times.Exactly(2));
+            tokenManagerMock.Verify(m => m.DecodeToken(It.IsAny<string>()), Times.Exactly(2));
             clockMock.VerifyGet(m => m.UtcNow, Times.Exactly(2));
             service.Verify(m => m.OnRefreshExpired(), Times.Never());
             service.Verify(m => m.CopyTokens(), Times.Once());

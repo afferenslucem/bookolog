@@ -16,7 +16,7 @@ namespace backend.v2.Services
         Task<T> Delete(Guid guid);
         Task<T[]> SaveMany(T[] entities);
         Task<T[]> UpdateMany(T[] entities);
-        Task<T[]> DeleteMany(T[] entities);
+        Task<T[]> DeleteMany(T[] entities, bool skipCheck);
         Task DeleteMany(Guid[] guids);
         Task<SyncData<T>> Synch(SyncData<T> data);
         Task<IEnumerable<T>> GetByUserId(long userId);
@@ -32,13 +32,15 @@ namespace backend.v2.Services
             this.storage = storage;
             this.session = session;
         }
-        public async Task<T> GetByGuid(Guid guid)
+        
+        public virtual async Task<T> GetByGuid(Guid guid)
         {
             var result = await this.storage.GetByGuid(guid);
 
             return result;
         }
-        public async Task<T[]> GetByGuids(Guid[] guids)
+        
+        public virtual async Task<T[]> GetByGuids(Guid[] guids)
         {
             var result = await this.storage.GetByGuids(guids);
 
@@ -85,21 +87,24 @@ namespace backend.v2.Services
 
         public virtual async Task<T[]> UpdateMany(T[] entities)
         {
-            var prevStates = await this.EntityAccessCheck(entities.Select(item => item.Guid.Value).ToArray());
+            var prevStates = await this.EntityAccessCheck(
+                entities.Select(item => item.Guid.Value).ToArray()
+            );
             
             this.SetUserId(entities);
-
             this.CopyMetadata(entities, prevStates);
-
             this.CheckEntity(entities);
 
             return await this.storage.UpdateMany(entities);
         }
 
-        public virtual async Task<T[]> DeleteMany(T[] entities)
+        public virtual async Task<T[]> DeleteMany(T[] entities, bool skipCheck = false)
         {
-            await this.EntityAccessCheck(entities.Select(item => item.Guid.Value).ToArray());
-            
+            if (!skipCheck)
+            {
+                await this.EntityAccessCheck(entities.Select(item => item.Guid.Value).ToArray());
+            }
+
             return await this.storage.DeleteMany(entities);
         }
 
@@ -119,34 +124,26 @@ namespace backend.v2.Services
 
         public async Task<SyncData<T>> Synch(SyncData<T> data)
         {
-            try
-            {
-                data.Update = data.Update ?? new T[] {};
-                data.Delete = data.Delete ?? new Guid[] {};
+            data.Update = data.Update ?? new T[] {};
+            data.Delete = data.Delete ?? new Guid[] {};
 
-                var toDeleteAwait = this.EntityAccessCheck(data.Delete);
-                var toUpdateAwait = this.EntityAccessCheck(data.Update.Select(item => item.Guid.Value).ToArray());
+            var toDeleteAwait = this.EntityAccessCheck(data.Delete);
+            var toUpdateAwait = this.EntityAccessCheck(data.Update.Select(item => item.Guid.Value).ToArray());
 
-                await Task.WhenAll(toUpdateAwait, toDeleteAwait);
+            await Task.WhenAll(toUpdateAwait, toDeleteAwait);
 
-                this.SetUserId(data.Update);
+            this.SetUserId(data.Update);
+            this.CopyMetadata(data.Update, toUpdateAwait.Result);
 
-                this.CopyMetadata(data.Update, toUpdateAwait.Result);
+            var updatingAwait = this.storage.SaveOrUpdateMany(data.Update);
+            var deletingAwait = this.DeleteMany(toDeleteAwait.Result, true);
 
-                var updatingAwait = this.storage.SaveOrUpdateMany(data.Update);
-                var deletingAwait = this.DeleteMany(toDeleteAwait.Result);
+            await Task.WhenAll(updatingAwait, deletingAwait);
 
-                var synched = await Task.WhenAll(updatingAwait, deletingAwait);
-
-                return await this.GetDifferenceForSession();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return await this.GetDifferenceForSession();
         }
         
-        private async Task<SyncData<T>> GetDifferenceForSession()
+        public virtual async Task<SyncData<T>> GetDifferenceForSession()
         {
             var thres = this.session.LastSyncTime ?? DateTime.MinValue;
             var user = this.session.User;
@@ -154,7 +151,7 @@ namespace backend.v2.Services
             var updateAwait = this.storage.GetChangedAfter(user.Id, thres);
             var deleteAwait = this.storage.GetDeletedAfter(user.Id, thres);
 
-            var diff = await Task.WhenAll(updateAwait, deleteAwait);
+            await Task.WhenAll(updateAwait, deleteAwait);
 
             return new SyncData<T>
             {
@@ -173,22 +170,19 @@ namespace backend.v2.Services
             return currentState;
         }
 
-        private async Task<T[]> EntityAccessCheck(Guid[] guids)
+        public virtual async Task<T[]> EntityAccessCheck(Guid[] guids)
         {
             var currentStates = await this.GetByGuids(guids);
             var user = this.session.User;
 
-            foreach (var entity in currentStates)
-            {
-                this.CheckAccess(user.Id, entity);
-            }
+            foreach (var entity in currentStates) { this.CheckAccess(user.Id, entity); }
 
             return currentStates;
         }
 
         public abstract void CheckEntity(T entity);
 
-        private void CheckEntity(params T[] entities)
+        public virtual void CheckEntity(params T[] entities)
         {
             foreach (var entity in entities)
             {
@@ -196,25 +190,15 @@ namespace backend.v2.Services
             }
         }
 
-        public void CheckAccess(long userId, T entity)
+        public virtual void CheckAccess(long userId, T entity)
         {
             if (entity.UserId != userId)
             {
-                throw new EntityAccessDenied();
-            }
-        }
-        
-        public void CheckAccess(T book)
-        {
-            var currentUser = this.session.User;
-
-            if (book.UserId != currentUser.Id)
-            {
-                throw new EntityAccessDenied();
+                throw new EntityAccessDeniedException();
             }
         }
 
-        protected virtual void SetUserId(params T[] entities)
+        private void SetUserId(params T[] entities)
         {
             var user = this.session.User;
 
@@ -224,7 +208,7 @@ namespace backend.v2.Services
             }
         }
 
-        private void CopyMetadata(T[] current, T[] oldState) {
+        public virtual void CopyMetadata(T[] current, T[] oldState) {
             
             var pairs = current.Join(
                 oldState,
@@ -239,7 +223,7 @@ namespace backend.v2.Services
             }
         }
 
-        private void CopyMetadata(T current, T oldState) {
+        public virtual void CopyMetadata(T current, T oldState) {
             current.CreateDate = oldState.CreateDate;
             current.DeleteDate = oldState.DeleteDate;
             current.ModifyDate = oldState.ModifyDate;

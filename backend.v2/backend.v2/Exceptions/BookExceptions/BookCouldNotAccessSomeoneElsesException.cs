@@ -1,9 +1,9 @@
 namespace backend.v2.Exceptions.BookExceptions
 {
-    public class EntityAccessDenied : BookException
+    public class EntityAccessDeniedException : BookException
     {
         public static readonly string ErrorMessage = "Could not access someone else's book";
-        public EntityAccessDenied() : base(ErrorCodes.BookCouldNotAccessSomeoneElses, ErrorMessage)
+        public EntityAccessDeniedException() : base(ErrorCodes.BookCouldNotAccessSomeoneElses, ErrorMessage)
         {
         }
     }

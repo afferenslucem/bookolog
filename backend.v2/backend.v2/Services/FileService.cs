@@ -37,11 +37,9 @@ namespace backend.v2.Services
         public async Task<Models.File> Save(IFormFile formfile)
         {
             this.CheckExtention(formfile.FileName);
-
             var file = this.CreateFileEntity(formfile);
 
             await this.fileSystem.WrileFile(formfile, file.Path);
-
             var result = await this.storage.Save(file);
 
             return result;
@@ -70,7 +68,7 @@ namespace backend.v2.Services
             return extension;
         }
 
-        private void CheckExtention(string filename) {
+        public virtual void CheckExtention(string filename) {
             var pass = configService.FileStorage.AllowedExtensions.Any(ext => this.GetExtentionFromFilename(filename) == ext);
 
             if(!pass) {
@@ -78,7 +76,7 @@ namespace backend.v2.Services
             }
         }
     
-        private Models.File CreateFileEntity(IFormFile formfile) {
+        public virtual Models.File CreateFileEntity(IFormFile formfile) {
             var name = this.fileSystem.GetRandomFileName() + this.GetExtentionFromFilename(formfile.FileName);
 
             var path = Path.Combine(this.configService.FileStorage.StoragePath, name);

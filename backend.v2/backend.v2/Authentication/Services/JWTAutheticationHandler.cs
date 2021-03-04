@@ -58,14 +58,14 @@ namespace backend.v2.Authentication.Services
         {
             try
             {
-                var refreshTokenData = this.tokenManager.ReadToken(refreshToken);
+                var refreshTokenData = this.tokenManager.DecodeToken(refreshToken);
                 if (refreshTokenData.ValidityDate < this.Clock.UtcNow)
                 {
                     this.OnRefreshExpired();
                     return AuthenticateResult.NoResult();
                 }
                 
-                var accessTokenData = this.tokenManager.ReadToken(accessToken);
+                var accessTokenData = this.tokenManager.DecodeToken(accessToken);
                 if (accessTokenData.ValidityDate < this.Clock.UtcNow)
                 {
                     this.OnAccessExpired(accessTokenData);
@@ -100,13 +100,13 @@ namespace backend.v2.Authentication.Services
         public virtual string GetAccessToken(TokenData data) {
             data.ValidityDate = this.tokenManager.NextAccessTime;
 
-            return tokenManager.GenerateToken(data);
+            return tokenManager.EncodeToken(data);
         }
 
         public virtual string GetRefreshToken(TokenData data) {
-            data.ValidityDate = this.tokenManager.NextRefrashTime;
+            data.ValidityDate = this.tokenManager.NextRefreshTime;
 
-            return tokenManager.GenerateToken(data);
+            return tokenManager.EncodeToken(data);
         }
 
         public async Task<AuthenticationTicket> Authenticate(TokenData data)

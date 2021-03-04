@@ -8,9 +8,9 @@ namespace backend.v2.Authentication.Services
     public interface IJWTTokenManager
     {
         DateTime NextAccessTime { get; }
-        DateTime NextRefrashTime { get; }
-        string GenerateToken(TokenData data);
-        TokenData ReadToken(string token);
+        DateTime NextRefreshTime { get; }
+        string EncodeToken(TokenData data);
+        TokenData DecodeToken(string token);
     }
 
     public class JWTTokenManager : IJWTTokenManager
@@ -22,7 +22,7 @@ namespace backend.v2.Authentication.Services
                 return DateTime.UtcNow.AddSeconds(Config.Cookie.AcceptTimeSeconds);
             }
         }
-        public DateTime NextRefrashTime
+        public DateTime NextRefreshTime
         {
             get
             {
@@ -32,20 +32,14 @@ namespace backend.v2.Authentication.Services
 
         private AESCrypter Crypter = new AESCrypter(Config.SessionChiper.Key, Config.SessionChiper.Salt); 
 
-        public string GenerateToken(TokenData data)
-        {
-            var serializedData = this.ConcatParameters(data);
-
-            return Crypter.Encode(serializedData);
-        }
-        public string GenerateAccessToken(TokenData data)
+        public string EncodeToken(TokenData data)
         {
             var serializedData = this.ConcatParameters(data);
 
             return Crypter.Encode(serializedData);
         }
 
-        private string ConcatParameters(TokenData data)
+        public string ConcatParameters(TokenData data)
         {
             var sb = new StringBuilder();
 
@@ -58,14 +52,14 @@ namespace backend.v2.Authentication.Services
             return sb.ToString();
         }
 
-        public TokenData ReadToken(string token)
+        public TokenData DecodeToken(string token)
         {
             var serializedData = Crypter.Decode(token);
 
-            return this.ReadParameters(serializedData);
+            return this.ParseParameters(serializedData);
         }
 
-        private TokenData ReadParameters(string serializedData)
+        public TokenData ParseParameters(string serializedData)
         {
             var splitted = serializedData.Split(';');
 

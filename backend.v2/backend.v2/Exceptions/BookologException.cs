@@ -22,6 +22,11 @@ namespace backend.v2.Exceptions
         {
             Code = code;
         }
+        
+        public BookologException(ErrorCodes code) : base()
+        {
+            Code = code;
+        }
 
         public ErrorCodes Code { get; set; }
     }

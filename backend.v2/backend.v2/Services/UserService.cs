@@ -56,11 +56,11 @@ namespace backend.v2.Services
             }
         }
 
-        public bool CheckHash(User user, string password) {
+        public virtual bool CheckHash(User user, string password) {
             return user.PasswordHash == this.hasher.GetSHA256Hash(password, user.Salt);
         }
 
-        public async Task<User> Authenticate(long id, string password)
+        public virtual async Task<User> Authenticate(long id, string password)
         {
             var user = await this.GetById(id);
 
@@ -86,9 +86,8 @@ namespace backend.v2.Services
             await this.SetNewPassword(id, newPassword);
         }
 
-        public async Task SetNewPassword(long id, string newPassword) {
+        public virtual async Task SetNewPassword(long id, string newPassword) {
             var salt = this.hasher.GetSalt();
-
             var hash = this.hasher.GetSHA256Hash(newPassword, salt);
 
             var user = await this.GetById(id);
@@ -107,7 +106,6 @@ namespace backend.v2.Services
         {
             try{
                 var salt = this.hasher.GetSalt();
-
                 var hash = this.hasher.GetSHA256Hash(user.Password, salt);
 
                 user.PasswordHash = hash;
@@ -141,7 +139,7 @@ namespace backend.v2.Services
             }
         }
 
-        public async Task<User> GetByLogin(string login)
+        public virtual async Task<User> GetByLogin(string login)
         {
             var result = await this.storage.GetByLogin(login);
 
@@ -163,7 +161,7 @@ namespace backend.v2.Services
             return result;
         }
 
-        public async Task<User> GetById(long id)
+        public virtual async Task<User> GetById(long id)
         {
             var user = await this.storage.GetById(id);
 

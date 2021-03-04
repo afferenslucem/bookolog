@@ -122,7 +122,7 @@ namespace backend.v2.Controllers
         public async Task<IActionResult> Get(long userId) {
             try
             {
-                this.logger.LogDebug(String.Format("Get all entities for user {0}", userId));
+                this.logger.LogDebug($"Get all entities for user {userId}");
 
                 var books = await this.entityService.GetByUserId(userId);
 

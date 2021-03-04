@@ -26,26 +26,39 @@ namespace backend.v2.Models
         
         [Column(TypeName = "varchar(512)")]
         public string Name { get; set; }
+        
         [Column(TypeName = "varchar(512)[]")]
         public string[] Authors { get; set; }
+        
         public Status? Status { get; set; }
+        
         [Column(TypeName = "varchar(256)[]")]
         public string[] Tags { get; set; }
+        
         public short? DoneUnits { get; set; }
+        public short? TotalUnits { get; set; }
 
         public Collection Collection {get; set;}
+        
         public Guid? CollectionGuid {get; set;}
 
         public short? CollectionOrder {get; set;}
-        public short? TotalUnits { get; set; }
+        
         [Column(TypeName = "varchar(256)")]
         public string Genre { get; set; }
+        
         public short? StartDateYear { get; set; }
+        
         public short? StartDateMonth { get; set; }
+        
         public short? StartDateDay { get; set; }
+        
         public short? EndDateYear { get; set; }
+        
         public short? EndDateMonth { get; set; }
+        
         public short? EndDateDay { get; set; }
+        
         public short? Year { get; set; }
 
         [Column(TypeName = "timestamptz")]
@@ -67,6 +80,7 @@ namespace backend.v2.Models
                 return new DateTime(this.StartDateYear ?? 1, this.StartDateMonth ?? 1, this.StartDateDay ?? 1);
             }
         }
+        
         public DateTime? EndDate { 
             get {
                 if (!this.EndDateYear.HasValue) return null;
@@ -88,20 +102,5 @@ namespace backend.v2.Models
         public long UserId { get; set; }
         
         public User User { get; set; }
-
-        public ShortBook ToShortBook() {
-            return new ShortBook() {
-                Guid = this.Guid,
-                Name = this.Name,
-                Authors = this.Authors,
-                Status = this.Status,
-                EndDateDay = this.EndDateDay,
-                EndDateMonth = this.EndDateMonth,
-                EndDateYear = this.EndDateYear,
-                CreateDate = this.CreateDate,
-                ModifyDate = this.ModifyDate,
-                Note = this.Note,
-            };
-        }
     }
 }

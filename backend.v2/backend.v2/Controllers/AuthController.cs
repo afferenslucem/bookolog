@@ -23,8 +23,12 @@ namespace backend.v2.Controllers
         private readonly IUserSession userSession;
         private readonly IMailService mailService;
 
-        public AuthController(IUserService userService, IUserSession userSession, IMailService mailService, ILogger<AuthController> logger)
-        {
+        public AuthController(
+            IUserService userService,
+            IUserSession userSession,
+            IMailService mailService,
+            ILogger<AuthController> logger
+        ) {
             this.userService = userService;
             this.userSession = userSession;
             this.mailService = mailService;
@@ -119,9 +123,9 @@ namespace backend.v2.Controllers
                 return StatusCode(500, "Can't change password");
             }
         }
-        private async Task AuthenticateUser(User user)
+        
+        public virtual async Task AuthenticateUser(User user)
         {
-
             var claims = new List<Claim>() {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Login)
@@ -137,6 +141,7 @@ namespace backend.v2.Controllers
                     IsPersistent = true,
                 });
         }
+        
         public async Task<User> CheckUser(string login, string password)
         {
             return await this.userService.Authenticate(login, password);
@@ -156,11 +161,11 @@ namespace backend.v2.Controllers
         {
             try
             {
-                this.logger.LogInformation(String.Format("Password recover {0}", email));
+                this.logger.LogInformation($"Password recover {email}");
 
                 var user = await this.userService.GetByEmail(email);
 
-                if (user.Email == email)
+                if (user != null)
                 {
                     var newPassword = RandomString.GetRandomString(6);
                     await this.userService.SetNewPassword(user.Id, newPassword);

@@ -6,6 +6,6 @@ namespace backend.v2.Authentication.Models
     {
         public Guid SessionGuid { get; set; }
         public long UserId { get; set; }
-        public DateTime ValidityDate { get; set; }
+        public virtual DateTime ValidityDate { get; set; }
     }
 }

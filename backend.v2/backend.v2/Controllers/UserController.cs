@@ -47,7 +47,7 @@ namespace backend.v2.Controllers
         {
             try
             {
-                this.logger.LogDebug(String.Format("Change email {0}", newMail));
+                this.logger.LogDebug($"Change email {newMail}");
 
                 var emailRegExp = new Regex(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
 
@@ -57,7 +57,7 @@ namespace backend.v2.Controllers
 
                     user.Email = newMail;
 
-                    this.logger.LogDebug(String.Format("Change valid email {0} {1}", newMail, user.Login));
+                    this.logger.LogDebug($"Change valid email {newMail} {user.Login}");
 
                     var result = await this.userService.Update(user);
 
@@ -88,7 +88,7 @@ namespace backend.v2.Controllers
             }
             catch(Exception ex) {
                 this.logger.LogError(500, ex.Message, ex);
-                return StatusCode(500, "Find user");
+                return StatusCode(500);
             }
         }
 
@@ -100,7 +100,7 @@ namespace backend.v2.Controllers
             {
                 var user = this.userSession.User;
 
-                var file = Request.Form.Files.First();
+                var file = Request.Form.Files.FirstOrDefault();
 
                 var avatar = await this.fileService.Save(file);
 

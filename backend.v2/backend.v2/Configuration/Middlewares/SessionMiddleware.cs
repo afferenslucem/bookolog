@@ -28,7 +28,7 @@ namespace backend.v2.Configuration.Middlewares
             _ = this.SaveSession(sessionService, userSession, logger);
         }
 
-        private async Task SaveSession(ISessionService sessionService, IUserSession userSession, ILogger<SessionMiddleware> logger)
+        public virtual async Task SaveSession(ISessionService sessionService, IUserSession userSession, ILogger<SessionMiddleware> logger)
         {
             var session = userSession.Session;
 
@@ -40,7 +40,7 @@ namespace backend.v2.Configuration.Middlewares
 
             try
             {
-                session.ValidityExpired = this.SesstionLifeTime;
+                session.ValidityExpired = this.SessionLifeTime;
                 await sessionService.Update(session);
                 logger.LogDebug("Session updated");
             }
@@ -50,13 +50,15 @@ namespace backend.v2.Configuration.Middlewares
             }
         }
 
-        private async Task LoadSession(HttpContext context, ISessionService sessionService, IUserSession userSession, ILogger<SessionMiddleware> logger)
+        public virtual async Task LoadSession(HttpContext context, ISessionService sessionService, IUserSession userSession, ILogger<SessionMiddleware> logger)
         {
             try
             {
-                var sId = context.User.FindFirstValue(ClaimTypes.Sid);
+                var sId = context.User.FindFirst(ClaimTypes.Sid);
+                
+                if (sId == null) return;
 
-                var sessionGuid = new Guid(sId);
+                var sessionGuid = new Guid(sId.Value);
 
                 var session = await this.GetSession(sessionService, sessionGuid) ??
                     await CreateSession(sessionService, sessionGuid);
@@ -69,22 +71,22 @@ namespace backend.v2.Configuration.Middlewares
             }
         }
 
-        private async Task<Session> GetSession(ISessionService sessionService, Guid guid) {
+        public virtual async Task<Session> GetSession(ISessionService sessionService, Guid guid) {
             return await sessionService.Get(guid);
         }
 
-        private async Task<Session> CreateSession(ISessionService sessionService, Guid guid)
+        public virtual async Task<Session> CreateSession(ISessionService sessionService, Guid guid)
         {
             var session = new Session()
             {
                 Guid = guid,
-                ValidityExpired = this.SesstionLifeTime
+                ValidityExpired = this.SessionLifeTime
             };
 
             return await sessionService.Save(session);
         }
 
-        private DateTime SesstionLifeTime
+        public virtual DateTime SessionLifeTime
         {
             get
             {

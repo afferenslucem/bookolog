@@ -32,9 +32,7 @@ namespace backend.v2.Controllers
             try
             {
                 var file = this.fileService.ReadFile(filename);
-                
                 var ext = this.fileService.GetExtentionFromFilename(filename);
-
                 var mediaType = this.contentMap[ext];
 
                 return File(file, mediaType);
@@ -42,13 +40,11 @@ namespace backend.v2.Controllers
             catch (FileReadException ex)
             {
                 this.logger.LogError(404, ex, ex.Message, filename);
-
                 return StatusCode(404, "Can't get file");
             }
             catch (Exception ex)
             {
                 this.logger.LogError(500, ex, ex.Message, filename);
-
                 return StatusCode(500, "Something went wrong");
             }
         }

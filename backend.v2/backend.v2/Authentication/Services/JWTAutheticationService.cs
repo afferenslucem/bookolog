@@ -59,7 +59,7 @@ namespace backend.v2.Authentication.Services
             this.logger.LogDebug("Logged out successful");
         }
 
-        private void RemoveSession(HttpContext context) {
+        public virtual void RemoveSession(HttpContext context) {
             var sId = context.User.FindFirstValue(ClaimTypes.Sid);
 
             if (sId != null) {
@@ -69,14 +69,14 @@ namespace backend.v2.Authentication.Services
             }
         }
 
-        private void SetTokens(HttpContext context, ClaimsPrincipal principal) {
+        public virtual void SetTokens(HttpContext context, ClaimsPrincipal principal) {
             var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
             var sessionGuid = Guid.NewGuid();
 
             var tokenData = this.GetTokenData(sessionGuid, long.Parse(userId));
 
             var accessToken = this.GetAccessToken(tokenData);
-            var refrashToken = this.GetRefrashToken(tokenData);
+            var refrashToken = this.GetRefreshToken(tokenData);
 
             this.AppendTokens(context, accessToken, refrashToken);
         }
@@ -88,23 +88,24 @@ namespace backend.v2.Authentication.Services
             };
         }
 
-        private string GetAccessToken(TokenData data) {
+        public string GetAccessToken(TokenData data) {
             data.ValidityDate = this.tokenManager.NextAccessTime;
 
-            return tokenManager.GenerateToken(data);
+            return tokenManager.EncodeToken(data);
         }
 
-        private string GetRefrashToken(TokenData data) {
-            data.ValidityDate = this.tokenManager.NextRefrashTime;
+        public string GetRefreshToken(TokenData data) {
+            data.ValidityDate = this.tokenManager.NextRefreshTime;
 
-            return tokenManager.GenerateToken(data);
+            return tokenManager.EncodeToken(data);
         }
 
-        private void AppendTokens(HttpContext context, string access, string refrash) {
+        private void AppendTokens(HttpContext context, string access, string refresh) {
             context.Response.Headers[JWTDefaults.AccessHeaderName] = access;
-            context.Response.Headers[JWTDefaults.RefreshHeaderName] = refrash;
+            context.Response.Headers[JWTDefaults.RefreshHeaderName] = refresh;
         }
-        private void RemoveTokens(HttpContext context) {
+        
+        public virtual void RemoveTokens(HttpContext context) {
             context.Response.Headers.Remove(JWTDefaults.AccessHeaderName);
             context.Response.Headers.Remove(JWTDefaults.RefreshHeaderName);
         }
