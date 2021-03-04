@@ -17,6 +17,7 @@ services:
       - postfix
     volumes: 
       - "./backend.v2/backend.v2/appsettings.json:/app/appsettings.json"
+      - "/imageStorage:/imageStorage"
 
   postfix:
     image: boky/postfix
