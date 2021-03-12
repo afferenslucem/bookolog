@@ -1,4 +1,4 @@
-FROM node:14-alpine as builder
+FROM node:12-alpine as builder
 WORKDIR /app
 COPY frontend.v3/package*.json ./
 RUN npm ci

@@ -2,6 +2,9 @@
 
 namespace backend.v2.Models.Authentication
 {
+    /// <summary>
+    /// Модель для смены пароля пользователя
+    /// </summary>
     public class PasswordChangeModel
     {
         [Required]

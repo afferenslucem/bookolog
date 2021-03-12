@@ -7,11 +7,12 @@ using backend.v2.Exceptions;
 using backend.v2.Models;
 using backend.v2.Authentication.Models;
 using backend.v2.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.v2.Controllers
 {
     
-    [Authorize(AuthenticationSchemes = JWTDefaults.AuthenticationScheme)]
+    [Authorize]
     public class EntityController<T> : Controller where T: class, IEntity
     {
         private readonly IEntityService<T> entityService;
@@ -27,13 +28,16 @@ namespace backend.v2.Controllers
 
         [HttpPost]
         [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Create([FromBody]T model) {
             try
             {
                 this.logger.LogDebug("Create entity");
                 var book = await this.entityService.Save(model);
 
-                return Ok(book);
+                return Created(HttpContext.Request.Path, book);
             }
             catch (BookologException ex)
             {
@@ -51,6 +55,9 @@ namespace backend.v2.Controllers
         
         [HttpPut]
         [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Update([FromBody]T model) {
             try
             {
@@ -75,15 +82,17 @@ namespace backend.v2.Controllers
     
         [HttpDelete]
         [Route("[action]/{guid:guid}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Delete(Guid guid) {
             try
             {
                 this.logger.LogDebug("Delete entity");
-                var book = await this.entityService.GetByGuid(guid);
-            
-                await this.entityService.Delete(guid);
+                
+                var entity = await this.entityService.Delete(guid);
 
-                return Ok(book);
+                return Ok(entity);
             }
             catch (BookologException ex)
             {
@@ -101,6 +110,8 @@ namespace backend.v2.Controllers
 
         [HttpGet]
         [Route("[action]/{guid:guid}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Get(Guid guid) {
             try
             {
@@ -119,7 +130,9 @@ namespace backend.v2.Controllers
 
         [HttpGet]
         [Route("User/{userId:long}")]
-        public async Task<IActionResult> Get(long userId) {
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public virtual async Task<IActionResult> Get(long userId) {
             try
             {
                 this.logger.LogDebug($"Get all entities for user {userId}");
@@ -140,7 +153,10 @@ namespace backend.v2.Controllers
     
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Synchronize([FromBody]SyncData<T> data) {
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public virtual async Task<IActionResult> Synchronize([FromBody]SyncData<T> data) {
             try
             {
                 this.logger.LogDebug("Sync entities");

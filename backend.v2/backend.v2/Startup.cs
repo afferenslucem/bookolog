@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,8 @@ using backend.v2.Storages;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
 using backend.v2.Configuration.Middlewares;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace backend.v2
 {
@@ -37,8 +40,12 @@ namespace backend.v2
             services.ConfigureFormOptions();
 
             services.ConfigureCookiesPolicy();
-            
-            services.AddControllers();
+
+            services
+                .AddControllers()
+                .AddNewtonsoftJson();
+
+            services.AddSwagger();
 
             services.AddDbContext<BookologContext>();
 
@@ -56,6 +63,8 @@ namespace backend.v2
             app.UseCors(corsPolicy);
 
             app.UseRouting();
+            
+            app.UseSwaggerDoc();
 
             app.UseXssProtection();
             app.UseNoSniffProtection();
@@ -69,6 +78,7 @@ namespace backend.v2
             {
                 endpoints.MapControllers();
             });
+
 
             this.UpdateDatabase(app);
         }

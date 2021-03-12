@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using backend.v2.Exceptions.FileExceptions;
 using backend.v2.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.v2.Controllers
 {
@@ -25,8 +26,17 @@ namespace backend.v2.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// Возвращает изображение по названию.
+        /// </summary>
+        /// <param name="filename">Название файла.</param>
+        /// <response code="200">Возвращает файловый поток.</response>
+        /// <response code="404">Не возможно получить файл по названию.</response>
         [HttpGet]
         [Route("{filename:maxlength(128)}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult File(string filename)
         {
             try

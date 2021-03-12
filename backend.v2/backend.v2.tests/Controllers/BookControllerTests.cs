@@ -5,6 +5,7 @@ using backend.v2.Exceptions;
 using backend.v2.Exceptions.BookExceptions;
 using backend.v2.Models;
 using backend.v2.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -17,6 +18,8 @@ namespace backend.v2.tests.Controllers
         private Mock<IBookService> bookServiceMock;
         private Mock<ILogger<BookController>> loggerMock;
         private Mock<IUserSession> sessionMock;
+        private Mock<HttpRequest> requestMock;
+        private Mock<HttpContext> httpContextMock;
         
         private Mock<BookController> controllerMock;
         
@@ -26,6 +29,8 @@ namespace backend.v2.tests.Controllers
             bookServiceMock = new Mock<IBookService>();
             sessionMock = new Mock<IUserSession>();
             loggerMock = new Mock<ILogger<BookController>>();
+            requestMock = new Mock<HttpRequest>();
+            httpContextMock = new Mock<HttpContext>();
             controllerMock = new Mock<BookController>(
                 MockBehavior.Default,
                 bookServiceMock.Object,
@@ -34,6 +39,10 @@ namespace backend.v2.tests.Controllers
             );
 
             controllerMock.CallBase = true;
+            
+            requestMock.SetupGet(m => m.Path).Returns(new PathString("/path"));
+            httpContextMock.SetupGet(m => m.Request).Returns(requestMock.Object);
+            controllerMock.Object.ControllerContext.HttpContext = httpContextMock.Object;
         }
         
         [TestMethod]
@@ -41,12 +50,13 @@ namespace backend.v2.tests.Controllers
         {
             var book = new Book();
             bookServiceMock.Setup(m => m.Save(It.IsAny<Book>())).ReturnsAsync(book);
-            controllerMock.Setup(m => m.Ok(It.IsAny<Book>()));
+            controllerMock.Setup(m => m.Created(It.IsAny<string>(), It.IsAny<string>()));
 
             await controllerMock.Object.Create(book);
             
             bookServiceMock.Verify(m => m.Save(book), Times.Once());
-            controllerMock.Verify(m => m.Ok(book), Times.Once());
+            
+            controllerMock.Verify(m => m.Created("/path", book), Times.Once());
         }
         
         [TestMethod]
@@ -130,7 +140,6 @@ namespace backend.v2.tests.Controllers
 
             await controllerMock.Object.Delete(guid);
             
-            bookServiceMock.Verify(m => m.GetByGuid(guid), Times.Once());
             bookServiceMock.Verify(m => m.Delete(guid), Times.Once());
             controllerMock.Verify(m => m.Ok(book), Times.Once());
         }
@@ -139,15 +148,13 @@ namespace backend.v2.tests.Controllers
         public async Task DeleteShouldReturn400()
         {
             var book = new Book();
-            bookServiceMock.Setup(m => m.GetByGuid(It.IsAny<Guid>())).ThrowsAsync(new BookologException(ErrorCodes.BookCouldNotSave));
-            bookServiceMock.Setup(m => m.Delete(It.IsAny<Guid>())).ReturnsAsync(book);
+            bookServiceMock.Setup(m => m.Delete(It.IsAny<Guid>())).ThrowsAsync(new BookologException(ErrorCodes.BookCouldNotSave));
             controllerMock.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<object>()));
             var guid = Guid.NewGuid();
 
             await controllerMock.Object.Delete(guid);
             
-            bookServiceMock.Verify(m => m.GetByGuid(guid), Times.Once());
-            bookServiceMock.Verify(m => m.Delete(guid), Times.Never());
+            bookServiceMock.Verify(m => m.Delete(guid), Times.Once());
             controllerMock.Verify(m => m.StatusCode(400, It.IsAny<object>()), Times.Once());
         }
         
@@ -155,15 +162,13 @@ namespace backend.v2.tests.Controllers
         public async Task DeleteShouldReturn500()
         {
             var book = new Book();
-            bookServiceMock.Setup(m => m.GetByGuid(It.IsAny<Guid>())).ThrowsAsync(new Exception());
-            bookServiceMock.Setup(m => m.Delete(It.IsAny<Guid>())).ReturnsAsync(book);
+            bookServiceMock.Setup(m => m.Delete(It.IsAny<Guid>())).ThrowsAsync(new Exception());
             controllerMock.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<object>()));
             var guid = Guid.NewGuid();
 
             await controllerMock.Object.Delete(guid);
             
-            bookServiceMock.Verify(m => m.GetByGuid(guid), Times.Once());
-            bookServiceMock.Verify(m => m.Delete(guid), Times.Never());
+            bookServiceMock.Verify(m => m.Delete(guid), Times.Once());
             controllerMock.Verify(m => m.StatusCode(500), Times.Once());
         }
         

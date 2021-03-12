@@ -2,6 +2,6 @@
   <mat-icon style="font-size: 32px">sync</mat-icon>
 </div>
 
-<small class="dark-text center-text sync-text">
+<small class="dark-text center-text sync-text" *ngIf="lastSyncTime">
   <span>Синхр. </span><span>{{lastSyncTime | date: 'short'}}</span>
 </small>

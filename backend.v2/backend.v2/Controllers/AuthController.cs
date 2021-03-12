@@ -12,6 +12,7 @@ using backend.v2.Models.Authentication;
 using backend.v2.Authentication.Models;
 using backend.v2.Services;
 using backend.v2.Utils;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.v2.Controllers
 {
@@ -35,8 +36,18 @@ namespace backend.v2.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// Аутентифицирует пользователя.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <response code="200">Возвращает данные аутентифицированного пользователя.</response>
+        /// <response code="403">Если учетные данные не верны.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpPost]
         [Route("[action]")]
+        [ProducesResponseType(typeof(User), 200)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login([FromBody] AuthenticateModel model)
         {
             try
@@ -63,8 +74,29 @@ namespace backend.v2.Controllers
             }
         }
 
+        /// <summary>
+        /// Создает нового пользователя.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <remarks>
+        /// Заметьте, вам не обязательно указывать `avatarName` и `lastSyncTime`.
+        /// 
+        ///     POST /Auth/Register
+        ///     {
+        ///       "login": "hrodvitnir",
+        ///       "email": "alexshakirov74@gmail.com",
+        ///       "password": "qwerty"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="201">Возвращает данные нового пользователя.</response>
+        /// <response code="400">Если данные конфликтуют с уже существующими пользователями.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpPost]
         [Route("[action]")]
+        [ProducesResponseType(typeof(User), 201)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Register([FromBody] User user)
         {
             try
@@ -77,7 +109,7 @@ namespace backend.v2.Controllers
 
                 this.logger.LogDebug(String.Format($"Registered user {user.Login} {user.Email}"));
 
-                return Ok(withoutPrivate);
+                return Created(HttpContext.Request.Path, withoutPrivate);
             }
             catch (UserWithSameEmailAlreadyExistsException e)
             {
@@ -96,9 +128,19 @@ namespace backend.v2.Controllers
             }
         }
 
+        /// <summary>
+        /// Изменяет пароль сушествующего пользователя.
+        /// </summary>
+        /// <param name="changeData"></param>
+        /// <response code="401">Если пользователь не авторизован в системе.</response>
+        /// <response code="403">Если указан не верный `oldPassword`.</response>
         [HttpPost]
         [Authorize]
         [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeModel changeData)
         {
             var user = this.userSession.User;
@@ -124,6 +166,7 @@ namespace backend.v2.Controllers
             }
         }
         
+        [NonAction]
         public virtual async Task AuthenticateUser(User user)
         {
             var claims = new List<Claim>() {
@@ -142,21 +185,32 @@ namespace backend.v2.Controllers
                 });
         }
         
+        [NonAction]
         public async Task<User> CheckUser(string login, string password)
         {
             return await this.userService.Authenticate(login, password);
         }
-
+        
+        /// <summary>
+        /// Удаляет сессию пользователя.
+        /// </summary>
         [HttpGet]
         [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
             return Ok();
         }
 
+        /// <summary>
+        /// Оправляет новый парольль на почту пользователя есть указанные email с ней совпадает.
+        /// </summary>
+        /// <param name="email">Почта для отправки пароля.</param>
         [HttpGet]
         [Route("[action]/{email:maxlength(128)}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> RecoverPassword(string email)
         {
             try

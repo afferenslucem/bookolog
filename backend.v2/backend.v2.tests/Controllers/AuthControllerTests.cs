@@ -23,6 +23,7 @@ namespace backend.v2.tests.Controllers
         private Mock<IUserSession> userSessionMock;
         private Mock<IUserService> userServiceMock;
         private Mock<IMailService> mailServiceMock;
+        private Mock<HttpRequest> requestMock;
         private Mock<HttpContext> httpContextMock;
         private Mock<ILogger<AuthController>> loggerMock;
 
@@ -35,6 +36,8 @@ namespace backend.v2.tests.Controllers
             userSessionMock = new Mock<IUserSession>();
             userServiceMock = new Mock<IUserService>();
             mailServiceMock = new Mock<IMailService>();
+            requestMock = new Mock<HttpRequest>();
+            httpContextMock = new Mock<HttpContext>();
             loggerMock = new Mock<ILogger<AuthController>>();
             controllerMock = new Mock<AuthController>(
                 MockBehavior.Default,
@@ -45,6 +48,10 @@ namespace backend.v2.tests.Controllers
             );
 
             controllerMock.CallBase = true;
+
+            requestMock.SetupGet(m => m.Path).Returns(new PathString("/path"));
+            httpContextMock.SetupGet(m => m.Request).Returns(requestMock.Object);
+            controllerMock.Object.ControllerContext.HttpContext = httpContextMock.Object;
         }
         
         [TestMethod]
@@ -139,12 +146,12 @@ namespace backend.v2.tests.Controllers
             };
 
             userServiceMock.Setup(m => m.RegisterUser(It.IsAny<User>())).ReturnsAsync(user);
-            controllerMock.Setup(m => m.Ok(It.IsAny<User>()));
+            controllerMock.Setup(m => m.Created(It.IsAny<string>(), It.IsAny<User>()));
 
             await controllerMock.Object.Register(user);
             
             userServiceMock.Verify(m => m.RegisterUser(It.Is<User>(v => v == user)), Times.Once());
-            controllerMock.Verify(m => m.Ok(It.Is<User>(v => v.Id == user.Id)), Times.Once());
+            controllerMock.Verify(m => m.Created(It.Is<string>(v => v == "/path"),It.Is<User>(v => v.Id == user.Id)), Times.Once());
         }
         
         [TestMethod]

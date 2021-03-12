@@ -26,7 +26,9 @@ export class UserService {
   }
 
   public get lastSyncDate(): Date {
-    return new Date(this.user.lastSyncTime);
+    const lastSyncDate = this.user?.lastSyncTime;
+
+    return lastSyncDate ? new Date(this.user.lastSyncTime) : null;
   }
 
   public async logout(): Promise<void> {

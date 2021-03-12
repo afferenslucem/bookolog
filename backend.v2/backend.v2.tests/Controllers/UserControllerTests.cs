@@ -332,23 +332,6 @@ namespace backend.v2.tests.Controllers
         }
 
         [TestMethod]
-        public async Task LoadAllShouldReturn400()
-        {
-            var user = new User()
-            {
-                Id = 2,
-            };
-            
-            userSessionMock.SetupGet(m => m.User).Returns(user);
-            bookServiceMock.Setup(m => m.GetByUserId(It.IsAny<long>())).ThrowsAsync(new BookologException(ErrorCodes.BookCouldNotSave, "ping"));
-            controller.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<string>()));
-
-            await controller.Object.LoadAll();
-            
-            controller.Setup(m => m.StatusCode(400, "ping"));
-        }
-
-        [TestMethod]
         public async Task LoadAllShouldReturn500()
         {
             var user = new User()
@@ -362,7 +345,7 @@ namespace backend.v2.tests.Controllers
 
             await controller.Object.LoadAll();
             
-            controller.Setup(m => m.StatusCode(500));
+            controller.Verify(m => m.StatusCode(500), Times.Once());
         }
     }
 }

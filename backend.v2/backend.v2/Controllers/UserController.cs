@@ -9,10 +9,11 @@ using backend.v2.Exceptions;
 using backend.v2.Models;
 using backend.v2.Authentication.Models;
 using backend.v2.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.v2.Controllers
 {
-    [Authorize(AuthenticationSchemes = JWTDefaults.AuthenticationScheme)]
+    [Authorize]
     [Route("[controller]")]
     public class UserController : Controller
     {
@@ -41,8 +42,16 @@ namespace backend.v2.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// Изменяет почту авторизованного пользователя.
+        /// </summary>
+        /// <param name="newMail">Новая почта.</param>
+        /// <response code="401">Если пользователь не авторизован в системе.</response>
         [HttpGet]
         [Route("[action]/{newMail:maxlength(128)}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ChangeEmail(string newMail)
         {
             try
@@ -74,9 +83,17 @@ namespace backend.v2.Controllers
                 return StatusCode(500, "Can't change email");
             }
         }
-
+        
+        /// <summary>
+        /// Возвращает данные авторизованного пользователя.
+        /// </summary>
+        /// <response code="200">Объект пользователя.</response>
+        /// <response code="401">Если пользователь не авторизован в системе.</response>
         [HttpGet]
         [Route("[action]")]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Me()
         {
             try {
@@ -91,9 +108,17 @@ namespace backend.v2.Controllers
                 return StatusCode(500);
             }
         }
-
+        
+        /// <summary>
+        /// Устанавливает загруженное изображение как аватар пользователя.
+        /// </summary>
+        /// <response code="200">Название нового аватара.</response>
+        /// <response code="401">Если пользователь не авторизован в системе.</response>
         [HttpPost]
         [Route("[action]")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UploadAvatar()
         {
             try
@@ -123,8 +148,18 @@ namespace backend.v2.Controllers
             }
         }
     
+        /// <summary>
+        /// Синхронизирует данные пользователя.
+        /// </summary>
+        /// <response code="200">Изменение в данных с момента последней синхронизации.</response>
+        /// <response code="400">Проблема при валидации или сохранении сущности.</response>
+        /// <response code="401">Если пользователь не авторизован в системе.</response>
         [HttpPost]
         [Route("[action]")]
+        [ProducesResponseType(typeof(AppSyncData), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Synchronize([FromBody]AppSyncData data) {
             try
             {
@@ -156,8 +191,17 @@ namespace backend.v2.Controllers
             }
         }
         
+    
+        /// <summary>
+        /// Вовращает все данные пользоввателя.
+        /// </summary>
+        /// <response code="200">Все данные пользоввателя.</response>
+        /// <response code="401">Если пользователь не авторизован в системе.</response>
         [HttpGet]
         [Route("[action]")]
+        [ProducesResponseType(typeof(AppData), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> LoadAll() {
             try
             {
@@ -174,12 +218,6 @@ namespace backend.v2.Controllers
                     Books = bookLoad.Result,
                     Collections = collectionLoad.Result,
                 });
-            }
-            catch (BookologException ex)
-            {
-                this.logger.LogError((int)ex.Code, ex, ex.Message);
-
-                return StatusCode(400, ex.Message);
             }
             catch (Exception ex)
             {
