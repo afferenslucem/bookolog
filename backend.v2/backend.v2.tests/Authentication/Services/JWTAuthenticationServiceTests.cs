@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
 using backend.v2.Models;
+using backend.v2.Models.Authentication;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +30,7 @@ namespace backend.v2.tests.Authentication.Services
         private Mock<IOptions<AuthenticationOptions> > optionsMock = new Mock<IOptions<AuthenticationOptions> >();
         private Mock<IJWTTokenManager> tokenManagerMock = new Mock<IJWTTokenManager>();
         private Mock<ISessionService> sessionServiceMock = new Mock<ISessionService>();
+        private Mock<IUserSession> userSessionMock = new Mock<IUserSession>();
         private Mock<ILogger<JWTAuthenticationService>> loggerMock = new Mock<ILogger<JWTAuthenticationService>>();
         private Mock<HttpContext> contextMock = new Mock<HttpContext>();
         
@@ -43,6 +45,7 @@ namespace backend.v2.tests.Authentication.Services
                 optionsMock.Object,
                 tokenManagerMock.Object,
                 sessionServiceMock.Object,
+                userSessionMock.Object,
                 loggerMock.Object
             );
 
@@ -73,6 +76,7 @@ namespace backend.v2.tests.Authentication.Services
         public async Task SignInShouldRunSetTokens()
         {
             service.Setup(m => m.SetTokens(It.IsAny<HttpContext>(), It.IsAny<ClaimsPrincipal>()));
+            service.Setup(m => m.CreateSession(It.IsAny<ISessionService>(), It.IsAny<ClaimsPrincipal>())).ReturnsAsync(It.IsAny<Session>());
 
             await service.Object.SignInAsync(contextMock.Object, null, null, null);
             

@@ -10,9 +10,6 @@ using backend.v2.Configuration;
 using backend.v2.Storages;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
-using backend.v2.Configuration.Middlewares;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
 
 namespace backend.v2
 {
@@ -71,7 +68,6 @@ namespace backend.v2
             app.UseDenyFrameProtection();
 
             app.UseAuthentication();
-            app.UseMiddleware<SessionMiddleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

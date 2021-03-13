@@ -28,8 +28,6 @@ public class CookieConfig
 
 public static class Config
 {
-    
-    
     public static string ConnectionString { get; set; }
 
     public static string[] AllowedOrigins { get; set; }
@@ -43,7 +41,7 @@ public static class Config
 
 public static class Version
 {
-    public static readonly string BuildVersion = "v0.4.10";
+    public static readonly string BuildVersion = "v0.4.11";
 
     public static readonly OpenApiInfo Info = new OpenApiInfo
     {

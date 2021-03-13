@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Net.Http;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using backend.v2.Configuration.Middlewares;
 using backend.v2.Controllers;
 using backend.v2.Exceptions.AuthenticationExceptions;
 using backend.v2.Models;
 using backend.v2.Models.Authentication;
 using backend.v2.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

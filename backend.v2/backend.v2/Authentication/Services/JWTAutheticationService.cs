@@ -2,6 +2,7 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using backend.v2.Authentication.Models;
+using backend.v2.Models.Authentication;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,7 @@ namespace backend.v2.Authentication.Services
     {
         private readonly ILogger<JWTAuthenticationService> logger;
         private readonly ISessionService sessionService;
+        private readonly IUserSession userSession;
         private readonly IJWTTokenManager tokenManager;
 
         public JWTAuthenticationService(
@@ -23,11 +25,13 @@ namespace backend.v2.Authentication.Services
             IOptions<AuthenticationOptions> options,
             IJWTTokenManager tokenManager,
             ISessionService sessionService,
+            IUserSession userSession,
             ILogger<JWTAuthenticationService> logger
             ): base(schemes, handlers, transform, options)
         {
             this.tokenManager = tokenManager;
             this.sessionService = sessionService;
+            this.userSession = userSession;
             this.logger = logger;
         }
 
@@ -49,6 +53,9 @@ namespace backend.v2.Authentication.Services
         public override async Task SignInAsync(HttpContext context, string scheme, ClaimsPrincipal principal, AuthenticationProperties properties)
         {
             await Task.Run(() => this.SetTokens(context, principal));
+            
+            this.userSession.Session = await CreateSession(sessionService, principal);
+            
             this.logger.LogDebug("Logged in successful");
         }
 
@@ -72,6 +79,8 @@ namespace backend.v2.Authentication.Services
         public virtual void SetTokens(HttpContext context, ClaimsPrincipal principal) {
             var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
             var sessionGuid = Guid.NewGuid();
+            
+            this.AppendClaim(principal, sessionGuid);
 
             var tokenData = this.GetTokenData(sessionGuid, long.Parse(userId));
 
@@ -79,6 +88,11 @@ namespace backend.v2.Authentication.Services
             var refrashToken = this.GetRefreshToken(tokenData);
 
             this.AppendTokens(context, accessToken, refrashToken);
+        }
+
+        private void AppendClaim(ClaimsPrincipal principal, Guid guid)
+        {
+            principal.AddIdentity(new ClaimsIdentity(new [] { new Claim(ClaimTypes.Sid, guid.ToString()) }));
         }
 
         private TokenData GetTokenData(Guid sessionGuid, long userId) {
@@ -108,6 +122,27 @@ namespace backend.v2.Authentication.Services
         public virtual void RemoveTokens(HttpContext context) {
             context.Response.Headers.Remove(JWTDefaults.AccessHeaderName);
             context.Response.Headers.Remove(JWTDefaults.RefreshHeaderName);
+        }
+        
+        public virtual async Task<Session> CreateSession(ISessionService sessionService, ClaimsPrincipal principal)
+        {
+            var sId = principal.FindFirstValue(ClaimTypes.Sid);
+            
+            var session = new Session()
+            {
+                Guid = new Guid(sId),
+                ValidityExpired = this.SessionLifeTime
+            };
+
+            return await sessionService.Save(session);
+        }
+        
+        public virtual DateTime SessionLifeTime
+        {
+            get
+            {
+                return DateTime.Now.AddSeconds(Config.Cookie.RefrashTimeSeconds);
+            }
         }
     }
 }
