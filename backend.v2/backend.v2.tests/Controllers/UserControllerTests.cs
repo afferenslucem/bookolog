@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.v2.Controllers;
 using backend.v2.Exceptions;
+using backend.v2.Exceptions.BookExceptions;
 using backend.v2.Models;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Components;
@@ -288,6 +289,23 @@ namespace backend.v2.tests.Controllers
             await controller.Object.Synchronize(data);
             
             controller.Verify(m => m.StatusCode(400, "ping"));
+        }
+
+        [TestMethod]
+        public async Task SynchronizeShouldReturn403()
+        {
+            var data = new AppSyncData()
+            {
+            };
+
+            bookServiceMock.Setup(m => m.Synch(It.IsAny<SyncData<Book>>()))
+                .ThrowsAsync(new EntityAccessDeniedException());
+
+            controller.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<string>()));
+            
+            await controller.Object.Synchronize(data);
+            
+            controller.Verify(m => m.StatusCode(403, It.IsAny<object>()));
         }
 
         [TestMethod]

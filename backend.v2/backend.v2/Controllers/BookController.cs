@@ -37,6 +37,7 @@ namespace backend.v2.Controllers
         /// <response code="200">Возвращает обновленную книгу.</response>
         /// <response code="400">Проблема при валидации или обновлении книги.</response>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
+        /// <response code="403">Если обновляется чужая книга.</response>
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         public override async Task<IActionResult> Update([FromBody]Book book)
         {
@@ -46,10 +47,11 @@ namespace backend.v2.Controllers
         /// <summary>
         /// Удаляет книгу.
         /// </summary>
-        /// <param name="guid">Идентификатор книги</param>
+        /// <param name="guid">Идентификатор книги.</param>
         /// <response code="200">Возвращает удаленную книгу.</response>
         /// <response code="400">Проблема при удалении книги.</response>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
+        /// <response code="403">Если удаляется чужая книга.</response>
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         public override async Task<IActionResult> Delete(Guid guid)
         {
@@ -87,6 +89,7 @@ namespace backend.v2.Controllers
         /// <response code="200">Возвращает книги для синхронизации.</response>
         /// <response code="400">Проблема при валидации или сохранении книги.</response>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
+        /// <response code="403">Если производится синхронизация с чужими данными.</response>
         [ProducesResponseType(typeof(SyncData<Book>), StatusCodes.Status200OK)]
         public override Task<IActionResult> Synchronize([FromBody]SyncData<Book> data)
         {

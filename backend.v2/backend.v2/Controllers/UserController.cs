@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using backend.v2.Exceptions;
 using backend.v2.Models;
 using backend.v2.Authentication.Models;
+using backend.v2.Exceptions.BookExceptions;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -154,6 +155,7 @@ namespace backend.v2.Controllers
         /// <response code="200">Изменение в данных с момента последней синхронизации.</response>
         /// <response code="400">Проблема при валидации или сохранении сущности.</response>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
+        /// <response code="403">Если производится синхронизация с чужими данными.</response>
         [HttpPost]
         [Route("[action]")]
         [ProducesResponseType(typeof(AppSyncData), StatusCodes.Status200OK)]
@@ -176,6 +178,12 @@ namespace backend.v2.Controllers
                     Books = bookSync,
                     Collections = collectionSync,
                 });
+            }
+            catch (EntityAccessDeniedException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex.Message, ex, data);
+
+                return StatusCode(403, ex.Message);
             }
             catch (BookologException ex)
             {
