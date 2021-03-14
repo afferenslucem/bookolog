@@ -1,26 +1,26 @@
 <span *ngIf="(custom$ | async) as custom" class="custom-title">
-  {{custom}}
+  {{ custom | capitalize }}
 </span>
 <span *ngIf="(title$ | async) as title" class="title">
     <ng-container [ngSwitch]="title">
-      <span *ngSwitchCase="1">Вход</span>
-      <span *ngSwitchCase="2">Регистрация</span>
-      <span *ngSwitchCase="3">Восстановление пароля</span>
-      <span *ngSwitchCase="10">Настройки</span>
-      <span *ngSwitchCase="100">Читаю сейчас</span>
-      <span *ngSwitchCase="110">Буду читать</span>
-      <span *ngSwitchCase="120">Прочитаные</span>
-      <span *ngSwitchCase="130">О книге</span>
+      <span *ngSwitchCase="TitleText.Login">Вход</span>
+      <span *ngSwitchCase="TitleText.Registration">Регистрация</span>
+      <span *ngSwitchCase="TitleText.PasswordRecovery">Восстановление пароля</span>
+      <span *ngSwitchCase="TitleText.Settings">Настройки</span>
+      <span *ngSwitchCase="TitleText.InProgressList">Читаю сейчас</span>
+      <span *ngSwitchCase="TitleText.ToReadList">Буду читать</span>
+      <span *ngSwitchCase="TitleText.DoneList">Прочитаные</span>
+      <span *ngSwitchCase="TitleText.Book">О книге</span>
       <span *ngSwitchCase="TitleText.BookEdit">Редактировать книгу</span>
       <span *ngSwitchCase="TitleText.BookCreate">Создать книгу</span>
-      <span *ngSwitchCase="200">Теги</span>
-      <span *ngSwitchCase="210">Жанры</span>
-      <span *ngSwitchCase="220">Авторы</span>
-      <span *ngSwitchCase="230">Года прочтения</span>
-      <span *ngSwitchCase="310">Серии</span>
-      <span *ngSwitchCase="340">О серии</span>
-      <span *ngSwitchCase="350">Создание серии</span>
-      <span *ngSwitchCase="360">Редактирование серии</span>
+      <span *ngSwitchCase="TitleText.TagsStatistic">Теги</span>
+      <span *ngSwitchCase="TitleText.GenresStatistic">Жанры</span>
+      <span *ngSwitchCase="TitleText.AuthorsStatistic">Авторы</span>
+      <span *ngSwitchCase="TitleText.YearsStatistic">Года прочтения</span>
+      <span *ngSwitchCase="TitleText.CollectionList">Серии</span>
+      <span *ngSwitchCase="TitleText.CollectionView">О серии</span>
+      <span *ngSwitchCase="TitleText.CollectionCreate">Создание серии</span>
+      <span *ngSwitchCase="TitleText.CollectionEdit">Редактирование серии</span>
       <span *ngSwitchDefault>Bookolog</span>
     </ng-container>
 </span>

@@ -126,7 +126,6 @@ export class BookEditViewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.titleService.setBookEdit();
   }
 
   public async submit(): Promise<void> {

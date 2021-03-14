@@ -45,12 +45,12 @@ export class CollectionViewComponent implements OnInit {
       )
     );
 
-    this.collection$ = data$.pipe(
+    data$.pipe(
       filter((item) => item.collection),
       map((item) => item.collection as Collection),
       tap((item) => this.setTitle(item.name)),
       tap(item => this.collection = item),
-    );
+    ).subscribe();
   }
 
   public ngOnInit(): void {}
