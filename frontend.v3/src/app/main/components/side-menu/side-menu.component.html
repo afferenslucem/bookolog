@@ -57,7 +57,7 @@
             <span class="link" routerLink="/settings" >Настройки</span>
           </mat-list-item>
           <mat-list-item>
-            <span class="link" (click)="logout()" >Выйти</span>
+            <span class="link" (click)="logout()">Выйти</span>
           </mat-list-item>
         </mat-list>
       </div>
@@ -67,6 +67,14 @@
         <app-sync-info></app-sync-info>
       </div>
     </div>
-    <span class="dark-text version" (click)="clearCache()">Version: {{version}}</span>
+    <span class="dark-text version" (click)="clearCache()">
+      <span *ngIf="newVersionAvailable | async; else emptyUpdates">
+        Доступно обновление
+      </span>
+
+      <ng-template #emptyUpdates>
+        <span>{{ version }}</span>
+      </ng-template>
+    </span>
   </div>
 </div>

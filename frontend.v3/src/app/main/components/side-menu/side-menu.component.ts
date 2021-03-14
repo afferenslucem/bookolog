@@ -5,6 +5,9 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { CacheService } from '../../services/cache.service';
+import {SwUpdate} from "@angular/service-worker";
+import {mapTo, startWith} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-side-menu',
@@ -14,6 +17,8 @@ import { CacheService } from '../../services/cache.service';
 export class SideMenuComponent implements OnInit {
   @Output()
   public navigated = new EventEmitter<void>();
+
+  public newVersionAvailable: Observable<boolean>;
 
   public BookStatus: typeof BookStatus = BookStatus;
 
@@ -25,10 +30,13 @@ export class SideMenuComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
     private cache: CacheService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private swUpdate: SwUpdate,
   ) {}
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    this.newVersionAvailable = this.swUpdate.available.pipe(mapTo(true), startWith(false));
+  }
 
   public async logout(): Promise<void> {
     await this.auth.logout();
