@@ -77,7 +77,7 @@
   <div class="book-edit__progress" [ngSwitch]="type" [hidden]="status !== BookStatus.InProgress">
     <div class="book-edit__progress_audio" *ngSwitchCase="BookType.Audio">
       <div>
-        <mat-label>Прослушано</mat-label>
+        <mat-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</mat-label>
         <app-book-time-input formControlName="doneUnits"></app-book-time-input>
       </div>
 

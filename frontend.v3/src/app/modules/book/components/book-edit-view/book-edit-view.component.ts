@@ -133,7 +133,9 @@ export class BookEditViewComponent implements OnInit {
     try {
       const data = Object.assign(this.book, this.form.value) as Book;
 
-      data.done = data.doneUnits;
+      if (data.doneUnits) {
+        data.done = data.doneUnits;
+      }
 
       data.modifyDate = DateUtils.nowUTC;
 
