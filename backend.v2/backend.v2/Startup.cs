@@ -10,6 +10,7 @@ using backend.v2.Configuration;
 using backend.v2.Storages;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
+using backend.v2.Configuration.Middlewares;
 
 namespace backend.v2
 {
@@ -67,7 +68,8 @@ namespace backend.v2
             app.UseNoSniffProtection();
             app.UseDenyFrameProtection();
 
-            app.UseAuthentication();
+            app.UseAuthentication();           
+            app.UseMiddleware<SessionMiddleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
