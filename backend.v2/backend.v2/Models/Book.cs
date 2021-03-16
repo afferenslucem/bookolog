@@ -197,7 +197,6 @@ namespace backend.v2.Models
         /// </summary>
         public string Note { get; set; }
         
-        
         /// <summary>
         /// `Id` пользователя, владеющего книгой.
         /// </summary>
@@ -206,5 +205,19 @@ namespace backend.v2.Models
         [SwaggerIgnore]
         [JsonIgnore]
         public User User { get; set; }
+
+        /// <summary>
+        /// `Id` книги, которую перечитывают.
+        /// </summary>
+        public Guid? RereadingBookGuid { get; set; }
+        
+        [SwaggerIgnore]
+        [JsonIgnore]
+        public Book RereadingBook { get; set; }
+        
+        /// <summary>
+        /// Книги которые являются новыми перечтениями данной книги.
+        /// </summary>
+        public Book[] RereadedBy { get; set; }
     }
 }
