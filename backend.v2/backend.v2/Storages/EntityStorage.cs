@@ -80,7 +80,7 @@ namespace backend.v2.Storages
         public async Task<T> GetByGuid(Guid guid)
         {
             using var context = new BookologContext();
-            var set = this.GetEntitiesSet(context);
+            var set = this.GetQuariableSet(context);
 
             var result = await set.Where(item => item.Guid == guid).SingleAsync();
 
@@ -90,7 +90,7 @@ namespace backend.v2.Storages
         public async Task<T[]> GetByGuids(Guid[] guids)
         {
             using var context = new BookologContext();
-            var set = this.GetEntitiesSet(context);
+            var set = this.GetQuariableSet(context);
 
             var result = await set.Where(item => guids.Contains(item.Guid.Value)).ToArrayAsync();
 
@@ -187,7 +187,7 @@ namespace backend.v2.Storages
         public async Task<T[]> GetDeletedAfter(long userId, DateTime date)
         {
             using var context = new BookologContext();
-            var set = this.GetEntitiesSet(context);
+            var set = this.GetQuariableSet(context);
 
             var result = await set.Where(item => item.DeleteDate >= date && item.UserId == userId).IgnoreQueryFilters().ToArrayAsync();
 
@@ -197,7 +197,7 @@ namespace backend.v2.Storages
         public async Task<T[]> GetChangedAfter(long userId, DateTime date)
         {
             using var context = new BookologContext();
-            var set = this.GetEntitiesSet(context);
+            var set = this.GetQuariableSet(context);
 
             var result = await set.Where(item => (item.ModifyDate >= date || item.CreateDate >= date) && item.UserId == userId).ToArrayAsync();
 
@@ -207,7 +207,7 @@ namespace backend.v2.Storages
         public async Task<IEnumerable<T>> GetByUserId(long id)
         {
             using var context = new BookologContext();
-            var set = this.GetEntitiesSet(context);
+            var set = this.GetQuariableSet(context);
 
             var result = await set.Where(item => item.UserId == id).ToArrayAsync();
 
@@ -236,5 +236,10 @@ namespace backend.v2.Storages
         }
     
         protected abstract DbSet<T> GetEntitiesSet(BookologContext context);
+
+        protected virtual IQueryable<T> GetQuariableSet(BookologContext context)
+        {
+            return this.GetEntitiesSet(context);
+        }
     }
 }

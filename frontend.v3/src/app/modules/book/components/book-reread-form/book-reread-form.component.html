@@ -1,0 +1,82 @@
+<div class="book__name property">
+  <div class="property__value">
+    {{book.name}}
+  </div>
+</div>
+
+<div class="book__authors property" *ngIf="book.authors.length > 0">
+  <div class="property__value">
+      <span *ngFor="let author of book.authors | capitalize; let last = last" class="link" [routerLink]="['/author', author]">
+        {{author}}<span *ngIf="!last">,</span>
+      </span>
+  </div>
+  <label >Авторы</label>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Статус</mat-label>
+    <mat-select formControlName="status">
+      <mat-option [value]="BookStatus.ToRead">К прочтению</mat-option>
+      <mat-option [value]="BookStatus.InProgress">Читаю</mat-option>
+      <mat-option [value]="BookStatus.Done">Прочитана</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Тип книги</mat-label>
+    <mat-select formControlName="type">
+      <mat-option [value]="BookType.Paper">Бумажная книга</mat-option>
+      <mat-option [value]="BookType.Electronic">Электронная книга
+      </mat-option>
+      <mat-option [value]="BookType.Audio">Аудиокнига</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" [hidden]="status !== BookStatus.InProgress">
+    <mat-label>Прогресс</mat-label>
+    <mat-select formControlName="progressType">
+      <mat-option [value]="ProgressAlgorithm.Done">{{type == BookType.Audio ? 'Прослушано' : 'Прочитано'}}</mat-option>
+      <mat-option [value]="ProgressAlgorithm.Left">Осталось</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="book-reread__progress" [ngSwitch]="type" [hidden]="status !== BookStatus.InProgress">
+    <div class="book-reread__progress_audio" *ngSwitchCase="BookType.Audio">
+      <div>
+        <mat-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</mat-label>
+        <app-book-time-input formControlName="doneUnits"></app-book-time-input>
+      </div>
+
+      <div>
+        <mat-label>Всего</mat-label>
+        <app-book-time-input formControlName="totalUnits"></app-book-time-input>
+      </div>
+    </div>
+    <div class="book-reread__progress_audio" *ngSwitchDefault>
+      <mat-form-field appearance="fill">
+        <mat-label>Страниц</mat-label>
+        <input matInput type="number" formControlName="doneUnits" min="0" step="1" max="6000" autocomplete="off"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Всего</mat-label>
+        <input matInput type="number" formControlName="totalUnits" min="0" step="1" max="6000" autocomplete="off"/>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
+    <mat-label>Начало чтения</mat-label>
+    <app-book-date-input formControlName="started"></app-book-date-input>
+  </div>
+
+  <div [hidden]="status != BookStatus.Done">
+    <mat-label>Окончание чтения</mat-label>
+    <app-book-date-input formControlName="finished"></app-book-date-input>
+  </div>
+
+  <button class="w-100" mat-flat-button [disabled]="form.invalid" color="primary"
+          type="submit">Сохранить
+  </button>
+</form>

@@ -53,8 +53,10 @@ export class CollectionListComponent implements OnInit {
   }
 
   public countBooksForCollection(books: Book[], collections: Collection[]): ISequence<BookCollection> {
+    const distinctBooks = _(books).where(item => item.rereadingBookGuid == null).toArray();
+
     return _(collections)
-      .groupJoin(books,
+      .groupJoin(distinctBooks,
         collection => collection.guid,
         book => book.collectionGuid,
         (collection, booksForCollection) => ({

@@ -135,6 +135,7 @@ describe('CollectionService', () => {
       const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
       const softDeleteSpy = spyOn(collectionService, 'softDelete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.resolveTo();
+      const syncSpy = spyOn(collectionService, 'entitiesSync').and.resolveTo();
 
       await collectionService.delete(collection);
 
@@ -143,6 +144,8 @@ describe('CollectionService', () => {
 
       expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
       expect(originDeleteSpy).toHaveBeenCalledTimes(1);
+
+      expect(syncSpy).toHaveBeenCalledTimes(1);
 
       expect(softDeleteSpy).toHaveBeenCalledTimes(0);
     });

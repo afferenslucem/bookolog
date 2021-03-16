@@ -37,6 +37,7 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     try {
       await this.origin.delete(entity.guid);
       await this.storage.delete(entity.guid);
+      await this.entitiesSync();
     } catch (e) {
       await this.softDelete(entity);
       throw e;

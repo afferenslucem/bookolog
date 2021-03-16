@@ -40,6 +40,11 @@ namespace backend.v2.Storages
 
             modelBuilder.Entity<Session>()
                 .HasIndex("Guid");
+
+            modelBuilder.Entity<Book>()
+                .HasOne(b => b.RereadingBook)
+                .WithMany(b => b.RereadedByBooks)
+                .OnDelete(DeleteBehavior.SetNull);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -49,6 +49,11 @@ namespace backend.v2.tests.Models
             var type = Type.Audio;
             var note = "note";
             var userId = 1;
+            var rereadingGuid = Guid.NewGuid();
+            var rereadingBook = new Book()
+            {
+                Guid = rereadingGuid,
+            };
 
             var book = new Book()
             {
@@ -76,6 +81,8 @@ namespace backend.v2.tests.Models
                 Type = type,
                 Note = note,
                 UserId = userId,
+                RereadingBookGuid = rereadingBook.Guid.Value,
+                RereadingBook = rereadingBook,
             };
             
             Assert.AreEqual(book.Guid, guid);
@@ -105,6 +112,8 @@ namespace backend.v2.tests.Models
             Assert.AreEqual(book.StartDate, new DateTime(2019, 3, 1));
             Assert.AreEqual(book.EndDate, new DateTime(2021, 3, 2));
             Assert.AreEqual(book.Deleted, true);
+            Assert.AreEqual(book.RereadingBookGuid, rereadingGuid);
+            Assert.AreEqual(book.RereadingBook, rereadingBook);
         }
 
         [TestMethod]

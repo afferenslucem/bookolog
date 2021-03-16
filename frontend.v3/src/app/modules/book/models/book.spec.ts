@@ -53,6 +53,8 @@ describe('Book', () => {
     expect(book.startDate).toEqual(null);
     expect(book.endDate).toEqual(null);
     expect(book.progressPercents).toEqual(0);
+    expect(book.rereadingBookGuid).toEqual(null);
+    expect(book.rereadedBy).toEqual([]);
   });
 
   it('map full correct', () => {
@@ -77,7 +79,9 @@ describe('Book', () => {
       modifyDate: '2020-11-18 10:57',
       createDate: '2020-11-18 09:57',
       startDate: '2020-11-10 10:34',
-      endDate: '2020-11-11 11:11'
+      endDate: '2020-11-11 11:11',
+      rereadedBy: ['guid1', 'guid2'],
+      rereadingBookGuid: 'guid3'
     };
 
     const book = new Book(data);
@@ -108,6 +112,8 @@ describe('Book', () => {
     expect(book.startDate).toEqual(new Date(data.startDate));
     expect(book.endDate).toEqual(new Date(data.endDate));
     expect(book.progressPercents).toEqual(50);
+    expect(book.rereadedBy).toEqual(['guid1', 'guid2']);
+    expect(book.rereadingBookGuid).toEqual('guid3');
   });
 
   it('map without dates correct', () => {

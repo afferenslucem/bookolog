@@ -8,6 +8,7 @@ import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import { BookOriginService } from './book.origin.service';
 import { BookStorageService } from './book.storage.service';
+import {EntityComparer} from "../../../main/utils/entity.comparer";
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,23 @@ export class BookService extends EntityService<BookData, Book> {
   public async saveOrUpdate(book: Book): Promise<Book> {
     try {
       book = await super.saveOrUpdate(book);
+    } catch (e) {
+      this.logger.warn('error sync', e);
+      this.notificationService.createWarningNotification('Книга сохранена локально');
+    }
+
+    return book;
+  }
+
+  public async saveRereading(book: Book): Promise<Book> {
+    try {
+      const original = await super.getByGuid(book.rereadingBookGuid);
+      book = await super.saveOrUpdate(book);
+
+      original.rereadedBy.push(book.guid);
+      await super.saveOrUpdate(book);
+
+      return book;
     } catch (e) {
       this.logger.warn('error sync', e);
       this.notificationService.createWarningNotification('Книга сохранена локально');
@@ -82,10 +100,29 @@ export class BookService extends EntityService<BookData, Book> {
 
   public async delete(book: Book): Promise<void> {
     try {
+      const rereadings = await this.typedStorage.getAllRereadings(book.guid);
+      if (rereadings?.length) {
+        const updated = this.changeRereadingHierarchy(rereadings);
+        await this.storage.updateMany(updated);
+      }
+
       await super.delete(book);
     } catch (e) {
       this.notificationService.createWarningNotification('Книга удалена локально');
     }
+  }
+
+  private changeRereadingHierarchy(bookDatas: BookData[]): BookData[] {
+    const youngest = _(bookDatas)
+      .orderBy(item => item.endDateYear)
+      .thenBy(item => item.endDateMonth || 12)
+      .thenBy(item => item.endDateDay || 32)
+      .first();
+
+    return _(bookDatas).except(_.of(youngest), new EntityComparer()).select(item => {
+      item.rereadingBookGuid = youngest.guid;
+      return item;
+    }).toArray();
   }
 
   public convertToDTO(book: Book): BookData {
@@ -113,7 +150,9 @@ export class BookService extends EntityService<BookData, Book> {
       createDate: this.formatDate(book.createDate),
       deleted: book.deleted || 0,
       shouldSync: book.shouldSync || 0,
-      progressType: book.progressType
+      progressType: book.progressType,
+      rereadingBookGuid: book.rereadingBookGuid,
+      rereadedBy: book.rereadedBy,
     };
 
     return data;

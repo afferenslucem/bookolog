@@ -43,17 +43,17 @@ describe('BooksBySeriesResolver', () => {
   });
 
   it('should requests booksByService', async () => {
-    const spy = spyOn(bookService, 'getByCollection').and.resolveTo({
+    const spy = spyOn(bookService, 'getByCollection').and.resolveTo([{
       guid: 'id1',
-    } as any);
+    } as any]);
 
     const result = await resolver.resolve({
       paramMap: new Map([['guid', 'id1']]),
     } as any, null);
 
     expect(spy).toHaveBeenCalledOnceWith('id1');
-    expect(result).toEqual({
+    expect(result).toEqual([{
       guid: 'id1'
-    } as any);
+    } as any]);
   });
 });

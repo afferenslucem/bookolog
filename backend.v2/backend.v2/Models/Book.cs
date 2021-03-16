@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text.Json.Serialization;
 using backend.v2.Configuration.Attributes;
 
@@ -197,7 +199,6 @@ namespace backend.v2.Models
         /// </summary>
         public string Note { get; set; }
         
-        
         /// <summary>
         /// `Id` пользователя, владеющего книгой.
         /// </summary>
@@ -206,5 +207,29 @@ namespace backend.v2.Models
         [SwaggerIgnore]
         [JsonIgnore]
         public User User { get; set; }
+
+        /// <summary>
+        /// `Id` книги, которую перечитывают.
+        /// </summary>
+        public Guid? RereadingBookGuid { get; set; }
+        
+        [SwaggerIgnore]
+        [JsonIgnore]
+        public Book RereadingBook { get; set; }
+        
+        [SwaggerIgnore]
+        [JsonIgnore]
+        public IEnumerable<Book> RereadedByBooks { get; set; }
+
+        /// <summary>
+        /// Книги которые являются новыми перечтениями данной книги.
+        /// </summary>
+        public IEnumerable<Guid> RereadedBy
+        {
+            get
+            {
+                return RereadedByBooks != null ? RereadedByBooks.Select(item => item.Guid.Value) : new Guid[] { };
+            }
+        }
     }
 }

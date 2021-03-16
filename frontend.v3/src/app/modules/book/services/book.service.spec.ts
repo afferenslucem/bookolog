@@ -183,8 +183,10 @@ describe('BookService', () => {
       const dto = bookService.convertToDTO(book);
 
       const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
+      const storageRereadingsSpy = spyOn(storage, 'getAllRereadings').and.resolveTo();
       const softDeleteSpy = spyOn(bookService, 'softDelete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.resolveTo();
+      const syncSpy = spyOn(bookService, 'entitiesSync').and.resolveTo();
 
       await bookService.delete(book);
 
@@ -193,6 +195,11 @@ describe('BookService', () => {
 
       expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
       expect(originDeleteSpy).toHaveBeenCalledTimes(1);
+
+      expect(storageRereadingsSpy).toHaveBeenCalledWith(dto.guid);
+      expect(storageRereadingsSpy).toHaveBeenCalledTimes(1);
+
+      expect(syncSpy).toHaveBeenCalledTimes(1);
 
       expect(softDeleteSpy).toHaveBeenCalledTimes(0);
     });
@@ -214,6 +221,7 @@ describe('BookService', () => {
       const dto = bookService.convertToDTO(book);
 
       const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
+      const storageRereadingsSpy = spyOn(storage, 'getAllRereadings').and.resolveTo();
       const softDeleteSpy = spyOn(bookService, 'softDelete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.rejectWith();
 
@@ -223,6 +231,9 @@ describe('BookService', () => {
 
       expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
       expect(originDeleteSpy).toHaveBeenCalledTimes(1);
+
+      expect(storageRereadingsSpy).toHaveBeenCalledWith(dto.guid);
+      expect(storageRereadingsSpy).toHaveBeenCalledTimes(1);
 
       expect(softDeleteSpy).toHaveBeenCalledTimes(1);
     });
