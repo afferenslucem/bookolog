@@ -10,6 +10,7 @@ import { of } from 'rxjs';
 import { TitleService } from '../../../ui/service/title.service';
 import { BookService } from '../../../book/services/book.service';
 import { CollectionService } from '../../services/collection.service';
+import { Book } from '../../../book/models/book';
 
 describe('CollectionComponent', () => {
   let component: CollectionViewComponent;
@@ -83,5 +84,38 @@ describe('CollectionComponent', () => {
     expect(deleteSpy).toHaveBeenCalledOnceWith({
       guid: 'id1',
     } as any);
+  });
+
+  describe('orderBooks', () => {
+    it('sort with orders', () => {
+      const first = {
+        collectionOrder: 1,
+      } as Book;
+      const second = {
+        collectionOrder: 2,
+      } as Book;
+      const third = {
+        collectionOrder: 3,
+      } as Book;
+
+      const sorted = component.orderBooks([third, second, first]);
+
+      expect(sorted).toEqual([first, second, third]);
+    });
+
+    it('sort without order', () => {
+      const first = {
+      } as Book;
+      const second = {
+        collectionOrder: 2,
+      } as Book;
+      const third = {
+        collectionOrder: 3,
+      } as Book;
+
+      const sorted = component.orderBooks([third, second, first]);
+
+      expect(sorted).toEqual([second, third, first]);
+    });
   });
 });

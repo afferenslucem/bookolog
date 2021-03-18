@@ -38,11 +38,7 @@ export class CollectionViewComponent implements OnInit {
     this.books$ = activatedRoute.data.pipe(
       filter((item) => item.books),
       map((item) => item.books as Book[]),
-      map((item) =>
-        _(item)
-          .orderBy((book) => book.collectionOrder)
-          .toArray()
-      )
+      map((books) => this.orderBooks(books))
     );
 
     data$.pipe(
@@ -51,6 +47,12 @@ export class CollectionViewComponent implements OnInit {
       tap((item) => this.setTitle(item.name)),
       tap(item => this.collection = item),
     ).subscribe();
+  }
+
+  public orderBooks(books: Book[]): Book[] {
+    return _(books)
+      .orderBy((book) => book.collectionOrder || Number.MAX_VALUE)
+      .toArray();
   }
 
   public ngOnInit(): void {}
