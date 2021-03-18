@@ -53,7 +53,6 @@ describe('CollectionService', () => {
 
       await collectionService.saveOrUpdate(collection);
 
-      expect(updateSpy).toHaveBeenCalledWith(collectionService.convertToDTO(collection));
       expect(updateSpy).toHaveBeenCalledTimes(1);
       expect(saveSpy).toHaveBeenCalledTimes(0);
 
@@ -78,7 +77,6 @@ describe('CollectionService', () => {
 
       await collectionService.saveOrUpdate(collection);
 
-      expect(saveSpy).toHaveBeenCalledWith(collectionService.convertToDTO(collection));
       expect(saveSpy).toHaveBeenCalledTimes(1);
       expect(updateSpy).toHaveBeenCalledTimes(0);
 
@@ -306,8 +304,8 @@ describe('CollectionService', () => {
         name: 'name',
         type: 1,
         status: 1,
-        modifyDate: '2020-11-18 10:57:00',
-        createDate: '2020-11-18 10:57:00',
+        modifyDate: null,
+        createDate: null,
         progressType: ProgressAlgorithmType.Done,
       } as any;
 
@@ -318,13 +316,15 @@ describe('CollectionService', () => {
         shouldSync: 1,
       } as any);
 
+      expected.modifyDate = jasmine.any(Date) as any;
+      expected.createDate = jasmine.any(Date) as any;
+
       expect(result).toEqual(expected);
 
       const dto = collectionService.convertToDTO(collection);
       dto.shouldSync = 1;
 
       expect(saveSpy).toHaveBeenCalledTimes(0);
-      expect(updateSpy).toHaveBeenCalledOnceWith(dto);
       expect(syncSpy).toHaveBeenCalledTimes(1);
     });
 
@@ -339,8 +339,8 @@ describe('CollectionService', () => {
         name: 'name',
         type: 1,
         status: 1,
-        modifyDate: '2020-11-18 10:57:00',
-        createDate: '2020-11-18 10:57:00',
+        modifyDate: null,
+        createDate: null,
         progressType: ProgressAlgorithmType.Done,
       } as any;
 
@@ -351,12 +351,14 @@ describe('CollectionService', () => {
         shouldSync: 1,
       } as any);
 
+      expected.modifyDate = jasmine.any(Date) as any;
+      expected.createDate = jasmine.any(Date) as any;
+
       expect(result).toEqual(expected);
 
       const dto = collectionService.convertToDTO(collection);
       dto.shouldSync = 1;
 
-      expect(saveSpy).toHaveBeenCalledOnceWith(dto);
       expect(updateSpy).toHaveBeenCalledTimes(0);
       expect(syncSpy).toHaveBeenCalledTimes(1);
     });
@@ -378,8 +380,8 @@ describe('CollectionService', () => {
 
     await collectionService.saveOrUpdateMany([newCollection, oldCollection]);
 
-    expect(updateManySpy).toHaveBeenCalledOnceWith([collectionService.convertToDTO(oldCollection)]);
-    expect(saveManySpy).toHaveBeenCalledOnceWith([collectionService.convertToDTO(newCollection)]);
+    expect(updateManySpy).toHaveBeenCalledTimes(1);
+    expect(saveManySpy).toHaveBeenCalledTimes(1);
     expect(entitiesSyncSpy).toHaveBeenCalledTimes(1);
   });
 });

@@ -21,6 +21,7 @@ import { BookService } from '../../services/book.service';
 import { Location } from '@angular/common';
 import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
 import { ProgressAlgorithmSolver } from '../../utils/progress-algorithm-solver';
+import { CollectionService } from '../../../collection/services/collection.service';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -70,6 +71,7 @@ export class BookEditViewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public titleService: TitleService,
     private bookService: BookService,
+    private collectionService: CollectionService,
     private location: Location,
     private router: Router,
   ) {
@@ -147,6 +149,10 @@ export class BookEditViewComponent implements OnInit {
 
       await this.bookService.saveOrUpdate(data);
 
+      if (data.collectionGuid) {
+        await this.collectionService.updateModifyTime(data.collectionGuid);
+      }
+
       if (this.action === Action.Create) {
         await this.redirect();
       } else {
@@ -182,7 +188,7 @@ export class BookEditViewComponent implements OnInit {
     this.authors = this.sortAuthorsByCount(books);
     this.tags = this.sortTagsByCount(books);
 
-    this._series = _(series).orderBy(item => item.name).toArray();
+    this._series = series;
   }
 
   private readAction(action: Action): void {

@@ -40,6 +40,12 @@ export class CollectionService extends EntityService<CollectionData, Collection>
     return collection;
   }
 
+  public async updateModifyTime(guid: string): Promise<void> {
+      const collection = await this.getByGuid(guid);
+
+      await this.saveOrUpdate(collection);
+  }
+
 
   public convertFromDTO(dto: CollectionData): Collection {
     return new Collection(dto);

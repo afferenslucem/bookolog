@@ -55,7 +55,6 @@ describe('BookService', () => {
 
       await bookService.saveOrUpdate(book);
 
-      expect(updateSpy).toHaveBeenCalledWith(bookService.convertToDTO(book));
       expect(updateSpy).toHaveBeenCalledTimes(1);
       expect(saveSpy).toHaveBeenCalledTimes(0);
 
@@ -80,7 +79,6 @@ describe('BookService', () => {
 
       await bookService.saveOrUpdate(book);
 
-      expect(saveSpy).toHaveBeenCalledWith(bookService.convertToDTO(book));
       expect(saveSpy).toHaveBeenCalledTimes(1);
       expect(updateSpy).toHaveBeenCalledTimes(0);
 
@@ -395,8 +393,8 @@ describe('BookService', () => {
         name: 'name',
         type: 1,
         status: 1,
-        modifyDate: '2020-11-18 10:57:00',
-        createDate: '2020-11-18 10:57:00',
+        modifyDate: null,
+        createDate: null,
         progressType: ProgressAlgorithmType.Done,
       } as any;
 
@@ -407,13 +405,16 @@ describe('BookService', () => {
         shouldSync: 1,
       } as any);
 
+      expected.modifyDate = jasmine.any(Date) as any;
+      expected.createDate = jasmine.any(Date) as any;
+
       expect(result).toEqual(expected);
 
       const dto = bookService.convertToDTO(book);
       dto.shouldSync = 1;
 
       expect(saveSpy).toHaveBeenCalledTimes(0);
-      expect(updateSpy).toHaveBeenCalledOnceWith(dto);
+      expect(updateSpy).toHaveBeenCalledTimes(1);
       expect(syncSpy).toHaveBeenCalledTimes(1);
     });
 
@@ -428,8 +429,8 @@ describe('BookService', () => {
         name: 'name',
         type: 1,
         status: 1,
-        modifyDate: '2020-11-18 10:57:00',
-        createDate: '2020-11-18 10:57:00',
+        modifyDate: null,
+        createDate: null,
         progressType: ProgressAlgorithmType.Done,
       } as any;
 
@@ -440,12 +441,15 @@ describe('BookService', () => {
         shouldSync: 1,
       } as any);
 
+      expected.modifyDate = jasmine.any(Date) as any;
+      expected.createDate = jasmine.any(Date) as any;
+
       expect(result).toEqual(expected);
 
       const dto = bookService.convertToDTO(book);
       dto.shouldSync = 1;
 
-      expect(saveSpy).toHaveBeenCalledOnceWith(dto);
+      expect(saveSpy).toHaveBeenCalledTimes(1);
       expect(updateSpy).toHaveBeenCalledTimes(0);
       expect(syncSpy).toHaveBeenCalledTimes(1);
     });

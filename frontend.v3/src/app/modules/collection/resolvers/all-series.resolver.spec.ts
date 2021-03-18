@@ -4,7 +4,7 @@ import { AllSeriesResolver } from './all-series.resolver';
 
 describe('AllSeriesResolver', () => {
   let resolver: AllSeriesResolver;
-  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
+  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo([]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
