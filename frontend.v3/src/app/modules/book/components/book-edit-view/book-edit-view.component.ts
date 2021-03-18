@@ -20,6 +20,7 @@ import { BookType } from '../../models/book-type';
 import { BookService } from '../../services/book.service';
 import { Location } from '@angular/common';
 import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
+import { ProgressAlgorithmSolver } from '../../utils/progress-algorithm-solver';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -120,11 +121,11 @@ export class BookEditViewComponent implements OnInit {
   }
 
   public get progressAlgorithmPreference(): ProgressAlgorithmType {
-    return localStorage.getItem('progressAlgorithmPreference') as ProgressAlgorithmType;
+    return ProgressAlgorithmSolver.getAlgorithm(this.type);
   }
 
   public set progressAlgorithmPreference(v: ProgressAlgorithmType) {
-    localStorage.setItem('progressAlgorithmPreference', v);
+    ProgressAlgorithmSolver.setAlgorithm(this.type, v);
   }
 
   public ngOnInit(): void {
@@ -228,6 +229,8 @@ export class BookEditViewComponent implements OnInit {
   }
 
   private formFromBook(book: Book): void {
+    const progressType = this.action === Action.Create ? ProgressAlgorithmSolver.getAlgorithm(this.book.type) : this.book.progressType;
+
     this.form = new FormBuilder().group({
       name: new FormControl(book.name, [Validators.required]),
       year: new FormControl(book.year),
@@ -243,7 +246,7 @@ export class BookEditViewComponent implements OnInit {
       authors: new FormControl(book.authors),
       tags: new FormControl(book.tags),
       note: new FormControl(book.note),
-      progressType: new FormControl(this.book.progressType || this.progressAlgorithmPreference || ProgressAlgorithmType.Done),
+      progressType: new FormControl(progressType),
     });
 
     this._filteredGenres = this.form.get('genre').valueChanges.pipe(
@@ -254,6 +257,8 @@ export class BookEditViewComponent implements OnInit {
     this.form.get('progressType').valueChanges.subscribe(v => this.progressAlgorithmPreference = v);
 
     this.form.get('status').valueChanges.subscribe(status => this.onStatusChange(status));
+
+    this.form.get('type').valueChanges.subscribe(() => this.onTypeChange());
   }
 
   private onStatusChange(status: BookStatus): void {
@@ -277,5 +282,9 @@ export class BookEditViewComponent implements OnInit {
       const total = this.form.get('totalUnits').value;
       this.form.get('doneUnits').setValue(total);
     }
+  }
+
+  private onTypeChange(): void {
+    this.form.get('progressType').setValue(this.progressAlgorithmPreference);
   }
 }
