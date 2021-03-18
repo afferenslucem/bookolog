@@ -101,6 +101,7 @@ export class BookService extends EntityService<BookData, Book> {
   public async delete(book: Book): Promise<void> {
     try {
       const rereadings = await this.typedStorage.getAllRereadings(book.guid);
+
       if (rereadings?.length) {
         const updated = this.changeRereadingHierarchy(rereadings);
         await this.storage.updateMany(updated);
@@ -112,17 +113,23 @@ export class BookService extends EntityService<BookData, Book> {
     }
   }
 
-  private changeRereadingHierarchy(bookDatas: BookData[]): BookData[] {
-    const youngest = _(bookDatas)
+  public changeRereadingHierarchy(bookDates: BookData[]): BookData[] {
+    let books = _(bookDates);
+
+    books = books
       .orderBy(item => item.endDateYear)
       .thenBy(item => item.endDateMonth || 12)
-      .thenBy(item => item.endDateDay || 32)
-      .first();
+      .thenBy(item => item.endDateDay || 32);
 
-    return _(bookDatas).except(_.of(youngest), new EntityComparer()).select(item => {
+    const youngest = books.first();
+    youngest.rereadingBookGuid = null;
+
+    books.skip(1).select(item => {
       item.rereadingBookGuid = youngest.guid;
       return item;
     }).toArray();
+
+    return books.toArray();
   }
 
   public convertToDTO(book: Book): BookData {

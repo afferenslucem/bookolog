@@ -263,6 +263,29 @@ describe('BookService', () => {
     });
   });
 
+  it('changeRereadingHierarchy', () => {
+    const guid1 = 'guid1';
+    const guid2 = 'guid2';
+    const guid3 = 'guid3';
+
+    const book1 = {
+      guid: guid2,
+      rereadingBookGuid: guid1,
+      endDateYear: 2020,
+    } as BookData;
+
+    const book2 = {
+      guid: guid3,
+      rereadingBookGuid: guid2,
+      endDateYear: 2021,
+    } as BookData;
+
+    const result = bookService.changeRereadingHierarchy([book1, book2]);
+
+    expect(result[0].rereadingBookGuid).toBeFalsy();
+    expect(result[1].rereadingBookGuid).toEqual(book1.guid);
+  });
+
   it('getCountByStatus',  async () => {
     const storage = TestBed.inject(BookStorageService);
     const storageUpdateSpy = spyOn(storage, 'countByStatus').and.resolveTo(7);

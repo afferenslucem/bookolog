@@ -1,5 +1,5 @@
 import { IEqualityComparer } from 'declarray';
-import {IEntity} from "../models/i-entity";
+import { IEntity } from '../models/i-entity';
 
 export class EntityComparer implements IEqualityComparer<IEntity>{
   public equal(first: IEntity, second: IEntity): boolean {
