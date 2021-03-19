@@ -11,6 +11,7 @@ using backend.v2.Storages;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
 using backend.v2.Configuration.Middlewares;
+using backend.v2.Configuration.RequestFormatters;
 
 namespace backend.v2
 {
@@ -35,8 +36,9 @@ namespace backend.v2
             .AddAuthentication(JWTDefaults.AuthenticationScheme)
             .AddJWT<JWTAuthenticationService>();
 
+            services.AddMvc(o => o.InputFormatters.Insert(0, new RawRequestBodyFormatter()));
             services.ConfigureFormOptions();
-
+            
             services.ConfigureCookiesPolicy();
 
             services
