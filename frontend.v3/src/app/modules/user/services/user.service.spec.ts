@@ -90,6 +90,7 @@ describe('UserService', () => {
 
     expect(saveUserSpy).toHaveBeenCalledTimes(1);
     expect(changeEmailSpy).toHaveBeenCalledOnceWith('alexshakirov74@gmail.com');
+    expect(service.user.email).toEqual('alexshakirov74@gmail.com');
   });
 
   it('passwordChange',  async () => {
