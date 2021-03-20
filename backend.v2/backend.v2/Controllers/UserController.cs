@@ -59,7 +59,7 @@ namespace backend.v2.Controllers
             {
                 this.logger.LogDebug($"Change email {newMail}");
 
-                var emailRegExp = new Regex(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+                var emailRegExp = new Regex(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9\-]+$");
 
                 if (emailRegExp.IsMatch(newMail))
                 {
