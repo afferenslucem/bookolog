@@ -48,4 +48,8 @@ export class ValueAccessorBase<T> implements ValueAccessor {
       item(event);
     });
   }
+
+  validate(): { invalid: boolean } | boolean {
+    return false;
+  }
 }

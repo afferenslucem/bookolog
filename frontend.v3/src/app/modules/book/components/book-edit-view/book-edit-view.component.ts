@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
 import { Observable } from 'rxjs';
@@ -253,6 +253,8 @@ export class BookEditViewComponent implements OnInit {
       tags: new FormControl(book.tags),
       note: new FormControl(book.note),
       progressType: new FormControl(progressType),
+    }, {
+      validators: [this.pagesValidator, this.datesValidator]
     });
 
     this._filteredGenres = this.form.get('genre').valueChanges.pipe(
@@ -292,5 +294,30 @@ export class BookEditViewComponent implements OnInit {
 
   private onTypeChange(): void {
     this.form.get('progressType').setValue(this.progressAlgorithmPreference);
+  }
+
+  public pagesValidator(formGroup: FormGroup): ValidationErrors | null {
+    const doneUnits = formGroup.get('doneUnits').value as number;
+    const totalUnits = formGroup.get('totalUnits').value as number;
+
+    const status = formGroup.get('status').value as BookStatus;
+
+    return (doneUnits > totalUnits) && (status === BookStatus.InProgress) ? {
+      invalidUnits: true
+    } : null;
+  }
+
+  public datesValidator(formGroup: FormGroup): ValidationErrors | null {
+    const started = formGroup.get('started').value as BookDate;
+    const finished = formGroup.get('finished').value as BookDate;
+
+    const status = formGroup.get('status').value as BookStatus;
+
+    const startDate = new Date(started.year, started.month, started.day);
+    const endDate = new Date(finished.year, finished.month, finished.day);
+
+    return (startDate > endDate) && (status === BookStatus.Done) ? {
+      invalidDates: true
+    } : null;
   }
 }
