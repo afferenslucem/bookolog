@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text.Json.Serialization;
 using backend.v2.Configuration.Attributes;
+using Newtonsoft.Json;
 
 namespace backend.v2.Models
 {
