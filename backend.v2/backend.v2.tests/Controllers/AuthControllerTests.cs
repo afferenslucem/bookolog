@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using backend.v2.Controllers;
 using backend.v2.Exceptions.AuthenticationExceptions;
+using backend.v2.Exceptions.StorageExceptions;
 using backend.v2.Models;
 using backend.v2.Models.Authentication;
 using backend.v2.Services;
@@ -320,7 +321,7 @@ namespace backend.v2.tests.Controllers
         [TestMethod]
         public async Task RecoverPasswordShouldSkipForNonExistingUser()
         {
-            userServiceMock.Setup(m => m.GetByEmail(It.IsAny<string>())).ReturnsAsync((User)null);
+            userServiceMock.Setup(m => m.GetByEmail(It.IsAny<string>())).ThrowsAsync(new StorageReadException());
             userServiceMock.Setup(m => m.SetNewPassword(It.IsAny<long>(), It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
             mailServiceMock.Setup(m => m.SendPasswordRecover(It.IsAny<User>(), It.IsAny<string>()))
