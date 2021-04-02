@@ -10,6 +10,7 @@ using backend.v2.Exceptions.AuthenticationExceptions;
 using backend.v2.Models;
 using backend.v2.Models.Authentication;
 using backend.v2.Authentication.Models;
+using backend.v2.Exceptions.StorageExceptions;
 using backend.v2.Services;
 using backend.v2.Utils;
 using Microsoft.AspNetCore.Http;
@@ -219,13 +220,14 @@ namespace backend.v2.Controllers
 
                 var user = await this.userService.GetByEmail(email);
 
-                if (user != null)
-                {
-                    var newPassword = RandomString.GetRandomString(6);
-                    await this.userService.SetNewPassword(user.Id, newPassword);
-                    await this.mailService.SendPasswordRecover(user, newPassword);
-                }
+                var newPassword = RandomString.GetRandomString(6);
+                await this.userService.SetNewPassword(user.Id, newPassword);
+                await this.mailService.SendPasswordRecover(user, newPassword);
 
+                return Ok();
+            }
+            catch (StorageReadException e)
+            {
                 return Ok();
             }
             catch (Exception e)
