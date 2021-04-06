@@ -7,7 +7,9 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
+using backend.v2.Authentication.Services.Actions;
 using backend.v2.Models;
+using backend.v2.Models.Authentication;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -27,9 +29,8 @@ namespace backend.v2.tests.Authentication.Services
         private Mock<IAuthenticationHandlerProvider> handlersMock = new Mock<IAuthenticationHandlerProvider>();
         private Mock<IClaimsTransformation> transformMock = new Mock<IClaimsTransformation>();
         private Mock<IOptions<AuthenticationOptions> > optionsMock = new Mock<IOptions<AuthenticationOptions> >();
-        private Mock<IJWTTokenManager> tokenManagerMock = new Mock<IJWTTokenManager>();
-        private Mock<ISessionService> sessionServiceMock = new Mock<ISessionService>();
-        private Mock<ILogger<JWTAuthenticationService>> loggerMock = new Mock<ILogger<JWTAuthenticationService>>();
+        private Mock<ISignInService> signInServiceMock = new Mock<ISignInService>();
+        private Mock<ISignOutService> signOutServiceMock = new Mock<ISignOutService>();
         private Mock<HttpContext> contextMock = new Mock<HttpContext>();
         
         [TestInitialize]
@@ -41,9 +42,8 @@ namespace backend.v2.tests.Authentication.Services
                 handlersMock.Object,
                 transformMock.Object,
                 optionsMock.Object,
-                tokenManagerMock.Object,
-                sessionServiceMock.Object,
-                loggerMock.Object
+                signInServiceMock.Object,
+                signOutServiceMock.Object
             );
 
             this.service.CallBase = true;
@@ -70,61 +70,23 @@ namespace backend.v2.tests.Authentication.Services
         }
 
         [TestMethod]
-        public async Task SignInShouldRunSetTokens()
+        public async Task SignInShouldRunAction()
         {
-            service.Setup(m => m.SetTokens(It.IsAny<HttpContext>(), It.IsAny<ClaimsPrincipal>()));
-
+            signInServiceMock.Setup(m => m.SignInAsync(It.IsAny<HttpContext>(), It.IsAny<ClaimsPrincipal>()));
+            
             await service.Object.SignInAsync(contextMock.Object, null, null, null);
             
-            service.Verify(m => m.SetTokens(It.IsAny<HttpContext>(), It.IsAny<ClaimsPrincipal>()), Times.Once());
+            signInServiceMock.Verify(m => m.SignInAsync(It.IsAny<HttpContext>(), It.IsAny<ClaimsPrincipal>()), Times.Once());
         }
 
         [TestMethod]
         public async Task SignOutShouldRemoveTokensAndSession()
         {
-            service.Setup(m => m.RemoveTokens(It.IsAny<HttpContext>()));
-            service.Setup(m => m.RemoveSession(It.IsAny<HttpContext>()));
+            signOutServiceMock.Setup(m => m.SignOutAsync(It.IsAny<HttpContext>()));
 
             await service.Object.SignOutAsync(contextMock.Object, null, null);
             
-            service.Verify(m => m.RemoveTokens(It.IsAny<HttpContext>()), Times.Once());
-            service.Verify(m => m.RemoveSession(It.IsAny<HttpContext>()), Times.Once());
-        }
-
-        [TestMethod]
-        public void GetAccessTokenShouldGenerateAccessToken()
-        {
-            var data = new Mock<TokenData>();
-
-            data.SetupSet(m => m.ValidityDate = It.IsAny<DateTime>());
-            tokenManagerMock.Setup(m => m.EncodeToken(It.IsAny<TokenData>())).Returns("Access");
-            tokenManagerMock.SetupGet(m => m.NextAccessTime).Returns(new DateTime(2021, 2, 27, 1, 59, 0));
-
-            var result = service.Object.GetAccessToken(data.Object);
-            
-            data.VerifySet(m => m.ValidityDate = It.Is<DateTime>(v => v == new DateTime(2021, 2, 27, 1, 59, 0)), Times.Once());
-            tokenManagerMock.Verify(m => m.EncodeToken(It.IsAny<TokenData>()), Times.Once());
-            tokenManagerMock.VerifyGet(m => m.NextAccessTime, Times.Once());
-            
-            Assert.AreEqual(result, "Access");
-        }
-
-        [TestMethod]
-        public void GetRefreshTokenShouldGenerateRefreshToken()
-        {
-            var data = new Mock<TokenData>();
-
-            data.SetupSet(m => m.ValidityDate = It.IsAny<DateTime>());
-            tokenManagerMock.Setup(m => m.EncodeToken(It.IsAny<TokenData>())).Returns("Refresh");
-            tokenManagerMock.SetupGet(m => m.NextRefreshTime).Returns(new DateTime(2021, 2, 27, 1, 59, 0));
-
-            var result = service.Object.GetRefreshToken(data.Object);
-            
-            data.VerifySet(m => m.ValidityDate = It.Is<DateTime>(v => v == new DateTime(2021, 2, 27, 1, 59, 0)), Times.Once());
-            tokenManagerMock.Verify(m => m.EncodeToken(It.IsAny<TokenData>()), Times.Once());
-            tokenManagerMock.VerifyGet(m => m.NextRefreshTime, Times.Once());
-            
-            Assert.AreEqual(result, "Refresh");
+            signOutServiceMock.Verify(m => m.SignOutAsync(It.IsAny<HttpContext>()), Times.Once());
         }
     }
 }

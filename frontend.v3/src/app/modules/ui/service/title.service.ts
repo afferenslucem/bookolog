@@ -43,6 +43,11 @@ export class TitleService {
     this.setTitle(TitleText.BookCreate);
   }
 
+  public setBookReread(): void {
+    this.setCustom(null);
+    this.setTitle(TitleText.BookReread);
+  }
+
   public setSettings(): void {
     this.setCustom(null);
     this.setTitle(TitleText.Settings);

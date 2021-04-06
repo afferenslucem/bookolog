@@ -1,5 +1,5 @@
 import { Component, forwardRef, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
 import { BookDate } from '../../../book/models/book-date';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
 
@@ -8,10 +8,15 @@ import { ValueAccessorBase } from '../value-accessor/value-accessor';
   templateUrl: './book-date-input.component.html',
   styleUrls: ['./book-date-input.component.scss'],
   providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => BookDateInputComponent),
-    multi: true,
-  }],
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => BookDateInputComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: BookDateInputComponent,
+      multi: true
+    }],
 })
 export class BookDateInputComponent extends ValueAccessorBase<BookDate> implements OnInit {
   public form: FormGroup = null;
@@ -34,6 +39,9 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
   }
 
   ngOnInit(): void {
+    this.form.get('year').markAsTouched();
+    this.form.get('month').markAsTouched();
+    this.form.get('day').markAsTouched();
   }
 
   public dayValidator(formGroup: FormGroup): ValidationErrors | null {
@@ -89,7 +97,11 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     });
   }
 
-  public emitTouch(event: MouseEvent | TouchEvent): void {
-    super.emitTouch(event);
+  validate(): { invalid: boolean } | boolean {
+    const isNotValid = this.form.invalid;
+
+    return isNotValid && {
+      invalid: true
+    };
   }
 }

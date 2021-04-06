@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using backend.v2.Models.Authentication;
@@ -21,11 +21,9 @@ namespace backend.v2.Configuration.Middlewares
 
         public async Task InvokeAsync(HttpContext context, ISessionService sessionService, IUserSession userSession, ILogger<SessionMiddleware> logger)
         {
-            await this.LoadSession(context, sessionService, userSession, logger);
-
             await next(context);
 
-            _ = this.SaveSession(sessionService, userSession, logger);
+            await this.SaveSession(sessionService, userSession, logger);
         }
 
         public virtual async Task SaveSession(ISessionService sessionService, IUserSession userSession, ILogger<SessionMiddleware> logger)
@@ -48,42 +46,6 @@ namespace backend.v2.Configuration.Middlewares
             {
                 logger.LogError("Could not update session", ex.Message, ex);
             }
-        }
-
-        public virtual async Task LoadSession(HttpContext context, ISessionService sessionService, IUserSession userSession, ILogger<SessionMiddleware> logger)
-        {
-            try
-            {
-                var sId = context.User.FindFirst(ClaimTypes.Sid);
-                
-                if (sId == null) return;
-
-                var sessionGuid = new Guid(sId.Value);
-
-                var session = await this.GetSession(sessionService, sessionGuid) ??
-                    await CreateSession(sessionService, sessionGuid);
-
-                userSession.Session = session;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError("Could not find session", ex.Message, ex);
-            }
-        }
-
-        public virtual async Task<Session> GetSession(ISessionService sessionService, Guid guid) {
-            return await sessionService.Get(guid);
-        }
-
-        public virtual async Task<Session> CreateSession(ISessionService sessionService, Guid guid)
-        {
-            var session = new Session()
-            {
-                Guid = guid,
-                ValidityExpired = this.SessionLifeTime
-            };
-
-            return await sessionService.Save(session);
         }
 
         public virtual DateTime SessionLifeTime

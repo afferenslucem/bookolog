@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { UserService } from './user.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserOriginService } from './user.origin.service';
+import { User } from '../../auth/models/user';
 
 describe('UserService', () => {
   let service: UserService;
@@ -85,11 +86,14 @@ describe('UserService', () => {
   it('changeEmail',  async () => {
     const saveUserSpy = spyOn(service, 'saveUser');
     const changeEmailSpy = spyOn(origin, 'changeEmail');
+    // @ts-ignore
+    service._user = {} as User;
 
     await service.changeEmail('alexshakirov74@gmail.com');
 
     expect(saveUserSpy).toHaveBeenCalledTimes(1);
     expect(changeEmailSpy).toHaveBeenCalledOnceWith('alexshakirov74@gmail.com');
+    expect(service.user.email).toEqual('alexshakirov74@gmail.com');
   });
 
   it('passwordChange',  async () => {

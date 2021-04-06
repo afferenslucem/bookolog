@@ -41,6 +41,7 @@ namespace backend.v2.Controllers
         /// <response code="200">Возвращает обновленную коллекцию.</response>
         /// <response code="400">Проблема при валидации или обновлении коллекции.</response>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
+        /// <response code="403">Если обновляется чужая коллекция.</response>
         [ProducesResponseType(typeof(Collection), StatusCodes.Status200OK)]
         public override async Task<IActionResult> Update([FromBody]Collection collection)
         {
@@ -50,10 +51,11 @@ namespace backend.v2.Controllers
         /// <summary>
         /// Удаляет коллекцию.
         /// </summary>
-        /// <param name="guid">Идентификатор коллекции</param>
+        /// <param name="guid">Идентификатор коллекции.</param>
         /// <response code="200">Возвращает удаленную коллекцию.</response>
         /// <response code="400">Проблема при удалении коллекции.</response>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
+        /// <response code="403">Если удаляется чужая коллекция.</response>
         [ProducesResponseType(typeof(Collection), StatusCodes.Status200OK)]
         public override async Task<IActionResult> Delete(Guid guid)
         {
@@ -91,6 +93,7 @@ namespace backend.v2.Controllers
         /// <response code="200">Возвращает коллекции для синхронизации.</response>
         /// <response code="400">Проблема при валидации или сохранении коллекции.</response>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
+        /// <response code="403">Если производится синхронизация с чужими данными.</response>
         [ProducesResponseType(typeof(SyncData<Collection>), StatusCodes.Status200OK)]
         public override Task<IActionResult> Synchronize([FromBody]SyncData<Collection> data)
         {

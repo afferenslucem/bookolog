@@ -106,3 +106,28 @@ mat-toolbar {
   align-items: center;
   justify-content: space-between;
 }
+
+// Book
+.property {
+  &:not(:last-child) {
+    margin-bottom: $ind-4;
+  }
+
+  &__value {
+    margin-bottom: $ind-1;
+  }
+
+  &__label, label {
+    font-size: $few-font-size;
+    font-weight: $fat-font-weight;
+
+    margin-left: $ind-1;
+  }
+}
+
+form {
+  mat-error {
+    position: relative;
+    bottom: 1.34375em;
+  }
+}

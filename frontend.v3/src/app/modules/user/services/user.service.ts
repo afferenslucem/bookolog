@@ -72,6 +72,9 @@ export class UserService {
 
   public async changeEmail(email: string): Promise<void> {
     await this.userOrigin.changeEmail(email);
+
+    this.user.email = email;
+
     this.saveUser();
   }
 

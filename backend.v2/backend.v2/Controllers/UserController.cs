@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using backend.v2.Exceptions;
 using backend.v2.Models;
 using backend.v2.Authentication.Models;
+using backend.v2.Exceptions.BookExceptions;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -47,18 +48,18 @@ namespace backend.v2.Controllers
         /// </summary>
         /// <param name="newMail">Новая почта.</param>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
-        [HttpGet]
-        [Route("[action]/{newMail:maxlength(128)}")]
+        [HttpPost]
+        [Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> ChangeEmail(string newMail)
+        public async Task<IActionResult> ChangeEmail([FromBody] string newMail)
         {
             try
             {
                 this.logger.LogDebug($"Change email {newMail}");
 
-                var emailRegExp = new Regex(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+                var emailRegExp = new Regex(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9\-]+$");
 
                 if (emailRegExp.IsMatch(newMail))
                 {
@@ -154,6 +155,7 @@ namespace backend.v2.Controllers
         /// <response code="200">Изменение в данных с момента последней синхронизации.</response>
         /// <response code="400">Проблема при валидации или сохранении сущности.</response>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
+        /// <response code="403">Если производится синхронизация с чужими данными.</response>
         [HttpPost]
         [Route("[action]")]
         [ProducesResponseType(typeof(AppSyncData), StatusCodes.Status200OK)]
@@ -176,6 +178,12 @@ namespace backend.v2.Controllers
                     Books = bookSync,
                     Collections = collectionSync,
                 });
+            }
+            catch (EntityAccessDeniedException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex.Message, ex, data);
+
+                return StatusCode(403, ex.Message);
             }
             catch (BookologException ex)
             {

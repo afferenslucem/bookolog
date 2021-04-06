@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { ILogger } from 'waterlog';
@@ -77,7 +77,12 @@ export class UserOriginService {
   }
 
   public async changeEmail(email: string): Promise<void> {
-    await this.httpClient.get('/user/changeEmail/' + email).toPromise();
+    await this.httpClient.post('/user/changeEmail', email, {
+      headers: {
+        'Content-Type': 'text/plain'
+      },
+      responseType: 'text'
+    }).toPromise();
   }
 
   public async loadAvatar(file: File): Promise<string> {

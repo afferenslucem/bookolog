@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
 import { Observable } from 'rxjs';
@@ -20,6 +20,8 @@ import { BookType } from '../../models/book-type';
 import { BookService } from '../../services/book.service';
 import { Location } from '@angular/common';
 import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
+import { ProgressAlgorithmSolver } from '../../utils/progress-algorithm-solver';
+import { CollectionService } from '../../../collection/services/collection.service';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -58,6 +60,8 @@ export class BookEditViewComponent implements OnInit {
     startDateYear: null,
     startDateMonth: null,
     startDateDay: null,
+    rereadingBookGuid: null,
+    rereadedBy: [],
   };
 
   private _filteredGenres: Observable<string[]>;
@@ -67,6 +71,7 @@ export class BookEditViewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public titleService: TitleService,
     private bookService: BookService,
+    private collectionService: CollectionService,
     private location: Location,
     private router: Router,
   ) {
@@ -118,22 +123,23 @@ export class BookEditViewComponent implements OnInit {
   }
 
   public get progressAlgorithmPreference(): ProgressAlgorithmType {
-    return localStorage.getItem('progressAlgorithmPreference') as ProgressAlgorithmType;
+    return ProgressAlgorithmSolver.getAlgorithm(this.type);
   }
 
   public set progressAlgorithmPreference(v: ProgressAlgorithmType) {
-    localStorage.setItem('progressAlgorithmPreference', v);
+    ProgressAlgorithmSolver.setAlgorithm(this.type, v);
   }
 
   public ngOnInit(): void {
-    this.titleService.setBookEdit();
   }
 
   public async submit(): Promise<void> {
     try {
       const data = Object.assign(this.book, this.form.value) as Book;
 
-      data.done = data.doneUnits;
+      if (data.doneUnits) {
+        data.done = data.doneUnits;
+      }
 
       data.modifyDate = DateUtils.nowUTC;
 
@@ -142,6 +148,10 @@ export class BookEditViewComponent implements OnInit {
       }
 
       await this.bookService.saveOrUpdate(data);
+
+      if (data.collectionGuid) {
+        await this.collectionService.updateModifyTime(data.collectionGuid);
+      }
 
       if (this.action === Action.Create) {
         await this.redirect();
@@ -178,7 +188,7 @@ export class BookEditViewComponent implements OnInit {
     this.authors = this.sortAuthorsByCount(books);
     this.tags = this.sortTagsByCount(books);
 
-    this._series = _(series).orderBy(item => item.name).toArray();
+    this._series = series;
   }
 
   private readAction(action: Action): void {
@@ -225,6 +235,8 @@ export class BookEditViewComponent implements OnInit {
   }
 
   private formFromBook(book: Book): void {
+    const progressType = this.action === Action.Create ? ProgressAlgorithmSolver.getAlgorithm(this.book.type) : this.book.progressType;
+
     this.form = new FormBuilder().group({
       name: new FormControl(book.name, [Validators.required]),
       year: new FormControl(book.year),
@@ -240,7 +252,9 @@ export class BookEditViewComponent implements OnInit {
       authors: new FormControl(book.authors),
       tags: new FormControl(book.tags),
       note: new FormControl(book.note),
-      progressType: new FormControl(this.book.progressType || this.progressAlgorithmPreference || ProgressAlgorithmType.Done),
+      progressType: new FormControl(progressType),
+    }, {
+      validators: [this.pagesValidator, this.datesValidator]
     });
 
     this._filteredGenres = this.form.get('genre').valueChanges.pipe(
@@ -251,6 +265,8 @@ export class BookEditViewComponent implements OnInit {
     this.form.get('progressType').valueChanges.subscribe(v => this.progressAlgorithmPreference = v);
 
     this.form.get('status').valueChanges.subscribe(status => this.onStatusChange(status));
+
+    this.form.get('type').valueChanges.subscribe(() => this.onTypeChange());
   }
 
   private onStatusChange(status: BookStatus): void {
@@ -274,5 +290,34 @@ export class BookEditViewComponent implements OnInit {
       const total = this.form.get('totalUnits').value;
       this.form.get('doneUnits').setValue(total);
     }
+  }
+
+  private onTypeChange(): void {
+    this.form.get('progressType').setValue(this.progressAlgorithmPreference);
+  }
+
+  public pagesValidator(formGroup: FormGroup): ValidationErrors | null {
+    const doneUnits = formGroup.get('doneUnits').value as number;
+    const totalUnits = formGroup.get('totalUnits').value as number;
+
+    const status = formGroup.get('status').value as BookStatus;
+
+    return (doneUnits > totalUnits) && (status === BookStatus.InProgress) ? {
+      invalidUnits: true
+    } : null;
+  }
+
+  public datesValidator(formGroup: FormGroup): ValidationErrors | null {
+    const started = formGroup.get('started').value as BookDate;
+    const finished = formGroup.get('finished').value as BookDate;
+
+    const status = formGroup.get('status').value as BookStatus;
+
+    const startDate = new Date(started.year, started.month, started.day);
+    const endDate = new Date(finished.year, finished.month, finished.day);
+
+    return (startDate > endDate) && (status === BookStatus.Done) ? {
+      invalidDates: true
+    } : null;
   }
 }

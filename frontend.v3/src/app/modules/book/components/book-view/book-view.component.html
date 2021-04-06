@@ -91,7 +91,24 @@
   <label>Заметки</label>
 </div>
 
-<button class="w-100 edit-button" [routerLink]="['/book/edit', book.guid]" mat-flat-button color="primary" >
+<button *ngIf="book.status == BookStatus.Done"
+        class="w-100 edit-button"
+        [routerLink]="['/book/reread', book.guid]"
+        mat-flat-button color="accent"
+>
+  Перечитать
+</button>
+
+<button class="w-100 edit-button"
+        [routerLink]="['/book/edit', book.guid]"
+        mat-flat-button color="primary"
+>
   Редактировать
 </button>
-<button class="w-100" mat-flat-button color="warn"  (click)="openDeleteDialog(book)">Удалить</button>
+
+<button class="w-100"
+        mat-flat-button color="warn"
+        (click)="openDeleteDialog(book)"
+>
+  Удалить
+</button>

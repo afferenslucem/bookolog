@@ -13,6 +13,8 @@ interface CollectionInfo {
   guid: string;
   shouldSync: number;
   count: number;
+  modifyDate: Date;
+  createDate: Date;
 }
 
 interface BookCollection {
@@ -45,6 +47,8 @@ export class CollectionListComponent implements OnInit {
             guid: item.collection.guid,
             shouldSync: item.collection.shouldSync,
             count: item.booksForCollection.count(),
+            modifyDate: item.collection.modifyDate,
+            createDate: item.collection.createDate,
           }));
 
         return this.sortCollection(result).toArray();
@@ -53,8 +57,10 @@ export class CollectionListComponent implements OnInit {
   }
 
   public countBooksForCollection(books: Book[], collections: Collection[]): ISequence<BookCollection> {
+    const distinctBooks = _(books).where(item => item.rereadingBookGuid == null).toArray();
+
     return _(collections)
-      .groupJoin(books,
+      .groupJoin(distinctBooks,
         collection => collection.guid,
         book => book.collectionGuid,
         (collection, booksForCollection) => ({
@@ -77,7 +83,9 @@ export class CollectionListComponent implements OnInit {
   }
 
   public sortCollection(collections: ISequence<CollectionInfo>): ISequence<CollectionInfo> {
-    return collections.orderByDescending(item => item.count).thenBy(item => item.name);
+    return collections
+      .orderByDescending(item => item.modifyDate)
+      .thenByDescending(item => item.createDate);
   }
 
   ngOnInit(): void {

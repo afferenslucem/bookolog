@@ -24,5 +24,6 @@ export class BookFilteredComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filter$.subscribe();
   }
 }

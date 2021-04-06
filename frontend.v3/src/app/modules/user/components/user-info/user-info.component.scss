@@ -80,4 +80,8 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+
+  &_value {
+    padding-right: $ind-1;
+  }
 }

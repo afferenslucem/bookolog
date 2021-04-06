@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using backend.v2.Exceptions;
 using backend.v2.Models;
 using backend.v2.Authentication.Models;
+using backend.v2.Exceptions.BookExceptions;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -57,6 +58,7 @@ namespace backend.v2.Controllers
         [Route("[action]")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Update([FromBody]T model) {
             try
@@ -65,6 +67,12 @@ namespace backend.v2.Controllers
                 var book = await this.entityService.Update(model);
 
                 return Ok(book);
+            }
+            catch (EntityAccessDeniedException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex.Message, ex, model);
+
+                return StatusCode(403, ex.Message);
             }
             catch (BookologException ex)
             {
@@ -84,6 +92,7 @@ namespace backend.v2.Controllers
         [Route("[action]/{guid:guid}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Delete(Guid guid) {
             try
@@ -93,6 +102,12 @@ namespace backend.v2.Controllers
                 var entity = await this.entityService.Delete(guid);
 
                 return Ok(entity);
+            }
+            catch (EntityAccessDeniedException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex.Message, ex, guid);
+
+                return StatusCode(403, ex.Message);
             }
             catch (BookologException ex)
             {
@@ -155,6 +170,7 @@ namespace backend.v2.Controllers
         [Route("[action]")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Synchronize([FromBody]SyncData<T> data) {
             try
@@ -169,6 +185,12 @@ namespace backend.v2.Controllers
                 this.session.UpdateLastSyncTime();
 
                 return Ok(answer);
+            }
+            catch (EntityAccessDeniedException ex)
+            {
+                this.logger.LogError((int)ex.Code, ex.Message, ex, data);
+
+                return StatusCode(403, ex.Message);
             }
             catch (BookologException ex)
             {

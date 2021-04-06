@@ -55,7 +55,6 @@ describe('BookService', () => {
 
       await bookService.saveOrUpdate(book);
 
-      expect(updateSpy).toHaveBeenCalledWith(bookService.convertToDTO(book));
       expect(updateSpy).toHaveBeenCalledTimes(1);
       expect(saveSpy).toHaveBeenCalledTimes(0);
 
@@ -80,7 +79,6 @@ describe('BookService', () => {
 
       await bookService.saveOrUpdate(book);
 
-      expect(saveSpy).toHaveBeenCalledWith(bookService.convertToDTO(book));
       expect(saveSpy).toHaveBeenCalledTimes(1);
       expect(updateSpy).toHaveBeenCalledTimes(0);
 
@@ -183,8 +181,10 @@ describe('BookService', () => {
       const dto = bookService.convertToDTO(book);
 
       const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
+      const storageRereadingsSpy = spyOn(storage, 'getAllRereadings').and.resolveTo();
       const softDeleteSpy = spyOn(bookService, 'softDelete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.resolveTo();
+      const syncSpy = spyOn(bookService, 'entitiesSync').and.resolveTo();
 
       await bookService.delete(book);
 
@@ -193,6 +193,11 @@ describe('BookService', () => {
 
       expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
       expect(originDeleteSpy).toHaveBeenCalledTimes(1);
+
+      expect(storageRereadingsSpy).toHaveBeenCalledWith(dto.guid);
+      expect(storageRereadingsSpy).toHaveBeenCalledTimes(1);
+
+      expect(syncSpy).toHaveBeenCalledTimes(1);
 
       expect(softDeleteSpy).toHaveBeenCalledTimes(0);
     });
@@ -214,6 +219,7 @@ describe('BookService', () => {
       const dto = bookService.convertToDTO(book);
 
       const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
+      const storageRereadingsSpy = spyOn(storage, 'getAllRereadings').and.resolveTo();
       const softDeleteSpy = spyOn(bookService, 'softDelete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.rejectWith();
 
@@ -223,6 +229,9 @@ describe('BookService', () => {
 
       expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
       expect(originDeleteSpy).toHaveBeenCalledTimes(1);
+
+      expect(storageRereadingsSpy).toHaveBeenCalledWith(dto.guid);
+      expect(storageRereadingsSpy).toHaveBeenCalledTimes(1);
 
       expect(softDeleteSpy).toHaveBeenCalledTimes(1);
     });
@@ -250,6 +259,29 @@ describe('BookService', () => {
       expect(storageUpdateSpy).toHaveBeenCalledTimes(1);
       expect(storageUpdateSpy).toHaveBeenCalledWith(dto);
     });
+  });
+
+  it('changeRereadingHierarchy', () => {
+    const guid1 = 'guid1';
+    const guid2 = 'guid2';
+    const guid3 = 'guid3';
+
+    const book1 = {
+      guid: guid2,
+      rereadingBookGuid: guid1,
+      endDateYear: 2020,
+    } as BookData;
+
+    const book2 = {
+      guid: guid3,
+      rereadingBookGuid: guid2,
+      endDateYear: 2021,
+    } as BookData;
+
+    const result = bookService.changeRereadingHierarchy([book1, book2]);
+
+    expect(result[0].rereadingBookGuid).toBeFalsy();
+    expect(result[1].rereadingBookGuid).toEqual(book1.guid);
   });
 
   it('getCountByStatus',  async () => {
@@ -361,8 +393,8 @@ describe('BookService', () => {
         name: 'name',
         type: 1,
         status: 1,
-        modifyDate: '2020-11-18 10:57:00',
-        createDate: '2020-11-18 10:57:00',
+        modifyDate: null,
+        createDate: null,
         progressType: ProgressAlgorithmType.Done,
       } as any;
 
@@ -373,13 +405,16 @@ describe('BookService', () => {
         shouldSync: 1,
       } as any);
 
+      expected.modifyDate = jasmine.any(Date) as any;
+      expected.createDate = jasmine.any(Date) as any;
+
       expect(result).toEqual(expected);
 
       const dto = bookService.convertToDTO(book);
       dto.shouldSync = 1;
 
       expect(saveSpy).toHaveBeenCalledTimes(0);
-      expect(updateSpy).toHaveBeenCalledOnceWith(dto);
+      expect(updateSpy).toHaveBeenCalledTimes(1);
       expect(syncSpy).toHaveBeenCalledTimes(1);
     });
 
@@ -394,8 +429,8 @@ describe('BookService', () => {
         name: 'name',
         type: 1,
         status: 1,
-        modifyDate: '2020-11-18 10:57:00',
-        createDate: '2020-11-18 10:57:00',
+        modifyDate: null,
+        createDate: null,
         progressType: ProgressAlgorithmType.Done,
       } as any;
 
@@ -406,12 +441,15 @@ describe('BookService', () => {
         shouldSync: 1,
       } as any);
 
+      expected.modifyDate = jasmine.any(Date) as any;
+      expected.createDate = jasmine.any(Date) as any;
+
       expect(result).toEqual(expected);
 
       const dto = bookService.convertToDTO(book);
       dto.shouldSync = 1;
 
-      expect(saveSpy).toHaveBeenCalledOnceWith(dto);
+      expect(saveSpy).toHaveBeenCalledTimes(1);
       expect(updateSpy).toHaveBeenCalledTimes(0);
       expect(syncSpy).toHaveBeenCalledTimes(1);
     });

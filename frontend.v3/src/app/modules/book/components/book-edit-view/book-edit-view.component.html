@@ -77,10 +77,9 @@
   <div class="book-edit__progress" [ngSwitch]="type" [hidden]="status !== BookStatus.InProgress">
     <div class="book-edit__progress_audio" *ngSwitchCase="BookType.Audio">
       <div>
-        <mat-label>Прослушано</mat-label>
+        <mat-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</mat-label>
         <app-book-time-input formControlName="doneUnits"></app-book-time-input>
       </div>
-
       <div>
         <mat-label>Всего</mat-label>
         <app-book-time-input formControlName="totalUnits"></app-book-time-input>
@@ -97,6 +96,10 @@
         <input matInput type="number" formControlName="totalUnits" min="0" step="1" max="6000" autocomplete="off"/>
       </mat-form-field>
     </div>
+
+    <mat-error *ngIf="form?.errors?.invalidUnits">
+      Неверно указан прогресс
+    </mat-error>
   </div>
 
   <div [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
@@ -108,6 +111,10 @@
     <mat-label>Окончание чтения</mat-label>
     <app-book-date-input formControlName="finished"></app-book-date-input>
   </div>
+
+  <mat-error *ngIf="form?.errors?.invalidDates">
+    Дата начала больше даты окончания
+  </mat-error>
 
   <mat-form-field appearance="fill">
     <mat-label>Заметки</mat-label>

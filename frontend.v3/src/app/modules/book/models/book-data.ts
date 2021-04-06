@@ -25,4 +25,6 @@ export interface BookData extends IDeletable, IUpdatable, IEntity {
   type: number;
   note?: string;
   progressType?: ProgressAlgorithmType;
+  rereadingBookGuid?: string;
+  rereadedBy?: string[];
 }

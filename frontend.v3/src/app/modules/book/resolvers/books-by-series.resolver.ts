@@ -3,6 +3,8 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { getConsoleLogger } from '../../../main/app.logging';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
+import _ from 'declarray';
+import {EntityComparer} from "../../../main/utils/entity.comparer";
 
 @Injectable({providedIn: 'root'})
 export class BooksBySeriesResolver implements Resolve<Book[]> {
@@ -19,6 +21,6 @@ export class BooksBySeriesResolver implements Resolve<Book[]> {
 
     const books = await this.bookService.getByCollection(seriesGuid);
 
-    return books;
+    return _(books).where(item => item.rereadingBookGuid == null).toArray();
   }
 }

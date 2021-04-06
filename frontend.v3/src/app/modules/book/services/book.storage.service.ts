@@ -106,6 +106,20 @@ export class BookStorageService extends EntityStorage<BookData> {
     }
   }
 
+  public async getAllRereadings(guid: string): Promise<BookData[]> {
+    try {
+      this.preloaderService.show();
+
+      await this.indexedDb.open(this.dbName);
+      const data: any = await this.indexedDb.allWithProperty(this.booksStore, 'rereadingBookGuid', guid);
+
+      return data.target.result;
+    } finally {
+      this.indexedDb.close();
+      this.preloaderService.hide();
+    }
+  }
+
   public async getDeleted(): Promise<BookData[]> {
     try {
       this.preloaderService.show();

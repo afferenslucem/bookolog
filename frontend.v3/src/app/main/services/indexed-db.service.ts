@@ -9,7 +9,7 @@ export class IndexedDbService {
     loggerName: 'IndexedDb',
     namespace: 'Storage',
   });
-  private readonly version = 6;
+  private readonly version = 7;
   private readonly indexedDB = window.indexedDB;
   private database: IDBDatabase;
 
@@ -244,6 +244,11 @@ export class IndexedDbService {
     if (dbEvent.oldVersion < 6) {
       const objectStore = upgradeTransaction.objectStore('BooksStore');
       objectStore.createIndex('endDateYear', 'endDateYear', {unique: false});
+    }
+
+    if (dbEvent.oldVersion < 7) {
+      const objectStore = upgradeTransaction.objectStore('BooksStore');
+      objectStore.createIndex('rereadingBookGuid', 'rereadingBookGuid', {unique: false});
     }
   }
 

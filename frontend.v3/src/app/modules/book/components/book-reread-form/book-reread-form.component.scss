@@ -1,0 +1,16 @@
+
+
+.book-reread {
+  &__progress {
+    &_audio {
+      display: flex;
+
+      justify-content: space-between;
+
+      > * {
+        flex: 0 0 47.5%;
+        width: 47.5%;
+      }
+    }
+  }
+}

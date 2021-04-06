@@ -77,6 +77,7 @@ namespace backend.v2.Migrations
                         .HasColumnType("timestamptz");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("varchar(512)");
 
                     b.Property<string>("Note")
@@ -84,6 +85,9 @@ namespace backend.v2.Migrations
 
                     b.Property<string>("ProgressType")
                         .HasColumnType("varchar(16)");
+
+                    b.Property<Guid?>("RereadingBookGuid")
+                        .HasColumnType("uuid");
 
                     b.Property<short?>("StartDateDay")
                         .HasColumnType("smallint");
@@ -115,6 +119,8 @@ namespace backend.v2.Migrations
                     b.HasKey("Guid");
 
                     b.HasIndex("CollectionGuid");
+
+                    b.HasIndex("RereadingBookGuid");
 
                     b.HasIndex("UserId");
 
@@ -218,6 +224,11 @@ namespace backend.v2.Migrations
                     b.HasOne("backend.v2.Models.Collection", "Collection")
                         .WithMany("Books")
                         .HasForeignKey("CollectionGuid")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("backend.v2.Models.Book", "RereadingBook")
+                        .WithMany("RereadedByBooks")
+                        .HasForeignKey("RereadingBookGuid")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("backend.v2.Models.User", "User")

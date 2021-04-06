@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using backend.v2.Authentication.Models;
+using backend.v2.Models.Authentication;
 using backend.v2.Services;
 
 namespace backend.v2.Authentication.Services
@@ -16,6 +17,7 @@ namespace backend.v2.Authentication.Services
         private readonly IJWTTokenManager tokenManager;
         private readonly IUserSession userSession;
         private readonly IUserService userService;
+        private readonly ISessionService sessionService;
 
         public JWTAuthenticationHandler(
             IOptionsMonitor<JWTAuthenticationOptions> options,
@@ -25,13 +27,15 @@ namespace backend.v2.Authentication.Services
             IAuthenticationService authenticationService,
             IUserSession userSession,
             IUserService userService,
+            ISessionService sessionService,
             IJWTTokenManager tokenManager,
             ILogger<JWTAuthenticationService> jwtLogger
         ) : base(options, logger, encoder, clock)
         {
-            this.tokenManager = tokenManager;
             this.userSession = userSession;
             this.userService = userService;
+            this.tokenManager = tokenManager;
+            this.sessionService = sessionService;
             this.authenticationService = authenticationService;
         }
         
@@ -73,6 +77,8 @@ namespace backend.v2.Authentication.Services
                 else {
                     this.CopyTokens();
                 }
+
+                await this.CheckSession(accessTokenData.SessionGuid);
 
                 var ticket = await this.Authenticate(accessTokenData);
 
@@ -140,10 +146,23 @@ namespace backend.v2.Authentication.Services
             Context.Response.Headers.Remove(JWTDefaults.AccessHeaderName);
             Context.Response.Headers.Remove(JWTDefaults.RefreshHeaderName);
         }
+        
         public virtual void AppendTokens(string access, string refresh)
         {
             Context.Response.Headers[JWTDefaults.AccessHeaderName] = access;
             Context.Response.Headers[JWTDefaults.RefreshHeaderName] = refresh;
+        }
+
+        public virtual async Task CheckSession(Guid guid)
+        {
+            var session = await this.sessionService.Get(guid);
+
+            if (session == null)
+            {
+                throw new Exception("Could not find session");
+            }
+
+            this.userSession.Session = session;
         }
     }
 }

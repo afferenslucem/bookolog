@@ -1,8 +1,8 @@
 import { IEqualityComparer } from 'declarray';
 
 export class StringComparer implements IEqualityComparer<string>{
-  public equal(first: string, seconds: string): boolean {
-    return first.toUpperCase() === seconds.toUpperCase();
+  public equal(first: string, second: string): boolean {
+    return first.toUpperCase() === second.toUpperCase();
   }
 
   public getHashCode(object: string): string | number {

@@ -12,6 +12,7 @@ import { BookResolver } from './resolvers/book.resolver';
 import { DoneBooksResolver } from './resolvers/done-books.resolver';
 import { InProgressBooksResolver } from './resolvers/in-progress-books.resolver';
 import { ToReadBooksResolver } from './resolvers/to-read-books.resolver';
+import {BookRereadFormComponent} from "./components/book-reread-form/book-reread-form.component";
 
 export const routes: Routes = [
   {
@@ -75,5 +76,13 @@ export const routes: Routes = [
     data: {
       action: Action.Create
     }
+  },
+  {
+    component: BookRereadFormComponent,
+    path: 'book/reread/:guid',
+    pathMatch: 'full',
+    resolve: {
+      book: BookResolver,
+    },
   },
 ];

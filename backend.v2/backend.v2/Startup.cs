@@ -11,8 +11,7 @@ using backend.v2.Storages;
 using backend.v2.Authentication.Models;
 using backend.v2.Authentication.Services;
 using backend.v2.Configuration.Middlewares;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
+using backend.v2.Configuration.RequestFormatters;
 
 namespace backend.v2
 {
@@ -37,8 +36,9 @@ namespace backend.v2
             .AddAuthentication(JWTDefaults.AuthenticationScheme)
             .AddJWT<JWTAuthenticationService>();
 
+            services.AddMvc(o => o.InputFormatters.Insert(0, new RawRequestBodyFormatter()));
             services.ConfigureFormOptions();
-
+            
             services.ConfigureCookiesPolicy();
 
             services
@@ -70,7 +70,7 @@ namespace backend.v2
             app.UseNoSniffProtection();
             app.UseDenyFrameProtection();
 
-            app.UseAuthentication();
+            app.UseAuthentication();           
             app.UseMiddleware<SessionMiddleware>();
             app.UseAuthorization();
 

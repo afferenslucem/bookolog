@@ -5,6 +5,7 @@ import { IEntity } from '../models/i-entity';
 import { SyncData } from '../models/sync-data';
 import { EntityStorage } from './entity.storage';
 import { ISyncableOrigin } from './i-syncable-origin';
+import { DateUtils } from '../utils/date-utils';
 
 export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity> {
   public constructor(protected storage: EntityStorage<TDTO>, protected origin: ISyncableOrigin<TDTO>) {
@@ -37,6 +38,7 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     try {
       await this.origin.delete(entity.guid);
       await this.storage.delete(entity.guid);
+      await this.entitiesSync();
     } catch (e) {
       await this.softDelete(entity);
       throw e;
@@ -52,9 +54,11 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     book.shouldSync = 1;
     const dto = this.convertToDTO(book);
 
+    dto.modifyDate = this.getNowUTC();
     if (book.guid) {
       await this.storage.update(dto);
     } else {
+      dto.createDate = this.getNowUTC();
       await this.storage.save(dto);
     }
 
@@ -152,5 +156,9 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     const temp = format(new Date(date), 'yyyy-MM-dd HH:mm:ss');
 
     return `${temp.slice(0, 10)}T${temp.slice(11, 19)}`;
+  }
+
+  public getNowUTC(): Date {
+    return DateUtils.nowUTC;
   }
 }

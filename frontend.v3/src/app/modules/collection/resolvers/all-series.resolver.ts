@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { getConsoleLogger } from '../../../main/app.logging';
 import { Collection } from '../models/collection';
 import { CollectionService } from '../services/collection.service';
+import _ from 'declarray';
 
 @Injectable({providedIn: 'root'})
 export class AllSeriesResolver implements Resolve<Collection[]> {
@@ -19,6 +20,9 @@ export class AllSeriesResolver implements Resolve<Collection[]> {
 
     this.logger.debug('Series result: ', result);
 
-    return result;
+    return _(result)
+      .orderByDescending(item => item.modifyDate || -1)
+      .thenByDescending(item => item.createDate || -1)
+      .toArray();
   }
 }

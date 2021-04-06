@@ -25,6 +25,8 @@ export class Book extends Entity {
   public type: BookType;
   public note?: string;
   public progressType: ProgressAlgorithmType;
+  public rereadingBookGuid?: string;
+  public rereadedBy: string[];
 
   public get done(): number {
     if (this.progressType === ProgressAlgorithmType.Left) {
@@ -78,6 +80,8 @@ export class Book extends Entity {
     this.type = data.type;
     this.note = data.note;
     this.progressType = data.progressType || ProgressAlgorithmType.Done;
+    this.rereadingBookGuid = data.rereadingBookGuid || null;
+    this.rereadedBy = data.rereadedBy || [];
   }
 
   private getDate(date: string | Date, bDate: BookDate): Date {

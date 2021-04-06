@@ -27,10 +27,11 @@ export class YearStatisticComponent implements OnInit {
     this.filter$ = route.params.pipe(
       map(data => data.filter),
       tap(data => this.title.setCustom(data)),
-    );
+    )
   }
 
   ngOnInit(): void {
+    this.filter$.subscribe();
   }
 
   public bookTrackBy(index: number, item: Book): string {

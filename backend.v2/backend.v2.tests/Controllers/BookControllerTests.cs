@@ -115,6 +115,20 @@ namespace backend.v2.tests.Controllers
         }
         
         [TestMethod]
+        public async Task UpdateShouldReturn403()
+        {
+            var book = new Book();
+            bookServiceMock.Setup(m => m.Update(It.IsAny<Book>())).ThrowsAsync(new EntityAccessDeniedException());
+            controllerMock.Setup(m => m.Ok(It.IsAny<Book>()));
+            controllerMock.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<object>()));
+
+            await controllerMock.Object.Update(book);
+            
+            bookServiceMock.Verify(m => m.Update(book), Times.Once());
+            controllerMock.Setup(m => m.StatusCode(403, It.IsAny<object>()));
+        }
+        
+        [TestMethod]
         public async Task UpdateShouldReturn500()
         {
             var book = new Book();
@@ -156,6 +170,20 @@ namespace backend.v2.tests.Controllers
             
             bookServiceMock.Verify(m => m.Delete(guid), Times.Once());
             controllerMock.Verify(m => m.StatusCode(400, It.IsAny<object>()), Times.Once());
+        }
+        
+        [TestMethod]
+        public async Task DeleteShouldReturn403()
+        {
+            var book = new Book();
+            bookServiceMock.Setup(m => m.Delete(It.IsAny<Guid>())).ThrowsAsync(new EntityAccessDeniedException());
+            controllerMock.Setup(m => m.Ok(It.IsAny<Book>()));
+            controllerMock.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<object>()));
+
+            await controllerMock.Object.Update(book);
+            
+            bookServiceMock.Verify(m => m.Update(book), Times.Once());
+            controllerMock.Setup(m => m.StatusCode(403, It.IsAny<object>()));
         }
         
         [TestMethod]
@@ -300,6 +328,24 @@ namespace backend.v2.tests.Controllers
             bookServiceMock.Verify(m => m.Synch(data), Times.Once());
             sessionMock.Verify(m => m.UpdateLastSyncTime(), Times.Never());
             controllerMock.Verify(m => m.StatusCode(400, It.IsAny<object>()));
+        }
+        
+        [TestMethod]
+        public async Task SyncShouldReturn403()
+        {
+            var data = new SyncData<Book>
+            {
+                Update = new Book[] { },
+                Delete = new Guid[] { },
+            };
+            
+            bookServiceMock.Setup(m => m.Synch(It.IsAny<SyncData<Book>>())).ThrowsAsync(new EntityAccessDeniedException());
+            controllerMock.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<object>()));
+
+            await controllerMock.Object.Synchronize(data);
+            
+            bookServiceMock.Verify(m => m.Synch(data), Times.Once());
+            controllerMock.Verify(m => m.StatusCode(403, It.IsAny<object>()));
         }
         
         [TestMethod]

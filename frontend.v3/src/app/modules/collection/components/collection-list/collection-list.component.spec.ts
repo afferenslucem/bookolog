@@ -126,15 +126,18 @@ describe('CollectionListComponent', () => {
       _([{
         guid: 'id3',
         count: 3,
+        modifyDate: 'date3',
       }, {
         guid: 'id2',
         count: 4,
+        modifyDate: 'date2',
       }, {
         guid: 'id5',
         count: 0,
+        createDate: 'date3',
       }] as any)).select(item => item.guid).toArray();
 
-    expect(result).toEqual(['id2', 'id3', 'id5']);
+    expect(result).toEqual(['id3', 'id2', 'id5']);
   });
 
   it('titleCheck', () => {

@@ -124,11 +124,11 @@ describe('UserOriginService', () => {
   });
 
   it('changeEmail', async () => {
-    const getSpy = spyOn(client, 'get').and.returnValue(of(null));
+    const getSpy = spyOn(client, 'post').and.returnValue(of(null));
 
     await origin.changeEmail('alexshakirov74@gmail.com');
 
-    expect(getSpy).toHaveBeenCalledOnceWith('/user/changeEmail/alexshakirov74@gmail.com');
+    expect(getSpy).toHaveBeenCalledOnceWith('/user/changeEmail', 'alexshakirov74@gmail.com', jasmine.any(Object));
   });
 
   it('synchronize', async () => {
