@@ -9,6 +9,7 @@ import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
 import { BookService } from '../../services/book.service';
 import { BookDeleteDialogComponent, DeleteDialogResult } from '../book-delete-dialog/book-delete-dialog.component';
+import _ from 'declarray';
 
 @Component({
   selector: 'app-book-view',
@@ -18,7 +19,7 @@ import { BookDeleteDialogComponent, DeleteDialogResult } from '../book-delete-di
 })
 export class BookViewComponent implements OnInit, OnDestroy {
   public book: Book;
-  public readings: Book[];
+  public doneReadings: Book[];
 
   public BookType: typeof BookType = BookType;
 
@@ -35,7 +36,7 @@ export class BookViewComponent implements OnInit, OnDestroy {
 
     activatedRoute.data.subscribe(data => {
       this.book = data.book;
-      this.readings = data.readings;
+      this.doneReadings = _(data.readings as Book[]).where((item: Book) => item.status === BookStatus.Done).toArray();
     });
   }
 
