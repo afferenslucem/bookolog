@@ -8,7 +8,6 @@ import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import { BookOriginService } from './book.origin.service';
 import { BookStorageService } from './book.storage.service';
-import {EntityComparer} from "../../../main/utils/entity.comparer";
 
 @Injectable({
   providedIn: 'root',
@@ -44,20 +43,18 @@ export class BookService extends EntityService<BookData, Book> {
   }
 
   public async saveRereading(book: Book): Promise<Book> {
-    try {
-      const original = await super.getByGuid(book.rereadingBookGuid);
-      book = await super.saveOrUpdate(book);
+      const original = await this.getByGuid(book.rereadingBookGuid);
+
+      if (original.rereadingBookGuid) {
+        book.rereadingBookGuid = original.rereadingBookGuid;
+      }
+
+      book = await this.saveOrUpdate(book);
 
       original.rereadedBy.push(book.guid);
-      await super.saveOrUpdate(book);
+      await this.saveOrUpdate(original);
 
       return book;
-    } catch (e) {
-      this.logger.warn('error sync', e);
-      this.notificationService.createWarningNotification('Книга сохранена локально');
-    }
-
-    return book;
   }
 
   public async deleteBooksFromCollection(guid: string): Promise<void> {

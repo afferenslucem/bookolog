@@ -577,4 +577,54 @@ describe('BookService', () => {
 
     expect(byCollectionSpy).toHaveBeenCalledOnceWith('id1');
   });
+
+  describe('saveRereading', () => {
+    it('shoold save sample rereading', async () => {
+      const original = {
+        rereadingBookGuid: undefined,
+        rereadedBy: [],
+        modifyDate: null,
+        createDate: null,
+      } as Book;
+
+      const book = {
+        guid: 'guid',
+        rereadedBy: [],
+        modifyDate: null,
+        createDate: null,
+      } as Book;
+
+      const byGuidSpy = spyOn(bookService, 'getByGuid').and.resolveTo(original);
+      const saveSpy = spyOn(bookService, 'saveOrUpdate').and.resolveTo(book);
+
+      await bookService.saveRereading(book);
+
+      expect(byGuidSpy).toHaveBeenCalledTimes(1);
+      expect(saveSpy).toHaveBeenCalledTimes(2);
+      expect(saveSpy).toHaveBeenCalledWith(book);
+      expect(original.rereadedBy).toEqual([book.guid]);
+    });
+
+    it('shoold change rereading id', async () => {
+      const original = {
+        rereadingBookGuid: 'guid2',
+        rereadedBy: [],
+        modifyDate: null,
+        createDate: null,
+      } as Book;
+
+      const book = {
+        guid: 'guid',
+        rereadedBy: [],
+        modifyDate: null,
+        createDate: null,
+      } as Book;
+
+      const saveSpy = spyOn(bookService, 'saveOrUpdate').and.resolveTo(book);
+      const byGuidSpy = spyOn(bookService, 'getByGuid').and.resolveTo(original);
+
+      await bookService.saveRereading(book);
+      expect(book.rereadingBookGuid).toEqual(original.rereadingBookGuid);
+    });
+  });
 });
