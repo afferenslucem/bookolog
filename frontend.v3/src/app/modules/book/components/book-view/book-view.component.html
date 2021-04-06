@@ -70,14 +70,14 @@
   <label >Прогресс</label>
 </div>
 
-<div class="book__start-date property" *ngIf="book.startDate">
+<div class="book__start-date property" *ngIf="book.startDate && book.status !== BookStatus.ToRead">
   <div class="property__value">
     {{book.startDate | date: 'shortDate'}}
   </div>
   <label >Начата</label>
 </div>
 
-<div class="book__end-date property" *ngIf="book.endDate">
+<div class="book__end-date property" *ngIf="book.endDate && book.status === BookStatus.Done">
   <div class="property__value">
     {{book.endDate | date: 'shortDate'}}
   </div>

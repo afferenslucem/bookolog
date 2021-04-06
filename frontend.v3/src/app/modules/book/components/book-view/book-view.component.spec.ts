@@ -263,9 +263,20 @@ describe('BookViewComponent', () => {
     });
 
     describe('Start Date', () => {
-      it('should render', () => {
+      it('should render for done book', () => {
         component.book = new Book({
           startDate: new Date('2020-01-02'),
+          status: BookStatus.Done
+        } as any);
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLDivElement>('.book__start-date .property__value').innerText).toEqual('1/2/20');
+      });
+      it('should render for progress book', () => {
+        component.book = new Book({
+          startDate: new Date('2020-01-02'),
+          status: BookStatus.InProgress
         } as any);
 
         fixture.detectChanges();
@@ -273,7 +284,18 @@ describe('BookViewComponent', () => {
         expect(element.querySelector<HTMLDivElement>('.book__start-date .property__value').innerText).toEqual('1/2/20');
       });
 
-      it('should not render', () => {
+      it('should not render for to read book', () => {
+        component.book = new Book({
+          startDate: new Date('2020-01-02'),
+          status: BookStatus.ToRead
+        } as any);
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLDivElement>('.book__start-date')).toBeFalsy();
+      });
+
+      it('should not render for empty date', () => {
         component.book = new Book({
         } as any);
 
@@ -284,9 +306,10 @@ describe('BookViewComponent', () => {
     });
 
     describe('End Date', () => {
-      it('should render', () => {
+      it('should render for done book', () => {
         component.book = new Book({
           endDate: new Date('2020-01-02'),
+          status: BookStatus.Done
         } as any);
 
         fixture.detectChanges();
@@ -294,7 +317,29 @@ describe('BookViewComponent', () => {
         expect(element.querySelector<HTMLDivElement>('.book__end-date .property__value').innerText).toEqual('1/2/20');
       });
 
-      it('should not render', () => {
+      it('should not render for progress book', () => {
+        component.book = new Book({
+          endDate: new Date('2020-01-02'),
+          status: BookStatus.InProgress
+        } as any);
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLDivElement>('.book__end-date')).toBeFalsy();
+      });
+
+      it('should not render for to read book', () => {
+        component.book = new Book({
+          endDate: new Date('2020-01-02'),
+          status: BookStatus.ToRead
+        } as any);
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLDivElement>('.book__end-date')).toBeFalsy();
+      });
+
+      it('should not render for empty date', () => {
         component.book = new Book({
         } as any);
 
