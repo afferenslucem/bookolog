@@ -36,7 +36,7 @@ export class BookViewComponent implements OnInit, OnDestroy {
 
     activatedRoute.data.subscribe(data => {
       this.book = data.book;
-      this.doneReadings = _(data.readings as Book[]).where((item: Book) => item.status === BookStatus.Done).toArray();
+      this.doneReadings = _((data.readings as Book[]) || []).where((item: Book) => item.status === BookStatus.Done).toArray();
     });
   }
 
