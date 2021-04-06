@@ -627,4 +627,73 @@ describe('BookService', () => {
       expect(book.rereadingBookGuid).toEqual(original.rereadingBookGuid);
     });
   });
+
+  describe('findFirstReadingOfBook', () => {
+    it('should return first', async () => {
+      const original = {
+        rereadingBookGuid: undefined,
+        rereadedBy: [],
+        modifyDate: null,
+        createDate: null,
+      } as Book;
+
+      const byGuidSpy = spyOn(bookService, 'getByGuid').and.resolveTo(original);
+
+      // @ts-ignore
+      const result = await bookService.findFirstReadingOfBook('guid');
+
+      expect(result).toEqual(original);
+      expect(byGuidSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return next', async () => {
+      const book = {
+        rereadingBookGuid: 'guid2',
+        rereadedBy: [],
+        modifyDate: null,
+        createDate: null,
+      } as Book;
+
+      const original = {
+        rereadingBookGuid: null,
+        rereadedBy: [],
+        modifyDate: null,
+        createDate: null,
+      } as Book;
+
+      const byGuidSpy = spyOn(bookService, 'getByGuid').and.returnValues(Promise.resolve(book), Promise.resolve(original));
+
+      // @ts-ignore
+      const result = await bookService.findFirstReadingOfBook('guid');
+
+      expect(result).toEqual(original);
+      expect(byGuidSpy).toHaveBeenCalledWith('guid');
+      expect(byGuidSpy).toHaveBeenCalledWith('guid2');
+      expect(byGuidSpy).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  it('getAllReadings', async () => {
+    const first = {
+      guid: 'guid',
+    } as Book;
+
+    const rereadings = [{
+      guid: 'guid2',
+    } as Book, {
+      guid: 'guid3',
+    } as Book, ] as Book[];
+
+    // @ts-ignore
+    const findFirstReadingOfBookSpy = spyOn(bookService, 'findFirstReadingOfBook').and.resolveTo(first);
+
+    // @ts-ignore
+    const findAllRereadingsOfBookSpy = spyOn(bookService, 'findAllRereadingsOfBook').and.resolveTo(rereadings);
+
+    const result = await bookService.getAllReadings('guid2');
+
+    expect(result).toEqual([first, ...rereadings]);
+    expect(findFirstReadingOfBookSpy).toHaveBeenCalledOnceWith('guid2');
+    expect(findAllRereadingsOfBookSpy).toHaveBeenCalledWith(first.guid);
+  });
 });

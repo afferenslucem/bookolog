@@ -70,6 +70,13 @@
   <label >Прогресс</label>
 </div>
 
+<div class="book__readings property" *ngIf="readings?.length > 1">
+  <div class="property__value">
+    {{readings.length}}
+  </div>
+  <label >Прочитана раз</label>
+</div>
+
 <div class="book__start-date property" *ngIf="book.startDate && book.status !== BookStatus.ToRead">
   <div class="property__value">
     {{book.startDate | date: 'shortDate'}}

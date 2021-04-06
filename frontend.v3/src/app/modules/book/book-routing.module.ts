@@ -13,6 +13,7 @@ import { DoneBooksResolver } from './resolvers/done-books.resolver';
 import { InProgressBooksResolver } from './resolvers/in-progress-books.resolver';
 import { ToReadBooksResolver } from './resolvers/to-read-books.resolver';
 import {BookRereadFormComponent} from "./components/book-reread-form/book-reread-form.component";
+import {BookReadingsResolver} from './resolvers/book-readings.resolver';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       book: BookResolver,
+      readings: BookReadingsResolver,
     },
     runGuardsAndResolvers: 'always'
   },

@@ -8,6 +8,7 @@ import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import { BookOriginService } from './book.origin.service';
 import { BookStorageService } from './book.storage.service';
+import {flatten} from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -93,6 +94,40 @@ export class BookService extends EntityService<BookData, Book> {
       .where(item => !item.deleted)
       .select(item => this.convertFromDTO(item))
       .toArray();
+  }
+
+  public async getAllReadings(guid: string): Promise<Book[]> {
+    const first = await this.findFirstReadingOfBook(guid);
+
+    const rereadings = await this.findAllRereadingsOfBook(first.guid);
+
+    return _(rereadings).prepend(first).toArray();
+  }
+
+  private async findFirstReadingOfBook(guid: string): Promise<Book> {
+    const result = await this.getByGuid(guid);
+
+    if (result.rereadingBookGuid) {
+      return await this.findFirstReadingOfBook(result.rereadingBookGuid);
+    } else {
+      return result;
+    }
+  }
+
+  private async findAllRereadingsOfBook(guid: string): Promise<Book[]> {
+    const rereadingsDTO = await this.typedStorage.getAllRereadings(guid);
+    const rereadings = this.convertFromDTOArray(rereadingsDTO);
+
+    if (rereadings.length === 0) {
+      return rereadings;
+    } else {
+      const requests = rereadings.map(item => this.findAllRereadingsOfBook(item.guid));
+
+      const resultDTO = await Promise.all(requests);
+      const result = _(resultDTO).selectMany(flatten);
+
+      return _(rereadings).concat(result).toArray();
+    }
   }
 
   public async delete(book: Book): Promise<void> {

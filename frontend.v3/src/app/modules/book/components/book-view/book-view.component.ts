@@ -18,6 +18,7 @@ import { BookDeleteDialogComponent, DeleteDialogResult } from '../book-delete-di
 })
 export class BookViewComponent implements OnInit, OnDestroy {
   public book: Book;
+  public readings: Book[];
 
   public BookType: typeof BookType = BookType;
 
@@ -31,7 +32,11 @@ export class BookViewComponent implements OnInit, OnDestroy {
               private bookService: BookService,
               private router: Router
   ) {
-    activatedRoute.data.subscribe(data => this.book = data.book);
+
+    activatedRoute.data.subscribe(data => {
+      this.book = data.book;
+      this.readings = data.readings;
+    });
   }
 
   ngOnDestroy(): void {
