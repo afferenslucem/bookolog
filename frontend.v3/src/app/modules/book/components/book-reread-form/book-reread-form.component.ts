@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { getConsoleLogger } from '../../../../main/app.logging';
-import { Action } from '../../../../main/resolvers/action.resolver';
-import { DateUtils } from '../../../../main/utils/date-utils';
-import { NotificationService } from '../../../notification/services/notification.service';
-import { TitleService } from '../../../ui/service/title.service';
-import { Book } from '../../models/book';
-import { BookData } from '../../models/book-data';
-import { BookStatus } from '../../models/book-status';
-import { BookType } from '../../models/book-type';
-import { BookService } from '../../services/book.service';
-import { Location } from '@angular/common';
-import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
-import { BookDate } from '../../models/book-date';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {getConsoleLogger} from '../../../../main/app.logging';
+import {Action} from '../../../../main/resolvers/action.resolver';
+import {DateUtils} from '../../../../main/utils/date-utils';
+import {NotificationService} from '../../../notification/services/notification.service';
+import {TitleService} from '../../../ui/service/title.service';
+import {Book} from '../../models/book';
+import {BookData} from '../../models/book-data';
+import {BookStatus} from '../../models/book-status';
+import {BookType} from '../../models/book-type';
+import {BookService} from '../../services/book.service';
+import {Location} from '@angular/common';
+import {ProgressAlgorithmType} from '../../models/progress-algorithm-type';
+import {BookDate} from '../../models/book-date';
+import {ProgressAlgorithmSolver} from '../../utils/progress-algorithm-solver';
 
 @Component({
   selector: 'app-book-reread-form',
@@ -67,6 +68,8 @@ export class BookRereadFormComponent implements OnInit {
     activatedRoute.data.subscribe(data => {
       this.book = data.book || new Book(this.defaultValue);
 
+      this.book.status = BookStatus.ToRead;
+
       this.formFromBook(this.book);
     });
   }
@@ -84,11 +87,7 @@ export class BookRereadFormComponent implements OnInit {
   }
 
   public get progressAlgorithmPreference(): ProgressAlgorithmType {
-    return localStorage.getItem('progressAlgorithmPreference') as ProgressAlgorithmType;
-  }
-
-  public set progressAlgorithmPreference(v: ProgressAlgorithmType) {
-    localStorage.setItem('progressAlgorithmPreference', v);
+    return ProgressAlgorithmSolver.getAlgorithm(this.type);
   }
 
   public ngOnInit(): void {
@@ -165,7 +164,11 @@ export class BookRereadFormComponent implements OnInit {
       validators: [this.datesValidator, this.pagesValidator]
     });
 
-    this.form.get('progressType').valueChanges.subscribe(v => this.progressAlgorithmPreference = v);
+    this.form.get('type').valueChanges.subscribe(() => this.onTypeChange());
+  }
+
+  private onTypeChange(): void {
+    this.form.get('progressType').setValue(this.progressAlgorithmPreference);
   }
 
   public pagesValidator(formGroup: FormGroup): ValidationErrors | null {
