@@ -12,7 +12,7 @@ export type ChangeDelegate<T> = (value: T) => void;
 export type TouchDelegate = (value: TouchEvent | MouseEvent) => void;
 
 export class ValueAccessorBase<T> implements ValueAccessor {
-  protected value: T = null;
+  public value: T = null;
 
   private changeListeners: ChangeDelegate<T>[] = [];
   private touchListeners: TouchDelegate[] = [];

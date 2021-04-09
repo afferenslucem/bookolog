@@ -1,16 +1,28 @@
 <form [formGroup]="form" (click)="emitTouch($event)">
-  <mat-form-field appearance="fill">
-    <mat-label >Год</mat-label>
-    <input matInput formControlName="year" type="number" min="1970" max="2030" step="1" autocomplete="off"/>
-  </mat-form-field>
+  <div class="date-input">
+    <mat-form-field appearance="fill">
+      <mat-label >Год</mat-label>
+      <input matInput formControlName="year" type="number" min="1970" [max]="maxYear" step="1" autocomplete="off"/>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label >Месяц</mat-label>
-    <input matInput formControlName="month" type="number" min="1" max="12" step="1" autocomplete="off"/>
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label >Месяц</mat-label>
+      <input matInput formControlName="month" type="number" min="1" max="12" step="1" autocomplete="off"/>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label >День</mat-label>
-    <input matInput formControlName="day" type="number" min="1" max="31" step="1" autocomplete="off"/>
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label >День</mat-label>
+      <input matInput formControlName="day" type="number" min="1" max="31" step="1" autocomplete="off"/>
+    </mat-form-field>
+  </div>
+
+  <div class="date-picker">
+    <mat-form-field class="date-picker__input" appearance="fill">
+      <input matInput [matDatepicker]="picker" [formControl]="dateControl">
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button class="date-picker__calendar-button" mat-raised-button color="accent" (click)="openPicker(picker)">
+      <mat-icon>event</mat-icon>
+    </button>
+  </div>
 </form>

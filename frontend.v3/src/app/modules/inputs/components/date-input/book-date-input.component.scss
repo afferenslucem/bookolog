@@ -1,10 +1,33 @@
-form {
+.date-input {
+  width: 77%;
+
   display: flex;
 
   justify-content: space-between;
 
   > * {
     flex: 0 0 30%;
-    width: 30%;
+    width: 30%
   }
+}
+
+.date-picker {
+  position: relative;
+
+  &__input {
+    display: block;
+    position: absolute;
+
+    height: 0;
+    width: 0;
+  }
+
+  &__calendar-button {
+    height: 60px;
+  }
+}
+
+form {
+  display: flex;
+  justify-content: space-between;
 }

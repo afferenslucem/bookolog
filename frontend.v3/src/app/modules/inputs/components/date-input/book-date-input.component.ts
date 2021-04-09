@@ -20,22 +20,54 @@ import { ValueAccessorBase } from '../value-accessor/value-accessor';
 })
 export class BookDateInputComponent extends ValueAccessorBase<BookDate> implements OnInit {
   public form: FormGroup = null;
+  public dateControl: FormControl = null;
 
   constructor() {
     super();
 
     this.form = new FormBuilder().group({
-      year: new FormControl(this.value?.year, [Validators.min(1970), Validators.max(2030)]),
-      month: new FormControl(this.value?.month, [Validators.min(1), Validators.max(12)]),
-      day: new FormControl(this.value?.day, [Validators.min(1), Validators.max(31)]),
+      year: new FormControl(null, [Validators.min(1970), Validators.max(this.maxYear)]),
+      month: new FormControl(null, [Validators.min(1), Validators.max(12)]),
+      day: new FormControl(null, [Validators.min(1), Validators.max(31)]),
     }, {
-      validators: [this.dayValidator, this.monthValidator],
+      validators: [
+        (formGroup: FormGroup) => this.dayValidator(formGroup),
+        (formGroup: FormGroup) => this.monthValidator(formGroup)
+      ],
     });
 
-    this.form.valueChanges.subscribe(data => {
-      this.emitChangeValue(data);
-      console.log(data);
-    });
+    this.dateControl = new FormControl(null);
+
+    this.writeValue(this.value);
+
+    this.form.valueChanges.subscribe((date: BookDate) => this.onBookDateChange(date));
+
+    this.dateControl.valueChanges.subscribe((value: Date) => this.onCalendarDateChange(value));
+  }
+
+  public openPicker(picker: any): void {
+    if (this.isEmptyDate(this.value)) {
+      this.writeValue(this.today);
+    }
+    picker.open();
+  }
+
+  public onBookDateChange(date: BookDate): void {
+    this.writeCalendarDate(date);
+    this.emitChangeValue(date);
+
+    this.value = date;
+  }
+
+  public onCalendarDateChange(value: Date): void {
+    const date: BookDate = {
+      year: value.getFullYear(),
+      month: value.getMonth() + 1,
+      day: value.getDate(),
+    };
+
+    this.writeBookDate(date);
+    this.emitChangeValue(date);
   }
 
   ngOnInit(): void {
@@ -50,6 +82,7 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     if (!formGroup.get('month').value && formGroup.get('day').value) {
       const error = {
         invalidMonth: true,
+        ...formGroup.get('day').errors,
       };
 
       formGroup.get('day').setErrors(error);
@@ -60,6 +93,7 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     if (!formGroup.get('year').value && formGroup.get('day').value) {
       const error = {
         invalidYear: true,
+        ...formGroup.get('day').errors,
       };
 
       formGroup.get('day').setErrors(error);
@@ -68,33 +102,73 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     }
 
     if (formErrors == null) {
-      formGroup.get('day').setErrors(null);
+      const errors = this.clearDayErrors(formGroup.get('day').errors);
+      formGroup.get('day').setErrors(errors);
     }
 
     return formErrors;
   }
 
+  public clearDayErrors(errors: ValidationErrors): ValidationErrors | null {
+    if (errors) {
+      delete errors.invalidMonth;
+      delete errors.invalidYear;
+    }
+
+    if (this.isEmptyObject(errors)) {
+      return null;
+    } else {
+      return errors;
+    }
+  }
+
   public monthValidator(formGroup: FormGroup): ValidationErrors | null {
     if ((!formGroup.get('year').value && formGroup.get('month').value)) {
-      const error = {
+      const errors = {
         invalidYear: true,
+        ...formGroup.get('month').errors,
       };
 
-      formGroup.get('month').setErrors(error);
+      formGroup.get('month').setErrors(errors);
 
-      return error;
+      return errors;
     } else {
-      formGroup.get('month').setErrors(null);
+      const errors = this.clearMonthErrors(formGroup.get('month').errors);
+      formGroup.get('month').setErrors(errors);
+
       return null;
     }
   }
 
+  public clearMonthErrors(errors: ValidationErrors): ValidationErrors | null {
+    if (errors) {
+      delete errors.invalidYear;
+    }
+
+    if (this.isEmptyObject(errors)) {
+      return null;
+    } else {
+      return errors;
+    }
+  }
+
   public writeValue(value: BookDate): void {
+    this.writeBookDate(value);
+    this.writeCalendarDate(value);
+  }
+
+  public writeBookDate(bookDate: BookDate): void {
     this.form.setValue({
-      year: value.year || null,
-      month: value.month || null,
-      day: value.day || null,
-    });
+      year: bookDate?.year || null,
+      month: bookDate?.month || null,
+      day: bookDate?.day || null
+    }, { emitEvent: false });
+
+    this.value = bookDate;
+  }
+
+  public writeCalendarDate(bookDate: BookDate): void {
+    this.dateControl.setValue(new Date(bookDate?.year, bookDate?.month ? bookDate.month - 1 : null, bookDate?.day), { emitEvent: false });
   }
 
   validate(): { invalid: boolean } | boolean {
@@ -102,6 +176,47 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
 
     return isNotValid && {
       invalid: true
+    };
+  }
+
+  public isEmptyObject(errors: ValidationErrors | null): boolean {
+    return !errors || Object.keys(errors).length === 0;
+  }
+
+  public isEmptyDate(date: BookDate): boolean {
+    return !date || !date.year && !date.month && !date.day;
+  }
+
+  public get day(): number {
+    return this.form.get('day').value;
+  }
+  public set day(v: number) {
+    this.form.get('day').setValue(v);
+  }
+
+  public get month(): number {
+    return this.form.get('month').value;
+  }
+  public set month(v: number) {
+    this.form.get('month').setValue(v);
+  }
+
+  public get year(): number {
+    return this.form.get('year').value;
+  }
+  public set year(v: number) {
+    this.form.get('year').setValue(v);
+  }
+
+  public get maxYear(): number {
+    return new Date().getFullYear() + 10;
+  }
+
+  public get today(): BookDate {
+    return {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate(),
     };
   }
 }

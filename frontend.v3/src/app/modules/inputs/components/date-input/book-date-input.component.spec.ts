@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookDateInputComponent } from './book-date-input.component';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { FormBuilder, FormControl } from '@angular/forms';
+import {BookDate} from '../../../book/models/book-date';
 
 describe('BookDateInputComponent', () => {
   let component: BookDateInputComponent;
@@ -122,6 +123,12 @@ describe('BookDateInputComponent', () => {
         month: 11,
         day: 23
       });
+
+      expect(component.value).toEqual({
+        year: 1997,
+        month: 11,
+        day: 23
+      });
     });
 
     it('should set empty', () => {
@@ -141,6 +148,77 @@ describe('BookDateInputComponent', () => {
         month: null,
         day: null
       });
+    });
+  });
+
+  it('writeBookDate', () => {
+    component.writeBookDate({
+      year: 2021,
+      month: 4,
+      day: 9
+    });
+
+    expect(component.form.value).toEqual({
+      year: 2021,
+      month: 4,
+      day: 9
+    });
+  });
+
+  it('writeCalendarDate', () => {
+    component.writeCalendarDate({
+      year: 2021,
+      month: 4,
+      day: 9
+    });
+
+    expect(component.dateControl.value).toEqual(new Date(2021, 3, 9));
+  });
+
+  it('onBookDateChange', () => {
+    const writeCalendarDateSpy = spyOn(component, 'writeCalendarDate');
+    const emitChangeValueSpy = spyOn(component, 'emitChangeValue');
+
+    const arg: BookDate = {
+      year: 2021,
+      month: 4,
+      day: 9
+    };
+
+    component.onBookDateChange(arg);
+
+    expect(writeCalendarDateSpy).toHaveBeenCalledOnceWith(arg);
+    expect(emitChangeValueSpy).toHaveBeenCalledOnceWith(arg);
+    expect(component.value).toEqual(arg);
+  });
+
+  it('onCalendarDateChange', () => {
+    const writeBookDateSpy = spyOn(component, 'writeBookDate');
+    const emitChangeValueSpy = spyOn(component, 'emitChangeValue');
+
+    const arg: Date = new Date(2021, 3, 9);
+
+    const expected: BookDate = {
+      year: 2021,
+      month: 4,
+      day: 9
+    };
+
+    component.onCalendarDateChange(arg);
+
+    expect(writeBookDateSpy).toHaveBeenCalledOnceWith(expected);
+    expect(emitChangeValueSpy).toHaveBeenCalledOnceWith(expected);
+  });
+
+  describe('ifEmptyErrors', () => {
+    it('should return true for null', () => {
+      expect(component.isEmptyObject(null)).toBeTrue();
+    });
+    it('should return true for empty object', () => {
+      expect(component.isEmptyObject({})).toBeTrue();
+    });
+    it('should return false for filled object', () => {
+      expect(component.isEmptyObject({ error: true })).toBeFalse();
     });
   });
 });

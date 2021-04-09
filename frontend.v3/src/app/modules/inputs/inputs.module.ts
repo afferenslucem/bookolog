@@ -13,6 +13,8 @@ import { FileInputComponent } from './components/file-input/file-input.component
 import { TagValueComponent } from './components/tag-value/tag-value.component';
 import { BookTagsInputComponent } from './components/tags-input/book-tags-input.component';
 import { BookTimeInputComponent } from './components/time-input/book-time-input.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { BookTimeInputComponent } from './components/time-input/book-time-input.
     MatIconModule,
     MatAutocompleteModule,
     FormattingModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     BookDateInputComponent,
