@@ -22,6 +22,7 @@ import { Location } from '@angular/common';
 import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
 import { ProgressAlgorithmSolver } from '../../utils/progress-algorithm-solver';
 import { CollectionService } from '../../../collection/services/collection.service';
+import {BookDataForm} from '../../utils/book-data-form';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -29,40 +30,14 @@ import { CollectionService } from '../../../collection/services/collection.servi
   styleUrls: ['./book-edit-view.component.scss'],
 })
 export class BookEditViewComponent implements OnInit {
-  public book: Book;
   public BookType: typeof BookType = BookType;
   public BookStatus: typeof BookStatus = BookStatus;
   public ProgressAlgorithm: typeof ProgressAlgorithmType = ProgressAlgorithmType;
-  public form: FormGroup = null;
+  public bookForm: BookDataForm = null;
   public authors: string[] = [];
   public tags: string[] = [];
   private logger = getConsoleLogger('BookEditViewComponent');
   private action: Action;
-
-  private defaultValue: BookData = {
-    guid: '',
-    name: '',
-    status: BookStatus.ToRead,
-    type: BookType.Paper,
-    year: null,
-    genre: '',
-    collectionGuid: null,
-    authors: [],
-    tags: [],
-    note: '',
-    modifyDate: '',
-    createDate: '',
-    doneUnits: null,
-    totalUnits: null,
-    endDateYear: null,
-    endDateMonth: null,
-    endDateDay: null,
-    startDateYear: null,
-    startDateMonth: null,
-    startDateDay: null,
-    rereadingBookGuid: null,
-    rereadedBy: [],
-  };
 
   private _filteredGenres: Observable<string[]>;
 
@@ -76,16 +51,12 @@ export class BookEditViewComponent implements OnInit {
     private router: Router,
   ) {
     activatedRoute.data.subscribe(data => {
-      this.book = data.book || new Book(this.defaultValue);
-
+      this.formFromBook(data.book);
       if (data.status) {
-        this.book.status = data.status;
+        this.bookForm.status = data.status;
       }
 
-      this.formFromBook(this.book);
-
       this.readAutocompleteData(data.allBooks, data.series);
-
       this.readAction(data.action);
     });
   }
@@ -99,7 +70,7 @@ export class BookEditViewComponent implements OnInit {
   private _series: Collection[] = [];
 
   public get series(): string {
-    return this.form.get('series').value;
+    return this.bookForm.series;
   }
 
   public get allSeries(): Collection[] {
@@ -107,19 +78,19 @@ export class BookEditViewComponent implements OnInit {
   }
 
   public get status(): BookStatus {
-    return this.form.get('status').value;
+    return this.bookForm.status;
   }
 
   public get type(): BookType {
-    return this.form.get('type').value;
-  }
-
-  public get genre(): string {
-    return this.form.get('genre').value;
+    return this.bookForm.type;
   }
 
   public get progressAlgorithm(): ProgressAlgorithmType {
-    return this.form.get('progressType').value;
+    return this.bookForm.progressType;
+  }
+
+  public get genre(): string {
+    return this.bookForm.genre;
   }
 
   public get progressAlgorithmPreference(): ProgressAlgorithmType {
@@ -167,7 +138,7 @@ export class BookEditViewComponent implements OnInit {
   }
 
   private async redirect(): Promise<void> {
-    switch (this.book.status) {
+    switch (this.bookForm.status) {
       case BookStatus.ToRead: {
         await this.router.navigate(['/to-read']);
         return;
@@ -235,62 +206,39 @@ export class BookEditViewComponent implements OnInit {
   }
 
   private formFromBook(book: Book): void {
+    this.bookForm = new BookDataForm(book);
     const progressType = this.action === Action.Create ? ProgressAlgorithmSolver.getAlgorithm(this.book.type) : this.book.progressType;
 
-    this.form = new FormBuilder().group({
-      name: new FormControl(book.name, [Validators.required]),
-      year: new FormControl(book.year),
-      genre: new FormControl(book.genre),
-      collectionGuid: new FormControl(book.collectionGuid),
-      collectionOrder: new FormControl(book.collectionOrder),
-      status: new FormControl(book.status),
-      type: new FormControl(book.type),
-      started: new FormControl(book.started),
-      finished: new FormControl(book.finished),
-      doneUnits: new FormControl(book.done || null),
-      totalUnits: new FormControl(book.totalUnits || null),
-      authors: new FormControl(book.authors),
-      tags: new FormControl(book.tags),
-      note: new FormControl(book.note),
-      progressType: new FormControl(progressType),
-    });
+    this.bookForm.progressType = progressType;
 
     this._filteredGenres = this.form.get('genre').valueChanges.pipe(
       startWith(this.genre || ''),
       map(item => new FuzzySearch().search(this._genres, item)),
     );
 
-    this.form.get('progressType').valueChanges.subscribe(v => this.progressAlgorithmPreference = v);
-
-    this.form.get('status').valueChanges.subscribe(status => this.onStatusChange(status));
-
-    this.form.get('type').valueChanges.subscribe(() => this.onTypeChange());
+    this.bookForm.registerOnProgressType(v => this.progressAlgorithmPreference = v);
+    this.bookForm.registerOnTypeChange(() => this.onTypeChange());
+    this.bookForm.registerOnStatusChange(status => this.onStatusChange(status));
   }
 
   private onStatusChange(status: BookStatus): void {
     if (this.book.status === BookStatus.ToRead && status === BookStatus.InProgress) {
-      const date = new Date();
-
-      this.form.get('started').setValue({
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
-      } as BookDate);
+      this.bookForm.started = DateUtils.today;
     } else if (this.book.status === BookStatus.InProgress && status === BookStatus.Done) {
-      const date = new Date();
-
-      this.form.get('finished').setValue({
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
-      } as BookDate);
-
-      const total = this.form.get('totalUnits').value;
-      this.form.get('doneUnits').setValue(total);
+      this.bookForm.finished = DateUtils.today;
+      this.bookForm.doneUnits = this.bookForm.totalUnits;
     }
   }
 
   private onTypeChange(): void {
-    this.form.get('progressType').setValue(this.progressAlgorithmPreference);
+    this.bookForm.progressType = this.progressAlgorithmPreference;
+  }
+
+  public get form(): FormGroup {
+    return this.bookForm.form;
+  }
+
+  public get book(): Book {
+    return this.bookForm.snapshot;
   }
 }

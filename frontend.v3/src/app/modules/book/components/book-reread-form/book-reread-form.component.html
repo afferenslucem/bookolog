@@ -33,10 +33,10 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" [hidden]="status !== BookStatus.InProgress">
+  <mat-form-field appearance="fill" [hidden]="bookForm.status !== BookStatus.InProgress">
     <mat-label>Прогресс</mat-label>
     <mat-select formControlName="progressType">
-      <mat-option [value]="ProgressAlgorithm.Done">{{type == BookType.Audio ? 'Прослушано' : 'Прочитано'}}</mat-option>
+      <mat-option [value]="ProgressAlgorithm.Done">{{bookForm.type == BookType.Audio ? 'Прослушано' : 'Прочитано'}}</mat-option>
       <mat-option [value]="ProgressAlgorithm.Left">Осталось</mat-option>
     </mat-select>
   </mat-form-field>
