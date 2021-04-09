@@ -1,10 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-
-import { LoggedInGuard } from './logged-in.guard';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '../../user/services/user.service';
-import { Router, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
 import { LogoutGuard } from './logout.guard';
 
 describe('LogoutGuard', () => {

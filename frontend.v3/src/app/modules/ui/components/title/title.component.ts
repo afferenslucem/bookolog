@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {TitleText} from '../../models/title-text';
-import {TitleService} from '../../service/title.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TitleText } from '../../models/title-text';
+import { TitleService } from '../../service/title.service';
 
 @Component({
   selector: 'app-title',

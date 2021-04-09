@@ -7,7 +7,7 @@ import { EditIconComponent } from './components/edit-icon/edit-icon.component';
 import { MenuIconComponent } from './components/menu-icon/menu-icon.component';
 import { PlusIconComponent } from './components/plus-icon/plus-icon.component';
 import { TitleComponent } from './components/title/title.component';
-import {FormattingModule} from "../formatting/formatting.module";
+import { FormattingModule } from '../formatting/formatting.module';
 
 
 @NgModule({
