@@ -13,7 +13,7 @@
   <label >Авторы</label>
 </div>
 
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form [formGroup]="form" appUnitsValidator appDatesValidator (ngSubmit)="submit()">
   <mat-form-field appearance="fill">
     <mat-label>Статус</mat-label>
     <mat-select formControlName="status">

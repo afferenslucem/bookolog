@@ -164,8 +164,6 @@ export class BookRereadFormComponent implements OnInit {
       tags: new FormControl(book.tags),
       note: new FormControl(book.note),
       progressType: new FormControl(this.book.progressType || this.progressAlgorithmPreference || ProgressAlgorithmType.Done),
-    }, {
-      validators: [this.datesValidator, this.pagesValidator]
     });
 
     this.form.get('type').valueChanges.subscribe(() => this.onTypeChange());
@@ -177,30 +175,5 @@ export class BookRereadFormComponent implements OnInit {
   }
 
   private onStatusChange(status: BookStatus): void {
-  }
-
-  public pagesValidator(formGroup: FormGroup): ValidationErrors | null {
-    const doneUnits = formGroup.get('doneUnits').value as number;
-    const totalUnits = formGroup.get('totalUnits').value as number;
-
-    const status = formGroup.get('status').value as BookStatus;
-
-    return (doneUnits > totalUnits) && (status === BookStatus.InProgress) ? {
-      invalidUnits: true
-    } : null;
-  }
-
-  public datesValidator(formGroup: FormGroup): ValidationErrors | null {
-    const started = formGroup.get('started').value as BookDate;
-    const finished = formGroup.get('finished').value as BookDate;
-
-    const status = formGroup.get('status').value as BookStatus;
-
-    const startDate = new Date(started.year, started.month, started.day);
-    const endDate = new Date(finished.year, finished.month, finished.day);
-
-    return (startDate > endDate) && (status === BookStatus.Done) ? {
-      invalidDates: true
-    } : null;
   }
 }

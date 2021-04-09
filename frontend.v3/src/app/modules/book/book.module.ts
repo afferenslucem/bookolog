@@ -35,6 +35,8 @@ import { ToReadBookComponent } from './components/to-read-book/to-read-book.comp
 import { ToReadBooksListComponent } from './components/to-read-books-list/to-read-books-list.component';
 import { BookAuthorsComponent } from './components/book-authors/book-authors.component';
 import { BookRereadFormComponent } from './components/book-reread-form/book-reread-form.component';
+import { UnitsValidatorDirective } from './validators/units-validator.directive';
+import { DatesValidatorDirective } from './validators/dates-validator.directive';
 
 
 @NgModule({
@@ -55,6 +57,8 @@ import { BookRereadFormComponent } from './components/book-reread-form/book-rere
         BooksByYearsComponent,
         BookAuthorsComponent,
         BookRereadFormComponent,
+        UnitsValidatorDirective,
+        DatesValidatorDirective,
     ],
     imports: [
         CommonModule,

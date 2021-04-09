@@ -15,6 +15,8 @@ import { BookTagsInputComponent } from './components/tags-input/book-tags-input.
 import { BookTimeInputComponent } from './components/time-input/book-time-input.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { DateMonthValidatorDirective } from './validators/date-month-validator.directive';
+import { DateDayValidatorDirective } from './validators/date-day-validator.directive';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     BookTagsInputComponent,
     TagValueComponent,
     FileInputComponent,
+    DateMonthValidatorDirective,
+    DateDayValidatorDirective,
   ],
   imports: [
     CommonModule,

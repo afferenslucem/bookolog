@@ -1,4 +1,4 @@
-<form [formGroup]="form" (click)="emitTouch($event)">
+<form [formGroup]="form" appDateDayValidator appDateMonthValidator (click)="emitTouch($event)">
   <div class="date-input">
     <mat-form-field appearance="fill">
       <mat-label >Год</mat-label>

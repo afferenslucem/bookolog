@@ -25,83 +25,6 @@ describe('BookDateInputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('dayValidator', () => {
-    it('should return invalidMonth', () => {
-      const form = new FormBuilder().group({
-        year: new FormControl(1998),
-        month: new FormControl(null),
-        day: new FormControl(21),
-      });
-
-      const result = component.dayValidator(form);
-
-      expect(result.invalidMonth).toBeTrue();
-      expect(result.invalidYear).toBeFalsy();
-    });
-
-    it('should return invalidYear', () => {
-      const form = new FormBuilder().group({
-        year: new FormControl(null),
-        month: new FormControl('12'),
-        day: new FormControl(21),
-      });
-
-      const result = component.dayValidator(form);
-
-      expect(result.invalidMonth).toBeFalsy();
-      expect(result.invalidYear).toBeTrue();
-    });
-
-    it('should return both', () => {
-      const form = new FormBuilder().group({
-        year: new FormControl(null),
-        month: new FormControl(null),
-        day: new FormControl(21),
-      });
-
-      const result = component.dayValidator(form);
-
-      expect(result.invalidMonth).toBeTrue();
-      expect(result.invalidYear).toBeTrue();
-    });
-
-    it('should return no errors', () => {
-      const form = new FormBuilder().group({
-        year: new FormControl(1998),
-        month: new FormControl(12),
-        day: new FormControl(21),
-      });
-
-      const result = component.dayValidator(form);
-
-      expect(result).toEqual(null);
-    });
-  });
-
-  describe('monthValidator', () => {
-    it('should return invalidYear', () => {
-      const form = new FormBuilder().group({
-        year: new FormControl(null),
-        month: new FormControl('12'),
-      });
-
-      const result = component.monthValidator(form);
-
-      expect(result.invalidYear).toBeTrue();
-    });
-
-    it('should return no errors', () => {
-      const form = new FormBuilder().group({
-        year: new FormControl(1998),
-        month: new FormControl(12),
-      });
-
-      const result = component.monthValidator(form);
-
-      expect(result).toEqual(null);
-    });
-  });
-
   describe('writeValue', () => {
     it('should write date', () => {
       component.form = new FormBuilder().group({
@@ -208,17 +131,5 @@ describe('BookDateInputComponent', () => {
 
     expect(writeBookDateSpy).toHaveBeenCalledOnceWith(expected);
     expect(emitChangeValueSpy).toHaveBeenCalledOnceWith(expected);
-  });
-
-  describe('ifEmptyErrors', () => {
-    it('should return true for null', () => {
-      expect(component.isEmptyObject(null)).toBeTrue();
-    });
-    it('should return true for empty object', () => {
-      expect(component.isEmptyObject({})).toBeTrue();
-    });
-    it('should return false for filled object', () => {
-      expect(component.isEmptyObject({ error: true })).toBeFalse();
-    });
   });
 });

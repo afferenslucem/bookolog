@@ -30,11 +30,6 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
       year: new FormControl(null, [Validators.min(1970), Validators.max(this.maxYear)]),
       month: new FormControl(null, [Validators.min(1), Validators.max(12)]),
       day: new FormControl(null, [Validators.min(1), Validators.max(31)]),
-    }, {
-      validators: [
-        (formGroup: FormGroup) => this.dayValidator(formGroup),
-        (formGroup: FormGroup) => this.monthValidator(formGroup)
-      ],
     });
 
     this.dateControl = new FormControl(null);
@@ -77,82 +72,6 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     this.form.get('day').markAsTouched();
   }
 
-  public dayValidator(formGroup: FormGroup): ValidationErrors | null {
-    let formErrors: ValidationErrors = null;
-
-    if (!formGroup.get('month').value && formGroup.get('day').value) {
-      const error = {
-        invalidMonth: true,
-        ...formGroup.get('day').errors,
-      };
-
-      formGroup.get('day').setErrors(error);
-
-      formErrors = Object.assign({}, error);
-    }
-
-    if (!formGroup.get('year').value && formGroup.get('day').value) {
-      const error = {
-        invalidYear: true,
-        ...formGroup.get('day').errors,
-      };
-
-      formGroup.get('day').setErrors(error);
-
-      formErrors = Object.assign(formErrors || {}, error);
-    }
-
-    if (formErrors == null) {
-      const errors = this.clearDayErrors(formGroup.get('day').errors);
-      formGroup.get('day').setErrors(errors);
-    }
-
-    return formErrors;
-  }
-
-  public clearDayErrors(errors: ValidationErrors): ValidationErrors | null {
-    if (errors) {
-      delete errors.invalidMonth;
-      delete errors.invalidYear;
-    }
-
-    if (this.isEmptyObject(errors)) {
-      return null;
-    } else {
-      return errors;
-    }
-  }
-
-  public monthValidator(formGroup: FormGroup): ValidationErrors | null {
-    if ((!formGroup.get('year').value && formGroup.get('month').value)) {
-      const errors = {
-        invalidYear: true,
-        ...formGroup.get('month').errors,
-      };
-
-      formGroup.get('month').setErrors(errors);
-
-      return errors;
-    } else {
-      const errors = this.clearMonthErrors(formGroup.get('month').errors);
-      formGroup.get('month').setErrors(errors);
-
-      return null;
-    }
-  }
-
-  public clearMonthErrors(errors: ValidationErrors): ValidationErrors | null {
-    if (errors) {
-      delete errors.invalidYear;
-    }
-
-    if (this.isEmptyObject(errors)) {
-      return null;
-    } else {
-      return errors;
-    }
-  }
-
   public writeValue(value: BookDate): void {
     this.writeBookDate(value);
     this.writeCalendarDate(value);
@@ -178,10 +97,6 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     return isNotValid && {
       invalid: true
     };
-  }
-
-  public isEmptyObject(errors: ValidationErrors | null): boolean {
-    return !errors || Object.keys(errors).length === 0;
   }
 
   public isEmptyDate(date: BookDate): boolean {
