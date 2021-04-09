@@ -2,6 +2,7 @@ import { Component, forwardRef, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
 import { BookDate } from '../../../book/models/book-date';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
+import {DateUtils} from '../../../../main/utils/date-utils';
 
 @Component({
   selector: 'app-book-date-input',
@@ -47,7 +48,7 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
 
   public openPicker(picker: any): void {
     if (this.isEmptyDate(this.value)) {
-      this.writeValue(this.today);
+      this.writeValue(DateUtils.today);
     }
     picker.open();
   }
@@ -210,13 +211,5 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
 
   public get maxYear(): number {
     return new Date().getFullYear() + 10;
-  }
-
-  public get today(): BookDate {
-    return {
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-      day: new Date().getDate(),
-    };
   }
 }

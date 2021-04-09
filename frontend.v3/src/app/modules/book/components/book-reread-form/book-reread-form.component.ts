@@ -69,6 +69,10 @@ export class BookRereadFormComponent implements OnInit {
       this.book = data.book || new Book(this.defaultValue);
 
       this.book.status = BookStatus.ToRead;
+      this.book.started = new BookDate();
+      this.book.finished = new BookDate();
+      this.book.doneUnits = null;
+      this.book.totalUnits = null;
 
       this.formFromBook(this.book);
     });
@@ -165,10 +169,14 @@ export class BookRereadFormComponent implements OnInit {
     });
 
     this.form.get('type').valueChanges.subscribe(() => this.onTypeChange());
+    this.form.get('status').valueChanges.subscribe((status: BookStatus) => this.onStatusChange(status));
   }
 
   private onTypeChange(): void {
     this.form.get('progressType').setValue(this.progressAlgorithmPreference);
+  }
+
+  private onStatusChange(status: BookStatus): void {
   }
 
   public pagesValidator(formGroup: FormGroup): ValidationErrors | null {
