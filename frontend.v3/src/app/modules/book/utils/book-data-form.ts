@@ -1,11 +1,11 @@
-import {BookData} from '../models/book-data';
-import {BookStatus} from '../models/book-status';
-import {BookType} from '../models/book-type';
-import {Book} from '../models/book';
+import { BookData } from '../models/book-data';
+import { BookStatus } from '../models/book-status';
+import { BookType } from '../models/book-type';
+import { Book } from '../models/book';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
-import {ProgressAlgorithmSolver} from './progress-algorithm-solver';
-import {BookDate} from '../models/book-date';
+import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
+import { ProgressAlgorithmSolver } from './progress-algorithm-solver';
+import { BookDate } from '../models/book-date';
 import { Observable } from 'rxjs';
 
 const defaultValue: BookData = {

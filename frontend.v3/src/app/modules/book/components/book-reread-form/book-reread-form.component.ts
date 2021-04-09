@@ -1,20 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {getConsoleLogger} from '../../../../main/app.logging';
-import {Action} from '../../../../main/resolvers/action.resolver';
-import {DateUtils} from '../../../../main/utils/date-utils';
-import {NotificationService} from '../../../notification/services/notification.service';
-import {TitleService} from '../../../ui/service/title.service';
-import {Book} from '../../models/book';
-import {BookStatus} from '../../models/book-status';
-import {BookType} from '../../models/book-type';
-import {BookService} from '../../services/book.service';
-import {Location} from '@angular/common';
-import {ProgressAlgorithmType} from '../../models/progress-algorithm-type';
-import {BookDate} from '../../models/book-date';
-import {ProgressAlgorithmSolver} from '../../utils/progress-algorithm-solver';
-import {BookDataForm} from '../../utils/book-data-form';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { getConsoleLogger } from '../../../../main/app.logging';
+import { Action } from '../../../../main/resolvers/action.resolver';
+import { DateUtils } from '../../../../main/utils/date-utils';
+import { NotificationService } from '../../../notification/services/notification.service';
+import { TitleService } from '../../../ui/service/title.service';
+import { Book } from '../../models/book';
+import { BookStatus } from '../../models/book-status';
+import { BookService } from '../../services/book.service';
+import { Location } from '@angular/common';
+import { BookDate } from '../../models/book-date';
+import { BookDataForm } from '../../utils/book-data-form';
 import { AbstractBookDataForm } from '../../utils/abstract-book-data-form';
 
 @Component({

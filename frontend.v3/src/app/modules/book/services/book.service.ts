@@ -8,7 +8,7 @@ import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import { BookOriginService } from './book.origin.service';
 import { BookStorageService } from './book.storage.service';
-import {flatten} from '@angular/compiler';
+import { flatten } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',

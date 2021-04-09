@@ -1,5 +1,4 @@
-import addMinutes from 'date-fns/addMinutes';
-import {BookDate} from '../../modules/book/models/book-date';
+import { BookDate } from '../../modules/book/models/book-date';
 
 export class DateUtils {
   public static get nowUTC(): Date {

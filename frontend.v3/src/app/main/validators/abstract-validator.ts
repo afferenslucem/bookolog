@@ -1,4 +1,4 @@
-import {ValidationErrors} from '@angular/forms';
+import { ValidationErrors } from '@angular/forms';
 
 export class AbstractValidator {
   public isEmptyObject(errors: ValidationErrors | null): boolean {

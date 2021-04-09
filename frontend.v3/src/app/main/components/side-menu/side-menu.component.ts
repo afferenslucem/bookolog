@@ -5,9 +5,9 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { CacheService } from '../../services/cache.service';
-import {SwUpdate} from "@angular/service-worker";
-import {mapTo, startWith} from "rxjs/operators";
-import {Observable} from "rxjs";
+import { SwUpdate } from '@angular/service-worker';
+import { mapTo, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-side-menu',
