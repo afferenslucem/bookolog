@@ -13,8 +13,6 @@ import { Collection } from '../../../collection/models/collection';
 import { NotificationService } from '../../../notification/services/notification.service';
 import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
-import { BookData } from '../../models/book-data';
-import { BookDate } from '../../models/book-date';
 import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
 import { BookService } from '../../services/book.service';
@@ -23,17 +21,14 @@ import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
 import { ProgressAlgorithmSolver } from '../../utils/progress-algorithm-solver';
 import { CollectionService } from '../../../collection/services/collection.service';
 import {BookDataForm} from '../../utils/book-data-form';
+import { AbstractBookDataForm } from '../../utils/abstract-book-data-form';
 
 @Component({
   selector: 'app-book-edit-view',
   templateUrl: './book-edit-view.component.html',
   styleUrls: ['./book-edit-view.component.scss'],
 })
-export class BookEditViewComponent implements OnInit {
-  public BookType: typeof BookType = BookType;
-  public BookStatus: typeof BookStatus = BookStatus;
-  public ProgressAlgorithm: typeof ProgressAlgorithmType = ProgressAlgorithmType;
-  public bookForm: BookDataForm = null;
+export class BookEditViewComponent extends AbstractBookDataForm implements OnInit {
   public authors: string[] = [];
   public tags: string[] = [];
   private logger = getConsoleLogger('BookEditViewComponent');
@@ -50,6 +45,8 @@ export class BookEditViewComponent implements OnInit {
     private location: Location,
     private router: Router,
   ) {
+    super();
+
     activatedRoute.data.subscribe(data => {
       this.formFromBook(data.book);
 
@@ -62,55 +59,28 @@ export class BookEditViewComponent implements OnInit {
 
       this.bookForm.build();
 
-      this._filteredGenres = this.form.get('genre').valueChanges.pipe(
+      this._filteredGenres = this.bookForm.genreChanges.pipe(
         startWith(this.genre || ''),
         map(item => new FuzzySearch().search(this._genres, item)),
       );
 
-      this.bookForm.registerOnProgressType(v => this.progressAlgorithmPreference = v);
-      this.bookForm.registerOnTypeChange(() => this.onTypeChange());
-      this.bookForm.registerOnStatusChange(status => this.onStatusChange(status));
+      this.bookForm.progressTypeChanges.subscribe(v => this.progressAlgorithmPreference = v);
+      this.bookForm.typeChanges.subscribe(() => this.onTypeChange());
+      this.bookForm.statusChanges.subscribe(status => this.onStatusChange(status));
     });
   }
 
   private _genres: string[] = [];
-
   public get genres(): Observable<string[]> {
     return this._filteredGenres;
   }
 
   private _series: Collection[] = [];
-
   public get series(): string {
-    return this.bookForm.series;
+    return this.bookForm.collectionGuid;
   }
-
   public get allSeries(): Collection[] {
     return this._series;
-  }
-
-  public get status(): BookStatus {
-    return this.bookForm.status;
-  }
-
-  public get type(): BookType {
-    return this.bookForm.type;
-  }
-
-  public get progressAlgorithm(): ProgressAlgorithmType {
-    return this.bookForm.progressType;
-  }
-
-  public get genre(): string {
-    return this.bookForm.genre;
-  }
-
-  public get progressAlgorithmPreference(): ProgressAlgorithmType {
-    return ProgressAlgorithmSolver.getAlgorithm(this.type);
-  }
-
-  public set progressAlgorithmPreference(v: ProgressAlgorithmType) {
-    ProgressAlgorithmSolver.setAlgorithm(this.type, v);
   }
 
   public ngOnInit(): void {
@@ -233,13 +203,5 @@ export class BookEditViewComponent implements OnInit {
 
   private onTypeChange(): void {
     this.bookForm.progressType = this.progressAlgorithmPreference;
-  }
-
-  public get form(): FormGroup {
-    return this.bookForm.form;
-  }
-
-  public get book(): Book {
-    return this.bookForm.snapshot;
   }
 }

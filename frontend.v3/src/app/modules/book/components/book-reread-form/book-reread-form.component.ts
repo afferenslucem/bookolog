@@ -15,17 +15,14 @@ import {ProgressAlgorithmType} from '../../models/progress-algorithm-type';
 import {BookDate} from '../../models/book-date';
 import {ProgressAlgorithmSolver} from '../../utils/progress-algorithm-solver';
 import {BookDataForm} from '../../utils/book-data-form';
+import { AbstractBookDataForm } from '../../utils/abstract-book-data-form';
 
 @Component({
   selector: 'app-book-reread-form',
   templateUrl: './book-reread-form.component.html',
   styleUrls: ['./book-reread-form.component.scss'],
 })
-export class BookRereadFormComponent implements OnInit {
-  public BookType: typeof BookType = BookType;
-  public BookStatus: typeof BookStatus = BookStatus;
-  public ProgressAlgorithm: typeof ProgressAlgorithmType = ProgressAlgorithmType;
-  public bookForm: BookDataForm = null;
+export class BookRereadFormComponent extends AbstractBookDataForm implements OnInit {
   private logger = getConsoleLogger('BookRereadFormComponent');
   private action: Action;
 
@@ -37,6 +34,8 @@ export class BookRereadFormComponent implements OnInit {
     private location: Location,
     private router: Router,
   ) {
+    super();
+
     activatedRoute.data.subscribe(data => {
       this.formFromBook(data.book);
 
@@ -47,11 +46,9 @@ export class BookRereadFormComponent implements OnInit {
       this.book.totalUnits = null;
 
       this.bookForm.build();
-    });
-  }
 
-  public get progressAlgorithmPreference(): ProgressAlgorithmType {
-    return ProgressAlgorithmSolver.getAlgorithm(this.bookForm.type);
+      this.bookForm.typeChanges.subscribe(() => this.onTypeChange());
+    });
   }
 
   public ngOnInit(): void {
@@ -109,31 +106,9 @@ export class BookRereadFormComponent implements OnInit {
 
   private formFromBook(book: Book): void {
     this.bookForm = new BookDataForm(book);
-
-    this.bookForm.registerOnTypeChange(() => this.onTypeChange());
   }
 
   private onTypeChange(): void {
     this.bookForm.progressType = this.progressAlgorithmPreference;
-  }
-
-  public get form(): FormGroup {
-    return this.bookForm.form;
-  }
-
-  public get status(): BookStatus {
-    return this.bookForm.status;
-  }
-
-  public get type(): BookType {
-    return this.bookForm.type;
-  }
-
-  public get progressAlgorithm(): ProgressAlgorithmType {
-    return this.bookForm.progressType;
-  }
-
-  public get book(): Book {
-    return this.bookForm.snapshot;
   }
 }

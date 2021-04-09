@@ -2,10 +2,11 @@ import {BookData} from '../models/book-data';
 import {BookStatus} from '../models/book-status';
 import {BookType} from '../models/book-type';
 import {Book} from '../models/book';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
 import {ProgressAlgorithmSolver} from './progress-algorithm-solver';
 import {BookDate} from '../models/book-date';
+import { Observable } from 'rxjs';
 
 const defaultValue: BookData = {
   guid: '',
@@ -40,18 +41,6 @@ export class BookDataForm {
     this.snapshot = book || new Book(defaultValue);
   }
 
-  public registerOnTypeChange(callback: (type: BookType) => void): void {
-    this.form.get('type').valueChanges.subscribe(callback);
-  }
-
-  public registerOnStatusChange(callback: (status: BookStatus) => void): void {
-    this.form.get('status').valueChanges.subscribe(callback);
-  }
-
-  public registerOnProgressType(callback: (type: ProgressAlgorithmType) => void): void {
-    this.form.get('progressType').valueChanges.subscribe(callback);
-  }
-
   private formFromBook(book: Book): void {
     this.form = new FormBuilder().group({
       name: new FormControl(book.name, [Validators.required]),
@@ -76,20 +65,31 @@ export class BookDataForm {
     this.formFromBook(this.snapshot);
   }
 
-  public get status(): BookStatus {
-    return this.form.get('status').value;
+  public get statusControl(): AbstractControl {
+    return this.form.get('status');
   }
-
+  public get status(): BookStatus {
+    return this.statusControl.value;
+  }
   public set status(v: BookStatus) {
     this.form.get('status').setValue(v);
   }
-
-  public get series(): string {
-    return this.form.get('series').value;
+  public get statusChanges(): Observable<BookStatus> {
+    return this.statusControl.valueChanges;
   }
 
+  public get collectionGuid(): string {
+    return this.form.get('collectionGuid').value;
+  }
+
+  public get genreControl(): AbstractControl {
+    return this.form.get('genre');
+  }
   public get genre(): string {
     return this.form.get('genre').value;
+  }
+  public get genreChanges(): Observable<string> {
+    return this.genreControl.valueChanges;
   }
 
   public set started(v: BookDate) {
@@ -100,28 +100,42 @@ export class BookDataForm {
     this.form.get('finished').setValue(v);
   }
 
-  public set doneUnits(v: BookDate) {
+  public set doneUnits(v: number) {
     this.form.get('doneUnits').setValue(v);
   }
 
-  public get totalUnits(): BookDate {
+  public get totalUnits(): number {
     return this.form.get('totalUnits').value;
   }
 
-  public set totalUnits(v: BookDate) {
+  public set totalUnits(v: number) {
     this.form.get('totalUnits').setValue(v);
   }
 
+  public get typeControl(): AbstractControl {
+    return this.form.get('type');
+  }
   public get type(): BookType {
-    return this.form.get('type').value;
+    return this.typeControl.value;
+  }
+  public set type(v: BookType) {
+    this.typeControl.setValue(v);
+  }
+  public get typeChanges(): Observable<BookType> {
+    return this.typeControl.valueChanges;
   }
 
+  public get progressTypeControl(): AbstractControl {
+    return this.form.get('progressType');
+  }
   public get progressType(): ProgressAlgorithmType {
-    return this.form.get('progressType').value;
+    return this.progressTypeControl.value;
   }
-
   public set progressType(v: ProgressAlgorithmType) {
-    this.form.get('progressType').setValue(v);
+    this.progressTypeControl.setValue(v);
+  }
+  public get progressTypeChanges(): Observable<ProgressAlgorithmType> {
+    return this.progressTypeControl.valueChanges;
   }
 
   private get progressAlgorithmPreference(): ProgressAlgorithmType {
