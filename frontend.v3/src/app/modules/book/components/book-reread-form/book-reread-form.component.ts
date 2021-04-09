@@ -40,11 +40,13 @@ export class BookRereadFormComponent implements OnInit {
     activatedRoute.data.subscribe(data => {
       this.formFromBook(data.book);
 
-      this.bookForm.status = BookStatus.ToRead;
-      this.bookForm.started = new BookDate();
-      this.bookForm.finished = new BookDate();
-      this.bookForm.doneUnits = null;
-      this.bookForm.totalUnits = null;
+      this.book.status = BookStatus.ToRead;
+      this.book.started = new BookDate();
+      this.book.finished = new BookDate();
+      this.book.doneUnits = null;
+      this.book.totalUnits = null;
+
+      this.bookForm.build();
     });
   }
 

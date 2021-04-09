@@ -52,12 +52,24 @@ export class BookEditViewComponent implements OnInit {
   ) {
     activatedRoute.data.subscribe(data => {
       this.formFromBook(data.book);
+
       if (data.status) {
-        this.bookForm.status = data.status;
+        this.book.status = data.status;
       }
 
       this.readAutocompleteData(data.allBooks, data.series);
       this.readAction(data.action);
+
+      this.bookForm.build();
+
+      this._filteredGenres = this.form.get('genre').valueChanges.pipe(
+        startWith(this.genre || ''),
+        map(item => new FuzzySearch().search(this._genres, item)),
+      );
+
+      this.bookForm.registerOnProgressType(v => this.progressAlgorithmPreference = v);
+      this.bookForm.registerOnTypeChange(() => this.onTypeChange());
+      this.bookForm.registerOnStatusChange(status => this.onStatusChange(status));
     });
   }
 
@@ -207,18 +219,7 @@ export class BookEditViewComponent implements OnInit {
 
   private formFromBook(book: Book): void {
     this.bookForm = new BookDataForm(book);
-    const progressType = this.action === Action.Create ? ProgressAlgorithmSolver.getAlgorithm(this.book.type) : this.book.progressType;
-
-    this.bookForm.progressType = progressType;
-
-    this._filteredGenres = this.form.get('genre').valueChanges.pipe(
-      startWith(this.genre || ''),
-      map(item => new FuzzySearch().search(this._genres, item)),
-    );
-
-    this.bookForm.registerOnProgressType(v => this.progressAlgorithmPreference = v);
-    this.bookForm.registerOnTypeChange(() => this.onTypeChange());
-    this.bookForm.registerOnStatusChange(status => this.onStatusChange(status));
+    this.book.progressType = this.action === Action.Create ? ProgressAlgorithmSolver.getAlgorithm(this.book.type) : this.book.progressType;
   }
 
   private onStatusChange(status: BookStatus): void {

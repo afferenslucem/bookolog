@@ -38,8 +38,6 @@ export class BookDataForm {
 
   public constructor(book?: Book) {
     this.snapshot = book || new Book(defaultValue);
-
-    this.formFromBook(this.snapshot);
   }
 
   public registerOnTypeChange(callback: (type: BookType) => void): void {
@@ -72,6 +70,10 @@ export class BookDataForm {
       note: new FormControl(book.note),
       progressType: new FormControl(this.snapshot.progressType || this.progressAlgorithmPreference || ProgressAlgorithmType.Done),
     });
+  }
+
+  public build(): void {
+    this.formFromBook(this.snapshot);
   }
 
   public get status(): BookStatus {

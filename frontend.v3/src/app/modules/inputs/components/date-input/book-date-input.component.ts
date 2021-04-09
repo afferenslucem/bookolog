@@ -44,6 +44,7 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
   public openPicker(picker: any): void {
     if (this.isEmptyDate(this.value)) {
       this.writeValue(DateUtils.today);
+      this.emitChangeValue(DateUtils.today);
     }
     picker.open();
   }
