@@ -4,7 +4,6 @@ import {BookType} from '../models/book-type';
 import {Book} from '../models/book';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
-import {ProgressAlgorithmSolver} from './progress-algorithm-solver';
 import {BookDate} from '../models/book-date';
 import {Observable} from 'rxjs';
 
@@ -57,7 +56,7 @@ export class BookDataForm {
       authors: new FormControl(book.authors),
       tags: new FormControl(book.tags),
       note: new FormControl(book.note),
-      progressType: new FormControl(this.snapshot.progressType || this.progressAlgorithmPreference || ProgressAlgorithmType.Done),
+      progressType: new FormControl(this.snapshot.progressType),
     });
   }
 
@@ -164,9 +163,5 @@ export class BookDataForm {
   }
   public get progressTypeChanges(): Observable<ProgressAlgorithmType> {
     return this.progressTypeControl.valueChanges;
-  }
-
-  private get progressAlgorithmPreference(): ProgressAlgorithmType {
-    return ProgressAlgorithmSolver.getAlgorithm(this.type);
   }
 }

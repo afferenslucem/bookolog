@@ -1,13 +1,24 @@
-import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponseBase, } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
-import { JWTDefaults } from '../models/jwt-defaults';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponseBase,
+} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {filter, tap} from 'rxjs/operators';
+import {JWTDefaults} from '../models/jwt-defaults';
+import {LocalStorageService} from '../../../main/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JWTAuthenticationInterceptor implements HttpInterceptor {
+  public constructor(private localStorageService: LocalStorageService) {
+  }
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -25,8 +36,8 @@ export class JWTAuthenticationInterceptor implements HttpInterceptor {
   }
 
   private getHeaders(): { [key: string]: string } {
-    const access = localStorage.getItem(JWTDefaults.accessHeader);
-    const refrash = localStorage.getItem(JWTDefaults.refrashHeader);
+    const access = this.localStorageService.getItem(JWTDefaults.accessHeader);
+    const refrash = this.localStorageService.getItem(JWTDefaults.refrashHeader);
 
     if (access && refrash) {
       return {
@@ -52,9 +63,9 @@ export class JWTAuthenticationInterceptor implements HttpInterceptor {
   private refrashToken(headers: HttpHeaders, headerName: string): void {
     if (headers.has(headerName)) {
       const token = headers.get(headerName);
-      localStorage.setItem(headerName, token);
+      this.localStorageService.setItem(headerName, token);
     } else {
-      localStorage.removeItem(headerName);
+      this.localStorageService.removeItem(headerName);
     }
   }
 }

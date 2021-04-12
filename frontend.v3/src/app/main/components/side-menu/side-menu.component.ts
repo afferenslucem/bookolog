@@ -1,13 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { BookStatus } from 'src/app/modules/book/models/book-status';
-import { NotificationService } from 'src/app/modules/notification/services/notification.service';
-import { environment } from '../../../../environments/environment';
-import { AuthService } from '../../../modules/auth/services/auth.service';
-import { CacheService } from '../../services/cache.service';
-import { SwUpdate } from '@angular/service-worker';
-import { mapTo, startWith } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Router} from '@angular/router';
+import {BookStatus} from 'src/app/modules/book/models/book-status';
+import {NotificationService} from 'src/app/modules/notification/services/notification.service';
+import {environment} from '../../../../environments/environment';
+import {AuthService} from '../../../modules/auth/services/auth.service';
+import {SwUpdate} from '@angular/service-worker';
+import {mapTo, startWith} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-side-menu',
@@ -29,7 +28,6 @@ export class SideMenuComponent implements OnInit {
   public constructor(
     private router: Router,
     private auth: AuthService,
-    private cache: CacheService,
     private notification: NotificationService,
     private swUpdate: SwUpdate,
   ) {}
@@ -45,7 +43,6 @@ export class SideMenuComponent implements OnInit {
 
   public async clearCache(): Promise<void> {
     try {
-      await this.cache.clearAllCache();
       this.notification.createInfoNotification('Кэш очищен');
     } catch (e) {
       this.notification.createErrorNotification('Не удалось очистить кэш');

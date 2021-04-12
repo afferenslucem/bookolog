@@ -2,12 +2,12 @@ import {BookStatus} from '../models/book-status';
 import {BookType} from '../models/book-type';
 import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
 import {BookDataForm} from './book-data-form';
-import {ProgressAlgorithmSolver} from './progress-algorithm-solver';
 import {FormGroup} from '@angular/forms';
 import {Book} from '../models/book';
 import {Router} from '@angular/router';
 import {DateUtils} from '../../../main/utils/date-utils';
 import {CollectionService} from '../../collection/services/collection.service';
+import {ProgressAlgorithmService} from '../services/progress-algorithm.service';
 
 export abstract class AbstractBookDataForm {
   public BookType: typeof BookType = BookType;
@@ -18,6 +18,7 @@ export abstract class AbstractBookDataForm {
   protected constructor(
     protected router: Router,
     private collectionService: CollectionService,
+    protected progressAlgorithmService: ProgressAlgorithmService,
     ) {
   }
 
@@ -63,11 +64,11 @@ export abstract class AbstractBookDataForm {
   }
 
   public get progressAlgorithmPreference(): ProgressAlgorithmType {
-    return ProgressAlgorithmSolver.getAlgorithm(this.type);
+    return this.progressAlgorithmService.getAlgorithm(this.type);
   }
 
   public set progressAlgorithmPreference(v: ProgressAlgorithmType) {
-    ProgressAlgorithmSolver.setAlgorithm(this.type, v);
+    this.progressAlgorithmService.setAlgorithm(this.type, v);
   }
 
   public get form(): FormGroup {

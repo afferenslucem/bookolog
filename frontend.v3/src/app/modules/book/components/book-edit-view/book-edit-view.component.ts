@@ -2,12 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Data, Router} from '@angular/router';
 import _ from 'declarray';
 import {Observable} from 'rxjs';
-import {filter, map, startWith} from 'rxjs/operators';
+import {map, startWith} from 'rxjs/operators';
 import {getConsoleLogger} from '../../../../main/app.logging';
 import {Action} from '../../../../main/resolvers/action.resolver';
 import {DateUtils} from '../../../../main/utils/date-utils';
 import {FuzzySearch} from '../../../../main/utils/fuzzy-search';
-import {StringComparer} from '../../../../main/utils/string.comparer';
 import {Collection} from '../../../collection/models/collection';
 import {NotificationService} from '../../../notification/services/notification.service';
 import {TitleService} from '../../../ui/service/title.service';
@@ -15,11 +14,11 @@ import {Book} from '../../models/book';
 import {BookStatus} from '../../models/book-status';
 import {BookService} from '../../services/book.service';
 import {Location} from '@angular/common';
-import {ProgressAlgorithmSolver} from '../../utils/progress-algorithm-solver';
 import {CollectionService} from '../../../collection/services/collection.service';
 import {BookDataForm} from '../../utils/book-data-form';
 import {AbstractBookDataForm} from '../../utils/abstract-book-data-form';
 import {BookSortUtils} from '../../../../main/utils/book-sort-utils';
+import {ProgressAlgorithmService} from '../../services/progress-algorithm.service';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -46,9 +45,10 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     private bookService: BookService,
     private location: Location,
     collectionService: CollectionService,
+    progressAlgorithmService: ProgressAlgorithmService,
     router: Router,
   ) {
-    super(router, collectionService);
+    super(router, collectionService, progressAlgorithmService);
 
     activatedRoute.data.subscribe(data => this.onDataInit(data));
   }
@@ -152,7 +152,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
 
   private formFromBook(book: Book): void {
     this.bookForm = new BookDataForm(book);
-    this.book.progressType = this.action === Action.Create ? ProgressAlgorithmSolver.getAlgorithm(this.book.type) : this.book.progressType;
+    this.book.progressType = this.action === Action.Create ? this.progressAlgorithmService.getAlgorithm(this.book.type) : this.book.progressType;
   }
 
   public onStatusChange(status: BookStatus): void {

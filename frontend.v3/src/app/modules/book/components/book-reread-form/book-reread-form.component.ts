@@ -10,6 +10,7 @@ import {BookDate} from '../../models/book-date';
 import {BookDataForm} from '../../utils/book-data-form';
 import {AbstractBookDataForm} from '../../utils/abstract-book-data-form';
 import {CollectionService} from '../../../collection/services/collection.service';
+import {ProgressAlgorithmService} from '../../services/progress-algorithm.service';
 
 @Component({
   selector: 'app-book-reread-form',
@@ -25,9 +26,10 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
     public titleService: TitleService,
     private bookService: BookService,
     collectionService: CollectionService,
+    progressAlgorithmService: ProgressAlgorithmService,
     router: Router,
   ) {
-    super(router, collectionService);
+    super(router, collectionService, progressAlgorithmService);
 
     activatedRoute.data.subscribe(data => this.onDataInit(data));
   }
