@@ -1,12 +1,12 @@
-import { BookData } from '../models/book-data';
-import { BookStatus } from '../models/book-status';
-import { BookType } from '../models/book-type';
-import { Book } from '../models/book';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
-import { ProgressAlgorithmSolver } from './progress-algorithm-solver';
-import { BookDate } from '../models/book-date';
-import { Observable } from 'rxjs';
+import {BookData} from '../models/book-data';
+import {BookStatus} from '../models/book-status';
+import {BookType} from '../models/book-type';
+import {Book} from '../models/book';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
+import {ProgressAlgorithmSolver} from './progress-algorithm-solver';
+import {BookDate} from '../models/book-date';
+import {Observable} from 'rxjs';
 
 const defaultValue: BookData = {
   guid: '',
@@ -72,7 +72,7 @@ export class BookDataForm {
     return this.statusControl.value;
   }
   public set status(v: BookStatus) {
-    this.form.get('status').setValue(v);
+    this.statusControl.setValue(v);
   }
   public get statusChanges(): Observable<BookStatus> {
     return this.statusControl.valueChanges;
@@ -92,24 +92,52 @@ export class BookDataForm {
     return this.genreControl.valueChanges;
   }
 
+  public get startedControl(): AbstractControl {
+    return this.form.get('started');
+  }
+
+  public get started(): BookDate {
+    return this.startedControl.value;
+  }
+
   public set started(v: BookDate) {
-    this.form.get('started').setValue(v);
+    this.startedControl.setValue(v);
+  }
+
+  public get finishedControl(): AbstractControl {
+    return this.form.get('finished');
+  }
+
+  public get finished(): BookDate {
+    return this.finishedControl.value;
   }
 
   public set finished(v: BookDate) {
-    this.form.get('finished').setValue(v);
+    this.finishedControl.setValue(v);
+  }
+
+  public get doneUnitsControl(): AbstractControl {
+    return this.form.get('doneUnits');
   }
 
   public set doneUnits(v: number) {
-    this.form.get('doneUnits').setValue(v);
+    this.doneUnitsControl.setValue(v);
+  }
+
+  public get doneUnits(): number {
+    return this.doneUnitsControl.value;
+  }
+
+  public get totalUnitsControl(): AbstractControl {
+    return this.form.get('totalUnits');
   }
 
   public get totalUnits(): number {
-    return this.form.get('totalUnits').value;
+    return this.totalUnitsControl.value;
   }
 
   public set totalUnits(v: number) {
-    this.form.get('totalUnits').setValue(v);
+    this.totalUnitsControl.setValue(v);
   }
 
   public get typeControl(): AbstractControl {

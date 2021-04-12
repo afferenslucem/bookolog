@@ -1,8 +1,8 @@
-import { BookDataForm } from './book-data-form';
-import { BookStatus } from '../models/book-status';
-import { first } from 'rxjs/operators';
-import { BookType } from '../models/book-type';
-import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
+import {BookDataForm} from './book-data-form';
+import {BookStatus} from '../models/book-status';
+import {first} from 'rxjs/operators';
+import {BookType} from '../models/book-type';
+import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
 
 describe('BookDataForm', () => {
   it('should create an instance', () => {
@@ -77,9 +77,33 @@ describe('BookDataForm', () => {
 
       expect(control).toBeTruthy();
     });
+
+    it('totalUnitsControl', () => {
+      const control = bookDataForm.totalUnitsControl;
+
+      expect(control).toBeTruthy();
+    });
+
+    it('doneUnitsControl', () => {
+      const control = bookDataForm.doneUnitsControl;
+
+      expect(control).toBeTruthy();
+    });
+
+    it('startedControl', () => {
+      const control = bookDataForm.startedControl;
+
+      expect(control).toBeTruthy();
+    });
+
+    it('finishedControl', () => {
+      const control = bookDataForm.finishedControl;
+
+      expect(control).toBeTruthy();
+    });
   });
 
-  describe('Setters', () => {
+  describe('Getters', () => {
     let bookDataForm: BookDataForm = null;
 
     beforeEach(() => {
@@ -115,6 +139,14 @@ describe('BookDataForm', () => {
       expect(bookDataForm.totalUnits).toEqual(100);
     });
 
+    it('doneUnits', () => {
+      bookDataForm.snapshot.doneUnits = 100;
+
+      bookDataForm.build();
+
+      expect(bookDataForm.doneUnits).toEqual(100);
+    });
+
     it('type', () => {
       bookDataForm.snapshot.type = BookType.Electronic;
 
@@ -130,9 +162,41 @@ describe('BookDataForm', () => {
 
       expect(bookDataForm.progressType).toEqual(ProgressAlgorithmType.Left);
     });
+
+    it('started', () => {
+      bookDataForm.snapshot.started = {
+        day: 1,
+        month: 2,
+        year: 2003,
+      };
+
+      bookDataForm.build();
+
+      expect(bookDataForm.started).toEqual({
+        day: 1,
+        month: 2,
+        year: 2003,
+      });
+    });
+
+    it('finished', () => {
+      bookDataForm.snapshot.finished = {
+        day: 1,
+        month: 2,
+        year: 2003,
+      };
+
+      bookDataForm.build();
+
+      expect(bookDataForm.finished).toEqual({
+        day: 1,
+        month: 2,
+        year: 2003,
+      });
+    });
   });
 
-  describe('Getters', () => {
+  describe('Setters', () => {
     let bookDataForm: BookDataForm = null;
 
     beforeEach(() => {
@@ -164,7 +228,7 @@ describe('BookDataForm', () => {
       });
     });
 
-    it('started', () => {
+    it('finished', () => {
       bookDataForm.finished = {
         year: 2021,
         month: 4,

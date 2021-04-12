@@ -1,7 +1,8 @@
-import { Book } from './book';
-import { BookData } from './book-data';
-import { BookStatus } from './book-status';
-import { BookType } from './book-type';
+import {Book} from './book';
+import {BookData} from './book-data';
+import {BookStatus} from './book-status';
+import {BookType} from './book-type';
+import {ProgressAlgorithmType} from './progress-algorithm-type';
 
 describe('Book', () => {
   it('should create an instance', () => {
@@ -166,5 +167,52 @@ describe('Book', () => {
     expect(book.note).toEqual(data.note, 'Different notes');
     expect(book.startDate).toEqual(new Date('2019-01-02 00:00:00'));
     expect(book.endDate).toEqual(new Date('2020-03-04 00:00:00'));
+  });
+
+  describe('Done property', () => {
+    let book: Book = null;
+
+    beforeEach(() => {
+      book = new Book({
+        guid: 'guid',
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57',
+        createDate: '2020-11-18 10:57',
+      });
+    });
+
+    it('Left progress', () => {
+      book.progressType = ProgressAlgorithmType.Left;
+      book.totalUnits = 200;
+      book.doneUnits = 50;
+
+      expect(book.done).toEqual(150);
+    });
+
+    it('Left progress with null done', () => {
+      book.progressType = ProgressAlgorithmType.Left;
+      book.totalUnits = 200;
+      book.doneUnits = null;
+
+      expect(book.done).toEqual(null);
+    });
+
+    it('Left progress with null total', () => {
+      book.progressType = ProgressAlgorithmType.Left;
+      book.totalUnits = null;
+      book.doneUnits = 50;
+
+      expect(book.done).toEqual(null);
+    });
+
+    it('Done progress', () => {
+      book.progressType = ProgressAlgorithmType.Done;
+      book.totalUnits = 200;
+      book.doneUnits = 50;
+
+      expect(book.done).toEqual(50);
+    });
   });
 });

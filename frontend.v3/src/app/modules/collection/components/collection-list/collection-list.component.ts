@@ -1,21 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ISequence } from 'declarray/lib/interfaces/i-sequence';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Book } from '../../../book/models/book';
-import { TitleService } from '../../../ui/service/title.service';
-import { Collection } from '../../models/collection';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {ISequence} from 'declarray/lib/interfaces/i-sequence';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Book} from '../../../book/models/book';
+import {TitleService} from '../../../ui/service/title.service';
+import {Collection} from '../../models/collection';
 import _ from 'declarray';
-
-interface CollectionInfo {
-  name: string;
-  guid: string;
-  shouldSync: number;
-  count: number;
-  modifyDate: Date;
-  createDate: Date;
-}
+import {BookSortUtils} from '../../../../main/utils/book-sort-utils';
+import {CollectionInfo} from '../../models/collection-info';
 
 interface BookCollection {
   collection: Collection;
@@ -51,7 +44,7 @@ export class CollectionListComponent implements OnInit {
             createDate: item.collection.createDate,
           }));
 
-        return this.sortCollection(result).toArray();
+        return this.sortCollection(result);
       }),
     );
   }
@@ -82,10 +75,8 @@ export class CollectionListComponent implements OnInit {
       }));
   }
 
-  public sortCollection(collections: ISequence<CollectionInfo>): ISequence<CollectionInfo> {
-    return collections
-      .orderByDescending(item => item.modifyDate)
-      .thenByDescending(item => item.createDate);
+  public sortCollection(collections: ISequence<CollectionInfo>): CollectionInfo[] {
+    return BookSortUtils.sortEntitiesByUsageTimeDesc(collections).toArray();
   }
 
   ngOnInit(): void {

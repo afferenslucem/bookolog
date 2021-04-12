@@ -7,7 +7,7 @@
 <div class="book__authors property" *ngIf="book.authors.length > 0">
   <div class="property__value">
       <span *ngFor="let author of book.authors | capitalize; let last = last" class="link" [routerLink]="['/author', author]">
-        {{author}}<span *ngIf="!last">,</span>
+        <span class="author__value">{{author}}</span><span *ngIf="!last">,</span>
       </span>
   </div>
   <label >Авторы</label>
@@ -25,7 +25,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Тип книги</mat-label>
-    <mat-select formControlName="type">
+    <mat-select class="book__type" formControlName="type">
       <mat-option [value]="BookType.Paper">Бумажная книга</mat-option>
       <mat-option [value]="BookType.Electronic">Электронная книга
       </mat-option>
