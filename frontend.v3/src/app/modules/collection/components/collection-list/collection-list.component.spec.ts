@@ -135,7 +135,7 @@ describe('CollectionListComponent', () => {
         guid: 'id5',
         count: 0,
         createDate: 'date3',
-      }] as any)).select(item => item.guid).toArray();
+      }] as any)).map(item => item.guid);
 
     expect(result).toEqual(['id3', 'id2', 'id5']);
   });
