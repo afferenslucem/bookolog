@@ -27,7 +27,7 @@ export class NotificationFactory {
       guid: this.guidGenerator.generate(),
       text,
       type,
-      timeout: autoclose ? options?.timeout || environment.notificationCloseTime : null
+      timeout: autoclose ? options?.timeout || environment.notificationCloseTime : null,
     };
 
     return new Notification(data);

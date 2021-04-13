@@ -1,5 +1,5 @@
 import { DateMonthValidatorDirective } from './date-month-validator.directive';
-import {FormBuilder, FormControl} from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 
 describe('DateMonthValidatorDirective', () => {
   let validator: DateMonthValidatorDirective = null;
@@ -10,6 +10,7 @@ describe('DateMonthValidatorDirective', () => {
 
   it('should create an instance', () => {
     const directive = new DateMonthValidatorDirective();
+
     expect(directive).toBeTruthy();
   });
 

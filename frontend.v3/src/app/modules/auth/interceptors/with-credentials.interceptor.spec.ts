@@ -20,7 +20,7 @@ describe('WithCredentialsInterceptor', () => {
     interceptor.intercept(req, next);
 
     expect(req.clone).toHaveBeenCalledWith({
-      withCredentials: true
+      withCredentials: true,
     });
 
     expect(next.handle).toHaveBeenCalledTimes(1);

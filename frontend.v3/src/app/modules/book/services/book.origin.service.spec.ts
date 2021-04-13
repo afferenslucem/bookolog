@@ -13,18 +13,17 @@ describe('BookOriginService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
+      imports: [HttpClientTestingModule],
       providers: [
         {
-          provide: UserService, useValue: {
+          provide: UserService,
+          useValue: {
             user: {
-              id: 1
-            }
-          }
-        }
-      ]
+              id: 1,
+            },
+          },
+        },
+      ],
     });
     service = TestBed.inject(BookOriginService);
     httpClient = TestBed.inject(HttpClient);
@@ -36,20 +35,22 @@ describe('BookOriginService', () => {
   });
 
   it('should do getAll', async () => {
-    const allSpy = spyOn(httpClient, 'get').and.returnValue(of([
-      {
-        guid: 'guid1',
-        name: 'name1'
-      },
-    ]));
+    const allSpy = spyOn(httpClient, 'get').and.returnValue(
+      of([
+        {
+          guid: 'guid1',
+          name: 'name1',
+        },
+      ]),
+    );
 
     const result = await service.getAll();
 
     expect(result).toEqual([
       {
         guid: 'guid1',
-        name: 'name1'
-      } as any
+        name: 'name1',
+      } as any,
     ]);
 
     expect(allSpy).toHaveBeenCalledOnceWith('/book/user/1');
@@ -68,12 +69,12 @@ describe('BookOriginService', () => {
 
     await service.sync({
       delete: [],
-      update: []
+      update: [],
     });
 
     expect(syncSpy).toHaveBeenCalledOnceWith('/book/synchronize/', {
       delete: [],
-      update: []
+      update: [],
     });
   });
 });

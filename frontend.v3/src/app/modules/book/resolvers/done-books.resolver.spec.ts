@@ -5,7 +5,7 @@ import { DoneBooksResolver } from './done-books.resolver';
 
 describe('DoneBooksResolver', () => {
   let resolver: DoneBooksResolver;
-  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
+  const spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -14,9 +14,9 @@ describe('DoneBooksResolver', () => {
           provide: BookService,
           useValue: {
             getByStatus: spy,
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     resolver = TestBed.inject(DoneBooksResolver);
   });
@@ -26,7 +26,7 @@ describe('DoneBooksResolver', () => {
   });
 
   it('should requests ToRead', () => {
-    const books = resolver.resolve(null, null);
+    const books = resolver.resolve();
 
     expect(spy).toHaveBeenCalledWith(BookStatus.Done);
     expect(spy).toHaveBeenCalledTimes(1);

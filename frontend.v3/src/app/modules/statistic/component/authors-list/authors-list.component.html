@@ -1,1 +1,1 @@
-<app-statistic-list [data]="authors$ | async" (selected)="selectedAuthor($event)"></app-statistic-list>
+<app-statistic-list (selected)="selectedAuthor($event)" [data]="authors$ | async"></app-statistic-list>

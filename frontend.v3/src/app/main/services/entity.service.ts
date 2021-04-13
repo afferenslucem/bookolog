@@ -8,13 +8,14 @@ import { ISyncableOrigin } from './i-syncable-origin';
 import { DateUtils } from '../utils/date-utils';
 
 export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity> {
-  public constructor(protected storage: EntityStorage<TDTO>, protected origin: ISyncableOrigin<TDTO>) {
-  }
+  public constructor(protected storage: EntityStorage<TDTO>, protected origin: ISyncableOrigin<TDTO>) {}
 
   public async getAll(): Promise<TEntity[]> {
     const data = await this.storage.getAll();
 
-    return _(data).select(item => this.convertFromDTO(item)).toArray();
+    return _(data)
+      .select(item => this.convertFromDTO(item))
+      .toArray();
   }
 
   public async getByGuid(guid: string): Promise<TEntity> {
@@ -30,8 +31,8 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
   }
 
   public async loadAll(): Promise<void> {
-      const data = await this.origin.getAll();
-      await this.storage.restore(data);
+    const data = await this.origin.getAll();
+    await this.storage.restore(data);
   }
 
   public async delete(entity: TEntity): Promise<void> {
@@ -68,12 +69,16 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
   }
 
   public async saveOrUpdateMany(entities: TEntity[]): Promise<TEntity[]> {
-    entities.forEach(item => item.shouldSync = 1);
+    entities.forEach(item => (item.shouldSync = 1));
 
     const dtos = this.convertToDTOArray(entities);
 
-    const toSave = _(dtos).where(item => !item.guid).toArray();
-    const toUpdate = _(dtos).where(item => !!item.guid).toArray();
+    const toSave = _(dtos)
+      .where(item => !item.guid)
+      .toArray();
+    const toUpdate = _(dtos)
+      .where(item => !!item.guid)
+      .toArray();
 
     const updateAwait = this.storage.updateMany(toUpdate);
     const saveAwait = this.storage.saveMany(toSave);
@@ -129,14 +134,12 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
 
     return {
       delete: diff[0].map(item => item.guid),
-      update: diff[1]
+      update: diff[1],
     };
   }
 
   public async sync(local: SyncData<TDTO>, remote: SyncData<TDTO>): Promise<void> {
-    const toDelete: string[] = _(remote.delete)
-      .concat(local.delete)
-      .toArray();
+    const toDelete: string[] = _(remote.delete).concat(local.delete).toArray();
 
     const toUpdate: TDTO[] = _(local.update)
       .select(item => {
@@ -152,13 +155,13 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     await Promise.all([updating, deleting]);
   }
 
+  public getNowUTC(): Date {
+    return DateUtils.nowUTC;
+  }
+
   protected formatDate(date: Date | string): string {
     const temp = format(new Date(date), 'yyyy-MM-dd HH:mm:ss');
 
     return `${temp.slice(0, 10)}T${temp.slice(11, 19)}`;
-  }
-
-  public getNowUTC(): Date {
-    return DateUtils.nowUTC;
   }
 }

@@ -12,10 +12,7 @@ import { User } from '../models/user';
 export class AuthService {
   private logger: ILogger = getConsoleLogger('AuthService');
 
-  constructor(
-    private userService: UserService,
-  ) {
-  }
+  constructor(private userService: UserService) {}
 
   public async login(credentials: Credentials): Promise<User> {
     const user = await this.userService.login(credentials);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Notification } from '../../models/notification';
 import { NotificationType } from '../../models/notification-type';
 import { NotificationService } from '../../services/notification.service';
@@ -9,18 +9,11 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./notification-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotificationItemComponent implements OnInit {
+export class NotificationItemComponent {
   @Input()
   public notification: Notification;
 
-  constructor(private notificationService: NotificationService) { }
-
-  ngOnInit(): void {
-  }
-
-  public close(): void {
-    this.notificationService.close(this.notification.guid);
-  }
+  constructor(private notificationService: NotificationService) {}
 
   public get matColor(): string {
     switch (this.notification.type) {
@@ -33,5 +26,9 @@ export class NotificationItemComponent implements OnInit {
       default:
         return 'primary';
     }
+  }
+
+  public close(): void {
+    this.notificationService.close(this.notification.guid);
   }
 }

@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Data, Router} from '@angular/router';
-import {getConsoleLogger} from '../../../../main/app.logging';
-import {NotificationService} from '../../../notification/services/notification.service';
-import {TitleService} from '../../../ui/service/title.service';
-import {Book} from '../../models/book';
-import {BookStatus} from '../../models/book-status';
-import {BookService} from '../../services/book.service';
-import {BookDate} from '../../models/book-date';
-import {BookDataForm} from '../../utils/book-data-form';
-import {AbstractBookDataForm} from '../../utils/abstract-book-data-form';
-import {CollectionService} from '../../../collection/services/collection.service';
-import {ProgressAlgorithmService} from '../../services/progress-algorithm.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Data, Router } from '@angular/router';
+import { getConsoleLogger } from '../../../../main/app.logging';
+import { NotificationService } from '../../../notification/services/notification.service';
+import { TitleService } from '../../../ui/service/title.service';
+import { Book } from '../../models/book';
+import { BookStatus } from '../../models/book-status';
+import { BookService } from '../../services/book.service';
+import { BookDate } from '../../models/book-date';
+import { BookDataForm } from '../../utils/book-data-form';
+import { AbstractBookDataForm } from '../../utils/abstract-book-data-form';
+import { CollectionService } from '../../../collection/services/collection.service';
+import { ProgressAlgorithmService } from '../../services/progress-algorithm.service';
 
 @Component({
   selector: 'app-book-reread-form',

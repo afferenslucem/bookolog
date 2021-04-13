@@ -1,1 +1,1 @@
-<app-statistic-list [data]="genres$ | async" (selected)="selectedGenre($event)"></app-statistic-list>
+<app-statistic-list (selected)="selectedGenre($event)" [data]="genres$ | async"></app-statistic-list>

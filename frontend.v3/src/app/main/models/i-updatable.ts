@@ -1,3 +1,3 @@
 export interface IUpdatable {
-    shouldSync?: number;
+  shouldSync?: number;
 }

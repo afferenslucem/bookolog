@@ -15,10 +15,7 @@ export class BookHeaderComponent implements OnInit {
   @Input()
   public truncate = true;
 
-  constructor(public actionService: BookActionService) { }
-
-  ngOnInit(): void {
-  }
+  constructor(public actionService: BookActionService) {}
 
   public get editAllowed(): boolean {
     return this.actionService.editAllowed;
@@ -31,4 +28,6 @@ export class BookHeaderComponent implements OnInit {
   public get name(): string {
     return this.book.name;
   }
+
+  ngOnInit(): void {}
 }

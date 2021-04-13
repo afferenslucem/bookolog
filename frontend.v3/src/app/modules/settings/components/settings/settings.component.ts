@@ -4,11 +4,10 @@ import { TitleService } from '../../../ui/service/title.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
-
-  constructor(private titleService: TitleService) { }
+  constructor(private titleService: TitleService) {}
 
   ngOnInit(): void {
     this.titleService.setSettings();

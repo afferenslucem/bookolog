@@ -12,11 +12,7 @@ import { TitleService } from '../../service/title.service';
 export class TitleComponent implements OnInit {
   public TitleText: typeof TitleText = TitleText;
 
-  constructor(private titleService: TitleService) {
-  }
-
-  ngOnInit(): void {
-  }
+  constructor(private titleService: TitleService) {}
 
   public get title$(): Observable<TitleText> {
     return this.titleService.title$;
@@ -25,4 +21,6 @@ export class TitleComponent implements OnInit {
   public get custom$(): Observable<string> {
     return this.titleService.custom$;
   }
+
+  ngOnInit(): void {}
 }

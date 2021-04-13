@@ -13,16 +13,16 @@ import { YearStatisticComponent } from './component/year-statistic/year-statisti
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RouterModule } from '@angular/router';
 
-
 @NgModule({
-  declarations: [StatisticListComponent, TagsListComponent, AuthorsListComponent, GenresListComponent, BookFilteredComponent, YearsListComponent, YearStatisticComponent],
-  imports: [
-    CommonModule,
-    MatListModule,
-    FormattingModule,
-    BookModule,
-    ScrollingModule,
-    RouterModule,
+  declarations: [
+    StatisticListComponent,
+    TagsListComponent,
+    AuthorsListComponent,
+    GenresListComponent,
+    BookFilteredComponent,
+    YearsListComponent,
+    YearStatisticComponent,
   ],
+  imports: [CommonModule, MatListModule, FormattingModule, BookModule, ScrollingModule, RouterModule],
 })
-export class StatisticModule { }
+export class StatisticModule {}

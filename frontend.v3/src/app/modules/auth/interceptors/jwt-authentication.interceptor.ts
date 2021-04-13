@@ -1,28 +1,17 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpHeaders,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponseBase,
-} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {filter, tap} from 'rxjs/operators';
-import {JWTDefaults} from '../models/jwt-defaults';
-import {LocalStorageService} from '../../../main/services/local-storage.service';
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponseBase } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
+import { JWTDefaults } from '../models/jwt-defaults';
+import { LocalStorageService } from '../../../main/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JWTAuthenticationInterceptor implements HttpInterceptor {
-  public constructor(private localStorageService: LocalStorageService) {
-  }
+  public constructor(private localStorageService: LocalStorageService) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const headers = this.getHeaders();
 
     const clone = req.clone({
@@ -30,8 +19,8 @@ export class JWTAuthenticationInterceptor implements HttpInterceptor {
     });
 
     return next.handle(clone).pipe(
-      filter((item) => item.type !== 0),
-      tap((item) => this.onResponse(item))
+      filter(item => item.type !== 0),
+      tap(item => this.onResponse(item)),
     );
   }
 

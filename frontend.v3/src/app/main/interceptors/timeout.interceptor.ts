@@ -13,8 +13,7 @@ export class TimeoutInterceptor implements HttpInterceptor {
     namespace: 'Interceptor',
   });
 
-  public constructor() {
-  }
+  public constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const timeoutValue = Number(req.headers.get('timeout')) || 20 * 1000;

@@ -10,11 +10,8 @@ describe('TagsInputComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [BookTagsInputComponent],
-      imports: [
-        MatAutocompleteModule,
-      ],
-    })
-      .compileComponents();
+      imports: [MatAutocompleteModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -14,14 +14,11 @@ export class PreloaderInterceptor implements HttpInterceptor {
     namespace: 'Interceptor',
   });
 
-  public constructor(private preloaderService: PreloaderService) {
-  }
+  public constructor(private preloaderService: PreloaderService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.preloaderService.show();
 
-    return next.handle(req).pipe(
-      finalize(() => this.preloaderService.hide()),
-    );
+    return next.handle(req).pipe(finalize(() => this.preloaderService.hide()));
   }
 }

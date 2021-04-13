@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-edit-icon',
   templateUrl: './edit-icon.component.html',
-  styleUrls: ['./edit-icon.component.scss']
+  styleUrls: ['./edit-icon.component.scss'],
 })
 export class EditIconComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -1,20 +1,17 @@
-import {Injectable} from '@angular/core';
-import {AppData} from '../../../main/models/app-data';
-import {AppSyncData} from '../../../main/models/app-sync-data';
-import {Credentials} from '../../auth/models/credentials';
-import {RegistrationData} from '../../auth/models/registration-data';
-import {User} from '../../auth/models/user';
-import {UserOriginService} from './user.origin.service';
-import {LocalStorageService} from '../../../main/services/local-storage.service';
+import { Injectable } from '@angular/core';
+import { AppData } from '../../../main/models/app-data';
+import { AppSyncData } from '../../../main/models/app-sync-data';
+import { Credentials } from '../../auth/models/credentials';
+import { RegistrationData } from '../../auth/models/registration-data';
+import { User } from '../../auth/models/user';
+import { UserOriginService } from './user.origin.service';
+import { LocalStorageService } from '../../../main/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(
-    private userOrigin: UserOriginService,
-    private localStorageService: LocalStorageService,
-  ) {
+  constructor(private userOrigin: UserOriginService, private localStorageService: LocalStorageService) {
     this.recoverUser();
   }
 
@@ -95,6 +92,10 @@ export class UserService {
     this.saveUser();
   }
 
+  public saveUser(): void {
+    this.localStorageService.setItem('user', JSON.stringify(this._user));
+  }
+
   private recoverUser(): User {
     const saved = this.localStorageService.getItem('user');
 
@@ -105,9 +106,5 @@ export class UserService {
     } else {
       return null;
     }
-  }
-
-  public saveUser(): void {
-    this.localStorageService.setItem('user', JSON.stringify(this._user));
   }
 }

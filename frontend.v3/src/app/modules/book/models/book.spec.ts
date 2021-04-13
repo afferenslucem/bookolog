@@ -1,19 +1,21 @@
-import {Book} from './book';
-import {BookData} from './book-data';
-import {BookStatus} from './book-status';
-import {BookType} from './book-type';
-import {ProgressAlgorithmType} from './progress-algorithm-type';
+import { Book } from './book';
+import { BookData } from './book-data';
+import { BookStatus } from './book-status';
+import { BookType } from './book-type';
+import { ProgressAlgorithmType } from './progress-algorithm-type';
 
 describe('Book', () => {
   it('should create an instance', () => {
-    expect(new Book({
-      guid: 'guid',
-      name: 'name',
-      type: 1,
-      status: 1,
-      modifyDate: '2020-11-18 10:57',
-      createDate: '2020-11-18 10:57',
-    })).toBeTruthy();
+    expect(
+      new Book({
+        guid: 'guid',
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57',
+        createDate: '2020-11-18 10:57',
+      }),
+    ).toBeTruthy();
   });
 
   it('map empty correct', () => {
@@ -37,16 +39,24 @@ describe('Book', () => {
     expect(book.totalUnits).toEqual(0, 'Different totalUnits');
     expect(book.doneUnits).toEqual(0, 'Different doneUnits');
     expect(book.genre).toEqual(undefined, 'Different genres');
-    expect(book.started).toEqual({
-      year: undefined,
-      month: undefined,
-      day: undefined
-    }, 'Different start dates');
-    expect(book.finished).toEqual({
-      year: undefined,
-      month: undefined,
-      day: undefined
-    }, 'Different end dates');
+    expect(book.started).toEqual(
+      {
+        year: undefined,
+        month: undefined,
+        day: undefined,
+      },
+      'Different start dates',
+    );
+
+    expect(book.finished).toEqual(
+      {
+        year: undefined,
+        month: undefined,
+        day: undefined,
+      },
+      'Different end dates',
+    );
+
     expect(book.type).toEqual(BookType.Electronic, 'Different types');
     expect(book.modifyDate).toEqual(new Date('2020-11-18 10:57:00'), 'Different modify dates');
     expect(book.createDate).toEqual(new Date('2020-11-18 09:57:00'), 'Different create dates');
@@ -82,7 +92,7 @@ describe('Book', () => {
       startDate: '2020-11-10 10:34',
       endDate: '2020-11-11 11:11',
       rereadedBy: ['guid1', 'guid2'],
-      rereadingBookGuid: 'guid3'
+      rereadingBookGuid: 'guid3',
     };
 
     const book = new Book(data);
@@ -96,16 +106,24 @@ describe('Book', () => {
     expect(book.totalUnits).toEqual(data.totalUnits, 'Different totalUnits');
     expect(book.doneUnits).toEqual(data.doneUnits, 'Different doneUnits');
     expect(book.genre).toEqual(data.genre, 'Different genres');
-    expect(book.started).toEqual({
-      year: data.startDateYear,
-      month: data.startDateMonth,
-      day: data.startDateDay
-    }, 'Different start dates');
-    expect(book.finished).toEqual({
-      year: data.endDateYear,
-      month: data.endDateMonth,
-      day: data.endDateDay
-    }, 'Different end dates');
+    expect(book.started).toEqual(
+      {
+        year: data.startDateYear,
+        month: data.startDateMonth,
+        day: data.startDateDay,
+      },
+      'Different start dates',
+    );
+
+    expect(book.finished).toEqual(
+      {
+        year: data.endDateYear,
+        month: data.endDateMonth,
+        day: data.endDateDay,
+      },
+      'Different end dates',
+    );
+
     expect(book.type).toEqual(BookType.Electronic, 'Different types');
     expect(book.modifyDate).toEqual(new Date('2020-11-18 10:57:00'), 'Different modify dates');
     expect(book.createDate).toEqual(new Date('2020-11-18 09:57:00'), 'Different create dates');
@@ -151,16 +169,24 @@ describe('Book', () => {
     expect(book.totalUnits).toEqual(data.totalUnits, 'Different totalUnits');
     expect(book.doneUnits).toEqual(data.doneUnits, 'Different doneUnits');
     expect(book.genre).toEqual(data.genre, 'Different genres');
-    expect(book.started).toEqual({
-      year: data.startDateYear,
-      month: data.startDateMonth,
-      day: data.startDateDay
-    }, 'Different start dates');
-    expect(book.finished).toEqual({
-      year: data.endDateYear,
-      month: data.endDateMonth,
-      day: data.endDateDay
-    }, 'Different end dates');
+    expect(book.started).toEqual(
+      {
+        year: data.startDateYear,
+        month: data.startDateMonth,
+        day: data.startDateDay,
+      },
+      'Different start dates',
+    );
+
+    expect(book.finished).toEqual(
+      {
+        year: data.endDateYear,
+        month: data.endDateMonth,
+        day: data.endDateDay,
+      },
+      'Different end dates',
+    );
+
     expect(book.type).toEqual(BookType.Electronic, 'Different types');
     expect(book.modifyDate).toEqual(new Date('2020-11-18 10:57:00'), 'Different modify dates');
     expect(book.createDate).toEqual(new Date('2020-11-18 09:57:00'), 'Different create dates');

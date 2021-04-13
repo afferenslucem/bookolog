@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { PadStartPipe } from './pad-start.pipe';
 
 @Pipe({
-  name: 'timifyUnits'
+  name: 'timifyUnits',
 })
 export class TimifyUnitsPipe implements PipeTransform {
   transform(units: number): string {

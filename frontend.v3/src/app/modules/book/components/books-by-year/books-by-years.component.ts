@@ -8,7 +8,7 @@ import { Book } from '../../models/book';
 @Component({
   selector: 'app-books-by-years',
   templateUrl: './books-by-years.component.html',
-  styleUrls: [ './books-by-years.component.scss' ],
+  styleUrls: ['./books-by-years.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksByYearsComponent implements OnInit {
@@ -18,8 +18,7 @@ export class BooksByYearsComponent implements OnInit {
   public undefinedYear$: Promise<IGroupedData<number, Book[]>>;
   private orderedBooks: ISequence<IGroupedData<number, Book[]>>;
 
-  constructor() {
-  }
+  constructor() {}
 
   @Input()
   public set books(v: Book[]) {
@@ -28,7 +27,10 @@ export class BooksByYearsComponent implements OnInit {
       .thenByDescending(item => item.finished.day || -1)
       .thenByDescending(item => item.modifyDate)
       .thenByDescending(item => item.createDate)
-      .groupBy(item => item.finished.year || -1, group => group.toArray())
+      .groupBy(
+        item => item.finished.year || -1,
+        group => group.toArray(),
+      )
       .orderByDescending(item => item.key);
 
     this.years$ = this.orderedBooks.promisify().toArray();
@@ -38,8 +40,7 @@ export class BooksByYearsComponent implements OnInit {
     this.undefinedYear$ = this.years$.then(() => this.orderedBooks.takeLast(1).firstOrDefault(null, item => item.key === -1));
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public bookTrackBy(index: number, item: Book): string {
     return BookTrackBy.trackBy(index, item);

@@ -11,16 +11,15 @@ describe('CollectionStorageService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: UserService, useValue: {
+          provide: UserService,
+          useValue: {
             user: {
-              login: 'hrodvitnir'
-            }
-          }
-        }
+              login: 'hrodvitnir',
+            },
+          },
+        },
       ],
-      imports: [
-        HttpClientTestingModule,
-      ]
+      imports: [HttpClientTestingModule],
     });
     service = TestBed.inject(CollectionStorageService);
   });

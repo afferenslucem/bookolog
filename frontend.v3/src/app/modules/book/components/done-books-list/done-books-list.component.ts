@@ -11,9 +11,9 @@ import _ from 'declarray';
 @Component({
   selector: 'app-done-books-list',
   templateUrl: './done-books-list.component.html',
-  styleUrls: [ './done-books-list.component.scss' ],
+  styleUrls: ['./done-books-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ BookActionService ],
+  providers: [BookActionService],
 })
 export class DoneBooksListComponent implements OnInit {
   public books$: Observable<Book[]>;

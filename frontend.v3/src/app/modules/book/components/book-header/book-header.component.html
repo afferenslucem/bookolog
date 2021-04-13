@@ -1,7 +1,7 @@
-<div class="book-line__name" [class.truncate-text]="truncate">{{ name }}</div>
+<div [class.truncate-text]="truncate" class="book-line__name">{{ name }}</div>
 <div class="book-line__icons">
-  <mat-icon class="sync-icon" *ngIf="shouldSync">update</mat-icon>
-  <mat-icon class="edit-icon" *ngIf="editAllowed" [routerLink]="['/book/edit', book.guid]"
-            (click)="$event.stopPropagation()">edit
+  <mat-icon *ngIf="shouldSync" class="sync-icon">update</mat-icon>
+  <mat-icon (click)="$event.stopPropagation()" *ngIf="editAllowed" [routerLink]="['/book/edit', book.guid]"
+            class="edit-icon">edit
   </mat-icon>
 </div>

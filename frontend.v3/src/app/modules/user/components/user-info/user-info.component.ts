@@ -12,11 +12,7 @@ import { UserService } from '../../services/user.service';
 export class UserInfoComponent implements OnInit {
   public count$: Promise<number>;
 
-  constructor(private userService: UserService, private bookService: BookService) { }
-
-  ngOnInit(): void {
-    this.count$ = this.bookService.getCountByStatus(BookStatus.Done);
-  }
+  constructor(private userService: UserService, private bookService: BookService) {}
 
   public get login(): string {
     return this.userService.user.login;
@@ -27,6 +23,10 @@ export class UserInfoComponent implements OnInit {
   }
 
   public get avatarUrl(): string {
-    return 'url(\'' + environment.filePath + this.avatar + '\')';
+    return "url('" + environment.filePath + this.avatar + "')";
+  }
+
+  ngOnInit(): void {
+    this.count$ = this.bookService.getCountByStatus(BookStatus.Done);
   }
 }

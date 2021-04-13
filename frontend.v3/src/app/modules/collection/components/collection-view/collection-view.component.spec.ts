@@ -24,31 +24,31 @@ describe('CollectionComponent', () => {
       declarations: [CollectionViewComponent],
       providers: [
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             data: of({
               collection: {
                 name: 'name',
                 description: 'description',
               },
-              books: [{
-                guid: 'id1',
-              }, {
-                guid: 'id2',
-              }, {
-                guid: 'id3',
-              }]
-            })
-          }
+              books: [
+                {
+                  guid: 'id1',
+                },
+                {
+                  guid: 'id2',
+                },
+                {
+                  guid: 'id3',
+                },
+              ],
+            }),
+          },
         },
         { provide: UUIDGeneratorService, useValue: {} },
       ],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        MatDialogModule,
-      ]
-    })
-      .compileComponents();
+      imports: [HttpClientTestingModule, RouterTestingModule, MatDialogModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -104,8 +104,7 @@ describe('CollectionComponent', () => {
     });
 
     it('sort without order', () => {
-      const first = {
-      } as Book;
+      const first = {} as Book;
       const second = {
         collectionOrder: 2,
       } as Book;

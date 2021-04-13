@@ -9,12 +9,8 @@ describe('BookSyncResolver', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
-      providers: [
-        { provide: UUIDGeneratorService, useValue: {} },
-      ]
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: UUIDGeneratorService, useValue: {} }],
     });
     resolver = TestBed.inject(BookSyncResolver);
   });
@@ -29,7 +25,7 @@ describe('BookSyncResolver', () => {
 
       const spy = spyOn(syncer, 'sync').and.resolveTo();
 
-      const result = await resolver.resolve(null, null);
+      const result = await resolver.resolve();
 
       expect(spy).toHaveBeenCalledTimes(1);
       expect(result).toBeTrue();
@@ -40,7 +36,7 @@ describe('BookSyncResolver', () => {
 
       const spy = spyOn(syncer, 'sync').and.rejectWith();
 
-      const result = await resolver.resolve(null, null);
+      const result = await resolver.resolve();
 
       expect(spy).toHaveBeenCalledTimes(1);
       expect(result).toBeFalse();

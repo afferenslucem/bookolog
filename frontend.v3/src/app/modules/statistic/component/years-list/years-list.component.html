@@ -1,1 +1,1 @@
-<app-statistic-list [data]="years$ | async" (selected)="selectedYear($event)"></app-statistic-list>
+<app-statistic-list (selected)="selectedYear($event)" [data]="years$ | async"></app-statistic-list>

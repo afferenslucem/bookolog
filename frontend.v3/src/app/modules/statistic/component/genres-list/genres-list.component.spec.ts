@@ -14,7 +14,7 @@ describe('GenresListComponent', () => {
   let titleService: TitleService;
   let router: Router;
 
-  let books: Book[] = [
+  const books: Book[] = [
     new Book({
       genre: 'One',
     } as any),
@@ -32,20 +32,18 @@ describe('GenresListComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [GenresListComponent],
-      imports: [
-        RouterTestingModule,
-      ],
+      imports: [RouterTestingModule],
       providers: [
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             data: of({
               books,
             }),
-          }
-        }
-      ]
-    })
-      .compileComponents();
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -72,12 +70,12 @@ describe('GenresListComponent', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should counts by genres', async () => {
+  it('should counts by genres', () => {
     const result = component.countGenres(books);
 
     const expected = [
-      { key: 'two', group: 2},
-      { key: 'One', group: 1},
+      { key: 'two', group: 2 },
+      { key: 'One', group: 1 },
     ] as any;
 
     expect(result).toEqual(expected);
@@ -91,7 +89,7 @@ describe('GenresListComponent', () => {
     expect(spy).toHaveBeenCalledOnceWith(['/genre', 'ping']);
   });
 
-  it('should set title', async () => {
+  it('should set title', () => {
     expect(titleService.title).toEqual(TitleText.GenresStatistic);
   });
 });

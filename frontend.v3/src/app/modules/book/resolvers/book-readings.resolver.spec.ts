@@ -1,13 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { CollectionService } from '../../collection/services/collection.service';
 import { BookService } from '../services/book.service';
-import { BookResolver } from './book.resolver';
-import {BookReadingsResolver} from './book-readings.resolver';
+import { BookReadingsResolver } from './book-readings.resolver';
 
 describe('BookReadingsResolver', () => {
   let resolver: BookReadingsResolver;
-  let booksSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
+  const booksSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,9 +14,9 @@ describe('BookReadingsResolver', () => {
           provide: BookService,
           useValue: {
             getAllReadings: booksSpy,
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     resolver = TestBed.inject(BookReadingsResolver);
   });
@@ -36,7 +34,7 @@ describe('BookReadingsResolver', () => {
       },
     } as any;
 
-    const status = await resolver.resolve(route, null);
+    const status = await resolver.resolve(route);
 
     expect(booksSpy).toHaveBeenCalledWith('guid1');
     expect(booksSpy).toHaveBeenCalledTimes(1);

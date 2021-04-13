@@ -17,21 +17,19 @@ describe('CollectionListComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [CollectionListComponent],
-      imports: [
-        RouterTestingModule,
-      ],
+      imports: [RouterTestingModule],
       providers: [
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             data: of({
               books: [],
-              collections: []
-            })
-          }
+              collections: [],
+            }),
+          },
         },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -57,25 +55,29 @@ describe('CollectionListComponent', () => {
 
     const collections = [
       new Collection({
-        guid: 'id1'
+        guid: 'id1',
       } as any),
       new Collection({
-        guid: 'id2'
+        guid: 'id2',
       } as any),
     ];
 
-    const result = component.countBooksForCollection(books, collections).select(item => ({
-      id: item.collection.guid,
-      count: item.booksForCollection.count(),
-    })).toArray();
+    const result = component
+      .countBooksForCollection(books, collections)
+      .select(item => ({
+        id: item.collection.guid,
+        count: item.booksForCollection.count(),
+      }))
+      .toArray();
 
-    expect(result).toEqual([{
-      id: 'id1',
-      count: 1
-    },
+    expect(result).toEqual([
+      {
+        id: 'id1',
+        count: 1,
+      },
       {
         id: 'id2',
-        count: 2
+        count: 2,
       },
     ]);
   });
@@ -96,46 +98,56 @@ describe('CollectionListComponent', () => {
 
     const collections = [
       new Collection({
-        guid: 'id1'
+        guid: 'id1',
       } as any),
       new Collection({
-        guid: 'id2'
+        guid: 'id2',
       } as any),
       new Collection({
-        guid: 'id3'
+        guid: 'id3',
       } as any),
     ];
 
     const counted = component.countBooksForCollection(books, collections);
 
-    const empty = component.findCollectionsWithoutBooks(books, collections, counted).select(item => ({
-      id: item.collection.guid,
-      count: item.booksForCollection.count(),
-    })).toArray();
+    const empty = component
+      .findCollectionsWithoutBooks(books, collections, counted)
+      .select(item => ({
+        id: item.collection.guid,
+        count: item.booksForCollection.count(),
+      }))
+      .toArray();
 
     expect(empty).toEqual([
       {
         id: 'id3',
-        count: 0
-      }
+        count: 0,
+      },
     ]);
   });
 
   it('sortCollection', () => {
-    const result = component.sortCollection(
-      _([{
-        guid: 'id3',
-        count: 3,
-        modifyDate: 'date3',
-      }, {
-        guid: 'id2',
-        count: 4,
-        modifyDate: 'date2',
-      }, {
-        guid: 'id5',
-        count: 0,
-        createDate: 'date3',
-      }] as any)).map(item => item.guid);
+    const result = component
+      .sortCollection(
+        _([
+          {
+            guid: 'id3',
+            count: 3,
+            modifyDate: 'date3',
+          },
+          {
+            guid: 'id2',
+            count: 4,
+            modifyDate: 'date2',
+          },
+          {
+            guid: 'id5',
+            count: 0,
+            createDate: 'date3',
+          },
+        ] as any),
+      )
+      .map(item => item.guid);
 
     expect(result).toEqual(['id3', 'id2', 'id5']);
   });
@@ -145,6 +157,6 @@ describe('CollectionListComponent', () => {
 
     component.ngOnInit();
 
-    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith();
   });
 });

@@ -2,24 +2,24 @@
 <div class="content">
   <div (click)="navigated.emit()">
     <div class="navigation">
-      <div class="navigation__header" >Списки</div>
+      <div class="navigation__header">Списки</div>
       <div class="navigation__body">
         <mat-list class="book-nav">
           <mat-list-item>
             <div class="book-nav__item">
-              <span class="link" [routerLink]="['/in-progress']">Читаю сейчас</span>
+              <span [routerLink]="['/in-progress']" class="link">Читаю сейчас</span>
               <app-plus-icon [routerLink]="['/book', 'create', BookStatus.InProgress]"></app-plus-icon>
             </div>
           </mat-list-item>
           <mat-list-item>
             <div class="book-nav__item">
-              <span class="link" [routerLink]="['/to-read']">Буду читать</span>
+              <span [routerLink]="['/to-read']" class="link">Буду читать</span>
               <app-plus-icon [routerLink]="['/book', 'create', BookStatus.ToRead]"></app-plus-icon>
             </div>
           </mat-list-item>
           <mat-list-item>
             <div class="book-nav__item">
-              <span class="link" [routerLink]="['/done']">Прочитаные</span>
+              <span [routerLink]="['/done']" class="link">Прочитаные</span>
               <app-plus-icon [routerLink]="['/book', 'create', BookStatus.Done]"></app-plus-icon>
             </div>
           </mat-list-item>
@@ -27,37 +27,37 @@
       </div>
     </div>
     <div class="navigation">
-      <div class="navigation__header" >Статистика</div>
+      <div class="navigation__header">Статистика</div>
       <div class="navigation__body">
         <mat-list class="book-nav">
           <mat-list-item>
-            <span class="link book-nav__item" [routerLink]="['/series']">Серии</span>
+            <span [routerLink]="['/series']" class="link book-nav__item">Серии</span>
             <app-plus-icon [routerLink]="['/series', 'create']"></app-plus-icon>
           </mat-list-item>
           <mat-list-item>
-            <span class="link" [routerLink]="['/years']">Года прочтения</span>
+            <span [routerLink]="['/years']" class="link">Года прочтения</span>
           </mat-list-item>
           <mat-list-item>
-            <span class="link" [routerLink]="['/genres']">Жанры</span>
+            <span [routerLink]="['/genres']" class="link">Жанры</span>
           </mat-list-item>
           <mat-list-item>
-            <span class="link" [routerLink]="['/authors']">Авторы</span>
+            <span [routerLink]="['/authors']" class="link">Авторы</span>
           </mat-list-item>
           <mat-list-item>
-            <span class="link" [routerLink]="['/tags']">Теги</span>
+            <span [routerLink]="['/tags']" class="link">Теги</span>
           </mat-list-item>
         </mat-list>
       </div>
     </div>
     <div class="navigation">
-      <div class="navigation__header" >Аккаунт</div>
+      <div class="navigation__header">Аккаунт</div>
       <div class="navigation__body">
         <mat-list class="book-nav">
           <mat-list-item>
-            <span class="link" routerLink="/settings" >Настройки</span>
+            <span class="link" routerLink="/settings">Настройки</span>
           </mat-list-item>
           <mat-list-item>
-            <span class="link" (click)="logout()">Выйти</span>
+            <span (click)="logout()" class="link">Выйти</span>
           </mat-list-item>
         </mat-list>
       </div>
@@ -67,7 +67,7 @@
         <app-sync-info></app-sync-info>
       </div>
     </div>
-    <span class="dark-text version" (click)="clearCache()">
+    <span (click)="clearCache()" class="dark-text version">
       <span *ngIf="newVersionAvailable | async; else emptyUpdates">
         Доступно обновление
       </span>

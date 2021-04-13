@@ -10,10 +10,9 @@ describe('LoggerWindowComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ LoggerWindowComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
-    })
-.compileComponents();
+      declarations: [LoggerWindowComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -13,18 +13,17 @@ export class IndexedDbService {
   private readonly indexedDB = window.indexedDB;
   private database: IDBDatabase;
 
-  constructor() {
-  }
+  constructor() {}
 
   public open(dbName: string): Promise<Event> {
-    return new Promise<Event>(((resolve, reject) => {
-      if (!!this.database) {
+    return new Promise<Event>((resolve, reject) => {
+      if (this.database) {
         reject('Db already in use');
       }
 
       const request = this.indexedDB.open(dbName, this.version);
 
-      request.onerror = (event) => {
+      request.onerror = event => {
         this.logger.error(`Could not open db ${dbName}`, event);
         reject(event);
       };
@@ -45,7 +44,7 @@ export class IndexedDbService {
         transaction.oncomplete = resolve;
         transaction.onerror = reject;
       };
-    }));
+    });
   }
 
   public close(): void {
@@ -59,13 +58,12 @@ export class IndexedDbService {
     const transaction = this.openTransaction(storeName);
 
     return new Promise<Event>((resolve, reject) => {
-
       const store = transaction.objectStore(storeName);
 
       const tr = store.add(object);
 
-      tr.onerror = (event) => reject(event);
-      tr.onsuccess = (event) => resolve(event);
+      tr.onerror = event => reject(event);
+      tr.onsuccess = event => resolve(event);
     });
   }
 
@@ -77,8 +75,8 @@ export class IndexedDbService {
 
       objects.forEach(item => store.add(item));
 
-      transaction.onerror = (event) => reject(event);
-      transaction.oncomplete = (event) => resolve(event);
+      transaction.onerror = event => reject(event);
+      transaction.oncomplete = event => resolve(event);
     });
   }
 
@@ -86,13 +84,12 @@ export class IndexedDbService {
     const transaction = this.openTransaction(storeName);
 
     return new Promise<Event>((resolve, reject) => {
-
       const store = transaction.objectStore(storeName);
 
       const tr = store.put(object);
 
-      tr.onerror = (event) => reject(event);
-      tr.onsuccess = (event) => resolve(event);
+      tr.onerror = event => reject(event);
+      tr.onsuccess = event => resolve(event);
     });
   }
 
@@ -104,8 +101,8 @@ export class IndexedDbService {
 
       objects.forEach(item => store.put(item));
 
-      transaction.onerror = (event) => reject(event);
-      transaction.oncomplete = (event) => resolve(event);
+      transaction.onerror = event => reject(event);
+      transaction.oncomplete = event => resolve(event);
     });
   }
 
@@ -113,13 +110,12 @@ export class IndexedDbService {
     const transaction = this.openTransaction(storeName);
 
     return new Promise((resolve, reject) => {
-
       const store = transaction.objectStore(storeName);
 
       const tr = store.delete(id);
 
-      tr.onerror = (event) => reject(event);
-      tr.onsuccess = (event) => resolve(event);
+      tr.onerror = event => reject(event);
+      tr.onsuccess = event => resolve(event);
     });
   }
 
@@ -131,8 +127,8 @@ export class IndexedDbService {
 
       ids.forEach(id => store.delete(id));
 
-      transaction.onerror = (event) => reject(event);
-      transaction.oncomplete = (event) => resolve(event);
+      transaction.onerror = event => reject(event);
+      transaction.oncomplete = event => resolve(event);
     });
   }
 
@@ -144,8 +140,8 @@ export class IndexedDbService {
 
       const request = store.getAll();
 
-      request.onerror = (event) => reject(event);
-      request.onsuccess = (event) => resolve(event);
+      request.onerror = event => reject(event);
+      request.onsuccess = event => resolve(event);
     });
   }
 
@@ -159,8 +155,8 @@ export class IndexedDbService {
 
       const request = index.count(value);
 
-      request.onerror = (event) => reject(event);
-      request.onsuccess = (event) => resolve(event);
+      request.onerror = event => reject(event);
+      request.onsuccess = event => resolve(event);
     });
   }
 
@@ -174,8 +170,8 @@ export class IndexedDbService {
 
       const request = index.getAll(IDBKeyRange.only(value));
 
-      request.onerror = (event) => reject(event);
-      request.onsuccess = (event) => resolve(event);
+      request.onerror = event => reject(event);
+      request.onsuccess = event => resolve(event);
     });
   }
 
@@ -189,8 +185,8 @@ export class IndexedDbService {
 
       const request = index.get(IDBKeyRange.only(id));
 
-      request.onerror = (event) => reject(event);
-      request.onsuccess = (event) => resolve(event);
+      request.onerror = event => reject(event);
+      request.onsuccess = event => resolve(event);
     });
   }
 
@@ -202,8 +198,8 @@ export class IndexedDbService {
 
       const request = store.clear();
 
-      request.onerror = (event) => reject(event);
-      request.onsuccess = (event) => resolve(event);
+      request.onerror = event => reject(event);
+      request.onsuccess = event => resolve(event);
     });
   }
 
@@ -212,50 +208,50 @@ export class IndexedDbService {
     const upgradeTransaction = dbEvent.target.transaction;
 
     if (dbEvent.oldVersion < 1) {
-      const objectStore = db.createObjectStore('BooksStore', {keyPath: 'guid'});
-      objectStore.createIndex('guid', 'guid', {unique: true});
-      objectStore.createIndex('type', 'type', {unique: false});
-      objectStore.createIndex('genre', 'genre', {unique: false});
-      objectStore.createIndex('status', 'status', {unique: false});
-      objectStore.createIndex('shouldSync', 'shouldSync', {unique: false});
-      objectStore.createIndex('deleted', 'deleted', {unique: false});
+      const objectStore = db.createObjectStore('BooksStore', { keyPath: 'guid' });
+      objectStore.createIndex('guid', 'guid', { unique: true });
+      objectStore.createIndex('type', 'type', { unique: false });
+      objectStore.createIndex('genre', 'genre', { unique: false });
+      objectStore.createIndex('status', 'status', { unique: false });
+      objectStore.createIndex('shouldSync', 'shouldSync', { unique: false });
+      objectStore.createIndex('deleted', 'deleted', { unique: false });
     }
 
     if (dbEvent.oldVersion < 2) {
-      const objectStore = db.createObjectStore('CollectionsStore', {keyPath: 'guid'});
-      objectStore.createIndex('guid', 'guid', {unique: true});
-      objectStore.createIndex('type', 'type', {unique: false});
-      objectStore.createIndex('shouldSync', 'shouldSync', {unique: false});
-      objectStore.createIndex('deleted', 'deleted', {unique: false});
+      const objectStore = db.createObjectStore('CollectionsStore', { keyPath: 'guid' });
+      objectStore.createIndex('guid', 'guid', { unique: true });
+      objectStore.createIndex('type', 'type', { unique: false });
+      objectStore.createIndex('shouldSync', 'shouldSync', { unique: false });
+      objectStore.createIndex('deleted', 'deleted', { unique: false });
     }
 
     if (dbEvent.oldVersion < 4) {
-      const objectStore = db.createObjectStore('BookCollectionsRecordStore', {keyPath: 'guid'});
-      objectStore.createIndex('collectionId', 'collectionId', {unique: false});
-      objectStore.createIndex('bookId', 'bookId', {unique: false});
+      const objectStore = db.createObjectStore('BookCollectionsRecordStore', { keyPath: 'guid' });
+      objectStore.createIndex('collectionId', 'collectionId', { unique: false });
+      objectStore.createIndex('bookId', 'bookId', { unique: false });
     }
 
     if (dbEvent.oldVersion < 5) {
       db.deleteObjectStore('BookCollectionsRecordStore');
       const objectStore = upgradeTransaction.objectStore('BooksStore');
-      objectStore.createIndex('collectionGuid', 'collectionGuid', {unique: false});
+      objectStore.createIndex('collectionGuid', 'collectionGuid', { unique: false });
     }
 
     if (dbEvent.oldVersion < 6) {
       const objectStore = upgradeTransaction.objectStore('BooksStore');
-      objectStore.createIndex('endDateYear', 'endDateYear', {unique: false});
+      objectStore.createIndex('endDateYear', 'endDateYear', { unique: false });
     }
 
     if (dbEvent.oldVersion < 7) {
       const objectStore = upgradeTransaction.objectStore('BooksStore');
-      objectStore.createIndex('rereadingBookGuid', 'rereadingBookGuid', {unique: false});
+      objectStore.createIndex('rereadingBookGuid', 'rereadingBookGuid', { unique: false });
     }
   }
 
   private openTransaction(objectStore: string, transactionType: 'readwrite' | 'readonly' = 'readwrite'): IDBTransaction {
     const transaction = this.database.transaction([objectStore], transactionType);
 
-    transaction.onerror = (event) => {
+    transaction.onerror = event => {
       this.logger.error(`Transaction failed: `, event);
     };
 

@@ -21,7 +21,7 @@ describe('PreloaderService', () => {
     expect(service._shouldShow).toEqual(1);
   });
 
-  it('should increment index', () => {
+  it('should decrement index', () => {
     service.hide();
 
     // @ts-ignore

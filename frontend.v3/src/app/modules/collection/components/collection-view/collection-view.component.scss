@@ -1,20 +1,20 @@
 @import "~src/styles/variables";
 
 .collection {
+  margin-bottom: $ind-2;
+
+  &__description {
     margin-bottom: $ind-2;
-    
-    &__description {
-        margin-bottom: $ind-2;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+
+    $button-width: calc(50% - #{$ind-1});
+
+    > button {
+      flex: 0 0 #{$button-width}
     }
-    
-    &__buttons {
-        display: flex;
-        justify-content: space-between;
-    
-        $button-width: calc(50% - #{$ind-1});
-    
-        > button {
-            flex: 0 0 #{$button-width}
-        }
-    }
+  }
 }

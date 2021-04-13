@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { UserService } from 'src/app/modules/user/services/user.service';
-import {CroppedEvent} from 'ngx-photo-editor';
+import { CroppedEvent } from 'ngx-photo-editor';
 
 @Component({
   selector: 'app-avatar-change',
@@ -20,6 +20,10 @@ export class AvatarChangeComponent implements OnInit {
   public image: File;
 
   constructor(public userService: UserService, private notification: NotificationService) {}
+
+  public get cropHeight(): number {
+    return window.outerHeight * 0.65;
+  }
 
   public ngOnInit(): void {}
 
@@ -39,9 +43,5 @@ export class AvatarChangeComponent implements OnInit {
     } catch (e) {
       this.notification.createErrorNotification('Неизвестная ошибка');
     }
-  }
-
-  public get cropHeight(): number {
-    return window.outerHeight * 0.65;
   }
 }

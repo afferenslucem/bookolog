@@ -8,15 +8,19 @@ import { BooksByAuthorResolver } from './books-by-author.resolver';
 describe('BooksByAuthorResolver', () => {
   let resolver: BooksByAuthorResolver;
 
-  const booksValue: Book[] = [{
-    authors: ['author1'],
-  }, {
-    authors: ['author1', 'author2'],
-  }, {
-    authors: ['author2'],
-  }] as any;
+  const booksValue: Book[] = [
+    {
+      authors: ['author1'],
+    },
+    {
+      authors: ['author1', 'author2'],
+    },
+    {
+      authors: ['author2'],
+    },
+  ] as any;
 
-  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo(booksValue);
+  const spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo(booksValue);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,7 +49,7 @@ describe('BooksByAuthorResolver', () => {
       },
     } as any;
 
-    const books = await resolver.resolve(route, null);
+    const books = await resolver.resolve(route);
 
     expect(spy).toHaveBeenCalledWith(BookStatus.Done);
     expect(spy).toHaveBeenCalledTimes(1);
@@ -53,10 +57,13 @@ describe('BooksByAuthorResolver', () => {
     expect(authorSpy).toHaveBeenCalledWith('filter');
     expect(authorSpy).toHaveBeenCalledTimes(1);
 
-    expect(books).toEqual([{
-      authors: ['author1'],
-    }, {
-      authors: ['author1', 'author2'],
-    }] as any);
+    expect(books).toEqual([
+      {
+        authors: ['author1'],
+      },
+      {
+        authors: ['author1', 'author2'],
+      },
+    ] as any);
   });
 });

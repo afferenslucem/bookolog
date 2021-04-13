@@ -13,12 +13,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 
 @NgModule({
-  declarations: [
-    SettingsComponent,
-    PasswordChangeComponent,
-    AvatarChangeComponent,
-    EmailChangeComponent,
-  ],
+  declarations: [SettingsComponent, PasswordChangeComponent, AvatarChangeComponent, EmailChangeComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

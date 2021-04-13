@@ -1,8 +1,8 @@
-<form [formGroup]="form" *ngIf="bookForm" appUnitsValidator appDatesValidator (ngSubmit)="submit()">
+<form (ngSubmit)="submit()" *ngIf="bookForm" [formGroup]="form" appDatesValidator appUnitsValidator>
   <mat-form-field appearance="fill">
     <mat-label>Название</mat-label>
-    <input matInput formControlName="name" type="text" required autocomplete="off"/>
-    <mat-error *ngIf="form.get('name').invalid" >
+    <input autocomplete="off" formControlName="name" matInput required type="text"/>
+    <mat-error *ngIf="form.get('name').invalid">
       Это обязательное поле
     </mat-error>
   </mat-form-field>
@@ -11,15 +11,15 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Год выпуска</mat-label>
-    <input matInput formControlName="year" type="number"/>
+    <input formControlName="year" matInput type="number"/>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Жанр</mat-label>
-    <input matInput
+    <input [matAutocomplete]="genreAutocomplete"
            formControlName="genre"
-           type="text"
-           [matAutocomplete]="genreAutocomplete">
+           matInput
+           type="text">
 
     <mat-autocomplete #genreAutocomplete="matAutocomplete">
       <mat-option *ngFor="let genre of genres | async" [value]="genre | capitalize">
@@ -41,7 +41,7 @@
 
     <mat-form-field appearance="fill" class="order">
       <mat-label>Порядок</mat-label>
-      <input matInput formControlName="collectionOrder" type="number" min="1" max="256" step="1"/>
+      <input formControlName="collectionOrder" matInput max="256" min="1" step="1" type="number"/>
     </mat-form-field>
   </div>
 
@@ -66,7 +66,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" [hidden]="status !== BookStatus.InProgress">
+  <mat-form-field [hidden]="status !== BookStatus.InProgress" appearance="fill">
     <mat-label>Прогресс</mat-label>
     <mat-select formControlName="progressType">
       <mat-option [value]="ProgressAlgorithm.Done">{{type == BookType.Audio ? 'Прослушано' : 'Прочитано'}}</mat-option>
@@ -74,8 +74,8 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="book-edit__progress" [ngSwitch]="type" [hidden]="status !== BookStatus.InProgress">
-    <div class="book-edit__progress_audio" *ngSwitchCase="BookType.Audio">
+  <div [hidden]="status !== BookStatus.InProgress" [ngSwitch]="type" class="book-edit__progress">
+    <div *ngSwitchCase="BookType.Audio" class="book-edit__progress_audio">
       <div>
         <mat-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</mat-label>
         <app-book-time-input formControlName="doneUnits"></app-book-time-input>
@@ -85,15 +85,15 @@
         <app-book-time-input formControlName="totalUnits"></app-book-time-input>
       </div>
     </div>
-    <div class="book-edit__progress_audio" *ngSwitchDefault>
+    <div *ngSwitchDefault class="book-edit__progress_audio">
       <mat-form-field appearance="fill">
         <mat-label>Страниц</mat-label>
-        <input matInput type="number" formControlName="doneUnits" min="0" step="1" max="6000" autocomplete="off"/>
+        <input autocomplete="off" formControlName="doneUnits" matInput max="6000" min="0" step="1" type="number"/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Всего</mat-label>
-        <input matInput type="number" formControlName="totalUnits" min="0" step="1" max="6000" autocomplete="off"/>
+        <input autocomplete="off" formControlName="totalUnits" matInput max="6000" min="0" step="1" type="number"/>
       </mat-form-field>
     </div>
 
@@ -118,10 +118,10 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Заметки</mat-label>
-    <textarea matInput rows="4" autocomplete="off" formControlName="note"></textarea>
+    <textarea autocomplete="off" formControlName="note" matInput rows="4"></textarea>
   </mat-form-field>
 
-  <button class="w-100" mat-flat-button [disabled]="form.invalid" color="primary"
+  <button [disabled]="form.invalid" class="w-100" color="primary" mat-flat-button
           type="submit">Сохранить
   </button>
 </form>

@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Action} from 'src/app/main/resolvers/action.resolver';
-import {ILogger} from 'waterlog';
-import {getConsoleLogger} from '../../../../main/app.logging';
-import {DateUtils} from '../../../../main/utils/date-utils';
-import {NotificationService} from '../../../notification/services/notification.service';
-import {TitleService} from '../../../ui/service/title.service';
-import {Collection} from '../../models/collection';
-import {CollectionData} from '../../models/collection-data';
-import {CollectionService} from '../../services/collection.service';
-import {Location} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Action } from 'src/app/main/resolvers/action.resolver';
+import { ILogger } from 'waterlog';
+import { getConsoleLogger } from '../../../../main/app.logging';
+import { DateUtils } from '../../../../main/utils/date-utils';
+import { NotificationService } from '../../../notification/services/notification.service';
+import { TitleService } from '../../../ui/service/title.service';
+import { Collection } from '../../models/collection';
+import { CollectionData } from '../../models/collection-data';
+import { CollectionService } from '../../services/collection.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-collection-edit-view',
@@ -20,9 +20,8 @@ import {Location} from '@angular/common';
 export class CollectionEditViewComponent implements OnInit {
   public form: FormGroup = null;
   public collection: Collection;
-  private logger: ILogger = getConsoleLogger('CollectionEditViewComponent');
   public action: Action;
-
+  private logger: ILogger = getConsoleLogger('CollectionEditViewComponent');
   private defaultData: CollectionData = {
     name: '',
     description: '',
@@ -31,12 +30,14 @@ export class CollectionEditViewComponent implements OnInit {
     modifyDate: '',
   };
 
-  constructor(private titleService: TitleService,
-              private collectionService: CollectionService,
-              private notificationService: NotificationService,
-              private activatedRoute: ActivatedRoute,
-              private location: Location,
-              private router: Router) {
+  constructor(
+    private titleService: TitleService,
+    private collectionService: CollectionService,
+    private notificationService: NotificationService,
+    private activatedRoute: ActivatedRoute,
+    private location: Location,
+    private router: Router,
+  ) {
     this.collection = new Collection({
       name: '',
       description: '',
@@ -61,8 +62,7 @@ export class CollectionEditViewComponent implements OnInit {
     });
   }
 
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {}
 
   public async submit(): Promise<void> {
     const data = Object.assign(this.collection, this.form.value) as Collection;

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookDateInputComponent } from './book-date-input.component';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { FormBuilder, FormControl } from '@angular/forms';
-import {BookDate} from '../../../book/models/book-date';
+import { BookDate } from '../../../book/models/book-date';
 import { DateUtils } from '../../../../main/utils/date-utils';
 
 describe('BookDateInputComponent', () => {
@@ -12,8 +12,7 @@ describe('BookDateInputComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [BookDateInputComponent],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -37,7 +36,7 @@ describe('BookDateInputComponent', () => {
       component.writeValue({
         year: 1997,
         month: 11,
-        day: 23
+        day: 23,
       });
 
       const result = component.form.value;
@@ -45,13 +44,13 @@ describe('BookDateInputComponent', () => {
       expect(result).toEqual({
         year: 1997,
         month: 11,
-        day: 23
+        day: 23,
       });
 
       expect(component.value).toEqual({
         year: 1997,
         month: 11,
-        day: 23
+        day: 23,
       });
     });
 
@@ -62,15 +61,14 @@ describe('BookDateInputComponent', () => {
         day: new FormControl(null),
       });
 
-      component.writeValue({
-      });
+      component.writeValue({});
 
       const result = component.form.value;
 
       expect(result).toEqual({
         year: null,
         month: null,
-        day: null
+        day: null,
       });
     });
   });
@@ -79,13 +77,13 @@ describe('BookDateInputComponent', () => {
     component.writeBookDate({
       year: 2021,
       month: 4,
-      day: 9
+      day: 9,
     });
 
     expect(component.form.value).toEqual({
       year: 2021,
       month: 4,
-      day: 9
+      day: 9,
     });
   });
 
@@ -93,7 +91,7 @@ describe('BookDateInputComponent', () => {
     component.writeCalendarDate({
       year: 2021,
       month: 4,
-      day: 9
+      day: 9,
     });
 
     expect(component.dateControl.value).toEqual(new Date(2021, 3, 9));
@@ -106,7 +104,7 @@ describe('BookDateInputComponent', () => {
     const arg: BookDate = {
       year: 2021,
       month: 4,
-      day: 9
+      day: 9,
     };
 
     component.onBookDateChange(arg);
@@ -125,7 +123,7 @@ describe('BookDateInputComponent', () => {
     const expected: BookDate = {
       year: 2021,
       month: 4,
-      day: 9
+      day: 9,
     };
 
     component.onCalendarDateChange(arg);
@@ -137,7 +135,7 @@ describe('BookDateInputComponent', () => {
   describe('openPicker', () => {
     it('should fill if empty date', () => {
       const pickerMock = {
-        open: jasmine.createSpy()
+        open: jasmine.createSpy(),
       };
 
       const writeValueSpy = spyOn(component, 'writeValue');
@@ -158,7 +156,7 @@ describe('BookDateInputComponent', () => {
 
     it('should pass if filled', () => {
       const pickerMock = {
-        open: jasmine.createSpy()
+        open: jasmine.createSpy(),
       };
 
       const writeValueSpy = spyOn(component, 'writeValue');

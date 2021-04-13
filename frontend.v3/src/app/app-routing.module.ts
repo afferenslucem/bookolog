@@ -26,12 +26,7 @@ const routes: Routes = [
 
     canActivateChild: [LoggedInGuard],
 
-    children: [
-      ...bookListRoutes,
-      ...statisticRoutes,
-      ...settingsRoutes,
-      ...collectionRoutes
-    ],
+    children: [...bookListRoutes, ...statisticRoutes, ...settingsRoutes, ...collectionRoutes],
     resolve: {
       sync: BookSyncResolver,
       user: MeResolver,
@@ -45,8 +40,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

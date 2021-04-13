@@ -3,7 +3,7 @@ import { UserService } from '../../modules/user/services/user.service';
 import { UUIDGenerator } from 'essents';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UUIDGeneratorService {
   private generator: UUIDGenerator;

@@ -14,12 +14,11 @@ describe('YearsListComponent', () => {
   let titleService: TitleService;
   let router: Router;
 
-  let books: Book[] = [
+  const books: Book[] = [
     new Book({
       endDateYear: 2020,
     } as any),
-    new Book({
-    } as any),
+    new Book({} as any),
     new Book({
       endDateYear: 2021,
     } as any),
@@ -31,20 +30,18 @@ describe('YearsListComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [YearsListComponent],
-      imports: [
-        RouterTestingModule,
-      ],
+      imports: [RouterTestingModule],
       providers: [
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             data: of({
               books,
             }),
-          }
-        }
-      ]
-    })
-      .compileComponents();
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -71,13 +68,13 @@ describe('YearsListComponent', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should counts by years', async () => {
+  it('should counts by years', () => {
     const result = component.countYears(books);
 
     const expected = [
-      { key: '2021', group: 2},
-      { key: '2020', group: 1},
-      { key:  'Не указан', group: 1},
+      { key: '2021', group: 2 },
+      { key: '2020', group: 1 },
+      { key: 'Не указан', group: 1 },
     ] as any;
 
     expect(result).toEqual(expected);
@@ -91,7 +88,7 @@ describe('YearsListComponent', () => {
     expect(spy).toHaveBeenCalledOnceWith(['/year', 'ping']);
   });
 
-  it('should set title', async () => {
+  it('should set title', () => {
     expect(titleService.title).toEqual(TitleText.YearsStatistic);
   });
 });

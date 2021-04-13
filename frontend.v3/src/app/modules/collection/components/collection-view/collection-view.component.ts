@@ -8,10 +8,7 @@ import { TitleService } from '../../../ui/service/title.service';
 import { Collection } from '../../models/collection';
 import _ from 'declarray';
 import { CollectionService } from '../../services/collection.service';
-import {
-  CollectionDeleteDialogComponent,
-  DeleteDialogResult,
-} from '../collection-delete-dialog/collection-delete-dialog.component';
+import { CollectionDeleteDialogComponent, DeleteDialogResult } from '../collection-delete-dialog/collection-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BookService } from 'src/app/modules/book/services/book.service';
 
@@ -36,22 +33,24 @@ export class CollectionViewComponent implements OnInit {
     const data$ = activatedRoute.data;
 
     this.books$ = activatedRoute.data.pipe(
-      filter((item) => item.books),
-      map((item) => item.books as Book[]),
-      map((books) => this.orderBooks(books))
+      filter(item => item.books),
+      map(item => item.books as Book[]),
+      map(books => this.orderBooks(books)),
     );
 
-    data$.pipe(
-      filter((item) => item.collection),
-      map((item) => item.collection as Collection),
-      tap((item) => this.setTitle(item.name)),
-      tap(item => this.collection = item),
-    ).subscribe();
+    data$
+      .pipe(
+        filter(item => item.collection),
+        map(item => item.collection as Collection),
+        tap(item => this.setTitle(item.name)),
+        tap(item => (this.collection = item)),
+      )
+      .subscribe();
   }
 
   public orderBooks(books: Book[]): Book[] {
     return _(books)
-      .orderBy((book) => book.collectionOrder || Number.MAX_VALUE)
+      .orderBy(book => book.collectionOrder || Number.MAX_VALUE)
       .toArray();
   }
 
@@ -61,7 +60,7 @@ export class CollectionViewComponent implements OnInit {
     return BookTrackBy.trackBy(index, item);
   }
 
-  public async openDeleteDialog(collection: Collection): Promise<void> {
+  public openDeleteDialog(collection: Collection): void {
     const dialogRef = this.dialog.open(CollectionDeleteDialogComponent, {
       width: '90%',
       maxWidth: '300px',
@@ -69,12 +68,10 @@ export class CollectionViewComponent implements OnInit {
 
     dialogRef
       .afterClosed()
-      .pipe(
-        filter((item?: DeleteDialogResult) => item && item === 'delete'),
-      )
-      .subscribe(async () => {
-        await this.deleteCollection(collection);
-        await this.redirect();
+      .pipe(filter((item?: DeleteDialogResult) => item && item === 'delete'))
+      .subscribe(() => {
+        this.deleteCollection(collection);
+        this.redirect();
       });
   }
 

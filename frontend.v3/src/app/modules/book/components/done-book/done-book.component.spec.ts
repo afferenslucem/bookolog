@@ -14,18 +14,9 @@ describe('DoneBookComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [
-        DoneBookComponent,
-        DateRangeComponent,
-        BookHeaderComponent,
-        BookAuthorsComponent,
-      ],
-      imports: [
-        FormattingModule,
-        RouterTestingModule,
-      ],
-    })
-      .compileComponents();
+      declarations: [DoneBookComponent, DateRangeComponent, BookHeaderComponent, BookAuthorsComponent],
+      imports: [FormattingModule, RouterTestingModule],
+    }).compileComponents();
   });
 
   describe('Creation', () => {
@@ -59,7 +50,7 @@ describe('DoneBookComponent', () => {
 
     it('Should return book name', () => {
       component.book = new Book({
-        name: 'book name'
+        name: 'book name',
       } as any);
 
       expect(component.name).toEqual('book name');
@@ -67,15 +58,15 @@ describe('DoneBookComponent', () => {
 
     it('Should return book authors', () => {
       component.book = new Book({
-        authors: [ 'One', 'Two' ]
+        authors: ['One', 'Two'],
       } as any);
 
-      expect(component.authors).toEqual([ 'One', 'Two' ]);
+      expect(component.authors).toEqual(['One', 'Two']);
     });
 
     it('Should return book startDate', () => {
       component.book = new Book({
-        startDate: new Date('2011-01-02')
+        startDate: new Date('2011-01-02'),
       } as any);
 
       expect(component.startDate).toEqual(new Date('2011-01-02'));
@@ -83,7 +74,7 @@ describe('DoneBookComponent', () => {
 
     it('Should return book endDate', () => {
       component.book = new Book({
-        endDate: new Date('2011-01-02')
+        endDate: new Date('2011-01-02'),
       } as any);
 
       expect(component.endDate).toEqual(new Date('2011-01-02'));
@@ -126,7 +117,7 @@ describe('DoneBookComponent', () => {
     describe('Dates', () => {
       it('Should render progress dates for only start date', () => {
         component.book = new Book({
-          startDate: '2011-01-01'
+          startDate: '2011-01-01',
         } as any);
 
         fixture.detectChanges();
@@ -139,7 +130,7 @@ describe('DoneBookComponent', () => {
 
     it('Should render progress dates for only end date', () => {
       component.book = new Book({
-        endDate: '2011-01-01'
+        endDate: '2011-01-01',
       } as any);
 
       fixture.detectChanges();
@@ -173,4 +164,3 @@ describe('DoneBookComponent', () => {
     });
   });
 });
-

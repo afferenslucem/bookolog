@@ -6,12 +6,12 @@ import { BookTrackBy } from 'src/app/main/utils/book-track-by';
 import { Book } from 'src/app/modules/book/models/book';
 import { TitleService } from 'src/app/modules/ui/service/title.service';
 import _ from 'declarray';
-import {BookStatus} from '../../../book/models/book-status';
+import { BookStatus } from '../../../book/models/book-status';
 
 @Component({
   selector: 'app-year-statistic',
   templateUrl: './year-statistic.component.html',
-  styleUrls: [ './year-statistic.component.scss' ],
+  styleUrls: ['./year-statistic.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class YearStatisticComponent implements OnInit {
@@ -27,7 +27,7 @@ export class YearStatisticComponent implements OnInit {
     this.filter$ = route.params.pipe(
       map(data => data.filter),
       tap(data => this.title.setCustom(data)),
-    )
+    );
   }
 
   ngOnInit(): void {

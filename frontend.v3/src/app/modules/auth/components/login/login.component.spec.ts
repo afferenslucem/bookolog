@@ -19,16 +19,12 @@ describe('LoginPageComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        UiModule,
-      ],
+      imports: [RouterTestingModule, HttpClientTestingModule, UiModule],
     })
       .overrideComponent(LoginComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
-        }
+        },
       })
       .compileComponents();
   });
@@ -55,7 +51,7 @@ describe('LoginPageComponent', () => {
       auth.login = spy;
 
       const event: any = {
-        preventDefault: jasmine.createSpy()
+        preventDefault: jasmine.createSpy(),
       };
 
       await component.submit(event);
@@ -71,7 +67,7 @@ describe('LoginPageComponent', () => {
       const loginSpy = spyOn(auth, 'login').and.rejectWith();
 
       const event: any = {
-        preventDefault: jasmine.createSpy()
+        preventDefault: jasmine.createSpy(),
       };
 
       await component.submit(event);
@@ -87,7 +83,7 @@ describe('LoginPageComponent', () => {
       const loginSpy = spyOn(auth, 'login');
       const navigateSpy = spyOn(router, 'navigate');
       const event: any = {
-        preventDefault: jasmine.createSpy()
+        preventDefault: jasmine.createSpy(),
       };
 
       component.error = component.LoginError.Undefined;
@@ -106,13 +102,13 @@ describe('LoginPageComponent', () => {
       component.form.get('password').setValue('qwerty');
 
       const event: any = {
-        preventDefault: jasmine.createSpy()
+        preventDefault: jasmine.createSpy(),
       };
       await component.submit(event);
 
       expect(loginSpy).toHaveBeenCalledOnceWith({
         login: 'hrodvitnir',
-        password: 'qwerty'
+        password: 'qwerty',
       });
     });
   });

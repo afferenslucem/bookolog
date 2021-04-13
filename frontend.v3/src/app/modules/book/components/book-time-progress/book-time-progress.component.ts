@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   selector: 'app-book-time-progress',
   templateUrl: './book-time-progress.component.html',
   styleUrls: ['./book-time-progress.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookTimeProgressComponent implements OnInit {
   @Input()
@@ -13,10 +13,7 @@ export class BookTimeProgressComponent implements OnInit {
   @Input()
   public total: number;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -1,14 +1,14 @@
-<app-book-header class="book-line__name" [book]="innerBook"></app-book-header>
+<app-book-header [book]="innerBook" class="book-line__name"></app-book-header>
 <div class="book-line__authors truncate-text">
   <app-book-authors [authors]="authors"></app-book-authors>
 </div>
-<mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+<mat-progress-bar [value]="progressValue" mode="determinate"></mat-progress-bar>
 <div
-  class="book-line__progress-data dark-text"
   *ngIf="progressValue || startDate; else noDates"
+  class="book-line__progress-data dark-text"
 >
   <small class="progress">
-    <ng-container [ngSwitch]="type" *ngIf="progressValue">
+    <ng-container *ngIf="progressValue" [ngSwitch]="type">
       <app-book-time-progress
         *ngSwitchCase="BookType.Audio"
         [done]="done"
@@ -23,7 +23,7 @@
   </small>
   <div class="separator"></div>
   <small *ngIf="startDate">
-    <app-date-range [startDate]="startDate" [endDate]="null"></app-date-range>
+    <app-date-range [endDate]="null" [startDate]="startDate"></app-date-range>
   </small>
 </div>
 <ng-template #noDates>

@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
 
@@ -6,13 +6,15 @@ import { ValueAccessorBase } from '../value-accessor/value-accessor';
   selector: 'app-book-time-input',
   templateUrl: './book-time-input.component.html',
   styleUrls: ['./book-time-input.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => BookTimeInputComponent),
-    multi: true,
-  }],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => BookTimeInputComponent),
+      multi: true,
+    },
+  ],
 })
-export class BookTimeInputComponent extends ValueAccessorBase<number>  implements OnInit {
+export class BookTimeInputComponent extends ValueAccessorBase<number> {
   public form: FormGroup = null;
 
   constructor() {
@@ -24,11 +26,8 @@ export class BookTimeInputComponent extends ValueAccessorBase<number>  implement
     });
 
     this.form.valueChanges.subscribe(data => {
-      this.emitChangeValue((+data.hours * 60) + +data.minutes);
+      this.emitChangeValue(+data.hours * 60 + +data.minutes);
     });
-  }
-
-  ngOnInit(): void {
   }
 
   public writeValue(value: number): void {

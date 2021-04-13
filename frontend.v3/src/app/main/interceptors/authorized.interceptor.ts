@@ -15,15 +15,14 @@ export class AuthorizedInterceptor implements HttpInterceptor {
     namespace: 'Interceptor',
   });
 
-  public constructor(private router: Router, private userService: UserService) {
-  }
+  public constructor(private router: Router, private userService: UserService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      catchError((err: HttpErrorResponse, caught) => {
+      catchError((err: HttpErrorResponse) => {
         if (!err.error && err.status === 401) {
           this.userService.clearStorage();
-          const _ = this.router.navigate(['/login']);
+          this.router.navigate(['/login']);
         }
         this.logger.warn('error: ', err);
         return throwError(err);

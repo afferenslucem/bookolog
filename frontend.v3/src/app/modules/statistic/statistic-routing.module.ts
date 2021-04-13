@@ -18,7 +18,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: DoneBooksResolver,
-    }
+    },
   },
   {
     component: GenresListComponent,
@@ -26,7 +26,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: DoneBooksResolver,
-    }
+    },
   },
   {
     component: AuthorsListComponent,
@@ -34,7 +34,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: DoneBooksResolver,
-    }
+    },
   },
   {
     component: YearsListComponent,
@@ -42,7 +42,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: DoneBooksResolver,
-    }
+    },
   },
   {
     component: BookFilteredComponent,
@@ -50,7 +50,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: BooksByTagResolver,
-    }
+    },
   },
   {
     component: BookFilteredComponent,
@@ -58,7 +58,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: BooksByGenreResolver,
-    }
+    },
   },
   {
     component: BookFilteredComponent,
@@ -66,7 +66,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: BooksByAuthorResolver,
-    }
+    },
   },
   {
     component: YearStatisticComponent,
@@ -74,6 +74,6 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: BooksByYearResolver,
-    }
+    },
   },
 ];

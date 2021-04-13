@@ -14,14 +14,9 @@ describe('StartPageComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [StartPageComponent],
-      imports: [
-        MatToolbarModule,
-        MatButtonModule,
-        RouterTestingModule,
-      ],
-      schemas: [ NO_ERRORS_SCHEMA ],
-    })
-      .compileComponents();
+      imports: [MatToolbarModule, MatButtonModule, RouterTestingModule],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

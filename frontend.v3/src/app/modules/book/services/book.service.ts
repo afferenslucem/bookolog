@@ -18,10 +18,7 @@ export class BookService extends EntityService<BookData, Book> {
 
   private typedStorage: BookStorageService;
 
-  constructor(storage: BookStorageService,
-              origin: BookOriginService,
-              private notificationService: NotificationService,
-  ) {
+  constructor(storage: BookStorageService, origin: BookOriginService, private notificationService: NotificationService) {
     super(storage, origin);
 
     this.typedStorage = storage;
@@ -44,18 +41,18 @@ export class BookService extends EntityService<BookData, Book> {
   }
 
   public async saveRereading(book: Book): Promise<Book> {
-      const original = await this.getByGuid(book.rereadingBookGuid);
+    const original = await this.getByGuid(book.rereadingBookGuid);
 
-      if (original.rereadingBookGuid) {
-        book.rereadingBookGuid = original.rereadingBookGuid;
-      }
+    if (original.rereadingBookGuid) {
+      book.rereadingBookGuid = original.rereadingBookGuid;
+    }
 
-      book = await this.saveOrUpdate(book);
+    book = await this.saveOrUpdate(book);
 
-      original.rereadedBy.push(book.guid);
-      await this.saveOrUpdate(original);
+    original.rereadedBy.push(book.guid);
+    await this.saveOrUpdate(original);
 
-      return book;
+    return book;
   }
 
   public async deleteBooksFromCollection(guid: string): Promise<void> {
@@ -104,32 +101,6 @@ export class BookService extends EntityService<BookData, Book> {
     return _(rereadings).prepend(first).toArray();
   }
 
-  private async findFirstReadingOfBook(guid: string): Promise<Book> {
-    const result = await this.getByGuid(guid);
-
-    if (result.rereadingBookGuid) {
-      return await this.findFirstReadingOfBook(result.rereadingBookGuid);
-    } else {
-      return result;
-    }
-  }
-
-  private async findAllRereadingsOfBook(guid: string): Promise<Book[]> {
-    const rereadingsDTO = await this.typedStorage.getAllRereadings(guid);
-    const rereadings = this.convertFromDTOArray(rereadingsDTO);
-
-    if (rereadings.length === 0) {
-      return rereadings;
-    } else {
-      const requests = rereadings.map(item => this.findAllRereadingsOfBook(item.guid));
-
-      const resultDTO = await Promise.all(requests);
-      const result = _(resultDTO).selectMany(flatten);
-
-      return _(rereadings).concat(result).toArray();
-    }
-  }
-
   public async delete(book: Book): Promise<void> {
     try {
       const rereadings = await this.typedStorage.getAllRereadings(book.guid);
@@ -156,10 +127,13 @@ export class BookService extends EntityService<BookData, Book> {
     const youngest = books.first();
     youngest.rereadingBookGuid = null;
 
-    books.skip(1).select(item => {
-      item.rereadingBookGuid = youngest.guid;
-      return item;
-    }).toArray();
+    books
+      .skip(1)
+      .select(item => {
+        item.rereadingBookGuid = youngest.guid;
+        return item;
+      })
+      .toArray();
 
     return books.toArray();
   }
@@ -199,5 +173,31 @@ export class BookService extends EntityService<BookData, Book> {
 
   public convertFromDTO(data: BookData): Book {
     return new Book(data);
+  }
+
+  private async findFirstReadingOfBook(guid: string): Promise<Book> {
+    const result = await this.getByGuid(guid);
+
+    if (result.rereadingBookGuid) {
+      return await this.findFirstReadingOfBook(result.rereadingBookGuid);
+    } else {
+      return result;
+    }
+  }
+
+  private async findAllRereadingsOfBook(guid: string): Promise<Book[]> {
+    const rereadingsDTO = await this.typedStorage.getAllRereadings(guid);
+    const rereadings = this.convertFromDTOArray(rereadingsDTO);
+
+    if (rereadings.length === 0) {
+      return rereadings;
+    } else {
+      const requests = rereadings.map(item => this.findAllRereadingsOfBook(item.guid));
+
+      const resultDTO = await Promise.all(requests);
+      const result = _(resultDTO).selectMany(flatten);
+
+      return _(rereadings).concat(result).toArray();
+    }
   }
 }

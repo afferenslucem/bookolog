@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Notification } from '../../models/notification';
 import { NotificationService } from '../../services/notification.service';
@@ -9,16 +9,11 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./notification-area.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotificationAreaComponent implements OnInit {
-
-  constructor(private notificationService: NotificationService) {
-  }
+export class NotificationAreaComponent {
+  constructor(private notificationService: NotificationService) {}
 
   public get notifications$(): Observable<Notification[]> {
     return this.notificationService.notifications$;
-  }
-
-  ngOnInit(): void {
   }
 
   public notificationTrackBy(index: number, item: Notification): any {

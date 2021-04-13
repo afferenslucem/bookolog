@@ -1,6 +1,6 @@
 import { IEqualityComparer } from 'declarray';
 
-export class StringComparer implements IEqualityComparer<string>{
+export class StringComparer implements IEqualityComparer<string> {
   public equal(first: string, second: string): boolean {
     return first.toUpperCase() === second.toUpperCase();
   }

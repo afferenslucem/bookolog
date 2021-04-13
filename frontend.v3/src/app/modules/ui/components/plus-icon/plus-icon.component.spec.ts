@@ -10,11 +10,8 @@ describe('PlusIconComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [PlusIconComponent],
-      imports: [
-        MatIconModule
-      ]
-    })
-      .compileComponents();
+      imports: [MatIconModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

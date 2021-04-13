@@ -1,4 +1,4 @@
-import {BookDate} from './book-date';
+import { BookDate } from './book-date';
 
 describe('BookDate', () => {
   it('should create empty instance', () => {
@@ -13,7 +13,7 @@ describe('BookDate', () => {
     const instance = new BookDate({
       day: 2,
       month: 3,
-      year: 2004
+      year: 2004,
     });
 
     expect(instance.day).toEqual(2);
@@ -23,7 +23,7 @@ describe('BookDate', () => {
 
   it('should create partial copy of instance', () => {
     const instance = new BookDate({
-      year: 2004
+      year: 2004,
     });
 
     expect(instance.day).toEqual(null);

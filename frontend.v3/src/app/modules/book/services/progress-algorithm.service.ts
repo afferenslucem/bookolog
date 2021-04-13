@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {BookType} from '../models/book-type';
-import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
-import {LocalStorageService} from '../../../main/services/local-storage.service';
+import { Injectable } from '@angular/core';
+import { BookType } from '../models/book-type';
+import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
+import { LocalStorageService } from '../../../main/services/local-storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProgressAlgorithmService {
-  constructor(private localStorageService: LocalStorageService) { }
+  constructor(private localStorageService: LocalStorageService) {}
 
   public setAlgorithm(bookType: BookType, algorithm: ProgressAlgorithmType): void {
     const data = this.localStorageService.getItem('progressAlgorithmPreference');

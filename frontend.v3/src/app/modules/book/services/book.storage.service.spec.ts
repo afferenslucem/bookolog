@@ -16,9 +16,7 @@ describe('BookStorageService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        { provide: UserService, useValue: { user: { login: '' } } }
-      ]
+      providers: [{ provide: UserService, useValue: { user: { login: '' } } }],
     });
     service = TestBed.inject(BookStorageService);
     indexedDbService = TestBed.inject(IndexedDbService);
@@ -32,11 +30,11 @@ describe('BookStorageService', () => {
   it('getAll', async () => {
     const spyAll = jasmine.createSpy();
 
-    const values = [ 1, 2, 3 ];
+    const values = [1, 2, 3];
     spyAll.and.resolveTo({
       target: {
-        result: values
-      }
+        result: values,
+      },
     });
 
     indexedDbService.open = jasmine.createSpy();
@@ -60,7 +58,7 @@ describe('BookStorageService', () => {
     indexedDbService.close = jasmine.createSpy();
     indexedDbService.saveMany = jasmine.createSpy();
 
-    const values: any = [ {}, {}, {} ];
+    const values: any = [{}, {}, {}];
 
     await service.saveMany(values);
 
@@ -95,7 +93,7 @@ describe('BookStorageService', () => {
   it('restore', async () => {
     const booksService: any = service;
 
-    const values: any = [ 1, 2, 3 ];
+    const values: any = [1, 2, 3];
 
     booksService.clear = jasmine.createSpy();
     booksService.saveMany = jasmine.createSpy();
@@ -113,8 +111,8 @@ describe('BookStorageService', () => {
 
     const getCountSpy = spyOn(indexedDbService, 'getCount').and.resolveTo({
       target: {
-        result: 7
-      }
+        result: 7,
+      },
     } as any);
 
     const closeSpy = spyOn(indexedDbService, 'close');
@@ -133,23 +131,29 @@ describe('BookStorageService', () => {
 
     const allWithPropertySpy = spyOn(indexedDbService, 'allWithProperty').and.resolveTo({
       target: {
-        result: [{
-          guid: 'id1'
-        }, {
-          guid: 'id2'
-        }, ]
-      }
+        result: [
+          {
+            guid: 'id1',
+          },
+          {
+            guid: 'id2',
+          },
+        ],
+      },
     } as any);
 
     const closeSpy = spyOn(indexedDbService, 'close');
 
     const result = await service.getAllByStatus(BookStatus.Done);
 
-    expect(result).toEqual([{
-      guid: 'id1'
-    }, {
-      guid: 'id2'
-    }, ] as any);
+    expect(result).toEqual([
+      {
+        guid: 'id1',
+      },
+      {
+        guid: 'id2',
+      },
+    ] as any);
 
     expect(openSpy).toHaveBeenCalledTimes(1);
     expect(allWithPropertySpy).toHaveBeenCalledOnceWith('BooksStore', 'status', BookStatus.Done);
@@ -162,23 +166,29 @@ describe('BookStorageService', () => {
 
       const allWithPropertySpy = spyOn(indexedDbService, 'allWithProperty').and.resolveTo({
         target: {
-          result: [{
-            guid: 'id1'
-          }, {
-            guid: 'id2'
-          }, ]
-        }
+          result: [
+            {
+              guid: 'id1',
+            },
+            {
+              guid: 'id2',
+            },
+          ],
+        },
       } as any);
 
       const closeSpy = spyOn(indexedDbService, 'close');
 
       const result = await service.getAllByYear(2007);
 
-      expect(result).toEqual([ {
-        guid: 'id1'
-      }, {
-        guid: 'id2'
-      }, ] as any);
+      expect(result).toEqual([
+        {
+          guid: 'id1',
+        },
+        {
+          guid: 'id2',
+        },
+      ] as any);
 
       expect(openSpy).toHaveBeenCalledTimes(1);
       expect(allWithPropertySpy).toHaveBeenCalledOnceWith('BooksStore', 'endDateYear', 2007);
@@ -187,21 +197,27 @@ describe('BookStorageService', () => {
 
     it('should search by null', async () => {
       const closeSpy = spyOn(indexedDbService, 'close');
-      const getAll = spyOn(service, 'getAll').and.resolveTo([{
-        endDateYear: 1997,
-      }, {
-        endDateYear: 1998,
-      }, {
-        endDateYear: null,
-      }, {
-      }] as any);
+      const getAll = spyOn(service, 'getAll').and.resolveTo([
+        {
+          endDateYear: 1997,
+        },
+        {
+          endDateYear: 1998,
+        },
+        {
+          endDateYear: null,
+        },
+        {},
+      ] as any);
 
       const result = await service.getAllByYear(null);
 
-      expect(result).toEqual([ {
-        endDateYear: null,
-      }, {
-      }] as any);
+      expect(result).toEqual([
+        {
+          endDateYear: null,
+        },
+        {},
+      ] as any);
 
       expect(getAll).toHaveBeenCalledTimes(1);
       expect(closeSpy).toHaveBeenCalledTimes(1);
@@ -213,23 +229,29 @@ describe('BookStorageService', () => {
 
     const allWithPropertySpy = spyOn(indexedDbService, 'allWithProperty').and.resolveTo({
       target: {
-        result: [{
-          guid: 'id1'
-        }, {
-          guid: 'id2'
-        }, ]
-      }
+        result: [
+          {
+            guid: 'id1',
+          },
+          {
+            guid: 'id2',
+          },
+        ],
+      },
     } as any);
 
     const closeSpy = spyOn(indexedDbService, 'close');
 
     const result = await service.getAllByCollection('id8');
 
-    expect(result).toEqual([ {
-      guid: 'id1'
-    }, {
-      guid: 'id2'
-    }, ] as any);
+    expect(result).toEqual([
+      {
+        guid: 'id1',
+      },
+      {
+        guid: 'id2',
+      },
+    ] as any);
 
     expect(openSpy).toHaveBeenCalledTimes(1);
     expect(allWithPropertySpy).toHaveBeenCalledOnceWith('BooksStore', 'collectionGuid', 'id8');
@@ -241,23 +263,29 @@ describe('BookStorageService', () => {
 
     const allWithPropertySpy = spyOn(indexedDbService, 'allWithProperty').and.resolveTo({
       target: {
-        result: [{
-          guid: 'id1'
-        }, {
-          guid: 'id2'
-        }, ]
-      }
+        result: [
+          {
+            guid: 'id1',
+          },
+          {
+            guid: 'id2',
+          },
+        ],
+      },
     } as any);
 
     const closeSpy = spyOn(indexedDbService, 'close');
 
     const result = await service.getDeleted();
 
-    expect(result).toEqual([ {
-      guid: 'id1'
-    }, {
-      guid: 'id2'
-    }, ] as any);
+    expect(result).toEqual([
+      {
+        guid: 'id1',
+      },
+      {
+        guid: 'id2',
+      },
+    ] as any);
 
     expect(openSpy).toHaveBeenCalledTimes(1);
     expect(allWithPropertySpy).toHaveBeenCalledOnceWith('BooksStore', 'deleted', 1);
@@ -269,23 +297,29 @@ describe('BookStorageService', () => {
 
     const allWithPropertySpy = spyOn(indexedDbService, 'allWithProperty').and.resolveTo({
       target: {
-        result: [{
-          guid: 'id1'
-        }, {
-          guid: 'id2'
-        }, ]
-      }
+        result: [
+          {
+            guid: 'id1',
+          },
+          {
+            guid: 'id2',
+          },
+        ],
+      },
     } as any);
 
     const closeSpy = spyOn(indexedDbService, 'close');
 
     const result = await service.getShouldSync();
 
-    expect(result).toEqual([ {
-      guid: 'id1'
-    }, {
-      guid: 'id2'
-    }, ] as any);
+    expect(result).toEqual([
+      {
+        guid: 'id1',
+      },
+      {
+        guid: 'id2',
+      },
+    ] as any);
 
     expect(openSpy).toHaveBeenCalledTimes(1);
     expect(allWithPropertySpy).toHaveBeenCalledOnceWith('BooksStore', 'shouldSync', 1);
@@ -298,9 +332,9 @@ describe('BookStorageService', () => {
     const getByGuidSpy = spyOn(indexedDbService, 'get').and.resolveTo({
       target: {
         result: {
-          guid: 'id1'
-        }
-      }
+          guid: 'id1',
+        },
+      },
     } as any);
 
     const closeSpy = spyOn(indexedDbService, 'close');
@@ -308,7 +342,7 @@ describe('BookStorageService', () => {
     const result = await service.getByGuid('id1');
 
     expect(result).toEqual({
-      guid: 'id1'
+      guid: 'id1',
     } as any);
 
     expect(openSpy).toHaveBeenCalledTimes(1);
@@ -322,29 +356,30 @@ describe('BookStorageService', () => {
     const saveSpy = spyOn(indexedDbService, 'save').and.resolveTo({
       target: {
         result: {
-          guid: 'id1'
-        }
-      }
+          guid: 'id1',
+        },
+      },
     } as any);
 
     const closeSpy = spyOn(indexedDbService, 'close');
     const generateSpy = spyOn(uuidService, 'generate').and.returnValue('id1');
 
     const result = await service.save({
-      name: 'name1'
+      name: 'name1',
     } as any);
 
     expect(result).toEqual({
       guid: 'id1',
-      name: 'name1'
+      name: 'name1',
     } as any);
 
     expect(openSpy).toHaveBeenCalledTimes(1);
     expect(generateSpy).toHaveBeenCalledTimes(1);
     expect(saveSpy).toHaveBeenCalledOnceWith('BooksStore', {
       guid: 'id1',
-      name: 'name1'
+      name: 'name1',
     });
+
     expect(closeSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -355,34 +390,47 @@ describe('BookStorageService', () => {
 
       const updateManySpy = spyOn(indexedDbService, 'updateMany').and.resolveTo({
         target: {
-          result: [{
-            guid: 'id1'
-          }, {
-            guid: 'id2'
-          }, ]
-        }
+          result: [
+            {
+              guid: 'id1',
+            },
+            {
+              guid: 'id2',
+            },
+          ],
+        },
       } as any);
 
       const closeSpy = spyOn(indexedDbService, 'close');
 
-      const result = await service.updateMany([{
-        guid: 'id1'
-      }, {
-        guid: 'id2'
-      }, ] as any);
+      const result = await service.updateMany([
+        {
+          guid: 'id1',
+        },
+        {
+          guid: 'id2',
+        },
+      ] as any);
 
-      expect(result).toEqual([{
-        guid: 'id1'
-      }, {
-        guid: 'id2'
-      }, ] as any);
+      expect(result).toEqual([
+        {
+          guid: 'id1',
+        },
+        {
+          guid: 'id2',
+        },
+      ] as any);
 
       expect(openSpy).toHaveBeenCalledTimes(1);
-      expect(updateManySpy).toHaveBeenCalledOnceWith('BooksStore', [{
-        guid: 'id1'
-      }, {
-        guid: 'id2'
-      }, ] as any);
+      expect(updateManySpy).toHaveBeenCalledOnceWith('BooksStore', [
+        {
+          guid: 'id1',
+        },
+        {
+          guid: 'id2',
+        },
+      ] as any);
+
       expect(generateSpy).toHaveBeenCalledTimes(0);
       expect(closeSpy).toHaveBeenCalledTimes(1);
     });
@@ -408,9 +456,9 @@ describe('BookStorageService', () => {
     const updateSpy = spyOn(indexedDbService, 'update').and.resolveTo({
       target: {
         result: {
-          guid: 'id1'
-        }
-      }
+          guid: 'id1',
+        },
+      },
     } as any);
 
     const closeSpy = spyOn(indexedDbService, 'close');
@@ -419,20 +467,21 @@ describe('BookStorageService', () => {
 
     const result = await service.update({
       guid: 'id1',
-      name: 'name1'
+      name: 'name1',
     } as any);
 
     expect(result).toEqual({
       guid: 'id1',
-      name: 'name1'
+      name: 'name1',
     } as any);
 
     expect(openSpy).toHaveBeenCalledTimes(1);
     expect(generateSpy).toHaveBeenCalledTimes(0);
     expect(updateSpy).toHaveBeenCalledOnceWith('BooksStore', {
       guid: 'id1',
-      name: 'name1'
+      name: 'name1',
     });
+
     expect(closeSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -442,39 +491,52 @@ describe('BookStorageService', () => {
       const generateSpy = spyOn(uuidService, 'generate').and.returnValues('id1', 'id2');
       const saveManySpy = spyOn(indexedDbService, 'saveMany').and.resolveTo({
         target: {
-          result: [{
-            guid: 'id1',
-            name: 'name1',
-          }, {
-            guid: 'id2',
-            name: 'name2'
-          }, ]
-        }
+          result: [
+            {
+              guid: 'id1',
+              name: 'name1',
+            },
+            {
+              guid: 'id2',
+              name: 'name2',
+            },
+          ],
+        },
       } as any);
       const closeSpy = spyOn(indexedDbService, 'close');
 
-      const result = await service.saveMany([{
-        name: 'name1',
-      }, {
-        name: 'name2'
-      }, ] as any);
+      const result = await service.saveMany([
+        {
+          name: 'name1',
+        },
+        {
+          name: 'name2',
+        },
+      ] as any);
 
-      expect(result).toEqual([{
-        guid: 'id1',
-        name: 'name1',
-      }, {
-        guid: 'id2',
-        name: 'name2'
-      }, ] as any);
+      expect(result).toEqual([
+        {
+          guid: 'id1',
+          name: 'name1',
+        },
+        {
+          guid: 'id2',
+          name: 'name2',
+        },
+      ] as any);
 
       expect(openSpy).toHaveBeenCalledTimes(1);
-      expect(saveManySpy).toHaveBeenCalledOnceWith('BooksStore', [{
-        guid: 'id1',
-        name: 'name1',
-      }, {
-        guid: 'id2',
-        name: 'name2'
-      }, ] as any);
+      expect(saveManySpy).toHaveBeenCalledOnceWith('BooksStore', [
+        {
+          guid: 'id1',
+          name: 'name1',
+        },
+        {
+          guid: 'id2',
+          name: 'name2',
+        },
+      ] as any);
+
       expect(closeSpy).toHaveBeenCalledTimes(1);
       expect(generateSpy).toHaveBeenCalledTimes(2);
     });

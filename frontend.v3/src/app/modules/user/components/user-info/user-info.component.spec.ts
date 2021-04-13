@@ -16,20 +16,18 @@ describe('UserInfoComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [UserInfoComponent],
-      imports: [
-        HttpClientTestingModule,
-      ],
+      imports: [HttpClientTestingModule],
       providers: [
         {
-          provide: UserService, useValue: {
+          provide: UserService,
+          useValue: {
             user: {
-              login: 'hrodvitnir'
-            }
-          }
-        }
-      ]
-    })
-      .compileComponents();
+              login: 'hrodvitnir',
+            },
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -62,13 +60,13 @@ describe('UserInfoComponent', () => {
   });
 
   describe('login', () => {
-    it('should render', async () => {
+    it('should render', () => {
       expect(element.querySelector<HTMLElement>('.login').innerText).toEqual('hrodvitnir');
     });
   });
 
   describe('avatar', () => {
-    it('should render', async () => {
+    it('should render', () => {
       userService.user.avatarName = 'name';
 
       fixture.detectChanges();
@@ -77,7 +75,7 @@ describe('UserInfoComponent', () => {
       expect(element.querySelector<HTMLElement>('.icon')).toBeFalsy();
     });
 
-    it('should hide', async () => {
+    it('should hide', () => {
       userService.user.avatarName = null;
 
       fixture.detectChanges();

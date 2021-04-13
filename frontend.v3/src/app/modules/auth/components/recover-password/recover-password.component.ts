@@ -8,14 +8,19 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-recover-password',
   templateUrl: './recover-password.component.html',
-  styleUrls: ['./recover-password.component.scss']
+  styleUrls: ['./recover-password.component.scss'],
 })
 export class RecoverPasswordComponent implements OnInit {
   public form: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.email]),
   });
 
-  constructor(private authService: AuthService, private title: TitleService, private router: Router, private notificationService: NotificationService) { }
+  constructor(
+    private authService: AuthService,
+    private title: TitleService,
+    private router: Router,
+    private notificationService: NotificationService,
+  ) {}
 
   ngOnInit(): void {
     this.title.setRecoveryPassword();

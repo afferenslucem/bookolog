@@ -12,8 +12,8 @@ import { BookResolver } from './resolvers/book.resolver';
 import { DoneBooksResolver } from './resolvers/done-books.resolver';
 import { InProgressBooksResolver } from './resolvers/in-progress-books.resolver';
 import { ToReadBooksResolver } from './resolvers/to-read-books.resolver';
-import {BookRereadFormComponent} from "./components/book-reread-form/book-reread-form.component";
-import {BookReadingsResolver} from './resolvers/book-readings.resolver';
+import { BookRereadFormComponent } from './components/book-reread-form/book-reread-form.component';
+import { BookReadingsResolver } from './resolvers/book-readings.resolver';
 
 export const routes: Routes = [
   {
@@ -23,7 +23,7 @@ export const routes: Routes = [
     resolve: {
       books: InProgressBooksResolver,
     },
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always',
   },
   {
     component: ToReadBooksListComponent,
@@ -32,7 +32,7 @@ export const routes: Routes = [
     resolve: {
       books: ToReadBooksResolver,
     },
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always',
   },
   {
     component: DoneBooksListComponent,
@@ -41,7 +41,7 @@ export const routes: Routes = [
     resolve: {
       books: DoneBooksResolver,
     },
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always',
   },
   {
     component: BookViewComponent,
@@ -51,7 +51,7 @@ export const routes: Routes = [
       book: BookResolver,
       readings: BookReadingsResolver,
     },
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always',
   },
   {
     component: BookEditViewComponent,
@@ -63,8 +63,8 @@ export const routes: Routes = [
       series: AllSeriesResolver,
     },
     data: {
-      action: Action.Edit
-    }
+      action: Action.Edit,
+    },
   },
   {
     component: BookEditViewComponent,
@@ -76,8 +76,8 @@ export const routes: Routes = [
       series: AllSeriesResolver,
     },
     data: {
-      action: Action.Create
-    }
+      action: Action.Create,
+    },
   },
   {
     component: BookRereadFormComponent,

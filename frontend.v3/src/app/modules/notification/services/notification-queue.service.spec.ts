@@ -19,12 +19,12 @@ describe('NotificationQueueService', () => {
   it('should add notifications', () => {
     const notification1 = new Notification({
       guid: 'guid1',
-      text: 'text1'
+      text: 'text1',
     });
 
     const notification2 = new Notification({
       guid: 'guid2',
-      text: 'text2'
+      text: 'text2',
     });
 
     service.add(notification1);
@@ -36,12 +36,12 @@ describe('NotificationQueueService', () => {
   it('should remove notifications', () => {
     const notification1 = new Notification({
       guid: 'guid1',
-      text: 'text1'
+      text: 'text1',
     });
 
     const notification2 = new Notification({
       guid: 'guid2',
-      text: 'text2'
+      text: 'text2',
     });
 
     service.add(notification1);

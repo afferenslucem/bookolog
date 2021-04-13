@@ -3,16 +3,18 @@ import { NotificationType } from './notification-type';
 
 describe('Notification', () => {
   it('should create an instance', () => {
-    expect(new Notification({
-      guid: 'guid',
-      text: 'text'
-    })).toBeTruthy();
+    expect(
+      new Notification({
+        guid: 'guid',
+        text: 'text',
+      }),
+    ).toBeTruthy();
   });
 
   it('should correct fill common data', () => {
     const notification = new Notification({
       guid: 'guid',
-      text: 'text'
+      text: 'text',
     });
 
     expect(notification.guid).toEqual('guid');
@@ -22,7 +24,7 @@ describe('Notification', () => {
   it('should correct fill empty field', () => {
     const notification = new Notification({
       guid: 'guid',
-      text: 'text'
+      text: 'text',
     });
 
     expect(notification.type).toEqual(NotificationType.Info);
@@ -35,7 +37,7 @@ describe('Notification', () => {
       guid: 'guid',
       text: 'text',
       timeout: 1000,
-      type: NotificationType.Warning
+      type: NotificationType.Warning,
     });
 
     expect(notification.type).toEqual(NotificationType.Warning);

@@ -10,9 +10,7 @@ export class BookAuthorsComponent implements OnInit {
   @Input()
   public authors: string[];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

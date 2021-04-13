@@ -13,9 +13,10 @@ describe('BookActionService', () => {
       providers: [
         UUIDGeneratorService,
         {
-          provide: UserService, useValue: { user: { login: 'hrodvitnir' }, },
-        }
-      ]
+          provide: UserService,
+          useValue: { user: { login: 'hrodvitnir' } },
+        },
+      ],
     });
     service = TestBed.inject(BookActionService);
   });

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { getConsoleLogger } from '../../../main/app.logging';
 import { CollectionService } from '../../collection/services/collection.service';
 import { Book } from '../models/book';
@@ -12,15 +12,9 @@ export class BookResolver implements Resolve<Book> {
     namespace: 'Resolver',
   });
 
-  public constructor(
-    private bookService: BookService,
-    private collectionService: CollectionService
-  ) {}
+  public constructor(private bookService: BookService, private collectionService: CollectionService) {}
 
-  public async resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Promise<Book> {
+  public async resolve(route: ActivatedRouteSnapshot): Promise<Book> {
     const guid = route.paramMap.get('guid');
 
     const book = await this.bookService.getByGuid(guid);

@@ -83,7 +83,10 @@ export class BookStorageService extends EntityStorage<BookData> {
         return data.target.result;
       } else {
         const data = await this.getAll();
-        const result = await _(data || []).where(item => item.endDateYear == null).promisify().toArray();
+        const result = await _(data || [])
+          .where(item => item.endDateYear == null)
+          .promisify()
+          .toArray();
         return result;
       }
     } finally {

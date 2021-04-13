@@ -12,10 +12,7 @@ describe('LogoutGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-      ]
+      imports: [HttpClientTestingModule, RouterTestingModule],
     });
     guard = TestBed.inject(LogoutGuard);
     user = TestBed.inject(UserService);
@@ -33,10 +30,11 @@ describe('LogoutGuard', () => {
       login: 'login',
       avatarName: '',
       email: 'alexshakirov74@gmail.com',
-      lastSyncTime: new Date()
+      lastSyncTime: new Date(),
     };
 
-    const result = guard.canActivateChild(null, null);
+    guard.canActivateChild();
+
     expect(parseSpy).toHaveBeenCalledOnceWith('/in-progress');
   });
 
@@ -44,7 +42,7 @@ describe('LogoutGuard', () => {
     // @ts-ignore
     user._user = null;
 
-    const result = guard.canActivateChild(null, null);
+    const result = guard.canActivateChild();
 
     expect(result).toBeTrue();
   });

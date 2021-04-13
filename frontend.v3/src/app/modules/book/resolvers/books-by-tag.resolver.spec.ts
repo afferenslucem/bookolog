@@ -8,15 +8,19 @@ import { BooksByTagResolver } from './books-by-tag.resolver';
 describe('BooksByTagResolver', () => {
   let resolver: BooksByTagResolver;
 
-  const booksValue: Book[] = [{
-    tags: ['tag1'],
-  }, {
-    tags: ['tag1', 'tag2'],
-  }, {
-    tags: ['tag2'],
-  }] as any;
+  const booksValue: Book[] = [
+    {
+      tags: ['tag1'],
+    },
+    {
+      tags: ['tag1', 'tag2'],
+    },
+    {
+      tags: ['tag2'],
+    },
+  ] as any;
 
-  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo(booksValue);
+  const spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo(booksValue);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,7 +49,7 @@ describe('BooksByTagResolver', () => {
       },
     } as any;
 
-    const books = await resolver.resolve(route, null);
+    const books = await resolver.resolve(route);
 
     expect(spy).toHaveBeenCalledWith(BookStatus.Done);
     expect(spy).toHaveBeenCalledTimes(1);
@@ -53,10 +57,13 @@ describe('BooksByTagResolver', () => {
     expect(tagSpy).toHaveBeenCalledWith('filter');
     expect(tagSpy).toHaveBeenCalledTimes(1);
 
-    expect(books).toEqual([{
-      tags: ['tag1'],
-    }, {
-      tags: ['tag1', 'tag2'],
-    }] as any);
+    expect(books).toEqual([
+      {
+        tags: ['tag1'],
+      },
+      {
+        tags: ['tag1', 'tag2'],
+      },
+    ] as any);
   });
 });

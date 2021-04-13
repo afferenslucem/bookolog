@@ -1,24 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Data, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import _ from 'declarray';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {getConsoleLogger} from '../../../../main/app.logging';
-import {Action} from '../../../../main/resolvers/action.resolver';
-import {DateUtils} from '../../../../main/utils/date-utils';
-import {FuzzySearch} from '../../../../main/utils/fuzzy-search';
-import {Collection} from '../../../collection/models/collection';
-import {NotificationService} from '../../../notification/services/notification.service';
-import {TitleService} from '../../../ui/service/title.service';
-import {Book} from '../../models/book';
-import {BookStatus} from '../../models/book-status';
-import {BookService} from '../../services/book.service';
-import {Location} from '@angular/common';
-import {CollectionService} from '../../../collection/services/collection.service';
-import {BookDataForm} from '../../utils/book-data-form';
-import {AbstractBookDataForm} from '../../utils/abstract-book-data-form';
-import {BookSortUtils} from '../../../../main/utils/book-sort-utils';
-import {ProgressAlgorithmService} from '../../services/progress-algorithm.service';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { getConsoleLogger } from '../../../../main/app.logging';
+import { Action } from '../../../../main/resolvers/action.resolver';
+import { DateUtils } from '../../../../main/utils/date-utils';
+import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
+import { Collection } from '../../../collection/models/collection';
+import { NotificationService } from '../../../notification/services/notification.service';
+import { TitleService } from '../../../ui/service/title.service';
+import { Book } from '../../models/book';
+import { BookStatus } from '../../models/book-status';
+import { BookService } from '../../services/book.service';
+import { Location } from '@angular/common';
+import { CollectionService } from '../../../collection/services/collection.service';
+import { BookDataForm } from '../../utils/book-data-form';
+import { AbstractBookDataForm } from '../../utils/abstract-book-data-form';
+import { BookSortUtils } from '../../../../main/utils/book-sort-utils';
+import { ProgressAlgorithmService } from '../../services/progress-algorithm.service';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -31,11 +31,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
   public action: Action;
 
   public sortUtils = new BookSortUtils();
-
-  private _genres: string[] = [];
-  private _series: Collection[] = [];
   private logger = getConsoleLogger('BookEditViewComponent');
-
   private _filteredGenres: Observable<string[]>;
 
   constructor(
@@ -51,6 +47,22 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     super(router, collectionService, progressAlgorithmService);
 
     activatedRoute.data.subscribe(data => this.onDataInit(data));
+  }
+
+  private _genres: string[] = [];
+
+  public get genres(): Observable<string[]> {
+    return this._filteredGenres;
+  }
+
+  private _series: Collection[] = [];
+
+  public get series(): string {
+    return this.bookForm.collectionGuid;
+  }
+
+  public get allSeries(): Collection[] {
+    return this._series;
   }
 
   public onDataInit(data: Data): void {
@@ -70,23 +82,12 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
       map(item => new FuzzySearch().search(this._genres, item)),
       map(item => item.filter(Boolean)),
     );
-    this.bookForm.progressTypeChanges.subscribe(v => this.progressAlgorithmPreference = v);
+    this.bookForm.progressTypeChanges.subscribe(v => (this.progressAlgorithmPreference = v));
     this.bookForm.typeChanges.subscribe(() => this.onTypeChange());
     this.bookForm.statusChanges.subscribe(status => this.onStatusChange(status));
   }
-  public get genres(): Observable<string[]> {
-    return this._filteredGenres;
-  }
 
-  public get series(): string {
-    return this.bookForm.collectionGuid;
-  }
-  public get allSeries(): Collection[] {
-    return this._series;
-  }
-
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {}
 
   public async submit(): Promise<void> {
     try {
@@ -107,13 +108,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
   public async processBook(book: Book): Promise<Book> {
     const result = await this.bookService.saveOrUpdate(book);
     return result;
-  }
-
-  private logSaveError(e: any): void {
-    this.logger.error('Book save error', e);
-    this.notificationService.createErrorNotification('Не удалось сохранить книгу', {
-      autoclose: false,
-    });
   }
 
   public readAutocompleteData(books: Book[], series: Collection[]): void {
@@ -138,6 +132,22 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     return this.sortUtils.sortGenresByCountDesc(books);
   }
 
+  public onStatusChange(status: BookStatus): void {
+    if (this.book.status === BookStatus.ToRead && status === BookStatus.InProgress) {
+      this.bookForm.started = DateUtils.today;
+    } else if (this.book.status === BookStatus.InProgress && status === BookStatus.Done) {
+      this.bookForm.finished = DateUtils.today;
+      this.bookForm.doneUnits = this.bookForm.totalUnits;
+    }
+  }
+
+  private logSaveError(e: any): void {
+    this.logger.error('Book save error', e);
+    this.notificationService.createErrorNotification('Не удалось сохранить книгу', {
+      autoclose: false,
+    });
+  }
+
   private sortAuthorsByCount(books: Book[]): string[] {
     return this.sortUtils.sortAuthorsByCountDesc(books);
   }
@@ -152,16 +162,8 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
 
   private formFromBook(book: Book): void {
     this.bookForm = new BookDataForm(book);
-    this.book.progressType = this.action === Action.Create ? this.progressAlgorithmService.getAlgorithm(this.book.type) : this.book.progressType;
-  }
-
-  public onStatusChange(status: BookStatus): void {
-    if (this.book.status === BookStatus.ToRead && status === BookStatus.InProgress) {
-      this.bookForm.started = DateUtils.today;
-    } else if (this.book.status === BookStatus.InProgress && status === BookStatus.Done) {
-      this.bookForm.finished = DateUtils.today;
-      this.bookForm.doneUnits = this.bookForm.totalUnits;
-    }
+    this.book.progressType =
+      this.action === Action.Create ? this.progressAlgorithmService.getAlgorithm(this.book.type) : this.book.progressType;
   }
 
   private onTypeChange(): void {

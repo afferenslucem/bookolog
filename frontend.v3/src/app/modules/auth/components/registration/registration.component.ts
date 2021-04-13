@@ -17,20 +17,20 @@ enum RegistrationError {
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent implements OnInit {
-  private logger = getConsoleLogger('RegistrationComponent');
-
   public error: RegistrationError = null;
   public RegistrationError: typeof RegistrationError = RegistrationError;
+  public form: FormGroup = new FormGroup(
+    {
+      login: new FormControl(null, [Validators.required, Validators.minLength(1)]),
+      email: new FormControl(null, [Validators.required, Validators.minLength(1)]),
+      password: new FormControl(null, [Validators.required]),
+      confirmation: new FormControl(null, [Validators.required]),
+    },
+    [this.confirmationValidation],
+  );
+  private logger = getConsoleLogger('RegistrationComponent');
 
-  public form: FormGroup = new FormGroup({
-    login: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-    email: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-    password: new FormControl(null, [Validators.required]),
-    confirmation: new FormControl(null, [Validators.required]),
-  }, [this.confirmationValidation]);
-
-  constructor(private authService: AuthService, private router: Router, private title: TitleService) {
-  }
+  constructor(private authService: AuthService, private router: Router, private title: TitleService) {}
 
   ngOnInit(): void {
     this.title.setRegistration();

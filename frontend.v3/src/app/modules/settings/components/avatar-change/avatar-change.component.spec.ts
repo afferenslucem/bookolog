@@ -12,11 +12,8 @@ describe('FileInputComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [AvatarChangeComponent],
-      imports: [
-        HttpClientTestingModule,
-      ],
-    })
-      .compileComponents();
+      imports: [HttpClientTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -57,13 +54,13 @@ describe('FileInputComponent', () => {
     const spy = spyOn(userService, 'setAvatar');
 
     component.image = {
-      id: 'file'
+      id: 'file',
     } as any;
 
     component.submit();
 
     expect(spy).toHaveBeenCalledOnceWith({
-      id: 'file'
+      id: 'file',
     } as any);
   });
 });

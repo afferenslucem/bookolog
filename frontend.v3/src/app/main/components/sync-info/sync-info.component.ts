@@ -7,19 +7,23 @@ import { SyncService } from '../../services/sync.service';
 @Component({
   selector: 'app-sync-info',
   templateUrl: './sync-info.component.html',
-  styleUrls: ['./sync-info.component.scss']
+  styleUrls: ['./sync-info.component.scss'],
 })
 export class SyncInfoComponent implements OnInit {
   private logger = getConsoleLogger('SyncInfoComponent');
 
-  constructor(private syncService: SyncService, private notificationService: NotificationService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private syncService: SyncService,
+    private notificationService: NotificationService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {}
 
   public get lastSyncTime(): Date {
     return this.syncService.lastSyncDate;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   @HostListener('click')
   public async sync(): Promise<void> {
@@ -33,6 +37,6 @@ export class SyncInfoComponent implements OnInit {
 
   public async reload(): Promise<void> {
     this.logger.debug('reload');
-    await this.router.navigate(['.'], {relativeTo: this.activatedRoute});
+    await this.router.navigate(['.'], { relativeTo: this.activatedRoute });
   }
 }

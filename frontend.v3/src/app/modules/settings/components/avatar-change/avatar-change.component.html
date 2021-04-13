@@ -1,20 +1,20 @@
 <div class="content">
-    <form [formGroup]="form" (ngSubmit)="submit()">
-        <label class="form-header">Смена аватара</label>
+  <form (ngSubmit)="submit()" [formGroup]="form">
+    <label class="form-header">Смена аватара</label>
 
-        <div class="form-content">
-            <app-file-input formControlName="image" [fileUrl]="base64" (fileChanged)="imageSelected($event)"></app-file-input>
-            <button *ngIf="image" mat-flat-button color="primary" type="submit">
-                Загрузить
-            </button>
-        </div>
-    </form>
+    <div class="form-content">
+      <app-file-input (fileChanged)="imageSelected($event)" [fileUrl]="base64" formControlName="image"></app-file-input>
+      <button *ngIf="image" color="primary" mat-flat-button type="submit">
+        Загрузить
+      </button>
+    </div>
+  </form>
 </div>
 <ngx-photo-editor
-  [imageChanedEvent]="fileEvent"
   (imageCropped)="imageCropped($event)"
   [aspectRatio]="1/1"
-  [viewMode]="2"
-  [resizeToWidth]="500"
   [canvasHeight]="cropHeight"
+  [imageChanedEvent]="fileEvent"
+  [resizeToWidth]="500"
+  [viewMode]="2"
 ></ngx-photo-editor>

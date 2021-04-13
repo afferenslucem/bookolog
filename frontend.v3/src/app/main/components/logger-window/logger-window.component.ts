@@ -5,17 +5,14 @@ import { getAccumulated } from '../../app.logging';
 @Component({
   selector: 'app-logger-window',
   templateUrl: './logger-window.component.html',
-  styleUrls: ['./logger-window.component.scss']
+  styleUrls: ['./logger-window.component.scss'],
 })
 export class LoggerWindowComponent implements OnInit {
+  constructor() {}
 
   public get logs(): ILogMessage[] {
     return getAccumulated().logs;
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

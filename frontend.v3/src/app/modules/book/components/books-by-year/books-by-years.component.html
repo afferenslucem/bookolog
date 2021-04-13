@@ -1,6 +1,8 @@
 <div class="book-list">
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let year of (definedYears$ | async); let first = first; trackBy: yearTrackBy" [expanded]="first" (opened)="onOpen(year.key)">
+    <mat-expansion-panel (opened)="onOpen(year.key)"
+                         *ngFor="let year of (definedYears$ | async); let first = first; trackBy: yearTrackBy"
+                         [expanded]="first">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{year.key}}
@@ -15,15 +17,16 @@
       </mat-expansion-panel-header>
       <div *ngIf="yearOpened == year.key">
         <div *ngFor="let book of year.group; let last = last; trackBy: bookTrackBy">
-          <app-done-book [routerLink]="['/book', book.guid]" class="book-list__item" [book]="book"></app-done-book>
+          <app-done-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-done-book>
           <mat-divider [hidden]="last"></mat-divider>
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="(undefinedYear$ | async) as year" [expanded]="(years$ | async)?.length === 1" (opened)="onOpen(undefined)">
+    <mat-expansion-panel (opened)="onOpen(undefined)" *ngIf="(undefinedYear$ | async) as year"
+                         [expanded]="(years$ | async)?.length === 1">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span >Год не указан</span>
+          <span>Год не указан</span>
         </mat-panel-title>
         <mat-panel-description>
           <div class="years__meta w-100">
@@ -35,11 +38,11 @@
       </mat-expansion-panel-header>
       <div *ngIf="yearOpened == undefined">
         <div *ngFor="let book of year.group; let last = last; trackBy: bookTrackBy">
-          <app-done-book [routerLink]="['/book', book.guid]" class="book-list__item" [book]="book"></app-done-book>
+          <app-done-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-done-book>
           <mat-divider [hidden]="last"></mat-divider>
         </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <span *ngIf="(years$ | async)?.length === 0" >Здесь пока ничего нет</span>
+  <span *ngIf="(years$ | async)?.length === 0">Здесь пока ничего нет</span>
 </div>

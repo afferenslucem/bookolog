@@ -4,7 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'capitalize',
 })
 export class CapitalizePipe implements PipeTransform {
-
   transform(value: string): string;
   transform(value: string[]): string[];
   transform(value: string | string[]): string | string[] {
@@ -27,6 +26,6 @@ export class CapitalizePipe implements PipeTransform {
     if (value == null) {
       return [];
     }
-    return value.map((item) => this.capitalize(item));
+    return value.map(item => this.capitalize(item));
   }
 }

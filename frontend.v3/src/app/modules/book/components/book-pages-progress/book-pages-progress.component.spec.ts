@@ -10,11 +10,10 @@ describe('BookPagesProgressComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ BookPagesProgressComponent ],
+      declarations: [BookPagesProgressComponent],
       imports: [FormattingModule],
-      schemas: [ NO_ERRORS_SCHEMA ]
-    })
-.compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

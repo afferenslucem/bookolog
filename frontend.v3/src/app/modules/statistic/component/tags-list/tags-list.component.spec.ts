@@ -14,7 +14,7 @@ describe('TagsListComponent', () => {
   let titleService: TitleService;
   let router: Router;
 
-  let books: Book[] = [
+  const books: Book[] = [
     new Book({
       tags: ['One', 'two'],
     } as any),
@@ -29,20 +29,18 @@ describe('TagsListComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [TagsListComponent],
-      imports: [
-        RouterTestingModule,
-      ],
+      imports: [RouterTestingModule],
       providers: [
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             data: of({
               books,
             }),
-          }
-        }
-      ]
-    })
-      .compileComponents();
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -69,12 +67,12 @@ describe('TagsListComponent', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should counts by author', async () => {
+  it('should counts by author', () => {
     const result = component.countTags(books);
 
     const expected = [
-      { key: 'two', group: 2},
-      { key: 'One', group: 1},
+      { key: 'two', group: 2 },
+      { key: 'One', group: 1 },
     ] as any;
 
     expect(result).toEqual(expected);
@@ -88,7 +86,7 @@ describe('TagsListComponent', () => {
     expect(spy).toHaveBeenCalledOnceWith(['/tag', 'ping']);
   });
 
-  it('should set title', async () => {
+  it('should set title', () => {
     expect(titleService.title).toEqual(TitleText.TagsStatistic);
   });
 });

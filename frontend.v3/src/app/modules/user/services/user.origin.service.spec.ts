@@ -1,12 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-
-import { UserService } from './user.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserOriginService } from './user.origin.service';
 import { HttpClient } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { CredentialsException } from '../../auth/exceptions/credentials.exception';
-import { switchMap } from 'rxjs/operators';
 
 describe('UserOriginService', () => {
   let origin: UserOriginService;
@@ -14,9 +11,7 @@ describe('UserOriginService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ]
+      imports: [HttpClientTestingModule],
     });
     origin = TestBed.inject(UserOriginService);
     client = TestBed.inject(HttpClient);
@@ -32,13 +27,17 @@ describe('UserOriginService', () => {
 
       await origin.login({
         login: 'hrodvitnir',
-        password: 'qwerty'
+        password: 'qwerty',
       });
 
-      expect(postSpy).toHaveBeenCalledOnceWith('/auth/login', {
-        login: 'hrodvitnir',
-        password: 'qwerty'
-      }, jasmine.any(Object));
+      expect(postSpy).toHaveBeenCalledOnceWith(
+        '/auth/login',
+        {
+          login: 'hrodvitnir',
+          password: 'qwerty',
+        },
+        jasmine.any(Object),
+      );
     });
 
     it('should wrap error', async () => {
@@ -47,7 +46,7 @@ describe('UserOriginService', () => {
       try {
         await origin.login({
           login: 'hrodvitnir',
-          password: 'qwerty'
+          password: 'qwerty',
         });
 
         expect({}).toBeFalsy();
@@ -62,7 +61,7 @@ describe('UserOriginService', () => {
       try {
         await origin.login({
           login: 'hrodvitnir',
-          password: 'qwerty'
+          password: 'qwerty',
         });
 
         expect({}).toBeFalsy();
@@ -94,13 +93,13 @@ describe('UserOriginService', () => {
     await origin.registration({
       email: 'alexshakirov74@gmail.com',
       login: 'hrodvitnir',
-      password: 'qwerty'
+      password: 'qwerty',
     });
 
     expect(getSpy).toHaveBeenCalledOnceWith('/auth/register', {
       email: 'alexshakirov74@gmail.com',
       login: 'hrodvitnir',
-      password: 'qwerty'
+      password: 'qwerty',
     });
   });
 

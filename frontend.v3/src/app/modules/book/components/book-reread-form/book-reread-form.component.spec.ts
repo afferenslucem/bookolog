@@ -1,23 +1,23 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {FormattingModule} from '../../../formatting/formatting.module';
-import {TestCore} from '../../../../main/test/test-core.spec';
-import {BookRereadFormComponent} from './book-reread-form.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Subject} from 'rxjs';
-import {UUIDGeneratorService} from '../../../../main/services/u-u-i-d-generator.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterTestingModule} from '@angular/router/testing';
-import {Book} from '../../models/book';
-import {BookType} from '../../models/book-type';
-import {ProgressAlgorithmType} from '../../models/progress-algorithm-type';
-import {MatSelectModule} from '@angular/material/select';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BookStatus} from '../../models/book-status';
-import {BookData} from '../../models/book-data';
-import {BookDate} from '../../models/book-date';
-import {CollectionService} from '../../../collection/services/collection.service';
-import {BookService} from '../../services/book.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { FormattingModule } from '../../../formatting/formatting.module';
+import { TestCore } from '../../../../main/test/test-core.spec';
+import { BookRereadFormComponent } from './book-reread-form.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generator.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Book } from '../../models/book';
+import { BookType } from '../../models/book-type';
+import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BookStatus } from '../../models/book-status';
+import { BookData } from '../../models/book-data';
+import { BookDate } from '../../models/book-date';
+import { CollectionService } from '../../../collection/services/collection.service';
+import { BookService } from '../../services/book.service';
 
 const book: Book = new Book({
   name: 'name',
@@ -44,24 +44,17 @@ describe('BookRereadFormComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ BookRereadFormComponent ],
-      imports: [
-        FormattingModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
-        MatSelectModule,
-        BrowserAnimationsModule,
-      ],
-      schemas: [ NO_ERRORS_SCHEMA ],
+      declarations: [BookRereadFormComponent],
+      imports: [FormattingModule, HttpClientTestingModule, RouterTestingModule, MatSelectModule, BrowserAnimationsModule],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRoute },
         { provide: UUIDGeneratorService, useValue: {} },
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
   });
 
-  beforeEach(async () => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(BookRereadFormComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
@@ -91,39 +84,49 @@ describe('BookRereadFormComponent', () => {
   describe('Form initialize', () => {
     it('type', () => {
       const expectedType = component.bookForm.type;
+
       expect(expectedType).toEqual(book.type);
     });
 
     it('status', () => {
       const expectedStatus = component.bookForm.status;
+
       expect(expectedStatus).toEqual(BookStatus.ToRead);
     });
 
     it('started', () => {
       const expectedStarted = component.bookForm.started;
-      expect(expectedStarted).toEqual(new BookDate({
-        year: null,
-        month: null,
-        day: null,
-      }));
+
+      expect(expectedStarted).toEqual(
+        new BookDate({
+          year: null,
+          month: null,
+          day: null,
+        }),
+      );
     });
 
     it('finished', () => {
       const expectedFinished = component.bookForm.finished;
-      expect(expectedFinished).toEqual(new BookDate({
-        year: null,
-        month: null,
-        day: null,
-      }));
+
+      expect(expectedFinished).toEqual(
+        new BookDate({
+          year: null,
+          month: null,
+          day: null,
+        }),
+      );
     });
 
     it('doneUnits', () => {
       const expectedDone = component.bookForm.doneUnits;
+
       expect(expectedDone).toEqual(null);
     });
 
     it('totalUnits', () => {
       const expectedTotal = component.bookForm.totalUnits;
+
       expect(expectedTotal).toEqual(null);
     });
   });

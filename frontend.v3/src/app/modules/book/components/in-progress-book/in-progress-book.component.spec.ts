@@ -16,21 +16,13 @@ describe('InProgressBookComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [
-        InProgressBookComponent,
-        DateRangeComponent,
-        BookHeaderComponent,
-        BookAuthorsComponent,
-      ],
-      imports: [
-        FormattingModule,
-        RouterTestingModule,
-      ],
+      declarations: [InProgressBookComponent, DateRangeComponent, BookHeaderComponent, BookAuthorsComponent],
+      imports: [FormattingModule, RouterTestingModule],
     })
       .overrideComponent(InProgressBookComponent, {
         set: {
-          changeDetection: ChangeDetectionStrategy.Default
-        }
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
       })
       .compileComponents();
   });
@@ -58,7 +50,6 @@ describe('InProgressBookComponent', () => {
     });
   });
 
-
   describe('Properties', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(InProgressBookComponent);
@@ -67,7 +58,7 @@ describe('InProgressBookComponent', () => {
 
     it('Should return book name', () => {
       component.book = new Book({
-        name: 'book name'
+        name: 'book name',
       } as any);
 
       expect(component.name).toEqual('book name');
@@ -75,15 +66,15 @@ describe('InProgressBookComponent', () => {
 
     it('Should return book authors', () => {
       component.book = new Book({
-        authors: [ 'One', 'Two' ]
+        authors: ['One', 'Two'],
       } as any);
 
-      expect(component.authors).toEqual([ 'One', 'Two' ]);
+      expect(component.authors).toEqual(['One', 'Two']);
     });
 
     it('Should return book startDate', () => {
       component.book = new Book({
-        startDate: new Date('2011-01-02')
+        startDate: new Date('2011-01-02'),
       } as any);
 
       expect(component.startDate).toEqual(new Date('2011-01-02'));
@@ -91,7 +82,7 @@ describe('InProgressBookComponent', () => {
 
     it('Should return book done', () => {
       component.book = new Book({
-        doneUnits: 42
+        doneUnits: 42,
       } as any);
 
       expect(component.done).toEqual(42);
@@ -99,7 +90,7 @@ describe('InProgressBookComponent', () => {
 
     it('Should return book total', () => {
       component.book = new Book({
-        totalUnits: 24
+        totalUnits: 24,
       } as any);
 
       expect(component.total).toEqual(24);
@@ -109,7 +100,7 @@ describe('InProgressBookComponent', () => {
       it('Should return zero for empty done', () => {
         component.book = new Book({
           doneUnits: null,
-          totalUnits: 100
+          totalUnits: 100,
         } as any);
 
         expect(component.progressValue).toEqual(0);
@@ -118,7 +109,7 @@ describe('InProgressBookComponent', () => {
       it('Should return zero for empty total', () => {
         component.book = new Book({
           doneUnits: 100,
-          totalUnits: 0
+          totalUnits: 0,
         } as any);
 
         expect(component.progressValue).toEqual(0);
@@ -127,7 +118,7 @@ describe('InProgressBookComponent', () => {
       it('Should return 20', () => {
         component.book = new Book({
           doneUnits: 5,
-          totalUnits: 25
+          totalUnits: 25,
         } as any);
 
         const progressValue = component.progressValue;
@@ -173,7 +164,7 @@ describe('InProgressBookComponent', () => {
     describe('Dates', () => {
       it('Should render progress dates for only start date', () => {
         component.book = new Book({
-          startDate: '2011-01-01'
+          startDate: '2011-01-01',
         } as any);
 
         fixture.detectChanges();
@@ -228,8 +219,7 @@ describe('InProgressBookComponent', () => {
       });
 
       it('Should not render progress section', () => {
-        component.book = new Book({
-        } as any);
+        component.book = new Book({} as any);
 
         fixture.detectChanges();
 

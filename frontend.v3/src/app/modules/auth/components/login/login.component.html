@@ -4,35 +4,35 @@
 <div class="content">
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
-      <mat-label >Логин</mat-label>
-      <input matInput formControlName="login" required/>
-      <mat-error *ngIf="form.get('login').invalid" >
+      <mat-label>Логин</mat-label>
+      <input formControlName="login" matInput required/>
+      <mat-error *ngIf="form.get('login').invalid">
         Это обязательное поле
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label >Пароль</mat-label>
-      <input matInput type="password" formControlName="password" required/>
-      <mat-error *ngIf="form.get('password').invalid" >
+      <mat-label>Пароль</mat-label>
+      <input formControlName="password" matInput required type="password"/>
+      <mat-error *ngIf="form.get('password').invalid">
         Это обязательное поле
       </mat-error>
     </mat-form-field>
 
-    <mat-error  *ngIf="error !== null" class="login-error">
+    <mat-error *ngIf="error !== null" class="login-error">
       <ng-container [ngSwitch]="error">
         <span *ngSwitchCase="LoginError.Credential">Неверные логин или пароль</span>
         <span *ngSwitchDefault>Неизвестная ошибка</span>
       </ng-container>
     </mat-error>
 
-    <span [routerLink]="['/recovery-password']" class="link" >Восстановить пароль</span>
+    <span [routerLink]="['/recovery-password']" class="link">Восстановить пароль</span>
 
-    <button mat-flat-button
-            color="primary"
-            class="w-100 submit"
+    <button (click)="submit($event)"
             [disabled]="form.invalid"
-            (click)="submit($event)"
+            class="w-100 submit"
+            color="primary"
+            mat-flat-button
     >
       Войти
     </button>

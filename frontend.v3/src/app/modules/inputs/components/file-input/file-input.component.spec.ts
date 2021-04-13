@@ -9,10 +9,9 @@ describe('FileInputComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ FileInputComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
-    })
-.compileComponents();
+      declarations: [FileInputComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -4,12 +4,20 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Notification } from '../models/notification';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationQueueService {
+  constructor() {}
+
   private _notifications$ = new BehaviorSubject<Notification[]>([]);
 
-  constructor() { }
+  public get notifications$(): Observable<Notification[]> {
+    return this._notifications$;
+  }
+
+  public get notifications(): Notification[] {
+    return this._notifications$.getValue();
+  }
 
   public add(notifications: Notification): void {
     const next = _(this.notifications).append(notifications).toArray();
@@ -18,16 +26,10 @@ export class NotificationQueueService {
   }
 
   public remove(guid: string): void {
-    const next = _(this.notifications).where(item => item.guid !== guid).toArray();
+    const next = _(this.notifications)
+      .where(item => item.guid !== guid)
+      .toArray();
 
     this._notifications$.next(next);
-  }
-
-  public get notifications$(): Observable<Notification[]> {
-    return this._notifications$;
-  }
-
-  public get notifications(): Notification[] {
-    return this._notifications$.getValue();
   }
 }

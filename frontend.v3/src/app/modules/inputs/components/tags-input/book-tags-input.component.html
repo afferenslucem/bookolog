@@ -1,7 +1,7 @@
-<form [formGroup]="form" (ngSubmit)="append()">
+<form (ngSubmit)="append()" [formGroup]="form">
   <mat-form-field appearance="fill">
     <mat-label>{{header}}</mat-label>
-    <input matInput formControlName="input" type="text" [matAutocomplete]="tagsAutocomplete"/>
+    <input [matAutocomplete]="tagsAutocomplete" formControlName="input" matInput type="text"/>
   </mat-form-field>
 
   <mat-autocomplete #tagsAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)">
@@ -10,11 +10,11 @@
     </mat-option>
   </mat-autocomplete>
 
-  <button mat-flat-button color="primary" type="submit">
+  <button color="primary" mat-flat-button type="submit">
     <app-plus-icon></app-plus-icon>
   </button>
 </form>
 
-<div class="tags-input__value tags" *ngIf="tags.length > 0">
-  <app-tag-value [name]="tag | capitalize" *ngFor="let tag of tags" (crossClick)="removeTag(tag)"></app-tag-value>
+<div *ngIf="tags.length > 0" class="tags-input__value tags">
+  <app-tag-value (crossClick)="removeTag(tag)" *ngFor="let tag of tags" [name]="tag | capitalize"></app-tag-value>
 </div>

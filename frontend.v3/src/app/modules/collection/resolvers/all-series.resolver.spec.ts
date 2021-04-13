@@ -4,7 +4,7 @@ import { AllSeriesResolver } from './all-series.resolver';
 
 describe('AllSeriesResolver', () => {
   let resolver: AllSeriesResolver;
-  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo([]);
+  const spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo([]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,9 +13,9 @@ describe('AllSeriesResolver', () => {
           provide: CollectionService,
           useValue: {
             getAll: spy,
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     resolver = TestBed.inject(AllSeriesResolver);
   });
@@ -25,7 +25,7 @@ describe('AllSeriesResolver', () => {
   });
 
   it('should requests ToRead', async () => {
-    const collections = await resolver.resolve(null, null);
+    const collections = await resolver.resolve();
 
     expect(spy).toHaveBeenCalledTimes(1);
   });

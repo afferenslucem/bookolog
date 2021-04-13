@@ -11,7 +11,7 @@ describe('DateRangeComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [DateRangeComponent],
-      schemas: [ NO_ERRORS_SCHEMA ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
       // .overrideComponent(DateRangeComponent, {
       //   set: {changeDetection: ChangeDetectionStrategy.Default},
@@ -26,11 +26,13 @@ describe('DateRangeComponent', () => {
 
   it('should create', () => {
     fixture.detectChanges();
+
     expect(component).toBeTruthy();
   });
 
-  it('should render empty range', async () => {
+  it('should render empty range', () => {
     fixture.detectChanges();
+
     expect(fixture.nativeElement.innerText).toEqual('[ … - … ]');
   });
 
@@ -43,7 +45,7 @@ describe('DateRangeComponent', () => {
     expect(fixture.nativeElement.innerText).toEqual('[ 11/17/20 - 11/18/20 ]');
   });
 
-  it('should render start range', async () => {
+  it('should render start range', () => {
     component.startDate = new Date('2020-11-17');
 
     fixture.detectChanges();
@@ -51,7 +53,7 @@ describe('DateRangeComponent', () => {
     expect(fixture.nativeElement.innerText).toEqual('[ 11/17/20 - … ]');
   });
 
-  it('should render end range', async () => {
+  it('should render end range', () => {
     component.endDate = new Date('2020-11-17');
 
     fixture.detectChanges();

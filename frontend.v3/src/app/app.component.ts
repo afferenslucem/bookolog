@@ -11,8 +11,7 @@ import { PreloaderService } from './main/services/preloader.service';
 export class AppComponent {
   title = 'Bookolog';
 
-  public constructor(private preloaderService: PreloaderService) {
-  }
+  public constructor(private preloaderService: PreloaderService) {}
 
   public get showPreloader(): Observable<boolean> {
     return this.preloaderService.shouldShow;

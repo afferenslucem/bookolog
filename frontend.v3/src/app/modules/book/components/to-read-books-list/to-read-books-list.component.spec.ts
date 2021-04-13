@@ -11,7 +11,7 @@ import { TitleText } from '../../../ui/models/title-text';
 describe('ToReadBooksListComponent', () => {
   let component: ToReadBooksListComponent;
   let fixture: ComponentFixture<ToReadBooksListComponent>;
-  let books: Book[] = [
+  const books: Book[] = [
     new Book({
       name: 'name0',
       modifyDate: '2021-01-01',
@@ -29,7 +29,7 @@ describe('ToReadBooksListComponent', () => {
       endDateYear: 2020,
       endDateMonth: 10,
       createDate: '2021-01-03',
-      name: 'name3'
+      name: 'name3',
     } as any),
     new Book({
       endDateYear: 2020,
@@ -37,22 +37,22 @@ describe('ToReadBooksListComponent', () => {
       endDateDay: 22,
       createDate: '2021-01-03',
       modifyDate: '2021-01-04',
-      name: 'name4'
+      name: 'name4',
     } as any),
   ];
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ ToReadBooksListComponent ],
+      declarations: [ToReadBooksListComponent],
       providers: [
         {
-          provide: ActivatedRoute, useValue: {
-            data: of({ books })
-          }
-        }
-      ]
-    })
-      .compileComponents();
+          provide: ActivatedRoute,
+          useValue: {
+            data: of({ books }),
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -70,9 +70,7 @@ describe('ToReadBooksListComponent', () => {
 
   describe('Books sorting', () => {
     it('Should order years descending', async () => {
-      const sorted = await component.books$.pipe(
-        first()
-      ).toPromise();
+      const sorted = await component.books$.pipe(first()).toPromise();
 
       expect(sorted.map(item => item.name)).toEqual(['name4', 'name1', 'name0', 'name3', 'name2']);
     });

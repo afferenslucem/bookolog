@@ -16,9 +16,8 @@ describe('NotificationComponent', () => {
     await TestCore.configureTestingModule({
       declarations: [NotificationItemComponent],
       providers: [NotificationService],
-      schemas: [ NO_ERRORS_SCHEMA ],
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

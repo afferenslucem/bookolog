@@ -19,7 +19,7 @@ export class BookFilteredComponent implements OnInit {
     this.books$ = activatedRoute.data.pipe(map(data => data.books));
     this.filter$ = activatedRoute.params.pipe(
       map(data => data.filter),
-      tap( data => this.title.setCustom(data)),
+      tap(data => this.title.setCustom(data)),
     );
   }
 

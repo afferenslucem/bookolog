@@ -1,6 +1,6 @@
 <div class="avatar-place">
-  <div class="avatar" *ngIf="avatar" [style.background-image]="avatarUrl"></div>
-  <div class="icon" *ngIf="!avatar">
+  <div *ngIf="avatar" [style.background-image]="avatarUrl" class="avatar"></div>
+  <div *ngIf="!avatar" class="icon">
     <mat-icon>person</mat-icon>
   </div>
 </div>
@@ -9,6 +9,7 @@
   {{ login }}
 </div>
 
-<div class="count" *ngIf="(count$ | async) as count">
-  <span class="count_value">{{ count }}</span> <span class="count_label">{{ count | chooseForm: 'книга' : 'книги' : 'книг'}}</span>
+<div *ngIf="(count$ | async) as count" class="count">
+  <span class="count_value">{{ count }}</span> <span
+  class="count_label">{{ count | chooseForm: 'книга' : 'книги' : 'книг'}}</span>
 </div>

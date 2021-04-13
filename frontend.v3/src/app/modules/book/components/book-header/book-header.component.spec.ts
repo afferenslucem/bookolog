@@ -12,18 +12,10 @@ describe('BookHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [
-        BookHeaderComponent,
-      ],
-      providers: [
-        BookActionService
-      ],
-      imports: [
-        FormattingModule,
-        RouterTestingModule,
-      ],
-    })
-      .compileComponents();
+      declarations: [BookHeaderComponent],
+      providers: [BookActionService],
+      imports: [FormattingModule, RouterTestingModule],
+    }).compileComponents();
   });
 
   describe('Creation', () => {
@@ -45,7 +37,6 @@ describe('BookHeaderComponent', () => {
     });
   });
 
-
   describe('Properties', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(BookHeaderComponent);
@@ -54,7 +45,7 @@ describe('BookHeaderComponent', () => {
 
     it('Should return book name', () => {
       component.book = new Book({
-        name: 'book name'
+        name: 'book name',
       } as any);
 
       expect(component.name).toEqual('book name');
@@ -63,7 +54,7 @@ describe('BookHeaderComponent', () => {
     describe('ShouldSync', () => {
       it('Should return true', () => {
         component.book = new Book({
-          shouldSync: 1
+          shouldSync: 1,
         } as any);
 
         expect(component.shouldSync).toEqual(true);
@@ -71,7 +62,7 @@ describe('BookHeaderComponent', () => {
 
       it('Should return false', () => {
         component.book = new Book({
-          shouldSync: 0
+          shouldSync: 0,
         } as any);
 
         expect(component.shouldSync).toEqual(false);
@@ -79,7 +70,7 @@ describe('BookHeaderComponent', () => {
 
       it('Should return false', () => {
         component.book = new Book({
-          shouldSync: null
+          shouldSync: null,
         } as any);
 
         expect(component.shouldSync).toEqual(false);
@@ -117,7 +108,7 @@ describe('BookHeaderComponent', () => {
     describe('Name', () => {
       it('Should render book name', () => {
         component.book = new Book({
-          name: 'book name'
+          name: 'book name',
         } as any);
 
         fixture.detectChanges();
@@ -129,7 +120,7 @@ describe('BookHeaderComponent', () => {
     describe('ShouldSync', () => {
       it('Should render', () => {
         component.book = new Book({
-          shouldSync: 1
+          shouldSync: 1,
         } as any);
 
         fixture.detectChanges();
@@ -139,7 +130,7 @@ describe('BookHeaderComponent', () => {
 
       it('Should not render', () => {
         component.book = new Book({
-          shouldSync: 0
+          shouldSync: 0,
         } as any);
 
         fixture.detectChanges();
@@ -151,7 +142,7 @@ describe('BookHeaderComponent', () => {
     describe('AllowEdit', () => {
       it('Should render', () => {
         component.book = new Book({
-          name: ''
+          name: '',
         } as any);
 
         const serv = TestBed.inject(BookActionService);
@@ -164,7 +155,7 @@ describe('BookHeaderComponent', () => {
 
       it('Should not render', () => {
         component.book = new Book({
-          name: ''
+          name: '',
         } as any);
         const serv = TestBed.inject(BookActionService);
         serv.editAllowed = false;

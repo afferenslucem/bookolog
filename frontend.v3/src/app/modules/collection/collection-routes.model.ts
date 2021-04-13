@@ -14,7 +14,7 @@ export const routes: Routes = [
     path: 'series/create',
     pathMatch: 'full',
     data: {
-      action: Action.Create
+      action: Action.Create,
     },
   },
   {
@@ -24,7 +24,7 @@ export const routes: Routes = [
     resolve: {
       books: BooksBySeriesResolver,
       collection: CollectionResolver,
-    }
+    },
   },
   {
     component: CollectionEditViewComponent,
@@ -35,7 +35,7 @@ export const routes: Routes = [
     },
     resolve: {
       collection: CollectionResolver,
-    }
+    },
   },
   {
     component: CollectionListComponent,
@@ -44,6 +44,6 @@ export const routes: Routes = [
     resolve: {
       collections: AllSeriesResolver,
       books: AllBooksResolver,
-    }
+    },
   },
 ];

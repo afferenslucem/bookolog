@@ -1,7 +1,7 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {ProgressAlgorithmService} from './progress-algorithm.service';
-import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
+import { ProgressAlgorithmService } from './progress-algorithm.service';
+import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
 
 describe('ProgressAlgorithmService', () => {
   let service: ProgressAlgorithmService;

@@ -7,18 +7,9 @@ import { PadStartPipe } from './pipes/pad-start.pipe';
 import { TimifyUnitsPipe } from './pipes/timify-units.pipe';
 import { MaxLengthPipe } from './pipes/max-length.pipe';
 
-
 @NgModule({
-    declarations: [JoinPipe, ChooseFormPipe, PadStartPipe, TimifyUnitsPipe, CapitalizePipe, MaxLengthPipe],
-    exports: [
-        JoinPipe,
-        TimifyUnitsPipe,
-        CapitalizePipe,
-        ChooseFormPipe,
-        MaxLengthPipe
-    ],
-    imports: [
-        CommonModule,
-    ],
+  declarations: [JoinPipe, ChooseFormPipe, PadStartPipe, TimifyUnitsPipe, CapitalizePipe, MaxLengthPipe],
+  exports: [JoinPipe, TimifyUnitsPipe, CapitalizePipe, ChooseFormPipe, MaxLengthPipe],
+  imports: [CommonModule],
 })
-export class FormattingModule { }
+export class FormattingModule {}

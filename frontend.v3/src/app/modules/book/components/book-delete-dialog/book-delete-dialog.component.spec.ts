@@ -10,54 +10,49 @@ describe('BookDeleteDialogComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [
-        BookDeleteDialogComponent,
-      ],
+      declarations: [BookDeleteDialogComponent],
       providers: [
         {
-          provide: MatDialogRef, useValue: {
-            close: () => {
-            }
-          }
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {},
+          },
         },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
-  describe('BookDeleteDialogComponent', () => {
-    beforeEach(() => {
-      fixture = TestBed.createComponent(BookDeleteDialogComponent);
-      component = fixture.componentInstance;
-      element = fixture.nativeElement;
+  beforeEach(() => {
+    fixture = TestBed.createComponent(BookDeleteDialogComponent);
+    component = fixture.componentInstance;
+    element = fixture.nativeElement;
 
-      fixture.detectChanges();
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  describe('Close', () => {
+    it('Cancel', () => {
+      const ref = TestBed.inject(MatDialogRef);
+
+      const closeSpy = spyOn(ref, 'close');
+
+      element.querySelector<HTMLElement>('.close').click();
+
+      expect(closeSpy).toHaveBeenCalledOnceWith('cancel');
     });
 
-    it('should create', () => {
-      expect(component).toBeTruthy();
-    });
+    it('Delete', () => {
+      const ref = TestBed.inject(MatDialogRef);
 
-    describe('Close', () => {
-      it('Cancel', () => {
-        const ref = TestBed.inject(MatDialogRef);
+      const closeSpy = spyOn(ref, 'close');
 
-        const closeSpy = spyOn(ref, 'close');
+      element.querySelector<HTMLElement>('.delete').click();
 
-        element.querySelector<HTMLElement>('.close').click();
-
-        expect(closeSpy).toHaveBeenCalledOnceWith('cancel');
-      });
-
-      it('Delete', () => {
-        const ref = TestBed.inject(MatDialogRef);
-
-        const closeSpy = spyOn(ref, 'close');
-
-        element.querySelector<HTMLElement>('.delete').click();
-
-        expect(closeSpy).toHaveBeenCalledOnceWith('delete');
-      });
+      expect(closeSpy).toHaveBeenCalledOnceWith('delete');
     });
   });
 });

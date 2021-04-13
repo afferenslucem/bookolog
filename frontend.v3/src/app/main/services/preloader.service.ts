@@ -3,13 +3,12 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, map, tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PreloaderService {
+  public shouldShow: Observable<boolean>;
   private _shouldShow = 0;
   private _showVotes = new Subject<number>();
-
-  public shouldShow: Observable<boolean>;
 
   constructor() {
     this.shouldShow = this._showVotes.pipe(

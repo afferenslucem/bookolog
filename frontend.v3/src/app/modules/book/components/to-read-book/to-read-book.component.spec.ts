@@ -14,18 +14,9 @@ describe('InProgressBookComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [
-        ToReadBookComponent,
-        DateRangeComponent,
-        BookHeaderComponent,
-        BookAuthorsComponent,
-      ],
-      imports: [
-        FormattingModule,
-        RouterTestingModule,
-      ],
-    })
-      .compileComponents();
+      declarations: [ToReadBookComponent, DateRangeComponent, BookHeaderComponent, BookAuthorsComponent],
+      imports: [FormattingModule, RouterTestingModule],
+    }).compileComponents();
   });
 
   describe('Creation', () => {
@@ -51,7 +42,6 @@ describe('InProgressBookComponent', () => {
     });
   });
 
-
   describe('Properties', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(ToReadBookComponent);
@@ -60,7 +50,7 @@ describe('InProgressBookComponent', () => {
 
     it('Should return book name', () => {
       component.book = new Book({
-        name: 'book name'
+        name: 'book name',
       } as any);
 
       expect(component.name).toEqual('book name');
@@ -68,10 +58,10 @@ describe('InProgressBookComponent', () => {
 
     it('Should return book authors', () => {
       component.book = new Book({
-        authors: [ 'One', 'Two' ]
+        authors: ['One', 'Two'],
       } as any);
 
-      expect(component.authors).toEqual([ 'One', 'Two' ]);
+      expect(component.authors).toEqual(['One', 'Two']);
     });
   });
 

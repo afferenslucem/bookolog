@@ -18,7 +18,7 @@ describe('SettingsComponent', () => {
       .overrideComponent(SettingsComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
-        }
+        },
       })
       .compileComponents();
   });
@@ -40,7 +40,7 @@ describe('SettingsComponent', () => {
   });
 
   describe('confirmationValidation', () => {
-    it ('should set error', () => {
+    it('should set error', () => {
       component.ngOnInit();
 
       expect(title.title).toEqual(TitleText.Settings);

@@ -11,7 +11,7 @@ import { TitleService } from '../../../ui/service/title.service';
 @Component({
   selector: 'app-author-list',
   templateUrl: './authors-list.component.html',
-  styleUrls: ['./authors-list.component.scss']
+  styleUrls: ['./authors-list.component.scss'],
 })
 export class AuthorsListComponent implements OnInit {
   public authors$: Observable<IGroupedData<string, number>[]> = null;
@@ -35,7 +35,11 @@ export class AuthorsListComponent implements OnInit {
     return _(books)
       .where(item => item.authors.length > 0)
       .selectMany(item => item.authors)
-      .groupBy(item => item, new StringComparer(), grouped => grouped.count())
+      .groupBy(
+        item => item,
+        new StringComparer(),
+        grouped => grouped.count(),
+      )
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .toArray();

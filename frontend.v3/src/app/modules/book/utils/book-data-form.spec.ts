@@ -1,8 +1,8 @@
-import {BookDataForm} from './book-data-form';
-import {BookStatus} from '../models/book-status';
-import {first} from 'rxjs/operators';
-import {BookType} from '../models/book-type';
-import {ProgressAlgorithmType} from '../models/progress-algorithm-type';
+import { BookDataForm } from './book-data-form';
+import { BookStatus } from '../models/book-status';
+import { first } from 'rxjs/operators';
+import { BookType } from '../models/book-type';
+import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
 
 describe('BookDataForm', () => {
   it('should create an instance', () => {
@@ -21,6 +21,7 @@ describe('BookDataForm', () => {
       const observable = bookDataForm.genreChanges.pipe(first()).toPromise();
       bookDataForm.form.get('genre').setValue('genre');
       const result = await observable;
+
       expect(result).toEqual('genre');
     });
 
@@ -28,6 +29,7 @@ describe('BookDataForm', () => {
       const observable = bookDataForm.statusChanges.pipe(first()).toPromise();
       bookDataForm.form.get('status').setValue(BookStatus.Done);
       const result = await observable;
+
       expect(result).toEqual(BookStatus.Done);
     });
 
@@ -35,6 +37,7 @@ describe('BookDataForm', () => {
       const observable = bookDataForm.typeChanges.pipe(first()).toPromise();
       bookDataForm.form.get('type').setValue(BookType.Electronic);
       const result = await observable;
+
       expect(result).toEqual(BookType.Electronic);
     });
 
@@ -42,6 +45,7 @@ describe('BookDataForm', () => {
       const observable = bookDataForm.progressTypeChanges.pipe(first()).toPromise();
       bookDataForm.form.get('progressType').setValue(ProgressAlgorithmType.Left);
       const result = await observable;
+
       expect(result).toEqual(ProgressAlgorithmType.Left);
     });
   });
@@ -216,7 +220,7 @@ describe('BookDataForm', () => {
       bookDataForm.started = {
         year: 2021,
         month: 3,
-        day: 12
+        day: 12,
       };
 
       const result = bookDataForm.form.get('started').value;
@@ -224,7 +228,7 @@ describe('BookDataForm', () => {
       expect(result).toEqual({
         year: 2021,
         month: 3,
-        day: 12
+        day: 12,
       });
     });
 

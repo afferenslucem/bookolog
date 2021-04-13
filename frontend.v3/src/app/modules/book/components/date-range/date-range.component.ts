@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   selector: 'app-date-range',
   templateUrl: './date-range.component.html',
   styleUrls: ['./date-range.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateRangeComponent implements OnInit {
   @Input()
@@ -13,9 +13,7 @@ export class DateRangeComponent implements OnInit {
   @Input()
   public endDate: Date;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

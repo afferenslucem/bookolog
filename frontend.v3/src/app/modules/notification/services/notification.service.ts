@@ -8,12 +8,15 @@ import { NotificationFactory } from '../utils/notification-factory';
 import { NotificationQueueService } from './notification-queue.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
   private factory = new NotificationFactory();
 
-  constructor(private notificationQueue: NotificationQueueService) {
+  constructor(private notificationQueue: NotificationQueueService) {}
+
+  public get notifications$(): Observable<Notification[]> {
+    return this.notificationQueue.notifications$;
   }
 
   public close(guid: string): void {
@@ -46,9 +49,5 @@ export class NotificationService {
     new Timer(() => {
       this.notificationQueue.remove(guid);
     }, timeout).start();
-  }
-
-  public get notifications$(): Observable<Notification[]> {
-    return this.notificationQueue.notifications$;
   }
 }

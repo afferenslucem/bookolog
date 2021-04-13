@@ -33,10 +33,14 @@ export class GenresListComponent implements OnInit {
   }
 
   public countGenres(books: Book[]): IGroupedData<any, number>[] {
-    return  _(books)
+    return _(books)
       .where(item => !!item.genre)
       .select(item => item.genre)
-      .groupBy(item => item, new StringComparer(), grouped => grouped.count())
+      .groupBy(
+        item => item,
+        new StringComparer(),
+        grouped => grouped.count(),
+      )
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .toArray();

@@ -1,9 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-
-import { CollectionStorageService } from './collection.storage.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserService } from '../../user/services/user.service';
-import { BookOriginService } from '../../book/services/book.origin.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { CollectionOriginService } from './collection.origin.service';
@@ -17,17 +14,16 @@ describe('CollectionOriginService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: UserService, useValue: {
+          provide: UserService,
+          useValue: {
             user: {
               login: 'hrodvitnir',
               id: 1,
-            }
-          }
-        }
+            },
+          },
+        },
       ],
-      imports: [
-        HttpClientTestingModule,
-      ]
+      imports: [HttpClientTestingModule],
     });
     service = TestBed.inject(CollectionOriginService);
     httpClient = TestBed.inject(HttpClient);
@@ -39,20 +35,22 @@ describe('CollectionOriginService', () => {
   });
 
   it('should do getAll', async () => {
-    const allSpy = spyOn(httpClient, 'get').and.returnValue(of([
-      {
-        guid: 'guid1',
-        name: 'name1'
-      },
-    ]));
+    const allSpy = spyOn(httpClient, 'get').and.returnValue(
+      of([
+        {
+          guid: 'guid1',
+          name: 'name1',
+        },
+      ]),
+    );
 
     const result = await service.getAll();
 
     expect(result).toEqual([
       {
         guid: 'guid1',
-        name: 'name1'
-      } as any
+        name: 'name1',
+      } as any,
     ]);
 
     expect(allSpy).toHaveBeenCalledOnceWith('/collection/user/1');
@@ -71,12 +69,12 @@ describe('CollectionOriginService', () => {
 
     await service.sync({
       delete: [],
-      update: []
+      update: [],
     });
 
     expect(syncSpy).toHaveBeenCalledOnceWith('/collection/synchronize/', {
       delete: [],
-      update: []
+      update: [],
     });
   });
 });

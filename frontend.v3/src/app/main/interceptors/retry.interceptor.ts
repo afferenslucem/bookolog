@@ -13,8 +13,7 @@ export class RetryInterceptor implements HttpInterceptor {
     namespace: 'Interceptor',
   });
 
-  public constructor() {
-  }
+  public constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.trySendRequest(req, next, 3);
@@ -30,7 +29,7 @@ export class RetryInterceptor implements HttpInterceptor {
         } else {
           return throwError(err);
         }
-      })
+      }),
     );
   }
 }

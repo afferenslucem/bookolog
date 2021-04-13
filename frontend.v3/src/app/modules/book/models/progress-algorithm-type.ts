@@ -1,4 +1,4 @@
 export enum ProgressAlgorithmType {
   Done = 'Done',
-  Left = 'Left'
+  Left = 'Left',
 }

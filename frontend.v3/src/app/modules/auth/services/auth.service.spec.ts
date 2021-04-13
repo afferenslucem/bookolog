@@ -10,9 +10,7 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ]
+      imports: [HttpClientTestingModule],
     });
     authService = TestBed.inject(AuthService);
     userService = TestBed.inject(UserService);
@@ -50,13 +48,13 @@ describe('AuthService', () => {
     await authService.registration({
       password: 'qwerty',
       login: 'hrodvitnir',
-      email: 'alexshakirov74@gmail.com'
+      email: 'alexshakirov74@gmail.com',
     });
 
     expect(registrationSpy).toHaveBeenCalledOnceWith({
       password: 'qwerty',
       login: 'hrodvitnir',
-      email: 'alexshakirov74@gmail.com'
+      email: 'alexshakirov74@gmail.com',
     });
   });
 

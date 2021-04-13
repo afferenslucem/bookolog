@@ -1,10 +1,10 @@
-import {Entity} from '../../../main/models/entity';
-import {Collection} from '../../collection/models/collection';
-import {BookData} from './book-data';
-import {BookDate} from './book-date';
-import {BookStatus} from './book-status';
-import {BookType} from './book-type';
-import {ProgressAlgorithmType} from './progress-algorithm-type';
+import { Entity } from '../../../main/models/entity';
+import { Collection } from '../../collection/models/collection';
+import { BookData } from './book-data';
+import { BookDate } from './book-date';
+import { BookStatus } from './book-status';
+import { BookType } from './book-type';
+import { ProgressAlgorithmType } from './progress-algorithm-type';
 
 export class Book extends Entity {
   public name: string;
@@ -27,33 +27,6 @@ export class Book extends Entity {
   public progressType: ProgressAlgorithmType;
   public rereadingBookGuid?: string;
   public rereadedBy: string[];
-
-  public get done(): number {
-    if (this.totalUnits == null || this.doneUnits == null) {
-      return null;
-    }
-    if (this.progressType === ProgressAlgorithmType.Left) {
-      return this.totalUnits - this.doneUnits;
-    } else {
-      return this.doneUnits;
-    }
-  }
-
-  public set done(v: number) {
-    if (this.progressType === ProgressAlgorithmType.Left) {
-      this.doneUnits = this.totalUnits - v;
-    } else {
-      this.doneUnits = v;
-    }
-  }
-
-  public get progressPercents(): number {
-    if (this.totalUnits && this.doneUnits) {
-      return Math.floor((this.doneUnits / this.totalUnits) * 100);
-    } else {
-      return 0;
-    }
-  }
 
   public constructor(data: BookData) {
     super(data);
@@ -85,6 +58,33 @@ export class Book extends Entity {
     this.progressType = data.progressType || ProgressAlgorithmType.Done;
     this.rereadingBookGuid = data.rereadingBookGuid || null;
     this.rereadedBy = data.rereadedBy || [];
+  }
+
+  public get done(): number {
+    if (this.totalUnits == null || this.doneUnits == null) {
+      return null;
+    }
+    if (this.progressType === ProgressAlgorithmType.Left) {
+      return this.totalUnits - this.doneUnits;
+    } else {
+      return this.doneUnits;
+    }
+  }
+
+  public set done(v: number) {
+    if (this.progressType === ProgressAlgorithmType.Left) {
+      this.doneUnits = this.totalUnits - v;
+    } else {
+      this.doneUnits = v;
+    }
+  }
+
+  public get progressPercents(): number {
+    if (this.totalUnits && this.doneUnits) {
+      return Math.floor((this.doneUnits / this.totalUnits) * 100);
+    } else {
+      return 0;
+    }
   }
 
   private getDate(date: string | Date, bDate: BookDate): Date {

@@ -8,18 +8,22 @@ import { BooksByGenreResolver } from './books-by-genre.resolver';
 describe('BooksByGenreResolver', () => {
   let resolver: BooksByGenreResolver;
 
-  const booksValue: Book[] = [{
-    name: 'name1',
-    genre: 'genre1',
-  }, {
-    name: 'name2',
-    genre: 'genre1',
-  }, {
-    name: 'name3',
-    genre: 'genre2',
-  }] as any;
+  const booksValue: Book[] = [
+    {
+      name: 'name1',
+      genre: 'genre1',
+    },
+    {
+      name: 'name2',
+      genre: 'genre1',
+    },
+    {
+      name: 'name3',
+      genre: 'genre2',
+    },
+  ] as any;
 
-  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo(booksValue);
+  const spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo(booksValue);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -48,7 +52,7 @@ describe('BooksByGenreResolver', () => {
       },
     } as any;
 
-    const books = await resolver.resolve(route, null);
+    const books = await resolver.resolve(route);
 
     expect(spy).toHaveBeenCalledWith(BookStatus.Done);
     expect(spy).toHaveBeenCalledTimes(1);
@@ -56,12 +60,15 @@ describe('BooksByGenreResolver', () => {
     expect(genreSpy).toHaveBeenCalledWith('filter');
     expect(genreSpy).toHaveBeenCalledTimes(1);
 
-    expect(books).toEqual([{
-      name: 'name1',
-      genre: 'genre1',
-    }, {
-      name: 'name2',
-      genre: 'genre1',
-    }] as any);
+    expect(books).toEqual([
+      {
+        name: 'name1',
+        genre: 'genre1',
+      },
+      {
+        name: 'name2',
+        genre: 'genre1',
+      },
+    ] as any);
   });
 });

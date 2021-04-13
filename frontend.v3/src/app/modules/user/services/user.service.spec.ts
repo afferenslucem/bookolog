@@ -11,9 +11,7 @@ describe('UserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ]
+      imports: [HttpClientTestingModule],
     });
     service = TestBed.inject(UserService);
     origin = TestBed.inject(UserOriginService);
@@ -28,7 +26,7 @@ describe('UserService', () => {
       const spy = spyOn(service, 'saveUser');
 
       service.user = {
-        login: 'login'
+        login: 'login',
       } as any;
 
       expect(spy).toHaveBeenCalledTimes(1);
@@ -36,7 +34,7 @@ describe('UserService', () => {
   });
 
   describe('setAvatar', () => {
-    it('should save user',  async () => {
+    it('should save user', async () => {
       const saveUserSpy = spyOn(service, 'saveUser');
       const uploadAvatarSpy = spyOn(origin, 'loadAvatar');
 
@@ -83,7 +81,7 @@ describe('UserService', () => {
     });
   });
 
-  it('changeEmail',  async () => {
+  it('changeEmail', async () => {
     const saveUserSpy = spyOn(service, 'saveUser');
     const changeEmailSpy = spyOn(origin, 'changeEmail');
     // @ts-ignore
@@ -96,7 +94,7 @@ describe('UserService', () => {
     expect(service.user.email).toEqual('alexshakirov74@gmail.com');
   });
 
-  it('passwordChange',  async () => {
+  it('passwordChange', async () => {
     const passwordChangeSpy = spyOn(origin, 'passwordChange');
 
     await service.changePassword('qwerty', 'uiop');
@@ -104,7 +102,7 @@ describe('UserService', () => {
     expect(passwordChangeSpy).toHaveBeenCalledOnceWith('qwerty', 'uiop');
   });
 
-  it('registration',  async () => {
+  it('registration', async () => {
     const registrationSpy = spyOn(origin, 'registration');
 
     await service.registration({
@@ -120,7 +118,7 @@ describe('UserService', () => {
     });
   });
 
-  it('loadMe',  async () => {
+  it('loadMe', async () => {
     const saveUserSpy = spyOn(service, 'saveUser');
     const loadMeSpy = spyOn(origin, 'loadMe');
 
@@ -130,23 +128,23 @@ describe('UserService', () => {
     expect(loadMeSpy).toHaveBeenCalledOnceWith();
   });
 
-  it('login',  async () => {
+  it('login', async () => {
     const saveUserSpy = spyOn(service, 'saveUser');
     const loginSpy = spyOn(origin, 'login');
 
     await service.login({
       login: 'hrodvitnir',
-      password: 'qwerty'
+      password: 'qwerty',
     });
 
     expect(saveUserSpy).toHaveBeenCalledTimes(1);
     expect(loginSpy).toHaveBeenCalledOnceWith({
       login: 'hrodvitnir',
-      password: 'qwerty'
+      password: 'qwerty',
     });
   });
 
-  it('logout',  async () => {
+  it('logout', async () => {
     const clearStorageSpy = spyOn(service, 'clearStorage');
     const logoutSpy = spyOn(origin, 'logout');
 

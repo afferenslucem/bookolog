@@ -1,12 +1,12 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Router} from '@angular/router';
-import {BookStatus} from 'src/app/modules/book/models/book-status';
-import {NotificationService} from 'src/app/modules/notification/services/notification.service';
-import {environment} from '../../../../environments/environment';
-import {AuthService} from '../../../modules/auth/services/auth.service';
-import {SwUpdate} from '@angular/service-worker';
-import {mapTo, startWith} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { BookStatus } from 'src/app/modules/book/models/book-status';
+import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../modules/auth/services/auth.service';
+import { SwUpdate } from '@angular/service-worker';
+import { mapTo, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-side-menu',
@@ -21,16 +21,16 @@ export class SideMenuComponent implements OnInit {
 
   public BookStatus: typeof BookStatus = BookStatus;
 
-  public get version(): string {
-    return environment.version;
-  }
-
   public constructor(
     private router: Router,
     private auth: AuthService,
     private notification: NotificationService,
     private swUpdate: SwUpdate,
   ) {}
+
+  public get version(): string {
+    return environment.version;
+  }
 
   public ngOnInit(): void {
     this.newVersionAvailable = this.swUpdate.available.pipe(mapTo(true), startWith(false));
@@ -41,7 +41,7 @@ export class SideMenuComponent implements OnInit {
     await this.router.navigate(['/']);
   }
 
-  public async clearCache(): Promise<void> {
+  public clearCache(): void {
     try {
       this.notification.createInfoNotification('Кэш очищен');
     } catch (e) {

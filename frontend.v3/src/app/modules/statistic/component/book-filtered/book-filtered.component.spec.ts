@@ -5,7 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { TitleService } from '../../../ui/service/title.service';
-import { TitleText } from '../../../ui/models/title-text';
 import { BookFilteredComponent } from './book-filtered.component';
 
 describe('BookFilteredComponent', () => {
@@ -14,7 +13,7 @@ describe('BookFilteredComponent', () => {
   let titleService: TitleService;
   let router: Router;
 
-  let books: Book[] = [
+  const books: Book[] = [
     new Book({
       guid: 'id',
     } as any),
@@ -23,23 +22,21 @@ describe('BookFilteredComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [BookFilteredComponent],
-      imports: [
-        RouterTestingModule,
-      ],
+      imports: [RouterTestingModule],
       providers: [
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             data: of({
               books,
             }),
             params: of({
-              filter: 'test'
-            })
-          }
-        }
-      ]
-    })
-      .compileComponents();
+              filter: 'test',
+            }),
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -72,6 +69,7 @@ describe('BookFilteredComponent', () => {
 
   it('should set filter as title', async () => {
     await component.filter$.toPromise();
+
     expect(titleService.custom).toEqual('test');
   });
 });

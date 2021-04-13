@@ -18,15 +18,12 @@ describe('PasswordChangeComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [PasswordChangeComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-      ],
+      imports: [HttpClientTestingModule, RouterTestingModule],
     })
       .overrideComponent(PasswordChangeComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
-        }
+        },
       })
       .compileComponents();
   });
@@ -49,25 +46,27 @@ describe('PasswordChangeComponent', () => {
   });
 
   describe('confirmationValidation', () => {
-    it ('should set error', () => {
+    it('should set error', () => {
       const form = new FormBuilder().group({
         newPassword: new FormControl('qwerty'),
         passwordConfirmation: new FormControl('uiop'),
       });
 
       const formError = component.confirmationValidation(form);
+
       expect(formError.passwordMatch).toBeTruthy();
 
       expect(form.get('passwordConfirmation').errors?.passwordMatch).toBeTruthy();
     });
 
-    it ('should pass check', () => {
+    it('should pass check', () => {
       const form = new FormBuilder().group({
         newPassword: new FormControl('qwerty'),
         passwordConfirmation: new FormControl('qwerty'),
       });
 
       const formError = component.confirmationValidation(form);
+
       expect(formError?.passwordMatch).toBeFalsy();
 
       expect(form.get('passwordConfirmation').errors?.passwordMatch).toBeFalsy();
@@ -75,7 +74,7 @@ describe('PasswordChangeComponent', () => {
   });
 
   describe('send password', () => {
-    it ('should send data', () => {
+    it('should send data', () => {
       const spy = spyOn(authService, 'changePassword');
 
       component.form.get('currentPassword').setValue('qwerty');
@@ -88,9 +87,9 @@ describe('PasswordChangeComponent', () => {
   });
 
   describe('error', () => {
-    it ('should show old password error', async () => {
+    it('should show old password error', async () => {
       const spy = spyOn(authService, 'changePassword').and.rejectWith({
-        error: 'Incorrect old password'
+        error: 'Incorrect old password',
       });
 
       await component.submit();
@@ -101,9 +100,8 @@ describe('PasswordChangeComponent', () => {
       expect(element.querySelector<HTMLElement>('.login-error').innerText).toBeTruthy();
     });
 
-    it ('should show unexpected error', async () => {
-      const spy = spyOn(authService, 'changePassword').and.rejectWith({
-      });
+    it('should show unexpected error', async () => {
+      const spy = spyOn(authService, 'changePassword').and.rejectWith({});
 
       await component.submit();
       fixture.detectChanges();
@@ -113,7 +111,7 @@ describe('PasswordChangeComponent', () => {
       expect(element.querySelector<HTMLElement>('.login-error').innerText).toBeTruthy();
     });
 
-    it ('should hide error', async () => {
+    it('should hide error', async () => {
       const changeSpy = spyOn(authService, 'changePassword').and.resolveTo();
       const navigateSpy = spyOn(router, 'navigate').and.resolveTo();
 

@@ -1,29 +1,29 @@
 :host {
-    display: block;
+  display: block;
 }
 
 .pic-input {
-    width: 64px;
-    height: 64px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #AAAAAA;
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #AAAAAA;
 
-    button {
-        height: 100%;
-    }
+  button {
+    height: 100%;
+  }
 
-    &__placeholder {
-        font-size: 24px;
-    }
+  &__placeholder {
+    font-size: 24px;
+  }
 
-    &__result {
-        background-position: center center;
-        background-size: 100% auto;
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 100%;
-    }
+  &__result {
+    background-position: center center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+  }
 }

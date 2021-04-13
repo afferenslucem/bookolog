@@ -6,10 +6,10 @@ import { BookResolver } from './book.resolver';
 
 describe('BookResolver', () => {
   let resolver: BookResolver;
-  let bookSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo({
-    collectionGuid: 'collectionGuid'
+  const bookSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo({
+    collectionGuid: 'collectionGuid',
   });
-  let collectionSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo({});
+  const collectionSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy().and.resolveTo({});
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,15 +18,15 @@ describe('BookResolver', () => {
           provide: BookService,
           useValue: {
             getByGuid: bookSpy,
-          }
+          },
         },
         {
           provide: CollectionService,
           useValue: {
             getByGuid: collectionSpy,
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     resolver = TestBed.inject(BookResolver);
   });
@@ -44,7 +44,7 @@ describe('BookResolver', () => {
       },
     } as any;
 
-    const status = await resolver.resolve(route, null);
+    const status = await resolver.resolve(route);
 
     expect(bookSpy).toHaveBeenCalledWith('guid1');
     expect(bookSpy).toHaveBeenCalledTimes(1);

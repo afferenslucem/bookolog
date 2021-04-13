@@ -1,14 +1,15 @@
 import { Component, forwardRef, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { BookDate } from '../../../book/models/book-date';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
-import {DateUtils} from '../../../../main/utils/date-utils';
+import { DateUtils } from '../../../../main/utils/date-utils';
 
 @Component({
   selector: 'app-book-date-input',
   templateUrl: './book-date-input.component.html',
   styleUrls: ['./book-date-input.component.scss'],
-  providers: [{
+  providers: [
+    {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => BookDateInputComponent),
       multi: true,
@@ -16,8 +17,9 @@ import {DateUtils} from '../../../../main/utils/date-utils';
     {
       provide: NG_VALIDATORS,
       useExisting: BookDateInputComponent,
-      multi: true
-    }],
+      multi: true,
+    },
+  ],
 })
 export class BookDateInputComponent extends ValueAccessorBase<BookDate> implements OnInit {
   public form: FormGroup = null;
@@ -39,6 +41,34 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     this.form.valueChanges.subscribe((date: BookDate) => this.onBookDateChange(date));
 
     this.dateControl.valueChanges.subscribe((value: Date) => this.onCalendarDateChange(value));
+  }
+
+  public get day(): number {
+    return this.form.get('day').value;
+  }
+
+  public set day(v: number) {
+    this.form.get('day').setValue(v);
+  }
+
+  public get month(): number {
+    return this.form.get('month').value;
+  }
+
+  public set month(v: number) {
+    this.form.get('month').setValue(v);
+  }
+
+  public get year(): number {
+    return this.form.get('year').value;
+  }
+
+  public set year(v: number) {
+    this.form.get('year').setValue(v);
+  }
+
+  public get maxYear(): number {
+    return new Date().getFullYear() + 10;
   }
 
   public openPicker(picker: any): void {
@@ -79,11 +109,14 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
   }
 
   public writeBookDate(bookDate: BookDate): void {
-    this.form.setValue({
-      year: bookDate?.year || null,
-      month: bookDate?.month || null,
-      day: bookDate?.day || null
-    }, { emitEvent: false });
+    this.form.setValue(
+      {
+        year: bookDate?.year || null,
+        month: bookDate?.month || null,
+        day: bookDate?.day || null,
+      },
+      { emitEvent: false },
+    );
 
     this.value = bookDate;
   }
@@ -95,37 +128,14 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
   validate(): { invalid: boolean } | boolean {
     const isNotValid = this.form.invalid;
 
-    return isNotValid && {
-      invalid: true
-    };
+    return (
+      isNotValid && {
+        invalid: true,
+      }
+    );
   }
 
   public isEmptyDate(date: BookDate): boolean {
-    return !date || !date.year && !date.month && !date.day;
-  }
-
-  public get day(): number {
-    return this.form.get('day').value;
-  }
-  public set day(v: number) {
-    this.form.get('day').setValue(v);
-  }
-
-  public get month(): number {
-    return this.form.get('month').value;
-  }
-  public set month(v: number) {
-    this.form.get('month').setValue(v);
-  }
-
-  public get year(): number {
-    return this.form.get('year').value;
-  }
-  public set year(v: number) {
-    this.form.get('year').setValue(v);
-  }
-
-  public get maxYear(): number {
-    return new Date().getFullYear() + 10;
+    return !date || (!date.year && !date.month && !date.day);
   }
 }

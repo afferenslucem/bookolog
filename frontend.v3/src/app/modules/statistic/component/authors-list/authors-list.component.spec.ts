@@ -14,7 +14,7 @@ describe('AuthorsListComponent', () => {
   let titleService: TitleService;
   let router: Router;
 
-  let books: Book[] = [
+  const books: Book[] = [
     new Book({
       authors: ['One', 'two'],
     } as any),
@@ -29,20 +29,18 @@ describe('AuthorsListComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [AuthorsListComponent],
-      imports: [
-        RouterTestingModule,
-      ],
+      imports: [RouterTestingModule],
       providers: [
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             data: of({
               books,
             }),
-          }
-        }
-      ]
-    })
-      .compileComponents();
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -69,12 +67,12 @@ describe('AuthorsListComponent', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should counts by author', async () => {
+  it('should counts by author', () => {
     const result = component.countAuthors(books);
 
     const expected = [
-      { key: 'two', group: 2},
-      { key: 'One', group: 1},
+      { key: 'two', group: 2 },
+      { key: 'One', group: 1 },
     ] as any;
 
     expect(result).toEqual(expected);
@@ -88,7 +86,7 @@ describe('AuthorsListComponent', () => {
     expect(spy).toHaveBeenCalledOnceWith(['/author', 'ping']);
   });
 
-  it('should set title', async () => {
+  it('should set title', () => {
     expect(titleService.title).toEqual(TitleText.AuthorsStatistic);
   });
 });

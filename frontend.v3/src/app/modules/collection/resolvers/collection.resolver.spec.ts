@@ -11,23 +11,23 @@ describe('CollectionResolver', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
+      imports: [HttpClientTestingModule],
       providers: [
         {
-          provide: UserService, useValue: {
+          provide: UserService,
+          useValue: {
             user: {
-              login: 'hrodvitnir'
-            }
-          }
+              login: 'hrodvitnir',
+            },
+          },
         },
         {
-          provide: ActivatedRouteSnapshot, useValue: {
-            paramMap: new Map([['guid', 'guid']])
-          }
-        }
-      ]
+          provide: ActivatedRouteSnapshot,
+          useValue: {
+            paramMap: new Map([['guid', 'guid']]),
+          },
+        },
+      ],
     });
     resolver = TestBed.inject(CollectionResolver);
     collectionService = TestBed.inject(CollectionService);
@@ -41,7 +41,7 @@ describe('CollectionResolver', () => {
     const spy = spyOn(collectionService, 'getByGuid');
     const params = TestBed.inject(ActivatedRouteSnapshot);
 
-    await resolver.resolve(params, null);
+    await resolver.resolve(params);
 
     expect(spy).toHaveBeenCalledOnceWith('guid');
   });

@@ -10,11 +10,13 @@ import { ValueAccessorBase } from '../value-accessor/value-accessor';
   selector: 'app-book-tags-input',
   templateUrl: './book-tags-input.component.html',
   styleUrls: ['./book-tags-input.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => BookTagsInputComponent),
-    multi: true,
-  }],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => BookTagsInputComponent),
+      multi: true,
+    },
+  ],
 })
 export class BookTagsInputComponent extends ValueAccessorBase<string[]> implements OnInit {
   @Input()
@@ -33,8 +35,25 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
     super();
   }
 
-  ngOnInit(): void {
+  public get tag(): string {
+    return this.form.get('input').value;
   }
+
+  public set tag(v: string) {
+    this.form.get('input').setValue(v);
+  }
+
+  public get availableTags(): string[] {
+    const tags = _(this.list).except(this.tags, new StringComparer()).toArray();
+
+    if (this.tag) {
+      return new FuzzySearch().search(tags, this.tag);
+    } else {
+      return tags;
+    }
+  }
+
+  ngOnInit(): void {}
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent): void {
     this.pushTag(event.option.value);
@@ -57,30 +76,14 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
   }
 
   public removeTag(tag: string): void {
-    this.tags = _(this.tags).where(item => !new StringComparer().equal(item, tag)).toArray();
+    this.tags = _(this.tags)
+      .where(item => !new StringComparer().equal(item, tag))
+      .toArray();
 
     this.emitChangeValue(this.tags);
   }
 
   public writeValue(value: string[]): void {
     this.tags = _(value).distinct(new StringComparer()).toArray();
-  }
-
-  public get tag(): string {
-    return this.form.get('input').value;
-  }
-
-  public set tag(v: string) {
-    this.form.get('input').setValue(v);
-  }
-
-  public get availableTags(): string[] {
-    const tags = _(this.list).except(this.tags, new StringComparer()).toArray();
-
-    if (this.tag) {
-      return new FuzzySearch().search(tags, this.tag);
-    } else {
-      return tags;
-    }
   }
 }

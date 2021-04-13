@@ -21,7 +21,7 @@ describe('UrlInterceptor', () => {
     int.intercept(req, next);
 
     expect(req.clone).toHaveBeenCalledWith({
-      url: environment.serverUrl + '/qwerty'
+      url: environment.serverUrl + '/qwerty',
     });
 
     expect(next.handle).toHaveBeenCalledTimes(1);

@@ -4,13 +4,13 @@
     <mat-divider></mat-divider>
   </div>
   <div class="collection__buttons">
-    <button mat-flat-button color="primary" [routerLink]="['/series', 'edit', collection.guid]">Редактировать</button>
-    <button mat-flat-button color="warn" (click)="openDeleteDialog(collection)">Удалить</button>
+    <button [routerLink]="['/series', 'edit', collection.guid]" color="primary" mat-flat-button>Редактировать</button>
+    <button (click)="openDeleteDialog(collection)" color="warn" mat-flat-button>Удалить</button>
   </div>
 </div>
 <div class="book-list">
   <div *ngFor="let book of books$ | async; let last = last; trackBy: bookTrackBy">
-    <app-to-read-book [routerLink]="['/book', book.guid]" class="book-list__item" [book]="book"></app-to-read-book>
+    <app-to-read-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-to-read-book>
     <mat-divider *ngIf="!last"></mat-divider>
   </div>
 </div>

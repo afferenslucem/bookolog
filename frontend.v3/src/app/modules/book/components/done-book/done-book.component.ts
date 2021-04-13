@@ -22,6 +22,5 @@ export class DoneBookComponent extends BookLineComponent implements OnInit {
     return this.innerBook.endDate;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

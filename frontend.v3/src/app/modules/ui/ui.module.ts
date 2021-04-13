@@ -9,21 +9,9 @@ import { PlusIconComponent } from './components/plus-icon/plus-icon.component';
 import { TitleComponent } from './components/title/title.component';
 import { FormattingModule } from '../formatting/formatting.module';
 
-
 @NgModule({
-    declarations: [TitleComponent, MenuIconComponent, PlusIconComponent, EditIconComponent, CloseIconComponent],
-    exports: [
-        TitleComponent,
-        MenuIconComponent,
-        PlusIconComponent,
-        EditIconComponent,
-        CloseIconComponent,
-    ],
-    imports: [
-        CommonModule,
-        MatIconModule,
-        MatButtonModule,
-        FormattingModule,
-    ],
+  declarations: [TitleComponent, MenuIconComponent, PlusIconComponent, EditIconComponent, CloseIconComponent],
+  exports: [TitleComponent, MenuIconComponent, PlusIconComponent, EditIconComponent, CloseIconComponent],
+  imports: [CommonModule, MatIconModule, MatButtonModule, FormattingModule],
 })
-export class UiModule { }
+export class UiModule {}

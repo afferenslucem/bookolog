@@ -1,12 +1,10 @@
-import {Book} from '../../modules/book/models/book';
+import { Book } from '../../modules/book/models/book';
 import _ from 'declarray';
-import {ISequence} from 'declarray/lib/interfaces/i-sequence';
-import {IGroupedData} from 'declarray/lib/interfaces/i-grouped-data';
-import {StringComparer} from './string.comparer';
-import {Collection} from '../../modules/collection/models/collection';
-import {CollectionInfo} from '../../modules/collection/models/collection-info';
-import {IEntity} from '../models/i-entity';
-import {Entity} from '../models/entity';
+import { ISequence } from 'declarray/lib/interfaces/i-sequence';
+import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
+import { StringComparer } from './string.comparer';
+import { IEntity } from '../models/i-entity';
+import { Entity } from '../models/entity';
 
 export class BookSortUtils {
   public static skipEmpty<T>(seq: ISequence<T>): ISequence<T> {
@@ -23,12 +21,15 @@ export class BookSortUtils {
   }
 
   public static count(seq: ISequence<string>): ISequence<IGroupedData<string, number>> {
-    return seq.groupBy(item => item, new StringComparer(), grouped => grouped.count());
+    return seq.groupBy(
+      item => item,
+      new StringComparer(),
+      grouped => grouped.count(),
+    );
   }
 
   public static sortCountedDesc(counted: ISequence<IGroupedData<string, number>>): ISequence<IGroupedData<string, number>> {
-    return counted.orderByDescending(item => item.group)
-      .thenBy(item => item.key);
+    return counted.orderByDescending(item => item.group).thenBy(item => item.key);
   }
 
   public static getKey(ordered: ISequence<IGroupedData<string, number>>): ISequence<string> {
@@ -36,9 +37,7 @@ export class BookSortUtils {
   }
 
   public static sortEntitiesByUsageTimeDesc<T extends IEntity | Entity>(entities: ISequence<T>): ISequence<T> {
-    const result = entities
-      .orderByDescending(item => item.modifyDate)
-      .thenByDescending(item => item.createDate);
+    const result = entities.orderByDescending(item => item.modifyDate).thenByDescending(item => item.createDate);
 
     return result;
   }

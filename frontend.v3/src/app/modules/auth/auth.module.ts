@@ -12,18 +12,17 @@ import { LoginComponent } from './components/login/login.component';
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 
-
 @NgModule({
   declarations: [LoginComponent, RegistrationComponent, RecoverPasswordComponent],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        MatToolbarModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        UiModule,
-    ],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    MatToolbarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    UiModule,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

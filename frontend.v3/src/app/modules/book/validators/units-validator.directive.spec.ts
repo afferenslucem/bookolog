@@ -1,6 +1,6 @@
 import { UnitsValidatorDirective } from './units-validator.directive';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {BookStatus} from '../models/book-status';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { BookStatus } from '../models/book-status';
 
 describe('UnitsValidatorDirective', () => {
   let form: FormGroup = null;
@@ -15,6 +15,7 @@ describe('UnitsValidatorDirective', () => {
 
   it('should create an instance', () => {
     const directive = new UnitsValidatorDirective();
+
     expect(directive).toBeTruthy();
   });
 
@@ -29,7 +30,7 @@ describe('UnitsValidatorDirective', () => {
 
     const result = directive.validate(form);
     const expected = {
-      invalidUnits: true
+      invalidUnits: true,
     };
 
     expect(result).toEqual(expected);
@@ -46,7 +47,7 @@ describe('UnitsValidatorDirective', () => {
 
     const result = directive.validate(form);
     const expected = {
-      invalidUnits: true
+      invalidUnits: true,
     };
 
     expect(result).toEqual(expected);

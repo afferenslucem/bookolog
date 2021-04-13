@@ -15,7 +15,6 @@ import { CollectionEditViewComponent } from './components/collection-edit-view/c
 import { CollectionListComponent } from './components/collection-list/collection-list.component';
 import { CollectionViewComponent } from './components/collection-view/collection-view.component';
 
-
 @NgModule({
   declarations: [CollectionEditViewComponent, CollectionListComponent, CollectionViewComponent, CollectionDeleteDialogComponent],
   imports: [
@@ -32,4 +31,4 @@ import { CollectionViewComponent } from './components/collection-view/collection
     MatDialogModule,
   ],
 })
-export class CollectionModule { }
+export class CollectionModule {}

@@ -13,15 +13,12 @@ describe('StatisticListComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [StatisticListComponent],
-      imports: [
-        RouterTestingModule,
-        FormattingModule,
-      ],
+      imports: [RouterTestingModule, FormattingModule],
     })
       .overrideComponent(StatisticListComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
-        }
+        },
       })
       .compileComponents();
   });
@@ -41,10 +38,12 @@ describe('StatisticListComponent', () => {
   });
 
   it('should write data', () => {
-    component.data = [{
-      key: 'test',
-      group: 2
-    }];
+    component.data = [
+      {
+        key: 'test',
+        group: 2,
+      },
+    ];
 
     fixture.detectChanges();
 
@@ -53,19 +52,24 @@ describe('StatisticListComponent', () => {
   });
 
   it('should write data', () => {
-    component.data = [{
-      key: 'test',
-      group: 2
-    }, {
-      key: 'test',
-      group: 2
-    }, {
-      key: 'test',
-      group: 2
-    }, {
-      key: 'test',
-      group: 2
-    }, ];
+    component.data = [
+      {
+        key: 'test',
+        group: 2,
+      },
+      {
+        key: 'test',
+        group: 2,
+      },
+      {
+        key: 'test',
+        group: 2,
+      },
+      {
+        key: 'test',
+        group: 2,
+      },
+    ];
 
     fixture.detectChanges();
 
@@ -74,19 +78,24 @@ describe('StatisticListComponent', () => {
 
   it('should emit select', () => {
     const spy = spyOn(component.selected, 'emit');
-    component.data = [{
-      key: 'test',
-      group: 2
-    }, {
-      key: 'test1',
-      group: 2
-    }, {
-      key: 'test2',
-      group: 2
-    }, {
-      key: 'test3',
-      group: 2
-    }, ];
+    component.data = [
+      {
+        key: 'test',
+        group: 2,
+      },
+      {
+        key: 'test1',
+        group: 2,
+      },
+      {
+        key: 'test2',
+        group: 2,
+      },
+      {
+        key: 'test3',
+        group: 2,
+      },
+    ];
 
     fixture.detectChanges();
 

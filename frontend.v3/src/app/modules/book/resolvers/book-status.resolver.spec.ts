@@ -15,7 +15,7 @@ describe('BookStatusResolver', () => {
     expect(new BookStatusResolver()).toBeTruthy();
   });
 
-  it('should return ToRead', async () => {
+  it('should return ToRead', () => {
     const statusSpy = jasmine.createSpy().and.returnValue('0');
 
     const route: ActivatedRouteSnapshot = {
@@ -24,7 +24,7 @@ describe('BookStatusResolver', () => {
       },
     } as any;
 
-    const status = await resolver.resolve(route, null);
+    const status = resolver.resolve(route);
 
     expect(statusSpy).toHaveBeenCalledWith('status');
     expect(statusSpy).toHaveBeenCalledTimes(1);
@@ -32,7 +32,7 @@ describe('BookStatusResolver', () => {
     expect(status).toEqual(BookStatus.ToRead);
   });
 
-  it('should return InProgress', async () => {
+  it('should return InProgress', () => {
     const statusSpy = jasmine.createSpy().and.returnValue('1');
 
     const route: ActivatedRouteSnapshot = {
@@ -41,7 +41,7 @@ describe('BookStatusResolver', () => {
       },
     } as any;
 
-    const status = await resolver.resolve(route, null);
+    const status = resolver.resolve(route);
 
     expect(statusSpy).toHaveBeenCalledWith('status');
     expect(statusSpy).toHaveBeenCalledTimes(1);
@@ -49,7 +49,7 @@ describe('BookStatusResolver', () => {
     expect(status).toEqual(BookStatus.InProgress);
   });
 
-  it('should requests ToRead', async () => {
+  it('should requests ToRead', () => {
     const statusSpy = jasmine.createSpy().and.returnValue('2');
 
     const route: ActivatedRouteSnapshot = {
@@ -58,7 +58,7 @@ describe('BookStatusResolver', () => {
       },
     } as any;
 
-    const status = await resolver.resolve(route, null);
+    const status = resolver.resolve(route);
 
     expect(statusSpy).toHaveBeenCalledWith('status');
     expect(statusSpy).toHaveBeenCalledTimes(1);

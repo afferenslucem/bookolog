@@ -8,14 +8,18 @@ import { ILogger } from 'waterlog';
 @Component({
   selector: 'app-email-change',
   templateUrl: './email-change.component.html',
-  styleUrls: ['./email-change.component.scss']
+  styleUrls: ['./email-change.component.scss'],
 })
 export class EmailChangeComponent implements OnInit {
   public form: FormGroup = null;
 
   private logger: ILogger = getConsoleLogger('EmailChangeComponent');
 
-  constructor(public userService: UserService, private notification: NotificationService) { }
+  constructor(public userService: UserService, private notification: NotificationService) {}
+
+  public get email(): string {
+    return this.form.get('email').value;
+  }
 
   public ngOnInit(): void {
     this.form = new FormBuilder().group({
@@ -31,9 +35,5 @@ export class EmailChangeComponent implements OnInit {
       this.logger.error('Could not change email', e);
       this.notification.createErrorNotification('Не удалось изменить почту');
     }
-  }
-
-  public get email(): string {
-    return this.form.get('email').value;
   }
 }

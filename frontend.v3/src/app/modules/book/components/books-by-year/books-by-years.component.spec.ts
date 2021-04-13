@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BooksByYearsComponent } from './books-by-years.component';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { Book } from '../../models/book';
@@ -10,9 +9,8 @@ describe('DoneBooksStaticComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ BooksByYearsComponent ],
-    })
-      .compileComponents();
+      declarations: [BooksByYearsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -31,43 +29,43 @@ describe('DoneBooksStaticComponent', () => {
     beforeEach(() => {
       books = [
         new Book({
-          name: 'name0'
+          name: 'name0',
         } as any),
         new Book({
-          name: 'name1'
+          name: 'name1',
         } as any),
         new Book({
           endDateYear: 2020,
-          name: 'name2'
+          name: 'name2',
         } as any),
         new Book({
           endDateYear: 2020,
           endDateMonth: 10,
-          name: 'name3'
+          name: 'name3',
         } as any),
         new Book({
           endDateYear: 2020,
           endDateMonth: 10,
           endDateDay: 22,
-          name: 'name4'
+          name: 'name4',
         } as any),
         new Book({
           endDateYear: 2021,
           endDateMonth: 10,
           endDateDay: 23,
-          name: 'name5'
+          name: 'name5',
         } as any),
         new Book({
           endDateYear: 2021,
           endDateMonth: 11,
           endDateDay: 23,
-          name: 'name6'
+          name: 'name6',
         } as any),
         new Book({
           endDateYear: 2021,
           endDateMonth: 11,
           endDateDay: 22,
-          name: 'name7'
+          name: 'name7',
         } as any),
       ];
     });

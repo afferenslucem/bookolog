@@ -5,7 +5,7 @@ import { ToReadBooksResolver } from './to-read-books.resolver';
 
 describe('ToReadBooksResolver', () => {
   let resolver: ToReadBooksResolver;
-  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
+  const spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -14,9 +14,9 @@ describe('ToReadBooksResolver', () => {
           provide: BookService,
           useValue: {
             getByStatus: spy,
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     resolver = TestBed.inject(ToReadBooksResolver);
   });
@@ -26,7 +26,7 @@ describe('ToReadBooksResolver', () => {
   });
 
   it('should requests ToRead', () => {
-    const books = resolver.resolve(null, null);
+    const books = resolver.resolve();
 
     expect(spy).toHaveBeenCalledWith(BookStatus.ToRead);
     expect(spy).toHaveBeenCalledTimes(1);

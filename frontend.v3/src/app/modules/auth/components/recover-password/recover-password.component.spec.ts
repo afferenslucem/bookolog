@@ -21,16 +21,12 @@ describe('RecoverPasswordComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [RecoverPasswordComponent],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        UiModule,
-      ],
+      imports: [RouterTestingModule, HttpClientTestingModule, UiModule],
     })
       .overrideComponent(RecoverPasswordComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
-        }
+        },
       })
       .compileComponents();
   });
@@ -50,7 +46,7 @@ describe('RecoverPasswordComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should send recovery',  async () => {
+  it('should send recovery', async () => {
     const recoverySpy = spyOn(auth, 'recoveryPassword');
 
     component.form.get('email').setValue('alexshakirov74@gmail.com');
@@ -60,7 +56,7 @@ describe('RecoverPasswordComponent', () => {
     expect(recoverySpy).toHaveBeenCalledOnceWith('alexshakirov74@gmail.com');
   });
 
-  it('should set title',  async () => {
+  it('should set title', () => {
     component.ngOnInit();
 
     expect(title.title).toEqual(TitleText.PasswordRecovery);

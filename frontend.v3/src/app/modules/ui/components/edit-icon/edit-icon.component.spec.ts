@@ -10,11 +10,8 @@ describe('EditIconComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [EditIconComponent],
-      imports: [
-        MatIconModule
-      ]
-    })
-      .compileComponents();
+      imports: [MatIconModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

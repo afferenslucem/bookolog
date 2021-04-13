@@ -14,8 +14,7 @@ export class StatisticListComponent implements OnInit {
   @Output()
   public selected = new EventEmitter<string>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

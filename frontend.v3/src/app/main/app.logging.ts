@@ -10,7 +10,7 @@ const consoleFactory = new LoggerFactory([
   },
   {
     name: 'SyncService',
-    logger: LogLevel.Debug
+    logger: LogLevel.Debug,
   },
 ]);
 

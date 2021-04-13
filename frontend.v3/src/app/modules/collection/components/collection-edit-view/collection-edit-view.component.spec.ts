@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {CollectionEditViewComponent} from './collection-edit-view.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TestCore} from '../../../../main/test/test-core.spec';
-import {RouterTestingModule} from '@angular/router/testing';
-import {UUIDGeneratorService} from '../../../../main/services/u-u-i-d-generator.service';
-import {CollectionService} from '../../services/collection.service';
-import {Action} from '../../../../main/resolvers/action.resolver';
-import {Location} from '@angular/common';
-import {TitleService} from '../../../ui/service/title.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CollectionEditViewComponent } from './collection-edit-view.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestCore } from '../../../../main/test/test-core.spec';
+import { RouterTestingModule } from '@angular/router/testing';
+import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generator.service';
+import { CollectionService } from '../../services/collection.service';
+import { Action } from '../../../../main/resolvers/action.resolver';
+import { Location } from '@angular/common';
+import { TitleService } from '../../../ui/service/title.service';
 
 describe('CollectionEditViewComponent', () => {
   let component: CollectionEditViewComponent;
@@ -19,15 +19,9 @@ describe('CollectionEditViewComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [CollectionEditViewComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-      ],
-      providers: [
-        {provide: UUIDGeneratorService, useValue: {}},
-      ]
-    })
-      .compileComponents();
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      providers: [{ provide: UUIDGeneratorService, useValue: {} }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -39,18 +33,18 @@ describe('CollectionEditViewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', async () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   describe('readAction', () => {
-    it('read Create', async () => {
+    it('read Create', () => {
       component.readAction(Action.Create);
 
       expect(component.action).toEqual(Action.Create);
     });
 
-    it('read Edit', async () => {
+    it('read Edit', () => {
       component.readAction(Action.Edit);
 
       expect(component.action).toEqual(Action.Edit);
@@ -58,20 +52,20 @@ describe('CollectionEditViewComponent', () => {
   });
 
   describe('setTitle', () => {
-    it('set Create', async () => {
+    it('set Create', () => {
       const spy = spyOn(titleService, 'setCollectionCreate');
 
       component.readAction(Action.Create);
 
-      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith();
     });
 
-    it('set Edit', async () => {
+    it('set Edit', () => {
       const spy = spyOn(titleService, 'setCollectionEdit');
 
       component.readAction(Action.Edit);
 
-      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith();
     });
   });
 
@@ -90,7 +84,7 @@ describe('CollectionEditViewComponent', () => {
       const spy = spyOn(service, 'saveOrUpdate');
 
       const collection = {
-        modifyDate: 'md'
+        modifyDate: 'md',
       } as any;
 
       await component.saveOrUpdate(collection);
@@ -110,7 +104,7 @@ describe('CollectionEditViewComponent', () => {
 
     it('should change modifyDate', async () => {
       const collection = {
-        modifyDate: 'md'
+        modifyDate: 'md',
       } as any;
 
       await component.saveOrUpdate(collection);
@@ -126,16 +120,16 @@ describe('CollectionEditViewComponent', () => {
       const backSpy = spyOn(location, 'back');
 
       const collection = {
-        modifyDate: 'md'
+        modifyDate: 'md',
       } as any;
 
       component.action = Action.Create;
 
       await component.saveOrUpdate(collection);
 
-      expect(saveOrUpdateSpy).toHaveBeenCalled();
-      expect(redirectSpy).toHaveBeenCalled();
-      expect(backSpy).not.toHaveBeenCalled();
+      expect(saveOrUpdateSpy).toHaveBeenCalledWith(collection);
+      expect(redirectSpy).toHaveBeenCalledWith();
+      expect(backSpy).not.toHaveBeenCalledWith();
     });
 
     it('should trigger back', async () => {
@@ -144,16 +138,16 @@ describe('CollectionEditViewComponent', () => {
       const backSpy = spyOn(location, 'back');
 
       const collection = {
-        modifyDate: 'md'
+        modifyDate: 'md',
       } as any;
 
       component.action = Action.Edit;
 
       await component.saveOrUpdate(collection);
 
-      expect(saveOrUpdateSpy).toHaveBeenCalled();
+      expect(saveOrUpdateSpy).toHaveBeenCalledWith(collection);
       expect(redirectSpy).not.toHaveBeenCalled();
-      expect(backSpy).toHaveBeenCalled();
+      expect(backSpy).toHaveBeenCalledWith();
     });
   });
 });

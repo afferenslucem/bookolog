@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ISequence} from 'declarray/lib/interfaces/i-sequence';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {Book} from '../../../book/models/book';
-import {TitleService} from '../../../ui/service/title.service';
-import {Collection} from '../../models/collection';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ISequence } from 'declarray/lib/interfaces/i-sequence';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Book } from '../../../book/models/book';
+import { TitleService } from '../../../ui/service/title.service';
+import { Collection } from '../../models/collection';
 import _ from 'declarray';
-import {BookSortUtils} from '../../../../main/utils/book-sort-utils';
-import {CollectionInfo} from '../../models/collection-info';
+import { BookSortUtils } from '../../../../main/utils/book-sort-utils';
+import { CollectionInfo } from '../../models/collection-info';
 
 interface BookCollection {
   collection: Collection;
@@ -33,16 +33,14 @@ export class CollectionListComponent implements OnInit {
 
         const missing = this.findCollectionsWithoutBooks(books, collections, counted);
 
-        const result = missing
-          .concat(counted)
-          .select(item => ({
-            name: item.collection.name,
-            guid: item.collection.guid,
-            shouldSync: item.collection.shouldSync,
-            count: item.booksForCollection.count(),
-            modifyDate: item.collection.modifyDate,
-            createDate: item.collection.createDate,
-          }));
+        const result = missing.concat(counted).select(item => ({
+          name: item.collection.name,
+          guid: item.collection.guid,
+          shouldSync: item.collection.shouldSync,
+          count: item.booksForCollection.count(),
+          modifyDate: item.collection.modifyDate,
+          createDate: item.collection.createDate,
+        }));
 
         return this.sortCollection(result);
       }),
@@ -50,16 +48,19 @@ export class CollectionListComponent implements OnInit {
   }
 
   public countBooksForCollection(books: Book[], collections: Collection[]): ISequence<BookCollection> {
-    const distinctBooks = _(books).where(item => item.rereadingBookGuid == null).toArray();
+    const distinctBooks = _(books)
+      .where(item => item.rereadingBookGuid == null)
+      .toArray();
 
-    return _(collections)
-      .groupJoin(distinctBooks,
-        collection => collection.guid,
-        book => book.collectionGuid,
-        (collection, booksForCollection) => ({
-          collection,
-          booksForCollection,
-        }));
+    return _(collections).groupJoin(
+      distinctBooks,
+      collection => collection.guid,
+      book => book.collectionGuid,
+      (collection, booksForCollection) => ({
+        collection,
+        booksForCollection,
+      }),
+    );
   }
 
   public findCollectionsWithoutBooks(

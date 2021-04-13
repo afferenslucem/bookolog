@@ -12,14 +12,15 @@ describe('BookAuthorsComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ BookAuthorsComponent ],
-      imports: [ FormattingModule ]
+      declarations: [BookAuthorsComponent],
+      imports: [FormattingModule],
     })
       .overrideComponent(BookAuthorsComponent, {
         set: {
-          changeDetection: ChangeDetectionStrategy.Default
-        }
-      }).compileComponents();
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
+      })
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -34,7 +35,7 @@ describe('BookAuthorsComponent', () => {
   });
 
   it('Should print one author', () => {
-    component.authors = [ 'One' ];
+    component.authors = ['One'];
 
     fixture.detectChanges();
 
@@ -42,7 +43,7 @@ describe('BookAuthorsComponent', () => {
   });
 
   it('Should print many author', () => {
-    component.authors = [ 'One', 'Two', 'Another Author' ];
+    component.authors = ['One', 'Two', 'Another Author'];
 
     fixture.detectChanges();
 

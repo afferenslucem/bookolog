@@ -1,12 +1,12 @@
-<app-book-header class="book-line__name" [book]="innerBook"></app-book-header>
+<app-book-header [book]="innerBook" class="book-line__name"></app-book-header>
 <div class="book-line__authors truncate-text">
   <app-book-authors [authors]="authors"></app-book-authors>
 </div>
 <div class="book-line__progress-data dark-text">
   <small *ngIf="startDate || endDate; else noDates">
     <app-date-range
-      [startDate]="startDate"
       [endDate]="endDate"
+      [startDate]="startDate"
     ></app-date-range>
   </small>
 </div>

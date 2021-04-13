@@ -33,11 +33,14 @@ export class YearsListComponent implements OnInit {
 
   public countYears(books: Book[]): IGroupedData<string, number>[] {
     return _(books)
-      .groupBy(item => item.finished.year || null, grouped => grouped.count())
+      .groupBy(
+        item => item.finished.year || null,
+        grouped => grouped.count(),
+      )
       .orderByDescending(item => item.key)
       .select(item => ({
         key: item.key ? item.key.toString() : 'Не указан',
-        group: item.group
+        group: item.group,
       }))
       .toArray();
   }

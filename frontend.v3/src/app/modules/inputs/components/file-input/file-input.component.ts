@@ -6,11 +6,13 @@ import { ValueAccessorBase } from '../value-accessor/value-accessor';
   selector: 'app-file-input',
   templateUrl: './file-input.component.html',
   styleUrls: ['./file-input.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => FileInputComponent),
-    multi: true,
-  }],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FileInputComponent),
+      multi: true,
+    },
+  ],
 })
 export class FileInputComponent extends ValueAccessorBase<any> implements OnInit {
   @Input()
@@ -19,33 +21,33 @@ export class FileInputComponent extends ValueAccessorBase<any> implements OnInit
   @Output()
   public fileChanged = new EventEmitter<Event>();
 
-  @Input()
-  public set fileUrl(v: string) {
-    this._fileUrl = v;
+  constructor(private elRef: ElementRef<HTMLElement>) {
+    super();
   }
+
+  private _fileUrl: string | ArrayBuffer = null;
 
   public get fileUrl(): string {
     return this._fileUrl ? `url(${this._fileUrl})` : null;
   }
 
-  private _fileUrl: string | ArrayBuffer = null;
-
-  constructor(private elRef: ElementRef<HTMLElement>) {
-    super();
+  @Input()
+  public set fileUrl(v: string) {
+    this._fileUrl = v;
   }
 
   ngOnInit(): void {}
 
-  public selectFile(event: Event): void {
-    this.elRef.nativeElement
-      .querySelector<HTMLElement>('input[type="file"]')
-      .click();
+  public selectFile(): void {
+    this.elRef.nativeElement.querySelector<HTMLElement>('input[type="file"]').click();
   }
 
   public onFileChange(event: any): void {
     const files = event.target.files || event.dataTransfer.files;
 
-    if (!files.length) { return; }
+    if (!files.length) {
+      return;
+    }
 
     const file = files[0];
 

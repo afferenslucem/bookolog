@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
   selector: 'app-tag-value',
   templateUrl: './tag-value.component.html',
   styleUrls: ['./tag-value.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagValueComponent implements OnInit {
   @Input()
@@ -16,8 +16,7 @@ export class TagValueComponent implements OnInit {
   @Output()
   public crossClick = new EventEmitter<void>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

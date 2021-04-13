@@ -19,21 +19,17 @@ describe('BookViewComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ BookViewComponent ],
-      imports: [
-        FormattingModule,
-        RouterTestingModule,
-        HttpClientTestingModule,
-      ],
+      declarations: [BookViewComponent],
+      imports: [FormattingModule, RouterTestingModule, HttpClientTestingModule],
       providers: [
         { provide: MatDialog, useValue: {} },
         { provide: BookService, useValue: {} },
-      ]
+      ],
     })
       .overrideComponent(BookEditViewComponent, {
         set: {
-          changeDetection: ChangeDetectionStrategy.Default
-        }
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
       })
       .compileComponents();
   });
@@ -62,10 +58,11 @@ describe('BookViewComponent', () => {
     describe('Authors', () => {
       it('should render', () => {
         component.book = new Book({
-          authors: [ 'One', 'two', 'another author' ],
+          authors: ['One', 'two', 'another author'],
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__authors .property__value').innerText).toEqual('One, Two, Another author');
       });
 
@@ -75,6 +72,7 @@ describe('BookViewComponent', () => {
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__authors')).toBeFalsy();
       });
     });
@@ -82,10 +80,11 @@ describe('BookViewComponent', () => {
     describe('Book year', () => {
       it('should render', () => {
         component.book = new Book({
-          year: 1997
+          year: 1997,
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__year .property__value').innerText).toEqual('1997');
       });
 
@@ -93,6 +92,7 @@ describe('BookViewComponent', () => {
         component.book = new Book({} as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__year')).toBeFalsy();
       });
     });
@@ -100,28 +100,31 @@ describe('BookViewComponent', () => {
     describe('Type', () => {
       it('Paper', () => {
         component.book = new Book({
-          type: BookType.Paper
+          type: BookType.Paper,
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__type .property__value').innerText).toEqual('Бумажная книга');
       });
 
       it('Electronic', () => {
         component.book = new Book({
-          type: BookType.Electronic
+          type: BookType.Electronic,
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__type .property__value').innerText).toEqual('Электронная книга');
       });
 
       it('Audio', () => {
         component.book = new Book({
-          type: BookType.Audio
+          type: BookType.Audio,
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__type .property__value').innerText).toEqual('Аудиокнига');
       });
     });
@@ -129,10 +132,11 @@ describe('BookViewComponent', () => {
     describe('Genre', () => {
       it('should render', () => {
         component.book = new Book({
-          genre: 'genre'
+          genre: 'genre',
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__genre .property__value').innerText).toEqual('Genre');
       });
 
@@ -140,6 +144,7 @@ describe('BookViewComponent', () => {
         component.book = new Book({} as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__genre')).toBeFalsy();
       });
     });
@@ -149,10 +154,11 @@ describe('BookViewComponent', () => {
         component.book = new Book({} as any);
 
         component.book.collection = {
-          name: 'collection'
+          name: 'collection',
         } as any;
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__collection .property__value').innerText).toEqual('Collection');
       });
 
@@ -160,6 +166,7 @@ describe('BookViewComponent', () => {
         component.book = new Book({} as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__collection')).toBeFalsy();
       });
     });
@@ -167,28 +174,31 @@ describe('BookViewComponent', () => {
     describe('Status', () => {
       it('Paper', () => {
         component.book = new Book({
-          status: BookStatus.ToRead
+          status: BookStatus.ToRead,
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__status .property__value').innerText).toEqual('К прочтению');
       });
 
       it('InProgress', () => {
         component.book = new Book({
-          status: BookStatus.InProgress
+          status: BookStatus.InProgress,
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__status .property__value').innerText).toEqual('Читаю');
       });
 
       it('Done', () => {
         component.book = new Book({
-          status: BookStatus.Done
+          status: BookStatus.Done,
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__status .property__value').innerText).toEqual('Прочитана');
       });
     });
@@ -196,7 +206,7 @@ describe('BookViewComponent', () => {
     describe('Tags', () => {
       it('should render', () => {
         component.book = new Book({
-          tags: [ 'One', 'two', 'another tag' ],
+          tags: ['One', 'two', 'another tag'],
         } as any);
 
         fixture.detectChanges();
@@ -212,6 +222,7 @@ describe('BookViewComponent', () => {
         } as any);
 
         fixture.detectChanges();
+
         expect(element.querySelector<HTMLDivElement>('.book__tags')).toBeFalsy();
       });
     });
@@ -220,7 +231,7 @@ describe('BookViewComponent', () => {
       it('should render', () => {
         component.book = new Book({
           doneUnits: 100,
-          totalUnits: 500
+          totalUnits: 500,
         } as any);
 
         fixture.detectChanges();
@@ -231,7 +242,7 @@ describe('BookViewComponent', () => {
       it('should not render', () => {
         component.book = new Book({
           doneUnits: null,
-          totalUnits: 500
+          totalUnits: 500,
         } as any);
 
         fixture.detectChanges();
@@ -242,7 +253,7 @@ describe('BookViewComponent', () => {
       it('should not render', () => {
         component.book = new Book({
           doneUnits: 10,
-          totalUnits: null
+          totalUnits: null,
         } as any);
 
         fixture.detectChanges();
@@ -253,7 +264,7 @@ describe('BookViewComponent', () => {
       it('should not render', () => {
         component.book = new Book({
           doneUnits: null,
-          totalUnits: null
+          totalUnits: null,
         } as any);
 
         fixture.detectChanges();
@@ -266,17 +277,18 @@ describe('BookViewComponent', () => {
       it('should render for done book', () => {
         component.book = new Book({
           startDate: new Date('2020-01-02'),
-          status: BookStatus.Done
+          status: BookStatus.Done,
         } as any);
 
         fixture.detectChanges();
 
         expect(element.querySelector<HTMLDivElement>('.book__start-date .property__value').innerText).toEqual('1/2/20');
       });
+
       it('should render for progress book', () => {
         component.book = new Book({
           startDate: new Date('2020-01-02'),
-          status: BookStatus.InProgress
+          status: BookStatus.InProgress,
         } as any);
 
         fixture.detectChanges();
@@ -287,7 +299,7 @@ describe('BookViewComponent', () => {
       it('should not render for to read book', () => {
         component.book = new Book({
           startDate: new Date('2020-01-02'),
-          status: BookStatus.ToRead
+          status: BookStatus.ToRead,
         } as any);
 
         fixture.detectChanges();
@@ -296,8 +308,7 @@ describe('BookViewComponent', () => {
       });
 
       it('should not render for empty date', () => {
-        component.book = new Book({
-        } as any);
+        component.book = new Book({} as any);
 
         fixture.detectChanges();
 
@@ -309,7 +320,7 @@ describe('BookViewComponent', () => {
       it('should render for done book', () => {
         component.book = new Book({
           endDate: new Date('2020-01-02'),
-          status: BookStatus.Done
+          status: BookStatus.Done,
         } as any);
 
         fixture.detectChanges();
@@ -320,7 +331,7 @@ describe('BookViewComponent', () => {
       it('should not render for progress book', () => {
         component.book = new Book({
           endDate: new Date('2020-01-02'),
-          status: BookStatus.InProgress
+          status: BookStatus.InProgress,
         } as any);
 
         fixture.detectChanges();
@@ -331,7 +342,7 @@ describe('BookViewComponent', () => {
       it('should not render for to read book', () => {
         component.book = new Book({
           endDate: new Date('2020-01-02'),
-          status: BookStatus.ToRead
+          status: BookStatus.ToRead,
         } as any);
 
         fixture.detectChanges();
@@ -340,8 +351,7 @@ describe('BookViewComponent', () => {
       });
 
       it('should not render for empty date', () => {
-        component.book = new Book({
-        } as any);
+        component.book = new Book({} as any);
 
         fixture.detectChanges();
 
@@ -361,8 +371,7 @@ describe('BookViewComponent', () => {
       });
 
       it('should not render', () => {
-        component.book = new Book({
-        } as any);
+        component.book = new Book({} as any);
 
         fixture.detectChanges();
 

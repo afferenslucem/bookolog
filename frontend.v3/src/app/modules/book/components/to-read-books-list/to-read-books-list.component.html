@@ -1,8 +1,8 @@
-<div class="book-list" *ngIf="(books$ | async) as books">
-  <cdk-virtual-scroll-viewport [itemSize]="52" [minBufferPx]="350" [maxBufferPx]="490" class="book-list">
+<div *ngIf="(books$ | async) as books" class="book-list">
+  <cdk-virtual-scroll-viewport [itemSize]="52" [maxBufferPx]="490" [minBufferPx]="350" class="book-list">
     <div *cdkVirtualFor="let book of books$ | async; let last = last; trackBy: bookTrackBy">
-      <app-to-read-book [routerLink]="['/book', book.guid]" class="book-list__item" [book]="book"></app-to-read-book>
-    <mat-divider *ngIf="!last"></mat-divider>
+      <app-to-read-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-to-read-book>
+      <mat-divider *ngIf="!last"></mat-divider>
     </div>
   </cdk-virtual-scroll-viewport>
   <span *ngIf="+(books?.length) === 0">Здесь пока ничего нет</span>

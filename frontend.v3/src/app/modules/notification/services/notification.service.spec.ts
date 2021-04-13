@@ -12,7 +12,7 @@ describe('NotificationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NotificationQueueService]
+      providers: [NotificationQueueService],
     });
     service = TestBed.inject(NotificationService);
     queue = TestBed.inject(NotificationQueueService);
@@ -26,16 +26,16 @@ describe('NotificationService', () => {
     it('should create timer', () => {
       const addSpy = spyOn(queue, 'add');
 
-      //@ts-ignore
+      // @ts-ignore
       const timerSpy = spyOn(service, 'createCloseTimer');
 
       service.createNotification('text', NotificationType.Info, {
-        autoclose: true
+        autoclose: true,
       });
 
       expect(addSpy).toHaveBeenCalledTimes(1);
       expect(timerSpy).toHaveBeenCalledTimes(1);
-      
+
       // @ts-ignore
       expect(timerSpy).toHaveBeenCalledWith(jasmine.any(String), environment.notificationCloseTime);
     });
@@ -47,7 +47,7 @@ describe('NotificationService', () => {
       const timerSpy = spyOn(service, 'createCloseTimer');
 
       service.createNotification('text', NotificationType.Info, {
-        autoclose: false
+        autoclose: false,
       });
 
       expect(addSpy).toHaveBeenCalledTimes(1);
@@ -60,7 +60,7 @@ describe('NotificationService', () => {
       const addSpy = spyOn(queue, 'add');
 
       service.createInfoNotification('text', {
-        autoclose: true
+        autoclose: true,
       });
 
       expect(addSpy).toHaveBeenCalledTimes(1);
@@ -69,7 +69,7 @@ describe('NotificationService', () => {
         guid: jasmine.any(String),
         text: 'text',
         type: NotificationType.Info,
-        timeout: environment.notificationCloseTime
+        timeout: environment.notificationCloseTime,
       } as any);
 
       expect(addSpy).toHaveBeenCalledWith(matcher);
@@ -79,7 +79,7 @@ describe('NotificationService', () => {
       const addSpy = spyOn(queue, 'add');
 
       service.createWarningNotification('text', {
-        autoclose: false
+        autoclose: false,
       });
 
       expect(addSpy).toHaveBeenCalledTimes(1);
@@ -88,7 +88,7 @@ describe('NotificationService', () => {
         guid: jasmine.any(String),
         text: 'text',
         type: NotificationType.Warning,
-        timeout: null
+        timeout: null,
       } as any);
 
       expect(addSpy).toHaveBeenCalledWith(matcher);
@@ -98,7 +98,7 @@ describe('NotificationService', () => {
       const addSpy = spyOn(queue, 'add');
 
       service.createErrorNotification('text', {
-        timeout: 1000
+        timeout: 1000,
       });
 
       expect(addSpy).toHaveBeenCalledTimes(1);
@@ -107,7 +107,7 @@ describe('NotificationService', () => {
         guid: jasmine.any(String),
         text: 'text',
         type: NotificationType.Error,
-        timeout: 1000
+        timeout: 1000,
       } as any);
 
       expect(addSpy).toHaveBeenCalledWith(matcher);

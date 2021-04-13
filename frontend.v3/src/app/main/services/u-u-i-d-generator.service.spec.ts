@@ -8,9 +8,7 @@ describe('UUIDGeneratorService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        { provide: UserService, useValue: { user: { login: 'hrodvitnir' } } }
-      ]
+      providers: [{ provide: UserService, useValue: { user: { login: 'hrodvitnir' } } }],
     });
     service = TestBed.inject(UUIDGeneratorService);
   });

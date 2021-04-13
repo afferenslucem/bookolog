@@ -5,7 +5,7 @@ import { InProgressBooksResolver } from './in-progress-books.resolver';
 
 describe('InProgressBooksResolver', () => {
   let resolver: InProgressBooksResolver;
-  let spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
+  const spy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -14,9 +14,9 @@ describe('InProgressBooksResolver', () => {
           provide: BookService,
           useValue: {
             getByStatus: spy,
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     resolver = TestBed.inject(InProgressBooksResolver);
   });
@@ -26,7 +26,7 @@ describe('InProgressBooksResolver', () => {
   });
 
   it('should requests ToRead', () => {
-    const books = resolver.resolve(null, null);
+    const books = resolver.resolve();
 
     expect(spy).toHaveBeenCalledWith(BookStatus.InProgress);
     expect(spy).toHaveBeenCalledTimes(1);

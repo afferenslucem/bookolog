@@ -34,6 +34,5 @@ export class InProgressBookComponent extends BookLineComponent implements OnInit
     return this.innerBook.progressPercents;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

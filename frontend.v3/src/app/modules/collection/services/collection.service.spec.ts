@@ -15,14 +15,8 @@ describe('CollectionService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        CollectionStorageService,
-        CollectionOriginService,
-        { provide: UUIDGeneratorService, useValue: {} }
-      ],
-      imports: [
-        HttpClientTestingModule,
-      ],
+      providers: [CollectionStorageService, CollectionOriginService, { provide: UUIDGeneratorService, useValue: {} }],
+      imports: [HttpClientTestingModule],
     });
     collectionService = TestBed.inject(CollectionService);
     collectionOrigin = TestBed.inject(CollectionOriginService);
@@ -100,13 +94,15 @@ describe('CollectionService', () => {
 
       const result = await collectionService.getByGuid('guid');
 
-      expect(result).toEqual(new Collection({
-        guid: 'guid',
-        name: 'name',
-        description: 'description',
-        modifyDate: '2020-11-18 10:57',
-        createDate: '2020-11-18 09:57',
-      } as any));
+      expect(result).toEqual(
+        new Collection({
+          guid: 'guid',
+          name: 'name',
+          description: 'description',
+          modifyDate: '2020-11-18 10:57',
+          createDate: '2020-11-18 09:57',
+        } as any),
+      );
 
       expect(getByGuidSpy).toHaveBeenCalledWith('guid');
       expect(getByGuidSpy).toHaveBeenCalledTimes(1);
@@ -202,15 +198,18 @@ describe('CollectionService', () => {
   });
 
   it('getAll', async () => {
-    const getAllSpy = spyOn(collectionStorage, 'getAll').and.resolveTo([{
-      name: 'name1',
-      description: 'description',
-      guid: 'id1'
-    }, {
-      name: 'name2',
-      description: 'description',
-      guid: 'id2'
-    }, ] as any);
+    const getAllSpy = spyOn(collectionStorage, 'getAll').and.resolveTo([
+      {
+        name: 'name1',
+        description: 'description',
+        guid: 'id1',
+      },
+      {
+        name: 'name2',
+        description: 'description',
+        guid: 'id2',
+      },
+    ] as any);
 
     const result = await collectionService.getAll();
 
@@ -236,7 +235,7 @@ describe('CollectionService', () => {
   it('getByGuid', async () => {
     const getByGuidSpy = spyOn(collectionStorage, 'getByGuid').and.resolveTo({
       name: 'name1',
-      guid: 'id1'
+      guid: 'id1',
     } as any);
 
     const result = await collectionService.getByGuid('id1');
@@ -260,38 +259,48 @@ describe('CollectionService', () => {
   });
 
   it('loadAll', async () => {
-    const getAllSpy = spyOn(collectionOrigin, 'getAll').and.resolveTo([{
-      guid: 'id1'
-    }, {
-      guid: 'id2'
-    }] as any);
+    const getAllSpy = spyOn(collectionOrigin, 'getAll').and.resolveTo([
+      {
+        guid: 'id1',
+      },
+      {
+        guid: 'id2',
+      },
+    ] as any);
     const restoreSpy = spyOn(collectionStorage, 'restore');
 
     await collectionService.loadAll();
 
     expect(getAllSpy).toHaveBeenCalledTimes(1);
-    expect(restoreSpy).toHaveBeenCalledOnceWith([{
-      guid: 'id1'
-    }, {
-      guid: 'id2'
-    }]);
+    expect(restoreSpy).toHaveBeenCalledOnceWith([
+      {
+        guid: 'id1',
+      },
+      {
+        guid: 'id2',
+      },
+    ]);
   });
 
   it('restore', async () => {
     const clearSpy = spyOn(collectionStorage, 'clear');
     const saveMany = spyOn(collectionStorage, 'saveMany');
 
-    await collectionService.restore([{
-      guid: 'id1',
-    }] as any);
+    await collectionService.restore([
+      {
+        guid: 'id1',
+      },
+    ] as any);
 
     expect(clearSpy).toHaveBeenCalledTimes(1);
-    expect(saveMany).toHaveBeenCalledOnceWith([{
-      guid: 'id1',
-    }] as any);
+    expect(saveMany).toHaveBeenCalledOnceWith([
+      {
+        guid: 'id1',
+      },
+    ] as any);
   });
 
-  describe('saveOrUpdate', async () => {
+  describe('saveOrUpdate', () => {
     it('should update', async () => {
       const storage = TestBed.inject(CollectionStorageService);
 

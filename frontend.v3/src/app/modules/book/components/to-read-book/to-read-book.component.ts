@@ -5,7 +5,7 @@ import { BookLineComponent } from '../book-line/book-line.component';
 @Component({
   selector: 'app-to-read-book',
   templateUrl: './to-read-book.component.html',
-  styleUrls: ['./to-read-book.component.scss']
+  styleUrls: ['./to-read-book.component.scss'],
 })
 export class ToReadBookComponent extends BookLineComponent implements OnInit {
   constructor() {
@@ -17,6 +17,5 @@ export class ToReadBookComponent extends BookLineComponent implements OnInit {
     this.innerBook = v;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

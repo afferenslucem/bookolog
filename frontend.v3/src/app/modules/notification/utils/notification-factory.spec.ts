@@ -23,7 +23,7 @@ describe('NotificationFactory', () => {
       const factory = new NotificationFactory();
 
       const notification = factory.createInfoNotification('text', {
-        autoclose: false
+        autoclose: false,
       });
 
       expect(notification.guid).toBeDefined();
@@ -36,7 +36,7 @@ describe('NotificationFactory', () => {
       const factory = new NotificationFactory();
 
       const notification = factory.createInfoNotification('text', {
-        timeout: 1000
+        timeout: 1000,
       });
 
       expect(notification.guid).toBeDefined();

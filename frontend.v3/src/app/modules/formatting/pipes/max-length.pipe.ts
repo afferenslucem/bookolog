@@ -5,7 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class MaxLengthPipe implements PipeTransform {
   transform(value: string, length: number = null): string {
-    if (!value) { return value; }
+    if (!value) {
+      return value;
+    }
 
     if (!length || value.length <= length) {
       return value;

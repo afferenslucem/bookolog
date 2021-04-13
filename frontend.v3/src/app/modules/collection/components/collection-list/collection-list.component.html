@@ -2,7 +2,7 @@
   <mat-list-item *ngFor="let item of collections$ | async">
     <div class="statistic-item w-100">
       <div class="statistic-item__header">
-        <span class="link" [routerLink]="['/series', item.guid]">{{item.name | capitalize}}</span>
+        <span [routerLink]="['/series', item.guid]" class="link">{{item.name | capitalize}}</span>
         <div class="actions">
           <mat-icon [hidden]="!item.shouldSync">update</mat-icon>
           <!--mat-icon [routerLink]="['/series/edit', item.guid]" (click)="$event.stopPropagation()">edit</mat-icon-->

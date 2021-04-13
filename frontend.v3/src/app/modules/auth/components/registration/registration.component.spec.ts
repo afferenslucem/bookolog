@@ -22,16 +22,12 @@ describe('RegistrationComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [RegistrationComponent],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        UiModule,
-      ],
+      imports: [RouterTestingModule, HttpClientTestingModule, UiModule],
     })
       .overrideComponent(RegistrationComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
-        }
+        },
       })
       .compileComponents();
   });
@@ -81,7 +77,7 @@ describe('RegistrationComponent', () => {
     });
   });
 
-  it('should send registration', () => {
+  it('should send registration', async () => {
     const spy = spyOn(auth, 'registration').and.resolveTo();
 
     component.form.get('login').setValue('hrodvitnir');
@@ -91,7 +87,7 @@ describe('RegistrationComponent', () => {
 
     expect(component.form.valid).toBeTrue();
 
-    component.submit();
+    await component.submit();
 
     expect(spy).toHaveBeenCalledOnceWith({
       login: 'hrodvitnir',
@@ -103,7 +99,7 @@ describe('RegistrationComponent', () => {
   describe('error', () => {
     it('should show email error', async () => {
       const spy = spyOn(auth, 'registration').and.rejectWith({
-        error: 'User with same email already exisists'
+        error: 'User with same email already exisists',
       });
 
       await component.submit();
@@ -113,7 +109,7 @@ describe('RegistrationComponent', () => {
 
     it('should show login error', async () => {
       const spy = spyOn(auth, 'registration').and.rejectWith({
-        error: 'User with same login already exisists'
+        error: 'User with same login already exisists',
       });
 
       await component.submit();
@@ -121,9 +117,9 @@ describe('RegistrationComponent', () => {
       expect(component.error).toEqual(component.RegistrationError.LoginExists);
     });
 
-    it('should show login error', async () => {
+    it('should show login error for unexpected error', async () => {
       const spy = spyOn(auth, 'registration').and.rejectWith({
-        error: 'Unexpected error'
+        error: 'Unexpected error',
       });
 
       await component.submit();

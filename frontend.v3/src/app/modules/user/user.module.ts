@@ -4,16 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormattingModule } from '../formatting/formatting.module';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 
-
 @NgModule({
   declarations: [UserInfoComponent],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    FormattingModule,
-  ],
-  exports: [
-    UserInfoComponent,
-  ],
+  imports: [CommonModule, MatIconModule, FormattingModule],
+  exports: [UserInfoComponent],
 })
-export class UserModule { }
+export class UserModule {}

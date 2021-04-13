@@ -12,21 +12,19 @@ describe('EmailChangeComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [EmailChangeComponent],
-      imports: [
-        HttpClientTestingModule,
-      ],
+      imports: [HttpClientTestingModule],
       providers: [
         {
-          provide: UserService, useValue: {
+          provide: UserService,
+          useValue: {
             user: {
               email: 'alexshakirov74@gmail.com',
             },
             changeEmail(): void {},
-          }
-        }
-      ]
-    })
-      .compileComponents();
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

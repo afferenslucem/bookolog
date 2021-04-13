@@ -16,14 +16,14 @@ export class BookOriginService implements ISyncableOrigin<BookData> {
     namespace: 'Origin',
   });
 
-  constructor(private httpClient: HttpClient, private userService: UserService) {
-  }
+  constructor(private httpClient: HttpClient, private userService: UserService) {}
 
   public async getAll(): Promise<BookData[]> {
     const userId = this.userService.user.id;
-    return this.httpClient.get<BookData[]>(`/book/user/${userId}`).pipe(
-      tap(books => this.logger.debug('Loaded books: ', books)),
-    ).toPromise();
+    return this.httpClient
+      .get<BookData[]>(`/book/user/${userId}`)
+      .pipe(tap(books => this.logger.debug('Loaded books: ', books)))
+      .toPromise();
   }
 
   public async delete(guid: string): Promise<void> {

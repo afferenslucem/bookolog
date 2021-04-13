@@ -9,8 +9,7 @@ export class TitleService {
   private readonly _title = new BehaviorSubject<TitleText>(0);
   private readonly _custom = new BehaviorSubject<string>('');
 
-  constructor() {
-  }
+  constructor() {}
 
   public get title$(): Observable<TitleText> {
     return this._title;
@@ -107,7 +106,6 @@ export class TitleService {
     this.setCustom(null);
     this.setTitle(TitleText.CollectionCreate);
   }
-
 
   public setCollectionEdit(): void {
     this.setCustom(null);

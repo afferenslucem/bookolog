@@ -3,12 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-plus-icon',
   templateUrl: './plus-icon.component.html',
-  styleUrls: ['./plus-icon.component.scss']
+  styleUrls: ['./plus-icon.component.scss'],
 })
 export class PlusIconComponent implements OnInit {
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

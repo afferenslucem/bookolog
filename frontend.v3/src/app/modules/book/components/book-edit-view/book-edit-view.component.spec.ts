@@ -1,29 +1,29 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {FormattingModule} from '../../../formatting/formatting.module';
-import {TestCore} from '../../../../main/test/test-core.spec';
-import {ActivatedRoute} from '@angular/router';
-import {Subject} from 'rxjs';
-import {UUIDGeneratorService} from '../../../../main/services/u-u-i-d-generator.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterTestingModule} from '@angular/router/testing';
-import {Book} from '../../models/book';
-import {BookType} from '../../models/book-type';
-import {ProgressAlgorithmType} from '../../models/progress-algorithm-type';
-import {MatSelectModule} from '@angular/material/select';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BookData} from '../../models/book-data';
-import {BookService} from '../../services/book.service';
-import {BookEditViewComponent} from './book-edit-view.component';
-import {BookStatus} from '../../models/book-status';
-import {Action} from '../../../../main/resolvers/action.resolver';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {ReactiveFormsModule} from '@angular/forms';
-import {InputsModule} from '../../../inputs/inputs.module';
-import {MatInputModule} from '@angular/material/input';
-import {TitleService} from '../../../ui/service/title.service';
-import {DateUtils} from '../../../../main/utils/date-utils';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { FormattingModule } from '../../../formatting/formatting.module';
+import { TestCore } from '../../../../main/test/test-core.spec';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generator.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Book } from '../../models/book';
+import { BookType } from '../../models/book-type';
+import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BookData } from '../../models/book-data';
+import { BookService } from '../../services/book.service';
+import { BookEditViewComponent } from './book-edit-view.component';
+import { BookStatus } from '../../models/book-status';
+import { Action } from '../../../../main/resolvers/action.resolver';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { InputsModule } from '../../../inputs/inputs.module';
+import { MatInputModule } from '@angular/material/input';
+import { TitleService } from '../../../ui/service/title.service';
+import { DateUtils } from '../../../../main/utils/date-utils';
 
 const book: Book = new Book({
   name: 'name',
@@ -70,14 +70,13 @@ describe('BookEditViewComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: UUIDGeneratorService, useValue: {}},
-      ]
-    })
-      .compileComponents();
+        { provide: ActivatedRoute, useValue: activatedRoute },
+        { provide: UUIDGeneratorService, useValue: {} },
+      ],
+    }).compileComponents();
   });
 
-  beforeEach(async () => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(BookEditViewComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
@@ -89,7 +88,7 @@ describe('BookEditViewComponent', () => {
       series,
       allBooks,
       status: BookStatus.InProgress,
-      action: Action.Edit
+      action: Action.Edit,
     });
 
     fixture.detectChanges();

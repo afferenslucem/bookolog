@@ -14,7 +14,7 @@ import _ from 'declarray';
 @Component({
   selector: 'app-book-view',
   templateUrl: './book-view.component.html',
-  styleUrls: [ './book-view.component.scss' ],
+  styleUrls: ['./book-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookViewComponent implements OnInit, OnDestroy {
@@ -27,16 +27,18 @@ export class BookViewComponent implements OnInit, OnDestroy {
 
   public destroy$ = new Subject();
 
-  constructor(private activatedRoute: ActivatedRoute,
-              public titleService: TitleService,
-              public dialog: MatDialog,
-              private bookService: BookService,
-              private router: Router
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    public titleService: TitleService,
+    public dialog: MatDialog,
+    private bookService: BookService,
+    private router: Router,
   ) {
-
     activatedRoute.data.subscribe(data => {
       this.book = data.book;
-      this.doneReadings = _((data.readings as Book[]) || []).where((item: Book) => item.status === BookStatus.Done).toArray();
+      this.doneReadings = _((data.readings as Book[]) || [])
+        .where((item: Book) => item.status === BookStatus.Done)
+        .toArray();
     });
   }
 
@@ -48,19 +50,22 @@ export class BookViewComponent implements OnInit, OnDestroy {
     this.titleService.setBook();
   }
 
-  public async openDeleteDialog(book: Book): Promise<void> {
+  public openDeleteDialog(book: Book): void {
     const dialogRef = this.dialog.open(BookDeleteDialogComponent, {
       width: '90%',
       maxWidth: '300px',
     });
 
-    dialogRef.afterClosed().pipe(
-      filter((item?: DeleteDialogResult) => item && item === 'delete'),
-      takeUntil(this.destroy$),
-    ).subscribe(async () => {
-      await this.deleteBook(book);
-      await this.redirect();
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter((item?: DeleteDialogResult) => item && item === 'delete'),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
+        this.deleteBook(book);
+        this.redirect();
+      });
   }
 
   public async deleteBook(book: Book): Promise<void> {
@@ -70,15 +75,15 @@ export class BookViewComponent implements OnInit, OnDestroy {
   public async redirect(): Promise<void> {
     switch (this.book.status) {
       case BookStatus.InProgress: {
-        await this.router.navigate([ '/in-progress' ]);
+        await this.router.navigate(['/in-progress']);
         break;
       }
       case BookStatus.Done: {
-        await this.router.navigate([ '/done' ]);
+        await this.router.navigate(['/done']);
         break;
       }
       case BookStatus.ToRead: {
-        await this.router.navigate([ '/to-read' ]);
+        await this.router.navigate(['/to-read']);
         break;
       }
     }

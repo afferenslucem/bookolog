@@ -8,10 +8,10 @@
   </p>
 </div>
 <div mat-dialog-actions>
-  <button class="close" mat-flat-button color="primary" mat-dialog-close (click)="cancel()">
+  <button (click)="cancel()" class="close" color="primary" mat-dialog-close mat-flat-button>
     Закрыть
   </button>
-  <button class="delete" mat-flat-button color="warn" mat-dialog-close (click)="delete()">
+  <button (click)="delete()" class="delete" color="warn" mat-dialog-close mat-flat-button>
     Удалить
   </button>
 </div>

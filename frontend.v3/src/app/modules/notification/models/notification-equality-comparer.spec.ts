@@ -7,7 +7,7 @@ describe('NotificationEqualityComparer', () => {
 
   it('should return correct hashcode', () => {
     const notification = {
-      guid: 'guid'
+      guid: 'guid',
     } as any;
 
     expect(new NotificationEqualityComparer().getHashCode(notification)).toEqual('guid');
@@ -15,11 +15,11 @@ describe('NotificationEqualityComparer', () => {
 
   it('should be equal', () => {
     const notification1 = {
-      guid: 'guid'
+      guid: 'guid',
     } as any;
 
     const notification2 = {
-      guid: 'guid'
+      guid: 'guid',
     } as any;
 
     expect(new NotificationEqualityComparer().equal(notification1, notification2)).toBeTrue();
@@ -27,11 +27,11 @@ describe('NotificationEqualityComparer', () => {
 
   it('should be not equal', () => {
     const notification1 = {
-      guid: 'guid1'
+      guid: 'guid1',
     } as any;
 
     const notification2 = {
-      guid: 'guid2'
+      guid: 'guid2',
     } as any;
 
     expect(new NotificationEqualityComparer().equal(notification1, notification2)).toBeFalse();

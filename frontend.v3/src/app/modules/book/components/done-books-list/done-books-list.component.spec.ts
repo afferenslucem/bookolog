@@ -11,7 +11,7 @@ import { TitleText } from '../../../ui/models/title-text';
 describe('DoneBooksListComponent', () => {
   let component: DoneBooksListComponent;
   let fixture: ComponentFixture<DoneBooksListComponent>;
-  let books: Book[] = [
+  const books: Book[] = [
     new Book({
       name: 'name0',
       modifyDate: '2021-01-01',
@@ -22,30 +22,30 @@ describe('DoneBooksListComponent', () => {
     } as any),
     new Book({
       endDateYear: 2020,
-      name: 'name2'
+      name: 'name2',
     } as any),
     new Book({
       endDateYear: 2020,
       endDateMonth: 10,
-      name: 'name3'
+      name: 'name3',
     } as any),
     new Book({
       endDateYear: 2020,
       endDateMonth: 10,
       endDateDay: 22,
-      name: 'name4'
+      name: 'name4',
     } as any),
     new Book({
       endDateYear: 2021,
       endDateMonth: 10,
       endDateDay: 23,
-      name: 'name5'
+      name: 'name5',
     } as any),
     new Book({
       endDateYear: 2021,
       endDateMonth: 11,
       endDateDay: 23,
-      name: 'name6'
+      name: 'name6',
     } as any),
     new Book({
       endDateYear: 2021,
@@ -66,22 +66,22 @@ describe('DoneBooksListComponent', () => {
       endDateYear: 2021,
       endDateMonth: 11,
       endDateDay: 22,
-      name: 'name7'
+      name: 'name7',
     } as any),
   ];
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ DoneBooksListComponent ],
+      declarations: [DoneBooksListComponent],
       providers: [
         {
-          provide: ActivatedRoute, useValue: {
-            data: of({ books })
-          }
+          provide: ActivatedRoute,
+          useValue: {
+            data: of({ books }),
+          },
         },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -99,11 +99,20 @@ describe('DoneBooksListComponent', () => {
 
   describe('Books sorting', () => {
     it('Should order years descending', async () => {
-      const sorted = await component.books$.pipe(
-        first()
-      ).toPromise();
+      const sorted = await component.books$.pipe(first()).toPromise();
 
-      expect(sorted.map(item => item.name)).toEqual(['name6.1', 'name6.2', 'name6', 'name7', 'name5', 'name4', 'name3', 'name2', 'name1', 'name0']);
+      expect(sorted.map(item => item.name)).toEqual([
+        'name6.1',
+        'name6.2',
+        'name6',
+        'name7',
+        'name5',
+        'name4',
+        'name3',
+        'name2',
+        'name1',
+        'name0',
+      ]);
     });
   });
 });

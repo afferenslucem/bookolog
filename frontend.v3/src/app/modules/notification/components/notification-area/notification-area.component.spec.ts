@@ -9,10 +9,9 @@ describe('NotificationsAreaComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ NotificationAreaComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
-    })
-.compileComponents();
+      declarations: [NotificationAreaComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

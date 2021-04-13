@@ -9,8 +9,7 @@ describe('CloseIconComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [CloseIconComponent],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

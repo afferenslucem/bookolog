@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import { TagValueComponent } from './tag-value.component';
-import { first, mapTo } from 'rxjs/operators';
 import { TestCore } from '../../../../main/test/test-core.spec';
 
 describe('TagValueComponent', () => {
@@ -12,12 +11,12 @@ describe('TagValueComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [TagValueComponent],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideComponent(TagValueComponent, {
         set: {
-          changeDetection: ChangeDetectionStrategy.Default
-        }
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
       })
       .compileComponents();
   });
@@ -42,7 +41,7 @@ describe('TagValueComponent', () => {
       expect(element.querySelector('.tag__close')).toBeTruthy();
     });
 
-    it('should show for \'true\'', () => {
+    it("should show for 'true'", () => {
       component.showCross = 'true';
 
       fixture.detectChanges();
@@ -62,7 +61,7 @@ describe('TagValueComponent', () => {
       expect(element.querySelector('.tag__close')).toBeFalsy();
     });
 
-    it('should hide for \'false\'', () => {
+    it("should hide for 'false'", () => {
       component.showCross = 'false';
 
       fixture.detectChanges();
@@ -79,11 +78,11 @@ describe('TagValueComponent', () => {
     expect(element.querySelector<HTMLElement>('.tag__value').innerText).toEqual('Text example');
   });
 
-  it('should emit event', async () => {
+  it('should emit event', () => {
     const spy = spyOn(component.crossClick, 'emit');
 
     element.querySelector<HTMLElement>('.tag__close').click();
 
-    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith();
   });
 });

@@ -2,43 +2,43 @@
   <app-title></app-title>
 </mat-toolbar>
 <div class="content">
-  <form [formGroup]="form" (ngSubmit)="submit($event)">
+  <form (ngSubmit)="submit($event)" [formGroup]="form">
     <mat-form-field appearance="fill">
-      <mat-label >Логин</mat-label>
-      <input matInput formControlName="login" required/>
-      <mat-error *ngIf="form.get('login').invalid" >
+      <mat-label>Логин</mat-label>
+      <input formControlName="login" matInput required/>
+      <mat-error *ngIf="form.get('login').invalid">
         Это обязательное поле
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label >Почта</mat-label>
-      <input matInput type="email" formControlName="email" required/>
-      <mat-error *ngIf="form.get('email').invalid" >
+      <mat-label>Почта</mat-label>
+      <input formControlName="email" matInput required type="email"/>
+      <mat-error *ngIf="form.get('email').invalid">
         Это обязательное поле
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label >Пароль</mat-label>
-      <input matInput type="password" formControlName="password" required/>
-      <mat-error *ngIf="form.get('password').invalid" >
+      <mat-label>Пароль</mat-label>
+      <input formControlName="password" matInput required type="password"/>
+      <mat-error *ngIf="form.get('password').invalid">
         Это обязательное поле
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label >Подтверждение пароля</mat-label>
-      <input matInput type="password" formControlName="confirmation" required/>
-      <mat-error *ngIf="form.get('confirmation')?.errors?.required" >
+      <mat-label>Подтверждение пароля</mat-label>
+      <input formControlName="confirmation" matInput required type="password"/>
+      <mat-error *ngIf="form.get('confirmation')?.errors?.required">
         Это обязательное поле
       </mat-error>
-      <mat-error *ngIf="form.get('confirmation')?.errors?.passwordMatch && !form.get('confirmation')?.errors?.required" >
+      <mat-error *ngIf="form.get('confirmation')?.errors?.passwordMatch && !form.get('confirmation')?.errors?.required">
         Пароли не совпадают
       </mat-error>
     </mat-form-field>
 
-    <mat-error  *ngIf="error !== null" class="login-error">
+    <mat-error *ngIf="error !== null" class="login-error">
       <ng-container [ngSwitch]="error">
         <span *ngSwitchCase="RegistrationError.LoginExists">Такой логин уже занят</span>
         <span *ngSwitchCase="RegistrationError.EmailExists">Такая почта уже занята</span>
@@ -46,11 +46,11 @@
       </ng-container>
     </mat-error>
 
-    <button mat-flat-button
-            color="primary"
-            class="w-100"
+    <button (click)="submit($event)"
             [disabled]="form.invalid"
-            (click)="submit($event)"
+            class="w-100"
+            color="primary"
+            mat-flat-button
 
     >
       Зарегистрироваться

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { ILogger } from 'waterlog';
@@ -16,16 +16,16 @@ import { User } from '../../auth/models/user';
 export class UserOriginService {
   private logger: ILogger = getConsoleLogger('UserOriginService');
 
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) {}
 
   public async login(credentials: Credentials): Promise<User> {
     try {
-      return await this.httpClient.post<User>('/auth/login', credentials, {
-        responseType: 'json',
-      }).pipe(
-        tap((response) => this.logger.debug('Sent login', response)),
-      ).toPromise();
+      return await this.httpClient
+        .post<User>('/auth/login', credentials, {
+          responseType: 'json',
+        })
+        .pipe(tap(response => this.logger.debug('Sent login', response)))
+        .toPromise();
     } catch (e) {
       if (e.error === 'Incorrect login or password') {
         this.logger.debug('Credentials error', e);
@@ -38,9 +38,10 @@ export class UserOriginService {
 
   public async logout(): Promise<void> {
     try {
-      return await this.httpClient.get('/auth/logout').pipe(
-        tap(() => this.logger.debug('Sent logout')),
-      ).toPromise() as Promise<void>;
+      return (await this.httpClient
+        .get('/auth/logout')
+        .pipe(tap(() => this.logger.debug('Sent logout')))
+        .toPromise()) as Promise<void>;
     } catch (e) {
       this.logger.error('Logout problem');
       throw e;
@@ -49,9 +50,10 @@ export class UserOriginService {
 
   public async loadMe(): Promise<User> {
     try {
-      return await this.httpClient.get<User>('/user/me').pipe(
-        tap((user) => this.logger.debug('Me', user)),
-      ).toPromise();
+      return await this.httpClient
+        .get<User>('/user/me')
+        .pipe(tap(user => this.logger.debug('Me', user)))
+        .toPromise();
     } catch (e) {
       this.logger.error('me problem', e);
       throw e;
@@ -59,10 +61,10 @@ export class UserOriginService {
   }
 
   public async registration(data: RegistrationData): Promise<User> {
-    return await this.httpClient.post<User>('/auth/register', data)
-      .pipe(
-        tap(item => this.logger.debug('Registered', item)),
-      ).toPromise();
+    return await this.httpClient
+      .post<User>('/auth/register', data)
+      .pipe(tap(item => this.logger.debug('Registered', item)))
+      .toPromise();
   }
 
   public async recoveryPassword(email: string): Promise<void> {
@@ -70,31 +72,37 @@ export class UserOriginService {
   }
 
   public async passwordChange(oldPassword: string, newPassword: string): Promise<void> {
-    await this.httpClient.post('/auth/changePassword', {
-      oldPassword,
-      newPassword,
-    }).toPromise();
+    await this.httpClient
+      .post('/auth/changePassword', {
+        oldPassword,
+        newPassword,
+      })
+      .toPromise();
   }
 
   public async changeEmail(email: string): Promise<void> {
-    await this.httpClient.post('/user/changeEmail', email, {
-      headers: {
-        'Content-Type': 'text/plain'
-      },
-      responseType: 'text'
-    }).toPromise();
+    await this.httpClient
+      .post('/user/changeEmail', email, {
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        responseType: 'text',
+      })
+      .toPromise();
   }
 
   public async loadAvatar(file: File): Promise<string> {
     const data = new FormData();
     data.append('file', file);
 
-    const result = await this.httpClient.post('/user/uploadAvatar', data, {
-      headers: {
-        timeout: '60000',
-      },
-      responseType: 'text',
-    }).toPromise();
+    const result = await this.httpClient
+      .post('/user/uploadAvatar', data, {
+        headers: {
+          timeout: '60000',
+        },
+        responseType: 'text',
+      })
+      .toPromise();
 
     return result.toString();
   }

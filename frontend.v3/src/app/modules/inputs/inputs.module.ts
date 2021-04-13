@@ -13,8 +13,8 @@ import { FileInputComponent } from './components/file-input/file-input.component
 import { TagValueComponent } from './components/tag-value/tag-value.component';
 import { BookTagsInputComponent } from './components/tags-input/book-tags-input.component';
 import { BookTimeInputComponent } from './components/time-input/book-time-input.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { DateMonthValidatorDirective } from './validators/date-month-validator.directive';
 import { DateDayValidatorDirective } from './validators/date-day-validator.directive';
 
@@ -39,14 +39,8 @@ import { DateDayValidatorDirective } from './validators/date-day-validator.direc
     MatAutocompleteModule,
     FormattingModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
-  exports: [
-    BookDateInputComponent,
-    BookTimeInputComponent,
-    BookTagsInputComponent,
-    TagValueComponent,
-    FileInputComponent,
-  ],
+  exports: [BookDateInputComponent, BookTimeInputComponent, BookTagsInputComponent, TagValueComponent, FileInputComponent],
 })
 export class InputsModule {}

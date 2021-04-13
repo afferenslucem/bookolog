@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { MatDialogRef } from '@angular/material/dialog';
-import {CollectionDeleteDialogComponent} from './collection-delete-dialog.component';
+import { CollectionDeleteDialogComponent } from './collection-delete-dialog.component';
 
 describe('CollectionDeleteDialogComponent', () => {
   let component: CollectionDeleteDialogComponent;
@@ -10,19 +10,16 @@ describe('CollectionDeleteDialogComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [
-        CollectionDeleteDialogComponent,
-      ],
+      declarations: [CollectionDeleteDialogComponent],
       providers: [
         {
-          provide: MatDialogRef, useValue: {
-            close: () => {
-            }
-          }
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {},
+          },
         },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   describe('CollectionDeleteDialogComponent', () => {

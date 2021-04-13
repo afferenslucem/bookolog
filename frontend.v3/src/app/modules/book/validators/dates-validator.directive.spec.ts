@@ -1,7 +1,6 @@
 import { DatesValidatorDirective } from './dates-validator.directive';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {UnitsValidatorDirective} from './units-validator.directive';
-import {BookStatus} from '../models/book-status';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { BookStatus } from '../models/book-status';
 
 describe('DatesValidatorDirective', () => {
   let form: FormGroup = null;
@@ -16,6 +15,7 @@ describe('DatesValidatorDirective', () => {
 
   it('should create an instance', () => {
     const directive = new DatesValidatorDirective();
+
     expect(directive).toBeTruthy();
   });
 
@@ -38,7 +38,7 @@ describe('DatesValidatorDirective', () => {
 
     const result = directive.validate(form);
     const expected = {
-      invalidDates: true
+      invalidDates: true,
     };
 
     expect(result).toEqual(expected);
@@ -87,7 +87,7 @@ describe('DatesValidatorDirective', () => {
     const result = directive.validate(form);
 
     const expected = {
-      invalidDates: true
+      invalidDates: true,
     };
 
     expect(result).toEqual(expected);

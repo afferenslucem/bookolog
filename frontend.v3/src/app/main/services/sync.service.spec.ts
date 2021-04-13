@@ -13,19 +13,15 @@ describe('SyncService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UserService
-      ],
-      imports: [
-        HttpClientTestingModule,
-      ]
+      providers: [UserService],
+      imports: [HttpClientTestingModule],
     });
     userService = TestBed.inject(UserService);
 
     userService.user = {
       login: 'hrodvitnir',
       email: 'alexshakirov74@gmail.com',
-      id: 1
+      id: 1,
     } as any;
 
     service = TestBed.inject(SyncService);
@@ -68,11 +64,11 @@ describe('SyncService', () => {
 
       expect(shouldRestoreSpy).toHaveBeenCalledOnceWith();
       expect(restoreAllSpy).not.toHaveBeenCalledWith();
-      expect(syncAllSpy).toHaveBeenCalled();
+      expect(syncAllSpy).toHaveBeenCalledWith();
     });
   });
 
-  it('should restoreAll', async () => {
+  it('should trigger restore for services', async () => {
     const syncAllSpy = spyOn(service, 'syncAll');
     const userRestoreSpy = spyOn(userService, 'restore').and.resolveTo({
       books: 'books',
@@ -90,7 +86,7 @@ describe('SyncService', () => {
     expect(collectionsRestoreSpy).toHaveBeenCalledOnceWith('collections');
   });
 
-  it('should syncAll', async () => {
+  it('should trigger sync for  services', async () => {
     const getSyncDataSpy = spyOn(service, 'getSyncData').and.resolveTo({
       books: 'booksToSync',
       collections: 'collectionsToSync',
@@ -110,6 +106,7 @@ describe('SyncService', () => {
       books: 'booksToSync',
       collections: 'collectionsToSync',
     } as any);
+
     expect(booksSyncSpy).toHaveBeenCalledWith('booksToSync' as any, 'booksToSave' as any);
     expect(collectionsSyncSpy).toHaveBeenCalledWith('collectionsToSync' as any, 'collectionsToSave' as any);
     expect(userSyncSpy).toHaveBeenCalledWith();
@@ -126,7 +123,7 @@ describe('SyncService', () => {
 
     expect(result).toEqual({
       books: 'books',
-      collections: 'collections'
+      collections: 'collections',
     } as any);
   });
 });

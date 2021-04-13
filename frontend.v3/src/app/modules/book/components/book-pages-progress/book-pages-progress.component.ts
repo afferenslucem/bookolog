@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { ChooseFormPipe } from '../../../formatting/pipes/choose-form.pipe';
 
 @Component({
   selector: 'app-book-pages-progress',
@@ -14,8 +13,7 @@ export class BookPagesProgressComponent implements OnInit {
   @Input()
   public total: number;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

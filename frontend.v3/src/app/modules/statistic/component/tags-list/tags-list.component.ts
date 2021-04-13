@@ -36,7 +36,11 @@ export class TagsListComponent implements OnInit {
     return _(books)
       .where(item => item.tags.length > 0)
       .selectMany(item => item.tags)
-      .groupBy(item => item, new StringComparer(), grouped => grouped.count())
+      .groupBy(
+        item => item,
+        new StringComparer(),
+        grouped => grouped.count(),
+      )
       .orderByDescending(item => item.group)
       .thenBy(item => item)
       .toArray();

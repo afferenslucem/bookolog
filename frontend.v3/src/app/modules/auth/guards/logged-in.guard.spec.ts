@@ -13,10 +13,7 @@ describe('LoggedInGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-      ]
+      imports: [HttpClientTestingModule, RouterTestingModule],
     });
     guard = TestBed.inject(LoggedInGuard);
     user = TestBed.inject(UserService);
@@ -33,10 +30,10 @@ describe('LoggedInGuard', () => {
       login: 'login',
       avatarName: '',
       email: 'alexshakirov74@gmail.com',
-      lastSyncTime: new Date()
+      lastSyncTime: new Date(),
     };
 
-    const result = guard.canActivateChild(null, null);
+    const result = guard.canActivateChild();
 
     expect(result).toBeTrue();
   });
@@ -46,7 +43,7 @@ describe('LoggedInGuard', () => {
     user._user = null;
 
     const parseSpy = spyOn(router, 'parseUrl');
-    const result = guard.canActivateChild(null, null);
+    guard.canActivateChild();
 
     expect(parseSpy).toHaveBeenCalledOnceWith('/login');
   });

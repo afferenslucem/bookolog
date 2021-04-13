@@ -10,13 +10,10 @@ describe('BookTimeProgressComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [ BookTimeProgressComponent ],
-      imports: [
-        FormattingModule,
-      ],
-      schemas: [ NO_ERRORS_SCHEMA ]
-    })
-.compileComponents();
+      declarations: [BookTimeProgressComponent],
+      imports: [FormattingModule],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -29,6 +26,7 @@ describe('BookTimeProgressComponent', () => {
 
   it('should create', () => {
     fixture.detectChanges();
+
     expect(component).toBeTruthy();
   });
 

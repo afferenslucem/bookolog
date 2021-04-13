@@ -10,7 +10,7 @@ import { AppSyncData } from '../models/app-sync-data';
 import { DateUtils } from '../utils/date-utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SyncService {
   private readonly consoleLogger = getConsoleLogger('SyncService');
@@ -20,8 +20,26 @@ export class SyncService {
     private userService: UserService,
     private bookService: BookService,
     private collectionService: CollectionService,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+  ) {}
+
+  public get lastSyncDate(): Date {
+    return this.userService.lastSyncDate;
+  }
+
+  public get shouldRestore(): boolean {
+    const nextSync = !this.userService.lastSyncDate || addSeconds(this.userService.lastSyncDate, environment.restoreTimeSeconds);
+
+    return nextSync <= this.nowUTC;
+  }
+
+  public get nowUTC(): Date {
+    return DateUtils.nowUTC;
+  }
+
+  public get now(): Date {
+    return DateUtils.now;
+  }
 
   public async syncUser(): Promise<void> {
     await this.userService.loadMe();
@@ -34,7 +52,6 @@ export class SyncService {
       } else {
         await this.syncAll();
       }
-
     } catch (e) {
       this.requestLogger.error('Failed sync', e);
       this.notificationService.createErrorNotification('Синхронизация неудалась');
@@ -79,23 +96,5 @@ export class SyncService {
       books: data[0],
       collections: data[1],
     };
-  }
-
-  public get lastSyncDate(): Date {
-    return this.userService.lastSyncDate;
-  }
-
-  public get shouldRestore(): boolean {
-    const nextSync = !this.userService.lastSyncDate || addSeconds(this.userService.lastSyncDate, environment.restoreTimeSeconds);
-
-    return nextSync <= this.nowUTC;
-  }
-
-  public get nowUTC(): Date {
-    return DateUtils.nowUTC;
-  }
-
-  public get now(): Date {
-    return DateUtils.now;
   }
 }
