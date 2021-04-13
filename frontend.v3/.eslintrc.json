@@ -38,10 +38,7 @@
             "after": true
           }
         ],
-        "linebreak-style": [
-          "error",
-          "windows"
-        ],
+        "linebreak-style": "off",
         "no-underscore-dangle": "off",
         "eqeqeq": [
           "error",
