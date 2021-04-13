@@ -1,47 +1,103 @@
 {
   "root": true,
-  "ignorePatterns": ["main.ts", "polyfills.ts", "test.ts"],
+  "ignorePatterns": [
+    "main.ts",
+    "polyfills.ts",
+    "test.ts"
+  ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "@angular-eslint"],
+  "plugins": [
+    "@typescript-eslint",
+    "@angular-eslint"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "parserOptions": {
         "project": [
-          "tsconfig.app.json",
-          "tsconfig.spec.json",
-          "e2e/tsconfig.json"
+          "tsconfig.app.json"
         ],
         "createDefaultProgram": true
       },
       "extends": [
-        "plugin:@angular-eslint/recommended",
         // This is required if you use inline templates in Components
         // "plugin:@angular-eslint/template/process-inline-templates",
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:@angular-eslint/recommended",
         "plugin:prettier/recommended"
       ],
       "rules": {
-        "keyword-spacing": ["error", { "before": true, "after": true }],
-        "linebreak-style": ["error", "windows"],
+        "keyword-spacing": [
+          "error",
+          {
+            "before": true,
+            "after": true
+          }
+        ],
+        "linebreak-style": [
+          "error",
+          "windows"
+        ],
         "no-underscore-dangle": "off",
-        "eqeqeq": ["error", "always", {"null": "ignore"}],
-        "array-bracket-newline": ["error", "consistent"],
-        "comma-dangle": ["error", "always-multiline"],
-        "comma-spacing": ["error", { "before": false, "after": true }],
-        "comma-style": ["error", "last"],
-        "computed-property-spacing": ["error", "never"],
-        "function-call-argument-newline": ["error", "consistent"],
-        "key-spacing": ["error", { "beforeColon": false, "afterColon": true, "mode": "strict" }],
+        "eqeqeq": [
+          "error",
+          "always",
+          {
+            "null": "ignore"
+          }
+        ],
+        "array-bracket-newline": [
+          "error",
+          "consistent"
+        ],
+        "comma-dangle": [
+          "error",
+          "always-multiline"
+        ],
+        "comma-spacing": [
+          "error",
+          {
+            "before": false,
+            "after": true
+          }
+        ],
+        "comma-style": [
+          "error",
+          "last"
+        ],
+        "computed-property-spacing": [
+          "error",
+          "never"
+        ],
+        "function-call-argument-newline": [
+          "error",
+          "consistent"
+        ],
+        "key-spacing": [
+          "error",
+          {
+            "beforeColon": false,
+            "afterColon": true,
+            "mode": "strict"
+          }
+        ],
         "no-lonely-if": "error",
         "no-multiple-empty-lines": "error",
         "no-trailing-spaces": "error",
         "no-unneeded-ternary": "error",
-        "object-curly-spacing": ["error", "always"],
+        "object-curly-spacing": [
+          "error",
+          "always"
+        ],
         "no-whitespace-before-property": "error",
-        "arrow-body-style": ["error", "as-needed"],
+        "arrow-body-style": [
+          "error",
+          "as-needed"
+        ],
         "arrow-spacing": "error",
         "no-confusing-arrow": "error",
         /**
@@ -50,11 +106,19 @@
          */
         "@angular-eslint/directive-selector": [
           "error",
-          { "type": "attribute", "prefix": "app", "style": "camelCase" }
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
         ],
         "@angular-eslint/component-selector": [
           "error",
-          { "type": "element", "prefix": "app", "style": "kebab-case" }
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
         ],
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/no-explicit-any": "off",
@@ -77,12 +141,21 @@
       }
     },
     {
-      "files": ["src/**/*.spec.ts"],
+      "files": [
+        "src/**/*.spec.ts"
+      ],
       "parserOptions": {
-        "project": "tsconfig.spec.json"
+        "project": [
+          "tsconfig.spec.json",
+          "e2e/tsconfig.json"
+        ]
       },
-      "extends": ["plugin:jasmine/recommended"],
-      "plugins": ["jasmine"],
+      "extends": [
+        "plugin:jasmine/recommended"
+      ],
+      "plugins": [
+        "jasmine"
+      ],
       "env": {
         "jasmine": true
       },
@@ -95,8 +168,12 @@
       }
     },
     {
-      "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
       "rules": {
         /**
          * Any template/HTML related rules you wish to use/reconfigure over and above the
