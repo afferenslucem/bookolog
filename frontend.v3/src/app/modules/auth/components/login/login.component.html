@@ -5,7 +5,7 @@
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
       <mat-label>Логин</mat-label>
-      <input formControlName="login" matInput required/>
+      <input formControlName="login" class="login" matInput required/>
       <mat-error *ngIf="form.get('login').invalid">
         Это обязательное поле
       </mat-error>
@@ -13,7 +13,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Пароль</mat-label>
-      <input formControlName="password" matInput required type="password"/>
+      <input formControlName="password" class="password" matInput required type="password"/>
       <mat-error *ngIf="form.get('password').invalid">
         Это обязательное поле
       </mat-error>
@@ -32,6 +32,7 @@
             [disabled]="form.invalid"
             class="w-100 submit"
             color="primary"
+            class="submit"
             mat-flat-button
     >
       Войти

@@ -7,8 +7,10 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage"
+    "e2e": "start-server-and-test ci:start-server http://localhost:4200 ci:run-cypress",
+    "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
+    "ci:start-server": "angular-http-server --path ./dist/frontend -p 4200",
+    "ci:run-cypress": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +52,8 @@
     "@types/node": "^14.6.0",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
+    "angular-http-server": "^1.10.0",
+    "cypress": "^7.1.0",
     "eslint": "^7.6.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.1.0",
@@ -66,7 +70,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "prettier": "^2.2.1",
-    "protractor": "~7.0.0",
+    "start-server-and-test": "^1.12.1",
     "ts-node": "~8.3.0",
     "typescript": "~4.0.2"
   }
