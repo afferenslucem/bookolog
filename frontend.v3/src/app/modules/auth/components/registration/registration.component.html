@@ -5,7 +5,7 @@
   <form (ngSubmit)="submit($event)" [formGroup]="form">
     <mat-form-field appearance="fill">
       <mat-label>Логин</mat-label>
-      <input formControlName="login" matInput required/>
+      <input formControlName="login" class="login" matInput required/>
       <mat-error *ngIf="form.get('login').invalid">
         Это обязательное поле
       </mat-error>
@@ -13,7 +13,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Почта</mat-label>
-      <input formControlName="email" matInput required type="email"/>
+      <input formControlName="email" class="email" matInput required type="email"/>
       <mat-error *ngIf="form.get('email').invalid">
         Это обязательное поле
       </mat-error>
@@ -21,7 +21,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Пароль</mat-label>
-      <input formControlName="password" matInput required type="password"/>
+      <input formControlName="password" class="password" matInput required type="password"/>
       <mat-error *ngIf="form.get('password').invalid">
         Это обязательное поле
       </mat-error>
@@ -29,7 +29,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Подтверждение пароля</mat-label>
-      <input formControlName="confirmation" matInput required type="password"/>
+      <input formControlName="confirmation" class="password-confirmation" matInput required type="password"/>
       <mat-error *ngIf="form.get('confirmation')?.errors?.required">
         Это обязательное поле
       </mat-error>
@@ -38,7 +38,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-error *ngIf="error !== null" class="login-error">
+    <mat-error *ngIf="error !== null" class="registration-error">
       <ng-container [ngSwitch]="error">
         <span *ngSwitchCase="RegistrationError.LoginExists">Такой логин уже занят</span>
         <span *ngSwitchCase="RegistrationError.EmailExists">Такая почта уже занята</span>
@@ -48,10 +48,9 @@
 
     <button (click)="submit($event)"
             [disabled]="form.invalid"
-            class="w-100"
+            class="w-100 submit"
             color="primary"
             mat-flat-button
-
     >
       Зарегистрироваться
     </button>

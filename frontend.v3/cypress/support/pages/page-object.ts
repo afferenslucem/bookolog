@@ -9,7 +9,7 @@ export abstract class PageObject {
 
   public visit(): void {
     this.setMobileViewport();
-    cy.visit('/login');
+    cy.visit(this.url);
   }
 
   public isHere(): void {

@@ -2,5 +2,10 @@
   "hrodvitnir": {
     "login": "hrodvitnir",
     "password": "qwerty"
+  },
+  "regCheck": {
+    "login": "regCheck",
+    "password": "qwerty",
+    "email": "regCheck@domain.ru"
   }
 }
