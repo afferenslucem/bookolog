@@ -7,5 +7,10 @@
     "login": "regCheck",
     "password": "qwerty",
     "email": "regCheck@domain.ru"
+  },
+  "bookCreateCheck": {
+    "login": "BiNTurronG",
+    "password": "qwerty",
+    "email": "medvedod009@gmail.com"
   }
 }

@@ -1,18 +1,6 @@
 @import "~src/styles/variables";
 @import "~src/styles/components";
 
-.tags-input {
-  position: relative;
-
-  &__value {
-    @extend .tags;
-
-    position: relative;
-    top: -#{$ind-3};
-    padding-bottom: $ind-3;
-  }
-}
-
 form {
   display: flex;
   justify-content: space-between;

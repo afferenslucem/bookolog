@@ -4,6 +4,7 @@ import Chainable = Cypress.Chainable;
 export class LoginPo extends PageObject {
   public constructor() {
     super('/login');
+    cy.intercept('POST', '**/auth/login').as('login');
   }
 
   public typeLogin(login: string): void {
@@ -20,5 +21,9 @@ export class LoginPo extends PageObject {
 
   public getError(): Chainable<JQuery> {
     return cy.get('app-login form mat-error span');
+  }
+
+  public waitLoginSuccess(): void {
+    cy.wait('@login').its('response.statusCode').should('be.eq', 200);
   }
 }

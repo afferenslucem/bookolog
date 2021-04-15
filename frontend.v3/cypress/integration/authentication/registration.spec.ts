@@ -2,7 +2,7 @@
 
 import { LoginPo } from '../../support/pages/login.po';
 import * as users from '../../fixtures/users.json';
-import { InProgressPo } from '../../support/pages/in-progress.po';
+import { InProgressListPo } from '../../support/pages/in-progress-list.po';
 import { RegistrationPo } from '../../support/pages/registration.po';
 
 context('Registration', () => {
@@ -15,7 +15,7 @@ context('Registration', () => {
     registrationPage.visit();
   });
 
-  it('RegistrationPage should exists', () => {
+  it('page should exists', () => {
     registrationPage.isHere();
   });
 

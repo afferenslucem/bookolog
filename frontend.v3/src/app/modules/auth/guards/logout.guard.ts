@@ -1,26 +1,16 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, Router, UrlTree } from '@angular/router';
-import { UserService } from '../../user/services/user.service';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LogoutGuard implements CanActivateChild, CanActivate {
-  public constructor(private user: UserService, private router: Router) {}
+export class LogoutGuard implements CanActivate {
+  public constructor(private auth: AuthService) {}
 
-  canActivateChild(): boolean | UrlTree {
-    if (!this.user.user) {
-      return true;
-    } else {
-      return this.router.parseUrl('/in-progress');
-    }
-  }
-
-  public canActivate(): boolean | UrlTree {
-    if (!this.user.user) {
-      return true;
-    } else {
-      return this.router.parseUrl('/in-progress');
-    }
+  public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
+    await this.auth.logout();
+    return true;
   }
 }

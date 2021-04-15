@@ -14,7 +14,7 @@ context('Login', () => {
     loginPage.visit();
   });
 
-  it('loginPage should exists', () => {
+  it('page should exists', () => {
     loginPage.isHere();
   });
 
@@ -25,6 +25,7 @@ context('Login', () => {
     loginPage.typePassword(user.password);
 
     loginPage.clickSubmit();
+    loginPage.waitLoginSuccess();
 
     inProgressPage.isHere();
   });
