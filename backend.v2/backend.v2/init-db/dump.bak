@@ -571,7 +571,7 @@ b9095827-0d79-40ec-b675-2c98ef8a510a	{"LastSyncTime":"2021-02-15T18:06:38.509+00
 --
 
 COPY public."Users" ("Id", "Login", "Email", "PasswordHash", "Salt", "AvatarId") FROM stdin;
-10	BiNTurronG 	medvedod009@gmail.com	daaad6e5604e8e17bd9f108d91e26afe6281dac8fda0091040a7a6d7bd9b43b5	123	\N
+10	BiNTurronG	medvedod009@gmail.com	daaad6e5604e8e17bd9f108d91e26afe6281dac8fda0091040a7a6d7bd9b43b5	123	\N
 12	Eldr est Ist	maxriabokon044@ukr.net	daaad6e5604e8e17bd9f108d91e26afe6281dac8fda0091040a7a6d7bd9b43b5	123	\N
 13	КанZлерЪ	gamerqwazz@gmail.com	daaad6e5604e8e17bd9f108d91e26afe6281dac8fda0091040a7a6d7bd9b43b5	123	\N
 19		shni74@mail.ru	daaad6e5604e8e17bd9f108d91e26afe6281dac8fda0091040a7a6d7bd9b43b5	123	\N
