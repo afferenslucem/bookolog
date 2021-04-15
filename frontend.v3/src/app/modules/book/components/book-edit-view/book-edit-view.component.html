@@ -1,29 +1,24 @@
 <form (ngSubmit)="submit()" *ngIf="bookForm" [formGroup]="form" appDatesValidator appUnitsValidator>
   <mat-form-field appearance="fill">
     <mat-label>Название</mat-label>
-    <input autocomplete="off" formControlName="name" matInput required type="text"/>
-    <mat-error *ngIf="form.get('name').invalid">
-      Это обязательное поле
-    </mat-error>
+    <input autocomplete="off" formControlName="name" matInput required type="text" />
+    <mat-error *ngIf="form.get('name').invalid"> Это обязательное поле </mat-error>
   </mat-form-field>
 
   <app-book-tags-input [list]="authors" formControlName="authors" header="Авторы"></app-book-tags-input>
 
   <mat-form-field appearance="fill">
     <mat-label>Год выпуска</mat-label>
-    <input formControlName="year" matInput type="number"/>
+    <input formControlName="year" matInput type="number" />
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Жанр</mat-label>
-    <input [matAutocomplete]="genreAutocomplete"
-           formControlName="genre"
-           matInput
-           type="text">
+    <input [matAutocomplete]="genreAutocomplete" formControlName="genre" matInput type="text" />
 
     <mat-autocomplete #genreAutocomplete="matAutocomplete">
       <mat-option *ngFor="let genre of genres | async" [value]="genre | capitalize">
-        {{genre | capitalize}}
+        {{ genre | capitalize }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
@@ -34,14 +29,14 @@
       <mat-select formControlName="collectionGuid">
         <mat-option [value]="null">Отсутствует</mat-option>
         <mat-option *ngFor="let item of allSeries" [value]="item.guid">
-          {{item.name | capitalize}}
+          {{ item.name | capitalize }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="order">
       <mat-label>Порядок</mat-label>
-      <input formControlName="collectionOrder" matInput max="256" min="1" step="1" type="number"/>
+      <input formControlName="collectionOrder" matInput max="256" min="1" step="1" type="number" />
     </mat-form-field>
   </div>
 
@@ -60,8 +55,7 @@
     <mat-label>Тип книги</mat-label>
     <mat-select formControlName="type">
       <mat-option [value]="BookType.Paper">Бумажная книга</mat-option>
-      <mat-option [value]="BookType.Electronic">Электронная книга
-      </mat-option>
+      <mat-option [value]="BookType.Electronic">Электронная книга </mat-option>
       <mat-option [value]="BookType.Audio">Аудиокнига</mat-option>
     </mat-select>
   </mat-form-field>
@@ -69,7 +63,7 @@
   <mat-form-field [hidden]="status !== BookStatus.InProgress" appearance="fill">
     <mat-label>Прогресс</mat-label>
     <mat-select formControlName="progressType">
-      <mat-option [value]="ProgressAlgorithm.Done">{{type == BookType.Audio ? 'Прослушано' : 'Прочитано'}}</mat-option>
+      <mat-option [value]="ProgressAlgorithm.Done">{{ type == BookType.Audio ? 'Прослушано' : 'Прочитано' }}</mat-option>
       <mat-option [value]="ProgressAlgorithm.Left">Осталось</mat-option>
     </mat-select>
   </mat-form-field>
@@ -88,18 +82,16 @@
     <div *ngSwitchDefault class="book-edit__progress_audio">
       <mat-form-field appearance="fill">
         <mat-label>Страниц</mat-label>
-        <input autocomplete="off" formControlName="doneUnits" matInput max="6000" min="0" step="1" type="number"/>
+        <input autocomplete="off" formControlName="doneUnits" matInput max="6000" min="0" step="1" type="number" />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Всего</mat-label>
-        <input autocomplete="off" formControlName="totalUnits" matInput max="6000" min="0" step="1" type="number"/>
+        <input autocomplete="off" formControlName="totalUnits" matInput max="6000" min="0" step="1" type="number" />
       </mat-form-field>
     </div>
 
-    <mat-error *ngIf="form?.errors?.invalidUnits">
-      Неверно указан прогресс
-    </mat-error>
+    <mat-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс </mat-error>
   </div>
 
   <div [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
@@ -112,16 +104,12 @@
     <app-book-date-input formControlName="finished"></app-book-date-input>
   </div>
 
-  <mat-error *ngIf="form?.errors?.invalidDates">
-    Дата начала больше даты окончания
-  </mat-error>
+  <mat-error *ngIf="form?.errors?.invalidDates"> Дата начала больше даты окончания </mat-error>
 
   <mat-form-field appearance="fill">
     <mat-label>Заметки</mat-label>
     <textarea autocomplete="off" formControlName="note" matInput rows="4"></textarea>
   </mat-form-field>
 
-  <button [disabled]="form.invalid" class="w-100" color="primary" mat-flat-button
-          type="submit">Сохранить
-  </button>
+  <button [disabled]="form.invalid" class="w-100" color="primary" mat-flat-button type="submit">Сохранить</button>
 </form>

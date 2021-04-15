@@ -4,15 +4,13 @@
 
     <div class="form-content">
       <app-file-input (fileChanged)="imageSelected($event)" [fileUrl]="base64" formControlName="image"></app-file-input>
-      <button *ngIf="image" color="primary" mat-flat-button type="submit">
-        Загрузить
-      </button>
+      <button *ngIf="image" color="primary" mat-flat-button type="submit">Загрузить</button>
     </div>
   </form>
 </div>
 <ngx-photo-editor
   (imageCropped)="imageCropped($event)"
-  [aspectRatio]="1/1"
+  [aspectRatio]="1 / 1"
   [canvasHeight]="cropHeight"
   [imageChanedEvent]="fileEvent"
   [resizeToWidth]="500"

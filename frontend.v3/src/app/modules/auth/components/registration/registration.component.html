@@ -5,34 +5,26 @@
   <form (ngSubmit)="submit($event)" [formGroup]="form">
     <mat-form-field appearance="fill">
       <mat-label>Логин</mat-label>
-      <input formControlName="login" class="login" matInput required/>
-      <mat-error *ngIf="form.get('login').invalid">
-        Это обязательное поле
-      </mat-error>
+      <input formControlName="login" class="login" matInput required />
+      <mat-error *ngIf="form.get('login').invalid"> Это обязательное поле </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Почта</mat-label>
-      <input formControlName="email" class="email" matInput required type="email"/>
-      <mat-error *ngIf="form.get('email').invalid">
-        Это обязательное поле
-      </mat-error>
+      <input formControlName="email" class="email" matInput required type="email" />
+      <mat-error *ngIf="form.get('email').invalid"> Это обязательное поле </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Пароль</mat-label>
-      <input formControlName="password" class="password" matInput required type="password"/>
-      <mat-error *ngIf="form.get('password').invalid">
-        Это обязательное поле
-      </mat-error>
+      <input formControlName="password" class="password" matInput required type="password" />
+      <mat-error *ngIf="form.get('password').invalid"> Это обязательное поле </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Подтверждение пароля</mat-label>
-      <input formControlName="confirmation" class="password-confirmation" matInput required type="password"/>
-      <mat-error *ngIf="form.get('confirmation')?.errors?.required">
-        Это обязательное поле
-      </mat-error>
+      <input formControlName="confirmation" class="password-confirmation" matInput required type="password" />
+      <mat-error *ngIf="form.get('confirmation')?.errors?.required"> Это обязательное поле </mat-error>
       <mat-error *ngIf="form.get('confirmation')?.errors?.passwordMatch && !form.get('confirmation')?.errors?.required">
         Пароли не совпадают
       </mat-error>
@@ -46,12 +38,7 @@
       </ng-container>
     </mat-error>
 
-    <button (click)="submit($event)"
-            [disabled]="form.invalid"
-            class="w-100 submit"
-            color="primary"
-            mat-flat-button
-    >
+    <button (click)="submit($event)" [disabled]="form.invalid" class="w-100 submit" color="primary" mat-flat-button>
       Зарегистрироваться
     </button>
   </form>

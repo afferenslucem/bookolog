@@ -1,10 +1,8 @@
 <form (ngSubmit)="submit()" [formGroup]="form">
   <mat-form-field appearance="fill">
     <mat-label>Название</mat-label>
-    <input autocomplete="off" formControlName="name" matInput required type="text"/>
-    <mat-error *ngIf="form.get('name').invalid">
-      Это обязательное поле
-    </mat-error>
+    <input autocomplete="off" formControlName="name" matInput required type="text" />
+    <mat-error *ngIf="form.get('name').invalid"> Это обязательное поле </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -12,7 +10,5 @@
     <textarea autocomplete="off" formControlName="description" matInput rows="5"></textarea>
   </mat-form-field>
 
-  <button [disabled]="form.invalid" class="w-100" color="primary" mat-flat-button type="submit">
-    Сохранить
-  </button>
+  <button [disabled]="form.invalid" class="w-100" color="primary" mat-flat-button type="submit">Сохранить</button>
 </form>

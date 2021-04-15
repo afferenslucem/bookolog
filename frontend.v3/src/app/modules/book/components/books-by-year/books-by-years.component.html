@@ -1,16 +1,18 @@
 <div class="book-list">
   <mat-accordion>
-    <mat-expansion-panel (opened)="onOpen(year.key)"
-                         *ngFor="let year of (definedYears$ | async); let first = first; trackBy: yearTrackBy"
-                         [expanded]="first">
+    <mat-expansion-panel
+      (opened)="onOpen(year.key)"
+      *ngFor="let year of definedYears$ | async; let first = first; trackBy: yearTrackBy"
+      [expanded]="first"
+    >
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{year.key}}
+          {{ year.key }}
         </mat-panel-title>
         <mat-panel-description>
           <div class="years__meta w-100">
             <div>
-              {{year.group.length}}
+              {{ year.group.length }}
             </div>
           </div>
         </mat-panel-description>
@@ -22,8 +24,7 @@
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="onOpen(undefined)" *ngIf="(undefinedYear$ | async) as year"
-                         [expanded]="(years$ | async)?.length === 1">
+    <mat-expansion-panel (opened)="onOpen(undefined)" *ngIf="undefinedYear$ | async as year" [expanded]="(years$ | async)?.length === 1">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span>Год не указан</span>
@@ -31,7 +32,7 @@
         <mat-panel-description>
           <div class="years__meta w-100">
             <div>
-              {{year.group.length}}
+              {{ year.group.length }}
             </div>
           </div>
         </mat-panel-description>

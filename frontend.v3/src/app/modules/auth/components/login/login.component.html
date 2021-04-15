@@ -5,18 +5,14 @@
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
       <mat-label>Логин</mat-label>
-      <input formControlName="login" class="login" matInput required/>
-      <mat-error *ngIf="form.get('login').invalid">
-        Это обязательное поле
-      </mat-error>
+      <input formControlName="login" class="login" matInput required />
+      <mat-error *ngIf="form.get('login').invalid"> Это обязательное поле </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Пароль</mat-label>
-      <input formControlName="password" class="password" matInput required type="password"/>
-      <mat-error *ngIf="form.get('password').invalid">
-        Это обязательное поле
-      </mat-error>
+      <input formControlName="password" class="password" matInput required type="password" />
+      <mat-error *ngIf="form.get('password').invalid"> Это обязательное поле </mat-error>
     </mat-form-field>
 
     <mat-error *ngIf="error !== null" class="login-error">
@@ -28,13 +24,6 @@
 
     <span [routerLink]="['/recovery-password']" class="link">Восстановить пароль</span>
 
-    <button (click)="submit($event)"
-            [disabled]="form.invalid"
-            class="w-100 submit"
-            color="primary"
-            mat-flat-button
-    >
-      Войти
-    </button>
+    <button (click)="submit($event)" [disabled]="form.invalid" class="w-100 submit" color="primary" mat-flat-button>Войти</button>
   </form>
 </div>
