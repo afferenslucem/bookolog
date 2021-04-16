@@ -1,18 +1,15 @@
 import { PageObject } from '../../page-object';
 
-export class YearsListPo extends PageObject {
-  public constructor() {
-    super('/years');
+export class YearInfoPo extends PageObject {
+  public constructor(year: number) {
+    super(`/year/${year}`);
   }
 
-  public rowsCount(count: number): void {
-    cy.get('app-years-list mat-list').find('mat-list-item').should('have.length', count);
+  public booksCount(count: number): void {
+    cy.get('app-year-statistic').find('app-done-book').should('have.length', count);
   }
 
-  public haveBooksForYear(year: number, count: number): void {
-    cy.get('app-years-list mat-list mat-list-item:first-child .statistic-item').as('item');
-
-    cy.get('@item').get('.statistic-item__name').contains(year.toString());
-    cy.get('@item').get('.statistic-item__count').contains(count.toString());
+  public containsBookWithName(bookName: string): void {
+    cy.get('app-year-statistic').find('app-done-book').contains(bookName);
   }
 }

@@ -13,9 +13,9 @@ import { DoneBookCreatePo } from '../../support/pages/books/forms/done-book-crea
 import { DoneListPo } from '../../support/pages/books/lists/done-list.po';
 import { IBookCheckData } from '../../support/interfaces/i-book-check-data';
 import { YearsListPo } from '../../support/pages/statistic/years/years-list.po';
-import { GenresListPo } from '../../support/pages/statistic/years/genres-list.po';
-import { AuthorsListPo } from '../../support/pages/statistic/years/authors-list.po';
-import { TagsListPo } from '../../support/pages/statistic/years/tags-list.po';
+import { GenresListPo } from '../../support/pages/statistic/genres/genres-list.po';
+import { AuthorsListPo } from '../../support/pages/statistic/authors/authors-list.po';
+import { TagsListPo } from '../../support/pages/statistic/tags/tags-list.po';
 
 context('BookCreate', () => {
   beforeEach(() => {

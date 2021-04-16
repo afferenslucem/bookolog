@@ -16,6 +16,10 @@ export abstract class PageObject {
     this.urlIs(this.url);
   }
 
+  public hasTitle(title: string): void {
+    cy.get('app-title').contains(title);
+  }
+
   protected setMobileViewport(): void {
     cy.viewport(380, 680);
   }
