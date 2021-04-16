@@ -17,6 +17,7 @@ import { GenresListPo } from '../../support/pages/statistic/genres/genres-list.p
 import { AuthorsListPo } from '../../support/pages/statistic/authors/authors-list.po';
 import { TagsListPo } from '../../support/pages/statistic/tags/tags-list.po';
 import { YearInfoPo } from '../../support/pages/statistic/years/year-info.po';
+import { GenreInfoPo } from '../../support/pages/statistic/genres/genre-info.po';
 
 context('Statistic', () => {
   beforeEach(() => {
@@ -55,6 +56,40 @@ context('Statistic', () => {
       yearInfo.containsBookWithName('Не спешу');
       yearInfo.containsBookWithName('В списках не значился');
       yearInfo.containsBookWithName('Изгоняющий дьявола');
+    });
+  });
+
+  context('Genre', () => {
+    let genreInfo: GenreInfoPo = null;
+
+    beforeEach(() => {
+      genreInfo = new GenreInfoPo('детектив');
+      genreInfo.visit();
+    });
+
+    it('page should exists', () => {
+      genreInfo.isHere();
+    });
+
+    it('page should has custom title', () => {
+      genreInfo.hasTitle('Детектив');
+    });
+
+    it('page should has 4 years', () => {
+      genreInfo.yearCount(4);
+    });
+
+    it('page should has books for years', () => {
+      genreInfo.countBooksForYear(2019, 2);
+      genreInfo.countBooksForYear(2017, 1);
+      genreInfo.countBooksForYear(2014, 1);
+      genreInfo.countBooksForYear(2013, 1);
+    });
+
+    it('page should has books for year', () => {
+      genreInfo.containsBookWithName('Дремлющий демон Декстера', 2019);
+      genreInfo.containsBookWithName('Молчание ягнят', 2019);
+      genreInfo.containsBookWithName('Девушка в поезде', 2017);
     });
   });
 });
