@@ -7,44 +7,88 @@ import { IUser } from '../../support/interfaces/i-user';
 import { loginAs, logout } from '../../support/routines';
 import { IBook } from '../../support/interfaces/i-book';
 import { ToReadListPo } from '../../support/pages/to-read-list.po';
+import { InProgressListPo } from '../../support/pages/in-progress-list.po';
+import { InProgressBookCreatePo } from '../../support/pages/in-progress-book-create.po';
 
 context('ToReadBookCreate', () => {
-  let formPage: ToReadBookCreatePo = null;
-  let toReadPage: ToReadListPo = null;
-
   beforeEach(() => {
     const creator: IUser = users.bookCreateCheck;
     loginAs(creator);
-
-    toReadPage = new ToReadListPo();
-    formPage = new ToReadBookCreatePo();
-    formPage.visit();
   });
 
   afterEach(() => {
     logout();
   });
 
-  it('page should exists', () => {
-    formPage.isHere();
+  context('toRead', () => {
+    let formPage: ToReadBookCreatePo = null;
+    let toReadListPage: ToReadListPo = null;
+
+    beforeEach(() => {
+      toReadListPage = new ToReadListPo();
+      formPage = new ToReadBookCreatePo();
+      formPage.visit();
+    });
+
+    it('page should exists', () => {
+      formPage.isHere();
+    });
+
+    it('should create book', () => {
+      const book: IBook = books.ageOfDeathBeginning;
+
+      formPage.typeName(book.name);
+      book.authors.forEach(item => formPage.typeAuthor(item));
+      formPage.typeYear(book.year);
+      formPage.typeGenre(book.genre);
+      book.tags.forEach(item => formPage.typeTag(item));
+      formPage.selectType(book.type);
+      formPage.typeNotes(book.notes);
+      formPage.clickSubmit();
+      formPage.waitSync();
+
+      toReadListPage.isHere();
+
+      toReadListPage.booksCountIs(1);
+      toReadListPage.lastBookIs(book);
+    });
   });
 
-  it('should create toRead book', () => {
-    const book: IBook = books.AgeOfDeathBeginning;
+  context('inProgress', () => {
+    let formPage: InProgressBookCreatePo = null;
+    let inProgressListPage: InProgressListPo = null;
 
-    formPage.typeName(book.name);
-    book.authors.forEach(item => formPage.typeAuthor(item));
-    formPage.typeYear(book.year);
-    formPage.typeGenre(book.genre);
-    book.tags.forEach(item => formPage.typeTag(item));
-    formPage.selectType(book.type);
-    formPage.typeNotes(book.notes);
-    formPage.clickSubmit();
-    formPage.waitSync();
+    beforeEach(() => {
+      inProgressListPage = new InProgressListPo();
+      formPage = new InProgressBookCreatePo();
+      formPage.visit();
+    });
 
-    toReadPage.isHere();
+    it('page should exists', () => {
+      formPage.isHere();
+    });
 
-    toReadPage.booksCountIs(1);
-    toReadPage.lastBookIs(book);
+    it('should create book', () => {
+      const book: IBook = books.earthOfRedundant;
+
+      formPage.typeName(book.name);
+      book.authors.forEach(item => formPage.typeAuthor(item));
+      formPage.typeYear(book.year);
+      formPage.typeGenre(book.genre);
+      book.tags.forEach(item => formPage.typeTag(item));
+      formPage.selectType(book.type);
+      formPage.selectProgressType(book.progressType);
+      formPage.typeAudioProgressDone(book.doneUnits);
+      formPage.typeAudioProgressTotal(book.totalUnits);
+      formPage.typeStartedDate(book.startYear, book.startMonth, book.startDay);
+      formPage.typeNotes(book.notes);
+      formPage.clickSubmit();
+      formPage.waitSync();
+
+      inProgressListPage.isHere();
+
+      inProgressListPage.booksCountIs(1);
+      inProgressListPage.lastBookIs(book);
+    });
   });
 });

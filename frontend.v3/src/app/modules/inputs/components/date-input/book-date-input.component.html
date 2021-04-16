@@ -2,17 +2,17 @@
   <div class="date-input">
     <mat-form-field appearance="fill">
       <mat-label>Год</mat-label>
-      <input [max]="maxYear" autocomplete="off" formControlName="year" matInput min="1970" step="1" type="number" />
+      <input [max]="maxYear" class="year" autocomplete="off" formControlName="year" matInput min="1970" step="1" type="number" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Месяц</mat-label>
-      <input autocomplete="off" formControlName="month" matInput max="12" min="1" step="1" type="number" />
+      <input class="month" autocomplete="off" formControlName="month" matInput max="12" min="1" step="1" type="number" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>День</mat-label>
-      <input autocomplete="off" formControlName="day" matInput max="31" min="1" step="1" type="number" />
+      <input class="day" autocomplete="off" formControlName="day" matInput max="31" min="1" step="1" type="number" />
     </mat-form-field>
   </div>
 

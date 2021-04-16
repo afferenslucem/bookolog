@@ -33,6 +33,33 @@ export abstract class BookCreatePo extends PageObject {
     cy.get('mat-option').contains(type).click();
   }
 
+  public selectProgressType(progressType: string): void {
+    cy.get(`app-book-edit-view form.book .book__progressType`).click();
+    cy.get('mat-option').contains(progressType).click();
+  }
+
+  public typeAudioProgressDone(done: number): void {
+    const hours = (done / 60) | 0;
+    const minutes = done % 60;
+
+    cy.get(`app-book-edit-view form.book app-book-time-input.book__doneUnits input.hours`).type(hours.toString());
+    cy.get(`app-book-edit-view form.book app-book-time-input.book__doneUnits input.minutes`).type(minutes.toString());
+  }
+
+  public typeAudioProgressTotal(total: number): void {
+    const hours = (total / 60) | 0;
+    const minutes = total % 60;
+
+    cy.get(`app-book-edit-view form.book app-book-time-input.book__totalUnits input.hours`).type(hours.toString());
+    cy.get(`app-book-edit-view form.book app-book-time-input.book__totalUnits input.minutes`).type(minutes.toString());
+  }
+
+  public typeStartedDate(year: number, month: number, day: number): void {
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.year`).type(year.toString());
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.month`).type(month.toString());
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.day`).type(day.toString());
+  }
+
   public typeNotes(notes: string): void {
     cy.get(`app-book-edit-view form.book textarea.book__notes`).type(notes);
   }

@@ -64,7 +64,7 @@
 
   <mat-form-field [hidden]="status !== BookStatus.InProgress" appearance="fill">
     <mat-label>Прогресс</mat-label>
-    <mat-select formControlName="progressType">
+    <mat-select class="book__progressType" formControlName="progressType">
       <mat-option
         [value]="ProgressAlgorithm.Done">{{ type == BookType.Audio ? 'Прослушано' : 'Прочитано' }}</mat-option>
       <mat-option [value]="ProgressAlgorithm.Left">Осталось</mat-option>
@@ -75,11 +75,11 @@
     <div *ngSwitchCase="BookType.Audio" class="book-edit__progress_audio">
       <div>
         <mat-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</mat-label>
-        <app-book-time-input formControlName="doneUnits"></app-book-time-input>
+        <app-book-time-input formControlName="doneUnits" class="book__doneUnits"></app-book-time-input>
       </div>
       <div>
         <mat-label>Всего</mat-label>
-        <app-book-time-input formControlName="totalUnits"></app-book-time-input>
+        <app-book-time-input formControlName="totalUnits" class="book__totalUnits"></app-book-time-input>
       </div>
     </div>
     <div *ngSwitchDefault class="book-edit__progress_audio">
@@ -99,7 +99,7 @@
 
   <div [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
     <mat-label>Начало чтения</mat-label>
-    <app-book-date-input formControlName="started"></app-book-date-input>
+    <app-book-date-input class="book__started" formControlName="started"></app-book-date-input>
   </div>
 
   <div [hidden]="status != BookStatus.Done">
