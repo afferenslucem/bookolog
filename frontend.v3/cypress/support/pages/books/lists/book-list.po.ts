@@ -1,5 +1,6 @@
-import { PageObject } from './page-object';
-import { IBook } from '../interfaces/i-book';
+import { PageObject } from '../../page-object';
+import { IBook } from '../../../interfaces/i-book';
+import { IBookCheckData } from '../../../interfaces/i-book-check-data';
 
 export abstract class BookListPo extends PageObject {
   protected constructor(url: string) {
@@ -8,5 +9,5 @@ export abstract class BookListPo extends PageObject {
 
   public abstract booksCountIs(count: number): void;
 
-  public abstract lastBookIs(book: IBook): void;
+  public abstract lastBookIs(book: IBookCheckData): void;
 }

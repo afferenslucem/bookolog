@@ -1,15 +1,8 @@
-export interface IBook {
+export interface IBookCheckData {
   name: string;
   authors?: string[];
-  year?: number;
-  genre?: string;
-  tags?: string[];
-  type?: string;
-  progressType?: string;
-  doneUnits?: number;
-  totalUnits?: number;
-  startDay?: number;
-  startMonth?: number;
-  startYear?: number;
-  notes?: string;
+  doneUnits?: string;
+  totalUnits?: string;
+  started?: string;
+  finished?: string;
 }

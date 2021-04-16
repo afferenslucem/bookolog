@@ -11,5 +11,8 @@ export interface IBook {
   startDay?: number;
   startMonth?: number;
   startYear?: number;
+  finishDay?: number;
+  finishMonth?: number;
+  finishYear?: number;
   notes?: string;
 }

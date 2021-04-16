@@ -1,9 +1,10 @@
 /// <reference types="cypress" />
 
-import { LoginPo } from '../../support/pages/login.po';
+import { LoginPo } from '../../support/pages/auth/login.po';
 import * as users from '../../fixtures/users.json';
-import { InProgressListPo } from '../../support/pages/in-progress-list.po';
-import { RegistrationPo } from '../../support/pages/registration.po';
+import { InProgressListPo } from '../../support/pages/books/lists/in-progress-list.po';
+import { RegistrationPo } from '../../support/pages/auth/registration.po';
+import { loginAs } from '../../support/routines';
 
 context('Registration', () => {
   let registrationPage: RegistrationPo = null;
@@ -30,5 +31,7 @@ context('Registration', () => {
     registrationPage.clickSubmit();
 
     loginPage.isHere();
+
+    loginAs(user);
   });
 });

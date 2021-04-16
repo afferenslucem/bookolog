@@ -1,15 +1,15 @@
 /// <reference types="cypress" />
 
-import { LoginPo } from '../../support/pages/login.po';
+import { LoginPo } from '../../support/pages/auth/login.po';
 import * as users from '../../fixtures/users.json';
-import { InProgressPo } from '../../support/pages/in-progress.po';
+import { InProgressListPo } from '../../support/pages/books/lists/in-progress-list.po';
 
 context('Login', () => {
   let loginPage: LoginPo = null;
-  let inProgressPage: InProgressPo = null;
+  let inProgressPage: InProgressListPo = null;
 
   beforeEach(() => {
-    inProgressPage = new InProgressPo();
+    inProgressPage = new InProgressListPo();
     loginPage = new LoginPo();
     loginPage.visit();
   });

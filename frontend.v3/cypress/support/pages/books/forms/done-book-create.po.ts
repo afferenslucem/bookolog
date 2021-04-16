@@ -1,7 +1,7 @@
 import { BookCreatePo } from './book-create.po';
 
-export class InProgressBookCreatePo extends BookCreatePo {
+export class DoneBookCreatePo extends BookCreatePo {
   public constructor() {
-    super('/book/create/1');
+    super('/book/create/2');
   }
 }

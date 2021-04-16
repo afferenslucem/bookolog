@@ -1,4 +1,4 @@
-import { PageObject } from './page-object';
+import { PageObject } from '../../page-object';
 
 export abstract class BookCreatePo extends PageObject {
   protected constructor(url: string) {
@@ -54,10 +54,24 @@ export abstract class BookCreatePo extends PageObject {
     cy.get(`app-book-edit-view form.book app-book-time-input.book__totalUnits input.minutes`).type(minutes.toString());
   }
 
+  public typePaperProgressDone(done: number): void {
+    cy.get(`app-book-edit-view form.book input.book__doneUnits`).type(done.toString());
+  }
+
+  public typePaperProgressTotal(total: number): void {
+    cy.get(`app-book-edit-view form.book input.book__totalUnits`).type(total.toString());
+  }
+
   public typeStartedDate(year: number, month: number, day: number): void {
     cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.year`).type(year.toString());
     cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.month`).type(month.toString());
     cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.day`).type(day.toString());
+  }
+
+  public typeFinishedDate(year: number, month: number, day: number): void {
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__finished input.year`).type(year.toString());
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__finished input.month`).type(month.toString());
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__finished input.day`).type(day.toString());
   }
 
   public typeNotes(notes: string): void {

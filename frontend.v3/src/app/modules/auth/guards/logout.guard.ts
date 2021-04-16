@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, UrlTree } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -9,7 +8,7 @@ import { AuthService } from '../services/auth.service';
 export class LogoutGuard implements CanActivate {
   public constructor(private auth: AuthService) {}
 
-  public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
+  public async canActivate(): Promise<boolean | UrlTree> {
     await this.auth.logout();
     return true;
   }

@@ -1,4 +1,4 @@
-import { PageObject } from './page-object';
+import { PageObject } from '../page-object';
 import Chainable = Cypress.Chainable;
 
 export class RegistrationPo extends PageObject {

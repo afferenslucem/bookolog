@@ -1,5 +1,6 @@
 import { BookListPo } from './book-list.po';
-import { IBook } from '../interfaces/i-book';
+import { IBook } from '../../../interfaces/i-book';
+import { IBookCheckData } from '../../../interfaces/i-book-check-data';
 
 export class InProgressListPo extends BookListPo {
   public constructor() {
@@ -10,14 +11,14 @@ export class InProgressListPo extends BookListPo {
     cy.get('.in-progress-books-list').find('app-in-progress-book').should('have.length', count);
   }
 
-  public lastBookIs(book: IBook): void {
+  public lastBookIs(book: IBookCheckData): void {
     cy.get('.in-progress-books-list app-in-progress-book:first-child').as('book');
 
     cy.get('@book').contains(book.name);
     book.authors.forEach(item => cy.get('@book').contains(item));
-    cy.get('@book').contains('12.06.2020');
-    cy.get('@book').contains('…');
-    cy.get('@book').contains('07:50');
-    cy.get('@book').contains('10:20');
+    cy.get('@book').contains(book.started);
+    cy.get('@book').contains(book.finished);
+    cy.get('@book').contains(book.doneUnits);
+    cy.get('@book').contains(book.totalUnits);
   }
 }
