@@ -18,6 +18,8 @@ import { AuthorsListPo } from '../../support/pages/statistic/authors/authors-lis
 import { TagsListPo } from '../../support/pages/statistic/tags/tags-list.po';
 import { YearInfoPo } from '../../support/pages/statistic/years/year-info.po';
 import { GenreInfoPo } from '../../support/pages/statistic/genres/genre-info.po';
+import { AuthorsInfoPo } from '../../support/pages/statistic/authors/author-info.po';
+import { TagInfoPo } from '../../support/pages/statistic/tags/tag-info.po';
 
 context('Statistic', () => {
   beforeEach(() => {
@@ -90,6 +92,71 @@ context('Statistic', () => {
       genreInfo.containsBookWithName('Дремлющий демон Декстера', 2019);
       genreInfo.containsBookWithName('Молчание ягнят', 2019);
       genreInfo.containsBookWithName('Девушка в поезде', 2017);
+    });
+  });
+
+  context('Author', () => {
+    let authorInfo: AuthorsInfoPo = null;
+
+    beforeEach(() => {
+      authorInfo = new AuthorsInfoPo('Дмитрий Глуховский');
+      authorInfo.visit();
+    });
+
+    it('page should exists', () => {
+      authorInfo.isHere();
+    });
+
+    it('page should has custom title', () => {
+      authorInfo.hasTitle('Дмитрий Глуховский');
+    });
+
+    it('page should has 3 years', () => {
+      authorInfo.yearCount(3);
+    });
+
+    it('page should has books for years', () => {
+      authorInfo.countBooksForYear(2021, 1);
+      authorInfo.countBooksForYear(2020, 3);
+      authorInfo.countBooksForYear(2012, 2);
+    });
+
+    it('page should has books for year', () => {
+      authorInfo.containsBookWithName('Метро 2034', 2020);
+      authorInfo.containsBookWithName('Метро 2035', 2020);
+      authorInfo.containsBookWithName('Пост (Сезон 1)', 2020);
+    });
+  });
+
+  context('Tag', () => {
+    let tagInfo: TagInfoPo = null;
+
+    beforeEach(() => {
+      tagInfo = new TagInfoPo('JavaScript');
+      tagInfo.visit();
+    });
+
+    it('page should exists', () => {
+      tagInfo.isHere();
+    });
+
+    it('page should has custom title', () => {
+      tagInfo.hasTitle('JavaScript');
+    });
+
+    it('page should has 2 years', () => {
+      tagInfo.yearCount(2);
+    });
+
+    it('page should has books for years', () => {
+      tagInfo.countBooksForYear(2020, 3);
+      tagInfo.countBooksForYear(2019, 4);
+    });
+
+    it('page should has books for year', () => {
+      tagInfo.containsBookWithName('Введение в ESMAScript 6', 2020);
+      tagInfo.containsBookWithName('Vue.js в действии', 2020);
+      tagInfo.containsBookWithName('Как устроен javascript', 2020);
     });
   });
 });
