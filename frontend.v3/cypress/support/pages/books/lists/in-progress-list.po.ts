@@ -1,5 +1,4 @@
 import { BookListPo } from './book-list.po';
-import { IBook } from '../../../interfaces/i-book';
 import { IBookCheckData } from '../../../interfaces/i-book-check-data';
 
 export class InProgressListPo extends BookListPo {

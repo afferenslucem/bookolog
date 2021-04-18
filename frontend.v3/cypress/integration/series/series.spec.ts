@@ -1,43 +1,51 @@
 /// <reference types="cypress" />
 
 import * as users from '../../fixtures/users.json';
-import * as books from '../../fixtures/books.json';
-import { ToReadBookCreatePo } from '../../support/pages/books/forms/to-read-book-create.po';
+import * as series from '../../fixtures/series.json';
 import { IUser } from '../../support/interfaces/i-user';
-import { createDoneBook, loginAs, logout } from '../../support/routines';
-import { IBook } from '../../support/interfaces/i-book';
-import { ToReadListPo } from '../../support/pages/books/lists/to-read-list.po';
-import { InProgressListPo } from '../../support/pages/books/lists/in-progress-list.po';
-import { InProgressBookCreatePo } from '../../support/pages/books/forms/in-progress-book-create.po';
-import { DoneBookCreatePo } from '../../support/pages/books/forms/done-book-create.po';
-import { DoneListPo } from '../../support/pages/books/lists/done-list.po';
-import { IBookCheckData } from '../../support/interfaces/i-book-check-data';
-import { YearsListPo } from '../../support/pages/statistic/years/years-list.po';
-import { GenresListPo } from '../../support/pages/statistic/genres/genres-list.po';
-import { AuthorsListPo } from '../../support/pages/statistic/authors/authors-list.po';
-import { TagsListPo } from '../../support/pages/statistic/tags/tags-list.po';
-import { YearInfoPo } from '../../support/pages/statistic/years/year-info.po';
-import { GenreInfoPo } from '../../support/pages/statistic/genres/genre-info.po';
-import { AuthorsInfoPo } from '../../support/pages/statistic/authors/author-info.po';
-import { TagInfoPo } from '../../support/pages/statistic/tags/tag-info.po';
+import { loginAs, logout } from '../../support/routines';
 import { SeriesListPo } from '../../support/pages/series/series-list.po';
-import { SeriesViewPo } from '../../support/pages/series/seriesViewPo';
+import { SeriesViewPo } from '../../support/pages/series/series-view.po';
+import { SeriesCreatePo } from '../../support/pages/series/series-create.po';
+import { ISeries } from '../../support/interfaces/i-series';
 
 context('Series', () => {
 
-  beforeEach(() => {
-    const user: IUser = users.hrodvitnir;
-    loginAs(user);
-  });
-
   afterEach(() => {
-    logout();
+    logout()
+  })
+
+  context('Create', () => {
+    let form: SeriesCreatePo = null;
+
+    beforeEach(() => {
+      const user: IUser = users.seriesCreateCheck;
+      loginAs(user);
+      form = new SeriesCreatePo();
+      form.visit();
+    })
+
+    it('create form exists', () => {
+      form.isHere();
+    });
+
+    it('should create series', () => {
+      const seriesEntity: ISeries = series.harryPotter;
+
+      form.typeName(seriesEntity.name);
+      form.typeDescription(seriesEntity.description);
+      form.clickSubmit();
+
+      new SeriesListPo().seriesContainsBooksCount(seriesEntity.name, 0);
+    });
   });
 
   context('List', () => {
-    let page = new SeriesListPo();
 
+    let page = new SeriesListPo();
     beforeEach(() => {
+      const user: IUser = users.hrodvitnir;
+      loginAs(user);
       page.visit();
     });
 
@@ -61,6 +69,8 @@ context('Series', () => {
     let page = new SeriesViewPo('02bbf997-8766-427d-b0a1-6679dd41b7ef');
 
     beforeEach(() => {
+      const user: IUser = users.hrodvitnir;
+      loginAs(user);
       page.visit();
     });
 

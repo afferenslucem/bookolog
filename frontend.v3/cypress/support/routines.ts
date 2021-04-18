@@ -3,9 +3,11 @@ import { LoginPo } from './pages/auth/login.po';
 import { LogoutPo } from './pages/auth/logout.po';
 import { IBook } from './interfaces/i-book';
 import { DoneBookCreatePo } from './pages/books/forms/done-book-create.po';
+import { InProgressListPo } from './pages/books/lists/in-progress-list.po';
 
 export function loginAs(user: IUser): void {
   const loginPage = new LoginPo();
+
 
   loginPage.visit();
 
@@ -16,7 +18,7 @@ export function loginAs(user: IUser): void {
 
   loginPage.waitLoginSuccess();
 
-  loginPage.isHere();
+  new InProgressListPo().isHere();
 }
 
 export function logout(): void {

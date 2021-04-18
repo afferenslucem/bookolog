@@ -1,5 +1,4 @@
 import { PageObject } from '../../page-object';
-import { IBook } from '../../../interfaces/i-book';
 import { IBookCheckData } from '../../../interfaces/i-book-check-data';
 
 export abstract class BookListPo extends PageObject {

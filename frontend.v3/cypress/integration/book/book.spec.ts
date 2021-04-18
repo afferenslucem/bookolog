@@ -19,14 +19,14 @@ import { TagsListPo } from '../../support/pages/statistic/tags/tags-list.po';
 import { BookViewPo } from '../../support/pages/books/book-view.po';
 
 context('Book', () => {
+  afterEach(() => {
+    logout();
+  });
+
   context('Create', () => {
     beforeEach(() => {
       const creator: IUser = users.bookCreateCheck;
       loginAs(creator);
-    });
-
-    afterEach(() => {
-      logout();
     });
 
     context('toRead', () => {
@@ -177,10 +177,6 @@ context('Book', () => {
     beforeEach(() => {
       const viewCheck: IUser = users.hrodvitnir;
       loginAs(viewCheck);
-    });
-
-    afterEach(() => {
-      logout();
     });
 
     context('toRead', () => {

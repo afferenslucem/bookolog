@@ -5,6 +5,10 @@ import { RegistrationPo } from '../../support/pages/auth/registration.po';
 import { loginAs, logout } from '../../support/routines';
 
 context('Authentication', () => {
+  afterEach(() => {
+    logout();
+  });
+
   context('Login', () => {
     let loginPage: LoginPo = null;
     let inProgressPage: InProgressListPo = null;
@@ -13,10 +17,6 @@ context('Authentication', () => {
       inProgressPage = new InProgressListPo();
       loginPage = new LoginPo();
       loginPage.visit();
-    });
-
-    afterEach(() => {
-      logout();
     });
 
     it('page should exists', () => {
@@ -44,10 +44,6 @@ context('Authentication', () => {
       registrationPage = new RegistrationPo();
       loginPage = new LoginPo();
       registrationPage.visit();
-    });
-
-    afterEach(() => {
-      logout();
     });
 
     it('page should exists', () => {
