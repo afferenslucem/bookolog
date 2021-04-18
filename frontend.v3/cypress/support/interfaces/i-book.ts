@@ -5,6 +5,8 @@ export interface IBook {
   genre?: string;
   tags?: string[];
   type?: string;
+  status?: string;
+  series?: string;
   progressType?: string;
   doneUnits?: number;
   totalUnits?: number;
