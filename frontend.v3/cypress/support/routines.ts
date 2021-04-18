@@ -15,6 +15,8 @@ export function loginAs(user: IUser): void {
   loginPage.clickSubmit();
 
   loginPage.waitLoginSuccess();
+
+  loginPage.isHere();
 }
 
 export function logout(): void {
