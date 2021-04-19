@@ -1,0 +1,3 @@
+[![Bookolog E2E Tests](https://github.com/afferenslucem/bookolog/actions/workflows/push-workflow-e2e.yml/badge.svg)](https://github.com/afferenslucem/bookolog/actions/workflows/push-workflow-e2e.yml)
+[![Bookolog Unit Tests](https://github.com/afferenslucem/bookolog/actions/workflows/push-workflow-unit.yml/badge.svg)](https://github.com/afferenslucem/bookolog/actions/workflows/push-workflow-unit.yml)
+[![Bookolog Publish](https://github.com/afferenslucem/bookolog/actions/workflows/release-workflow.yml/badge.svg)](https://github.com/afferenslucem/bookolog/actions/workflows/release-workflow.yml)
