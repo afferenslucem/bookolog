@@ -8,12 +8,17 @@ import { SeriesListPo } from '../../support/pages/series/series-list.po';
 import { SeriesViewPo } from '../../support/pages/series/series-view.po';
 import { SeriesCreatePo } from '../../support/pages/series/series-create.po';
 import { ISeries } from '../../support/interfaces/i-series';
+import { SeriesUpdatePo } from '../../support/pages/series/series-update.po';
+import { PageObject } from '../../support/pages/page-object';
 
 context('Series', () => {
+  beforeEach(() => {
+    new PageObject().setMobileViewport();
+  });
 
   afterEach(() => {
-    logout()
-  })
+    logout();
+  });
 
   context('Create', () => {
     let form: SeriesCreatePo = null;
@@ -23,7 +28,7 @@ context('Series', () => {
       loginAs(user);
       form = new SeriesCreatePo();
       form.visit();
-    })
+    });
 
     it('create form exists', () => {
       form.isHere();
@@ -34,14 +39,76 @@ context('Series', () => {
 
       form.typeName(seriesEntity.name);
       form.typeDescription(seriesEntity.description);
+
       form.clickSubmit();
 
       new SeriesListPo().seriesContainsBooksCount(seriesEntity.name, 0);
     });
   });
 
-  context('List', () => {
+  context('Update', () => {
+    let form: SeriesUpdatePo = null;
 
+    beforeEach(() => {
+      const user: IUser = users.hrodvitnir;
+      loginAs(user);
+      form = new SeriesUpdatePo('0e5930fd-8477-4311-9e00-2eb73bda6fa5');
+      form.visit();
+    });
+
+    it('page should exists', () => {
+      form.isHere();
+    });
+
+    it('page should reset description', () => {
+      const seriesData: ISeries = series.khmelAndKlondayk;
+
+      form = new SeriesUpdatePo('d9bd7f71-4d18-4a77-b9be-1fcc0e1e9c73');
+      form.visit();
+      form.isHere();
+
+      form.clearName();
+      form.typeName(seriesData.name);
+
+      form.clearDescription();
+
+      form.setSyncInterceptor();
+      form.clickSubmit();
+      form.waitSync();
+
+      // Series check
+      const page = new SeriesViewPo('d9bd7f71-4d18-4a77-b9be-1fcc0e1e9c73');
+      page.visit();
+      page.nameIs(seriesData.name);
+      page.descriptionNotExists();
+    });
+
+    it('page should fill form with description', () => {
+      const seriesData: ISeries = series.arDeko;
+
+      form = new SeriesUpdatePo('0e5930fd-8477-4311-9e00-2eb73bda6fa5');
+      form.visit();
+      form.isHere();
+
+      form.clearName();
+      form.typeName(seriesData.name);
+
+      form.clearDescription();
+      form.typeDescription(seriesData.description);
+
+      form.setSyncInterceptor();
+      form.clickSubmit();
+      form.waitSync();
+
+      // Series check
+      const page = new SeriesViewPo('0e5930fd-8477-4311-9e00-2eb73bda6fa5');
+      page.visit();
+      page.nameIs(seriesData.name);
+      page.descriptionIs(seriesData.description);
+    });
+  });
+
+  context('List', () => {
     let page = new SeriesListPo();
     beforeEach(() => {
       const user: IUser = users.hrodvitnir;
@@ -86,4 +153,4 @@ context('Series', () => {
       page.containsBook('Прорыв');
     });
   });
-})
+});

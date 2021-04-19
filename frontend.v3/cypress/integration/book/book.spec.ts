@@ -17,8 +17,13 @@ import { GenresListPo } from '../../support/pages/statistic/genres/genres-list.p
 import { AuthorsListPo } from '../../support/pages/statistic/authors/authors-list.po';
 import { TagsListPo } from '../../support/pages/statistic/tags/tags-list.po';
 import { BookViewPo } from '../../support/pages/books/book-view.po';
+import { PageObject } from '../../support/pages/page-object';
 
 context('Book', () => {
+  beforeEach(() => {
+    new PageObject().setMobileViewport();
+  });
+
   afterEach(() => {
     logout();
   });
@@ -53,6 +58,8 @@ context('Book', () => {
         book.tags.forEach(item => formPage.typeTag(item));
         formPage.selectType(book.type);
         formPage.typeNotes(book.notes);
+
+        formPage.setSyncInterceptor();
         formPage.clickSubmit();
         formPage.waitSync();
 
@@ -96,6 +103,8 @@ context('Book', () => {
         formPage.typeAudioProgressTotal(book.totalUnits);
         formPage.typeStartedDate(book.startYear, book.startMonth, book.startDay);
         formPage.typeNotes(book.notes);
+
+        formPage.setSyncInterceptor();
         formPage.clickSubmit();
         formPage.waitSync();
 
@@ -227,7 +236,7 @@ context('Book', () => {
         bookView.seriesIs(book.series);
         bookView.statusIs(book.status);
         bookView.tagsIs(book.tags);
-        bookView.startDateIs(book.startYear, book.startMonth, book.startDay)
+        bookView.startDateIs(book.startYear, book.startMonth, book.startDay);
       });
     });
 
@@ -253,8 +262,8 @@ context('Book', () => {
         bookView.seriesIs(book.series);
         bookView.statusIs(book.status);
         bookView.tagsIs(book.tags);
-        bookView.startDateIs(book.startYear, book.startMonth, book.startDay)
-        bookView.finishDateIs(book.finishYear, book.finishMonth, book.finishDay)
+        bookView.startDateIs(book.startYear, book.startMonth, book.startDay);
+        bookView.finishDateIs(book.finishYear, book.finishMonth, book.finishDay);
       });
     });
   });

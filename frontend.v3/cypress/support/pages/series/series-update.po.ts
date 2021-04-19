@@ -1,8 +1,8 @@
 import { PageObject } from '../page-object';
-import {SeriesFormPo} from './series-form.po';
+import { SeriesFormPo } from './series-form.po';
 
-export class SeriesCreatePo extends SeriesFormPo {
-  public constructor() {
-    super('/series/create');
+export class SeriesUpdatePo extends SeriesFormPo {
+  public constructor(guid: string) {
+    super(`/series/edit/${guid}`);
   }
 }

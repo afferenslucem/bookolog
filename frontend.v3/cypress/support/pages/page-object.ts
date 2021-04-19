@@ -1,14 +1,14 @@
 import { baseUrl } from '../constants';
 
-export abstract class PageObject {
+export class PageObject {
   protected url: string;
 
-  protected constructor(url: string) {
+  public constructor();
+  public constructor(url?: string) {
     this.url = url;
   }
 
   public visit(): void {
-    this.setMobileViewport();
     cy.visit(this.url);
   }
 
@@ -20,7 +20,15 @@ export abstract class PageObject {
     cy.get('app-title').contains(title);
   }
 
-  protected setMobileViewport(): void {
+  public setSyncInterceptor(): void {
+    cy.intercept('POST', '**/user/Synchronize').as('sync');
+  }
+
+  public waitSync(): void {
+    cy.wait('@sync').its('response.statusCode').should('be.oneOf', [200, 201]);
+  }
+
+  public setMobileViewport(): void {
     cy.viewport(380, 680);
   }
 

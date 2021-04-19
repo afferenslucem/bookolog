@@ -4,10 +4,11 @@ import { LogoutPo } from './pages/auth/logout.po';
 import { IBook } from './interfaces/i-book';
 import { DoneBookCreatePo } from './pages/books/forms/done-book-create.po';
 import { InProgressListPo } from './pages/books/lists/in-progress-list.po';
+import { ISeries } from './interfaces/i-series';
+import { SeriesCreatePo } from './pages/series/series-create.po';
 
 export function loginAs(user: IUser): void {
   const loginPage = new LoginPo();
-
 
   loginPage.visit();
 
@@ -42,6 +43,19 @@ export function createDoneBook(book: IBook): void {
   formPage.typeStartedDate(book.startYear, book.startMonth, book.startDay);
   formPage.typeFinishedDate(book.finishYear, book.finishMonth, book.finishDay);
   formPage.typeNotes(book.notes);
+
+  formPage.setSyncInterceptor();
   formPage.clickSubmit();
   formPage.waitSync();
+}
+
+export function createSeries(series: ISeries): void {
+  let form: SeriesCreatePo = new SeriesCreatePo();
+  form.visit();
+  form.typeName(series.name);
+  form.typeDescription(series.description);
+
+  form.setSyncInterceptor();
+  form.clickSubmit();
+  form.waitSync();
 }

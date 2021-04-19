@@ -14,7 +14,6 @@ describe('CollectionEditViewComponent', () => {
   let fixture: ComponentFixture<CollectionEditViewComponent>;
   let service: CollectionService;
   let titleService: TitleService;
-  let location: Location;
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
@@ -28,7 +27,6 @@ describe('CollectionEditViewComponent', () => {
     fixture = TestBed.createComponent(CollectionEditViewComponent);
     service = TestBed.inject(CollectionService);
     component = fixture.componentInstance;
-    location = TestBed.inject(Location);
     titleService = TestBed.inject(TitleService);
     fixture.detectChanges();
   });
@@ -117,10 +115,10 @@ describe('CollectionEditViewComponent', () => {
     it('should trigger redirect', async () => {
       const saveOrUpdateSpy = spyOn(service, 'saveOrUpdate');
       const redirectSpy = spyOn(component, 'redirect');
-      const backSpy = spyOn(location, 'back');
 
       const collection = {
         modifyDate: 'md',
+        guid: 'guid',
       } as any;
 
       component.action = Action.Create;
@@ -129,16 +127,16 @@ describe('CollectionEditViewComponent', () => {
 
       expect(saveOrUpdateSpy).toHaveBeenCalledWith(collection);
       expect(redirectSpy).toHaveBeenCalledWith();
-      expect(backSpy).not.toHaveBeenCalledWith();
+      expect(redirectSpy).not.toHaveBeenCalledWith(collection.guid);
     });
 
     it('should trigger back', async () => {
       const saveOrUpdateSpy = spyOn(service, 'saveOrUpdate');
       const redirectSpy = spyOn(component, 'redirect');
-      const backSpy = spyOn(location, 'back');
 
       const collection = {
         modifyDate: 'md',
+        guid: 'guid',
       } as any;
 
       component.action = Action.Edit;
@@ -146,8 +144,8 @@ describe('CollectionEditViewComponent', () => {
       await component.saveOrUpdate(collection);
 
       expect(saveOrUpdateSpy).toHaveBeenCalledWith(collection);
-      expect(redirectSpy).not.toHaveBeenCalled();
-      expect(backSpy).toHaveBeenCalledWith();
+      expect(redirectSpy).not.toHaveBeenCalledWith();
+      expect(redirectSpy).toHaveBeenCalledWith(collection.guid);
     });
   });
 });

@@ -3,8 +3,13 @@ import { InProgressListPo } from '../../support/pages/books/lists/in-progress-li
 import * as users from '../../fixtures/users.json';
 import { RegistrationPo } from '../../support/pages/auth/registration.po';
 import { loginAs, logout } from '../../support/routines';
+import { PageObject } from '../../support/pages/page-object';
 
 context('Authentication', () => {
+  beforeEach(() => {
+    new PageObject().setMobileViewport();
+  });
+
   afterEach(() => {
     logout();
   });
@@ -65,4 +70,4 @@ context('Authentication', () => {
       loginAs(user);
     });
   });
-})
+});

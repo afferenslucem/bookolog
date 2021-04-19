@@ -7,8 +7,13 @@ import { YearInfoPo } from '../../support/pages/statistic/years/year-info.po';
 import { GenreInfoPo } from '../../support/pages/statistic/genres/genre-info.po';
 import { AuthorsInfoPo } from '../../support/pages/statistic/authors/author-info.po';
 import { TagInfoPo } from '../../support/pages/statistic/tags/tag-info.po';
+import { PageObject } from '../../support/pages/page-object';
 
 context('Statistic', () => {
+  beforeEach(() => {
+    new PageObject().setMobileViewport();
+  });
+
   beforeEach(() => {
     const user: IUser = users.hrodvitnir;
     loginAs(user);
