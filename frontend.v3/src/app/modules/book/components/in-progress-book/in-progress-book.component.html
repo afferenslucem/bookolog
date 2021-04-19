@@ -3,22 +3,11 @@
   <app-book-authors [authors]="authors"></app-book-authors>
 </div>
 <mat-progress-bar [value]="progressValue" mode="determinate"></mat-progress-bar>
-<div
-  *ngIf="progressValue || startDate; else noDates"
-  class="book-line__progress-data dark-text"
->
+<div *ngIf="progressValue || startDate; else noDates" class="book-line__progress-data dark-text">
   <small class="progress">
     <ng-container *ngIf="progressValue" [ngSwitch]="type">
-      <app-book-time-progress
-        *ngSwitchCase="BookType.Audio"
-        [done]="done"
-        [total]="total"
-      ></app-book-time-progress>
-      <app-book-pages-progress
-        *ngSwitchDefault
-        [done]="done"
-        [total]="total"
-      ></app-book-pages-progress>
+      <app-book-time-progress *ngSwitchCase="BookType.Audio" [done]="done" [total]="total"></app-book-time-progress>
+      <app-book-pages-progress *ngSwitchDefault [done]="done" [total]="total"></app-book-pages-progress>
     </ng-container>
   </small>
   <div class="separator"></div>

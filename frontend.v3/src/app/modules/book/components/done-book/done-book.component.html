@@ -4,10 +4,7 @@
 </div>
 <div class="book-line__progress-data dark-text">
   <small *ngIf="startDate || endDate; else noDates">
-    <app-date-range
-      [endDate]="endDate"
-      [startDate]="startDate"
-    ></app-date-range>
+    <app-date-range [endDate]="endDate" [startDate]="startDate"></app-date-range>
   </small>
 </div>
 <ng-template #noDates>

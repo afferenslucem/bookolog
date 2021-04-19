@@ -1,0 +1,21 @@
+{
+  "hrodvitnir": {
+    "login": "hrodvitnir",
+    "password": "qwerty"
+  },
+  "regCheck": {
+    "login": "regCheck",
+    "password": "qwerty",
+    "email": "regCheck@domain.ru"
+  },
+  "bookCreateCheck": {
+    "login": "BiNTurronG",
+    "password": "qwerty",
+    "email": "medvedod009@gmail.com"
+  },
+  "seriesCreateCheck": {
+    "login": "shadeofclown",
+    "password": "qwerty",
+    "email": "walawap@gmail.com"
+  }
+}

@@ -1,27 +1,27 @@
-<span *ngIf="(custom$ | async) as custom" class="custom-title">
+<span *ngIf="custom$ | async as custom" class="custom-title">
   {{ custom | capitalize }}
 </span>
-<span *ngIf="(title$ | async) as title" class="title">
-    <ng-container [ngSwitch]="title">
-      <span *ngSwitchCase="TitleText.Login">Вход</span>
-      <span *ngSwitchCase="TitleText.Registration">Регистрация</span>
-      <span *ngSwitchCase="TitleText.PasswordRecovery">Восстановление пароля</span>
-      <span *ngSwitchCase="TitleText.Settings">Настройки</span>
-      <span *ngSwitchCase="TitleText.InProgressList">Читаю сейчас</span>
-      <span *ngSwitchCase="TitleText.ToReadList">Буду читать</span>
-      <span *ngSwitchCase="TitleText.DoneList">Прочитаные</span>
-      <span *ngSwitchCase="TitleText.Book">О книге</span>
-      <span *ngSwitchCase="TitleText.BookEdit">Редактировать книгу</span>
-      <span *ngSwitchCase="TitleText.BookCreate">Создать книгу</span>
-      <span *ngSwitchCase="TitleText.BookReread">Перечитать книгу</span>
-      <span *ngSwitchCase="TitleText.TagsStatistic">Теги</span>
-      <span *ngSwitchCase="TitleText.GenresStatistic">Жанры</span>
-      <span *ngSwitchCase="TitleText.AuthorsStatistic">Авторы</span>
-      <span *ngSwitchCase="TitleText.YearsStatistic">Года прочтения</span>
-      <span *ngSwitchCase="TitleText.CollectionList">Серии</span>
-      <span *ngSwitchCase="TitleText.CollectionView">О серии</span>
-      <span *ngSwitchCase="TitleText.CollectionCreate">Создание серии</span>
-      <span *ngSwitchCase="TitleText.CollectionEdit">Редактирование серии</span>
-      <span *ngSwitchDefault>Bookolog</span>
-    </ng-container>
+<span *ngIf="title$ | async as title" class="title">
+  <ng-container [ngSwitch]="title">
+    <span *ngSwitchCase="TitleText.Login">Вход</span>
+    <span *ngSwitchCase="TitleText.Registration">Регистрация</span>
+    <span *ngSwitchCase="TitleText.PasswordRecovery">Восстановление пароля</span>
+    <span *ngSwitchCase="TitleText.Settings">Настройки</span>
+    <span *ngSwitchCase="TitleText.InProgressList">Читаю сейчас</span>
+    <span *ngSwitchCase="TitleText.ToReadList">Буду читать</span>
+    <span *ngSwitchCase="TitleText.DoneList">Прочитаные</span>
+    <span *ngSwitchCase="TitleText.Book">О книге</span>
+    <span *ngSwitchCase="TitleText.BookEdit">Редактировать книгу</span>
+    <span *ngSwitchCase="TitleText.BookCreate">Создать книгу</span>
+    <span *ngSwitchCase="TitleText.BookReread">Перечитать книгу</span>
+    <span *ngSwitchCase="TitleText.TagsStatistic">Теги</span>
+    <span *ngSwitchCase="TitleText.GenresStatistic">Жанры</span>
+    <span *ngSwitchCase="TitleText.AuthorsStatistic">Авторы</span>
+    <span *ngSwitchCase="TitleText.YearsStatistic">Года прочтения</span>
+    <span *ngSwitchCase="TitleText.CollectionList">Серии</span>
+    <span *ngSwitchCase="TitleText.CollectionView">О серии</span>
+    <span *ngSwitchCase="TitleText.CollectionCreate">Создание серии</span>
+    <span *ngSwitchCase="TitleText.CollectionEdit">Редактирование серии</span>
+    <span *ngSwitchDefault>Bookolog</span>
+  </ng-container>
 </span>

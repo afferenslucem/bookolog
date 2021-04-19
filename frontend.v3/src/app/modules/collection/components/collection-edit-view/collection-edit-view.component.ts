@@ -35,7 +35,6 @@ export class CollectionEditViewComponent implements OnInit {
     private collectionService: CollectionService,
     private notificationService: NotificationService,
     private activatedRoute: ActivatedRoute,
-    private location: Location,
     private router: Router,
   ) {
     this.collection = new Collection({
@@ -83,7 +82,7 @@ export class CollectionEditViewComponent implements OnInit {
       if (this.action === Action.Create) {
         await this.redirect();
       } else {
-        this.location.back();
+        await this.redirect(data.guid);
       }
     } catch (e) {
       this.logger.error('Book save error', e);
@@ -93,8 +92,12 @@ export class CollectionEditViewComponent implements OnInit {
     }
   }
 
-  public async redirect(): Promise<void> {
-    await this.router.navigate(['/series']);
+  public async redirect(guid?: string): Promise<void> {
+    if (!guid) {
+      await this.router.navigate(['/series']);
+    } else {
+      await this.router.navigate(['/series', guid]);
+    }
   }
 
   public readAction(action: Action): void {

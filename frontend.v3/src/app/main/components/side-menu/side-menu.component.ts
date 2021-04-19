@@ -37,8 +37,7 @@ export class SideMenuComponent implements OnInit {
   }
 
   public async logout(): Promise<void> {
-    await this.auth.logout();
-    await this.router.navigate(['/']);
+    await this.router.navigate(['/logout']);
   }
 
   public clearCache(): void {

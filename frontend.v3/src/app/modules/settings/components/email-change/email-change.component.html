@@ -4,24 +4,10 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Почта</mat-label>
-      <input
-        formControlName="email"
-        matInput
-        required
-        type="email"
-      />
-      <mat-error *ngIf="form.get('email').invalid">
-        Это обязательное поле
-      </mat-error>
+      <input formControlName="email" matInput required type="email" />
+      <mat-error *ngIf="form.get('email').invalid"> Это обязательное поле </mat-error>
     </mat-form-field>
 
-    <button [disabled]="form.invalid"
-            class="w-100"
-            color="primary"
-            mat-flat-button
-            type="submit"
-    >
-      Сменить почту
-    </button>
+    <button [disabled]="form.invalid" class="w-100" color="primary" mat-flat-button type="submit">Сменить почту</button>
   </form>
 </div>

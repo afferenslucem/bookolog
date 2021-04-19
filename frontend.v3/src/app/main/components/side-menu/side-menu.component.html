@@ -68,9 +68,7 @@
       </div>
     </div>
     <span (click)="clearCache()" class="dark-text version">
-      <span *ngIf="newVersionAvailable | async; else emptyUpdates">
-        Доступно обновление
-      </span>
+      <span *ngIf="newVersionAvailable | async; else emptyUpdates"> Доступно обновление </span>
 
       <ng-template #emptyUpdates>
         <span>{{ version }}</span>

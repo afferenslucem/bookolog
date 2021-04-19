@@ -1,4 +1,6 @@
 <div class="tape">
-  <app-notification *ngFor="let notification of (notifications$ | async); trackBy: notificationTrackBy"
-                    [notification]="notification"></app-notification>
+  <app-notification
+    *ngFor="let notification of notifications$ | async; trackBy: notificationTrackBy"
+    [notification]="notification"
+  ></app-notification>
 </div>

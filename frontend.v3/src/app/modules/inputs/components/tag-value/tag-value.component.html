@@ -1,6 +1,5 @@
 <div class="tag mat-accent mat-flat-button">
-  <span class="tag__value">{{name}}</span>
+  <span class="tag__value">{{ name }}</span>
 
-  <mat-icon (click)="crossClick.emit()" *ngIf="showCross !== 'false' && showCross !== false" class="tag__close">close
-  </mat-icon>
+  <mat-icon (click)="crossClick.emit()" *ngIf="showCross !== 'false' && showCross !== false" class="tag__close">close </mat-icon>
 </div>

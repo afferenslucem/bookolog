@@ -1,0 +1,21 @@
+{
+  "harryPotter": {
+    "name": "Гарри Поттер",
+    "description": "Мальчик который выжил"
+  },
+  "stalker": {
+    "name": "S.T.A.L.K.E.R.",
+    "description": "Приключения у ЧАЭС"
+  },
+  "khmelAndKlondayk": {
+    "name": "Хмель и Клондайк"
+  },
+  "arDeko": {
+    "name": "Ар-деко",
+    "description": "Преступники старой Америки"
+  },
+  "ageOfDeath": {
+    "name": "Эпоха мертвых",
+    "description": "История одного зомби-апокалипсиса в Москве"
+  }
+}

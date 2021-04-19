@@ -139,12 +139,27 @@
     },
     {
       "files": [
+        "*.html"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.app.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:prettier/recommended"
+      ],
+      "rules": {}
+    },
+    {
+      "files": [
         "src/**/*.spec.ts"
       ],
       "parserOptions": {
         "project": [
-          "tsconfig.spec.json",
-          "e2e/tsconfig.json"
+          "tsconfig.spec.json"
         ]
       },
       "extends": [

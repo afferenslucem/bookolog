@@ -1,16 +1,16 @@
-<form (ngSubmit)="append()" [formGroup]="form">
+<form (ngSubmit)="append()" [formGroup]="form" class="tags-input__form">
   <mat-form-field appearance="fill">
-    <mat-label>{{header}}</mat-label>
-    <input [matAutocomplete]="tagsAutocomplete" formControlName="input" matInput type="text"/>
+    <mat-label>{{ header }}</mat-label>
+    <input [matAutocomplete]="tagsAutocomplete" formControlName="input" class="tag" matInput type="text" />
   </mat-form-field>
 
   <mat-autocomplete #tagsAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)">
     <mat-option *ngFor="let tag of availableTags" [value]="tag | capitalize">
-      {{tag | capitalize}}
+      {{ tag | capitalize }}
     </mat-option>
   </mat-autocomplete>
 
-  <button color="primary" mat-flat-button type="submit">
+  <button color="primary" mat-flat-button type="submit" class="submit">
     <app-plus-icon></app-plus-icon>
   </button>
 </form>
