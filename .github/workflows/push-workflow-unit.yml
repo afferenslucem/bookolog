@@ -1,4 +1,4 @@
-name: Bookolog Tests
+name: Bookolog Unit Tests
 
 on:
   push:

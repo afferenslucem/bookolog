@@ -1,4 +1,4 @@
-name: Bookolog Tests
+name: Bookolog E2E Tests
 
 on:
   push:
@@ -6,52 +6,19 @@ on:
 
 
 jobs:
-  client-tests:
+  e2e-tests:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend.v3
-
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        working-directory: .
 
     steps:
       - uses: actions/checkout@v2
-      - name: Tests client use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm run test:prod
-
-  client-linting:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend.v3
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Lint client
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - run: npm ci
-      - run: npm run lint
-
-  server-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build server tests Docker image
-        run: docker build -t bookolog/tests backend.v2 --file backend.v2/DockerfileTests
+      - name: Build testing images
+        run: docker-compose -f docker-compose.e2e.yml build
         
-      - name: Run server tests
-        run: docker run bookolog/tests
+      - name: Run e2e tests
+        run: docker-compose -f docker-compose.e2e.yml up e2e
 
 
 
