@@ -7,11 +7,11 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "npm run ci:build-e2e && start-server-and-test ci:start-server http://localhost:4200 ci:run-cypress",
+    "e2e": "start-server-and-test ci:start-server http://localhost:4200 ci:run-cypress",
     "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
     "ci:build-e2e": "ng build --prod --configuration=e2e",
     "ci:start-server": "angular-http-server --path ./dist/frontend -p 4200",
-    "ci:run-cypress": "cypress run"
+    "ci:run-cypress": "$(npm bin)/cypress run"
   },
   "private": true,
   "dependencies": {

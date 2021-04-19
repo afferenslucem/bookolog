@@ -35,7 +35,6 @@ context('Authentication', () => {
       loginPage.typePassword(user.password);
 
       loginPage.clickSubmit();
-      loginPage.waitLoginSuccess();
 
       inProgressPage.isHere();
     });

@@ -1,0 +1,33 @@
+version: "3"
+services:
+  server:
+    build: 
+      context: ./backend.v2/backend.v2
+      dockerfile: DockerfileDev
+    ports:
+      - "35000:5000"
+    volumes: 
+      - "/imageStorage:/imageStorage"
+    depends_on: 
+      - postgre
+
+  postgre:
+    image: postgres:12.4-alpine
+    environment:
+      POSTGRES_PASSWORD: masterkey
+    ports:
+      - "35432:5432"
+    volumes: 
+      - "./backend.v2/backend.v2/init-db/:/docker-entrypoint-initdb.d/"
+
+
+  e2e:
+    build: 
+      context: ./frontend.v3
+      dockerfile: DockerfileE2E
+    command: sh -c "npm run e2e"
+    working_dir: /app
+    environment:
+      NG_CLI_ANALYTICS: 'off'
+    depends_on: 
+      - server

@@ -24,6 +24,8 @@ export class LoginPo extends PageObject {
   }
 
   public waitLoginSuccess(): void {
-    cy.wait('@login').its('response.statusCode').should('be.eq', 200);
+    cy.wait('@login').then(interception => {
+      cy.wrap(interception.response.statusCode).should('be.eq', 200);
+    });
   }
 }

@@ -4,6 +4,7 @@ export class PageObject {
   protected url: string;
 
   public constructor();
+  public constructor(url: string);
   public constructor(url?: string) {
     this.url = url;
   }
