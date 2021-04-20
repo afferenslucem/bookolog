@@ -12,11 +12,23 @@ export class SeriesViewPo extends PageObject {
   public descriptionIs(description: string): void {
     cy.get('app-collection .collection__description').contains(description);
   }
+
   public descriptionExists(): void {
     cy.get('app-collection .collection__description').should('exist');
   }
+
   public descriptionNotExists(): void {
     cy.get('app-collection .collection__description').should('not.exist');
+  }
+
+  public delete(): void {
+    cy.get('app-collection .collection__buttons .mat-warn').click();
+
+    cy.intercept('DELETE', '**/collection/delete/**').as('delete');
+
+    cy.get('app-collection-delete-dialog .mat-dialog-actions .delete').click();
+
+    cy.wait('@delete').its('response.statusCode').should('be.eq', 200);
   }
 
   public containsBook(name: string): void {

@@ -69,10 +69,12 @@ export class CollectionViewComponent implements OnInit {
     dialogRef
       .afterClosed()
       .pipe(filter((item?: DeleteDialogResult) => item && item === 'delete'))
-      .subscribe(() => {
-        this.deleteCollection(collection);
-        this.redirect();
-      });
+      .subscribe(() => this.onDelete(collection));
+  }
+
+  private async onDelete(collection: Collection): Promise<void> {
+    await this.deleteCollection(collection);
+    await this.redirect();
   }
 
   public async deleteCollection(collection: Collection): Promise<void> {

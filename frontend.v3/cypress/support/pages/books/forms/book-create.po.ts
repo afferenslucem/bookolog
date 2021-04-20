@@ -28,6 +28,11 @@ export abstract class BookCreatePo extends PageObject {
     cy.get('app-book-edit-view form.book app-book-tags-input.book__tags .tags-input__form button.submit').click();
   }
 
+  public selectSeries(series: string): void {
+    cy.get(`app-book-edit-view form.book .book__series`).click();
+    cy.get('mat-option').contains(series).click();
+  }
+
   public selectType(type: string): void {
     cy.get(`app-book-edit-view form.book .book__type`).click();
     cy.get('mat-option').contains(type).click();

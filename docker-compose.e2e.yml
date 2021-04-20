@@ -31,3 +31,7 @@ services:
       NG_CLI_ANALYTICS: 'off'
     depends_on: 
       - server
+
+    volumes:
+      - "./frontend.v3/cypress/screenshots/:/app/cypress/screenshots"
+      - "./frontend.v3/cypress/videos/:/app/cypress/videos"

@@ -26,7 +26,7 @@
   <div class="collection-input">
     <mat-form-field appearance="fill" class="name">
       <mat-label>Серия</mat-label>
-      <mat-select formControlName="collectionGuid">
+      <mat-select class="book__series" formControlName="collectionGuid">
         <mat-option [value]="null">Отсутствует</mat-option>
         <mat-option *ngFor="let item of allSeries" [value]="item.guid">
           {{ item.name | capitalize }}
@@ -44,7 +44,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Статус</mat-label>
-    <mat-select formControlName="status">
+    <mat-select class="book__status" formControlName="status">
       <mat-option [value]="BookStatus.ToRead">К прочтению</mat-option>
       <mat-option [value]="BookStatus.InProgress">Читаю</mat-option>
       <mat-option [value]="BookStatus.Done">Прочитана</mat-option>
