@@ -10,7 +10,6 @@ import { TitleService } from '../../../ui/service/title.service';
 import { Collection } from '../../models/collection';
 import { CollectionData } from '../../models/collection-data';
 import { CollectionService } from '../../services/collection.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-collection-edit-view',
