@@ -62,10 +62,12 @@ export class BookViewComponent implements OnInit, OnDestroy {
         filter((item?: DeleteDialogResult) => item && item === 'delete'),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => {
-        this.deleteBook(book);
-        this.redirect();
-      });
+      .subscribe(() => void this.onDelete(book));
+  }
+
+  public async onDelete(book: Book): Promise<void> {
+    await this.deleteBook(book);
+    await this.redirect();
   }
 
   public async deleteBook(book: Book): Promise<void> {

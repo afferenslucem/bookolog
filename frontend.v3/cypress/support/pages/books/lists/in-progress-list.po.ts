@@ -1,5 +1,6 @@
 import { BookListPo } from './book-list.po';
 import { IBookCheckData } from '../../../interfaces/i-book-check-data';
+import Chainable = Cypress.Chainable;
 
 export class InProgressListPo extends BookListPo {
   public constructor() {
@@ -19,5 +20,9 @@ export class InProgressListPo extends BookListPo {
     cy.get('@book').contains(book.finished);
     cy.get('@book').contains(book.doneUnits);
     cy.get('@book').contains(book.totalUnits);
+  }
+
+  protected containsBook(book: IBookCheckData): Chainable<any> {
+    return cy.contains('.in-progress-books-list app-in-progress-book', book.name);
   }
 }
