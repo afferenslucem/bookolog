@@ -1,13 +1,13 @@
 /// <reference types="cypress" />
 
-import * as users from '../../fixtures/users.json';
-import { IUser } from '../../support/interfaces/i-user';
-import { loginAs, logout } from '../../support/routines';
-import { YearInfoPo } from '../../support/pages/statistic/years/year-info.po';
-import { GenreInfoPo } from '../../support/pages/statistic/genres/genre-info.po';
-import { AuthorsInfoPo } from '../../support/pages/statistic/authors/author-info.po';
-import { TagInfoPo } from '../../support/pages/statistic/tags/tag-info.po';
-import { PageObject } from '../../support/pages/page-object';
+import * as users from '../fixtures/users.json';
+import { IUser } from '../support/interfaces/i-user';
+import { loginAs, logout } from '../support/routines';
+import { YearInfoPo } from '../support/pages/statistic/years/year-info.po';
+import { GenreInfoPo } from '../support/pages/statistic/genres/genre-info.po';
+import { AuthorsInfoPo } from '../support/pages/statistic/authors/author-info.po';
+import { TagInfoPo } from '../support/pages/statistic/tags/tag-info.po';
+import { PageObject } from '../support/pages/page-object';
 
 context('Statistic', () => {
   beforeEach(() => {

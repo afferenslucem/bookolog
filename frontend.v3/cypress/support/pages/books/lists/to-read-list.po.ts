@@ -1,5 +1,6 @@
 import { BookListPo } from './book-list.po';
 import { IBookCheckData } from '../../../interfaces/i-book-check-data';
+import Chainable = Cypress.Chainable;
 
 export class ToReadListPo extends BookListPo {
   public constructor() {
@@ -15,5 +16,9 @@ export class ToReadListPo extends BookListPo {
 
     cy.get('@book').contains(book.name);
     book.authors.forEach(item => cy.get('@book').contains(item));
+  }
+
+  protected containsBook(book: IBookCheckData): Chainable<any> {
+    return cy.contains('.to-read-books-list app-to-read-book', book.name);
   }
 }

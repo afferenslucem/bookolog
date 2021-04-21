@@ -1,23 +1,24 @@
 /// <reference types="cypress" />
 
-import * as users from '../../fixtures/users.json';
-import * as books from '../../fixtures/books.json';
-import { ToReadBookCreatePo } from '../../support/pages/books/forms/to-read-book-create.po';
-import { IUser } from '../../support/interfaces/i-user';
-import { createDoneBook, loginAs, logout } from '../../support/routines';
-import { IBook } from '../../support/interfaces/i-book';
-import { ToReadListPo } from '../../support/pages/books/lists/to-read-list.po';
-import { InProgressListPo } from '../../support/pages/books/lists/in-progress-list.po';
-import { InProgressBookCreatePo } from '../../support/pages/books/forms/in-progress-book-create.po';
-import { DoneBookCreatePo } from '../../support/pages/books/forms/done-book-create.po';
-import { DoneListPo } from '../../support/pages/books/lists/done-list.po';
-import { IBookCheckData } from '../../support/interfaces/i-book-check-data';
-import { YearsListPo } from '../../support/pages/statistic/years/years-list.po';
-import { GenresListPo } from '../../support/pages/statistic/genres/genres-list.po';
-import { AuthorsListPo } from '../../support/pages/statistic/authors/authors-list.po';
-import { TagsListPo } from '../../support/pages/statistic/tags/tags-list.po';
-import { BookViewPo } from '../../support/pages/books/book-view.po';
-import { PageObject } from '../../support/pages/page-object';
+import * as users from '../fixtures/users.json';
+import * as books from '../fixtures/books.json';
+import { ToReadBookCreatePo } from '../support/pages/books/forms/to-read-book-create.po';
+import { IUser } from '../support/interfaces/i-user';
+import { createDoneBook, loginAs, logout } from '../support/routines';
+import { IBook } from '../support/interfaces/i-book';
+import { ToReadListPo } from '../support/pages/books/lists/to-read-list.po';
+import { InProgressListPo } from '../support/pages/books/lists/in-progress-list.po';
+import { InProgressBookCreatePo } from '../support/pages/books/forms/in-progress-book-create.po';
+import { DoneBookCreatePo } from '../support/pages/books/forms/done-book-create.po';
+import { DoneListPo } from '../support/pages/books/lists/done-list.po';
+import { IBookCheckData } from '../support/interfaces/i-book-check-data';
+import { YearsListPo } from '../support/pages/statistic/years/years-list.po';
+import { GenresListPo } from '../support/pages/statistic/genres/genres-list.po';
+import { AuthorsListPo } from '../support/pages/statistic/authors/authors-list.po';
+import { TagsListPo } from '../support/pages/statistic/tags/tags-list.po';
+import { BookViewPo } from '../support/pages/books/book-view.po';
+import { PageObject } from '../support/pages/page-object';
+import { BookEditPo } from '../support/pages/books/forms/book-edit.po';
 
 context('Book', () => {
   beforeEach(() => {
@@ -264,6 +265,94 @@ context('Book', () => {
         bookView.tagsIs(book.tags);
         bookView.startDateIs(book.startYear, book.startMonth, book.startDay);
         bookView.finishDateIs(book.finishYear, book.finishMonth, book.finishDay);
+      });
+    });
+  });
+
+  context('Update', () => {
+    let bookEdit: BookEditPo = null;
+
+    beforeEach(() => {
+      const viewCheck: IUser = users.hrodvitnir;
+      loginAs(viewCheck);
+    });
+
+    beforeEach(() => {
+      bookEdit = new BookEditPo('01782c99-2b7c-42d2-aa6d-3442496b96dd');
+      bookEdit.visit();
+      bookEdit.isHere();
+    });
+
+    it('page should exists', () => {
+      bookEdit.isHere();
+    });
+
+    it('should update progress', () => {
+      bookEdit.clearPaperProgressDone();
+      bookEdit.typePaperProgressDone(250);
+      bookEdit.clearPaperProgressTotal();
+      bookEdit.typePaperProgressTotal(500);
+
+      bookEdit.setSyncInterceptor();
+      bookEdit.clickSubmit();
+      bookEdit.waitSync();
+
+      const list = new InProgressListPo();
+      list.visit();
+      list.isHere();
+
+      list.checkBook({
+        name: 'Тысячеликий герой',
+        doneUnits: '250',
+        totalUnits: '500',
+      });
+    });
+
+    it('should update status and dates', () => {
+      bookEdit.selectStatus('Прочитана');
+
+      bookEdit.clearStartedDate();
+      bookEdit.typeStartedDate(2020, 2, 12);
+      bookEdit.clearFinishedDate();
+      bookEdit.typeFinishedDate(2021, 4, 14);
+
+      bookEdit.setSyncInterceptor();
+      bookEdit.clickSubmit();
+      bookEdit.waitSync();
+
+      const list = new DoneListPo();
+      list.visit();
+      list.isHere();
+
+      list.checkBook({
+        name: 'Тысячеликий герой',
+        started: '12.02.2020',
+        totalUnits: '14.04.2021',
+      });
+    });
+  });
+
+  context('Delete', () => {
+    beforeEach(() => {
+      const viewCheck: IUser = users.hrodvitnir;
+      loginAs(viewCheck);
+    });
+
+    it('should delete book', () => {
+      const page = new BookViewPo('01782c99-2b7c-42d2-aa6d-3442496b96dd');
+      page.visit();
+      page.isHere();
+
+      page.nameIs('Тысячеликий герой');
+
+      page.delete();
+
+      const list = new DoneListPo();
+      list.visit();
+      list.isHere();
+
+      list.haventGotBook({
+        name: 'Тысячеликий герой',
       });
     });
   });

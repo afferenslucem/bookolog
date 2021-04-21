@@ -33,6 +33,11 @@ export abstract class BookCreatePo extends PageObject {
     cy.get('mat-option').contains(series).click();
   }
 
+  public selectStatus(status: string): void {
+    cy.get(`app-book-edit-view form.book .book__status`).click();
+    cy.get('mat-option').contains(status).click();
+  }
+
   public selectType(type: string): void {
     cy.get(`app-book-edit-view form.book .book__type`).click();
     cy.get('mat-option').contains(type).click();
@@ -41,6 +46,7 @@ export abstract class BookCreatePo extends PageObject {
   public selectProgressType(progressType: string): void {
     cy.get(`app-book-edit-view form.book .book__progressType`).click();
     cy.get('mat-option').contains(progressType).click();
+    cy.wait(500);
   }
 
   public typeAudioProgressDone(done: number): void {
@@ -63,14 +69,34 @@ export abstract class BookCreatePo extends PageObject {
     cy.get(`app-book-edit-view form.book input.book__doneUnits`).type(done.toString());
   }
 
+  public clearPaperProgressDone(): void {
+    cy.get(`app-book-edit-view form.book input.book__doneUnits`).clear();
+  }
+
   public typePaperProgressTotal(total: number): void {
     cy.get(`app-book-edit-view form.book input.book__totalUnits`).type(total.toString());
+  }
+
+  public clearPaperProgressTotal(): void {
+    cy.get(`app-book-edit-view form.book input.book__totalUnits`).clear();
+  }
+
+  public clearStartedDate(): void {
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.year`).clear();
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.month`).clear();
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.day`).clear();
   }
 
   public typeStartedDate(year: number, month: number, day: number): void {
     cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.year`).type(year.toString());
     cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.month`).type(month.toString());
     cy.get(`app-book-edit-view form.book app-book-date-input.book__started input.day`).type(day.toString());
+  }
+
+  public clearFinishedDate(): void {
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__finished input.year`).clear();
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__finished input.month`).clear();
+    cy.get(`app-book-edit-view form.book app-book-date-input.book__finished input.day`).clear();
   }
 
   public typeFinishedDate(year: number, month: number, day: number): void {

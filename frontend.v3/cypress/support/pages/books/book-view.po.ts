@@ -56,4 +56,14 @@ export class BookViewPo extends PageObject {
       `${day.toString().padStart(2, '0')}.${month.toString().padStart(2, '0')}.${year}`,
     );
   }
+
+  public delete(): void {
+    cy.contains('app-book-view .mat-warn', 'Удалить').click();
+
+    cy.intercept('DELETE', '**/book/delete/**').as('delete');
+
+    cy.get('app-book-delete-dialog .mat-dialog-actions .delete').click();
+
+    cy.wait('@delete').its('response.statusCode').should('be.eq', 200);
+  }
 }
