@@ -11,13 +11,14 @@ import { routes as collectionRoutes } from './modules/collection/collection-rout
 import { routes as settingsRoutes } from './modules/settings/settings-routing.module';
 import { routes as statisticRoutes } from './modules/statistic/statistic-routing.module';
 import { MeResolver } from './modules/user/resolvers/me.resolver';
+import { AuthorizedGuard } from './modules/auth/guards/authorized.guard.service';
 
 const routes: Routes = [
   {
     component: StartPageComponent,
     path: '',
     pathMatch: 'full',
-    canActivate: [LogoutGuard],
+    canActivate: [AuthorizedGuard],
   },
   {
     component: InnerAreaComponent,
