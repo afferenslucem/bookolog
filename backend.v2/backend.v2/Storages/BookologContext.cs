@@ -2,6 +2,7 @@
 using System;
 using backend.v2.Models;
 using backend.v2.Models.Authentication;
+using Microsoft.Extensions.Logging;
 
 namespace backend.v2.Storages
 {
@@ -12,6 +13,8 @@ namespace backend.v2.Storages
         public DbSet<User> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Collection> Collections { get; set; }
+
+        private ILoggerFactory loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +51,13 @@ namespace backend.v2.Storages
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(Config.ConnectionString);
+        {
+            optionsBuilder.UseNpgsql(Config.ConnectionString);
+
+            if (!Config.IsProduction)
+            {
+                optionsBuilder.UseLoggerFactory(this.loggerFactory);
+            }
+        }
     }
 }

@@ -31,12 +31,14 @@ public static class Config
     public static string ConnectionString { get; set; }
 
     public static string[] AllowedOrigins { get; set; }
-
+    
     public static SMTPConfig SMTP { get; set; } = new SMTPConfig();
 
     public static StorageConfig FileStorage { get; set; } = new StorageConfig();
     public static SessionChiperConfig SessionChiper { get; set; } = new SessionChiperConfig();
     public static CookieConfig Cookie { get; set; } = new CookieConfig();
+    
+    public static bool IsProduction { get; set; }
 }
 
 public static class Version

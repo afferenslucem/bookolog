@@ -205,6 +205,8 @@ namespace backend.v2.tests.Services
         {            
             var user = new User()
             {
+                Login = "Login",
+                Email = "Email",
                 Password = "qwerty"
             };
 
@@ -216,10 +218,29 @@ namespace backend.v2.tests.Services
         }
         
         [TestMethod]
+        public async Task ShouldTrimBeforeRegisterUser()
+        {            
+            var user = new User()
+            {
+                Login = "Login   ",
+                Email = "   Email",
+                Password = "qwerty"
+            };
+
+            storageMock.Setup(m => m.Save(It.IsAny<User>()));
+
+            await serviceMock.Object.RegisterUser(user);
+            
+            storageMock.Verify(m => m.Save(It.Is<User>(v => v.Login == "Login" && v.Email == "Email")), Times.Once());
+        }
+        
+        [TestMethod]
         public async Task RegisterUserShouldThrowLoginError()
         {            
             var user = new User()
             {
+                Login = "Login",
+                Email = "Email",
                 Password = "qwerty"
             };
 
@@ -232,10 +253,29 @@ namespace backend.v2.tests.Services
         }
         
         [TestMethod]
+        public async Task RegisterUserShouldThrowLoginErrorByCheck()
+        {            
+            var user = new User()
+            {
+                Login = "Login",
+                Email = "Email",
+                Password = "qwerty"
+            };
+
+            serviceMock.Setup(m => m.CheckLoginExisting(It.IsAny<string>())).ThrowsAsync(new UserWithSameLoginAlreadyExistsException());
+            serviceMock.Setup(m => m.CheckEmailExisting(It.IsAny<string>())).Returns(Task.CompletedTask);
+
+            await Assert.ThrowsExceptionAsync<UserWithSameLoginAlreadyExistsException>(() =>
+                serviceMock.Object.RegisterUser(user));
+        }
+        
+        [TestMethod]
         public async Task RegisterUserShouldThrowEmailError()
         {            
             var user = new User()
             {
+                Login = "Login",
+                Email = "Email",
                 Password = "qwerty"
             };
 
@@ -248,10 +288,29 @@ namespace backend.v2.tests.Services
         }
         
         [TestMethod]
+        public async Task RegisterUserShouldThrowEmailErrorByCheck()
+        {            
+            var user = new User()
+            {
+                Login = "Login",
+                Email = "Email",
+                Password = "qwerty"
+            };
+
+            serviceMock.Setup(m => m.CheckEmailExisting(It.IsAny<string>())).ThrowsAsync(new UserWithSameEmailAlreadyExistsException());
+            serviceMock.Setup(m => m.CheckLoginExisting(It.IsAny<string>())).Returns(Task.CompletedTask);
+
+            await Assert.ThrowsExceptionAsync<UserWithSameEmailAlreadyExistsException>(async () =>
+                await serviceMock.Object.RegisterUser(user));
+        }
+        
+        [TestMethod]
         public async Task RegisterUserShouldThrowError()
         {            
             var user = new User()
             {
+                Login = "Login",
+                Email = "Email",
                 Password = "qwerty"
             };
 
@@ -266,6 +325,8 @@ namespace backend.v2.tests.Services
         {            
             var user = new User()
             {
+                Login = "Login",
+                Email = "Email",
                 Password = "qwerty"
             };
 
@@ -338,6 +399,50 @@ namespace backend.v2.tests.Services
             
             storageMock.Verify(m => m.GetById(1), Times.Once());
             Assert.AreSame(result, user);
+        }
+        
+        [TestMethod]
+        public async Task CheckLoginExistingShouldThrowError()
+        {            
+            var user = new User()
+            {
+            };
+
+            storageMock.Setup(m => m.GetByLogin(It.IsAny<string>())).ReturnsAsync(user);
+
+            await Assert.ThrowsExceptionAsync<UserWithSameLoginAlreadyExistsException>(
+                async () => await serviceMock.Object.CheckLoginExisting("login"));
+        }
+        
+        [TestMethod]
+        public async Task CheckLoginExistingShouldPass()
+        {            
+
+            storageMock.Setup(m => m.GetByLogin(It.IsAny<string>())).ReturnsAsync((User) null);
+
+            await serviceMock.Object.CheckLoginExisting("login");
+        }
+        
+        [TestMethod]
+        public async Task CheckEmailExistingShouldThrowError()
+        {            
+            var user = new User()
+            {
+            };
+
+            storageMock.Setup(m => m.GetByEmail(It.IsAny<string>())).ReturnsAsync(user);
+
+            await Assert.ThrowsExceptionAsync<UserWithSameEmailAlreadyExistsException>(
+                async () => await serviceMock.Object.CheckEmailExisting("login"));
+        }
+        
+        [TestMethod]
+        public async Task CheckEmailExistingShouldPass()
+        {            
+
+            storageMock.Setup(m => m.GetByEmail(It.IsAny<string>())).ReturnsAsync((User) null);
+
+            await serviceMock.Object.CheckEmailExisting("login");
         }
     }
 }

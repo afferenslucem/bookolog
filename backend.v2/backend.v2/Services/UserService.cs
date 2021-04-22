@@ -104,7 +104,14 @@ namespace backend.v2.Services
 
         public async Task<User> RegisterUser(User user)
         {
-            try{
+            user = this.PrepareForSave(user);
+            
+            await this.CheckLoginExisting(user.Login);
+            await this.CheckEmailExisting(user.Email);
+        
+            try
+            {
+                
                 var salt = this.hasher.GetSalt();
                 var hash = this.hasher.GetSHA256Hash(user.Password, salt);
 
@@ -122,6 +129,34 @@ namespace backend.v2.Services
                 else {
                     throw;
                 }
+            }
+        }
+
+        public User PrepareForSave(User user)
+        {
+            user.Email = user.Email.Trim();
+            user.Login = user.Login.Trim();
+
+            return user;
+        }
+
+        public virtual async Task CheckLoginExisting(string login)
+        {
+            var user = await this.storage.GetByLogin(login);
+
+            if (user != null)
+            {
+                throw new UserWithSameLoginAlreadyExistsException();
+            }
+        }
+
+        public virtual async Task CheckEmailExisting(string email)
+        {
+            var user = await this.storage.GetByEmail(email);
+
+            if (user != null)
+            {
+                throw new UserWithSameEmailAlreadyExistsException();
             }
         }
 

@@ -28,8 +28,6 @@ namespace backend.v2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            this.ReadConfig();
-
             services.AddCorsRules(corsPolicy);
 
             services
@@ -55,6 +53,8 @@ namespace backend.v2
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            this.ReadConfig(env);
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -95,8 +95,9 @@ namespace backend.v2
                 }
             }
         }
-        public void ReadConfig()
+        public void ReadConfig(IWebHostEnvironment env)
         {
+            Config.IsProduction = env.IsProduction();
             Config.ConnectionString = this.Configuration.GetConnectionString("DefaultConnection");
             Config.AllowedOrigins = this.Configuration.GetSection("AllowedOrigins").Get<string[]>();
             Config.FileStorage.StoragePath = this.Configuration.GetValue<string>("FileStorage:StoragePath");

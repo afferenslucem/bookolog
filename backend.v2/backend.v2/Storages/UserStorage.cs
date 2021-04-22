@@ -20,12 +20,13 @@ namespace backend.v2.Storages
         public async Task<User> GetByLogin(string login) {
             using var context = new BookologContext();
 
-            return await context.Users.Include(item => item.Avatar).Where(item => item.Login == login).SingleOrDefaultAsync();
+            return await context.Users.Include(item => item.Avatar).Where(item => item.Login.ToLower() == login.ToLower()).SingleOrDefaultAsync();
         }
+        
         public async Task<User> GetByEmail(string email) {
             using var context = new BookologContext();
 
-            return await context.Users.Include(item => item.Avatar).Where(item => item.Email == email).SingleOrDefaultAsync();
+            return await context.Users.Include(item => item.Avatar).Where(item => item.Email.ToLower() == email.ToLower()).SingleOrDefaultAsync();
         }
 
         public async Task<User> GetById(long id) {
@@ -36,7 +37,8 @@ namespace backend.v2.Storages
             return user;
         }
 
-        public async Task<User> Save(User user) {
+        public async Task<User> Save(User user)
+        {
             using var db = new BookologContext();
 
             await db.Users.AddAsync(user);
@@ -46,7 +48,8 @@ namespace backend.v2.Storages
             return user;
         }
 
-        public async Task<User> Update(User user) {
+        public async Task<User> Update(User user)
+        {
             using var db = new BookologContext();
 
             db.Users.Update(user);
@@ -67,6 +70,7 @@ namespace backend.v2.Storages
 
             return user;
         }
+        
         public async Task<User> Delete(string login) {
             using var db = new BookologContext();
 
