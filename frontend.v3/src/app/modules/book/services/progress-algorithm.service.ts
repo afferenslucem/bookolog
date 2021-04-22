@@ -15,7 +15,7 @@ export class ProgressAlgorithmService {
     if (this.oneOfProgressType(data)) {
       this.createAndSaveSettings(bookType.toString(), algorithm);
     } else {
-      this.appendToSettings(bookType.toString(), algorithm);
+      this.appendToSettings(bookType.toString(), algorithm, data);
     }
   }
 
@@ -63,10 +63,8 @@ export class ProgressAlgorithmService {
     this.localStorageService.setItem('progressAlgorithmPreference', JSON.stringify(settings));
   }
 
-  private appendToSettings(bookType: string, algorithm: ProgressAlgorithmType): void {
-    const data = this.localStorageService.getItem('progressAlgorithmPreference') || '{}';
-
-    const settings = JSON.parse(data) || {};
+  private appendToSettings(bookType: string, algorithm: ProgressAlgorithmType, data: string): void {
+    const settings = data ? JSON.parse(data) : {};
 
     settings[bookType] = algorithm;
 
