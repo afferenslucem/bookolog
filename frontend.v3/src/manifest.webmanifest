@@ -55,5 +55,22 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
-  ]
+  ],
+  "shortcuts": [
+      {
+        "name": "Открыть Список Прочитанных",
+        "url": "/done",
+        "icons": [{ "src": "assets/icons/icon-96x96.png", "sizes": "96x96" }]
+      },
+      {
+        "name": "Открыть Список к Прочтению",
+        "url": "/to-read",
+        "icons": [{ "src": "assets/icons/icon-96x96.png", "sizes": "96x96" }]
+      },
+      {
+        "name": "Дабавить книгу",
+        "url": "/book/create/0",
+        "icons": [{ "src": "assets/icons/icon-96x96.png", "sizes": "96x96" }]
+      }
+    ]
 }
