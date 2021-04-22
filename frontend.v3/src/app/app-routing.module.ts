@@ -4,7 +4,6 @@ import { InnerAreaComponent } from './main/components/inner-area/inner-area.comp
 import { LoggerWindowComponent } from './main/components/logger-window/logger-window.component';
 import { StartPageComponent } from './main/components/start-page/start-page.component';
 import { LoggedInGuard } from './modules/auth/guards/logged-in.guard';
-import { LogoutGuard } from './modules/auth/guards/logout.guard';
 import { routes as bookListRoutes } from './modules/book/book-routing.module';
 import { BookSyncResolver } from './modules/book/resolvers/book-sync.resolver';
 import { routes as collectionRoutes } from './modules/collection/collection-routes.model';
@@ -15,8 +14,13 @@ import { AuthorizedGuard } from './modules/auth/guards/authorized.guard.service'
 
 const routes: Routes = [
   {
-    component: StartPageComponent,
     path: '',
+    redirectTo: 'main',
+    pathMatch: 'full',
+  },
+  {
+    component: StartPageComponent,
+    path: 'main',
     pathMatch: 'full',
     canActivate: [AuthorizedGuard],
   },
@@ -26,8 +30,8 @@ const routes: Routes = [
     pathMatch: 'prefix',
 
     canActivateChild: [LoggedInGuard],
-
     children: [...bookListRoutes, ...statisticRoutes, ...settingsRoutes, ...collectionRoutes],
+
     resolve: {
       sync: BookSyncResolver,
       user: MeResolver,
@@ -41,7 +45,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload', enableTracing: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

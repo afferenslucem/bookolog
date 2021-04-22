@@ -4,6 +4,7 @@ import { RecoverPasswordComponent } from './components/recover-password/recover-
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AuthorizedGuard } from './guards/authorized.guard.service';
 import { LogoutGuard } from './guards/logout.guard';
+import { StartPageComponent } from '../../main/components/start-page/start-page.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,6 @@ export const routes: Routes = [
     path: 'logout',
     pathMatch: 'full',
     canActivate: [LogoutGuard],
-    redirectTo: '',
+    component: StartPageComponent,
   },
 ];
