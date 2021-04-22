@@ -1,7 +1,7 @@
 <form class="book" (ngSubmit)="submit()" *ngIf="bookForm" [formGroup]="form" appDatesValidator appUnitsValidator>
   <mat-form-field appearance="fill">
     <mat-label>Название</mat-label>
-    <input autocomplete="off" class="book__name" formControlName="name" matInput required type="text" />
+    <input appTrimOnBlur autocomplete="off" class="book__name" formControlName="name" matInput required type="text" />
     <mat-error *ngIf="form.get('name').invalid"> Это обязательное поле</mat-error>
   </mat-form-field>
 
@@ -14,7 +14,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Жанр</mat-label>
-    <input [matAutocomplete]="genreAutocomplete" formControlName="genre" class="book__genre" matInput type="text" />
+    <input [matAutocomplete]="genreAutocomplete" appTrimOnBlur class="book__genre" formControlName="genre" matInput type="text" />
 
     <mat-autocomplete #genreAutocomplete="matAutocomplete">
       <mat-option *ngFor="let genre of genres | async" [value]="genre | capitalize">
@@ -117,7 +117,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Заметки</mat-label>
-    <textarea class="book__notes" autocomplete="off" formControlName="note" matInput rows="4"></textarea>
+    <textarea appTrimOnBlur autocomplete="off" class="book__notes" formControlName="note" matInput rows="4"></textarea>
   </mat-form-field>
 
   <button [disabled]="form.invalid" class="w-100 book__create-button" color="primary" mat-flat-button type="submit">Сохранить</button>

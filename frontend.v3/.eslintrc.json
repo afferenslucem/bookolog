@@ -176,7 +176,8 @@
         "jasmine/no-spec-dupes": "off",
         "jasmine/no-unsafe-spy": "off",
         "jasmine/no-suite-dupes": "off",
-        "@typescript-eslint/no-floating-promises": "off"
+        "@typescript-eslint/no-floating-promises": "off",
+        "jasmine/no-expect-in-setup-teardown": "off"
       }
     },
     {

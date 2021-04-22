@@ -1,7 +1,7 @@
 <form (ngSubmit)="append()" [formGroup]="form" class="tags-input__form">
   <mat-form-field appearance="fill">
     <mat-label>{{ header }}</mat-label>
-    <input [matAutocomplete]="tagsAutocomplete" formControlName="input" class="tag" matInput type="text" />
+    <input [matAutocomplete]="tagsAutocomplete" appTrimOnBlur class="tag" formControlName="input" matInput />
   </mat-form-field>
 
   <mat-autocomplete #tagsAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)">

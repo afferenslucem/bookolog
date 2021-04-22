@@ -112,6 +112,7 @@ describe('ProgressAlgorithmService', () => {
       service.setAlgorithm(BookType.Audio, ProgressAlgorithmType.Left);
 
       const expected = JSON.stringify({ [BookType.Audio]: 'Left' });
+
       expect(setItemSpy).toHaveBeenCalledOnceWith('progressAlgorithmPreference', expected);
     });
 
@@ -121,6 +122,7 @@ describe('ProgressAlgorithmService', () => {
       service.setAlgorithm(BookType.Electronic, ProgressAlgorithmType.Done);
 
       const expected = JSON.stringify({ [BookType.Audio]: 'Left', [BookType.Electronic]: 'Done' });
+
       expect(setItemSpy).toHaveBeenCalledOnceWith('progressAlgorithmPreference', expected);
     });
 
@@ -130,6 +132,7 @@ describe('ProgressAlgorithmService', () => {
       service.setAlgorithm(BookType.Electronic, ProgressAlgorithmType.Done);
 
       const expected = JSON.stringify({ [BookType.Electronic]: 'Done' });
+
       expect(setItemSpy).toHaveBeenCalledOnceWith('progressAlgorithmPreference', expected);
     });
   });

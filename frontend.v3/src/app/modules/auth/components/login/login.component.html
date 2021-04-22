@@ -5,7 +5,7 @@
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
       <mat-label>Логин</mat-label>
-      <input formControlName="login" class="login" matInput required />
+      <input appTrimOnBlur class="login" formControlName="login" matInput required />
       <mat-error *ngIf="form.get('login').invalid"> Это обязательное поле </mat-error>
     </mat-form-field>
 

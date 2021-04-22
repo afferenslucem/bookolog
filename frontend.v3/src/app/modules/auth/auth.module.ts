@@ -11,6 +11,7 @@ import { routes } from './auth-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { FormattingModule } from '../formatting/formatting.module';
 
 @NgModule({
   declarations: [LoginComponent, RegistrationComponent, RecoverPasswordComponent],
@@ -23,6 +24,7 @@ import { RegistrationComponent } from './components/registration/registration.co
     MatButtonModule,
     ReactiveFormsModule,
     UiModule,
+    FormattingModule,
   ],
 })
 export class AuthModule {}

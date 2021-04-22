@@ -6,10 +6,11 @@ import { JoinPipe } from './pipes/join.pipe';
 import { PadStartPipe } from './pipes/pad-start.pipe';
 import { TimifyUnitsPipe } from './pipes/timify-units.pipe';
 import { MaxLengthPipe } from './pipes/max-length.pipe';
+import { TrimOnBlurDirective } from './directives/trim-on-blur.directive';
 
 @NgModule({
-  declarations: [JoinPipe, ChooseFormPipe, PadStartPipe, TimifyUnitsPipe, CapitalizePipe, MaxLengthPipe],
-  exports: [JoinPipe, TimifyUnitsPipe, CapitalizePipe, ChooseFormPipe, MaxLengthPipe],
+  declarations: [JoinPipe, ChooseFormPipe, PadStartPipe, TimifyUnitsPipe, CapitalizePipe, MaxLengthPipe, TrimOnBlurDirective],
+  exports: [JoinPipe, TimifyUnitsPipe, CapitalizePipe, ChooseFormPipe, MaxLengthPipe, TrimOnBlurDirective],
   imports: [CommonModule],
 })
 export class FormattingModule {}
