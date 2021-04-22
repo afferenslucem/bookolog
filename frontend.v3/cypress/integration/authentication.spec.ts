@@ -4,6 +4,8 @@ import * as users from '../fixtures/users.json';
 import { RegistrationPo } from '../support/pages/auth/registration.po';
 import { loginAs, logout } from '../support/routines';
 import { PageObject } from '../support/pages/page-object';
+import { MainPo } from '../support/pages/main.po';
+import { LogoutPo } from '../support/pages/auth/logout.po';
 
 context('Authentication', () => {
   beforeEach(() => {
@@ -33,10 +35,48 @@ context('Authentication', () => {
 
       loginPage.typeLogin(user.login);
       loginPage.typePassword(user.password);
-
       loginPage.clickSubmit();
 
       inProgressPage.isHere();
+    });
+
+    it('should redirect to inProgress for visit main', () => {
+      const user = users.hrodvitnir;
+
+      loginPage.typeLogin(user.login);
+      loginPage.typePassword(user.password);
+      loginPage.clickSubmit();
+
+      inProgressPage.isHere();
+
+      new MainPo().visit();
+
+      inProgressPage.isHere();
+    });
+  });
+
+  context('Logout', () => {
+    let loginPage: LoginPo = null;
+    let inProgressPage: InProgressListPo = null;
+
+    beforeEach(() => {
+      inProgressPage = new InProgressListPo();
+      loginPage = new LoginPo();
+      loginPage.visit();
+    });
+
+    it('should logout', () => {
+      const user = users.hrodvitnir;
+
+      loginPage.typeLogin(user.login);
+      loginPage.typePassword(user.password);
+      loginPage.clickSubmit();
+
+      inProgressPage.isHere();
+
+      new LogoutPo().visit();
+
+      new PageObject('/main').isHere();
     });
   });
 
