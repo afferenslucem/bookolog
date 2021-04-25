@@ -71,7 +71,7 @@ describe('RecoverPasswordComponent', () => {
       const error = element.querySelector<HTMLElement>('.email-field mat-error')?.innerHTML;
 
       expect(error).toEqual('Некорректный формат почты');
-    })
+    });
 
     it('required error', () => {
       component.form.value = '';
@@ -81,7 +81,7 @@ describe('RecoverPasswordComponent', () => {
       const error = element.querySelector<HTMLElement>('.email-field mat-error')?.innerHTML;
 
       expect(error).toEqual('Это обязательное поле');
-    })
+    });
 
     it('hide error', () => {
       component.form.value = 'alexshakirov@gmail.com';
@@ -91,6 +91,6 @@ describe('RecoverPasswordComponent', () => {
       const error = element.querySelector<HTMLElement>('.email-field mat-error')?.innerHTML;
 
       expect(error).toBeFalsy();
-    })
-  })
+    });
+  });
 });

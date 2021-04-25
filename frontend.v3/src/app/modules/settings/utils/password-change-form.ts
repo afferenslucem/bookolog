@@ -1,4 +1,4 @@
-import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { PasswordChangeData } from '../models/password-change-data';
 import { AbstractForm } from '../../../main/utils/abstract-form';
 import { FormValidators } from '../../../main/utils/FormValidators';

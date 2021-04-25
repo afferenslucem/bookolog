@@ -8,7 +8,7 @@ describe('CollectionDataForm', () => {
 
   beforeEach(() => {
     form = new CollectionDataForm();
-  })
+  });
 
   it('should create an instance', () => {
     expect(new CollectionDataForm()).toBeTruthy();
@@ -17,7 +17,7 @@ describe('CollectionDataForm', () => {
   describe('Accessors', () => {
     beforeEach(() => {
       form.build();
-    })
+    });
 
     describe('Getters', () => {
       it('name', () => {
@@ -46,12 +46,12 @@ describe('CollectionDataForm', () => {
         expect(form.nativeForm.get('description').value).toEqual('description');
       });
     });
-  })
+  });
 
   describe('Validation', () => {
     beforeEach(() => {
       form.build();
-    })
+    });
 
     describe('name', () => {
       it('should show required error', () => {
@@ -67,7 +67,7 @@ describe('CollectionDataForm', () => {
         expect(form.nameInvalid).toBeFalse();
         expect(form.nameErrorMessage).toEqual(null);
       });
-    })
+    });
 
     describe('description', () => {
       it('should hide required error for empty', () => {
@@ -83,10 +83,8 @@ describe('CollectionDataForm', () => {
         expect(form.descriptionInvalid).toBeFalse();
         expect(form.descriptionErrorMessage).toEqual(null);
       });
-    })
+    });
   });
-
-
 
   describe('build', () => {
     it('should init', () => {
@@ -95,7 +93,7 @@ describe('CollectionDataForm', () => {
         description: 'description',
         createDate: new Date(),
         modifyDate: new Date(),
-        guid: 'guid'
+        guid: 'guid',
       };
 
       form = new CollectionDataForm(initDate);
@@ -120,5 +118,5 @@ describe('CollectionDataForm', () => {
         description: '',
       } as any);
     });
-  })
+  });
 });

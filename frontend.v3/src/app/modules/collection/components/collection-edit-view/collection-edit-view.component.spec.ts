@@ -70,7 +70,7 @@ describe('CollectionEditViewComponent', () => {
 
   describe('service trigger', () => {
     it('should trigger saveOrUpdate', async () => {
-      spyOnProperty(component, 'collection', 'get').and.returnValue({})
+      spyOnProperty(component, 'collection', 'get').and.returnValue({});
 
       const spy = spyOn(component, 'saveOrUpdate');
 
@@ -157,8 +157,8 @@ describe('CollectionEditViewComponent', () => {
 
       const errorText = element.querySelector('.name-field mat-error').innerHTML;
 
-      expect(errorText).toEqual('Это обязательное поле')
-    })
+      expect(errorText).toEqual('Это обязательное поле');
+    });
 
     it('hidden', () => {
       component.form.name = 'name';
@@ -166,7 +166,7 @@ describe('CollectionEditViewComponent', () => {
 
       const errorText = element.querySelector('.name-field mat-error')?.innerHTML;
 
-      expect(errorText).toBeFalsy()
-    })
-  })
+      expect(errorText).toBeFalsy();
+    });
+  });
 });

@@ -131,25 +131,25 @@ describe('RegistrationComponent', () => {
 
   describe('local error', () => {
     describe('login', () => {
-      it('should show error', async () => {
+      it('should show error', () => {
         component.form.login = '';
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле')
+        expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле');
       });
 
-      it('should hide error', async () => {
+      it('should hide error', () => {
         component.form.login = 'login';
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.login-field mat-error')?.innerText).toBeFalsy()
+        expect(element.querySelector<HTMLElement>('.login-field mat-error')?.innerText).toBeFalsy();
       });
     });
 
     describe('email', () => {
-      it('should show required error', async () => {
+      it('should show required error', () => {
         component.form.email = '';
 
         fixture.detectChanges();
@@ -157,7 +157,7 @@ describe('RegistrationComponent', () => {
         expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Это обязательное поле');
       });
 
-      it('should show format error', async () => {
+      it('should show format error', () => {
         component.form.email = 'email';
 
         fixture.detectChanges();
@@ -165,7 +165,7 @@ describe('RegistrationComponent', () => {
         expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Некорректный формат почты');
       });
 
-      it('should hide error', async () => {
+      it('should hide error', () => {
         component.form.email = 'email@qwerty.uiop';
 
         fixture.detectChanges();
@@ -177,25 +177,25 @@ describe('RegistrationComponent', () => {
 
   describe('local error', () => {
     describe('login', () => {
-      it('should show error', async () => {
+      it('should show error', () => {
         component.form.login = '';
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле')
+        expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле');
       });
 
-      it('should hide error', async () => {
+      it('should hide error', () => {
         component.form.login = 'login';
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.login-field mat-error')?.innerText).toBeFalsy()
+        expect(element.querySelector<HTMLElement>('.login-field mat-error')?.innerText).toBeFalsy();
       });
     });
 
     describe('email', () => {
-      it('should show required error', async () => {
+      it('should show required error', () => {
         component.form.email = '';
 
         fixture.detectChanges();
@@ -203,7 +203,7 @@ describe('RegistrationComponent', () => {
         expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Это обязательное поле');
       });
 
-      it('should show format error', async () => {
+      it('should show format error', () => {
         component.form.email = 'email';
 
         fixture.detectChanges();
@@ -211,7 +211,7 @@ describe('RegistrationComponent', () => {
         expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Некорректный формат почты');
       });
 
-      it('should hide error', async () => {
+      it('should hide error', () => {
         component.form.email = 'email@qwerty.uiop';
 
         fixture.detectChanges();
@@ -221,7 +221,7 @@ describe('RegistrationComponent', () => {
     });
 
     describe('password', () => {
-      it('should show required error', async () => {
+      it('should show required error', () => {
         component.form.password = '';
 
         fixture.detectChanges();
@@ -229,7 +229,7 @@ describe('RegistrationComponent', () => {
         expect(element.querySelector<HTMLElement>('.password-field mat-error')?.innerText).toEqual('Это обязательное поле');
       });
 
-      it('should hide error', async () => {
+      it('should hide error', () => {
         component.form.password = 'password';
 
         fixture.detectChanges();
@@ -239,7 +239,7 @@ describe('RegistrationComponent', () => {
     });
 
     describe('password', () => {
-      it('should show required error', async () => {
+      it('should show required error', () => {
         component.form.password = '';
         component.form.confirmation = '';
 
@@ -248,7 +248,7 @@ describe('RegistrationComponent', () => {
         expect(element.querySelector<HTMLElement>('.confirmation-field mat-error')?.innerText).toEqual('Это обязательное поле');
       });
 
-      it('should show confirmation error', async () => {
+      it('should show confirmation error', () => {
         component.form.password = 'qwerty';
         component.form.confirmation = 'uiop';
 
@@ -257,7 +257,7 @@ describe('RegistrationComponent', () => {
         expect(element.querySelector<HTMLElement>('.confirmation-field mat-error')?.innerText).toEqual('Пароли не совпадают');
       });
 
-      it('should hide error', async () => {
+      it('should hide error', () => {
         component.form.password = 'password';
 
         fixture.detectChanges();

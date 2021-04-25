@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Action } from 'src/app/main/resolvers/action.resolver';
 import { ILogger } from 'waterlog';
@@ -8,7 +7,6 @@ import { DateUtils } from '../../../../main/utils/date-utils';
 import { NotificationService } from '../../../notification/services/notification.service';
 import { TitleService } from '../../../ui/service/title.service';
 import { Collection } from '../../models/collection';
-import { CollectionData } from '../../models/collection-data';
 import { CollectionService } from '../../services/collection.service';
 import { CollectionDataForm } from '../../utils/collection-data-form';
 
@@ -46,7 +44,7 @@ export class CollectionEditViewComponent implements OnInit {
   public ngOnInit(): void {}
 
   public async submit(): Promise<void> {
-    const data = Object.assign(this.collection, this.form.value) as Collection;
+    const data = Object.assign(this.collection, this.form.value);
 
     await this.saveOrUpdate(data);
   }

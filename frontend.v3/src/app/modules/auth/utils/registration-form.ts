@@ -123,6 +123,6 @@ export class RegistrationForm extends AbstractForm<RegistrationData> {
       login: this.login,
       email: this.email,
       password: this.password,
-    }
+    };
   }
 }

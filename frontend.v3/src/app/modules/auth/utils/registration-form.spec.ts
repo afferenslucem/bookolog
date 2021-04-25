@@ -65,7 +65,6 @@ describe('RegistrationForm', () => {
     });
   });
 
-
   describe('Validation', () => {
     describe('login', () => {
       it('should be valid', () => {
