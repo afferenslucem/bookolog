@@ -10,6 +10,7 @@ import { TitleService } from '../../../ui/service/title.service';
 import { RegistrationComponent } from './registration.component';
 import { TitleText } from '../../../ui/models/title-text';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { FormValidators } from '../../../../main/utils/FormValidators';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
@@ -60,7 +61,7 @@ describe('RegistrationComponent', () => {
         confirmation: new FormControl('uiop'),
       });
 
-      const result = component.confirmationValidation(form);
+      const result = FormValidators.confirmationValidation(form);
 
       expect(result.passwordMatch).toBeTrue();
     });
@@ -71,7 +72,7 @@ describe('RegistrationComponent', () => {
         confirmation: new FormControl('qwerty'),
       });
 
-      const result = component.confirmationValidation(form);
+      const result = FormValidators.confirmationValidation(form);
 
       expect(result?.passwordMatch).toBeFalsy();
     });
@@ -80,10 +81,10 @@ describe('RegistrationComponent', () => {
   it('should send registration', async () => {
     const spy = spyOn(auth, 'registration').and.resolveTo();
 
-    component.form.get('login').setValue('hrodvitnir');
-    component.form.get('email').setValue('alexshakirov74@gmail.com');
-    component.form.get('password').setValue('qwerty');
-    component.form.get('confirmation').setValue('qwerty');
+    component.form.login = 'hrodvitnir';
+    component.form.email = 'alexshakirov74@gmail.com';
+    component.form.password = 'qwerty';
+    component.form.confirmation = 'qwerty';
 
     expect(component.form.valid).toBeTrue();
 
@@ -96,7 +97,7 @@ describe('RegistrationComponent', () => {
     });
   });
 
-  describe('error', () => {
+  describe('remote error', () => {
     it('should show email error', async () => {
       const spy = spyOn(auth, 'registration').and.rejectWith({
         error: 'User with same email already exisists',
@@ -125,6 +126,144 @@ describe('RegistrationComponent', () => {
       await component.submit();
 
       expect(component.error).toEqual(component.RegistrationError.Undefined);
+    });
+  });
+
+  describe('local error', () => {
+    describe('login', () => {
+      it('should show error', async () => {
+        component.form.login = '';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле')
+      });
+
+      it('should hide error', async () => {
+        component.form.login = 'login';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.login-field mat-error')?.innerText).toBeFalsy()
+      });
+    });
+
+    describe('email', () => {
+      it('should show required error', async () => {
+        component.form.email = '';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Это обязательное поле');
+      });
+
+      it('should show format error', async () => {
+        component.form.email = 'email';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Некорректный формат почты');
+      });
+
+      it('should hide error', async () => {
+        component.form.email = 'email@qwerty.uiop';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toBeFalsy();
+      });
+    });
+  });
+
+  describe('local error', () => {
+    describe('login', () => {
+      it('should show error', async () => {
+        component.form.login = '';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле')
+      });
+
+      it('should hide error', async () => {
+        component.form.login = 'login';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.login-field mat-error')?.innerText).toBeFalsy()
+      });
+    });
+
+    describe('email', () => {
+      it('should show required error', async () => {
+        component.form.email = '';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Это обязательное поле');
+      });
+
+      it('should show format error', async () => {
+        component.form.email = 'email';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Некорректный формат почты');
+      });
+
+      it('should hide error', async () => {
+        component.form.email = 'email@qwerty.uiop';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toBeFalsy();
+      });
+    });
+
+    describe('password', () => {
+      it('should show required error', async () => {
+        component.form.password = '';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.password-field mat-error')?.innerText).toEqual('Это обязательное поле');
+      });
+
+      it('should hide error', async () => {
+        component.form.password = 'password';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.password-field mat-error')?.innerText).toBeFalsy();
+      });
+    });
+
+    describe('password', () => {
+      it('should show required error', async () => {
+        component.form.password = '';
+        component.form.confirmation = '';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.confirmation-field mat-error')?.innerText).toEqual('Это обязательное поле');
+      });
+
+      it('should show confirmation error', async () => {
+        component.form.password = 'qwerty';
+        component.form.confirmation = 'uiop';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.confirmation-field mat-error')?.innerText).toEqual('Пароли не совпадают');
+      });
+
+      it('should hide error', async () => {
+        component.form.password = 'password';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.password-field mat-error')?.innerText).toBeFalsy();
+      });
     });
   });
 });

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { getConsoleLogger } from 'src/app/main/app.logging';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { UserService } from 'src/app/modules/user/services/user.service';
 import { ILogger } from 'waterlog';
+import { EmailForm } from '../../../../main/utils/email-form';
 
 @Component({
   selector: 'app-email-change',
@@ -11,20 +11,18 @@ import { ILogger } from 'waterlog';
   styleUrls: ['./email-change.component.scss'],
 })
 export class EmailChangeComponent implements OnInit {
-  public form: FormGroup = null;
+  public form: EmailForm = null;
 
   private logger: ILogger = getConsoleLogger('EmailChangeComponent');
 
   constructor(public userService: UserService, private notification: NotificationService) {}
 
   public get email(): string {
-    return this.form.get('email').value;
+    return this.form.value;
   }
 
   public ngOnInit(): void {
-    this.form = new FormBuilder().group({
-      email: new FormControl(this.userService.user.email, [Validators.required, Validators.email]),
-    });
+    this.form = new EmailForm(this.userService.user.email);
   }
 
   public async submit(): Promise<void> {

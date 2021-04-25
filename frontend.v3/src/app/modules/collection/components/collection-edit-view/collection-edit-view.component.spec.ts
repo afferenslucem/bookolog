@@ -6,13 +6,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generator.service';
 import { CollectionService } from '../../services/collection.service';
 import { Action } from '../../../../main/resolvers/action.resolver';
-import { Location } from '@angular/common';
 import { TitleService } from '../../../ui/service/title.service';
 
 describe('CollectionEditViewComponent', () => {
   let component: CollectionEditViewComponent;
   let fixture: ComponentFixture<CollectionEditViewComponent>;
   let service: CollectionService;
+  let element: HTMLElement;
   let titleService: TitleService;
 
   beforeEach(async () => {
@@ -28,6 +28,7 @@ describe('CollectionEditViewComponent', () => {
     service = TestBed.inject(CollectionService);
     component = fixture.componentInstance;
     titleService = TestBed.inject(TitleService);
+    element = fixture.nativeElement;
     fixture.detectChanges();
   });
 
@@ -69,7 +70,7 @@ describe('CollectionEditViewComponent', () => {
 
   describe('service trigger', () => {
     it('should trigger saveOrUpdate', async () => {
-      component.collection = {} as any;
+      spyOnProperty(component, 'collection', 'get').and.returnValue({})
 
       const spy = spyOn(component, 'saveOrUpdate');
 
@@ -148,4 +149,24 @@ describe('CollectionEditViewComponent', () => {
       expect(redirectSpy).toHaveBeenCalledWith(collection.guid);
     });
   });
+
+  describe('should show local error', () => {
+    it('required', () => {
+      component.form.name = '';
+      fixture.detectChanges();
+
+      const errorText = element.querySelector('.name-field mat-error').innerHTML;
+
+      expect(errorText).toEqual('Это обязательное поле')
+    })
+
+    it('hidden', () => {
+      component.form.name = 'name';
+      fixture.detectChanges();
+
+      const errorText = element.querySelector('.name-field mat-error')?.innerHTML;
+
+      expect(errorText).toBeFalsy()
+    })
+  })
 });

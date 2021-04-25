@@ -115,5 +115,6 @@ export abstract class BookCreatePo extends PageObject {
 
   public waitSync(): void {
     cy.wait('@sync').its('response.statusCode').should('be.oneOf', [200, 201]);
+    cy.wait(500);
   }
 }

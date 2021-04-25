@@ -2,32 +2,29 @@
   <app-title></app-title>
 </mat-toolbar>
 <div class="content">
-  <form (ngSubmit)="submit($event)" [formGroup]="form">
-    <mat-form-field appearance="fill">
+  <form (ngSubmit)="submit($event)" [formGroup]="form.nativeForm">
+    <mat-form-field appearance="fill" class="login-field">
       <mat-label>Логин</mat-label>
       <input appTrimOnBlur class="login" formControlName="login" matInput required />
-      <mat-error *ngIf="form.get('login').invalid"> Это обязательное поле </mat-error>
+      <mat-error *ngIf="form.loginInvalid">{{ form.loginErrorMessage }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="email-field">
       <mat-label>Почта</mat-label>
       <input appTrimOnBlur class="email" formControlName="email" matInput required />
-      <mat-error *ngIf="form.get('email').invalid"> Это обязательное поле </mat-error>
+      <mat-error *ngIf="form.emailInvalid">{{ form.emailErrorMessage }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="password-field">
       <mat-label>Пароль</mat-label>
       <input formControlName="password" class="password" matInput required type="password" />
-      <mat-error *ngIf="form.get('password').invalid"> Это обязательное поле </mat-error>
+      <mat-error *ngIf="form.passwordInvalid">{{ form.passwordErrorMessage }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="confirmation-field">
       <mat-label>Подтверждение пароля</mat-label>
       <input formControlName="confirmation" class="password-confirmation" matInput required type="password" />
-      <mat-error *ngIf="form.get('confirmation')?.errors?.required"> Это обязательное поле </mat-error>
-      <mat-error *ngIf="form.get('confirmation')?.errors?.passwordMatch && !form.get('confirmation')?.errors?.required">
-        Пароли не совпадают
-      </mat-error>
+      <mat-error *ngIf="form.confirmationInvalid">{{ form.confirmationErrorMessage }}</mat-error>
     </mat-form-field>
 
     <mat-error *ngIf="error !== null" class="registration-error">

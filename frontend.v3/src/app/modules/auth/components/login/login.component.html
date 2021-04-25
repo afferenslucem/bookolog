@@ -2,17 +2,17 @@
   <app-title></app-title>
 </mat-toolbar>
 <div class="content">
-  <form [formGroup]="form">
-    <mat-form-field appearance="fill">
+  <form [formGroup]="form.nativeForm">
+    <mat-form-field appearance="fill" class="login-field">
       <mat-label>Логин</mat-label>
       <input appTrimOnBlur class="login" formControlName="login" matInput required />
-      <mat-error *ngIf="form.get('login').invalid"> Это обязательное поле </mat-error>
+      <mat-error *ngIf="form.loginInvalid">Это обязательное поле</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="password-field">
       <mat-label>Пароль</mat-label>
-      <input formControlName="password" class="password" matInput required type="password" />
-      <mat-error *ngIf="form.get('password').invalid"> Это обязательное поле </mat-error>
+      <input class="password" formControlName="password" matInput required type="password" />
+      <mat-error *ngIf="form.passwordInvalid">Это обязательное поле</mat-error>
     </mat-form-field>
 
     <mat-error *ngIf="error !== null" class="login-error">

@@ -2,10 +2,11 @@ import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import { BookType } from '../models/book-type';
 import { Book } from '../models/book';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
 import { BookDate } from '../models/book-date';
 import { Observable } from 'rxjs';
+import { AbstractForm } from '../../../main/utils/abstract-form';
 
 const defaultValue: BookData = {
   guid: '',
@@ -32,11 +33,12 @@ const defaultValue: BookData = {
   rereadedBy: [],
 };
 
-export class BookDataForm {
+export class BookDataForm extends AbstractForm<Book> {
   public snapshot: Book;
-  public form: FormGroup = null;
 
   public constructor(book?: Book) {
+    super(null);
+
     this.snapshot = book || new Book(defaultValue);
   }
 

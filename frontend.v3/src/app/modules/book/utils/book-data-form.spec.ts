@@ -19,7 +19,7 @@ describe('BookDataForm', () => {
 
     it('genreChanges', async () => {
       const observable = bookDataForm.genreChanges.pipe(first()).toPromise();
-      bookDataForm.form.get('genre').setValue('genre');
+      bookDataForm.nativeForm.get('genre').setValue('genre');
       const result = await observable;
 
       expect(result).toEqual('genre');
@@ -27,7 +27,7 @@ describe('BookDataForm', () => {
 
     it('statusChanges', async () => {
       const observable = bookDataForm.statusChanges.pipe(first()).toPromise();
-      bookDataForm.form.get('status').setValue(BookStatus.Done);
+      bookDataForm.nativeForm.get('status').setValue(BookStatus.Done);
       const result = await observable;
 
       expect(result).toEqual(BookStatus.Done);
@@ -35,7 +35,7 @@ describe('BookDataForm', () => {
 
     it('typeChanges', async () => {
       const observable = bookDataForm.typeChanges.pipe(first()).toPromise();
-      bookDataForm.form.get('type').setValue(BookType.Electronic);
+      bookDataForm.nativeForm.get('type').setValue(BookType.Electronic);
       const result = await observable;
 
       expect(result).toEqual(BookType.Electronic);
@@ -43,7 +43,7 @@ describe('BookDataForm', () => {
 
     it('progressTypeChanges', async () => {
       const observable = bookDataForm.progressTypeChanges.pipe(first()).toPromise();
-      bookDataForm.form.get('progressType').setValue(ProgressAlgorithmType.Left);
+      bookDataForm.nativeForm.get('progressType').setValue(ProgressAlgorithmType.Left);
       const result = await observable;
 
       expect(result).toEqual(ProgressAlgorithmType.Left);
@@ -211,7 +211,7 @@ describe('BookDataForm', () => {
     it('status', () => {
       bookDataForm.status = BookStatus.Done;
 
-      const result = bookDataForm.form.get('status').value;
+      const result = bookDataForm.nativeForm.get('status').value;
 
       expect(result).toEqual(BookStatus.Done);
     });
@@ -223,7 +223,7 @@ describe('BookDataForm', () => {
         day: 12,
       };
 
-      const result = bookDataForm.form.get('started').value;
+      const result = bookDataForm.nativeForm.get('started').value;
 
       expect(result).toEqual({
         year: 2021,
@@ -239,7 +239,7 @@ describe('BookDataForm', () => {
         day: 14,
       };
 
-      const result = bookDataForm.form.get('finished').value;
+      const result = bookDataForm.nativeForm.get('finished').value;
 
       expect(result).toEqual({
         year: 2021,
@@ -251,7 +251,7 @@ describe('BookDataForm', () => {
     it('doneUnits', () => {
       bookDataForm.doneUnits = 100;
 
-      const result = bookDataForm.form.get('doneUnits').value;
+      const result = bookDataForm.nativeForm.get('doneUnits').value;
 
       expect(result).toEqual(100);
     });
@@ -259,7 +259,7 @@ describe('BookDataForm', () => {
     it('totalUnits', () => {
       bookDataForm.totalUnits = 120;
 
-      const result = bookDataForm.form.get('totalUnits').value;
+      const result = bookDataForm.nativeForm.get('totalUnits').value;
 
       expect(result).toEqual(120);
     });
@@ -267,7 +267,7 @@ describe('BookDataForm', () => {
     it('type', () => {
       bookDataForm.type = BookType.Electronic;
 
-      const result = bookDataForm.form.get('type').value;
+      const result = bookDataForm.nativeForm.get('type').value;
 
       expect(result).toEqual(BookType.Electronic);
     });
@@ -275,7 +275,7 @@ describe('BookDataForm', () => {
     it('progressType', () => {
       bookDataForm.progressType = ProgressAlgorithmType.Left;
 
-      const result = bookDataForm.form.get('progressType').value;
+      const result = bookDataForm.nativeForm.get('progressType').value;
 
       expect(result).toEqual(ProgressAlgorithmType.Left);
     });

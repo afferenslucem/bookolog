@@ -49,7 +49,7 @@ describe('RecoverPasswordComponent', () => {
   it('should send recovery', async () => {
     const recoverySpy = spyOn(auth, 'recoveryPassword');
 
-    component.form.get('email').setValue('alexshakirov74@gmail.com');
+    component.form.value = 'alexshakirov74@gmail.com';
 
     await component.submit();
 
@@ -61,4 +61,36 @@ describe('RecoverPasswordComponent', () => {
 
     expect(title.title).toEqual(TitleText.PasswordRecovery);
   });
+
+  describe('local errors', () => {
+    it('format error', () => {
+      component.form.value = 'hrodvitnir';
+
+      fixture.detectChanges();
+
+      const error = element.querySelector<HTMLElement>('.email-field mat-error')?.innerHTML;
+
+      expect(error).toEqual('Некорректный формат почты');
+    })
+
+    it('required error', () => {
+      component.form.value = '';
+
+      fixture.detectChanges();
+
+      const error = element.querySelector<HTMLElement>('.email-field mat-error')?.innerHTML;
+
+      expect(error).toEqual('Это обязательное поле');
+    })
+
+    it('hide error', () => {
+      component.form.value = 'alexshakirov@gmail.com';
+
+      fixture.detectChanges();
+
+      const error = element.querySelector<HTMLElement>('.email-field mat-error')?.innerHTML;
+
+      expect(error).toBeFalsy();
+    })
+  })
 });

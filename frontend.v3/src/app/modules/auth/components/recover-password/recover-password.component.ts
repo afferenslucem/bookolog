@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../../notification/services/notification.service';
 import { TitleService } from '../../../ui/service/title.service';
 import { AuthService } from '../../services/auth.service';
+import { EmailForm } from '../../../../main/utils/email-form';
 
 @Component({
   selector: 'app-recover-password',
@@ -11,9 +11,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./recover-password.component.scss'],
 })
 export class RecoverPasswordComponent implements OnInit {
-  public form: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.email]),
-  });
+  public form: EmailForm = new EmailForm(null);
 
   constructor(
     private authService: AuthService,
@@ -30,7 +28,7 @@ export class RecoverPasswordComponent implements OnInit {
     const value = this.form.value;
 
     try {
-      await this.authService.recoveryPassword(value.email);
+      await this.authService.recoveryPassword(value);
 
       this.notificationService.createInfoNotification('Письмо с паролем отправлено на почту');
 

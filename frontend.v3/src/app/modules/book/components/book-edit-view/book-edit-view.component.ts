@@ -98,7 +98,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
       if (this.action === Action.Create) {
         await this.redirect();
       } else {
-        this.location.back();
+        await this.router.navigate(['/book', this.book.guid]);
       }
     } catch (e) {
       this.logSaveError(e);

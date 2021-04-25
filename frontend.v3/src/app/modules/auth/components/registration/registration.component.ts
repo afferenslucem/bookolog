@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { getConsoleLogger } from '../../../../main/app.logging';
 import { TitleService } from '../../../ui/service/title.service';
 import { AuthService } from '../../services/auth.service';
+import { RegistrationForm } from '../../utils/registration-form';
 
 enum RegistrationError {
   Undefined = -1,
@@ -19,15 +20,7 @@ enum RegistrationError {
 export class RegistrationComponent implements OnInit {
   public error: RegistrationError = null;
   public RegistrationError: typeof RegistrationError = RegistrationError;
-  public form: FormGroup = new FormGroup(
-    {
-      login: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-      email: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.email]),
-      password: new FormControl(null, [Validators.required]),
-      confirmation: new FormControl(null, [Validators.required]),
-    },
-    [this.confirmationValidation],
-  );
+  public form: RegistrationForm = new RegistrationForm();
   private logger = getConsoleLogger('RegistrationComponent');
 
   constructor(private authService: AuthService, private router: Router, private title: TitleService) {}
@@ -40,7 +33,6 @@ export class RegistrationComponent implements OnInit {
     event?.preventDefault();
 
     const data = this.form.value;
-    delete data.confirmation;
 
     try {
       await this.authService.registration(data);
@@ -55,19 +47,6 @@ export class RegistrationComponent implements OnInit {
       } else {
         this.error = RegistrationError.Undefined;
       }
-    }
-  }
-
-  public confirmationValidation(form: AbstractControl): ValidationErrors | null {
-    if (form.get('password')?.value !== form.get('confirmation')?.value) {
-      const error = {
-        passwordMatch: true,
-      };
-
-      form.get('confirmation').setErrors(error);
-      return error;
-    } else {
-      return null;
     }
   }
 }

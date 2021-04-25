@@ -3,7 +3,6 @@ import { TestCore } from '../../../../main/test/test-core.spec';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ChangePasswordError, PasswordChangeComponent } from './password-change.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FormBuilder, FormControl } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { ChangeDetectionStrategy } from '@angular/core';
@@ -45,40 +44,12 @@ describe('PasswordChangeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('confirmationValidation', () => {
-    it('should set error', () => {
-      const form = new FormBuilder().group({
-        newPassword: new FormControl('qwerty'),
-        passwordConfirmation: new FormControl('uiop'),
-      });
-
-      const formError = component.confirmationValidation(form);
-
-      expect(formError.passwordMatch).toBeTruthy();
-
-      expect(form.get('passwordConfirmation').errors?.passwordMatch).toBeTruthy();
-    });
-
-    it('should pass check', () => {
-      const form = new FormBuilder().group({
-        newPassword: new FormControl('qwerty'),
-        passwordConfirmation: new FormControl('qwerty'),
-      });
-
-      const formError = component.confirmationValidation(form);
-
-      expect(formError?.passwordMatch).toBeFalsy();
-
-      expect(form.get('passwordConfirmation').errors?.passwordMatch).toBeFalsy();
-    });
-  });
-
   describe('send password', () => {
     it('should send data', () => {
       const spy = spyOn(authService, 'changePassword');
 
-      component.form.get('currentPassword').setValue('qwerty');
-      component.form.get('newPassword').setValue('uiop');
+      component.form.currentPassword = 'qwerty';
+      component.form.newPassword = 'uiop';
 
       component.submit();
 
@@ -86,7 +57,7 @@ describe('PasswordChangeComponent', () => {
     });
   });
 
-  describe('error', () => {
+  describe('remote errors', () => {
     it('should show old password error', async () => {
       const spy = spyOn(authService, 'changePassword').and.rejectWith({
         error: 'Incorrect old password',
@@ -123,6 +94,64 @@ describe('PasswordChangeComponent', () => {
 
       expect(component.error).toBeFalsy();
       expect(element.querySelector<HTMLElement>('.login-error')?.innerText).toBeFalsy();
+    });
+  });
+
+  describe('form errors', () => {
+    describe('Current password', () => {
+      it('should not show error', () => {
+        component.form.currentPassword = 'qwerty';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.current-password-field mat-error')?.innerText).toBeFalsy();
+      });
+
+      it('should show error', () => {
+        component.form.currentPassword = '';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.current-password-field mat-error')?.innerText).toEqual('Это обязательное поле');
+      });
+    });
+
+    describe('New password', () => {
+      it('should not show error', () => {
+        component.form.newPassword = 'qwerty';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.new-password-field mat-error')?.innerText).toBeFalsy();
+      });
+
+      it('should show error', () => {
+        component.form.newPassword = '';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.new-password-field mat-error')?.innerText).toEqual('Это обязательное поле');
+      });
+    });
+
+    describe('Confirmation password', () => {
+      it('should not show error', () => {
+        component.form.newPassword = 'qwerty';
+        component.form.passwordConfirmation = 'qwerty';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.confirmation-password-field mat-error')?.innerText).toBeFalsy();
+      });
+
+      it('should show confirmation error', () => {
+        component.form.newPassword = 'qwerty';
+        component.form.passwordConfirmation = 'qwerty2';
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLElement>('.confirmation-password-field mat-error')?.innerText).toEqual('Пароли не совпадают');
+      });
     });
   });
 });

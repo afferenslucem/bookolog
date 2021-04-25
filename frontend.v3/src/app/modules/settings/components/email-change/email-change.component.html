@@ -1,11 +1,11 @@
 <div class="content">
-  <form (ngSubmit)="submit()" [formGroup]="form">
+  <form (ngSubmit)="submit()" [formGroup]="form.nativeForm">
     <label class="form-header">Смена почты</label>
 
     <mat-form-field appearance="fill">
       <mat-label>Почта</mat-label>
       <input appTrimOnBlur formControlName="email" matInput required />
-      <mat-error *ngIf="form.get('email').invalid"> Это обязательное поле </mat-error>
+      <mat-error *ngIf="form.invalid">{{ form.errorMessage }}</mat-error>
     </mat-form-field>
 
     <button [disabled]="form.invalid" class="w-100" color="primary" mat-flat-button type="submit">Сменить почту</button>

@@ -46,7 +46,7 @@ export abstract class AbstractBookDataForm {
   }
 
   public get form(): FormGroup {
-    return this.bookForm.form;
+    return this.bookForm.nativeForm;
   }
 
   public get book(): Book {

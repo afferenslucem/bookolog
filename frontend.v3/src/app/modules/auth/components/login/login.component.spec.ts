@@ -43,7 +43,7 @@ describe('LoginPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('error', () => {
+  describe('remote error', () => {
     it('should show credential error', async () => {
       const spy = jasmine.createSpy();
       spy.and.throwError(new CredentialsException());
@@ -94,12 +94,30 @@ describe('LoginPageComponent', () => {
     });
   });
 
+  describe('form errors', () => {
+    it('should show login error', () => {
+      component.form.login = '';
+
+      fixture.detectChanges();
+
+      expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле');
+    });
+
+    it('should show password error', () => {
+      component.form.password = '';
+
+      fixture.detectChanges();
+
+      expect(element.querySelector<HTMLElement>('.password-field mat-error').innerText).toEqual('Это обязательное поле');
+    });
+  });
+
   describe('should send credentials', () => {
     it('copy form', async () => {
       const loginSpy = spyOn(auth, 'login').and.resolveTo();
 
-      component.form.get('login').setValue('hrodvitnir');
-      component.form.get('password').setValue('qwerty');
+      component.form.login = 'hrodvitnir';
+      component.form.password = 'qwerty';
 
       const event: any = {
         preventDefault: jasmine.createSpy(),

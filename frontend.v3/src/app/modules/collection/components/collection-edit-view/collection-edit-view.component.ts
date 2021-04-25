@@ -10,6 +10,7 @@ import { TitleService } from '../../../ui/service/title.service';
 import { Collection } from '../../models/collection';
 import { CollectionData } from '../../models/collection-data';
 import { CollectionService } from '../../services/collection.service';
+import { CollectionDataForm } from '../../utils/collection-data-form';
 
 @Component({
   selector: 'app-collection-edit-view',
@@ -17,17 +18,14 @@ import { CollectionService } from '../../services/collection.service';
   styleUrls: ['./collection-edit-view.component.scss'],
 })
 export class CollectionEditViewComponent implements OnInit {
-  public form: FormGroup = null;
-  public collection: Collection;
+  public form: CollectionDataForm = null;
+
+  public get collection(): Collection {
+    return this.form.snapshot;
+  }
+
   public action: Action;
   private logger: ILogger = getConsoleLogger('CollectionEditViewComponent');
-  private defaultData: CollectionData = {
-    name: '',
-    description: '',
-    guid: '',
-    createDate: '',
-    modifyDate: '',
-  };
 
   constructor(
     private titleService: TitleService,
@@ -36,27 +34,12 @@ export class CollectionEditViewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
-    this.collection = new Collection({
-      name: '',
-      description: '',
-      guid: '',
-      createDate: '',
-      modifyDate: '',
-    });
-
     this.activatedRoute.data.subscribe(data => {
-      this.collection = Object.assign({}, data.collection || new Collection(this.defaultData));
-
-      this.formFromCollection(this.collection);
+      this.form = new CollectionDataForm(data.collection);
 
       this.readAction(data.action);
-    });
-  }
 
-  public formFromCollection(collection: Collection): void {
-    this.form = new FormBuilder().group({
-      name: new FormControl(collection.name, Validators.required),
-      description: new FormControl(collection.description),
+      this.form.build();
     });
   }
 
