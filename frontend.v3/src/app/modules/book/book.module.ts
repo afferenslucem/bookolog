@@ -37,6 +37,7 @@ import { BookAuthorsComponent } from './components/book-authors/book-authors.com
 import { BookRereadFormComponent } from './components/book-reread-form/book-reread-form.component';
 import { UnitsValidatorDirective } from './validators/units-validator.directive';
 import { DatesValidatorDirective } from './validators/dates-validator.directive';
+import { ListModuleModule } from '../list-module/list-module.module';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { DatesValidatorDirective } from './validators/dates-validator.directive'
     MatOptionModule,
     InputsModule,
     ScrollingModule,
+    ListModuleModule,
   ],
   exports: [DoneBooksListComponent, DoneBookComponent, BooksByYearsComponent, ToReadBookComponent],
 })

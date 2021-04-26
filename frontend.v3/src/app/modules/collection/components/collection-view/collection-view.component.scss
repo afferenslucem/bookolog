@@ -1,5 +1,19 @@
 @import "~src/styles/variables";
 
+:host {
+  display: flex;
+
+  flex-flow: column;
+
+  height: 100%;
+
+  .collection-books-content {
+    flex-grow: 1;
+
+    overflow: auto;
+  }
+}
+
 .collection {
   margin-bottom: $ind-2;
 

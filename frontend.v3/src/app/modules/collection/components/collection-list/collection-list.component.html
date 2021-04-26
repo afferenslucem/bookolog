@@ -1,14 +1,19 @@
-<mat-list role="list">
-  <mat-list-item *ngFor="let item of collections$ | async">
-    <div class="statistic-item w-100">
-      <div class="statistic-item__header">
-        <span [routerLink]="['/series', item.guid]" class="link">{{ item.name | capitalize }}</span>
-        <div class="actions">
-          <mat-icon [hidden]="!item.shouldSync">update</mat-icon>
-          <!--mat-icon [routerLink]="['/series/edit', item.guid]" (click)="$event.stopPropagation()">edit</mat-icon-->
-          <span>{{ item.count }}</span>
+<div *ngIf="collections$ | async as collections" class="collection-static-list">
+  <mat-list role="list" *ngIf="collections?.length > 0; else emptyList">
+    <mat-list-item *ngFor="let item of collections">
+      <div class="statistic-item w-100">
+        <div class="statistic-item__header">
+          <span [routerLink]="['/series', item.guid]" class="link">{{ item.name | capitalize }}</span>
+          <div class="actions">
+            <mat-icon [hidden]="!item.shouldSync">update</mat-icon>
+            <!--mat-icon [routerLink]="['/series/edit', item.guid]" (click)="$event.stopPropagation()">edit</mat-icon-->
+            <span>{{ item.count }}</span>
+          </div>
         </div>
       </div>
-    </div>
-  </mat-list-item>
-</mat-list>
+    </mat-list-item>
+  </mat-list>
+  <ng-template #emptyList>
+    <app-empty-list-placeholder></app-empty-list-placeholder>
+  </ng-template>
+</div>

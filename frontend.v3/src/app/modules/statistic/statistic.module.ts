@@ -12,6 +12,7 @@ import { YearsListComponent } from './component/years-list/years-list.component'
 import { YearStatisticComponent } from './component/year-statistic/year-statistic.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RouterModule } from '@angular/router';
+import { ListModuleModule } from '../list-module/list-module.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,6 @@ import { RouterModule } from '@angular/router';
     YearsListComponent,
     YearStatisticComponent,
   ],
-  imports: [CommonModule, MatListModule, FormattingModule, BookModule, ScrollingModule, RouterModule],
+  imports: [CommonModule, MatListModule, FormattingModule, BookModule, ScrollingModule, RouterModule, ListModuleModule],
 })
 export class StatisticModule {}

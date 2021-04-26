@@ -14,6 +14,7 @@ import { CollectionDeleteDialogComponent } from './components/collection-delete-
 import { CollectionEditViewComponent } from './components/collection-edit-view/collection-edit-view.component';
 import { CollectionListComponent } from './components/collection-list/collection-list.component';
 import { CollectionViewComponent } from './components/collection-view/collection-view.component';
+import { ListModuleModule } from '../list-module/list-module.module';
 
 @NgModule({
   declarations: [CollectionEditViewComponent, CollectionListComponent, CollectionViewComponent, CollectionDeleteDialogComponent],
@@ -29,6 +30,7 @@ import { CollectionViewComponent } from './components/collection-view/collection
     BookModule,
     MatIconModule,
     MatDialogModule,
+    ListModuleModule,
   ],
 })
 export class CollectionModule {}

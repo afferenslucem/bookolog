@@ -32,7 +32,7 @@
       "name": "pictures",
       "version": 2,
       "cacheConfig": {
-        "maxSize": 100,
+        "maxSize": 200,
         "maxAge": "100d",
         "strategy": "performance"
       },

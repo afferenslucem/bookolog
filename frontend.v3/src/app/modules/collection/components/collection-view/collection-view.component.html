@@ -8,9 +8,14 @@
     <button (click)="openDeleteDialog(collection)" color="warn" mat-flat-button>Удалить</button>
   </div>
 </div>
-<div class="book-list">
-  <div *ngFor="let book of books$ | async; let last = last; trackBy: bookTrackBy">
-    <app-to-read-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-to-read-book>
-    <mat-divider *ngIf="!last"></mat-divider>
+<div class="collection-books-content" *ngIf="books$ | async as books">
+  <div class="book-list" *ngIf="+books?.length > 0; else emptyList">
+    <div *ngFor="let book of books; let last = last; trackBy: bookTrackBy">
+      <app-to-read-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-to-read-book>
+      <mat-divider *ngIf="!last"></mat-divider>
+    </div>
   </div>
+  <ng-template #emptyList>
+    <app-empty-list-placeholder></app-empty-list-placeholder>
+  </ng-template>
 </div>
