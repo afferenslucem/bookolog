@@ -10,10 +10,6 @@ export class EmailForm extends AbstractForm<string> {
     super(form);
   }
 
-  private getEmailControl(): AbstractControl {
-    return this.form.get('email');
-  }
-
   public get invalid(): boolean {
     return this.getEmailControl().invalid;
   }
@@ -38,5 +34,9 @@ export class EmailForm extends AbstractForm<string> {
 
   public set value(v: string) {
     this.getEmailControl().setValue(v);
+  }
+
+  private getEmailControl(): AbstractControl {
+    return this.form.get('email');
   }
 }

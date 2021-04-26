@@ -11,20 +11,19 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { Book } from '../../models/book';
 import { BookType } from '../../models/book-type';
 import { BookStatus } from '../../models/book-status';
+import { DateUtils } from '../../../../main/utils/date-utils';
 
 describe('BookViewComponent', () => {
   let component: BookViewComponent;
   let fixture: ComponentFixture<BookViewComponent>;
   let element: HTMLElement;
+  let bookService: BookService;
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [BookViewComponent],
       imports: [FormattingModule, RouterTestingModule, HttpClientTestingModule],
-      providers: [
-        { provide: MatDialog, useValue: {} },
-        { provide: BookService, useValue: {} },
-      ],
+      providers: [{ provide: MatDialog, useValue: {} }, BookService],
     })
       .overrideComponent(BookEditViewComponent, {
         set: {
@@ -38,6 +37,7 @@ describe('BookViewComponent', () => {
     fixture = TestBed.createComponent(BookViewComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+    bookService = TestBed.inject(BookService);
   });
 
   it('Creating', () => {
@@ -376,6 +376,99 @@ describe('BookViewComponent', () => {
         fixture.detectChanges();
 
         expect(element.querySelector<HTMLDivElement>('.book__note')).toBeFalsy();
+      });
+    });
+
+    describe('Buttons', () => {
+      describe('Mark inProgress', () => {
+        it('should render for toRead book', () => {
+          component.book = new Book({ status: BookStatus.ToRead } as any);
+
+          fixture.detectChanges();
+
+          expect(element.querySelector<HTMLElement>('.mark-as-progress')).toBeTruthy();
+        });
+
+        it('should not render for InProgress book', () => {
+          component.book = new Book({ status: BookStatus.InProgress } as any);
+
+          fixture.detectChanges();
+
+          expect(element.querySelector<HTMLElement>('.mark-as-progress')).toBeFalsy();
+        });
+
+        it('should not render for Done book', () => {
+          component.book = new Book({ status: BookStatus.Done } as any);
+
+          fixture.detectChanges();
+
+          expect(element.querySelector<HTMLElement>('.mark-as-progress')).toBeFalsy();
+        });
+      });
+
+      describe('Mark done', () => {
+        it('should not render for toRead book', () => {
+          component.book = new Book({ status: BookStatus.ToRead } as any);
+
+          fixture.detectChanges();
+
+          expect(element.querySelector<HTMLElement>('.mark-as-done')).toBeFalsy();
+        });
+
+        it('should not render for InProgress book', () => {
+          component.book = new Book({ status: BookStatus.InProgress } as any);
+
+          fixture.detectChanges();
+
+          expect(element.querySelector<HTMLElement>('.mark-as-done')).toBeTruthy();
+        });
+
+        it('should not render for Done book', () => {
+          component.book = new Book({ status: BookStatus.Done } as any);
+
+          fixture.detectChanges();
+
+          expect(element.querySelector<HTMLElement>('.mark-as-done')).toBeFalsy();
+        });
+      });
+    });
+  });
+
+  describe('Actions', () => {
+    describe('Status actions', () => {
+      let updateSpy: jasmine.Spy = null;
+
+      beforeEach(() => {
+        updateSpy = spyOn(bookService, 'saveOrUpdate');
+      });
+
+      it('markAsProgress', () => {
+        const book = {
+          status: BookStatus.ToRead,
+        } as Book;
+
+        component.markAsProgress(book);
+
+        expect(updateSpy).toHaveBeenCalledOnceWith({
+          status: BookStatus.InProgress,
+          started: DateUtils.today,
+        } as Book);
+      });
+
+      it('markAsProgress', () => {
+        const book = {
+          status: BookStatus.InProgress,
+          totalUnits: 100,
+        } as Book;
+
+        component.markAsDone(book);
+
+        expect(updateSpy).toHaveBeenCalledOnceWith({
+          status: BookStatus.Done,
+          doneUnits: 100,
+          totalUnits: 100,
+          finished: DateUtils.today,
+        } as Book);
       });
     });
   });

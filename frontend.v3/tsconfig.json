@@ -29,5 +29,7 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "exclude": ["cypress/**/*"]
+  "exclude": [
+    "cypress/**/*"
+  ]
 }

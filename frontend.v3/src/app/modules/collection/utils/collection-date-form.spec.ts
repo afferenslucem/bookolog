@@ -1,6 +1,4 @@
 import { CollectionDataForm } from './collection-data-form';
-import { ProgressAlgorithmType } from '../../book/models/progress-algorithm-type';
-import { CollectionData } from '../models/collection-data';
 import { Collection } from '../models/collection';
 
 describe('CollectionDataForm', () => {

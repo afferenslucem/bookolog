@@ -14,10 +14,18 @@ export class DoneListPo extends BookListPo {
   public lastBookIs(book: IBookCheckData): void {
     cy.get('.done-books-list app-done-book:first-child').as('book');
 
-    cy.get('@book').contains(book.name);
-    book.authors.forEach(item => cy.get('@book').contains(item));
-    cy.get('@book').contains(book.started);
-    cy.get('@book').contains(book.finished);
+    if (book.name) {
+      cy.get('@book').contains(book.name);
+    }
+    if (book.authors) {
+      book.authors.forEach(item => cy.get('@book').contains(item));
+    }
+    if (book.started) {
+      cy.get('@book').contains(book.started);
+    }
+    if (book.finished) {
+      cy.get('@book').contains(book.finished);
+    }
   }
 
   protected containsBook(book: IBookCheckData): Chainable<any> {

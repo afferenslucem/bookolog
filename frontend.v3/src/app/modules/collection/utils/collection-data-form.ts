@@ -14,6 +14,12 @@ const defaultValue: CollectionData = {
 export class CollectionDataForm extends AbstractForm<Collection> {
   public snapshot: Collection;
 
+  constructor(collection?: Collection) {
+    super(null);
+
+    this.snapshot = collection || new Collection(defaultValue);
+  }
+
   public get name(): string {
     return this.getNameControl().value;
   }
@@ -50,10 +56,8 @@ export class CollectionDataForm extends AbstractForm<Collection> {
     return null;
   }
 
-  constructor(collection?: Collection) {
-    super(null);
-
-    this.snapshot = collection || new Collection(defaultValue);
+  public build(): void {
+    this.formFromCollection(this.snapshot);
   }
 
   private getNameControl(): AbstractControl {
@@ -62,10 +66,6 @@ export class CollectionDataForm extends AbstractForm<Collection> {
 
   private getDescriptionControl(): AbstractControl {
     return this.form.get('description');
-  }
-
-  public build(): void {
-    this.formFromCollection(this.snapshot);
   }
 
   private formFromCollection(collection: Collection): void {

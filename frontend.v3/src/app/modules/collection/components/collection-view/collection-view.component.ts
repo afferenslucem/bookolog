@@ -72,11 +72,6 @@ export class CollectionViewComponent implements OnInit {
       .subscribe(() => void this.onDelete(collection));
   }
 
-  private async onDelete(collection: Collection): Promise<void> {
-    await this.deleteCollection(collection);
-    await this.redirect();
-  }
-
   public async deleteCollection(collection: Collection): Promise<void> {
     await this.bookService.deleteBooksFromCollection(collection.guid);
     await this.collectionService.delete(collection);
@@ -88,5 +83,10 @@ export class CollectionViewComponent implements OnInit {
 
   public setTitle(title: string): void {
     this.titleService.setCustom(title);
+  }
+
+  private async onDelete(collection: Collection): Promise<void> {
+    await this.deleteCollection(collection);
+    await this.redirect();
   }
 }

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { TitleService } from '../../../ui/service/title.service';
@@ -10,12 +10,12 @@ import { BookType } from '../../models/book-type';
 import { BookService } from '../../services/book.service';
 import { BookDeleteDialogComponent, DeleteDialogResult } from '../book-delete-dialog/book-delete-dialog.component';
 import _ from 'declarray';
+import { DateUtils } from '../../../../main/utils/date-utils';
 
 @Component({
   selector: 'app-book-view',
   templateUrl: './book-view.component.html',
   styleUrls: ['./book-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookViewComponent implements OnInit, OnDestroy {
   public book: Book;
@@ -32,21 +32,17 @@ export class BookViewComponent implements OnInit, OnDestroy {
     public titleService: TitleService,
     public dialog: MatDialog,
     private bookService: BookService,
+    private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
   ) {
-    activatedRoute.data.subscribe(data => {
-      this.book = data.book;
-      this.doneReadings = _((data.readings as Book[]) || [])
-        .where((item: Book) => item.status === BookStatus.Done)
-        .toArray();
-    });
+    activatedRoute.data.subscribe(data => this.onDataInit(data));
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.titleService.setBook();
   }
 
@@ -74,6 +70,23 @@ export class BookViewComponent implements OnInit, OnDestroy {
     await this.bookService.delete(book);
   }
 
+  public async markAsProgress(book: Book): Promise<void> {
+    book.started = DateUtils.today;
+    book.status = BookStatus.InProgress;
+
+    await this.bookService.saveOrUpdate(book);
+    await this.reload();
+  }
+
+  public async markAsDone(book: Book): Promise<void> {
+    book.finished = DateUtils.today;
+    book.doneUnits = book.totalUnits;
+    book.status = BookStatus.Done;
+
+    await this.bookService.saveOrUpdate(book);
+    await this.reload();
+  }
+
   public async redirect(): Promise<void> {
     switch (this.book.status) {
       case BookStatus.InProgress: {
@@ -89,5 +102,16 @@ export class BookViewComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+
+  public async reload(): Promise<void> {
+    await this.router.navigate(['.'], { relativeTo: this.activatedRoute });
+  }
+
+  private onDataInit(data: Data): void {
+    this.book = data.book;
+    this.doneReadings = _((data.readings as Book[]) || [])
+      .where((item: Book) => item.status === BookStatus.Done)
+      .toArray();
   }
 }

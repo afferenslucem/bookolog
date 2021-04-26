@@ -17,13 +17,13 @@
 
     <mat-form-field appearance="fill" class="password-field">
       <mat-label>Пароль</mat-label>
-      <input formControlName="password" class="password" matInput required type="password" />
+      <input class="password" formControlName="password" matInput required type="password" />
       <mat-error *ngIf="form.passwordInvalid">{{ form.passwordErrorMessage }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="confirmation-field">
       <mat-label>Подтверждение пароля</mat-label>
-      <input formControlName="confirmation" class="password-confirmation" matInput required type="password" />
+      <input class="password-confirmation" formControlName="confirmation" matInput required type="password" />
       <mat-error *ngIf="form.confirmationInvalid">{{ form.confirmationErrorMessage }}</mat-error>
     </mat-form-field>
 

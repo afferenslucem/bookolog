@@ -1,4 +1,4 @@
-<form class="book" (ngSubmit)="submit()" *ngIf="bookForm" [formGroup]="form" appDatesValidator appUnitsValidator>
+<form (ngSubmit)="submit()" *ngIf="bookForm" [formGroup]="form" appDatesValidator appUnitsValidator class="book">
   <mat-form-field appearance="fill">
     <mat-label>Название</mat-label>
     <input appTrimOnBlur autocomplete="off" class="book__name" formControlName="name" matInput required type="text" />
@@ -9,7 +9,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Год выпуска</mat-label>
-    <input formControlName="year" class="book__year" matInput type="number" />
+    <input class="book__year" formControlName="year" matInput type="number" />
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -72,11 +72,11 @@
     <div *ngSwitchCase="BookType.Audio" class="book-edit__progress_audio">
       <div>
         <mat-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</mat-label>
-        <app-book-time-input formControlName="doneUnits" class="book__doneUnits"></app-book-time-input>
+        <app-book-time-input class="book__doneUnits" formControlName="doneUnits"></app-book-time-input>
       </div>
       <div>
         <mat-label>Всего</mat-label>
-        <app-book-time-input formControlName="totalUnits" class="book__totalUnits"></app-book-time-input>
+        <app-book-time-input class="book__totalUnits" formControlName="totalUnits"></app-book-time-input>
       </div>
     </div>
     <div *ngSwitchDefault class="book-edit__progress_audio">

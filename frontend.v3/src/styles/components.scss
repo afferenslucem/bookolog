@@ -125,3 +125,22 @@ mat-toolbar {
     margin-left: $ind-1;
   }
 }
+
+.button-group {
+  &.vertical {
+    > button {
+      width: 100%;
+
+      &:not(:last-child) {
+        margin-bottom: $ind-2;
+      }
+    }
+  }
+}
+
+.mat-flat-button {
+  &.book-status-button {
+    background-color: $book-status-button-color;
+    color: $white;
+  }
+}

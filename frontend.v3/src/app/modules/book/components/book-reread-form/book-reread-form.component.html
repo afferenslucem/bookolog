@@ -28,7 +28,7 @@
     <mat-label>Тип книги</mat-label>
     <mat-select class="book__type" formControlName="type">
       <mat-option [value]="BookType.Paper">Бумажная книга</mat-option>
-      <mat-option [value]="BookType.Electronic">Электронная книга </mat-option>
+      <mat-option [value]="BookType.Electronic">Электронная книга</mat-option>
       <mat-option [value]="BookType.Audio">Аудиокнига</mat-option>
     </mat-select>
   </mat-form-field>
@@ -65,7 +65,7 @@
       </mat-form-field>
     </div>
 
-    <mat-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс </mat-error>
+    <mat-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс</mat-error>
   </div>
 
   <div [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
@@ -78,7 +78,7 @@
     <app-book-date-input formControlName="finished"></app-book-date-input>
   </div>
 
-  <mat-error *ngIf="form?.errors?.invalidDates"> Дата начала больше даты окончания </mat-error>
+  <mat-error *ngIf="form?.errors?.invalidDates"> Дата начала больше даты окончания</mat-error>
 
   <button [disabled]="form.invalid" class="w-100" color="primary" mat-flat-button type="submit">Сохранить</button>
 </form>

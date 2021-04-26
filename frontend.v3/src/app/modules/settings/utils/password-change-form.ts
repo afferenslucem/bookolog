@@ -4,8 +4,19 @@ import { AbstractForm } from '../../../main/utils/abstract-form';
 import { FormValidators } from '../../../main/utils/FormValidators';
 
 export class PasswordChangeForm extends AbstractForm<PasswordChangeData> {
-  public getCurrentPasswordControl(): AbstractControl {
-    return this.form.get('currentPassword');
+  public constructor() {
+    const form = new FormBuilder().group(
+      {
+        currentPassword: new FormControl(null, [Validators.required]),
+        password: new FormControl(null, [Validators.required]),
+        confirmation: new FormControl(null, [Validators.required]),
+      },
+      {
+        validators: [FormValidators.confirmationValidation],
+      },
+    );
+
+    super(form);
   }
 
   public get currentPassword(): string {
@@ -28,10 +39,6 @@ export class PasswordChangeForm extends AbstractForm<PasswordChangeData> {
     }
   }
 
-  public getNewPasswordControl(): AbstractControl {
-    return this.form.get('password');
-  }
-
   public get newPassword(): string {
     return this.getNewPasswordControl().value;
   }
@@ -50,10 +57,6 @@ export class PasswordChangeForm extends AbstractForm<PasswordChangeData> {
     } else {
       return null;
     }
-  }
-
-  public getConfirmationControl(): AbstractControl {
-    return this.form.get('confirmation');
   }
 
   public get passwordConfirmation(): string {
@@ -78,25 +81,22 @@ export class PasswordChangeForm extends AbstractForm<PasswordChangeData> {
     }
   }
 
-  public constructor() {
-    const form = new FormBuilder().group(
-      {
-        currentPassword: new FormControl(null, [Validators.required]),
-        password: new FormControl(null, [Validators.required]),
-        confirmation: new FormControl(null, [Validators.required]),
-      },
-      {
-        validators: [FormValidators.confirmationValidation],
-      },
-    );
-
-    super(form);
-  }
-
   public get value(): PasswordChangeData {
     return {
       currentPassword: this.currentPassword,
       newPassword: this.newPassword,
     };
+  }
+
+  public getCurrentPasswordControl(): AbstractControl {
+    return this.form.get('currentPassword');
+  }
+
+  public getNewPasswordControl(): AbstractControl {
+    return this.form.get('password');
+  }
+
+  public getConfirmationControl(): AbstractControl {
+    return this.form.get('confirmation');
   }
 }

@@ -18,10 +18,6 @@ export class RegistrationForm extends AbstractForm<RegistrationData> {
     super(form);
   }
 
-  public getLoginControl(): AbstractControl {
-    return this.form.get('login');
-  }
-
   public get login(): string {
     return this.getLoginControl().value;
   }
@@ -40,10 +36,6 @@ export class RegistrationForm extends AbstractForm<RegistrationData> {
     } else {
       return null;
     }
-  }
-
-  public getEmailControl(): AbstractControl {
-    return this.form.get('email');
   }
 
   public get email(): string {
@@ -68,10 +60,6 @@ export class RegistrationForm extends AbstractForm<RegistrationData> {
     }
   }
 
-  public getPasswordControl(): AbstractControl {
-    return this.form.get('password');
-  }
-
   public get password(): string {
     return this.getPasswordControl().value;
   }
@@ -90,10 +78,6 @@ export class RegistrationForm extends AbstractForm<RegistrationData> {
     } else {
       return null;
     }
-  }
-
-  public getConfirmationControl(): AbstractControl {
-    return this.form.get('confirmation');
   }
 
   public get confirmation(): string {
@@ -124,5 +108,21 @@ export class RegistrationForm extends AbstractForm<RegistrationData> {
       email: this.email,
       password: this.password,
     };
+  }
+
+  public getLoginControl(): AbstractControl {
+    return this.form.get('login');
+  }
+
+  public getEmailControl(): AbstractControl {
+    return this.form.get('email');
+  }
+
+  public getPasswordControl(): AbstractControl {
+    return this.form.get('password');
+  }
+
+  public getConfirmationControl(): AbstractControl {
+    return this.form.get('confirmation');
   }
 }

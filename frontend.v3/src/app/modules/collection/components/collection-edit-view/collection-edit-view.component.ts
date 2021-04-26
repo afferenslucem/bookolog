@@ -17,11 +17,6 @@ import { CollectionDataForm } from '../../utils/collection-data-form';
 })
 export class CollectionEditViewComponent implements OnInit {
   public form: CollectionDataForm = null;
-
-  public get collection(): Collection {
-    return this.form.snapshot;
-  }
-
   public action: Action;
   private logger: ILogger = getConsoleLogger('CollectionEditViewComponent');
 
@@ -39,6 +34,10 @@ export class CollectionEditViewComponent implements OnInit {
 
       this.form.build();
     });
+  }
+
+  public get collection(): Collection {
+    return this.form.snapshot;
   }
 
   public ngOnInit(): void {}

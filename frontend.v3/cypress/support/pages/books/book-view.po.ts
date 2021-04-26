@@ -66,4 +66,12 @@ export class BookViewPo extends PageObject {
 
     cy.wait('@delete').its('response.statusCode').should('be.eq', 200);
   }
+
+  public markAsProgress(): void {
+    cy.get('app-book-view .mark-as-progress').click();
+  }
+
+  public markAsDone(): void {
+    cy.get('app-book-view .mark-as-done').click();
+  }
 }

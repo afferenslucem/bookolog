@@ -98,16 +98,31 @@
   <label>Заметки</label>
 </div>
 
-<button
-  *ngIf="book.status == BookStatus.Done"
-  [routerLink]="['/book/reread', book.guid]"
-  class="w-100 edit-button"
-  color="accent"
-  mat-flat-button
->
-  Перечитать
-</button>
+<div class="button-group vertical">
+  <button
+    (click)="markAsProgress(book)"
+    *ngIf="book.status == BookStatus.ToRead"
+    class="mark-as-progress book-status-button"
+    mat-flat-button
+  >
+    Читаю
+  </button>
 
-<button [routerLink]="['/book/edit', book.guid]" class="w-100 edit-button" color="primary" mat-flat-button>Редактировать</button>
+  <button (click)="markAsDone(book)" *ngIf="book.status == BookStatus.InProgress" class="mark-as-done book-status-button" mat-flat-button>
+    Прочитана
+  </button>
 
-<button (click)="openDeleteDialog(book)" class="w-100" color="warn" mat-flat-button>Удалить</button>
+  <button
+    *ngIf="book.status == BookStatus.Done"
+    [routerLink]="['/book/reread', book.guid]"
+    class="edit-button"
+    color="accent"
+    mat-flat-button
+  >
+    Перечитать
+  </button>
+
+  <button [routerLink]="['/book/edit', book.guid]" class="w-100 edit-button" color="primary" mat-flat-button>Редактировать</button>
+
+  <button (click)="openDeleteDialog(book)" color="warn" mat-flat-button>Удалить</button>
+</div>

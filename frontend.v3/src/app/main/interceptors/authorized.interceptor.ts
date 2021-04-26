@@ -21,12 +21,16 @@ export class AuthorizedInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
         if (!err.error && err.status === 401) {
-          this.userService.clearStorage();
-          this.router.navigate(['/login']);
+          void this.onUnauthorized();
         }
         this.logger.warn('error: ', err);
         return throwError(err);
       }),
     );
+  }
+
+  private async onUnauthorized() {
+    await this.userService.logout();
+    await this.router.navigate(['/login']);
   }
 }

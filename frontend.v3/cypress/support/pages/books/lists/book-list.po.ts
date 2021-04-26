@@ -11,8 +11,6 @@ export abstract class BookListPo extends PageObject {
 
   public abstract lastBookIs(book: IBookCheckData): void;
 
-  protected abstract containsBook(book: IBookCheckData): Chainable<any>;
-
   public haventGotBook(book: IBookCheckData): void {
     this.containsBook(book).should('not.exist');
   }
@@ -40,4 +38,6 @@ export abstract class BookListPo extends PageObject {
       }
     });
   }
+
+  protected abstract containsBook(book: IBookCheckData): Chainable<any>;
 }

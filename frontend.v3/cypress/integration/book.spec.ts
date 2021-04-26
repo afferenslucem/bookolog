@@ -29,6 +29,138 @@ context('Book', () => {
     logout();
   });
 
+  context('View', () => {
+    beforeEach(() => {
+      const viewCheck: IUser = users.hrodvitnir;
+      loginAs(viewCheck);
+    });
+
+    context('toRead', () => {
+      let bookView: BookViewPo = null;
+
+      beforeEach(() => {
+        bookView = new BookViewPo('dce0d8ed-d71d-42e0-87cc-593b7f53c1e7');
+        bookView.visit();
+      });
+
+      it('page of toRead should exists', () => {
+        bookView.isHere();
+      });
+
+      it('should correctly fill toRead book', () => {
+        const book: IBook = books.amberTelescope;
+
+        bookView.nameIs(book.name);
+        bookView.authorsIs(book.authors);
+        bookView.yearIs(book.year);
+        bookView.typeIs(book.type);
+        bookView.genreIs(book.genre);
+        bookView.seriesIs(book.series);
+        bookView.statusIs(book.status);
+        bookView.tagsIs(book.tags);
+      });
+
+      it('should mark as progress', () => {
+        const book: IBook = books.amberTelescope;
+        const today = new Date();
+
+        bookView.setSyncInterceptor();
+        bookView.markAsProgress();
+        bookView.waitSync();
+
+        bookView.statusIs('Читаю');
+        bookView.startDateIs(today.getFullYear(), today.getMonth() + 1, today.getDate());
+
+        const expected: IBookCheckData = {
+          name: book.name,
+          authors: book.authors,
+        };
+
+        const inProgressListPage = new InProgressListPo();
+        inProgressListPage.visit();
+        inProgressListPage.isHere();
+
+        inProgressListPage.lastBookIs(expected);
+      });
+    });
+
+    context('inProgress', () => {
+      let bookView: BookViewPo = null;
+
+      beforeEach(() => {
+        bookView = new BookViewPo('177b2b7d-d1dc-455a-89f1-37c5208b7728');
+        bookView.visit();
+      });
+
+      it('page of inProgress book should exists', () => {
+        bookView.isHere();
+      });
+
+      it('should correctly fill inProgress book', () => {
+        const book: IBook = books.humans;
+
+        bookView.nameIs(book.name);
+        bookView.authorsIs(book.authors);
+        bookView.typeIs(book.type);
+        bookView.genreIs(book.genre);
+        bookView.seriesIs(book.series);
+        bookView.statusIs(book.status);
+        bookView.tagsIs(book.tags);
+        bookView.startDateIs(book.startYear, book.startMonth, book.startDay);
+      });
+
+      it('should mark as done', () => {
+        const book: IBook = books.humans;
+        const today = new Date();
+
+        bookView.setSyncInterceptor();
+        bookView.markAsDone();
+        bookView.waitSync();
+
+        bookView.statusIs('Прочитана');
+        bookView.finishDateIs(today.getFullYear(), today.getMonth() + 1, today.getDate());
+
+        const expected: IBookCheckData = {
+          name: book.name,
+          authors: book.authors,
+        };
+
+        const doneListPo = new DoneListPo();
+        doneListPo.visit();
+        doneListPo.isHere();
+
+        doneListPo.lastBookIs(expected);
+      });
+    });
+
+    context('done', () => {
+      let bookView: BookViewPo = null;
+
+      beforeEach(() => {
+        bookView = new BookViewPo('757a6143-5e76-448d-8100-f032f9e03de3');
+        bookView.visit();
+      });
+
+      it('page of done book should exists', () => {
+        bookView.isHere();
+      });
+
+      it('should correctly fill done book', () => {
+        const book: IBook = books.shortSummer;
+
+        bookView.nameIs(book.name);
+        bookView.authorsIs(book.authors);
+        bookView.typeIs(book.type);
+        bookView.genreIs(book.genre);
+        bookView.seriesIs(book.series);
+        bookView.statusIs(book.status);
+        bookView.tagsIs(book.tags);
+        bookView.startDateIs(book.startYear, book.startMonth, book.startDay);
+        bookView.finishDateIs(book.finishYear, book.finishMonth, book.finishDay);
+      });
+    });
+  });
+
   context('Create', () => {
     beforeEach(() => {
       const creator: IUser = users.bookCreateCheck;
@@ -71,7 +203,6 @@ context('Book', () => {
           authors: book.authors,
         };
 
-        toReadListPage.booksCountIs(1);
         toReadListPage.lastBookIs(expected);
       });
     });
@@ -179,92 +310,6 @@ context('Book', () => {
         tagsList.visit();
         tagsList.rowsCount(4);
         book.tags.forEach(item => tagsList.haveBooksForTag(item, 1));
-      });
-    });
-  });
-
-  context('View', () => {
-    beforeEach(() => {
-      const viewCheck: IUser = users.hrodvitnir;
-      loginAs(viewCheck);
-    });
-
-    context('toRead', () => {
-      let bookView: BookViewPo = null;
-
-      beforeEach(() => {
-        bookView = new BookViewPo('dce0d8ed-d71d-42e0-87cc-593b7f53c1e7');
-        bookView.visit();
-      });
-
-      it('page of toRead should exists', () => {
-        bookView.isHere();
-      });
-
-      it('should correctly fill toRead book', () => {
-        const book: IBook = books.amberTelescope;
-
-        bookView.nameIs(book.name);
-        bookView.authorsIs(book.authors);
-        bookView.yearIs(book.year);
-        bookView.typeIs(book.type);
-        bookView.genreIs(book.genre);
-        bookView.seriesIs(book.series);
-        bookView.statusIs(book.status);
-        bookView.tagsIs(book.tags);
-      });
-    });
-
-    context('inProgress', () => {
-      let bookView: BookViewPo = null;
-
-      beforeEach(() => {
-        bookView = new BookViewPo('177b2b7d-d1dc-455a-89f1-37c5208b7728');
-        bookView.visit();
-      });
-
-      it('page of inProgress book should exists', () => {
-        bookView.isHere();
-      });
-
-      it('should correctly fill inProgress book', () => {
-        const book: IBook = books.humans;
-
-        bookView.nameIs(book.name);
-        bookView.authorsIs(book.authors);
-        bookView.typeIs(book.type);
-        bookView.genreIs(book.genre);
-        bookView.seriesIs(book.series);
-        bookView.statusIs(book.status);
-        bookView.tagsIs(book.tags);
-        bookView.startDateIs(book.startYear, book.startMonth, book.startDay);
-      });
-    });
-
-    context('done', () => {
-      let bookView: BookViewPo = null;
-
-      beforeEach(() => {
-        bookView = new BookViewPo('757a6143-5e76-448d-8100-f032f9e03de3');
-        bookView.visit();
-      });
-
-      it('page of done book should exists', () => {
-        bookView.isHere();
-      });
-
-      it('should correctly fill done book', () => {
-        const book: IBook = books.shortSummer;
-
-        bookView.nameIs(book.name);
-        bookView.authorsIs(book.authors);
-        bookView.typeIs(book.type);
-        bookView.genreIs(book.genre);
-        bookView.seriesIs(book.series);
-        bookView.statusIs(book.status);
-        bookView.tagsIs(book.tags);
-        bookView.startDateIs(book.startYear, book.startMonth, book.startDay);
-        bookView.finishDateIs(book.finishYear, book.finishMonth, book.finishDay);
       });
     });
   });

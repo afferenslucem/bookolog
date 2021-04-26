@@ -4,7 +4,7 @@ import * as users from '../fixtures/users.json';
 import * as books from '../fixtures/books.json';
 import * as series from '../fixtures/series.json';
 import { IUser } from '../support/interfaces/i-user';
-import { createDoneBook, createToReadBook, loginAs, logout, seriesContainsBooksCount, seriesDoesNotExists } from '../support/routines';
+import { createToReadBook, loginAs, logout, seriesContainsBooksCount, seriesDoesNotExists } from '../support/routines';
 import { SeriesListPo } from '../support/pages/series/series-list.po';
 import { SeriesViewPo } from '../support/pages/series/series-view.po';
 import { SeriesCreatePo } from '../support/pages/series/series-create.po';
