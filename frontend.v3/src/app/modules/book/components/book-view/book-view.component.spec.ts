@@ -12,6 +12,9 @@ import { Book } from '../../models/book';
 import { BookType } from '../../models/book-type';
 import { BookStatus } from '../../models/book-status';
 import { DateUtils } from '../../../../main/utils/date-utils';
+import { BookOriginService } from '../../services/book.origin.service';
+import { BookStorageService } from '../../services/book.storage.service';
+import { UUIDGenerator } from 'essents';
 
 describe('BookViewComponent', () => {
   let component: BookViewComponent;
@@ -23,7 +26,13 @@ describe('BookViewComponent', () => {
     await TestCore.configureTestingModule({
       declarations: [BookViewComponent],
       imports: [FormattingModule, RouterTestingModule, HttpClientTestingModule],
-      providers: [{ provide: MatDialog, useValue: {} }, BookService],
+      providers: [
+        { provide: MatDialog, useValue: {} },
+        BookService,
+        { provide: BookOriginService, useValue: {} },
+        { provide: BookStorageService, useValue: {} },
+        { provide: UUIDGenerator, useValue: {} },
+      ],
     })
       .overrideComponent(BookEditViewComponent, {
         set: {
