@@ -22,5 +22,10 @@
     "login": "sunriselink",
     "password": "qwerty",
     "email": "cfljamtd@gmail.com"
+  },
+  "settingsChangeCheck": {
+    "login": "prog300",
+    "password": "qwerty",
+    "email": "9793594@gmail.com"
   }
 }
