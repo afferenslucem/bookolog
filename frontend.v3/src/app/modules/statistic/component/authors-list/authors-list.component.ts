@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StringComparer } from '../../../../main/utils/string.comparer';
 import { Book } from '../../../book/models/book';
-import { TitleService } from '../../../ui/service/title.service';
 
 @Component({
   selector: 'app-author-list',
@@ -16,16 +15,14 @@ import { TitleService } from '../../../ui/service/title.service';
 export class AuthorsListComponent implements OnInit {
   public authors$: Observable<IGroupedData<string, number>[]> = null;
 
-  constructor(private activateRoute: ActivatedRoute, private titleService: TitleService, private router: Router) {
+  constructor(private activateRoute: ActivatedRoute, private router: Router) {
     this.authors$ = activateRoute.data.pipe(
       map(data => data.books as Book[]),
       map(data => this.countAuthors(data)),
     );
   }
 
-  ngOnInit(): void {
-    this.titleService.setAuthorsStatistic();
-  }
+  ngOnInit(): void {}
 
   public async selectedAuthor(tag: string): Promise<void> {
     await this.router.navigate(['/author', tag]);

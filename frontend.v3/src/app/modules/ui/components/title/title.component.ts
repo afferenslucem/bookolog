@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TitleText } from '../../models/title-text';
 import { TitleService } from '../../service/title.service';
 
 @Component({
@@ -10,11 +9,9 @@ import { TitleService } from '../../service/title.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TitleComponent implements OnInit {
-  public TitleText: typeof TitleText = TitleText;
-
   constructor(private titleService: TitleService) {}
 
-  public get title$(): Observable<TitleText> {
+  public get title$(): Observable<string> {
     return this.titleService.title$;
   }
 

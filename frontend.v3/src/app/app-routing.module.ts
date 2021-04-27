@@ -23,6 +23,9 @@ const routes: Routes = [
     path: 'main',
     pathMatch: 'full',
     canActivate: [AuthorizedGuard],
+    data: {
+      title: 'Bookolog',
+    },
   },
   {
     component: InnerAreaComponent,
@@ -41,6 +44,9 @@ const routes: Routes = [
     component: LoggerWindowComponent,
     path: 'logs',
     pathMatch: 'full',
+    data: {
+      title: 'Логи',
+    },
   },
 ];
 

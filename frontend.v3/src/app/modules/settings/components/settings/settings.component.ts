@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TitleService } from '../../../ui/service/title.service';
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +6,7 @@ import { TitleService } from '../../../ui/service/title.service';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
-  constructor(private titleService: TitleService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.titleService.setSettings();
-  }
+  ngOnInit(): void {}
 }

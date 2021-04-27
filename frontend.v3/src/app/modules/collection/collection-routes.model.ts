@@ -15,6 +15,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     data: {
       action: Action.Create,
+      title: 'Создать серию',
     },
   },
   {
@@ -32,6 +33,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     data: {
       action: Action.Edit,
+      title: 'Редактировать серию',
     },
     resolve: {
       collection: CollectionResolver,
@@ -44,6 +46,9 @@ export const routes: Routes = [
     resolve: {
       collections: AllSeriesResolver,
       books: AllBooksResolver,
+    },
+    data: {
+      title: 'Серии',
     },
   },
 ];

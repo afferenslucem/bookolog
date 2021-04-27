@@ -6,14 +6,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generator.service';
 import { CollectionService } from '../../services/collection.service';
 import { Action } from '../../../../main/resolvers/action.resolver';
-import { TitleService } from '../../../ui/service/title.service';
 
 describe('CollectionEditViewComponent', () => {
   let component: CollectionEditViewComponent;
   let fixture: ComponentFixture<CollectionEditViewComponent>;
   let service: CollectionService;
   let element: HTMLElement;
-  let titleService: TitleService;
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
@@ -27,7 +25,6 @@ describe('CollectionEditViewComponent', () => {
     fixture = TestBed.createComponent(CollectionEditViewComponent);
     service = TestBed.inject(CollectionService);
     component = fixture.componentInstance;
-    titleService = TestBed.inject(TitleService);
     element = fixture.nativeElement;
     fixture.detectChanges();
   });
@@ -47,24 +44,6 @@ describe('CollectionEditViewComponent', () => {
       component.readAction(Action.Edit);
 
       expect(component.action).toEqual(Action.Edit);
-    });
-  });
-
-  describe('setTitle', () => {
-    it('set Create', () => {
-      const spy = spyOn(titleService, 'setCollectionCreate');
-
-      component.readAction(Action.Create);
-
-      expect(spy).toHaveBeenCalledWith();
-    });
-
-    it('set Edit', () => {
-      const spy = spyOn(titleService, 'setCollectionEdit');
-
-      component.readAction(Action.Edit);
-
-      expect(spy).toHaveBeenCalledWith();
     });
   });
 

@@ -5,13 +5,10 @@ import { Book } from '../../../book/models/book';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { TitleService } from '../../../ui/service/title.service';
-import { TitleText } from '../../../ui/models/title-text';
 
 describe('AuthorsListComponent', () => {
   let component: AuthorsListComponent;
   let fixture: ComponentFixture<AuthorsListComponent>;
-  let titleService: TitleService;
   let router: Router;
 
   const books: Book[] = [
@@ -51,7 +48,6 @@ describe('AuthorsListComponent', () => {
 
     fixture.detectChanges();
 
-    titleService = TestBed.inject(TitleService);
     router = TestBed.inject(Router);
   });
 
@@ -84,9 +80,5 @@ describe('AuthorsListComponent', () => {
     await component.selectedAuthor('ping');
 
     expect(spy).toHaveBeenCalledOnceWith(['/author', 'ping']);
-  });
-
-  it('should set title', () => {
-    expect(titleService.title).toEqual(TitleText.AuthorsStatistic);
   });
 });

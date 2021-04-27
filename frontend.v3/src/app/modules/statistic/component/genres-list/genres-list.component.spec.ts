@@ -4,14 +4,11 @@ import { Book } from '../../../book/models/book';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { TitleService } from '../../../ui/service/title.service';
-import { TitleText } from '../../../ui/models/title-text';
 import { GenresListComponent } from './genres-list.component';
 
 describe('GenresListComponent', () => {
   let component: GenresListComponent;
   let fixture: ComponentFixture<GenresListComponent>;
-  let titleService: TitleService;
   let router: Router;
 
   const books: Book[] = [
@@ -53,8 +50,6 @@ describe('GenresListComponent', () => {
     component.ngOnInit();
 
     fixture.detectChanges();
-
-    titleService = TestBed.inject(TitleService);
     router = TestBed.inject(Router);
   });
 
@@ -87,9 +82,5 @@ describe('GenresListComponent', () => {
     await component.selectedGenre('ping');
 
     expect(spy).toHaveBeenCalledOnceWith(['/genre', 'ping']);
-  });
-
-  it('should set title', () => {
-    expect(titleService.title).toEqual(TitleText.GenresStatistic);
   });
 });

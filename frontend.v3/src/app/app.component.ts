@@ -1,6 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PreloaderService } from './main/services/preloader.service';
+import { TitleWatcherService } from './main/services/title-watcher.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,12 @@ import { PreloaderService } from './main/services/preloader.service';
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent {
-  title = 'Bookolog';
+export class AppComponent implements OnInit {
+  public constructor(private preloaderService: PreloaderService, public titleWatcher: TitleWatcherService) {}
 
-  public constructor(private preloaderService: PreloaderService) {}
+  public ngOnInit(): void {
+    this.titleWatcher.watch();
+  }
 
   public get showPreloader(): Observable<boolean> {
     return this.preloaderService.shouldShow;

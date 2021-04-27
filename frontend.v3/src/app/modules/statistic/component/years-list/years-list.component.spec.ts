@@ -4,14 +4,11 @@ import { Book } from '../../../book/models/book';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { TitleService } from '../../../ui/service/title.service';
-import { TitleText } from '../../../ui/models/title-text';
 import { YearsListComponent } from './years-list.component';
 
 describe('YearsListComponent', () => {
   let component: YearsListComponent;
   let fixture: ComponentFixture<YearsListComponent>;
-  let titleService: TitleService;
   let router: Router;
 
   const books: Book[] = [
@@ -52,7 +49,6 @@ describe('YearsListComponent', () => {
 
     fixture.detectChanges();
 
-    titleService = TestBed.inject(TitleService);
     router = TestBed.inject(Router);
   });
 
@@ -86,9 +82,5 @@ describe('YearsListComponent', () => {
     await component.selectedYear('ping');
 
     expect(spy).toHaveBeenCalledOnceWith(['/year', 'ping']);
-  });
-
-  it('should set title', () => {
-    expect(titleService.title).toEqual(TitleText.YearsStatistic);
   });
 });

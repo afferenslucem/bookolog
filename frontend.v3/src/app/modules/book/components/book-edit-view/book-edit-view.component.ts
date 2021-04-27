@@ -9,7 +9,6 @@ import { DateUtils } from '../../../../main/utils/date-utils';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { Collection } from '../../../collection/models/collection';
 import { NotificationService } from '../../../notification/services/notification.service';
-import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookStatus } from '../../models/book-status';
 import { BookService } from '../../services/book.service';
@@ -37,7 +36,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
   constructor(
     private notificationService: NotificationService,
     private activatedRoute: ActivatedRoute,
-    public titleService: TitleService,
     private bookService: BookService,
     private location: Location,
     collectionService: CollectionService,
@@ -120,12 +118,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
 
   public readAction(action: Action): void {
     this.action = action;
-
-    if (this.action === Action.Create) {
-      this.titleService.setBookCreate();
-    } else if (this.action === Action.Edit) {
-      this.titleService.setBookEdit();
-    }
   }
 
   public sortGenresByCount(books: Book[]): string[] {

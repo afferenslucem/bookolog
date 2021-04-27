@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../../notification/services/notification.service';
-import { TitleService } from '../../../ui/service/title.service';
 import { AuthService } from '../../services/auth.service';
 import { EmailForm } from '../../../../main/utils/email-form';
 
@@ -13,16 +12,9 @@ import { EmailForm } from '../../../../main/utils/email-form';
 export class RecoverPasswordComponent implements OnInit {
   public form: EmailForm = new EmailForm(null);
 
-  constructor(
-    private authService: AuthService,
-    private title: TitleService,
-    private router: Router,
-    private notificationService: NotificationService,
-  ) {}
+  constructor(private authService: AuthService, private router: Router, private notificationService: NotificationService) {}
 
-  ngOnInit(): void {
-    this.title.setRecoveryPassword();
-  }
+  ngOnInit(): void {}
 
   public async submit(): Promise<void> {
     const value = this.form.value;

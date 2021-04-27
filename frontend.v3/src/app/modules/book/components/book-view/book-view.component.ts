@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
@@ -29,7 +28,6 @@ export class BookViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    public titleService: TitleService,
     public dialog: MatDialog,
     private bookService: BookService,
     private changeDetectorRef: ChangeDetectorRef,
@@ -42,9 +40,7 @@ export class BookViewComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  public ngOnInit(): void {
-    this.titleService.setBook();
-  }
+  public ngOnInit(): void {}
 
   public openDeleteDialog(book: Book): void {
     const dialogRef = this.dialog.open(BookDeleteDialogComponent, {

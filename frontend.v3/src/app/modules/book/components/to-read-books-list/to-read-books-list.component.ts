@@ -4,7 +4,6 @@ import _ from 'declarray';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BookTrackBy } from '../../../../main/utils/book-track-by';
-import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookActionService } from '../../services/book-action.service';
 
@@ -17,16 +16,14 @@ import { BookActionService } from '../../services/book-action.service';
 export class ToReadBooksListComponent implements OnInit {
   public books$: Observable<Book[]>;
 
-  constructor(public route: ActivatedRoute, private title: TitleService) {
+  constructor(public route: ActivatedRoute) {
     this.books$ = this.route.data.pipe(
       map(item => item.books),
       map(books => this.sortBooks(books)),
     );
   }
 
-  ngOnInit(): void {
-    this.title.setToReadList();
-  }
+  ngOnInit(): void {}
 
   public bookTrackBy(index: number, item: Book): string {
     return BookTrackBy.trackBy(index, item);

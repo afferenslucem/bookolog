@@ -5,8 +5,6 @@ import { DoneBooksListComponent } from './done-books-list.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { TitleService } from '../../../ui/service/title.service';
-import { TitleText } from '../../../ui/models/title-text';
 
 describe('DoneBooksListComponent', () => {
   let component: DoneBooksListComponent;
@@ -92,9 +90,6 @@ describe('DoneBooksListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    const title = TestBed.inject(TitleService);
-
-    expect(title.title).toEqual(TitleText.DoneList);
   });
 
   describe('Books sorting', () => {

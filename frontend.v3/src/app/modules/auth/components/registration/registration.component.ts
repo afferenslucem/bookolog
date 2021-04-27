@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { getConsoleLogger } from '../../../../main/app.logging';
-import { TitleService } from '../../../ui/service/title.service';
 import { AuthService } from '../../services/auth.service';
 import { RegistrationForm } from '../../utils/registration-form';
 
@@ -22,11 +21,9 @@ export class RegistrationComponent implements OnInit {
   public form: RegistrationForm = new RegistrationForm();
   private logger = getConsoleLogger('RegistrationComponent');
 
-  constructor(private authService: AuthService, private router: Router, private title: TitleService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    this.title.setRegistration();
-  }
+  ngOnInit(): void {}
 
   public async submit(event?: Event): Promise<void> {
     event?.preventDefault();

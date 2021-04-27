@@ -12,6 +12,12 @@ const consoleFactory = new LoggerFactory([
     name: 'SyncService',
     logger: LogLevel.Debug,
   },
+  {
+    name: {
+      namespace: 'Storage',
+    },
+    logger: LogLevel.Info,
+  },
 ]);
 
 const accumulator = new AccumulatorAppender();

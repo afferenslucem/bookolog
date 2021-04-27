@@ -12,18 +12,27 @@ export const routes: Routes = [
     path: 'login',
     pathMatch: 'full',
     canActivate: [AuthorizedGuard],
+    data: {
+      title: 'Войти',
+    },
   },
   {
     component: RecoverPasswordComponent,
     path: 'recovery-password',
     pathMatch: 'full',
     canActivate: [AuthorizedGuard],
+    data: {
+      title: 'Восстановить пароль',
+    },
   },
   {
     component: RegistrationComponent,
     path: 'registration',
     pathMatch: 'full',
     canActivate: [AuthorizedGuard],
+    data: {
+      title: 'Зарегистрироваться',
+    },
   },
   {
     path: 'logout',

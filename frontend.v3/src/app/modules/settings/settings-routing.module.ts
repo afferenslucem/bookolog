@@ -6,5 +6,8 @@ export const routes: Routes = [
     component: SettingsComponent,
     path: 'settings',
     pathMatch: 'full',
+    data: {
+      title: 'Настройки',
+    },
   },
 ];

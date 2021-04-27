@@ -7,12 +7,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import _ from 'declarray';
-import { TitleService } from '../../../ui/service/title.service';
 
 describe('CollectionListComponent', () => {
   let component: CollectionListComponent;
   let fixture: ComponentFixture<CollectionListComponent>;
-  let titleService: TitleService;
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
@@ -35,7 +33,6 @@ describe('CollectionListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CollectionListComponent);
     component = fixture.componentInstance;
-    titleService = TestBed.inject(TitleService);
     fixture.detectChanges();
   });
 
@@ -150,13 +147,5 @@ describe('CollectionListComponent', () => {
       .map(item => item.guid);
 
     expect(result).toEqual(['id3', 'id2', 'id5']);
-  });
-
-  it('titleCheck', () => {
-    const spy = spyOn(titleService, 'setCollectionList');
-
-    component.ngOnInit();
-
-    expect(spy).toHaveBeenCalledWith();
   });
 });

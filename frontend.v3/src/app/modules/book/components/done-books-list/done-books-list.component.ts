@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { BookTrackBy } from 'src/app/main/utils/book-track-by';
-import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookActionService } from '../../services/book-action.service';
 import _ from 'declarray';
@@ -18,16 +17,14 @@ import _ from 'declarray';
 export class DoneBooksListComponent implements OnInit {
   public books$: Observable<Book[]>;
 
-  constructor(public route: ActivatedRoute, private title: TitleService) {
+  constructor(public route: ActivatedRoute) {
     this.books$ = this.route.data.pipe(
       filter(item => item.books),
       map(item => this.sortBooks(item.books)),
     );
   }
 
-  public ngOnInit(): void {
-    this.title.setDoneList();
-  }
+  public ngOnInit(): void {}
 
   public sortBooks(books: Book[]): Book[] {
     return _(books)

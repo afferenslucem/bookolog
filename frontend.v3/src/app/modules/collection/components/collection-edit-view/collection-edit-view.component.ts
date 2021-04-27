@@ -5,7 +5,6 @@ import { ILogger } from 'waterlog';
 import { getConsoleLogger } from '../../../../main/app.logging';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { NotificationService } from '../../../notification/services/notification.service';
-import { TitleService } from '../../../ui/service/title.service';
 import { Collection } from '../../models/collection';
 import { CollectionService } from '../../services/collection.service';
 import { CollectionDataForm } from '../../utils/collection-data-form';
@@ -21,7 +20,6 @@ export class CollectionEditViewComponent implements OnInit {
   private logger: ILogger = getConsoleLogger('CollectionEditViewComponent');
 
   constructor(
-    private titleService: TitleService,
     private collectionService: CollectionService,
     private notificationService: NotificationService,
     private activatedRoute: ActivatedRoute,
@@ -80,12 +78,6 @@ export class CollectionEditViewComponent implements OnInit {
   }
 
   public readAction(action: Action): void {
-    if (action === Action.Create) {
-      this.titleService.setCollectionCreate();
-    } else if (action === Action.Edit) {
-      this.titleService.setCollectionEdit();
-    }
-
     this.action = action;
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { getConsoleLogger } from '../../../../main/app.logging';
 import { NotificationService } from '../../../notification/services/notification.service';
-import { TitleService } from '../../../ui/service/title.service';
 import { Book } from '../../models/book';
 import { BookStatus } from '../../models/book-status';
 import { BookService } from '../../services/book.service';
@@ -23,7 +22,6 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
   constructor(
     private notificationService: NotificationService,
     public activatedRoute: ActivatedRoute,
-    public titleService: TitleService,
     private bookService: BookService,
     collectionService: CollectionService,
     progressAlgorithmService: ProgressAlgorithmService,
@@ -48,9 +46,7 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
     this.bookForm.typeChanges.subscribe(() => this.onTypeChange());
   }
 
-  public ngOnInit(): void {
-    this.titleService.setBookReread();
-  }
+  public ngOnInit(): void {}
 
   public async submit(): Promise<void> {
     try {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TitleService } from '../../../ui/service/title.service';
 import { CredentialsException } from '../../exceptions/credentials.exception';
 import { AuthService } from '../../services/auth.service';
 import { LoginForm } from '../../utils/login-form';
@@ -21,11 +20,9 @@ export class LoginComponent implements OnInit {
 
   public form: LoginForm = new LoginForm();
 
-  constructor(private authService: AuthService, private router: Router, private title: TitleService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    this.title.setLogin();
-  }
+  ngOnInit(): void {}
 
   public async submit(event?: Event): Promise<void> {
     event.preventDefault();

@@ -23,6 +23,9 @@ export const routes: Routes = [
     resolve: {
       books: InProgressBooksResolver,
     },
+    data: {
+      title: 'Читаю сейчас',
+    },
     runGuardsAndResolvers: 'always',
   },
   {
@@ -31,6 +34,9 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: ToReadBooksResolver,
+    },
+    data: {
+      title: 'Буду читать',
     },
     runGuardsAndResolvers: 'always',
   },
@@ -41,6 +47,9 @@ export const routes: Routes = [
     resolve: {
       books: DoneBooksResolver,
     },
+    data: {
+      title: 'Прочитаные',
+    },
     runGuardsAndResolvers: 'always',
   },
   {
@@ -50,6 +59,9 @@ export const routes: Routes = [
     resolve: {
       book: BookResolver,
       readings: BookReadingsResolver,
+    },
+    data: {
+      title: 'О книге',
     },
     runGuardsAndResolvers: 'always',
   },
@@ -64,6 +76,7 @@ export const routes: Routes = [
     },
     data: {
       action: Action.Edit,
+      title: 'Редактировать книгу',
     },
   },
   {
@@ -77,6 +90,7 @@ export const routes: Routes = [
     },
     data: {
       action: Action.Create,
+      title: 'Создать книгу',
     },
   },
   {
@@ -85,6 +99,9 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       book: BookResolver,
+    },
+    data: {
+      title: 'Перечитать книгу',
     },
   },
 ];

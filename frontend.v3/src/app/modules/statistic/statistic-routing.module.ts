@@ -19,6 +19,9 @@ export const routes: Routes = [
     resolve: {
       books: DoneBooksResolver,
     },
+    data: {
+      title: 'Теги',
+    },
   },
   {
     component: GenresListComponent,
@@ -26,6 +29,9 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: DoneBooksResolver,
+    },
+    data: {
+      title: 'Жанры',
     },
   },
   {
@@ -35,6 +41,9 @@ export const routes: Routes = [
     resolve: {
       books: DoneBooksResolver,
     },
+    data: {
+      title: 'Авторы',
+    },
   },
   {
     component: YearsListComponent,
@@ -42,6 +51,9 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: DoneBooksResolver,
+    },
+    data: {
+      title: 'Года прочтения',
     },
   },
   {

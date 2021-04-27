@@ -4,7 +4,6 @@ import { ISequence } from 'declarray/lib/interfaces/i-sequence';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Book } from '../../../book/models/book';
-import { TitleService } from '../../../ui/service/title.service';
 import { Collection } from '../../models/collection';
 import _ from 'declarray';
 import { BookSortUtils } from '../../../../main/utils/book-sort-utils';
@@ -23,7 +22,7 @@ interface BookCollection {
 export class CollectionListComponent implements OnInit {
   public collections$: Observable<CollectionInfo[]>;
 
-  constructor(private activatedRoute: ActivatedRoute, private titleService: TitleService) {
+  constructor(private activatedRoute: ActivatedRoute) {
     this.collections$ = activatedRoute.data.pipe(
       map(data => {
         const books = data.books as Book[];
@@ -80,7 +79,5 @@ export class CollectionListComponent implements OnInit {
     return BookSortUtils.sortEntitiesByUsageTimeDesc(collections).toArray();
   }
 
-  ngOnInit(): void {
-    this.titleService.setCollectionList();
-  }
+  ngOnInit(): void {}
 }

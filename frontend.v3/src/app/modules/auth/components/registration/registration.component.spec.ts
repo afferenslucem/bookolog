@@ -6,9 +6,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { Router } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TitleService } from '../../../ui/service/title.service';
 import { RegistrationComponent } from './registration.component';
-import { TitleText } from '../../../ui/models/title-text';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { FormValidators } from '../../../../main/utils/FormValidators';
 
@@ -18,7 +16,6 @@ describe('RegistrationComponent', () => {
   let auth: AuthService;
   let element: HTMLElement;
   let router: Router;
-  let title: TitleService;
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
@@ -41,7 +38,6 @@ describe('RegistrationComponent', () => {
     auth = TestBed.inject(AuthService);
     element = fixture.nativeElement;
     router = TestBed.inject(Router);
-    title = TestBed.inject(TitleService);
   });
 
   it('should create', () => {
@@ -50,8 +46,6 @@ describe('RegistrationComponent', () => {
 
   it('set title', () => {
     component.ngOnInit();
-
-    expect(title.title).toEqual(TitleText.Registration);
   });
 
   describe('confirmationValidation', () => {

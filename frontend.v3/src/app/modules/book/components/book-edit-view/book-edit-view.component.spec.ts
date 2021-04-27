@@ -22,7 +22,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputsModule } from '../../../inputs/inputs.module';
 import { MatInputModule } from '@angular/material/input';
-import { TitleService } from '../../../ui/service/title.service';
 import { DateUtils } from '../../../../main/utils/date-utils';
 
 const book: Book = new Book({
@@ -50,7 +49,6 @@ describe('BookEditViewComponent', () => {
   let element: HTMLDivElement = null;
 
   let bookService: BookService = null;
-  let titleService: TitleService = null;
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
@@ -82,7 +80,6 @@ describe('BookEditViewComponent', () => {
     element = fixture.nativeElement;
 
     bookService = TestBed.inject(BookService);
-    titleService = TestBed.inject(TitleService);
 
     component.onDataInit({
       series,
@@ -96,26 +93,6 @@ describe('BookEditViewComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  describe('readAction', () => {
-    it('should set create title', () => {
-      const setCreateTitleSpy = spyOn(titleService, 'setBookCreate');
-
-      component.readAction(Action.Create);
-
-      expect(component.action).toEqual(Action.Create);
-      expect(setCreateTitleSpy).toHaveBeenCalledOnceWith();
-    });
-
-    it('should set edit title', () => {
-      const setCreateTitleSpy = spyOn(titleService, 'setBookEdit');
-
-      component.readAction(Action.Edit);
-
-      expect(component.action).toEqual(Action.Edit);
-      expect(setCreateTitleSpy).toHaveBeenCalledOnceWith();
-    });
   });
 
   describe('onStatusChange', () => {
