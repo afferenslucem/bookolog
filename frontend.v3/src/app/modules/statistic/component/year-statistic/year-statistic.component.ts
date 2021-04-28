@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
-import { BookTrackBy } from 'src/app/main/utils/book-track-by';
+import { map, tap } from 'rxjs/operators';
 import { Book } from 'src/app/modules/book/models/book';
 import _ from 'declarray';
 import { BookStatus } from '../../../book/models/book-status';
 import { TitleService } from '../../../title/services/title.service';
+import { BookSearchableList } from '../../../book/utils/book-searchable-list';
+import { SearchService } from '../../../search/services/search.service';
+import { BookSortUtils } from '../../../../main/utils/book-sort-utils';
 
 @Component({
   selector: 'app-year-statistic',
@@ -14,37 +16,27 @@ import { TitleService } from '../../../title/services/title.service';
   styleUrls: ['./year-statistic.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class YearStatisticComponent implements OnInit {
-  public books$: Observable<Book[]>;
-  public filter$: Observable<string> = null;
+export class YearStatisticComponent extends BookSearchableList implements OnInit {
+  public dataFilter$: Observable<string> = null;
 
-  constructor(public route: ActivatedRoute, private title: TitleService) {
-    this.books$ = this.route.data.pipe(
-      filter(item => item.books),
-      map(item => this.sortBooks(item.books)),
-    );
+  constructor(route: ActivatedRoute, searchService: SearchService, private title: TitleService) {
+    super(route, searchService);
 
-    this.filter$ = route.params.pipe(
+    this.dataFilter$ = route.params.pipe(
       map(data => data.filter),
       tap(data => this.title.setCustom(data)),
     );
   }
 
   ngOnInit(): void {
-    this.filter$.subscribe();
-  }
-
-  public bookTrackBy(index: number, item: Book): string {
-    return BookTrackBy.trackBy(index, item);
+    this.dataFilter$.subscribe();
   }
 
   public sortBooks(books: Book[]): Book[] {
-    return _(books)
-      .where(item => item.status === BookStatus.Done)
-      .orderByDescending(item => item.finished.month || -1)
-      .thenByDescending(item => item.finished.day || -1)
-      .thenByDescending(item => item.modifyDate || -1)
-      .thenByDescending(item => item.createDate || -1)
+    books = _(books)
+      .where(item => item.status == BookStatus.Done)
       .toArray();
+
+    return new BookSortUtils().sortBooksByFinishDate(books);
   }
 }

@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StatisticListComponent } from './statistic-list.component';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { FormattingModule } from '../../../formatting/formatting.module';
+import { SearchService } from '../../../search/services/search.service';
 
 describe('StatisticListComponent', () => {
   let component: StatisticListComponent;
@@ -13,6 +14,7 @@ describe('StatisticListComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [StatisticListComponent],
+      providers: [SearchService],
       imports: [RouterTestingModule, FormattingModule],
     })
       .overrideComponent(StatisticListComponent, {
@@ -45,6 +47,7 @@ describe('StatisticListComponent', () => {
       },
     ];
 
+    component.ngOnInit();
     fixture.detectChanges();
 
     expect(element.querySelector<HTMLElement>('.statistic-item__name')?.innerText).toEqual('Test');
@@ -71,6 +74,7 @@ describe('StatisticListComponent', () => {
       },
     ];
 
+    component.ngOnInit();
     fixture.detectChanges();
 
     expect(element.querySelectorAll<HTMLElement>('.statistic-item')?.length).toEqual(4);
@@ -97,6 +101,7 @@ describe('StatisticListComponent', () => {
       },
     ];
 
+    component.ngOnInit();
     fixture.detectChanges();
 
     element.querySelectorAll<HTMLElement>('.statistic-item')?.[1]?.click();

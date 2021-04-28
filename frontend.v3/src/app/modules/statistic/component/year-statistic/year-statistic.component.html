@@ -1,6 +1,11 @@
-<cdk-virtual-scroll-viewport [itemSize]="72" [maxBufferPx]="490" [minBufferPx]="350" class="book-list">
-  <div *cdkVirtualFor="let book of books$ | async; let last = last; trackBy: bookTrackBy">
-    <app-done-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-done-book>
-    <mat-divider [hidden]="last"></mat-divider>
-  </div>
-</cdk-virtual-scroll-viewport>
+<div class="scroll-list" *ngIf="books$ | async as books">
+  <cdk-virtual-scroll-viewport [itemSize]="72" [maxBufferPx]="490" [minBufferPx]="350" class="book-list" *ngIf="books.length > 0; else emptyList">
+    <div *cdkVirtualFor="let book of books; let last = last; trackBy: bookTrackBy">
+      <app-done-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-done-book>
+      <mat-divider [hidden]="last"></mat-divider>
+    </div>
+  </cdk-virtual-scroll-viewport>
+  <ng-template #emptyList>
+    <app-empty-list-placeholder></app-empty-list-placeholder>
+  </ng-template>
+</div>

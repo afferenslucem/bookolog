@@ -1,11 +1,13 @@
-<mat-list *ngIf="+data?.length > 0; else emptyList" role="list">
-  <mat-list-item *ngFor="let item of filteredData | async">
-    <div (click)="selected.emit(item.key)" class="statistic-item w-100">
-      <span class="statistic-item__name link">{{ item.key | capitalize }}</span>
-      <span class="statistic-item__count">{{ item.group }}</span>
-    </div>
-  </mat-list-item>
-</mat-list>
-<ng-template #emptyList>
-  <app-empty-list-placeholder></app-empty-list-placeholder>
-</ng-template>
+<div *ngIf="filteredData | async as filteredData" class="scroll-list">
+  <mat-list *ngIf="filteredData.length > 0; else emptyList" role="list">
+    <mat-list-item *ngFor="let item of filteredData">
+      <div (click)="selected.emit(item.key)" class="statistic-item w-100">
+        <span class="statistic-item__name link">{{ item.key | capitalize }}</span>
+        <span class="statistic-item__count">{{ item.group }}</span>
+      </div>
+    </mat-list-item>
+  </mat-list>
+  <ng-template #emptyList>
+    <app-empty-list-placeholder></app-empty-list-placeholder>
+  </ng-template>
+</div>

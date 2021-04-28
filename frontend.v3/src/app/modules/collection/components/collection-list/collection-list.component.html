@@ -1,4 +1,4 @@
-<div *ngIf="collections$ | async as collections" class="collection-static-list">
+<div *ngIf="collections$ | async as collections" class="collection-static-list scroll-list">
   <mat-list role="list" *ngIf="collections?.length > 0; else emptyList">
     <mat-list-item *ngFor="let item of collections">
       <div class="statistic-item w-100">

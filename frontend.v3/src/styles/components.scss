@@ -144,3 +144,19 @@ mat-toolbar {
     color: $white;
   }
 }
+
+
+app-statistic-list,
+app-author-list,
+app-genres-list,
+app-year-statistic,
+app-years-list,
+app-tags-list,
+app-collection-list,
+.scroll-list,
+app-empty-list-placeholder {
+  display: block;
+
+  height: 100%;
+  width: 100%;
+}

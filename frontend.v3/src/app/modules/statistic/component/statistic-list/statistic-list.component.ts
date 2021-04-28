@@ -17,7 +17,7 @@ export class StatisticListComponent extends SearchableList implements OnInit {
   public filteredData: Observable<IGroupedData<string, number>[]>;
 
   @Input()
-  public data: IGroupedData<string, number>[];
+  public data: IGroupedData<string, number>[] = [];
 
   @Output()
   public selected = new EventEmitter<string>();
