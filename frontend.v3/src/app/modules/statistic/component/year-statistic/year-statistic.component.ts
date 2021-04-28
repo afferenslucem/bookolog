@@ -6,7 +6,7 @@ import { BookTrackBy } from 'src/app/main/utils/book-track-by';
 import { Book } from 'src/app/modules/book/models/book';
 import _ from 'declarray';
 import { BookStatus } from '../../../book/models/book-status';
-import { TitleService } from '../../../ui/service/title.service';
+import { TitleService } from '../../../title/services/title.service';
 
 @Component({
   selector: 'app-year-statistic',

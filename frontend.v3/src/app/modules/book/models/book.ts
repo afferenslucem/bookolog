@@ -97,4 +97,8 @@ export class Book extends Entity {
       return null;
     }
   }
+
+  public toString(): string {
+    return this.authors.concat([this.name]).join('|');
+  }
 }

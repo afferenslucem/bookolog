@@ -5,7 +5,10 @@
   <mat-drawer-content class="main">
     <mat-toolbar class="main__header" color="primary">
       <app-menu-icon (click)="drawer.open()"></app-menu-icon>
-      <app-title></app-title>
+      <div class="modifiable-title">
+        <app-title></app-title>
+        <app-search *ngIf="isSearchEnabled | async"></app-search>
+      </div>
     </mat-toolbar>
     <div class="content main__body">
       <router-outlet></router-outlet>

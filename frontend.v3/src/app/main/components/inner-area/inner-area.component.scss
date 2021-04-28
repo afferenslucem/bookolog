@@ -1,4 +1,5 @@
 @import "~src/styles/variables";
+@import "~src/styles/mixins";
 
 :host {
   height: 100%;
@@ -23,10 +24,30 @@ mat-drawer-container {
 
   &__header {
     height: #{$header-height};
+
+    @include flex;
+
+    width: 100%;
   }
 
   &__body {
     height: calc(100% - #{$header-height});
     overflow: auto;
   }
+}
+
+.modifiable-title {
+  flex: 1 1 auto;
+
+  position: relative;
+}
+
+app-search {
+  position: absolute;
+
+  right: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
 }

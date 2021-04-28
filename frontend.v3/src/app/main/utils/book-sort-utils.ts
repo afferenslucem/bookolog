@@ -66,4 +66,14 @@ export class BookSortUtils {
 
     return result.toArray();
   }
+
+  public sortBooksByFinishDate(books: Book[]): Book[] {
+    return _(books)
+      .orderByDescending(item => item.finished.year || -1)
+      .thenByDescending(item => item.finished.month || -1)
+      .thenByDescending(item => item.finished.day || -1)
+      .thenByDescending(item => +item.modifyDate || -1)
+      .thenByDescending(item => +item.createDate || -1)
+      .toArray();
+  }
 }

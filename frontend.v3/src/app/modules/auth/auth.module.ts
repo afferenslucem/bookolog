@@ -12,6 +12,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { FormattingModule } from '../formatting/formatting.module';
+import { TitleModule } from '../title/title.module';
 
 @NgModule({
   declarations: [LoginComponent, RegistrationComponent, RecoverPasswordComponent],
@@ -25,6 +26,7 @@ import { FormattingModule } from '../formatting/formatting.module';
     ReactiveFormsModule,
     UiModule,
     FormattingModule,
+    TitleModule,
   ],
 })
 export class AuthModule {}

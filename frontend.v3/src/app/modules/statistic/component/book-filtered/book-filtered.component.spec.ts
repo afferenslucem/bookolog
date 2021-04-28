@@ -4,13 +4,15 @@ import { Book } from '../../../book/models/book';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { TitleService } from '../../../ui/service/title.service';
+import { TitleService } from '../../../title/services/title.service';
 import { BookFilteredComponent } from './book-filtered.component';
+import { SearchService } from '../../../search/services/search.service';
 
 describe('BookFilteredComponent', () => {
   let component: BookFilteredComponent;
   let fixture: ComponentFixture<BookFilteredComponent>;
   let titleService: TitleService;
+  let searchService: SearchService;
   let router: Router;
 
   const books: Book[] = [
@@ -35,6 +37,7 @@ describe('BookFilteredComponent', () => {
             }),
           },
         },
+        SearchService,
       ],
     }).compileComponents();
   });
@@ -48,6 +51,7 @@ describe('BookFilteredComponent', () => {
     fixture.detectChanges();
 
     titleService = TestBed.inject(TitleService);
+    searchService = TestBed.inject(SearchService);
     router = TestBed.inject(Router);
   });
 
@@ -55,20 +59,8 @@ describe('BookFilteredComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should catch books by pipe', async () => {
-    const result = await component.books$.toPromise();
-
-    const expected = [
-      new Book({
-        guid: 'id',
-      } as any),
-    ];
-
-    expect(result).toEqual(expected);
-  });
-
   it('should set filter as title', async () => {
-    await component.filter$.toPromise();
+    await component.filterParam$.toPromise();
 
     expect(titleService.custom).toEqual('test');
   });

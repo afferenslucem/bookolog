@@ -7,7 +7,6 @@ import { TestCore } from '../../../../main/test/test-core.spec';
 import { Router } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RecoverPasswordComponent } from './recover-password.component';
-import { TitleService } from '../../../ui/service/title.service';
 
 describe('RecoverPasswordComponent', () => {
   let component: RecoverPasswordComponent;

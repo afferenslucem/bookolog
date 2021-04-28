@@ -241,4 +241,32 @@ describe('Book', () => {
       expect(book.done).toEqual(50);
     });
   });
+
+  describe('toString', () => {
+    let book: Book = null;
+
+    beforeEach(() => {
+      book = new Book({
+        guid: 'guid',
+        name: 'name',
+        authors: ['author1', 'author2'],
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57',
+        createDate: '2020-11-18 10:57',
+      });
+    });
+
+    it('should join authors with name', () => {
+      const result = book.toString();
+
+      expect(result).toEqual('author1|author2|name');
+    });
+
+    it('should return name', () => {
+      const result = book.toString();
+
+      expect(result).toEqual('author1|author2|name');
+    });
+  });
 });

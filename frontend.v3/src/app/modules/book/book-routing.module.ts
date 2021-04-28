@@ -37,6 +37,7 @@ export const routes: Routes = [
     },
     data: {
       title: 'Буду читать',
+      searchEnabled: true,
     },
     runGuardsAndResolvers: 'always',
   },
@@ -49,6 +50,7 @@ export const routes: Routes = [
     },
     data: {
       title: 'Прочитаные',
+      searchEnabled: true,
     },
     runGuardsAndResolvers: 'always',
   },

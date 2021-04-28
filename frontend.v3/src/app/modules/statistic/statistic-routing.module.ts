@@ -21,6 +21,7 @@ export const routes: Routes = [
     },
     data: {
       title: 'Теги',
+      searchEnabled: true,
     },
   },
   {
@@ -32,6 +33,7 @@ export const routes: Routes = [
     },
     data: {
       title: 'Жанры',
+      searchEnabled: true,
     },
   },
   {
@@ -43,6 +45,7 @@ export const routes: Routes = [
     },
     data: {
       title: 'Авторы',
+      searchEnabled: true,
     },
   },
   {
@@ -63,6 +66,9 @@ export const routes: Routes = [
     resolve: {
       books: BooksByTagResolver,
     },
+    data: {
+      searchEnabled: true,
+    },
   },
   {
     component: BookFilteredComponent,
@@ -70,6 +76,9 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: BooksByGenreResolver,
+    },
+    data: {
+      searchEnabled: true,
     },
   },
   {
@@ -79,6 +88,9 @@ export const routes: Routes = [
     resolve: {
       books: BooksByAuthorResolver,
     },
+    data: {
+      searchEnabled: true,
+    },
   },
   {
     component: YearStatisticComponent,
@@ -86,6 +98,9 @@ export const routes: Routes = [
     pathMatch: 'full',
     resolve: {
       books: BooksByYearResolver,
+    },
+    data: {
+      searchEnabled: true,
     },
   },
 ];

@@ -1,4 +1,3 @@
-import { PageObject } from '../../page-object';
 import { SettingsPo } from './settings.po';
 
 export class EmailSettingsPo extends SettingsPo {

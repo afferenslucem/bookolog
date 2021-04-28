@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SearchWatcherService } from '../../../modules/search/services/search-watcher.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-inner-area',
@@ -6,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./inner-area.component.scss'],
 })
 export class InnerAreaComponent implements OnInit {
-  constructor() {}
+  constructor(private searchWatcher: SearchWatcherService) {}
+
+  public get isSearchEnabled(): Observable<boolean> {
+    return this.searchWatcher.isEnabled$;
+  }
 
   ngOnInit(): void {}
 }

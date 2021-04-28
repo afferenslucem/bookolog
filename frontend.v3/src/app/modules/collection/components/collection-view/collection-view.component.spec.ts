@@ -7,7 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { TitleService } from '../../../ui/service/title.service';
+import { TitleService } from '../../../title/services/title.service';
 import { BookService } from '../../../book/services/book.service';
 import { CollectionService } from '../../services/collection.service';
 import { Book } from '../../../book/models/book';
@@ -98,7 +98,7 @@ describe('CollectionComponent', () => {
         collectionOrder: 3,
       } as Book;
 
-      const sorted = component.orderBooks([third, second, first]);
+      const sorted = component.sortBooks([third, second, first]);
 
       expect(sorted).toEqual([first, second, third]);
     });
@@ -112,7 +112,7 @@ describe('CollectionComponent', () => {
         collectionOrder: 3,
       } as Book;
 
-      const sorted = component.orderBooks([third, second, first]);
+      const sorted = component.sortBooks([third, second, first]);
 
       expect(sorted).toEqual([second, third, first]);
     });

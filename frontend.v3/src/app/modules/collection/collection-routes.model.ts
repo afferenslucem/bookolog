@@ -26,6 +26,9 @@ export const routes: Routes = [
       books: BooksBySeriesResolver,
       collection: CollectionResolver,
     },
+    data: {
+      searchEnabled: true,
+    },
   },
   {
     component: CollectionEditViewComponent,
@@ -49,6 +52,7 @@ export const routes: Routes = [
     },
     data: {
       title: 'Серии',
+      searchEnabled: true,
     },
   },
 ];

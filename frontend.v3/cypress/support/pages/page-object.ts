@@ -27,7 +27,7 @@ export class PageObject {
 
   public waitSync(): void {
     cy.wait('@sync').its('response.statusCode').should('be.oneOf', [200, 201]);
-    cy.wait(500);
+    cy.wait(1000);
   }
 
   public setMobileViewport(): void {

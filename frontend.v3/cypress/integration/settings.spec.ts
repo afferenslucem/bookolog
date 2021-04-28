@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 
 import * as users from '../fixtures/users.json';
-import { IUser } from '../support/interfaces/i-user';
 import { loginAs, logout } from '../support/routines';
 import { PageObject } from '../support/pages/page-object';
 import { SettingsPo } from '../support/pages/statistic/settings/settings.po';

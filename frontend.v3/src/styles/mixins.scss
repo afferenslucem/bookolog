@@ -1,0 +1,15 @@
+@mixin flex {
+  display: flex;
+  justify-content: flex-start;
+}
+
+@mixin spaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin centeredByRow {
+  @include flex;
+
+  align-items: center;
+}

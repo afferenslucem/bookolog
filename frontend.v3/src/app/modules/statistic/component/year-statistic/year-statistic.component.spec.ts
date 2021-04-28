@@ -3,7 +3,7 @@ import { TestCore } from '../../../../main/test/test-core.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { TitleService } from '../../../ui/service/title.service';
+import { TitleService } from '../../../title/services/title.service';
 import { Book } from '../../../book/models/book';
 import { YearStatisticComponent } from './year-statistic.component';
 import { BookStatus } from '../../../book/models/book-status';

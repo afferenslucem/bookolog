@@ -1,5 +1,5 @@
 <mat-list *ngIf="+data?.length > 0; else emptyList" role="list">
-  <mat-list-item *ngFor="let item of data">
+  <mat-list-item *ngFor="let item of filteredData | async">
     <div (click)="selected.emit(item.key)" class="statistic-item w-100">
       <span class="statistic-item__name link">{{ item.key | capitalize }}</span>
       <span class="statistic-item__count">{{ item.group }}</span>

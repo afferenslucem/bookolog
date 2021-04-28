@@ -1,11 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { BookTrackBy } from 'src/app/main/utils/book-track-by';
-import { Book } from '../../models/book';
 import { BookActionService } from '../../services/book-action.service';
-import _ from 'declarray';
+import { SearchService } from '../../../search/services/search.service';
+import { BookSearchableList } from '../../utils/book-searchable-list';
 
 @Component({
   selector: 'app-done-books-list',
@@ -14,29 +11,10 @@ import _ from 'declarray';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [BookActionService],
 })
-export class DoneBooksListComponent implements OnInit {
-  public books$: Observable<Book[]>;
-
-  constructor(public route: ActivatedRoute) {
-    this.books$ = this.route.data.pipe(
-      filter(item => item.books),
-      map(item => this.sortBooks(item.books)),
-    );
+export class DoneBooksListComponent extends BookSearchableList implements OnInit {
+  constructor(route: ActivatedRoute, searchService: SearchService) {
+    super(route, searchService);
   }
 
   public ngOnInit(): void {}
-
-  public sortBooks(books: Book[]): Book[] {
-    return _(books)
-      .orderByDescending(item => item.finished.year || -1)
-      .thenByDescending(item => item.finished.month || -1)
-      .thenByDescending(item => item.finished.day || -1)
-      .thenByDescending(item => +item.modifyDate || -1)
-      .thenByDescending(item => +item.createDate || -1)
-      .toArray();
-  }
-
-  public bookTrackBy(index: number, item: Book): string {
-    return BookTrackBy.trackBy(index, item);
-  }
 }

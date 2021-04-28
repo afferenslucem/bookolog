@@ -2,24 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { BookTrackBy } from '../../../../main/utils/book-track-by';
 import { Book } from '../../../book/models/book';
-import { TitleService } from '../../../ui/service/title.service';
+import { TitleService } from '../../../title/services/title.service';
 import { Collection } from '../../models/collection';
 import _ from 'declarray';
 import { CollectionService } from '../../services/collection.service';
 import { CollectionDeleteDialogComponent, DeleteDialogResult } from '../collection-delete-dialog/collection-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BookService } from 'src/app/modules/book/services/book.service';
+import { BookSearchableList } from '../../../book/utils/book-searchable-list';
+import { SearchService } from '../../../search/services/search.service';
 
 @Component({
   selector: 'app-collection',
   templateUrl: './collection-view.component.html',
   styleUrls: ['./collection-view.component.scss'],
 })
-export class CollectionViewComponent implements OnInit {
+export class CollectionViewComponent extends BookSearchableList implements OnInit {
   public books$: Observable<Book[]>;
-  public collection$: Observable<Collection>;
   public collection: Collection;
 
   constructor(
@@ -27,16 +27,12 @@ export class CollectionViewComponent implements OnInit {
     private titleService: TitleService,
     private collectionService: CollectionService,
     private bookService: BookService,
+    searchService: SearchService,
     private router: Router,
     public dialog: MatDialog,
   ) {
+    super(activatedRoute, searchService);
     const data$ = activatedRoute.data;
-
-    this.books$ = activatedRoute.data.pipe(
-      filter(item => item.books),
-      map(item => item.books as Book[]),
-      map(books => this.orderBooks(books)),
-    );
 
     data$
       .pipe(
@@ -48,17 +44,13 @@ export class CollectionViewComponent implements OnInit {
       .subscribe();
   }
 
-  public orderBooks(books: Book[]): Book[] {
+  public sortBooks(books: Book[]): Book[] {
     return _(books)
       .orderBy(book => book.collectionOrder || Number.MAX_VALUE)
       .toArray();
   }
 
   public ngOnInit(): void {}
-
-  public bookTrackBy(index: number, item: Book): string {
-    return BookTrackBy.trackBy(index, item);
-  }
 
   public openDeleteDialog(collection: Collection): void {
     const dialogRef = this.dialog.open(CollectionDeleteDialogComponent, {

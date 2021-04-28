@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Data, NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { TitleService } from '../../modules/ui/service/title.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { TitleService } from './title.service';
 import { filter, map } from 'rxjs/operators';
 
 @Injectable({
