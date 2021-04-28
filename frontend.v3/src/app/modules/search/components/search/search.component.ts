@@ -3,7 +3,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { SearchService } from '../../services/search.service';
 import { Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, takeUntil } from 'rxjs/operators';
+import { debounce, debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { Timer } from 'essents';
 
 @Component({
@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.router.events
       .pipe(
         takeUntil(this.destroy$),
+        debounceTime(300),
         filter(event => event instanceof NavigationEnd),
       )
       .subscribe(() => this.close());
