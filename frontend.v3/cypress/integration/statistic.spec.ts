@@ -23,6 +23,64 @@ context('Statistic', () => {
     logout();
   });
 
+  context('Tag', () => {
+    let tagInfo: TagInfoPo = null;
+
+    beforeEach(() => {
+      tagInfo = new TagInfoPo('JavaScript');
+      tagInfo.visit();
+    });
+
+    it('page should exists', () => {
+      tagInfo.isHere();
+    });
+
+    it('page should has custom title', () => {
+      tagInfo.hasTitle('JavaScript');
+    });
+
+    it('page should has 2 years', () => {
+      tagInfo.yearCount(2);
+    });
+
+    it('page should has books for years', () => {
+      tagInfo.countBooksForYear(2020, 3);
+      tagInfo.countBooksForYear(2019, 4);
+    });
+
+    it('page should has books for year', () => {
+      tagInfo.containsBookWithName('Введение в ESMAScript 6', 2020);
+      tagInfo.containsBookWithName('Vue.js в действии', 2020);
+      tagInfo.containsBookWithName('Как устроен javascript', 2020);
+    });
+  });
+
+  context('Tag with filter', () => {
+    let genreInfo: TagInfoPo = null;
+
+    beforeEach(() => {
+      genreInfo = new TagInfoPo('Научная фантастика');
+      genreInfo.visit();
+      genreInfo.search('в');
+    });
+
+    it('page with filter should has 2 years', () => {
+      genreInfo.yearCount(2);
+    });
+
+    it('page with filter should has books for years', () => {
+      genreInfo.countBooksForYear(2020, 2);
+      genreInfo.countBooksForYear(2013, 2);
+    });
+
+    it('page with filter should has books for year', () => {
+      genreInfo.containsBookWithName('Война миров', 2020);
+      genreInfo.containsBookWithName('Я робот', 2020);
+      genreInfo.containsBookWithName('Путешествие к центру земли', 2013);
+      genreInfo.containsBookWithName('День когда земля вскрикнула', 2013);
+    });
+  });
+
   context('Year', () => {
     let yearInfo: YearInfoPo = null;
 
@@ -41,6 +99,23 @@ context('Statistic', () => {
 
     it('page should has 6 books', () => {
       yearInfo.booksCount(6);
+
+      yearInfo.containsBookWithName('Евгений Онегин');
+      yearInfo.containsBookWithName('Звонок');
+      yearInfo.containsBookWithName('Бойцовский клуб');
+      yearInfo.containsBookWithName('Не спешу');
+      yearInfo.containsBookWithName('В списках не значился');
+      yearInfo.containsBookWithName('Изгоняющий дьявола');
+    });
+
+    it('page should has 3 books', () => {
+      yearInfo.search('он');
+
+      yearInfo.booksCount(3);
+
+      yearInfo.containsBookWithName('Евгений Онегин');
+      yearInfo.containsBookWithName('Звонок');
+      yearInfo.containsBookWithName('Изгоняющий дьявола');
     });
 
     it('page should has all books', () => {
@@ -87,6 +162,30 @@ context('Statistic', () => {
     });
   });
 
+  context('Genre with filter', () => {
+    let genreInfo: GenreInfoPo = null;
+
+    beforeEach(() => {
+      genreInfo = new GenreInfoPo('Нон-фикшен');
+      genreInfo.visit();
+      genreInfo.search('об');
+    });
+
+    it('page with filter should has 2 years', () => {
+      genreInfo.yearCount(2);
+    });
+
+    it('page with filter should has books for years', () => {
+      genreInfo.countBooksForYear(2021, 1);
+      genreInfo.countBooksForYear(2020, 1);
+    });
+
+    it('page with filter should has books for year', () => {
+      genreInfo.containsBookWithName('Обезьяны и все-все-все', 2021);
+      genreInfo.containsBookWithName('Жлобология', 2020);
+    });
+  });
+
   context('Author', () => {
     let authorInfo: AuthorsInfoPo = null;
 
@@ -120,35 +219,27 @@ context('Statistic', () => {
     });
   });
 
-  context('Tag', () => {
-    let tagInfo: TagInfoPo = null;
+  context('Author with filter', () => {
+    let genreInfo: AuthorsInfoPo = null;
 
     beforeEach(() => {
-      tagInfo = new TagInfoPo('JavaScript');
-      tagInfo.visit();
+      genreInfo = new AuthorsInfoPo('Джоан Роулинг');
+      genreInfo.visit();
+      genreInfo.search('пр');
     });
 
-    it('page should exists', () => {
-      tagInfo.isHere();
+    it('page with filter should has 2 years', () => {
+      genreInfo.yearCount(2);
     });
 
-    it('page should has custom title', () => {
-      tagInfo.hasTitle('JavaScript');
+    it('page with filter should has books for years', () => {
+      genreInfo.countBooksForYear(2021, 1);
+      genreInfo.countBooksForYear(2012, 1);
     });
 
-    it('page should has 2 years', () => {
-      tagInfo.yearCount(2);
-    });
-
-    it('page should has books for years', () => {
-      tagInfo.countBooksForYear(2020, 3);
-      tagInfo.countBooksForYear(2019, 4);
-    });
-
-    it('page should has books for year', () => {
-      tagInfo.containsBookWithName('Введение в ESMAScript 6', 2020);
-      tagInfo.containsBookWithName('Vue.js в действии', 2020);
-      tagInfo.containsBookWithName('Как устроен javascript', 2020);
+    it('page with filter should has books for year', () => {
+      genreInfo.containsBookWithName('Гарри Поттер и Проклятое Дитя', 2021);
+      genreInfo.containsBookWithName('Гарри Поттер и Принц полукровка', 2012);
     });
   });
 });

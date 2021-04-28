@@ -23,6 +23,70 @@ context('Series', () => {
     logout();
   });
 
+  context('View', () => {
+    let page = new SeriesViewPo('02bbf997-8766-427d-b0a1-6679dd41b7ef');
+
+    beforeEach(() => {
+      const user: IUser = users.hrodvitnir;
+      loginAs(user);
+      page.visit();
+    });
+
+    it('page should exists', () => {
+      page.isHere();
+    });
+
+    it('should render correct', () => {
+      page.nameIs('Эпоха мертвых');
+      page.descriptionIs('История одного зомби-апокалипсиса в Москве');
+      page.containsBook('Начало');
+      page.containsBook('Москва');
+      page.containsBook('Прорыв');
+    });
+
+    it('should filter books', () => {
+      page.search('в');
+
+      page.notContainsBook('Начало');
+      page.containsBook('Москва');
+      page.containsBook('Прорыв');
+    });
+  });
+
+  context('List', () => {
+    let page = new SeriesListPo();
+    beforeEach(() => {
+      const user: IUser = users.hrodvitnir;
+      loginAs(user);
+      page.visit();
+    });
+
+    it('page should exists', () => {
+      page.isHere();
+    });
+
+    it('items count should be 16', () => {
+      page.itemCountIs(16);
+    });
+
+    it('should not filter items', () => {
+      page.itemCountIs(16);
+      page.seriesContainsBooksCount('Достающее звено', 2);
+      page.seriesContainsBooksCount('S.T.A.L.K.E.R.', 50);
+      page.seriesContainsBooksCount('Хмель и Клондайк', 4);
+      page.seriesContainsBooksCount('Гарри Поттер', 8);
+      page.seriesContainsBooksCount('Эпоха мертвых', 3);
+    });
+
+    it('should filter items', () => {
+      page.search('до');
+
+      page.itemCountIs(2);
+      page.seriesContainsBooksCount('Достающее звено', 2);
+      page.seriesContainsBooksCount('Я! Еду! Домой!', 3);
+    });
+  });
+
   context('Create', () => {
     let form: SeriesCreatePo = null;
 
@@ -146,52 +210,6 @@ context('Series', () => {
       page.visit();
       page.nameIs(seriesData.name);
       page.descriptionIs(seriesData.description);
-    });
-  });
-
-  context('List', () => {
-    let page = new SeriesListPo();
-    beforeEach(() => {
-      const user: IUser = users.hrodvitnir;
-      loginAs(user);
-      page.visit();
-    });
-
-    it('page should exists', () => {
-      page.isHere();
-    });
-
-    it('items count should be 16', () => {
-      page.itemCountIs(16);
-    });
-
-    it('counts should be correct', () => {
-      page.seriesContainsBooksCount('Акулы из стали', 6);
-      page.seriesContainsBooksCount('Гарри Поттер', 8);
-      page.seriesContainsBooksCount('S.T.A.L.K.E.R.', 50);
-      page.seriesContainsBooksCount('Я! Еду! Домой!', 3);
-    });
-  });
-
-  context('View', () => {
-    let page = new SeriesViewPo('02bbf997-8766-427d-b0a1-6679dd41b7ef');
-
-    beforeEach(() => {
-      const user: IUser = users.hrodvitnir;
-      loginAs(user);
-      page.visit();
-    });
-
-    it('page should exists', () => {
-      page.isHere();
-    });
-
-    it('should render correct', () => {
-      page.nameIs('Эпоха мертвых');
-      page.descriptionIs('История одного зомби-апокалипсиса в Москве');
-      page.containsBook('Начало');
-      page.containsBook('Москва');
-      page.containsBook('Прорыв');
     });
   });
 });

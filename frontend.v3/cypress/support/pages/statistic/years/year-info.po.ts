@@ -1,6 +1,6 @@
-import { PageObject } from '../../page-object';
+import { SearchablePageObject } from '../../searchable-page-object';
 
-export class YearInfoPo extends PageObject {
+export class YearInfoPo extends SearchablePageObject {
   public constructor(year: number) {
     super(`/year/${year}`);
   }

@@ -1,6 +1,6 @@
-import { PageObject } from '../page-object';
+import { SearchablePageObject } from '../searchable-page-object';
 
-export class SeriesViewPo extends PageObject {
+export class SeriesViewPo extends SearchablePageObject {
   public constructor(guid: string) {
     super(`/series/${guid}`);
   }
@@ -33,5 +33,9 @@ export class SeriesViewPo extends PageObject {
 
   public containsBook(name: string): void {
     cy.get('app-collection .book-list app-to-read-book').contains(name);
+  }
+
+  public notContainsBook(name: string): void {
+    cy.contains('app-collection .book-list app-to-read-book', name).should('not.exist');
   }
 }

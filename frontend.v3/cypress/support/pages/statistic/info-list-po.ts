@@ -1,6 +1,6 @@
-import { PageObject } from '../page-object';
+import { SearchablePageObject } from '../searchable-page-object';
 
-export class InfoListPo extends PageObject {
+export class InfoListPo extends SearchablePageObject {
   public yearCount(count: number): void {
     cy.get('app-books-by-years mat-accordion').find('mat-expansion-panel').should('have.length', count);
   }

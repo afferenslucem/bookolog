@@ -1,6 +1,6 @@
-import { PageObject } from '../page-object';
+import { SearchablePageObject } from '../searchable-page-object';
 
-export class SeriesListPo extends PageObject {
+export class SeriesListPo extends SearchablePageObject {
   public constructor() {
     super('/series');
   }
