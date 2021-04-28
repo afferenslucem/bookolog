@@ -34,7 +34,7 @@ export class YearStatisticComponent extends BookSearchableList implements OnInit
 
   public sortBooks(books: Book[]): Book[] {
     books = _(books)
-      .where(item => item.status == BookStatus.Done)
+      .where(item => item.status === BookStatus.Done)
       .toArray();
 
     return new BookSortUtils().sortBooksByFinishDate(books);
