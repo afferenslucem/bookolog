@@ -3,7 +3,7 @@ import { NgControl } from '@angular/forms';
 import { fromEvent, Subscription } from 'rxjs';
 
 @Directive({
-  selector: 'input[appTrimOnBlur], textarea[appTrimOnBlur]',
+  selector: '[appTrimOnBlur]',
 })
 export class TrimOnBlurDirective implements OnInit, OnDestroy {
   private blurSubscription: Subscription;
@@ -11,7 +11,7 @@ export class TrimOnBlurDirective implements OnInit, OnDestroy {
   constructor(private elementRef: ElementRef, @Self() private ngControl: NgControl) {}
 
   public get value(): string {
-    return this.ngControl.value.toString();
+    return this.ngControl.value?.toString();
   }
 
   public set value(v: string) {
@@ -26,6 +26,6 @@ export class TrimOnBlurDirective implements OnInit, OnDestroy {
 
   public trim(): void {
     const currentValue: string = this.value;
-    this.value = currentValue.trim();
+    this.value = (currentValue?.trim() || null);
   }
 }

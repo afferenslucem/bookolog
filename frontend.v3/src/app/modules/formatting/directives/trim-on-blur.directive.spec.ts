@@ -18,4 +18,19 @@ describe('TrimOnBlurDirective', () => {
     expect(getValueSpy).toHaveBeenCalledOnceWith();
     expect(setValueSpy).toHaveBeenCalledOnceWith('value');
   });
+
+  it('should trim with null value', () => {
+    const directive = new TrimOnBlurDirective(null, {
+      get value(): any {
+        return null;
+      }
+    } as any);
+
+    const setValueSpy = spyOnProperty(directive, 'value', 'set');
+
+    directive.trim();
+    const expected: any = null;
+
+    expect(setValueSpy).toHaveBeenCalledOnceWith(expected);
+  });
 });
