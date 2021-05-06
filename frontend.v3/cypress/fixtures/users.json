@@ -1,7 +1,8 @@
 {
   "hrodvitnir": {
     "login": "hrodvitnir",
-    "password": "qwerty"
+    "password": "qwerty",
+    "email": "alexshakirov74@gmail.com"
   },
   "regCheck": {
     "login": "regCheck",

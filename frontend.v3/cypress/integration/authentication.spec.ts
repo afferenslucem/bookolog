@@ -6,6 +6,7 @@ import { loginAs, logout } from '../support/routines';
 import { PageObject } from '../support/pages/page-object';
 import { MainPo } from '../support/pages/main.po';
 import { LogoutPo } from '../support/pages/auth/logout.po';
+import { RecoverPasswordPo } from '../support/pages/auth/recover-password.po';
 
 context('Authentication', () => {
   beforeEach(() => {
@@ -107,6 +108,29 @@ context('Authentication', () => {
       loginPage.isHere();
 
       loginAs(user);
+    });
+  });
+
+  context('PasswordRecovery', () => {
+    let recoverPasswordPage: RecoverPasswordPo = null;
+
+    beforeEach(() => {
+      recoverPasswordPage = new RecoverPasswordPo();
+      recoverPasswordPage.visit();
+    });
+
+    it('page should exists', () => {
+      recoverPasswordPage.isHere();
+    });
+
+    it('should register', () => {
+      const user = users.hrodvitnir;
+
+      recoverPasswordPage.typeEmail(user.email);
+
+      recoverPasswordPage.interceptRequest();
+      recoverPasswordPage.clickSubmit();
+      recoverPasswordPage.waitRecover();
     });
   });
 });

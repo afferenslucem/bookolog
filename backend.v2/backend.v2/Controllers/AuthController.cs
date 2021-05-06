@@ -226,14 +226,9 @@ namespace backend.v2.Controllers
 
                 return Ok();
             }
-            catch (StorageReadException e)
-            {
-                return Ok();
-            }
             catch (Exception e)
             {
-                this.logger.LogError(500, e.Message, e, email);
-                return StatusCode(500, "Can't send email");
+                return Ok();
             }
         }
     }
