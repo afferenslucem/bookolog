@@ -205,14 +205,14 @@ namespace backend.v2.Controllers
         }
 
         /// <summary>
-        /// Оправляет новый парольль на почту пользователя есть указанные email с ней совпадает.
+        /// Оправляет новый пароль на указанную почту, если пользователь с такой почтой существует.
         /// </summary>
         /// <param name="email">Почта для отправки пароля.</param>
-        [HttpGet]
-        [Route("[action]/{email:maxlength(128)}")]
+        [HttpPost]
+        [Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> RecoverPassword(string email)
+        public async Task<IActionResult> RecoverPassword([FromBody] string email)
         {
             try
             {

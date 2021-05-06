@@ -104,11 +104,11 @@ describe('UserOriginService', () => {
   });
 
   it('recoveryPassword', async () => {
-    const getSpy = spyOn(client, 'get').and.returnValue(of(null));
+    const getSpy = spyOn(client, 'post').and.returnValue(of(null));
 
     await origin.recoveryPassword('alexshakirov74@gmail.com');
 
-    expect(getSpy).toHaveBeenCalledOnceWith('/auth/recoverPassword/alexshakirov74@gmail.com');
+    expect(getSpy).toHaveBeenCalledOnceWith('/auth/recoverPassword', 'alexshakirov74@gmail.com', jasmine.any(Object));
   });
 
   it('passwordChange', async () => {

@@ -68,7 +68,11 @@ export class UserOriginService {
   }
 
   public async recoveryPassword(email: string): Promise<void> {
-    await this.httpClient.get('/auth/recoverPassword/' + email).toPromise();
+    await this.httpClient.post('/auth/recoverPassword', email, {
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    }).toPromise();
   }
 
   public async passwordChange(oldPassword: string, newPassword: string): Promise<void> {
