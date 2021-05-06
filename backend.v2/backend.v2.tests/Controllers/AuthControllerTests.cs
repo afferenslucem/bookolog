@@ -336,17 +336,5 @@ namespace backend.v2.tests.Controllers
             
             controllerMock.Verify(m => m.Ok(), Times.Once());
         }
-        
-        [TestMethod]
-        public async Task RecoverPasswordShouldReturn500()
-        {
-            userServiceMock.Setup(m => m.GetByEmail(It.IsAny<string>())).ThrowsAsync(new Exception());
-            controllerMock.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<string>()));
-
-            await controllerMock.Object.RecoverPassword("alexshakirov74@gmail.com");
-
-            userServiceMock.Verify(m => m.GetByEmail("alexshakirov74@gmail.com"), Times.Once());
-            controllerMock.Verify(m => m.StatusCode(500, It.IsAny<string>()), Times.Once());
-        }
     }
 }
