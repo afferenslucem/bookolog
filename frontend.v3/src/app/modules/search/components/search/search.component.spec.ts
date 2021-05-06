@@ -37,12 +37,14 @@ describe('SearchComponent', () => {
 
   it('should close and clear input', () => {
     component.open();
+
     expect(component.isClosed).toBeFalse();
     fixture.detectChanges();
 
     component.input.setValue('value');
 
     component.close();
+
     expect(component.input.value).toEqual('');
     expect(component.isClosed).toBeTrue();
   });

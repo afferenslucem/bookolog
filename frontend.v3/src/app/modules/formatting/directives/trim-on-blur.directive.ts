@@ -26,6 +26,6 @@ export class TrimOnBlurDirective implements OnInit, OnDestroy {
 
   public trim(): void {
     const currentValue: string = this.value;
-    this.value = (currentValue?.trim() || null);
+    this.value = currentValue?.trim() || null;
   }
 }

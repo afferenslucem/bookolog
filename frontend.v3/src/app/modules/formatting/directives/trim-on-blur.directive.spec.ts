@@ -23,7 +23,7 @@ describe('TrimOnBlurDirective', () => {
     const directive = new TrimOnBlurDirective(null, {
       get value(): any {
         return null;
-      }
+      },
     } as any);
 
     const setValueSpy = spyOnProperty(directive, 'value', 'set');
