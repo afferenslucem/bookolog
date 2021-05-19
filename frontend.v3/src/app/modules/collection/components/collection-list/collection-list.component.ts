@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ISequence } from 'declarray/lib/interfaces/i-sequence';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Book } from '../../../book/models/book';
 import { Collection } from '../../models/collection';
-import _ from 'declarray';
+import _, { ISequence } from 'declarray';
 import { BookSortUtils } from '../../../../main/utils/book-sort-utils';
 import { CollectionInfo } from '../../models/collection-info';
 import { SearchableList } from '../../../../main/utils/searchable-list';
@@ -73,7 +72,7 @@ export class CollectionListComponent extends SearchableList implements OnInit {
       .except(counted.select(item => item.collection))
       .select(item => ({
         collection: item,
-        booksForCollection: _.empty(),
+        booksForCollection: _.empty() as ISequence<Book>,
       }));
   }
 

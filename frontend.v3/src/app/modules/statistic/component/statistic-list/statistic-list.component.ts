@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 import { SearchableList } from '../../../../main/utils/searchable-list';
 import { SearchService } from '../../../search/services/search.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import _ from 'declarray';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
+import { IGroupedData } from 'declarray/dist/interfaces/i-grouped-data';
 
 @Component({
   selector: 'app-statistic-list',

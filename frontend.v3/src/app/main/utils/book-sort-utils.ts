@@ -1,8 +1,6 @@
 import { Book } from '../../modules/book/models/book';
-import _ from 'declarray';
-import { ISequence } from 'declarray/lib/interfaces/i-sequence';
-import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
-import { StringComparer } from './string.comparer';
+import _, { IGroupedData, ISequence } from 'declarray';
+import { StringComparator } from './string-comparator';
 import { IEntity } from '../models/i-entity';
 import { Entity } from '../models/entity';
 
@@ -23,7 +21,7 @@ export class BookSortUtils {
   public static count(seq: ISequence<string>): ISequence<IGroupedData<string, number>> {
     return seq.groupBy(
       item => item,
-      new StringComparer(),
+      new StringComparator(),
       grouped => grouped.count(),
     );
   }
@@ -37,7 +35,7 @@ export class BookSortUtils {
   }
 
   public static sortEntitiesByUsageTimeDesc<T extends IEntity | Entity>(entities: ISequence<T>): ISequence<T> {
-    const result = entities.orderByDescending(item => item.modifyDate).thenByDescending(item => item.createDate);
+    const result = entities.orderByDescending(item => +(item.modifyDate || null)).thenByDescending(item => +(item.createDate || null));
 
     return result;
   }

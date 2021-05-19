@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import _ from 'declarray';
-import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
-import { ISequence } from 'declarray/lib/interfaces/i-sequence';
+import _, { IGroupedData, ISequence } from 'declarray';
 import { BookTrackBy } from '../../../../main/utils/book-track-by';
 import { Book } from '../../models/book';
 
@@ -37,7 +35,7 @@ export class BooksByYearsComponent implements OnInit {
 
     this.definedYears$ = this.years$.then(() => this.orderedBooks.where(item => item.key !== -1).toArray());
 
-    this.undefinedYear$ = this.years$.then(() => this.orderedBooks.takeLast(1).firstOrDefault(null, item => item.key === -1));
+    this.undefinedYear$ = this.years$.then(() => this.orderedBooks.takeLast(1).firstOrDefault(item => item.key === -1, null));
   }
 
   ngOnInit(): void {}

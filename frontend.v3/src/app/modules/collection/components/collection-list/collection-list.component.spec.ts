@@ -130,17 +130,17 @@ describe('CollectionListComponent', () => {
           {
             guid: 'id3',
             count: 3,
-            modifyDate: 'date3',
+            modifyDate: new Date(2021, 1, 1),
           },
           {
             guid: 'id2',
             count: 4,
-            modifyDate: 'date2',
+            modifyDate: new Date(2021, 0, 1),
           },
           {
             guid: 'id5',
             count: 0,
-            createDate: 'date3',
+            createDate: new Date(2021, 1, 1),
           },
         ] as any),
       )

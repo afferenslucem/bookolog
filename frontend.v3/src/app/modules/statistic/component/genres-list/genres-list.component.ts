@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'declarray';
-import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StringComparer } from '../../../../main/utils/string.comparer';
 import { Book } from '../../../book/models/book';
+import { IGroupedData } from 'declarray/dist/interfaces/i-grouped-data';
+import { StringComparator } from '../../../../main/utils/string-comparator';
 
 @Component({
   selector: 'app-genres-list',
@@ -35,7 +35,7 @@ export class GenresListComponent implements OnInit {
       .select(item => item.genre)
       .groupBy(
         item => item,
-        new StringComparer(),
+        new StringComparator(),
         grouped => grouped.count(),
       )
       .orderByDescending(item => item.group)

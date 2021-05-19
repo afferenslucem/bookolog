@@ -31,7 +31,7 @@
     "bootstrap": "^4.5.0",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
-    "declarray": "^6.0.4",
+    "declarray": "0.1.0-rc6",
     "essents": "^1.4.7",
     "moment": "^2.29.1",
     "ngx-photo-editor": "^0.3.3",

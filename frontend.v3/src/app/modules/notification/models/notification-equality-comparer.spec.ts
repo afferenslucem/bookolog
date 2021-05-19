@@ -1,16 +1,8 @@
-import { NotificationEqualityComparer } from './notification-equality-comparer';
+import { NotificationEqualityComparator } from './notification-equality-comparator';
 
 describe('NotificationEqualityComparer', () => {
   it('should create an instance', () => {
-    expect(new NotificationEqualityComparer()).toBeTruthy();
-  });
-
-  it('should return correct hashcode', () => {
-    const notification = {
-      guid: 'guid',
-    } as any;
-
-    expect(new NotificationEqualityComparer().getHashCode(notification)).toEqual('guid');
+    expect(new NotificationEqualityComparator()).toBeTruthy();
   });
 
   it('should be equal', () => {
@@ -22,7 +14,7 @@ describe('NotificationEqualityComparer', () => {
       guid: 'guid',
     } as any;
 
-    expect(new NotificationEqualityComparer().equal(notification1, notification2)).toBeTrue();
+    expect(new NotificationEqualityComparator().equals(notification1, notification2)).toBeTrue();
   });
 
   it('should be not equal', () => {
@@ -34,6 +26,6 @@ describe('NotificationEqualityComparer', () => {
       guid: 'guid2',
     } as any;
 
-    expect(new NotificationEqualityComparer().equal(notification1, notification2)).toBeFalse();
+    expect(new NotificationEqualityComparator().equals(notification1, notification2)).toBeFalse();
   });
 });

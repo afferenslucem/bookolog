@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import _ from 'declarray';
-import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
+import _, { IGroupedData } from 'declarray';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StringComparer } from '../../../../main/utils/string.comparer';
 import { Book } from '../../../book/models/book';
+import { StringComparator } from '../../../../main/utils/string-comparator';
 
 @Component({
   selector: 'app-tags-list',
@@ -35,7 +34,7 @@ export class TagsListComponent implements OnInit {
       .selectMany(item => item.tags)
       .groupBy(
         item => item,
-        new StringComparer(),
+        new StringComparator(),
         grouped => grouped.count(),
       )
       .orderByDescending(item => item.group)

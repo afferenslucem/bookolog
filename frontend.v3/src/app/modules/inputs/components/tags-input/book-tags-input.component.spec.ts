@@ -28,7 +28,7 @@ describe('TagsInputComponent', () => {
     it('should write value', () => {
       component.writeValue(['one', 'One', 'two', 'three']);
 
-      expect(component.tags).toEqual(['one', 'two', 'three']);
+      expect(component.tags).toEqual(['two', 'one', 'three']);
     });
   });
 

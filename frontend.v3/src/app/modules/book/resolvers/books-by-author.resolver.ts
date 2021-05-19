@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import _ from 'declarray';
 import { getConsoleLogger } from '../../../main/app.logging';
-import { StringComparer } from '../../../main/utils/string.comparer';
+import { StringComparator } from '../../../main/utils/string-comparator';
 import { Book } from '../models/book';
 import { BookStatus } from '../models/book-status';
 import { BookService } from '../services/book.service';
@@ -22,7 +22,7 @@ export class BooksByAuthorResolver implements Resolve<Book[]> {
     const books = await this.bookService.getByStatus(BookStatus.Done);
 
     return await _(books)
-      .where(item => _(item.authors).contains(targetAuthor, new StringComparer()))
+      .where(item => _(item.authors).contains(targetAuthor, new StringComparator()))
       .promisify()
       .toArray();
   }

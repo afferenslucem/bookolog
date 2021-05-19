@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IGroupedData } from 'declarray/lib/interfaces/i-grouped-data';
 import { Observable } from 'rxjs';
 import { Book } from 'src/app/modules/book/models/book';
 import _ from 'declarray';
 import { map } from 'rxjs/operators';
+import { IGroupedData } from 'declarray/dist/interfaces/i-grouped-data';
 
 @Component({
   selector: 'app-years-list',

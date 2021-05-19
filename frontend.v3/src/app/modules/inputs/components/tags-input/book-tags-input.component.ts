@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angula
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import _ from 'declarray';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
-import { StringComparer } from '../../../../main/utils/string.comparer';
+import { StringComparator } from '../../../../main/utils/string-comparator';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
 
 @Component({
@@ -44,7 +44,7 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
   }
 
   public get availableTags(): string[] {
-    const tags = _(this.list).except(this.tags, new StringComparer()).toArray();
+    const tags = _(this.list).except(this.tags, new StringComparator()).toArray();
 
     if (this.tag) {
       return new FuzzySearch().search(tags, this.tag);
@@ -66,7 +66,7 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
   }
 
   public pushTag(value: string): void {
-    if (value && !_(this.tags).contains(value, new StringComparer())) {
+    if (value && !_(this.tags).contains(value, new StringComparator())) {
       this.tags.push(value);
 
       this.emitChangeValue(this.tags);
@@ -77,13 +77,13 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
 
   public removeTag(tag: string): void {
     this.tags = _(this.tags)
-      .where(item => !new StringComparer().equal(item, tag))
+      .where(item => !new StringComparator().equals(item, tag))
       .toArray();
 
     this.emitChangeValue(this.tags);
   }
 
   public writeValue(value: string[]): void {
-    this.tags = _(value).distinct(new StringComparer()).toArray();
+    this.tags = _(value).distinct(new StringComparator()).toArray();
   }
 }
