@@ -14,3 +14,9 @@
 .book__authors {
   font-size: $normal-font-size;
 }
+
+.book__note {
+  .property__value {
+    white-space: pre-line;
+  }
+}

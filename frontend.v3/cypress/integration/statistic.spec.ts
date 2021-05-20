@@ -176,11 +176,12 @@ context('Statistic', () => {
     });
 
     it('page with filter should has books for years', () => {
-      genreInfo.countBooksForYear(2021, 1);
+      genreInfo.countBooksForYear(2021, 2);
       genreInfo.countBooksForYear(2020, 1);
     });
 
     it('page with filter should has books for year', () => {
+      genreInfo.containsBookWithName('Люди', 2021);
       genreInfo.containsBookWithName('Обезьяны и все-все-все', 2021);
       genreInfo.containsBookWithName('Жлобология', 2020);
     });
