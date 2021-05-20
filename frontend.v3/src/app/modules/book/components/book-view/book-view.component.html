@@ -40,8 +40,7 @@
 
 <div *ngIf="book.collection" class="book__collection property">
   <div [routerLink]="['/series', book.collection.guid]" class="property__value link">
-    {{ book.collection.name | capitalize }}  <span class="order"
-                                                   *ngIf="book.collectionOrder != null">№ {{ book.collectionOrder }}</span>
+    {{ book.collection.name | capitalize }} <span class="order" *ngIf="book.collectionOrder != null">№ {{ book.collectionOrder }}</span>
   </div>
   <label>Серия</label>
 </div>
