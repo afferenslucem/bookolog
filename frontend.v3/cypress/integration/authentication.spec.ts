@@ -124,7 +124,7 @@ context('Authentication', () => {
     });
 
     it('should register', () => {
-      const user = users.hrodvitnir;
+      const user = users.passwordRecoveryCheck;
 
       recoverPasswordPage.typeEmail(user.email);
 

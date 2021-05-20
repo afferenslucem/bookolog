@@ -28,5 +28,10 @@
     "login": "prog300",
     "password": "qwerty",
     "email": "9793594@gmail.com"
+  },
+  "passwordRecoveryCheck": {
+    "login": "Plinto",
+    "password": "qwerty",
+    "email": "d4u@bk.ru"
   }
 }

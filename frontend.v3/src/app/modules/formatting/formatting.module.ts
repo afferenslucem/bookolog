@@ -7,10 +7,20 @@ import { PadStartPipe } from './pipes/pad-start.pipe';
 import { TimifyUnitsPipe } from './pipes/timify-units.pipe';
 import { MaxLengthPipe } from './pipes/max-length.pipe';
 import { TrimOnBlurDirective } from './directives/trim-on-blur.directive';
+import { TrimFractionDirective } from './directives/trim-fraction.directive';
 
 @NgModule({
-  declarations: [JoinPipe, ChooseFormPipe, PadStartPipe, TimifyUnitsPipe, CapitalizePipe, MaxLengthPipe, TrimOnBlurDirective],
-  exports: [JoinPipe, TimifyUnitsPipe, CapitalizePipe, ChooseFormPipe, MaxLengthPipe, TrimOnBlurDirective],
+  declarations: [
+    JoinPipe,
+    ChooseFormPipe,
+    PadStartPipe,
+    TimifyUnitsPipe,
+    CapitalizePipe,
+    MaxLengthPipe,
+    TrimOnBlurDirective,
+    TrimFractionDirective,
+  ],
+  exports: [JoinPipe, TimifyUnitsPipe, CapitalizePipe, ChooseFormPipe, MaxLengthPipe, TrimOnBlurDirective, TrimFractionDirective],
   imports: [CommonModule],
 })
 export class FormattingModule {}

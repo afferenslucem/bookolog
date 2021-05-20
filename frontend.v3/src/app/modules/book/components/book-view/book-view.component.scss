@@ -20,3 +20,9 @@
     white-space: pre-line;
   }
 }
+
+.book__collection {
+  .order {
+    padding-left: $ind-1;
+  }
+}

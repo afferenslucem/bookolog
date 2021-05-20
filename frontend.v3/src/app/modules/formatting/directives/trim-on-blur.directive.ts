@@ -18,9 +18,11 @@ export class TrimOnBlurDirective implements OnInit, OnDestroy {
     this.ngControl.control.patchValue(v);
   }
 
-  ngOnDestroy(): void {}
+  public ngOnDestroy(): void {
+    this.blurSubscription.unsubscribe();
+  }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.blurSubscription = fromEvent(this.elementRef.nativeElement, 'blur').subscribe(() => this.trim());
   }
 

@@ -86,7 +86,7 @@ namespace backend.v2.Models
         /// <summary>
         /// Номер книги в коллекции.
         /// </summary>
-        public short? CollectionOrder {get; set;}
+        public float? CollectionOrder {get; set;}
         
         /// <summary>
         /// Название жанра.
