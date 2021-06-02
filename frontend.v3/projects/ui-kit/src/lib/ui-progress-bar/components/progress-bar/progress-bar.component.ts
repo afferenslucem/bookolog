@@ -15,7 +15,7 @@ export class ProgressBarComponent implements OnInit {
 
   public getStyle(): any {
     return {
-      width: this.value + 'px',
+      width: this.value + '%',
     };
   }
 }
