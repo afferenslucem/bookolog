@@ -20,7 +20,7 @@ export class LoginPo extends PageObject {
   }
 
   public getError(): Chainable<JQuery> {
-    return cy.get('app-login form mat-error span');
+    return cy.get('app-login form ui-error span');
   }
 
   public waitLoginSuccess(): void {

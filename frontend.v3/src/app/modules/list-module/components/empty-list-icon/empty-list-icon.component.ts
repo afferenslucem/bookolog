@@ -11,16 +11,16 @@ export class EmptyListIconComponent implements OnInit {
 
   constructor() {}
 
+  public get iconFullName(): string {
+    return `/assets/empty-list-icons/${this.id}.svg`;
+  }
+
   ngOnInit(): void {
     this.id = this.getRandomIndex(17);
   }
 
   public onError(): void {
     this.isFailed = true;
-  }
-
-  public get iconFullName(): string {
-    return `/assets/empty-list-icons/${this.id}.svg`;
   }
 
   private getRandomIndex(bound: number): number {

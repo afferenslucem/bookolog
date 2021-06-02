@@ -134,7 +134,7 @@ describe('CollectionEditViewComponent', () => {
       component.form.name = '';
       fixture.detectChanges();
 
-      const errorText = element.querySelector('.name-field mat-error').innerHTML;
+      const errorText = element.querySelector('.name-field ui-error').innerHTML;
 
       expect(errorText).toEqual('Это обязательное поле');
     });
@@ -143,7 +143,7 @@ describe('CollectionEditViewComponent', () => {
       component.form.name = 'name';
       fixture.detectChanges();
 
-      const errorText = element.querySelector('.name-field mat-error')?.innerHTML;
+      const errorText = element.querySelector('.name-field ui-error')?.innerHTML;
 
       expect(errorText).toBeFalsy();
     });

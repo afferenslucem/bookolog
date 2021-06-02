@@ -28,10 +28,16 @@
   }
 }
 
-mat-list {
-  mat-list-item {
+ul.book-nav {
+  padding-left: $ind-2;
+
+  li {
     height: 35px;
+    display: flex;
+    align-items: center;
   }
+
+  margin-bottom: $ind-4;
 }
 
 .bottom {

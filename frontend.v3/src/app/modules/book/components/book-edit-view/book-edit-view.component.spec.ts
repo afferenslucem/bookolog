@@ -10,18 +10,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Book } from '../../models/book';
 import { BookType } from '../../models/book-type';
 import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
-import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BookData } from '../../models/book-data';
 import { BookService } from '../../services/book.service';
 import { BookEditViewComponent } from './book-edit-view.component';
 import { BookStatus } from '../../models/book-status';
 import { Action } from '../../../../main/resolvers/action.resolver';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputsModule } from '../../../inputs/inputs.module';
-import { MatInputModule } from '@angular/material/input';
 import { DateUtils } from '../../../../main/utils/date-utils';
 
 const book: Book = new Book({
@@ -57,13 +53,9 @@ describe('BookEditViewComponent', () => {
         FormattingModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        MatSelectModule,
         BrowserAnimationsModule,
-        MatAutocompleteModule,
-        MatFormFieldModule,
         ReactiveFormsModule,
         InputsModule,
-        MatInputModule,
         FormattingModule,
       ],
       schemas: [NO_ERRORS_SCHEMA],

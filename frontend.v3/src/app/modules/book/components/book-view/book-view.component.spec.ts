@@ -3,7 +3,6 @@ import { FormattingModule } from '../../../formatting/formatting.module';
 import { BookViewComponent } from './book-view.component';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatDialog } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BookService } from '../../services/book.service';
 import { BookEditViewComponent } from '../book-edit-view/book-edit-view.component';
@@ -15,6 +14,7 @@ import { DateUtils } from '../../../../main/utils/date-utils';
 import { BookOriginService } from '../../services/book.origin.service';
 import { BookStorageService } from '../../services/book.storage.service';
 import { UUIDGenerator } from 'essents';
+import { UiModalService } from 'ui-kit';
 
 describe('BookViewComponent', () => {
   let component: BookViewComponent;
@@ -27,7 +27,7 @@ describe('BookViewComponent', () => {
       declarations: [BookViewComponent],
       imports: [FormattingModule, RouterTestingModule, HttpClientTestingModule],
       providers: [
-        { provide: MatDialog, useValue: {} },
+        { provide: UiModalService, useValue: {} },
         BookService,
         { provide: BookOriginService, useValue: {} },
         { provide: BookStorageService, useValue: {} },
@@ -245,7 +245,7 @@ describe('BookViewComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value mat-progress-bar')).toBeTruthy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value ui-progress-bar')).toBeTruthy();
       });
 
       it('should not render', () => {

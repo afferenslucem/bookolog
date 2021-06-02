@@ -58,11 +58,11 @@ export class BookViewPo extends PageObject {
   }
 
   public delete(): void {
-    cy.contains('app-book-view .mat-warn', 'Удалить').click();
+    cy.contains('app-book-view [color=danger]', 'Удалить').click();
 
     cy.intercept('DELETE', '**/book/delete/**').as('delete');
 
-    cy.get('app-book-delete-dialog .mat-dialog-actions .delete').click();
+    cy.get('app-book-delete-dialog ui-modal-bottom .delete').click();
 
     cy.wait('@delete').its('response.statusCode').should('be.eq', 200);
   }

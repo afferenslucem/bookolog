@@ -22,11 +22,11 @@ export class SeriesViewPo extends SearchablePageObject {
   }
 
   public delete(): void {
-    cy.get('app-collection .collection__buttons .mat-warn').click();
+    cy.get('app-collection .collection__buttons [color=danger]').click();
 
     cy.intercept('DELETE', '**/collection/delete/**').as('delete');
 
-    cy.get('app-collection-delete-dialog .mat-dialog-actions .delete').click();
+    cy.get('app-collection-delete-dialog ui-modal-bottom .delete').click();
 
     cy.wait('@delete').its('response.statusCode').should('be.eq', 200);
   }

@@ -60,7 +60,7 @@ describe('NotificationComponent', () => {
 
       const color = component.matColor;
 
-      expect(color).toEqual('accent');
+      expect(color).toEqual('warning');
     });
 
     it('should return warn', () => {
@@ -68,7 +68,7 @@ describe('NotificationComponent', () => {
 
       const color = component.matColor;
 
-      expect(color).toEqual('warn');
+      expect(color).toEqual('danger');
     });
   });
 

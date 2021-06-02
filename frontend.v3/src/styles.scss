@@ -1,5 +1,4 @@
-// @import "styles/reset";
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "projects/ui-kit/src/styles";
 
 @import "styles/variables";
 @import "styles/components";
@@ -11,14 +10,6 @@
 html {
   max-height: 100%;
   max-width: 100%;
-}
-
-body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  margin: 0;
-
-  max-width: 100%;
-  max-height: 100%;
 }
 
 app-root {

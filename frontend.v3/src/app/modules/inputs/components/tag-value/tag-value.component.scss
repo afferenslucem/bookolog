@@ -4,6 +4,10 @@
   display: flex;
   align-items: center;
 
+  background-color: #f9cd0b;
+
+  color: white;
+
   > * {
     flex: 0 0 auto;
   }
@@ -17,6 +21,8 @@
   &__close {
     margin-left: $ind-1;
   }
+
+  border-radius: 4px;
 }
 
 :host {

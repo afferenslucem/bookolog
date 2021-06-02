@@ -1,18 +1,15 @@
 <div *ngIf="collections$ | async as collections" class="collection-static-list scroll-list">
-  <mat-list role="list" *ngIf="collections?.length > 0; else emptyList">
-    <mat-list-item *ngFor="let item of collections">
-      <div class="statistic-item w-100">
-        <div class="statistic-item__header">
-          <span [routerLink]="['/series', item.guid]" class="link">{{ item.name | capitalize }}</span>
-          <div class="actions">
-            <mat-icon [hidden]="!item.shouldSync">update</mat-icon>
-            <!--mat-icon [routerLink]="['/series/edit', item.guid]" (click)="$event.stopPropagation()">edit</mat-icon-->
-            <span>{{ item.count }}</span>
-          </div>
+  <ul *ngIf="collections?.length > 0; else emptyList" role="list">
+    <li *ngFor="let item of collections" class="statistic-item w-100">
+      <div class="statistic-item__header">
+        <span [routerLink]="['/series', item.guid]" class="link">{{ item.name | capitalize }}</span>
+        <div class="actions">
+          <span [hidden]="!item.shouldSync" class="ui-cloud-upload"></span>
+          <span>{{ item.count }}</span>
         </div>
       </div>
-    </mat-list-item>
-  </mat-list>
+    </li>
+  </ul>
   <ng-template #emptyList>
     <app-empty-list-placeholder></app-empty-list-placeholder>
   </ng-template>

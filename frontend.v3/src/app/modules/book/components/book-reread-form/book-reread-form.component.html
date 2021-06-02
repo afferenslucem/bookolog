@@ -8,77 +8,77 @@
   <div class="property__value">
     <span *ngFor="let author of book.authors | capitalize; let last = last" [routerLink]="['/author', author]" class="link">
       <span class="author__value">{{ author }}</span
-      ><span *ngIf="!last">,</span>
+      ><span *ngIf="!last">, </span>
     </span>
   </div>
   <label>Авторы</label>
 </div>
 
-<form (ngSubmit)="submit()" [formGroup]="form" appDatesValidator appUnitsValidator>
-  <mat-form-field appearance="fill">
-    <mat-label>Статус</mat-label>
-    <mat-select formControlName="status">
-      <mat-option [value]="BookStatus.ToRead">К прочтению</mat-option>
-      <mat-option [value]="BookStatus.InProgress">Читаю</mat-option>
-      <mat-option [value]="BookStatus.Done">Прочитана</mat-option>
-    </mat-select>
-  </mat-form-field>
+<form (ngSubmit)="submit()" [formGroup]="form" appDatesValidator appUnitsValidator class="ui-form">
+  <ui-form-field appearance="fill">
+    <ui-label>Статус</ui-label>
+    <select formControlName="status" uiSelect>
+      <option [value]="BookStatus.ToRead">К прочтению</option>
+      <option [value]="BookStatus.InProgress">Читаю</option>
+      <option [value]="BookStatus.Done">Прочитана</option>
+    </select>
+  </ui-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Тип книги</mat-label>
-    <mat-select class="book__type" formControlName="type">
-      <mat-option [value]="BookType.Paper">Бумажная книга</mat-option>
-      <mat-option [value]="BookType.Electronic">Электронная книга</mat-option>
-      <mat-option [value]="BookType.Audio">Аудиокнига</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <ui-form-field appearance="fill">
+    <ui-label>Тип книги</ui-label>
+    <select class="book__type" formControlName="type" uiSelect>
+      <option [value]="BookType.Paper">Бумажная книга</option>
+      <option [value]="BookType.Electronic">Электронная книга</option>
+      <option [value]="BookType.Audio">Аудиокнига</option>
+    </select>
+  </ui-form-field>
 
-  <mat-form-field [hidden]="bookForm.status !== BookStatus.InProgress" appearance="fill">
-    <mat-label>Прогресс</mat-label>
-    <mat-select formControlName="progressType">
-      <mat-option [value]="ProgressAlgorithm.Done">{{ bookForm.type == BookType.Audio ? 'Прослушано' : 'Прочитано' }}</mat-option>
-      <mat-option [value]="ProgressAlgorithm.Left">Осталось</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <ui-form-field [hidden]="bookForm.status !== BookStatus.InProgress" appearance="fill">
+    <ui-label>Прогресс</ui-label>
+    <select formControlName="progressType" uiSelect>
+      <option [value]="ProgressAlgorithm.Done">{{ bookForm.type == BookType.Audio ? 'Прослушано' : 'Прочитано' }}</option>
+      <option [value]="ProgressAlgorithm.Left">Осталось</option>
+    </select>
+  </ui-form-field>
 
   <div [hidden]="status !== BookStatus.InProgress" [ngSwitch]="type" class="book-reread__progress">
     <div *ngSwitchCase="BookType.Audio" class="book-reread__progress_audio">
       <div>
-        <mat-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</mat-label>
+        <ui-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</ui-label>
         <app-book-time-input formControlName="doneUnits"></app-book-time-input>
       </div>
 
       <div>
-        <mat-label>Всего</mat-label>
+        <ui-label>Всего</ui-label>
         <app-book-time-input formControlName="totalUnits"></app-book-time-input>
       </div>
     </div>
     <div *ngSwitchDefault class="book-reread__progress_audio">
-      <mat-form-field appearance="fill">
-        <mat-label>Страниц</mat-label>
-        <input autocomplete="off" formControlName="doneUnits" matInput max="6000" min="0" step="1" type="number" />
-      </mat-form-field>
+      <ui-form-field appearance="fill">
+        <ui-label>Страниц</ui-label>
+        <input autocomplete="off" formControlName="doneUnits" max="6000" min="0" step="1" type="number" uiInput />
+      </ui-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Всего</mat-label>
-        <input autocomplete="off" formControlName="totalUnits" matInput max="6000" min="0" step="1" type="number" />
-      </mat-form-field>
+      <ui-form-field appearance="fill">
+        <ui-label>Всего</ui-label>
+        <input autocomplete="off" formControlName="totalUnits" max="6000" min="0" step="1" type="number" uiInput />
+      </ui-form-field>
     </div>
 
-    <mat-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс</mat-error>
+    <ui-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс</ui-error>
   </div>
 
   <div [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
-    <mat-label>Начало чтения</mat-label>
+    <ui-label>Начало чтения</ui-label>
     <app-book-date-input formControlName="started"></app-book-date-input>
   </div>
 
   <div [hidden]="status != BookStatus.Done">
-    <mat-label>Окончание чтения</mat-label>
+    <ui-label>Окончание чтения</ui-label>
     <app-book-date-input formControlName="finished"></app-book-date-input>
   </div>
 
-  <mat-error *ngIf="form?.errors?.invalidDates"> Дата начала больше даты окончания</mat-error>
+  <ui-error *ngIf="form?.errors?.invalidDates"> Дата начала больше даты окончания</ui-error>
 
-  <button [disabled]="form.invalid" class="w-100" color="primary" mat-flat-button type="submit">Сохранить</button>
+  <button [disabled]="form.invalid" class="w-100" color="primary" type="submit" uiButton>Сохранить</button>
 </form>

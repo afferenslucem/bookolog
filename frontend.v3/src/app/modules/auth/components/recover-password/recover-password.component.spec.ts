@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UiModule } from '../../../ui/ui.module';
 import { AuthService } from '../../services/auth.service';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { TestCore } from '../../../../main/test/test-core.spec';
@@ -18,7 +17,7 @@ describe('RecoverPasswordComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [RecoverPasswordComponent],
-      imports: [RouterTestingModule, HttpClientTestingModule, UiModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
     })
       .overrideComponent(RecoverPasswordComponent, {
         set: {
@@ -58,7 +57,7 @@ describe('RecoverPasswordComponent', () => {
 
       fixture.detectChanges();
 
-      const error = element.querySelector<HTMLElement>('.email-field mat-error')?.innerHTML;
+      const error = element.querySelector<HTMLElement>('.email-field ui-error')?.innerHTML;
 
       expect(error).toEqual('Некорректный формат почты');
     });
@@ -68,7 +67,7 @@ describe('RecoverPasswordComponent', () => {
 
       fixture.detectChanges();
 
-      const error = element.querySelector<HTMLElement>('.email-field mat-error')?.innerHTML;
+      const error = element.querySelector<HTMLElement>('.email-field ui-error')?.innerHTML;
 
       expect(error).toEqual('Это обязательное поле');
     });
@@ -78,7 +77,7 @@ describe('RecoverPasswordComponent', () => {
 
       fixture.detectChanges();
 
-      const error = element.querySelector<HTMLElement>('.email-field mat-error')?.innerHTML;
+      const error = element.querySelector<HTMLElement>('.email-field ui-error')?.innerHTML;
 
       expect(error).toBeFalsy();
     });

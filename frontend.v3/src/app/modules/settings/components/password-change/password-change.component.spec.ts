@@ -104,7 +104,7 @@ describe('PasswordChangeComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.current-password-field mat-error')?.innerText).toBeFalsy();
+        expect(element.querySelector<HTMLElement>('.current-password-field ui-error')?.innerText).toBeFalsy();
       });
 
       it('should show error', () => {
@@ -112,7 +112,7 @@ describe('PasswordChangeComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.current-password-field mat-error')?.innerText).toEqual('Это обязательное поле');
+        expect(element.querySelector<HTMLElement>('.current-password-field ui-error')?.innerText).toEqual('Это обязательное поле');
       });
     });
 
@@ -122,7 +122,7 @@ describe('PasswordChangeComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.new-password-field mat-error')?.innerText).toBeFalsy();
+        expect(element.querySelector<HTMLElement>('.new-password-field ui-error')?.innerText).toBeFalsy();
       });
 
       it('should show error', () => {
@@ -130,7 +130,7 @@ describe('PasswordChangeComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.new-password-field mat-error')?.innerText).toEqual('Это обязательное поле');
+        expect(element.querySelector<HTMLElement>('.new-password-field ui-error')?.innerText).toEqual('Это обязательное поле');
       });
     });
 
@@ -141,7 +141,7 @@ describe('PasswordChangeComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.confirmation-password-field mat-error')?.innerText).toBeFalsy();
+        expect(element.querySelector<HTMLElement>('.confirmation-password-field ui-error')?.innerText).toBeFalsy();
       });
 
       it('should show confirmation error', () => {
@@ -150,7 +150,7 @@ describe('PasswordChangeComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.confirmation-password-field mat-error')?.innerText).toEqual('Пароли не совпадают');
+        expect(element.querySelector<HTMLElement>('.confirmation-password-field ui-error')?.innerText).toEqual('Пароли не совпадают');
       });
     });
   });

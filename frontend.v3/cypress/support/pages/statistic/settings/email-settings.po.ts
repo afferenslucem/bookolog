@@ -6,15 +6,15 @@ export class EmailSettingsPo extends SettingsPo {
   }
 
   public clearEmail(): void {
-    cy.get('app-email-change mat-form-field input').clear();
+    cy.get('app-email-change ui-form-field input').clear();
   }
 
   public typeEmail(email: string): void {
-    cy.get('app-email-change mat-form-field input').type(email);
+    cy.get('app-email-change ui-form-field input').type(email);
   }
 
   public emailIs(email: string): void {
-    cy.get('app-email-change mat-form-field input').should('have.value', email);
+    cy.get('app-email-change ui-form-field input').should('have.value', email);
   }
 
   public submit(): void {

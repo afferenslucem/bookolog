@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UiModule } from '../../../ui/ui.module';
 import { CredentialsException } from '../../exceptions/credentials.exception';
 import { AuthService } from '../../services/auth.service';
 import { ChangeDetectionStrategy } from '@angular/core';
@@ -19,7 +18,7 @@ describe('LoginPageComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [RouterTestingModule, HttpClientTestingModule, UiModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
     })
       .overrideComponent(LoginComponent, {
         set: {
@@ -100,7 +99,7 @@ describe('LoginPageComponent', () => {
 
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле');
+      expect(element.querySelector<HTMLElement>('.login-field ui-error').innerText).toEqual('Это обязательное поле');
     });
 
     it('should show password error', () => {
@@ -108,7 +107,7 @@ describe('LoginPageComponent', () => {
 
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLElement>('.password-field mat-error').innerText).toEqual('Это обязательное поле');
+      expect(element.querySelector<HTMLElement>('.password-field ui-error').innerText).toEqual('Это обязательное поле');
     });
   });
 

@@ -1,7 +1,6 @@
-import { PageObject } from '../../page-object';
 import { IBookCheckData } from '../../../interfaces/i-book-check-data';
-import Chainable = Cypress.Chainable;
 import { SearchablePageObject } from '../../searchable-page-object';
+import Chainable = Cypress.Chainable;
 
 export abstract class BookListPo extends SearchablePageObject {
   protected constructor(url: string) {
@@ -41,7 +40,7 @@ export abstract class BookListPo extends SearchablePageObject {
   }
 
   public shouldNotContainsBook(book: IBookCheckData): void {
-    this.containsBook(book).should('not.exist')
+    this.containsBook(book).should('not.exist');
   }
 
   protected abstract containsBook(book: IBookCheckData): Chainable<any>;

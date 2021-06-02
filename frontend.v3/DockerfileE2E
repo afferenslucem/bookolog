@@ -6,4 +6,5 @@ RUN npm ci
 RUN npm install --save-dev cypress
 RUN $(npm bin)/cypress verify
 COPY . .
+RUN npm run build -- ui-kit && npm pack ./dist/ui-kit && npm install ./ui-kit-0.0.1.tgz
 RUN npm run ci:build-e2e

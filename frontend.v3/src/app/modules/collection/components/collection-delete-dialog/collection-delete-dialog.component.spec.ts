@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestCore } from '../../../../main/test/test-core.spec';
-import { MatDialogRef } from '@angular/material/dialog';
+import { ModalRef } from 'ui-kit';
 import { CollectionDeleteDialogComponent } from './collection-delete-dialog.component';
 
 describe('CollectionDeleteDialogComponent', () => {
@@ -13,7 +13,7 @@ describe('CollectionDeleteDialogComponent', () => {
       declarations: [CollectionDeleteDialogComponent],
       providers: [
         {
-          provide: MatDialogRef,
+          provide: ModalRef,
           useValue: {
             close: () => {},
           },
@@ -37,7 +37,7 @@ describe('CollectionDeleteDialogComponent', () => {
 
     describe('Close', () => {
       it('Cancel', () => {
-        const ref = TestBed.inject(MatDialogRef);
+        const ref = TestBed.inject(ModalRef);
 
         const closeSpy = spyOn(ref, 'close');
 
@@ -47,7 +47,7 @@ describe('CollectionDeleteDialogComponent', () => {
       });
 
       it('Delete', () => {
-        const ref = TestBed.inject(MatDialogRef);
+        const ref = TestBed.inject(ModalRef);
 
         const closeSpy = spyOn(ref, 'close');
 

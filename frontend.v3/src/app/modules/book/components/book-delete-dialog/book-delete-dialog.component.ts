@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { ModalRef } from 'ui-kit';
 
 export type DeleteDialogResult = 'delete' | 'cancel';
 
@@ -9,7 +9,7 @@ export type DeleteDialogResult = 'delete' | 'cancel';
   styleUrls: ['./book-delete-dialog.component.scss'],
 })
 export class BookDeleteDialogComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<BookDeleteDialogComponent>) {}
+  constructor(private dialogRef: ModalRef<BookDeleteDialogComponent>) {}
 
   public ngOnInit(): void {}
 

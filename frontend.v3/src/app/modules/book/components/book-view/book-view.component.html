@@ -40,7 +40,7 @@
 
 <div *ngIf="book.collection" class="book__collection property">
   <div [routerLink]="['/series', book.collection.guid]" class="property__value link">
-    {{ book.collection.name | capitalize }} <span class="order" *ngIf="book.collectionOrder != null">№ {{ book.collectionOrder }}</span>
+    {{ book.collection.name | capitalize }} <span *ngIf="book.collectionOrder != null" class="order">№ {{ book.collectionOrder }}</span>
   </div>
   <label>Серия</label>
 </div>
@@ -65,7 +65,7 @@
 
 <div *ngIf="book.doneUnits && book.totalUnits" class="book__progress property">
   <div class="property__value">
-    <mat-progress-bar [value]="book.progressPercents"></mat-progress-bar>
+    <ui-progress-bar [value]="book.progressPercents"></ui-progress-bar>
   </div>
   <label>Прогресс</label>
 </div>
@@ -99,30 +99,20 @@
 </div>
 
 <div class="button-group vertical">
-  <button
-    (click)="markAsProgress(book)"
-    *ngIf="book.status == BookStatus.ToRead"
-    class="mark-as-progress book-status-button"
-    mat-flat-button
-  >
+  <button (click)="markAsProgress(book)" *ngIf="book.status == BookStatus.ToRead" class="mark-as-progress book-status-button" uiButton>
     Читаю
   </button>
 
-  <button (click)="markAsDone(book)" *ngIf="book.status == BookStatus.InProgress" class="mark-as-done book-status-button" mat-flat-button>
+  <button (click)="markAsDone(book)" *ngIf="book.status == BookStatus.InProgress" class="mark-as-done book-status-button" uiButton>
     Прочитана
   </button>
 
-  <button
-    *ngIf="book.status == BookStatus.Done"
-    [routerLink]="['/book/reread', book.guid]"
-    class="edit-button"
-    color="accent"
-    mat-flat-button
-  >
+  <button *ngIf="book.status == BookStatus.Done" [routerLink]="['/book/reread', book.guid]" class="edit-button" color="warning" uiButton>
     Перечитать
   </button>
 
-  <button [routerLink]="['/book/edit', book.guid]" class="w-100 edit-button" color="primary" mat-flat-button>Редактировать</button>
+  <button [routerLink]="['/book/edit', book.guid]" class="w-100 edit-button" color="secondary" uiButton>Редактировать</button>
 
-  <button (click)="openDeleteDialog(book)" color="warn" mat-flat-button>Удалить</button>
+  <button (click)="openDeleteDialog(book)" color="danger" uiButton>Удалить</button>
 </div>
+<ng-template #container></ng-template>

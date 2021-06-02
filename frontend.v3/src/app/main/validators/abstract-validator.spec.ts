@@ -65,7 +65,13 @@ describe('AbstractValidator', () => {
     });
 
     it('should return null for empty result', () => {
-      const result = validator.clearErrors({ error: 'error', error2: 'error2' }, { error: 'error2', error2: undefined });
+      const result = validator.clearErrors(
+        { error: 'error', error2: 'error2' },
+        {
+          error: 'error2',
+          error2: undefined,
+        },
+      );
 
       expect(result).toEqual(null);
     });

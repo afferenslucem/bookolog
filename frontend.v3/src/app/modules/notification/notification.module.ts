@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { UiModule } from '../ui/ui.module';
 import { NotificationAreaComponent } from './components/notification-area/notification-area.component';
 import { NotificationItemComponent } from './components/notification-item/notification-item.component';
+import { UiButtonModule } from 'ui-kit';
 
 @NgModule({
   declarations: [NotificationAreaComponent, NotificationItemComponent],
   exports: [NotificationAreaComponent],
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, UiModule],
+  imports: [CommonModule, UiButtonModule],
 })
 export class NotificationModule {}

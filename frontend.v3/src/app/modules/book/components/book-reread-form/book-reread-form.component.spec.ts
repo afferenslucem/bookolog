@@ -11,7 +11,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Book } from '../../models/book';
 import { BookType } from '../../models/book-type';
 import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
-import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BookStatus } from '../../models/book-status';
 import { BookData } from '../../models/book-data';
@@ -45,7 +44,7 @@ describe('BookRereadFormComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [BookRereadFormComponent],
-      imports: [FormattingModule, HttpClientTestingModule, RouterTestingModule, MatSelectModule, BrowserAnimationsModule],
+      imports: [FormattingModule, HttpClientTestingModule, RouterTestingModule, BrowserAnimationsModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRoute },

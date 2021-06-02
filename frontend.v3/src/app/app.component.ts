@@ -20,9 +20,9 @@ export class AppComponent implements OnInit {
     this.searchWatcher.watch();
   }
 
-  public ngOnInit(): void {}
-
   public get showPreloader(): Observable<boolean> {
     return this.preloaderService.shouldShow;
   }
+
+  public ngOnInit(): void {}
 }

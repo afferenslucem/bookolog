@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookTagsInputComponent } from './book-tags-input.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TestCore } from '../../../../main/test/test-core.spec';
 
 describe('TagsInputComponent', () => {
@@ -10,7 +9,6 @@ describe('TagsInputComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [BookTagsInputComponent],
-      imports: [MatAutocompleteModule],
     }).compileComponents();
   });
 

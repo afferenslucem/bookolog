@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookStatus } from 'src/app/modules/book/models/book-status';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideMenuComponent implements OnInit {
   @Output()
@@ -38,13 +39,5 @@ export class SideMenuComponent implements OnInit {
 
   public async logout(): Promise<void> {
     await this.router.navigate(['/logout']);
-  }
-
-  public clearCache(): void {
-    try {
-      this.notification.createInfoNotification('Кэш очищен');
-    } catch (e) {
-      this.notification.createErrorNotification('Не удалось очистить кэш');
-    }
   }
 }

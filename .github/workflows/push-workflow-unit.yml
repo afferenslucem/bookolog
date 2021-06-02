@@ -24,8 +24,32 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run build --if-present
+      - run: npm run build ui-kit
+      - run: npm pack ./dist/ui-kit
+      - run: npm install ui-kit-0.0.1.tgz
+      - run: npm run build
       - run: npm run test:prod
+
+  ui-kit-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend.v3
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Tests client use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present -- --prod ui-kit
+      - run: npm run test:prod -- ui-kit
 
   client-linting:
     runs-on: ubuntu-latest

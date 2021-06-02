@@ -1,41 +1,41 @@
-<mat-toolbar color="primary">
+<ui-toolbar color="primary">
   <app-title></app-title>
-</mat-toolbar>
+</ui-toolbar>
 <div class="content">
-  <form (ngSubmit)="submit($event)" [formGroup]="form.nativeForm">
-    <mat-form-field appearance="fill" class="login-field">
-      <mat-label>Логин</mat-label>
-      <input appTrimOnBlur class="login" formControlName="login" matInput required />
-      <mat-error *ngIf="form.loginInvalid">{{ form.loginErrorMessage }}</mat-error>
-    </mat-form-field>
+  <form (ngSubmit)="submit($event)" [formGroup]="form.nativeForm" class="ui-form">
+    <ui-form-field appearance="fill" class="login-field">
+      <ui-label>Логин</ui-label>
+      <input appTrimOnBlur class="login" formControlName="login" required uiInput />
+      <ui-error *ngIf="form.loginInvalid">{{ form.loginErrorMessage }}</ui-error>
+    </ui-form-field>
 
-    <mat-form-field appearance="fill" class="email-field">
-      <mat-label>Почта</mat-label>
-      <input appTrimOnBlur class="email" formControlName="email" matInput required />
-      <mat-error *ngIf="form.emailInvalid">{{ form.emailErrorMessage }}</mat-error>
-    </mat-form-field>
+    <ui-form-field appearance="fill" class="email-field">
+      <ui-label>Почта</ui-label>
+      <input appTrimOnBlur class="email" formControlName="email" required uiInput />
+      <ui-error *ngIf="form.emailInvalid">{{ form.emailErrorMessage }}</ui-error>
+    </ui-form-field>
 
-    <mat-form-field appearance="fill" class="password-field">
-      <mat-label>Пароль</mat-label>
-      <input class="password" formControlName="password" matInput required type="password" />
-      <mat-error *ngIf="form.passwordInvalid">{{ form.passwordErrorMessage }}</mat-error>
-    </mat-form-field>
+    <ui-form-field appearance="fill" class="password-field">
+      <ui-label>Пароль</ui-label>
+      <input class="password" formControlName="password" required type="password" uiInput />
+      <ui-error *ngIf="form.passwordInvalid">{{ form.passwordErrorMessage }}</ui-error>
+    </ui-form-field>
 
-    <mat-form-field appearance="fill" class="confirmation-field">
-      <mat-label>Подтверждение пароля</mat-label>
-      <input class="password-confirmation" formControlName="confirmation" matInput required type="password" />
-      <mat-error *ngIf="form.confirmationInvalid">{{ form.confirmationErrorMessage }}</mat-error>
-    </mat-form-field>
+    <ui-form-field appearance="fill" class="confirmation-field">
+      <ui-label>Подтверждение пароля</ui-label>
+      <input class="password-confirmation" formControlName="confirmation" required type="password" uiInput />
+      <ui-error *ngIf="form.confirmationInvalid">{{ form.confirmationErrorMessage }}</ui-error>
+    </ui-form-field>
 
-    <mat-error *ngIf="error !== null" class="registration-error">
+    <ui-error *ngIf="error !== null" class="registration-error">
       <ng-container [ngSwitch]="error">
         <span *ngSwitchCase="RegistrationError.LoginExists">Такой логин уже занят</span>
         <span *ngSwitchCase="RegistrationError.EmailExists">Такая почта уже занята</span>
         <span *ngSwitchDefault>Неизвестная ошибка</span>
       </ng-container>
-    </mat-error>
+    </ui-error>
 
-    <button (click)="submit($event)" [disabled]="form.invalid" class="w-100 submit" color="primary" mat-flat-button>
+    <button (click)="submit($event)" [disabled]="form.invalid" class="w-100 submit" color="primary" type="submit" uiButton>
       Зарегистрироваться
     </button>
   </form>

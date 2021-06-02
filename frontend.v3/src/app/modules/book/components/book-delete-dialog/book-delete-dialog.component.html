@@ -1,9 +1,11 @@
-<h1 mat-dialog-title>Удалить книгу?</h1>
-<div mat-dialog-content>
+<ui-modal-header>
+  <h1>Удалить книгу?</h1>
+</ui-modal-header>
+<ui-modal-body>
   <p>Вы уверены, что хотите удалить книгу?</p>
   <p>Это действие будет нельзя отменить.</p>
-</div>
-<div mat-dialog-actions>
-  <button (click)="cancel()" class="close" color="primary" mat-dialog-close mat-flat-button>Закрыть</button>
-  <button (click)="delete()" class="delete" color="warn" mat-dialog-close mat-flat-button>Удалить</button>
-</div>
+</ui-modal-body>
+<ui-modal-bottom>
+  <button (click)="cancel()" class="close" color="secondary" uiButton>Закрыть</button>
+  <button (click)="delete()" class="delete" color="danger" uiButton>Удалить</button>
+</ui-modal-bottom>

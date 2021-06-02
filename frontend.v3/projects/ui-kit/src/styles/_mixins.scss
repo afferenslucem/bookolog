@@ -1,0 +1,7 @@
+@import "variables";
+
+@mixin focusBorder() {
+  -webkit-box-shadow: 0px 0px 0px 0.25rem rgb(13 110 253 / 25%);
+  -moz-box-shadow: 0px 0px 0px 0.25rem rgb(13 110 253 / 25%);
+  box-shadow: 0px 0px 0px 0.25rem rgb(13 110 253 / 25%);
+}

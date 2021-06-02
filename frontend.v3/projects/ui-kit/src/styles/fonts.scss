@@ -1,0 +1,68 @@
+@import "variables";
+
+@font-face {
+  font-family: "OpenSans";
+  src: url('/assets/fonts/open-sans/OpenSans-Bold.ttf') format('opentype'),
+  url('/assets/fonts/open-sans/OpenSans-BoldItalic.ttf') format('opentype'),
+  url('/assets/fonts/open-sans/OpenSans-ExtraBoldItalic.ttf') format('opentype'),
+  url('/assets/fonts/open-sans/OpenSans-Italic.ttf') format('opentype'),
+  url('/assets/fonts/open-sans/OpenSans-Light.ttf') format('opentype'),
+  url('/assets/fonts/open-sans/OpenSans-LightItalic.ttf') format('opentype'),
+  url('/assets/fonts/open-sans/OpenSans-Regular.ttf') format('opentype'),
+  url('/assets/fonts/open-sans/OpenSans-SemiBold.ttf') format('opentype'),
+  url('/assets/fonts/open-sans/OpenSans-SemiBoldItalic.ttf') format('opentype'),
+  url('/assets/fonts/open-sans/OpenSans-ExtraBold.ttf') format('opentype');
+}
+
+@font-face {
+  font-family: "NotoSans";
+  src: url('/assets/fonts/noto-sans/NotoSans-Regular.ttf') format('opentype'),
+  url('/assets/fonts/noto-sans/NotoSans-BoldItalic.ttf') format('opentype'),
+  url('/assets/fonts/noto-sans/NotoSans-Italic.ttf') format('opentype'),
+  url('/assets/fonts/noto-sans/NotoSans-Bold.ttf') format('opentype');
+}
+
+
+@font-face {
+  font-family: "MyRoboto";
+  src: url('/assets/fonts/roboto/Roboto-Regular.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-Medium.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-Black.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-BlackItalic.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-Bold.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-BoldItalic.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-Italic.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-Light.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-LightItalic.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-MediumItalic.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-Thin.ttf') format('opentype'),
+  url('/assets/fonts/roboto/Roboto-ThinItalic.ttf') format('opentype');
+}
+
+html {
+  font-family: 'MyRoboto';
+
+  font-size: 16px;
+  font-weight: 400;
+
+  color: $font-color;
+}
+
+h1, h2, h3, h4, h5, h6, ui-label, ui-toolbar, .ui-form-header, ui-modal-header {
+  font-family: 'NotoSans';
+}
+
+
+.ui-form-header, ui-modal-header {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.small, small {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+ui-error {
+  color: $font-error-color;
+}

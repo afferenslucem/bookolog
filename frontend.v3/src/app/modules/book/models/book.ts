@@ -87,6 +87,10 @@ export class Book extends Entity {
     }
   }
 
+  public toString(): string {
+    return this.authors.concat([this.name]).join('|');
+  }
+
   private getDate(date: string | Date, bDate: BookDate): Date {
     if (date) {
       return new Date(date);
@@ -96,9 +100,5 @@ export class Book extends Entity {
     } else {
       return null;
     }
-  }
-
-  public toString(): string {
-    return this.authors.concat([this.name]).join('|');
   }
 }

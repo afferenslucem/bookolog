@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { BookDeleteDialogComponent } from './book-delete-dialog.component';
-import { MatDialogRef } from '@angular/material/dialog';
+import { ModalRef } from 'ui-kit';
 
 describe('BookDeleteDialogComponent', () => {
   let component: BookDeleteDialogComponent;
@@ -13,7 +13,7 @@ describe('BookDeleteDialogComponent', () => {
       declarations: [BookDeleteDialogComponent],
       providers: [
         {
-          provide: MatDialogRef,
+          provide: ModalRef,
           useValue: {
             close: () => {},
           },
@@ -36,7 +36,7 @@ describe('BookDeleteDialogComponent', () => {
 
   describe('Close', () => {
     it('Cancel', () => {
-      const ref = TestBed.inject(MatDialogRef);
+      const ref = TestBed.inject(ModalRef);
 
       const closeSpy = spyOn(ref, 'close');
 
@@ -46,7 +46,7 @@ describe('BookDeleteDialogComponent', () => {
     });
 
     it('Delete', () => {
-      const ref = TestBed.inject(MatDialogRef);
+      const ref = TestBed.inject(ModalRef);
 
       const closeSpy = spyOn(ref, 'close');
 

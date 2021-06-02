@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UiModule } from '../../../ui/ui.module';
 import { AuthService } from '../../services/auth.service';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { TestCore } from '../../../../main/test/test-core.spec';
@@ -20,7 +19,7 @@ describe('RegistrationComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [RegistrationComponent],
-      imports: [RouterTestingModule, HttpClientTestingModule, UiModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
     })
       .overrideComponent(RegistrationComponent, {
         set: {
@@ -130,7 +129,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле');
+        expect(element.querySelector<HTMLElement>('.login-field ui-error').innerText).toEqual('Это обязательное поле');
       });
 
       it('should hide error', () => {
@@ -138,7 +137,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.login-field mat-error')?.innerText).toBeFalsy();
+        expect(element.querySelector<HTMLElement>('.login-field ui-error')?.innerText).toBeFalsy();
       });
     });
 
@@ -148,7 +147,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Это обязательное поле');
+        expect(element.querySelector<HTMLElement>('.email-field ui-error')?.innerText).toEqual('Это обязательное поле');
       });
 
       it('should show format error', () => {
@@ -156,7 +155,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Некорректный формат почты');
+        expect(element.querySelector<HTMLElement>('.email-field ui-error')?.innerText).toEqual('Некорректный формат почты');
       });
 
       it('should hide error', () => {
@@ -164,7 +163,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toBeFalsy();
+        expect(element.querySelector<HTMLElement>('.email-field ui-error')?.innerText).toBeFalsy();
       });
     });
   });
@@ -176,7 +175,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.login-field mat-error').innerText).toEqual('Это обязательное поле');
+        expect(element.querySelector<HTMLElement>('.login-field ui-error').innerText).toEqual('Это обязательное поле');
       });
 
       it('should hide error', () => {
@@ -184,7 +183,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.login-field mat-error')?.innerText).toBeFalsy();
+        expect(element.querySelector<HTMLElement>('.login-field ui-error')?.innerText).toBeFalsy();
       });
     });
 
@@ -194,7 +193,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Это обязательное поле');
+        expect(element.querySelector<HTMLElement>('.email-field ui-error')?.innerText).toEqual('Это обязательное поле');
       });
 
       it('should show format error', () => {
@@ -202,7 +201,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toEqual('Некорректный формат почты');
+        expect(element.querySelector<HTMLElement>('.email-field ui-error')?.innerText).toEqual('Некорректный формат почты');
       });
 
       it('should hide error', () => {
@@ -210,7 +209,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.email-field mat-error')?.innerText).toBeFalsy();
+        expect(element.querySelector<HTMLElement>('.email-field ui-error')?.innerText).toBeFalsy();
       });
     });
 
@@ -220,7 +219,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.password-field mat-error')?.innerText).toEqual('Это обязательное поле');
+        expect(element.querySelector<HTMLElement>('.password-field ui-error')?.innerText).toEqual('Это обязательное поле');
       });
 
       it('should hide error', () => {
@@ -228,7 +227,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.password-field mat-error')?.innerText).toBeFalsy();
+        expect(element.querySelector<HTMLElement>('.password-field ui-error')?.innerText).toBeFalsy();
       });
     });
 
@@ -239,7 +238,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.confirmation-field mat-error')?.innerText).toEqual('Это обязательное поле');
+        expect(element.querySelector<HTMLElement>('.confirmation-field ui-error')?.innerText).toEqual('Это обязательное поле');
       });
 
       it('should show confirmation error', () => {
@@ -248,7 +247,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.confirmation-field mat-error')?.innerText).toEqual('Пароли не совпадают');
+        expect(element.querySelector<HTMLElement>('.confirmation-field ui-error')?.innerText).toEqual('Пароли не совпадают');
       });
 
       it('should hide error', () => {
@@ -256,7 +255,7 @@ describe('RegistrationComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLElement>('.password-field mat-error')?.innerText).toBeFalsy();
+        expect(element.querySelector<HTMLElement>('.password-field ui-error')?.innerText).toBeFalsy();
       });
     });
   });

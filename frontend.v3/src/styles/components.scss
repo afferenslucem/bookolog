@@ -5,14 +5,6 @@
 }
 
 form {
-  mat-form-field, mat-error {
-    width: 100%;
-
-    &:not(:last-child) {
-      margin-bottom: $ind-2;
-    }
-  }
-
   .form-header {
     margin-bottom: $ind-3;
 
@@ -37,16 +29,25 @@ form {
   }
 
   &__name {
+    font-family: 'NotoSans';
     font-weight: $fat-font-weight;
-    margin-bottom: 0 !important;
+    line-height: 1.2rem;
   }
 
   &__icons {
     flex: 0 0 auto;
+
+    > span:not(:first-child) {
+      margin-left: $ind-2;
+    }
+
+    > span {
+      font-size: 16px;
+    }
   }
 
   &__authors {
-    font-weight: $fat-font-weight;
+    font-weight: $normal-font-weight;
     line-height: normal;
   }
 
@@ -159,4 +160,26 @@ app-empty-list-placeholder {
 
   height: 100%;
   width: 100%;
+}
+
+app-books-by-years {
+  ui-expansion-panel-header {
+    display: flex !important;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    > * {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+app-statistic-list, app-collection-list {
+  ul {
+    li {
+      padding: $ind-3 $ind-2;
+    }
+  }
 }

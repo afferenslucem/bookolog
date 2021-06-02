@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
@@ -7,8 +7,8 @@ import { TitleService } from '../../../title/services/title.service';
 import { Collection } from '../../models/collection';
 import _ from 'declarray';
 import { CollectionService } from '../../services/collection.service';
-import { CollectionDeleteDialogComponent, DeleteDialogResult } from '../collection-delete-dialog/collection-delete-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { CollectionDeleteDialogComponent } from '../collection-delete-dialog/collection-delete-dialog.component';
+import { DestroyService, UiModalService } from 'ui-kit';
 import { BookService } from 'src/app/modules/book/services/book.service';
 import { BookSearchableList } from '../../../book/utils/book-searchable-list';
 import { SearchService } from '../../../search/services/search.service';
@@ -17,10 +17,12 @@ import { SearchService } from '../../../search/services/search.service';
   selector: 'app-collection',
   templateUrl: './collection-view.component.html',
   styleUrls: ['./collection-view.component.scss'],
+  providers: [DestroyService, UiModalService],
 })
-export class CollectionViewComponent extends BookSearchableList implements OnInit {
+export class CollectionViewComponent extends BookSearchableList implements OnInit, AfterViewInit {
   public books$: Observable<Book[]>;
   public collection: Collection;
+  @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
 
   constructor(
     activatedRoute: ActivatedRoute,
@@ -29,7 +31,7 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
     private bookService: BookService,
     searchService: SearchService,
     private router: Router,
-    public dialog: MatDialog,
+    public dialog: UiModalService,
   ) {
     super(activatedRoute, searchService);
     const data$ = activatedRoute.data;
@@ -58,10 +60,7 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
       maxWidth: '300px',
     });
 
-    dialogRef
-      .afterClosed()
-      .pipe(filter((item?: DeleteDialogResult) => item && item === 'delete'))
-      .subscribe(() => void this.onDelete(collection));
+    dialogRef.close$.pipe(filter((item?: string) => item && item === 'delete')).subscribe(() => void this.onDelete(collection));
   }
 
   public async deleteCollection(collection: Collection): Promise<void> {
@@ -75,6 +74,10 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
 
   public setTitle(title: string): void {
     this.titleService.setCustom(title);
+  }
+
+  public ngAfterViewInit(): void {
+    this.dialog.registerContainerRef(this.container);
   }
 
   private async onDelete(collection: Collection): Promise<void> {

@@ -123,7 +123,7 @@ context('Authentication', () => {
       recoverPasswordPage.isHere();
     });
 
-    it('should register', () => {
+    it('should recover', () => {
       const user = users.passwordRecoveryCheck;
 
       recoverPasswordPage.typeEmail(user.email);

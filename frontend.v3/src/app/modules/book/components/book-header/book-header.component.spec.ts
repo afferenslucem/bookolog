@@ -125,7 +125,7 @@ describe('BookHeaderComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLDivElement>('.sync-icon')).toBeTruthy();
+        expect(element.querySelector<HTMLDivElement>('.ui-cloud-upload')).toBeTruthy();
       });
 
       it('Should not render', () => {
@@ -150,7 +150,7 @@ describe('BookHeaderComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLDivElement>('.edit-icon')).toBeTruthy();
+        expect(element.querySelector<HTMLDivElement>('.ui-pencil')).toBeTruthy();
       });
 
       it('Should not render', () => {
@@ -162,7 +162,7 @@ describe('BookHeaderComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLDivElement>('.edit-icon')).toBeFalsy();
+        expect(element.querySelector<HTMLDivElement>('.ui-pencil')).toBeFalsy();
       });
     });
   });

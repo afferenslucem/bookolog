@@ -1,6 +1,6 @@
 <div (click)="selectFile()" class="pic-input">
-  <button *ngIf="!fileUrl; else pic" class="icon" color="primary" mat-flat-button type="button">
-    <mat-icon>camera_enhance</mat-icon>
+  <button *ngIf="!fileUrl; else pic" class="icon" color="primary" type="button" uiButton>
+    <span class="ui-camera"></span>
   </button>
   <ng-template #pic>
     <div [style.background-image]="fileUrl" class="pic-input__result"></div>

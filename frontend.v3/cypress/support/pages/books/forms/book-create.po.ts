@@ -29,23 +29,19 @@ export abstract class BookCreatePo extends PageObject {
   }
 
   public selectSeries(series: string): void {
-    cy.get(`app-book-edit-view form.book .book__series`).click();
-    cy.get('mat-option').contains(series).click();
+    cy.get(`app-book-edit-view form.book .book__series`).select(series);
   }
 
   public selectStatus(status: string): void {
-    cy.get(`app-book-edit-view form.book .book__status`).click();
-    cy.get('mat-option').contains(status).click();
+    cy.get(`app-book-edit-view form.book .book__status`).select(status);
   }
 
   public selectType(type: string): void {
-    cy.get(`app-book-edit-view form.book .book__type`).click();
-    cy.get('mat-option').contains(type).click();
+    cy.get(`app-book-edit-view form.book .book__type`).select(type);
   }
 
   public selectProgressType(progressType: string): void {
-    cy.get(`app-book-edit-view form.book .book__progressType`).click();
-    cy.get('mat-option').contains(progressType).click();
+    cy.get(`app-book-edit-view form.book .book__progressType`).select(progressType);
     cy.wait(500);
   }
 

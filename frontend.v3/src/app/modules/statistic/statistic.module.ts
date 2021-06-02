@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatListModule } from '@angular/material/list';
 import { BookModule } from '../book/book.module';
 import { FormattingModule } from '../formatting/formatting.module';
 import { AuthorsListComponent } from './component/authors-list/authors-list.component';
@@ -13,6 +12,7 @@ import { YearStatisticComponent } from './component/year-statistic/year-statisti
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RouterModule } from '@angular/router';
 import { ListModuleModule } from '../list-module/list-module.module';
+import { UiDividerModule } from 'ui-kit';
 
 @NgModule({
   declarations: [
@@ -24,6 +24,6 @@ import { ListModuleModule } from '../list-module/list-module.module';
     YearsListComponent,
     YearStatisticComponent,
   ],
-  imports: [CommonModule, MatListModule, FormattingModule, BookModule, ScrollingModule, RouterModule, ListModuleModule],
+  imports: [CommonModule, FormattingModule, BookModule, ScrollingModule, RouterModule, ListModuleModule, UiDividerModule],
 })
 export class StatisticModule {}

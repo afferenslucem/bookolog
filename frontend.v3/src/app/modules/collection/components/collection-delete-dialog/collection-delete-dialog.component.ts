@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { ModalRef } from 'ui-kit';
 
 export type DeleteDialogResult = 'delete' | 'cancel';
 
@@ -9,7 +9,7 @@ export type DeleteDialogResult = 'delete' | 'cancel';
   styleUrls: ['./collection-delete-dialog.component.scss'],
 })
 export class CollectionDeleteDialogComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<CollectionDeleteDialogComponent>) {}
+  constructor(public dialogRef: ModalRef<CollectionDeleteDialogComponent>) {}
 
   public ngOnInit(): void {}
 

@@ -2,12 +2,13 @@ FROM node:12-alpine as builder
 WORKDIR /app
 COPY frontend.v3/package*.json ./
 RUN npm ci
+RUN npm run build -- ui-kit && npm pack ./dist/ui-kit && npm install ./ui-kit-0.0.1.tgz
 COPY frontend.v3/ ./
-RUN npm run build -- --output-path=dist/out
+RUN npm run build
 
 # этап production (production-stage)
 FROM nginx:stable-alpine as production-stage
-COPY --from=builder /app/dist/out /usr/share/nginx/html
+COPY --from=builder /app/dist/frontend /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/client.nginx.conf /etc/nginx/conf.d/nginx.conf
 EXPOSE 80

@@ -1,11 +1,11 @@
 <form (click)="emitTouch($event)" [formGroup]="form">
-  <mat-form-field appearance="fill">
-    <mat-label>Часы</mat-label>
-    <input autocomplete="off" class="hours" formControlName="hours" matInput max="100" min="0" step="1" type="number" />
-  </mat-form-field>
+  <ui-form-field appearance="fill">
+    <ui-label>Часы</ui-label>
+    <input autocomplete="off" class="hours" formControlName="hours" max="100" min="0" step="1" type="number" uiInput />
+  </ui-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Минуты</mat-label>
-    <input autocomplete="off" class="minutes" formControlName="minutes" matInput max="59" min="0" step="1" type="number" />
-  </mat-form-field>
+  <ui-form-field appearance="fill">
+    <ui-label>Минуты</ui-label>
+    <input autocomplete="off" class="minutes" formControlName="minutes" max="59" min="0" step="1" type="number" uiInput />
+  </ui-form-field>
 </form>

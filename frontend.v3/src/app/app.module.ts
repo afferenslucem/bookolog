@@ -2,12 +2,6 @@ import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import localeRu from '@angular/common/locales/ru';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -27,13 +21,13 @@ import { CollectionModule } from './modules/collection/collection.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { SettingsModule } from './modules/settings/settings.module';
 import { StatisticModule } from './modules/statistic/statistic.module';
-import { UiModule } from './modules/ui/ui.module';
 import { UserModule } from './modules/user/user.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoggerWindowComponent } from './main/components/logger-window/logger-window.component';
 import { FormattingModule } from './modules/formatting/formatting.module';
 import { SearchModule } from './modules/search/search.module';
 import { TitleModule } from './modules/title/title.module';
+import { UiButtonModule, UiFormFieldModule, UiProgressBarModule, UiSideMenuModule, UiSpinnerModule, UiToolbarModule } from 'ui-kit';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -52,17 +46,16 @@ registerLocaleData(localeRu, 'ru');
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
+    UiProgressBarModule,
+    UiToolbarModule,
+    UiFormFieldModule,
+    UiSideMenuModule,
+    UiButtonModule,
+    UiSpinnerModule,
     HttpClientModule,
     AuthModule,
     BookModule,
     StatisticModule,
-    UiModule,
-    MatIconModule,
     UserModule,
     SettingsModule,
     NotificationModule,

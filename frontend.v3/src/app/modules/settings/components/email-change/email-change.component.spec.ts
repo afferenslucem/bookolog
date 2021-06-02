@@ -63,7 +63,7 @@ describe('EmailChangeComponent', () => {
       component.form.value = 'alexshakirov74@gmail.';
       fixture.detectChanges();
 
-      const error = element.querySelector<HTMLDivElement>('mat-error').innerText;
+      const error = element.querySelector<HTMLDivElement>('ui-error').innerText;
 
       expect(error).toEqual('Некорректный формат почты');
     });
@@ -72,7 +72,7 @@ describe('EmailChangeComponent', () => {
       component.form.value = '';
       fixture.detectChanges();
 
-      const error = element.querySelector<HTMLDivElement>('mat-error').innerText;
+      const error = element.querySelector<HTMLDivElement>('ui-error').innerText;
 
       expect(error).toEqual('Это обязательное поле');
     });
@@ -81,7 +81,7 @@ describe('EmailChangeComponent', () => {
       component.form.value = 'alexshakirov74@gmail.com';
       fixture.detectChanges();
 
-      const error = element.querySelector<HTMLDivElement>('mat-error')?.innerText;
+      const error = element.querySelector<HTMLDivElement>('ui-error')?.innerText;
 
       expect(error).toBeFalsy();
     });

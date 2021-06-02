@@ -2,7 +2,7 @@
 <div class="book-line__authors truncate-text">
   <app-book-authors [authors]="authors"></app-book-authors>
 </div>
-<mat-progress-bar [value]="progressValue" mode="determinate"></mat-progress-bar>
+<ui-progress-bar [value]="progressValue"></ui-progress-bar>
 <div *ngIf="progressValue || startDate; else noDates" class="book-line__progress-data dark-text">
   <small class="progress">
     <ng-container *ngIf="progressValue" [ngSwitch]="type">

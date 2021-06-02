@@ -1,21 +1,22 @@
 <div *ngIf="collection" class="collection">
   <div *ngIf="collection.description" class="collection__description">
     <span>{{ collection.description }}</span>
-    <mat-divider></mat-divider>
+    <ui-divider></ui-divider>
   </div>
   <div class="collection__buttons">
-    <button [routerLink]="['/series', 'edit', collection.guid]" color="primary" mat-flat-button>Редактировать</button>
-    <button (click)="openDeleteDialog(collection)" color="warn" mat-flat-button>Удалить</button>
+    <button [routerLink]="['/series', 'edit', collection.guid]" color="primary" uiButton>Редактировать</button>
+    <button (click)="openDeleteDialog(collection)" color="danger" uiButton>Удалить</button>
   </div>
 </div>
-<div class="collection-books-content" *ngIf="books$ | async as books">
-  <div class="book-list" *ngIf="+books?.length > 0; else emptyList">
+<div *ngIf="books$ | async as books" class="collection-books-content">
+  <div *ngIf="+books?.length > 0; else emptyList" class="book-list">
     <div *ngFor="let book of books; let last = last; trackBy: bookTrackBy">
       <app-to-read-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-to-read-book>
-      <mat-divider *ngIf="!last"></mat-divider>
+      <ui-divider *ngIf="!last"></ui-divider>
     </div>
   </div>
   <ng-template #emptyList>
     <app-empty-list-placeholder></app-empty-list-placeholder>
   </ng-template>
 </div>
+<ng-template #container></ng-template>

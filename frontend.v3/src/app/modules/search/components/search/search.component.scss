@@ -5,44 +5,21 @@
   @include centeredByRow;
   justify-content: flex-end;
 
-  position: relative;
-
   form, .search {
     height: 100%;
     width: 100%;
-
-    * ::ng-deep {
-      padding: 0 !important;
-      border-top: none !important;
-    }
-
-    mat-form-field, input {
-      width: 100%;
-    }
   }
 
   .search {
     @include centeredByRow;
-    background-color: #673ab7;
 
-    app-close-icon {
-      flex: 0 0 auto;
-    }
-  }
+    [uiInput] {
+      background-color: #673ab7;
+      color: white;
 
-  ::ng-deep {
-    .mat-form-field-label-wrapper {
-      display: none;
-    }
-
-    .mat-form-field-infix {
-      border-top: none;
-      padding: 0;
-    }
-
-    .mat-form-field-flex {
-      padding: $ind-2 $ind-1 $ind-1 $ind-3 !important;
-      background-color: rgba(0, 0, 0, .12);;
+      -webkit-box-shadow: 0px 0px 0px 0.25rem rgba(102, 35, 225, 0.6) inset;
+      -moz-box-shadow: 0px 0px 0px 0.25rem rgba(102, 35, 225, 0.6) inset;
+      box-shadow: 0px 0px 0px 0.25rem rgba(102, 35, 225, 0.6) inset;
     }
   }
 }

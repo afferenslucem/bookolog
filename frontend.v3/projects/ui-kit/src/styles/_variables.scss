@@ -1,0 +1,57 @@
+$default-radius: 0.375rem;
+
+$purple-color: #6f42c1;
+$cyan-color: #0dcaf0;
+$crayola-color: #1BE7FF;
+$minion-yellow: #F4E04D;
+$violet-color: #713FC2;
+$cultured-color: #e9ecef;
+$gainsboro-color: #dee2e6;
+
+
+$danger-color: #dc3545;
+$danger-dark-color: #bb2d3b;
+$primary-color: #0d6efd;
+$primary-dark-color: #0b5ed7;
+$success-color: #198754;
+$success-dark-color: #157347;
+$secondary-color: #6c757d;
+$secondary-dark-color: #5c636a;
+$warning-color: #ffc107;
+$warning-dark-color: #ffca2c;
+
+$font-color: #212529;
+$font-error-color: $danger-color;
+$border-color: #ced4da;
+$border-error-color: $danger-color;
+$input-focus-color: #86b7fe;
+
+$primary-button-color: $primary-color;
+$primary-button-focused-color: $primary-dark-color;
+$success-button-color: $success-color;
+$success-button-focused-color: $success-dark-color;
+$secondary-button-color: $secondary-color;
+$secondary-button-focused-color: $secondary-dark-color;
+$danger-button-color: $danger-color;
+$danger-button-focused-color: $danger-dark-color;
+$warning-button-color: $warning-color;
+$warning-button-focused-color: $warning-dark-color;
+
+$toolbar-color: $violet-color;
+
+$progress-background-color: $cultured-color;
+$divider-color: $gainsboro-color;
+
+$base-gutter: 4px;
+
+$ind-1: $base-gutter;
+$ind-2: $base-gutter * 2;
+$ind-3: $base-gutter * 3;
+$ind-4: $base-gutter * 4;
+$ind-5: $base-gutter * 5;
+$ind-6: $base-gutter * 6;
+$ind-7: $base-gutter * 7;
+$ind-8: $base-gutter * 8;
+$ind-9: $base-gutter * 9;
+
+$fa-font-path: "/assets/fonts/fontawesome";

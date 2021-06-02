@@ -1,50 +1,46 @@
 <div *ngIf="years$ | async as years" class="book-list">
-  <mat-accordion *ngIf="years?.length > 0; else emptyList">
-    <mat-expansion-panel
+  <ui-accordion *ngIf="years?.length > 0; else emptyList">
+    <ui-expansion-panel
       (opened)="onOpen(year.key)"
       *ngFor="let year of definedYears$ | async; let first = first; trackBy: yearTrackBy"
       [expanded]="first"
     >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ year.key }}
-        </mat-panel-title>
-        <mat-panel-description>
-          <div class="years__meta w-100">
-            <div>
-              {{ year.group.length }}
-            </div>
+      <ui-expansion-panel-header>
+        <span class="title">{{ year.key }}</span>
+        <div class="description years__meta">
+          <div>
+            {{ year.group.length }}
           </div>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div *ngIf="yearOpened == year.key">
-        <div *ngFor="let book of year.group; let last = last; trackBy: bookTrackBy">
-          <app-done-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-done-book>
-          <mat-divider [hidden]="last"></mat-divider>
         </div>
-      </div>
-    </mat-expansion-panel>
-    <mat-expansion-panel (opened)="onOpen(undefined)" *ngIf="undefinedYear$ | async as year" [expanded]="(years$ | async)?.length === 1">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <span>Год не указан</span>
-        </mat-panel-title>
-        <mat-panel-description>
-          <div class="years__meta w-100">
-            <div>
-              {{ year.group.length }}
-            </div>
+      </ui-expansion-panel-header>
+      <ui-expansion-panel-body>
+        <div *ngIf="yearOpened == year.key">
+          <div *ngFor="let book of year.group; let last = last; trackBy: bookTrackBy">
+            <app-done-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-done-book>
+            <ui-divider [hidden]="last"></ui-divider>
           </div>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div *ngIf="yearOpened == undefined">
-        <div *ngFor="let book of year.group; let last = last; trackBy: bookTrackBy">
-          <app-done-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-done-book>
-          <mat-divider [hidden]="last"></mat-divider>
         </div>
-      </div>
-    </mat-expansion-panel>
-  </mat-accordion>
+      </ui-expansion-panel-body>
+    </ui-expansion-panel>
+    <ui-expansion-panel (opened)="onOpen(undefined)" *ngIf="undefinedYear$ | async as year" [expanded]="(years$ | async)?.length === 1">
+      <ui-expansion-panel-header>
+        <span class="title">Год не указан</span>
+        <div class="description years__meta">
+          <div>
+            {{ year.group.length }}
+          </div>
+        </div>
+      </ui-expansion-panel-header>
+      <ui-expansion-panel-body>
+        <div *ngIf="yearOpened == undefined">
+          <div *ngFor="let book of year.group; let last = last; trackBy: bookTrackBy">
+            <app-done-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-done-book>
+            <ui-divider [hidden]="last"></ui-divider>
+          </div>
+        </div>
+      </ui-expansion-panel-body>
+    </ui-expansion-panel>
+  </ui-accordion>
   <ng-template #emptyList>
     <app-empty-list-placeholder></app-empty-list-placeholder>
   </ng-template>

@@ -1,14 +1,14 @@
-<form (ngSubmit)="submit()" [formGroup]="form.nativeForm">
-  <mat-form-field appearance="fill" class="name-field">
-    <mat-label>Название</mat-label>
-    <input appTrimOnBlur autocomplete="off" class="collection__name" formControlName="name" matInput required type="text" />
-    <mat-error *ngIf="form.nameInvalid">{{ form.nameErrorMessage }}</mat-error>
-  </mat-form-field>
+<form (ngSubmit)="submit()" [formGroup]="form.nativeForm" class="ui-form">
+  <ui-form-field appearance="fill" class="name-field">
+    <ui-label>Название</ui-label>
+    <input appTrimOnBlur autocomplete="off" class="collection__name" formControlName="name" required type="text" uiInput />
+    <ui-error *ngIf="form.nameInvalid">{{ form.nameErrorMessage }}</ui-error>
+  </ui-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Описание</mat-label>
-    <textarea appTrimOnBlur autocomplete="off" class="collection__description" formControlName="description" matInput rows="5"></textarea>
-  </mat-form-field>
+  <ui-form-field appearance="fill">
+    <ui-label>Описание</ui-label>
+    <textarea appTrimOnBlur autocomplete="off" class="collection__description" formControlName="description" rows="5" uiInput></textarea>
+  </ui-form-field>
 
-  <button [disabled]="form.invalid" class="w-100 submit" color="primary" mat-flat-button type="submit">Сохранить</button>
+  <button [disabled]="form.invalid" class="w-100 submit" color="primary" type="submit" uiButton>Сохранить</button>
 </form>

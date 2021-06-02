@@ -1,0 +1,108 @@
+@import "fontawesome/scss/fontawesome";
+@import "fontawesome/scss/regular";
+@import "fontawesome/scss/solid";
+
+.icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.ui-plus-square {
+  @extend %fa-icon;
+  @extend .far;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-plus-square);
+  }
+}
+
+.ui-plus {
+  @extend %fa-icon;
+  @extend .fas;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-plus);
+  }
+}
+
+.ui-menu {
+  @extend %fa-icon;
+  @extend .fas;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-bars);
+  }
+}
+
+.ui-search {
+  @extend %fa-icon;
+  @extend .fas;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-search);
+  }
+}
+
+.ui-times {
+  @extend %fa-icon;
+  @extend .fas;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-times);
+  }
+}
+
+.ui-sync {
+  @extend %fa-icon;
+  @extend .fas;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-sync);
+  }
+}
+
+.ui-pencil {
+  @extend %fa-icon;
+  @extend .fas;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-pencil-alt);
+  }
+}
+
+.ui-cloud-upload {
+  @extend %fa-icon;
+  @extend .fas;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-cloud-upload-alt);
+  }
+}
+
+.ui-camera {
+  @extend %fa-icon;
+  @extend .fas;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-camera);
+  }
+}
+
+.ui-user {
+  @extend %fa-icon;
+  @extend .fas;
+  @extend .icon;
+
+  &:before {
+    content: fa-content($fa-var-user);
+  }
+}

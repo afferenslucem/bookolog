@@ -1,6 +1,5 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import _ from 'declarray';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { StringComparator } from '../../../../main/utils/string-comparator';
@@ -19,20 +18,24 @@ import { ValueAccessorBase } from '../value-accessor/value-accessor';
   ],
 })
 export class BookTagsInputComponent extends ValueAccessorBase<string[]> implements OnInit {
+  private static counter = 0;
   @Input()
   public list: string[] = [];
-
   @Input()
   public header: string;
-
   public tags: string[] = [];
-
   public form = new FormBuilder().group({
     input: new FormControl(null, [Validators.min(2), Validators.max(128)]),
   });
+  public id: number;
 
   constructor() {
     super();
+    this.id = ++BookTagsInputComponent.counter;
+  }
+
+  public get tagId(): string {
+    return `tagAutocomplete-${this.id}`;
   }
 
   public get tag(): string {
@@ -54,10 +57,6 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
   }
 
   ngOnInit(): void {}
-
-  public onOptionSelected(event: MatAutocompleteSelectedEvent): void {
-    this.pushTag(event.option.value);
-  }
 
   public append(): void {
     const value = this.tag;

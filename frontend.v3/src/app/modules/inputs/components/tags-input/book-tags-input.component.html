@@ -1,17 +1,17 @@
 <form (ngSubmit)="append()" [formGroup]="form" class="tags-input__form">
-  <mat-form-field appearance="fill">
-    <mat-label>{{ header }}</mat-label>
-    <input [matAutocomplete]="tagsAutocomplete" appTrimOnBlur class="tag" formControlName="input" matInput />
-  </mat-form-field>
+  <ui-form-field>
+    <ui-label>{{ header }}</ui-label>
+    <input [uiList]="tagId" appTrimOnBlur class="tag" formControlName="input" uiInput />
+  </ui-form-field>
 
-  <mat-autocomplete #tagsAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)">
-    <mat-option *ngFor="let tag of availableTags" [value]="tag | capitalize">
+  <datalist id="{{ tagId }}">
+    <option *ngFor="let tag of availableTags" [value]="tag | capitalize">
       {{ tag | capitalize }}
-    </mat-option>
-  </mat-autocomplete>
+    </option>
+  </datalist>
 
-  <button class="submit" color="primary" mat-flat-button type="submit">
-    <app-plus-icon></app-plus-icon>
+  <button class="submit" type="submit" uiIconButton>
+    <span class="ui-plus-square"></span>
   </button>
 </form>
 

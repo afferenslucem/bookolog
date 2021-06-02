@@ -4,62 +4,62 @@
     <div class="navigation">
       <div class="navigation__header">Списки</div>
       <div class="navigation__body">
-        <mat-list class="book-nav">
-          <mat-list-item>
+        <ul class="book-nav">
+          <li>
             <div class="book-nav__item">
               <span [routerLink]="['/in-progress']" class="link">Читаю сейчас</span>
-              <app-plus-icon [routerLink]="['/book', 'create', BookStatus.InProgress]"></app-plus-icon>
+              <span [routerLink]="['/book', 'create', BookStatus.InProgress]" class="ui-plus link"></span>
             </div>
-          </mat-list-item>
-          <mat-list-item>
+          </li>
+          <li>
             <div class="book-nav__item">
               <span [routerLink]="['/to-read']" class="link">Буду читать</span>
-              <app-plus-icon [routerLink]="['/book', 'create', BookStatus.ToRead]"></app-plus-icon>
+              <span [routerLink]="['/book', 'create', BookStatus.ToRead]" class="ui-plus link"></span>
             </div>
-          </mat-list-item>
-          <mat-list-item>
+          </li>
+          <li>
             <div class="book-nav__item">
               <span [routerLink]="['/done']" class="link">Прочитаные</span>
-              <app-plus-icon [routerLink]="['/book', 'create', BookStatus.Done]"></app-plus-icon>
+              <span [routerLink]="['/book', 'create', BookStatus.Done]" class="ui-plus link"></span>
             </div>
-          </mat-list-item>
-        </mat-list>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="navigation">
       <div class="navigation__header">Статистика</div>
       <div class="navigation__body">
-        <mat-list class="book-nav">
-          <mat-list-item>
+        <ul class="book-nav">
+          <li>
             <span [routerLink]="['/series']" class="link book-nav__item">Серии</span>
-            <app-plus-icon [routerLink]="['/series', 'create']"></app-plus-icon>
-          </mat-list-item>
-          <mat-list-item>
+            <span [routerLink]="['/series', 'create']" class="ui-plus link"></span>
+          </li>
+          <li>
             <span [routerLink]="['/years']" class="link">Года прочтения</span>
-          </mat-list-item>
-          <mat-list-item>
+          </li>
+          <li>
             <span [routerLink]="['/genres']" class="link">Жанры</span>
-          </mat-list-item>
-          <mat-list-item>
+          </li>
+          <li>
             <span [routerLink]="['/authors']" class="link">Авторы</span>
-          </mat-list-item>
-          <mat-list-item>
+          </li>
+          <li>
             <span [routerLink]="['/tags']" class="link">Теги</span>
-          </mat-list-item>
-        </mat-list>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="navigation">
       <div class="navigation__header">Аккаунт</div>
       <div class="navigation__body">
-        <mat-list class="book-nav">
-          <mat-list-item>
+        <ul class="book-nav">
+          <li>
             <span class="link" routerLink="/settings">Настройки</span>
-          </mat-list-item>
-          <mat-list-item>
+          </li>
+          <li>
             <span (click)="logout()" class="link">Выйти</span>
-          </mat-list-item>
-        </mat-list>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="navigation sync">
@@ -67,7 +67,7 @@
         <app-sync-info></app-sync-info>
       </div>
     </div>
-    <span (click)="clearCache()" class="dark-text version">
+    <span class="dark-text version">
       <span *ngIf="newVersionAvailable | async; else emptyUpdates"> Доступно обновление </span>
 
       <ng-template #emptyUpdates>

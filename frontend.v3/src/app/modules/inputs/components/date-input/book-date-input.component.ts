@@ -71,12 +71,11 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     return new Date().getFullYear() + 10;
   }
 
-  public openPicker(picker: any): void {
+  public setToday(): void {
     if (this.isEmptyDate(this.value)) {
       this.writeValue(DateUtils.today);
       this.emitChangeValue(DateUtils.today);
     }
-    picker.open();
   }
 
   public onBookDateChange(date: BookDate): void {

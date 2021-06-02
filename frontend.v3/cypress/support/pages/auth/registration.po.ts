@@ -27,6 +27,6 @@ export class RegistrationPo extends PageObject {
   }
 
   public getError(): Chainable<JQuery> {
-    return cy.get('app-registration form mat-error span');
+    return cy.get('app-registration form ui-error span');
   }
 }

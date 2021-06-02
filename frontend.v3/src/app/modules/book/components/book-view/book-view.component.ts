@@ -1,22 +1,24 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
 import { Book } from '../../models/book';
 import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
 import { BookService } from '../../services/book.service';
-import { BookDeleteDialogComponent, DeleteDialogResult } from '../book-delete-dialog/book-delete-dialog.component';
+import { BookDeleteDialogComponent } from '../book-delete-dialog/book-delete-dialog.component';
 import _ from 'declarray';
 import { DateUtils } from '../../../../main/utils/date-utils';
+import { DestroyService, UiModalService } from 'ui-kit';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-book-view',
   templateUrl: './book-view.component.html',
   styleUrls: ['./book-view.component.scss'],
+  providers: [DestroyService, UiModalService],
 })
-export class BookViewComponent implements OnInit, OnDestroy {
+export class BookViewComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
+
   public book: Book;
   public doneReadings: Book[];
 
@@ -24,11 +26,10 @@ export class BookViewComponent implements OnInit, OnDestroy {
 
   public BookStatus: typeof BookStatus = BookStatus;
 
-  public destroy$ = new Subject();
-
   constructor(
     private activatedRoute: ActivatedRoute,
-    public dialog: MatDialog,
+    public modal: UiModalService,
+    private destroy$: DestroyService,
     private bookService: BookService,
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
@@ -43,15 +44,14 @@ export class BookViewComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {}
 
   public openDeleteDialog(book: Book): void {
-    const dialogRef = this.dialog.open(BookDeleteDialogComponent, {
+    const dialogRef = this.modal.open(BookDeleteDialogComponent, {
       width: '90%',
-      maxWidth: '300px',
+      maxWidth: '350px',
     });
 
-    dialogRef
-      .afterClosed()
+    dialogRef.close$
       .pipe(
-        filter((item?: DeleteDialogResult) => item && item === 'delete'),
+        filter((item?: string) => item && item === 'delete'),
         takeUntil(this.destroy$),
       )
       .subscribe(() => void this.onDelete(book));
@@ -102,6 +102,10 @@ export class BookViewComponent implements OnInit, OnDestroy {
 
   public async reload(): Promise<void> {
     await this.router.navigate(['.'], { relativeTo: this.activatedRoute });
+  }
+
+  public ngAfterViewInit(): void {
+    this.modal.registerContainerRef(this.container);
   }
 
   private onDataInit(data: Data): void {

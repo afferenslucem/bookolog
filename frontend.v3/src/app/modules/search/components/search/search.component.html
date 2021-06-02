@@ -1,12 +1,8 @@
-<mat-icon *ngIf="isClosed; else searchInput" (click)="open()">search</mat-icon>
+<span (click)="open()" *ngIf="isClosed; else searchInput" class="ui-search p-h-4"></span>
 <ng-template #searchInput>
   <div class="search">
-    <form>
-      <mat-form-field appearance="fill">
-        <input [formControl]="input" autocomplete="off" matInput />
-      </mat-form-field>
-    </form>
+    <input [formControl]="input" autocomplete="off" uiInput />
 
-    <app-close-icon (click)="close()"></app-close-icon>
+    <span (click)="close()" class="ui-times p-h-4"></span>
   </div>
 </ng-template>

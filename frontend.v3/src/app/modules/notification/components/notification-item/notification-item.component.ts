@@ -18,10 +18,10 @@ export class NotificationItemComponent {
   public get matColor(): string {
     switch (this.notification.type) {
       case NotificationType.Error:
-        return 'warn';
+        return 'danger';
 
       case NotificationType.Warning:
-        return 'accent';
+        return 'warning';
 
       default:
         return 'primary';

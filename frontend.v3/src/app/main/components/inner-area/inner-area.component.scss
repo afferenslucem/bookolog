@@ -8,11 +8,6 @@
   display: block;
 }
 
-mat-drawer-container {
-  height: 100%;
-  width: 100%;
-}
-
 .main {
   height: 100%;
   width: 100%;
@@ -23,11 +18,7 @@ mat-drawer-container {
   }
 
   &__header {
-    height: #{$header-height};
-
     @include flex;
-
-    width: 100%;
   }
 
   &__body {

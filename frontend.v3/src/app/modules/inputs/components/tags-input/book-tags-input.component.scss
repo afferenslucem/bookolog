@@ -3,14 +3,24 @@
 
 form {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
 
-  button {
-    flex: 0 0 auto;
+  ui-form-field {
+    padding-right: $ind-3;
 
-    height: 60px;
-
-    margin-left: 16px;
+    flex: 1 0 auto;
   }
+
+  [uiIconButton] {
+    height: 35px;
+    width: 35px;
+  }
+}
+
+:host {
+  display: block;
+}
+
+.tags-input__value {
+  margin-top: $ind-3;
 }

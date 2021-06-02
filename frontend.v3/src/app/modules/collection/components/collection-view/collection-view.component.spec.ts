@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generator.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatDialogModule } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { TitleService } from '../../../title/services/title.service';
 import { BookService } from '../../../book/services/book.service';
@@ -47,7 +46,7 @@ describe('CollectionComponent', () => {
         },
         { provide: UUIDGeneratorService, useValue: {} },
       ],
-      imports: [HttpClientTestingModule, RouterTestingModule, MatDialogModule],
+      imports: [HttpClientTestingModule, RouterTestingModule],
     }).compileComponents();
   });
 
