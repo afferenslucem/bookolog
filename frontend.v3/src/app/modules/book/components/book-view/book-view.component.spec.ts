@@ -14,7 +14,7 @@ import { DateUtils } from '../../../../main/utils/date-utils';
 import { BookOriginService } from '../../services/book.origin.service';
 import { BookStorageService } from '../../services/book.storage.service';
 import { UUIDGenerator } from 'essents';
-import { UiModalService } from 'ui-kit';
+import { UiModalService } from 'bookolog-ui-kit';
 
 describe('BookViewComponent', () => {
   let component: BookViewComponent;

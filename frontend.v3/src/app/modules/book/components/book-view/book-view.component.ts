@@ -7,7 +7,7 @@ import { BookService } from '../../services/book.service';
 import { BookDeleteDialogComponent } from '../book-delete-dialog/book-delete-dialog.component';
 import _ from 'declarray';
 import { DateUtils } from '../../../../main/utils/date-utils';
-import { DestroyService, UiModalService } from 'ui-kit';
+import { DestroyService, UiModalService } from 'bookolog-ui-kit';
 import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({

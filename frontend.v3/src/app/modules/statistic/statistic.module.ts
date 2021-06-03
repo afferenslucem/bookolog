@@ -12,7 +12,7 @@ import { YearStatisticComponent } from './component/year-statistic/year-statisti
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RouterModule } from '@angular/router';
 import { ListModuleModule } from '../list-module/list-module.module';
-import { UiDividerModule } from 'ui-kit';
+import { UiDividerModule } from 'bookolog-ui-kit';
 
 @NgModule({
   declarations: [

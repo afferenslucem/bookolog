@@ -25,7 +25,7 @@ import { BookRereadFormComponent } from './components/book-reread-form/book-rere
 import { UnitsValidatorDirective } from './validators/units-validator.directive';
 import { DatesValidatorDirective } from './validators/dates-validator.directive';
 import { ListModuleModule } from '../list-module/list-module.module';
-import { UiAccordionModule, UiButtonModule, UiDividerModule, UiFormFieldModule, UiModalModule, UiProgressBarModule } from 'ui-kit';
+import { UiAccordionModule, UiButtonModule, UiDividerModule, UiFormFieldModule, UiModalModule, UiProgressBarModule } from 'bookolog-ui-kit';
 
 @NgModule({
   declarations: [

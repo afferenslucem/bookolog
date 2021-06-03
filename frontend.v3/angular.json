@@ -130,48 +130,6 @@
           }
         }
       }
-    },
-    "ui-kit": {
-      "projectType": "library",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "projects/ui-kit",
-      "sourceRoot": "projects/ui-kit/src",
-      "prefix": "ui",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/ui-kit/tsconfig.lib.json",
-            "project": "projects/ui-kit/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/ui-kit/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ui-kit/src/test.ts",
-            "tsConfig": "projects/ui-kit/tsconfig.spec.json",
-            "karmaConfig": "projects/ui-kit/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.component.html"
-            ]
-          }
-        }
-      }
     }
   },
   "defaultProject": "frontend",

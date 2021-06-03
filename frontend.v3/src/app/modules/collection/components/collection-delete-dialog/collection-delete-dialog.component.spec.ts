@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestCore } from '../../../../main/test/test-core.spec';
-import { ModalRef } from 'ui-kit';
+import { ModalRef } from 'bookolog-ui-kit';
 import { CollectionDeleteDialogComponent } from './collection-delete-dialog.component';
 
 describe('CollectionDeleteDialogComponent', () => {

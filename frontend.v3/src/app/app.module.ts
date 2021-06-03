@@ -27,7 +27,14 @@ import { LoggerWindowComponent } from './main/components/logger-window/logger-wi
 import { FormattingModule } from './modules/formatting/formatting.module';
 import { SearchModule } from './modules/search/search.module';
 import { TitleModule } from './modules/title/title.module';
-import { UiButtonModule, UiFormFieldModule, UiProgressBarModule, UiSideMenuModule, UiSpinnerModule, UiToolbarModule } from 'ui-kit';
+import {
+  UiButtonModule,
+  UiFormFieldModule,
+  UiProgressBarModule,
+  UiSideMenuModule,
+  UiSpinnerModule,
+  UiToolbarModule,
+} from 'bookolog-ui-kit';
 
 registerLocaleData(localeRu, 'ru');
 

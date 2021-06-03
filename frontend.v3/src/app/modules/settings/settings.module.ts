@@ -8,7 +8,7 @@ import { PasswordChangeComponent } from './components/password-change/password-c
 import { SettingsComponent } from './components/settings/settings.component';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { FormattingModule } from '../formatting/formatting.module';
-import { UiButtonModule, UiFormFieldModule } from 'ui-kit';
+import { UiButtonModule, UiFormFieldModule } from 'bookolog-ui-kit';
 
 @NgModule({
   declarations: [SettingsComponent, PasswordChangeComponent, AvatarChangeComponent, EmailChangeComponent],

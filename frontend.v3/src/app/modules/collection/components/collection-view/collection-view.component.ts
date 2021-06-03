@@ -8,7 +8,7 @@ import { Collection } from '../../models/collection';
 import _ from 'declarray';
 import { CollectionService } from '../../services/collection.service';
 import { CollectionDeleteDialogComponent } from '../collection-delete-dialog/collection-delete-dialog.component';
-import { DestroyService, UiModalService } from 'ui-kit';
+import { DestroyService, UiModalService } from 'bookolog-ui-kit';
 import { BookService } from 'src/app/modules/book/services/book.service';
 import { BookSearchableList } from '../../../book/utils/book-searchable-list';
 import { SearchService } from '../../../search/services/search.service';

@@ -8,7 +8,7 @@ import { RecoverPasswordComponent } from './components/recover-password/recover-
 import { RegistrationComponent } from './components/registration/registration.component';
 import { FormattingModule } from '../formatting/formatting.module';
 import { TitleModule } from '../title/title.module';
-import { UiButtonModule, UiFormFieldModule, UiToolbarModule } from 'ui-kit';
+import { UiButtonModule, UiFormFieldModule, UiToolbarModule } from 'bookolog-ui-kit';
 
 @NgModule({
   declarations: [LoginComponent, RegistrationComponent, RecoverPasswordComponent],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalRef } from 'ui-kit';
+import { ModalRef } from 'bookolog-ui-kit';
 
 export type DeleteDialogResult = 'delete' | 'cancel';
 

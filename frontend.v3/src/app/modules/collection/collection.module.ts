@@ -9,7 +9,7 @@ import { CollectionEditViewComponent } from './components/collection-edit-view/c
 import { CollectionListComponent } from './components/collection-list/collection-list.component';
 import { CollectionViewComponent } from './components/collection-view/collection-view.component';
 import { ListModuleModule } from '../list-module/list-module.module';
-import { UiButtonModule, UiDividerModule, UiFormFieldModule, UiModalModule, UiProgressBarModule } from 'ui-kit';
+import { UiButtonModule, UiDividerModule, UiFormFieldModule, UiModalModule, UiProgressBarModule } from 'bookolog-ui-kit';
 
 @NgModule({
   declarations: [CollectionEditViewComponent, CollectionListComponent, CollectionViewComponent, CollectionDeleteDialogComponent],

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { BookDeleteDialogComponent } from './book-delete-dialog.component';
-import { ModalRef } from 'ui-kit';
+import { ModalRef } from 'bookolog-ui-kit';
 
 describe('BookDeleteDialogComponent', () => {
   let component: BookDeleteDialogComponent;

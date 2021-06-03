@@ -3,7 +3,6 @@ WORKDIR /app
 COPY frontend.v3/package*.json ./
 RUN npm ci
 COPY frontend.v3/ ./
-RUN npm run build -- ui-kit && npm pack ./dist/ui-kit && npm install ./ui-kit-0.0.1.tgz
 RUN npm run build
 
 # этап production (production-stage)

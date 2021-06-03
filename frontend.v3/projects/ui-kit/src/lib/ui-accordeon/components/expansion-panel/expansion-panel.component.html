@@ -1,9 +1,0 @@
-<div (click)="toggle()" [class.opened]="isOpened" class="ui-panel__header-wrapper">
-  <ng-content select="ui-expansion-panel-header"></ng-content>
-</div>
-<div [class.collapsed]="!isOpened" [style.height]="isOpened ? (targetHeight + 'px') : '0px'"
-     class="ui-panel__body-wrapper">
-  <div style="height: 16px"></div>
-  <ng-content select="ui-expansion-panel-body"></ng-content>
-  <div style="height: 16px"></div>
-</div>

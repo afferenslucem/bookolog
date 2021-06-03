@@ -9,7 +9,7 @@ import { BookTagsInputComponent } from './components/tags-input/book-tags-input.
 import { BookTimeInputComponent } from './components/time-input/book-time-input.component';
 import { DateMonthValidatorDirective } from './validators/date-month-validator.directive';
 import { DateDayValidatorDirective } from './validators/date-day-validator.directive';
-import { UiButtonModule, UiFormFieldModule } from 'ui-kit';
+import { UiButtonModule, UiFormFieldModule } from 'bookolog-ui-kit';
 
 @NgModule({
   declarations: [
