@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { EventBusService } from './event-bus.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('OpenDelegatorService', () => {
+describe('EventBusService', () => {
   let service: EventBusService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+    });
     service = TestBed.inject(EventBusService);
   });
 

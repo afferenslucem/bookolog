@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { EventBusService } from '../../services/event-bus.service';
 import { DestroyService } from '../../../common/destroy.service';
 import { BehaviorSubject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { delay, takeUntil, tap } from 'rxjs/operators';
 import { Timer } from 'essents';
 
 const TRANSPARENT_DELAY = 25;
@@ -29,10 +29,13 @@ export class SideMenuHostComponent {
       )
       .subscribe(() => this.isMenuOpened$.next(true));
 
+    eventBus.navigated$.pipe(takeUntil(this.destroy$)).subscribe(() => this.closeAll());
+
     eventBus.closeAll$
       .pipe(
         takeUntil(destroy$),
         tap(() => this.removeDark()),
+        delay(350),
       )
       .subscribe(() => this.isMenuOpened$.next(false));
   }
@@ -47,5 +50,13 @@ export class SideMenuHostComponent {
 
   public closeAll(): void {
     this.eventBus.closeAll();
+  }
+
+  public onBackDropClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+
+    if (target.classList.contains('ui-backdrop')) {
+      this.closeAll();
+    }
   }
 }
