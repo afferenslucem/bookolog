@@ -46,14 +46,6 @@ ui-form-field {
       }
     }
   }
-
-  ui-label {
-    margin-bottom: $ind-1;
-  }
-
-  ui-error {
-    margin-top: $ind-2;
-  }
 }
 
 form.ui-form {
@@ -66,16 +58,21 @@ form.ui-form {
   }
 }
 
+ui-label {
+  margin-bottom: $ind-1;
+}
+
+ui-error {
+  margin-top: $ind-2;
+}
+
 .field-group {
-  display: flex;
-
-  justify-content: flex-start;
-  align-items: center;
-
   width: 100%;
 
   &.horizontal {
-    flex-flow: row;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
     ui-form-field {
       margin-top: 0;
@@ -199,7 +196,8 @@ ui-side-menu-host {
     height: 100%;
     width: 100%;
 
-    transition: background-color 1s ease-in-out;
+    transition: background-color 0.35s ease-in-out;
+
     background-color: #00000000;
 
     &.ui-dark {
@@ -213,7 +211,7 @@ ui-side-menu-host {
     max-width: 75%;
     background-color: white;
 
-    transition: all ease-in-out 0.5s;
+    transition: all ease-in-out 0.35s;
     position: fixed;
     z-index: 1000;
 

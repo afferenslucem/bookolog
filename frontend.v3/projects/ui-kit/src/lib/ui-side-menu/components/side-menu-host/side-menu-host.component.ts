@@ -1,31 +1,51 @@
-import { Component, ContentChildren, Input, OnInit, QueryList } from '@angular/core';
-import { SideMenuComponent } from '../side-menu/side-menu.component';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { EventBusService } from '../../services/event-bus.service';
+import { DestroyService } from '../../../common/destroy.service';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
+import { Timer } from 'essents';
+
+const TRANSPARENT_DELAY = 25;
 
 @Component({
   selector: 'ui-side-menu-host',
   templateUrl: './side-menu-host.component.html',
   styleUrls: ['./side-menu-host.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [EventBusService, DestroyService],
 })
-export class SideMenuHostComponent implements OnInit {
+export class SideMenuHostComponent {
   @Input()
   public hasBackdrop = false;
 
-  @ContentChildren(SideMenuComponent)
-  public sideMenus: QueryList<SideMenuComponent>;
+  public isDark$ = new BehaviorSubject(false);
+  public isMenuOpened$ = new BehaviorSubject<boolean>(false);
 
-  constructor() {}
+  constructor(private eventBus: EventBusService, private destroy$: DestroyService) {
+    eventBus.open$
+      .pipe(
+        takeUntil(destroy$),
+        tap(() => this.addDark()),
+      )
+      .subscribe(() => this.isMenuOpened$.next(true));
 
-  public get isMenuOpened(): boolean {
-    return this.sideMenus?.some(item => item.isOpened);
+    eventBus.closeAll$
+      .pipe(
+        takeUntil(destroy$),
+        tap(() => this.removeDark()),
+      )
+      .subscribe(() => this.isMenuOpened$.next(false));
   }
 
-  ngOnInit(): void {}
+  public addDark(): void {
+    new Timer(() => this.isDark$.next(this.hasBackdrop), TRANSPARENT_DELAY).start();
+  }
+
+  public removeDark(): void {
+    new Timer(() => this.isDark$.next(false), TRANSPARENT_DELAY).start();
+  }
 
   public closeAll(): void {
-    console.log('hasBackdrop', this.hasBackdrop);
-
-    for (let menu of this.sideMenus) {
-      menu.close();
-    }
+    this.eventBus.closeAll();
   }
 }

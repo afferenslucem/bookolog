@@ -1,2 +1,2 @@
-<div (click)="closeAll()" *ngIf="isMenuOpened" [class.ui-dark]="hasBackdrop" class="ui-backdrop"></div>
+<div (click)="closeAll()" *ngIf="isMenuOpened$ | async" [class.ui-dark]="isDark$ | async" class="ui-backdrop"></div>
 <ng-content></ng-content>

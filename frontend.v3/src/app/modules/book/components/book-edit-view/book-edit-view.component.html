@@ -68,28 +68,39 @@
     </select>
   </ui-form-field>
 
-  <div [hidden]="status !== BookStatus.InProgress" [ngSwitch]="type" class="book-edit__progress field-group horizontal">
-    <div *ngSwitchCase="BookType.Audio" class="book-edit__progress_audio">
-      <div>
-        <ui-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</ui-label>
-        <app-book-time-input class="book__doneUnits" formControlName="doneUnits"></app-book-time-input>
+  <div [hidden]="status !== BookStatus.InProgress" [ngSwitch]="type" class="book-edit__progress field-group">
+    <div class="field-group horizontal">
+      <div *ngSwitchCase="BookType.Audio" class="book-edit__progress_audio">
+        <div>
+          <ui-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</ui-label>
+          <app-book-time-input class="book__doneUnits" formControlName="doneUnits"></app-book-time-input>
+        </div>
+        <div>
+          <ui-label>Всего</ui-label>
+          <app-book-time-input class="book__totalUnits" formControlName="totalUnits"></app-book-time-input>
+        </div>
       </div>
-      <div>
-        <ui-label>Всего</ui-label>
-        <app-book-time-input class="book__totalUnits" formControlName="totalUnits"></app-book-time-input>
+
+      <div *ngSwitchDefault class="book-edit__progress_audio field-group horizontal">
+        <ui-form-field>
+          <ui-label>Страниц</ui-label>
+          <input autocomplete="off" class="book__doneUnits" formControlName="doneUnits" max="6000" min="0" step="1" type="number" uiInput />
+        </ui-form-field>
+
+        <ui-form-field>
+          <ui-label>Всего</ui-label>
+          <input
+            autocomplete="off"
+            class="book__totalUnits"
+            formControlName="totalUnits"
+            max="6000"
+            min="0"
+            step="1"
+            type="number"
+            uiInput
+          />
+        </ui-form-field>
       </div>
-    </div>
-
-    <div *ngSwitchDefault class="book-edit__progress_audio field-group horizontal">
-      <ui-form-field>
-        <ui-label>Страниц</ui-label>
-        <input autocomplete="off" class="book__doneUnits" formControlName="doneUnits" max="6000" min="0" step="1" type="number" uiInput />
-      </ui-form-field>
-
-      <ui-form-field>
-        <ui-label>Всего</ui-label>
-        <input autocomplete="off" class="book__totalUnits" formControlName="totalUnits" max="6000" min="0" step="1" type="number" uiInput />
-      </ui-form-field>
     </div>
 
     <ui-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс</ui-error>

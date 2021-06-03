@@ -1,27 +1,30 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { EventBusService } from '../../services/event-bus.service';
+import { DestroyService } from '../../../common/destroy.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'ui-side-menu',
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DestroyService],
 })
 export class SideMenuComponent implements OnInit {
   @Input()
   public mode: 'top' | 'top' | 'left' | 'right' = 'left';
 
-  public isOpened = false;
-
-  constructor(private elRef: ElementRef<HTMLElement>) {}
+  constructor(private elRef: ElementRef<HTMLElement>, private eventBus: EventBusService, private destroy$: DestroyService) {
+    this.eventBus.closeAll$.pipe(takeUntil(destroy$)).subscribe(() => this.close());
+  }
 
   public open(): void {
+    this.eventBus.open();
     this.elRef.nativeElement.classList.add('opened');
-    this.isOpened = true;
   }
 
   public close(): void {
     this.elRef.nativeElement.classList.remove('opened');
-    this.isOpened = false;
   }
 
   ngOnInit(): void {
