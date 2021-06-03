@@ -24,9 +24,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run build ui-kit
-      - run: npm pack ./dist/ui-kit
-      - run: npm install ui-kit-0.0.1.tgz
       - run: npm run build
       - run: npm run test:prod
 
