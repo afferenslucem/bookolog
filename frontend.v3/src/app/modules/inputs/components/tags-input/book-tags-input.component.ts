@@ -1,9 +1,12 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import _ from 'declarray';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { StringComparator } from '../../../../main/utils/string-comparator';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
+import { DestroyService } from 'bookolog-ui-kit';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-book-tags-input',
@@ -15,6 +18,7 @@ import { ValueAccessorBase } from '../value-accessor/value-accessor';
       useExisting: forwardRef(() => BookTagsInputComponent),
       multi: true,
     },
+    DestroyService,
   ],
 })
 export class BookTagsInputComponent extends ValueAccessorBase<string[]> implements OnInit {
@@ -29,7 +33,7 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
   });
   public id: number;
 
-  constructor() {
+  constructor(private destroy$: DestroyService, private elRef: ElementRef<HTMLElement>) {
     super();
     this.id = ++BookTagsInputComponent.counter;
   }
@@ -43,7 +47,9 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
   }
 
   public set tag(v: string) {
-    this.form.get('input').setValue(v);
+    this.form.get('input').setValue(v, {
+      emitEvent: false,
+    });
   }
 
   public get availableTags(): string[] {
@@ -56,7 +62,20 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscribeToAutocomplete();
+  }
+
+  private subscribeToAutocomplete(): void {
+    fromEvent<InputEvent>(this.elRef.nativeElement.querySelector('.tag'), 'input')
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((event: InputEvent) => event.inputType == null),
+        filter((event: InputEvent) => event.data == null),
+        map((event: InputEvent) => event.target as any),
+      )
+      .subscribe(target => this.pushTag(target.value));
+  }
 
   public append(): void {
     const value = this.tag;
