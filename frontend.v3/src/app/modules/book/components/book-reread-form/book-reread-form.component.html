@@ -14,7 +14,7 @@
   <label>Авторы</label>
 </div>
 
-<form (ngSubmit)="submit()" [formGroup]="form" appDatesValidator appUnitsValidator class="ui-form">
+<form (ngSubmit)="submit()" [formGroup]="form" appDatesValidator appUnitsValidator>
   <ui-form-field appearance="fill">
     <ui-label>Статус</ui-label>
     <select formControlName="status" uiSelect>

@@ -2,7 +2,7 @@
   display: block;
 }
 
-form {
+form > ui-form-field-set {
   display: flex;
 
   justify-content: space-between;
