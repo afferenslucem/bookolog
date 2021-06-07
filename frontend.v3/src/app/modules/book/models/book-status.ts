@@ -1,5 +1,5 @@
 export enum BookStatus {
-  ToRead,
-  InProgress,
-  Done,
+  ToRead = 0,
+  InProgress = 1,
+  Done = 2,
 }

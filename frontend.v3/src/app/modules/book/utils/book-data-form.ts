@@ -47,7 +47,7 @@ export class BookDataForm extends AbstractForm<Book> {
   }
 
   public get status(): BookStatus {
-    return this.statusControl.value;
+    return Number(this.statusControl.value);
   }
 
   public set status(v: BookStatus) {

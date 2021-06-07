@@ -72,7 +72,8 @@
     </select>
   </ui-form-field>
 
-  <ui-form-field [hidden]="status !== BookStatus.InProgress" [ngSwitch]="type" class="book-edit__progress">
+  <ui-form-field-set [hidden]="status != BookStatus.InProgress">
+    <ui-form-field [ngSwitch]="type" class="book-edit__progress">
       <ui-form-field-set orientation="horizontal" *ngSwitchCase="BookType.Audio" class="book-edit__progress_audio">
         <div>
           <ui-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</ui-label>
@@ -104,20 +105,22 @@
           />
         </ui-form-field>
       </ui-form-field-set>
+    </ui-form-field>
 
-      <ui-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс</ui-error>
-  </ui-form-field>
+    <ui-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс</ui-error>
+  </ui-form-field-set>
+
 
   <ui-form-field>
-    <div [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
+    <ui-form-field [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
       <ui-label>Начало чтения</ui-label>
       <app-book-date-input class="book__started" formControlName="started"></app-book-date-input>
-    </div>
+    </ui-form-field>
 
-    <div [hidden]="status != BookStatus.Done">
+    <ui-form-field [hidden]="status != BookStatus.Done">
       <ui-label>Окончание чтения</ui-label>
       <app-book-date-input class="book__finished" formControlName="finished"></app-book-date-input>
-    </div>
+    </ui-form-field>
 
     <ui-error *ngIf="form?.errors?.invalidDates"> Дата начала больше даты окончания</ui-error>
   </ui-form-field>
