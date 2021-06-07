@@ -8,19 +8,20 @@
           <li>
             <div class="book-nav__item">
               <span [routerLink]="['/in-progress']" class="link">Читаю сейчас</span>
-              <span [routerLink]="['/book', 'create', BookStatus.InProgress]" class="ui-plus link"></span>
+
+              <span [routerLink]="['/book', 'create', BookStatus.InProgress]" class="ui-plus-square link"></span>
             </div>
           </li>
           <li>
             <div class="book-nav__item">
               <span [routerLink]="['/to-read']" class="link">Буду читать</span>
-              <span [routerLink]="['/book', 'create', BookStatus.ToRead]" class="ui-plus link"></span>
+              <span [routerLink]="['/book', 'create', BookStatus.ToRead]" class="ui-plus-square link"></span>
             </div>
           </li>
           <li>
             <div class="book-nav__item">
               <span [routerLink]="['/done']" class="link">Прочитаные</span>
-              <span [routerLink]="['/book', 'create', BookStatus.Done]" class="ui-plus link"></span>
+              <span [routerLink]="['/book', 'create', BookStatus.Done]" class="ui-plus-square link"></span>
             </div>
           </li>
         </ul>
@@ -32,7 +33,7 @@
         <ul class="book-nav">
           <li>
             <span [routerLink]="['/series']" class="link book-nav__item">Серии</span>
-            <span [routerLink]="['/series', 'create']" class="ui-plus link"></span>
+            <span [routerLink]="['/series', 'create']" class="ui-plus-square link"></span>
           </li>
           <li>
             <span [routerLink]="['/years']" class="link">Года прочтения</span>

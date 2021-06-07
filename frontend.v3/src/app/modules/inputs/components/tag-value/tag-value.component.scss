@@ -4,22 +4,22 @@
   display: flex;
   align-items: center;
 
-  background-color: #f9cd0b;
+  background-color: $warning-color;
 
-  color: white;
+  color: black;
 
   > * {
     flex: 0 0 auto;
   }
 
-  padding: $ind-1;
-
   line-height: 18px;
 
   min-width: unset;
 
+  padding: 0 0 0 $ind-2;
+
   &__close {
-    margin-left: $ind-1;
+    margin-left: $ind-2;
   }
 
   border-radius: 4px;

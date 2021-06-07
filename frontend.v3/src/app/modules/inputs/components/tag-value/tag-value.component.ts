@@ -18,5 +18,7 @@ export class TagValueComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('showCross', this.showCross);
+  }
 }
