@@ -3,7 +3,6 @@
 .tag {
   display: flex;
   align-items: center;
-
   background-color: $warning-color;
 
   color: black;
@@ -16,10 +15,8 @@
 
   min-width: unset;
 
-  padding: 0 0 0 $ind-2;
-
-  &__close {
-    margin-left: $ind-2;
+  &__value {
+    padding: $ind-2;
   }
 
   border-radius: 4px;

@@ -1,4 +1,4 @@
-<div *ngIf="filteredData | async as filteredData" class="scroll-list">
+<div *ngIf="filteredData | async as filteredData" class="list-viewport">
   <ul *ngIf="filteredData.length > 0; else emptyList">
     <li (click)="selected.emit(item.key)" *ngFor="let item of filteredData" class="statistic-item w-100">
       <span class="statistic-item__name link">{{ item.key | capitalize }}</span>

@@ -1,6 +1,11 @@
-:host, .book-list {
-  display: block;
+ui-expansion-panel-header {
+  display: flex !important;
 
-  height: 100%;
-  width: 100%;
+  justify-content: space-between;
+
+  align-items: center;
+
+  > * {
+    flex: 0 0 auto;
+  }
 }
