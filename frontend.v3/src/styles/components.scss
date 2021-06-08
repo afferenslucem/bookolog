@@ -4,14 +4,6 @@
   padding: $ind-1 $ind-2;
 }
 
-form {
-  .form-header {
-    margin-bottom: $ind-3;
-
-    display: inline-block;
-  }
-}
-
 // Books
 .book-line {
   > *:not(:last-child) {
