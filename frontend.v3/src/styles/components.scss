@@ -183,3 +183,43 @@ app-statistic-list, app-collection-list {
     }
   }
 }
+
+.link {
+  color: #007BFF;
+}
+
+.nav {
+  &:not(:first-child) .name {
+    margin-top: $ind-4;
+  }
+
+  .name {
+    margin-bottom: $ind-2;
+    font-weight: 600;
+  }
+
+  ul, li {
+    width: 100%;
+  }
+
+  ul {
+    padding-left: $ind-4;
+  }
+
+  li {
+    @extend .link;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2.2rem;
+
+    > * {
+      flex: 1 1 auto;
+    }
+
+    > .nav-icon {
+      flex: 0 0 auto;
+    }
+  }
+}

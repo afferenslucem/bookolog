@@ -6,40 +6,6 @@
   min-width: 250px;
 }
 
-.book-nav__item {
-  display: flex;
-
-  align-items: baseline;
-  justify-content: space-between;
-
-  width: 100%;
-}
-
-.book-nav {
-  padding-top: 0;
-}
-
-.navigation {
-  width: 100%;
-
-  &__header {
-    font-size: $large-font-size;
-    font-weight: $fat-font-weight;
-  }
-}
-
-ul.book-nav {
-  padding-left: $ind-2;
-
-  li {
-    height: 35px;
-    display: flex;
-    align-items: center;
-  }
-
-  margin-bottom: $ind-4;
-}
-
 .bottom {
   position: absolute;
 
@@ -47,7 +13,7 @@ ul.book-nav {
   left: 0;
 }
 
-.navigation.sync {
+.nav.sync {
   @extend .bottom;
 }
 

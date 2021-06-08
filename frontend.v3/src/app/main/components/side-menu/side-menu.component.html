@@ -1,79 +1,62 @@
 <app-user-info></app-user-info>
-<div class="content">
-  <div (click)="navigated.emit()">
-    <div class="navigation">
-      <div class="navigation__header">Списки</div>
-      <div class="navigation__body">
-        <ul class="book-nav">
-          <li>
-            <div class="book-nav__item">
-              <span [routerLink]="['/in-progress']" class="link">Читаю сейчас</span>
-
-              <span [routerLink]="['/book', 'create', BookStatus.InProgress]" class="ui-plus-square link"></span>
-            </div>
-          </li>
-          <li>
-            <div class="book-nav__item">
-              <span [routerLink]="['/to-read']" class="link">Буду читать</span>
-              <span [routerLink]="['/book', 'create', BookStatus.ToRead]" class="ui-plus-square link"></span>
-            </div>
-          </li>
-          <li>
-            <div class="book-nav__item">
-              <span [routerLink]="['/done']" class="link">Прочитаные</span>
-              <span [routerLink]="['/book', 'create', BookStatus.Done]" class="ui-plus-square link"></span>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="navigation">
-      <div class="navigation__header">Статистика</div>
-      <div class="navigation__body">
-        <ul class="book-nav">
-          <li>
-            <span [routerLink]="['/series']" class="link book-nav__item">Серии</span>
-            <span [routerLink]="['/series', 'create']" class="ui-plus-square link"></span>
-          </li>
-          <li>
-            <span [routerLink]="['/years']" class="link">Года прочтения</span>
-          </li>
-          <li>
-            <span [routerLink]="['/genres']" class="link">Жанры</span>
-          </li>
-          <li>
-            <span [routerLink]="['/authors']" class="link">Авторы</span>
-          </li>
-          <li>
-            <span [routerLink]="['/tags']" class="link">Теги</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="navigation">
-      <div class="navigation__header">Аккаунт</div>
-      <div class="navigation__body">
-        <ul class="book-nav">
-          <li>
-            <span class="link" routerLink="/settings">Настройки</span>
-          </li>
-          <li>
-            <span (click)="logout()" class="link">Выйти</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="navigation sync">
-      <div class="navigation__body">
-        <app-sync-info></app-sync-info>
-      </div>
-    </div>
-    <span class="dark-text version">
-      <span *ngIf="newVersionAvailable | async; else emptyUpdates"> Доступно обновление </span>
-
-      <ng-template #emptyUpdates>
-        <span>{{ version }}</span>
-      </ng-template>
-    </span>
+<div class="content" (click)="navigated.emit()">
+  <div class="nav">
+    <div class="name">Списки</div>
+    <ul>
+      <li>
+          <span [routerLink]="['/in-progress']">Читаю сейчас</span>
+          <span [routerLink]="['/book', 'create', BookStatus.InProgress]" class="ui-plus-square nav-icon"></span>
+      </li>
+      <li>
+          <span [routerLink]="['/to-read']">Буду читать</span>
+          <span [routerLink]="['/book', 'create', BookStatus.ToRead]" class="ui-plus-square nav-icon"></span>
+      </li>
+      <li>
+          <span [routerLink]="['/done']">Прочитаные</span>
+          <span [routerLink]="['/book', 'create', BookStatus.Done]" class="ui-plus-square nav-icon"></span>
+      </li>
+    </ul>
   </div>
+  <div class="nav named">
+    <div class="name">Статистика</div>
+    <ul>
+      <li>
+        <span [routerLink]="['/series']">Серии</span>
+        <span [routerLink]="['/series', 'create']" class="ui-plus-square nav-icon"></span>
+      </li>
+      <li>
+        <span [routerLink]="['/years']">Года прочтения</span>
+      </li>
+      <li>
+        <span [routerLink]="['/genres']">Жанры</span>
+      </li>
+      <li>
+        <span [routerLink]="['/authors']">Авторы</span>
+      </li>
+      <li>
+        <span [routerLink]="['/tags']">Теги</span>
+      </li>
+    </ul>
+  </div>
+  <div class="nav named">
+    <div class="name">Аккаунт</div>
+    <ul>
+      <li>
+        <span routerLink="/settings">Настройки</span>
+      </li>
+      <li>
+        <span (click)="logout()">Выйти</span>
+      </li>
+    </ul>
+  </div>
+  <div class="nav named sync">
+    <app-sync-info></app-sync-info>
+  </div>
+  <span class="dark-text version">
+    <span *ngIf="newVersionAvailable | async; else emptyUpdates"> Доступно обновление </span>
+
+    <ng-template #emptyUpdates>
+      <span>{{ version }}</span>
+    </ng-template>
+  </span>
 </div>
