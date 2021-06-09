@@ -23,10 +23,16 @@ import { fromEvent } from 'rxjs';
 })
 export class BookTagsInputComponent extends ValueAccessorBase<string[]> implements OnInit {
   private static counter = 0;
+
   @Input()
   public list: string[] = [];
+
   @Input()
   public header: string;
+
+  @Input()
+  public placeholder = '';
+
   public tags: string[] = [];
   public form = new FormBuilder().group({
     input: new FormControl(null, [Validators.min(2), Validators.max(128)]),

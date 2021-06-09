@@ -1,22 +1,22 @@
 <form (ngSubmit)="submit()" *ngIf="bookForm" [formGroup]="form" appDatesValidator appUnitsValidator class="book">
   <ui-form-field>
     <ui-label>Название</ui-label>
-    <input appTrimOnBlur autocomplete="off" class="book__name" formControlName="name" required type="text" uiInput />
+    <input appTrimOnBlur autocomplete="off" class="book__name" formControlName="name" required type="text" placeholder="Укажите название книги" uiInput />
     <ui-error *ngIf="form.get('name').invalid"> Это обязательное поле</ui-error>
   </ui-form-field>
 
   <ui-form-field>
-    <app-book-tags-input [list]="authors" class="book__authors" formControlName="authors" header="Авторы"></app-book-tags-input>
+    <app-book-tags-input [list]="authors" class="book__authors" formControlName="authors" header="Авторы" placeholder="Укажите автора"></app-book-tags-input>
   </ui-form-field>
 
   <ui-form-field>
     <ui-label>Год выпуска</ui-label>
-    <input class="book__year" formControlName="year" type="number" uiInput />
+    <input class="book__year" formControlName="year" type="number" uiInput placeholder="Укажите год издания книги" />
   </ui-form-field>
 
   <ui-form-field>
     <ui-label>Жанр</ui-label>
-    <input appTrimOnBlur class="book__genre" formControlName="genre" list="genreAutocomplete" type="text" uiInput />
+    <input appTrimOnBlur class="book__genre" formControlName="genre" list="genreAutocomplete" type="text" uiInput placeholder="Укажите жанр книги" />
 
     <datalist id="genreAutocomplete">
       <option *ngFor="let genre of genres | async" [value]="genre | capitalize">
@@ -43,7 +43,7 @@
   </ui-form-field-set>
 
   <ui-form-field>
-    <app-book-tags-input [list]="tags" class="book__tags" formControlName="tags" header="Теги"></app-book-tags-input>
+    <app-book-tags-input [list]="tags" class="book__tags" formControlName="tags" header="Теги" placeholder="Укажите тег"></app-book-tags-input>
   </ui-form-field>
 
   <ui-form-field>

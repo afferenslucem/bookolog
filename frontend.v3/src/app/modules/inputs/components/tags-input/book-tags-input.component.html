@@ -1,7 +1,7 @@
 <form (ngSubmit)="append()" [formGroup]="form" class="tags-input__form">
   <ui-form-field>
     <ui-label>{{ header }}</ui-label>
-    <input [uiList]="tagId" appTrimOnBlur class="tag" formControlName="input" uiInput />
+    <input [uiList]="tagId" appTrimOnBlur class="tag" formControlName="input" uiInput [placeholder]="placeholder" />
   </ui-form-field>
 
   <datalist id="{{ tagId }}">
