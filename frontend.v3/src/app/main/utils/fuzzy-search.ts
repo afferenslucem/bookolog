@@ -2,6 +2,10 @@ import _ from 'declarray';
 
 export class FuzzySearch {
   public search<T>(items: T[], pattern: string): T[] {
+    if (pattern == null) {
+      return items;
+    }
+
     pattern = pattern.trim().toLowerCase();
 
     if (pattern === '') {

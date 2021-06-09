@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookTagsInputComponent } from './book-tags-input.component';
 import { TestCore } from '../../../../main/test/test-core.spec';
+import { skip } from 'rxjs/operators';
 
 describe('TagsInputComponent', () => {
   let component: BookTagsInputComponent;
@@ -77,35 +78,52 @@ describe('TagsInputComponent', () => {
   });
 
   describe('Available tags', () => {
-    it('should return all', () => {
+    it('should return all', done => {
       component.list = ['one', 'two', 'three'];
-      component.tag = '';
 
-      expect(component.availableTags).toEqual(['one', 'two', 'three']);
+      component.availableTags.pipe(skip(1)).subscribe(result => {
+        expect(result).toEqual(['one', 'two', 'three']);
+        done();
+      });
+
+      component.form.get('input').setValue('');
     });
 
-    it('should return filtered', () => {
+    it('should return filtered', done => {
       component.list = ['one', 'two', 'three'];
-      component.tag = 'o';
 
-      expect(component.availableTags).toEqual(['one', 'two']);
+      component.availableTags.pipe(skip(1)).subscribe(result => {
+        expect(result).toEqual(['one', 'two']);
+        done();
+      });
+
+      component.form.get('input').setValue('o');
     });
 
-    it('should return except selected', () => {
+    it('should return except selected', done => {
       component.list = ['one', 'two', 'three'];
 
       component.pushTag('One');
 
-      expect(component.availableTags).toEqual(['two', 'three']);
+      component.availableTags.pipe(skip(1)).subscribe(result => {
+        expect(result).toEqual(['two', 'three']);
+        done();
+      });
+
+      component.form.get('input').setValue('');
     });
 
-    it('should return filtered except selected', () => {
+    it('should return filtered except selected', done => {
       component.list = ['one', 'two', 'three'];
 
       component.pushTag('One');
-      component.tag = 'o';
 
-      expect(component.availableTags).toEqual(['two']);
+      component.availableTags.pipe(skip(1)).subscribe(result => {
+        expect(result).toEqual(['two']);
+        done();
+      });
+
+      component.form.get('input').setValue('o');
     });
   });
 });

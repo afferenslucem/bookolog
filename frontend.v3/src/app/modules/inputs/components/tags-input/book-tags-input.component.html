@@ -5,7 +5,7 @@
   </ui-form-field>
 
   <datalist id="{{ tagId }}">
-    <option *ngFor="let tag of availableTags" [value]="tag | capitalize">
+    <option *ngFor="let tag of availableTags | async" [value]="tag | capitalize">
       {{ tag | capitalize }}
     </option>
   </datalist>

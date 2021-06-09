@@ -1,7 +1,16 @@
 <form (ngSubmit)="submit()" [formGroup]="form.nativeForm">
   <ui-form-field appearance="fill" class="name-field">
     <ui-label>Название</ui-label>
-    <input appTrimOnBlur autocomplete="off" class="collection__name" formControlName="name" required type="text" uiInput placeholder="Укажите название серии" />
+    <input
+      appTrimOnBlur
+      autocomplete="off"
+      class="collection__name"
+      formControlName="name"
+      required
+      type="text"
+      uiInput
+      placeholder="Укажите название серии"
+    />
     <ui-error *ngIf="form.nameInvalid">{{ form.nameErrorMessage }}</ui-error>
   </ui-form-field>
 

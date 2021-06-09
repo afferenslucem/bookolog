@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import _ from 'declarray';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 import { getConsoleLogger } from '../../../../main/app.logging';
 import { Action } from '../../../../main/resolvers/action.resolver';
 import { DateUtils } from '../../../../main/utils/date-utils';
@@ -76,10 +76,13 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     this.bookForm.build();
 
     this._filteredGenres = this.bookForm.genreChanges.pipe(
+      debounceTime(300),
       startWith(this.genre || ''),
       map(item => new FuzzySearch().search(this._genres, item)),
-      map(item => item.filter(Boolean)),
-      map(item => item.filter(variant => variant !== this.genre)),
+      map(item => _(item)),
+      map(item => item.where(Boolean)),
+      map(item => item.where(variant => variant !== this.genre)),
+      switchMap(item => from(item.promisify().toArray())),
     );
     this.bookForm.progressTypeChanges.subscribe(v => (this.progressAlgorithmPreference = v));
     this.bookForm.typeChanges.subscribe(() => this.onTypeChange());

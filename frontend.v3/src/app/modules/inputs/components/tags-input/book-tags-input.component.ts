@@ -5,8 +5,8 @@ import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { StringComparator } from '../../../../main/utils/string-comparator';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
 import { DestroyService } from 'bookolog-ui-kit';
-import { filter, map, takeUntil } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
+import { debounceTime, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { from, fromEvent, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-book-tags-input',
@@ -34,10 +34,14 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
   public placeholder = '';
 
   public tags: string[] = [];
+
   public form = new FormBuilder().group({
     input: new FormControl(null, [Validators.min(2), Validators.max(128)]),
   });
+
   public id: number;
+
+  private _filteredTags: Observable<string[]>;
 
   constructor(private destroy$: DestroyService, private elRef: ElementRef<HTMLElement>) {
     super();
@@ -58,18 +62,25 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
     });
   }
 
-  public get availableTags(): string[] {
-    const tags = _(this.list).except(this.tags, new StringComparator()).toArray();
-
-    if (this.tag) {
-      return new FuzzySearch().search(tags, this.tag);
-    } else {
-      return tags;
-    }
+  public get availableTags(): Observable<string[]> {
+    return this._filteredTags;
   }
 
   ngOnInit(): void {
     this.subscribeToAutocomplete();
+
+    this._filteredTags = this.form.get('input').valueChanges.pipe(
+      debounceTime(300),
+      startWith(this.tag || ''),
+      map(item => {
+        const tags = _(this.list).except(this.tags, new StringComparator()).toArray();
+        return new FuzzySearch().search(tags, item);
+      }),
+      map(item => _(item)),
+      map(item => item.where(Boolean)),
+      map(item => item.where(variant => variant !== this.tag)),
+      switchMap(item => from(item.promisify().toArray())),
+    );
   }
 
   private subscribeToAutocomplete(): void {
