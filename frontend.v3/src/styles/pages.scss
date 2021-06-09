@@ -8,6 +8,19 @@
   padding: $ind-2 $ind-2 $ind-3 $ind-2;
 }
 
+.list-page {
+  @extend .content;
+
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: block;
+
+  .cdk-virtual-scroll-content-wrapper {
+    max-width: 100%;
+  }
+}
+
 app-collection {
   @extend .content;
   padding-top: $ind-2;
@@ -15,4 +28,8 @@ app-collection {
 
 app-book-view, app-book-edit-view, app-book-reread-form, app-collection-edit-view {
   @extend .single-page;
+}
+
+app-year-statistic, app-collection-list, app-in-progress-books-list, app-to-read-books-list, app-done-books-list, app-statistic-list {
+  @extend .list-page;
 }

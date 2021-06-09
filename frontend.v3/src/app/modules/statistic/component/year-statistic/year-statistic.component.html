@@ -1,4 +1,4 @@
-<div *ngIf="books$ | async as books" class="scroll-list">
+<div *ngIf="books$ | async as books" class="list-viewport">
   <cdk-virtual-scroll-viewport
     *ngIf="books.length > 0; else emptyList"
     [itemSize]="67"

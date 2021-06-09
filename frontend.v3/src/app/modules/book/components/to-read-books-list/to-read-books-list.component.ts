@@ -7,7 +7,7 @@ import { BookSearchableList } from '../../utils/book-searchable-list';
 import { SearchService } from '../../../search/services/search.service';
 
 @Component({
-  selector: 'app-to-read-book-list',
+  selector: 'app-to-read-books-list',
   templateUrl: './to-read-books-list.component.html',
   styleUrls: ['./to-read-books-list.component.scss'],
   providers: [BookActionService],

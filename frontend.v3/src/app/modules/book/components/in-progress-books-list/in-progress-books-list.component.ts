@@ -8,7 +8,7 @@ import { Book } from '../../models/book';
 import { BookActionService } from '../../services/book-action.service';
 
 @Component({
-  selector: 'app-in-progress',
+  selector: 'app-in-progress-books-list',
   templateUrl: './in-progress-books-list.component.html',
   styleUrls: ['./in-progress-books-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
