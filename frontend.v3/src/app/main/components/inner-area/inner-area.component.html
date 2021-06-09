@@ -2,7 +2,7 @@
   <ui-side-menu #drawer>
     <app-side-menu></app-side-menu>
   </ui-side-menu>
-  <div class="main">
+  <div class="main inner-area-placeholder">
     <ui-toolbar class="main__header">
       <button uiIconButton color="#713FC2" type="flat" class="mr-4">
         <span (click)="drawer.open()" class="ui-menu"></span>
@@ -13,7 +13,7 @@
         <app-search *ngIf="isSearchEnabled | async"></app-search>
       </div>
     </ui-toolbar>
-    <div class="content main__body">
+    <div class="main__body">
       <router-outlet></router-outlet>
     </div>
   </div>

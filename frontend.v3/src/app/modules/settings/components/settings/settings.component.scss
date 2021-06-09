@@ -1,7 +1,7 @@
 @import "~src/styles/variables";
 
 :host {
-  > * {
+  .single-page > *:not(:last-child) {
     margin-bottom: $ind-3;
   }
 }

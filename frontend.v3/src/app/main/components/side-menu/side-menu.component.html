@@ -4,20 +4,20 @@
     <div class="name">Списки</div>
     <ul>
       <li>
-          <span [routerLink]="['/in-progress']">Читаю сейчас</span>
-          <span [routerLink]="['/book', 'create', BookStatus.InProgress]" class="ui-plus-square nav-icon"></span>
+        <span [routerLink]="['/in-progress']">Читаю сейчас</span>
+        <span [routerLink]="['/book', 'create', BookStatus.InProgress]" class="ui-plus-square nav-icon"></span>
       </li>
       <li>
-          <span [routerLink]="['/to-read']">Буду читать</span>
-          <span [routerLink]="['/book', 'create', BookStatus.ToRead]" class="ui-plus-square nav-icon"></span>
+        <span [routerLink]="['/to-read']">Буду читать</span>
+        <span [routerLink]="['/book', 'create', BookStatus.ToRead]" class="ui-plus-square nav-icon"></span>
       </li>
       <li>
-          <span [routerLink]="['/done']">Прочитаные</span>
-          <span [routerLink]="['/book', 'create', BookStatus.Done]" class="ui-plus-square nav-icon"></span>
+        <span [routerLink]="['/done']">Прочитаные</span>
+        <span [routerLink]="['/book', 'create', BookStatus.Done]" class="ui-plus-square nav-icon"></span>
       </li>
     </ul>
   </div>
-  <div class="nav named">
+  <div class="nav">
     <div class="name">Статистика</div>
     <ul>
       <li>
@@ -38,7 +38,7 @@
       </li>
     </ul>
   </div>
-  <div class="nav named">
+  <div class="nav">
     <div class="name">Аккаунт</div>
     <ul>
       <li>
@@ -49,7 +49,7 @@
       </li>
     </ul>
   </div>
-  <div class="nav named sync">
+  <div class="nav sync">
     <app-sync-info></app-sync-info>
   </div>
   <span class="dark-text version">

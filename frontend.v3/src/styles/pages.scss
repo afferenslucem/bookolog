@@ -1,0 +1,18 @@
+.content {
+  padding: 0 $ind-2;
+}
+
+.single-page {
+  display: block;
+
+  padding: $ind-2 $ind-2 $ind-3 $ind-2;
+}
+
+app-collection {
+  @extend .content;
+  padding-top: $ind-2;
+}
+
+app-book-view, app-book-edit-view, app-book-reread-form, app-collection-edit-view {
+  @extend .single-page;
+}

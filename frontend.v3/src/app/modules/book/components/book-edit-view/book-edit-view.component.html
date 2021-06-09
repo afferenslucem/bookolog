@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" *ngIf="bookForm" [formGroup]="form" appDatesValidator appUnitsValidator class="book ui-form">
+<form (ngSubmit)="submit()" *ngIf="bookForm" [formGroup]="form" appDatesValidator appUnitsValidator class="book">
   <ui-form-field>
     <ui-label>Название</ui-label>
     <input appTrimOnBlur autocomplete="off" class="book__name" formControlName="name" required type="text" uiInput />

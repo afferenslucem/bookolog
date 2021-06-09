@@ -1,9 +1,5 @@
 @import "~src/styles/variables";
 
-.content {
-  padding: $ind-1 $ind-2;
-}
-
 // Books
 .book-line {
   > *:not(:last-child) {
@@ -131,6 +127,7 @@ app-done-book {
 
   ul {
     padding-left: $ind-4;
+    margin-bottom: 0;
   }
 
   li {

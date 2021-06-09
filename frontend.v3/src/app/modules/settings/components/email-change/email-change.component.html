@@ -1,13 +1,11 @@
-<div class="content">
-  <form (ngSubmit)="submit()" [formGroup]="form.nativeForm">
-    <ui-form-header>Смена почты</ui-form-header>
+<form (ngSubmit)="submit()" [formGroup]="form.nativeForm">
+  <ui-form-header>Смена почты</ui-form-header>
 
-    <ui-form-field appearance="fill">
-      <ui-label>Почта</ui-label>
-      <input appTrimOnBlur formControlName="email" required uiInput />
-      <ui-error *ngIf="form.invalid">{{ form.errorMessage }}</ui-error>
-    </ui-form-field>
+  <ui-form-field appearance="fill">
+    <ui-label>Почта</ui-label>
+    <input appTrimOnBlur formControlName="email" required uiInput />
+    <ui-error *ngIf="form.invalid">{{ form.errorMessage }}</ui-error>
+  </ui-form-field>
 
-    <button [disabled]="form.invalid" class="w-100" color="primary" type="submit" uiButton>Сменить почту</button>
-  </form>
-</div>
+  <button [disabled]="form.invalid" class="w-100" color="primary" type="submit" uiButton>Сменить почту</button>
+</form>
