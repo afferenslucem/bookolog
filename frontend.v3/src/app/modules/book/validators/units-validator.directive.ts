@@ -11,7 +11,7 @@ export class UnitsValidatorDirective implements Validator {
 
   validate(formGroup: FormGroup): ValidationErrors | null {
     const status = formGroup.get('status').value as BookStatus;
-    if (status !== BookStatus.InProgress) {
+    if (Number(status) !== BookStatus.InProgress) {
       return null;
     }
 

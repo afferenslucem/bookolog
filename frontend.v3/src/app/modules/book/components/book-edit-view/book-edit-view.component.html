@@ -11,7 +11,7 @@
       placeholder="Укажите название книги"
       uiInput
     />
-    <ui-error *ngIf="form.get('name').invalid"> Это обязательное поле</ui-error>
+    <ui-error *ngIf="form.get('name').invalid">Это обязательное поле</ui-error>
   </ui-form-field>
 
   <ui-form-field>
@@ -136,10 +136,10 @@
       </ui-form-field-set>
     </ui-form-field>
 
-    <ui-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс</ui-error>
+    <ui-error *ngIf="bookForm.errors?.invalidUnits">Неверно указан прогресс</ui-error>
   </ui-form-field-set>
 
-  <ui-form-field>
+  <ui-form-field-set>
     <ui-form-field [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
       <ui-label>Начало чтения</ui-label>
       <app-book-date-input class="book__started" formControlName="started"></app-book-date-input>
@@ -150,8 +150,8 @@
       <app-book-date-input class="book__finished" formControlName="finished"></app-book-date-input>
     </ui-form-field>
 
-    <ui-error *ngIf="form?.errors?.invalidDates"> Дата начала больше даты окончания</ui-error>
-  </ui-form-field>
+    <ui-error *ngIf="bookForm.errors?.invalidDates"> Дата начала больше даты окончания</ui-error>
+  </ui-form-field-set>
 
   <ui-form-field>
     <ui-label>Заметки</ui-label>

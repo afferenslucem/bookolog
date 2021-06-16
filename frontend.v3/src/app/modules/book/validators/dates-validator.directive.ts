@@ -12,7 +12,7 @@ export class DatesValidatorDirective implements Validator {
 
   validate(formGroup: FormGroup): ValidationErrors | null {
     const status = formGroup.get('status').value as BookStatus;
-    if (status !== BookStatus.Done) {
+    if (Number(status) !== BookStatus.Done) {
       return null;
     }
 

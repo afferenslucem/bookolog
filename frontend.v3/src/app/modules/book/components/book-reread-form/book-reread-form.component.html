@@ -41,8 +41,8 @@
     </select>
   </ui-form-field>
 
-  <ui-form-field [hidden]="status !== BookStatus.InProgress" [ngSwitch]="type" class="book-reread__progress">
-    <div *ngSwitchCase="BookType.Audio" class="book-reread__progress_audio">
+  <ui-form-field-set [hidden]="status !== BookStatus.InProgress" [ngSwitch]="type" class="book-reread__progress">
+    <ui-form-field-set orientation="horizontal" *ngSwitchCase="BookType.Audio" class="book-reread__progress_audio">
       <div>
         <ui-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</ui-label>
         <app-book-time-input formControlName="doneUnits"></app-book-time-input>
@@ -52,7 +52,7 @@
         <ui-label>Всего</ui-label>
         <app-book-time-input formControlName="totalUnits"></app-book-time-input>
       </div>
-    </div>
+    </ui-form-field-set>
     <ui-form-field-set orientation="horizontal" *ngSwitchDefault class="book-reread__progress_audio">
       <ui-form-field>
         <ui-label>Страниц</ui-label>
@@ -66,7 +66,7 @@
     </ui-form-field-set>
 
     <ui-error *ngIf="form?.errors?.invalidUnits"> Неверно указан прогресс</ui-error>
-  </ui-form-field>
+  </ui-form-field-set>
 
   <ui-form-field-set>
     <ui-form-field [hidden]="status != BookStatus.Done && status != BookStatus.InProgress">
