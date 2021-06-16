@@ -16,5 +16,7 @@
 </form>
 
 <div *ngIf="tags.length > 0" class="tags-input__value tags">
-  <app-tag-value (crossClick)="removeTag(tag)" *ngFor="let tag of tags" [name]="tag | capitalize"></app-tag-value>
+  <ui-chip (crossClick)="removeTag(tag)" showCross="true" *ngFor="let tag of tags">
+    {{ tag | capitalize }}
+  </ui-chip>
 </div>

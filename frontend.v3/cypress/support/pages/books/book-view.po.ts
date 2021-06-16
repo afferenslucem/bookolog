@@ -41,7 +41,7 @@ export class BookViewPo extends PageObject {
 
   public tagsIs(tags: string[]): void {
     tags.forEach(item => {
-      cy.get('app-book-view .book__tags .property__value app-tag-value .tag__value').contains(item);
+      cy.get('app-book-view .book__tags .property__value ui-chip .ui-text-wrapper').contains(item);
     });
   }
 

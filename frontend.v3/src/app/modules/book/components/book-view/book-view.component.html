@@ -58,7 +58,9 @@
 
 <div *ngIf="book.tags.length > 0" class="book__tags property">
   <div class="property__value tags">
-    <app-tag-value *ngFor="let tag of book.tags" [name]="tag | capitalize" [routerLink]="['/tag', tag]" showCross="false"></app-tag-value>
+    <ui-chip *ngFor="let tag of book.tags" [routerLink]="['/tag', tag]" showCross="false">
+      {{ tag | capitalize }}
+    </ui-chip>
   </div>
   <label>Теги</label>
 </div>

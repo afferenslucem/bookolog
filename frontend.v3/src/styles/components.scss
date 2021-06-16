@@ -64,13 +64,7 @@ app-done-book {
   align-items: center;
   justify-content: flex-start;
 
-  app-tag-value {
-    flex: 0 0 auto;
-
-    &:not(:last-child) {
-      margin-right: $ind-1;
-    }
-
+  ui-chip {
     margin-bottom: $ind-1;
   }
 }

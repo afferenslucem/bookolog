@@ -51,7 +51,7 @@ export class BookViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
     dialogRef.close$
       .pipe(
-        filter((item?: string) => item && item === 'delete'),
+        filter((item?: string) => item === 'delete'),
         takeUntil(this.destroy$),
       )
       .subscribe(() => void this.onDelete(book));
