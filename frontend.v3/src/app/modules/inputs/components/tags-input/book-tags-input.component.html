@@ -1,7 +1,21 @@
-<form (ngSubmit)="append()" [formGroup]="form" class="tags-input__form">
+<form [formGroup]="form" class="tags-input__form">
   <ui-form-field>
     <ui-label>{{ header }}</ui-label>
-    <input [uiList]="tagId" appTrimOnBlur class="tag" formControlName="input" uiInput [placeholder]="placeholder" />
+    <ui-chip-list>
+      <ui-chip (crossClick)="removeTag(tag)" showCross="true" *ngFor="let tag of tags">
+        {{ tag | capitalize }}
+      </ui-chip>
+
+      <input
+        [uiList]="tagId"
+        appTrimOnBlur
+        class="tag"
+        formControlName="input"
+        [placeholder]="placeholder"
+        (uiChipAddOnBlur)="append()"
+        (uiChipInputFinished)="append()"
+      />
+    </ui-chip-list>
   </ui-form-field>
 
   <datalist id="{{ tagId }}">
@@ -9,14 +23,4 @@
       {{ tag | capitalize }}
     </option>
   </datalist>
-
-  <button class="submit" type="submit" uiIconButton>
-    <span class="ui-plus-square"></span>
-  </button>
 </form>
-
-<div *ngIf="tags.length > 0" class="tags-input__value tags">
-  <ui-chip (crossClick)="removeTag(tag)" showCross="true" *ngFor="let tag of tags">
-    {{ tag | capitalize }}
-  </ui-chip>
-</div>

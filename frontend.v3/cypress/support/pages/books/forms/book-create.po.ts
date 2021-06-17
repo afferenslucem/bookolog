@@ -12,7 +12,7 @@ export abstract class BookCreatePo extends PageObject {
 
   public typeAuthor(author: string): void {
     cy.get('app-book-edit-view form.book app-book-tags-input.book__authors .tags-input__form input.tag').type(author);
-    cy.get('app-book-edit-view form.book app-book-tags-input.book__authors .tags-input__form button.submit').click();
+    cy.get('app-book-edit-view form.book app-book-tags-input.book__authors .tags-input__form input.tag').trigger('blur');
   }
 
   public typeYear(year: number): void {
@@ -25,7 +25,7 @@ export abstract class BookCreatePo extends PageObject {
 
   public typeTag(author: string): void {
     cy.get('app-book-edit-view form.book app-book-tags-input.book__tags .tags-input__form input.tag').type(author);
-    cy.get('app-book-edit-view form.book app-book-tags-input.book__tags .tags-input__form button.submit').click();
+    cy.get('app-book-edit-view form.book app-book-tags-input.book__tags .tags-input__form input.tag').trigger('blur');
   }
 
   public selectSeries(series: string): void {
