@@ -1,26 +1,6 @@
 @import "~src/styles/variables";
 @import "~src/styles/components";
 
-form {
-  display: flex;
-  align-items: flex-end;
-
-  ui-form-field {
-    padding-right: $ind-3;
-
-    flex: 1 0 auto;
-  }
-
-  [uiIconButton] {
-    height: 35px;
-    width: 35px;
-  }
-}
-
 :host {
   display: block;
-}
-
-.tags-input__value {
-  margin-top: $ind-3;
 }
