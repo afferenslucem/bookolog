@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.8.22",
+  "version": "0.8.23",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host=0.0.0.0",
@@ -31,7 +31,7 @@
     "bootstrap": "^4.5.0",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
-    "declarray": "^0.2.5",
+    "declarray": "^0.3.0",
     "essents": "^1.4.7",
     "moment": "^2.29.1",
     "ngx-photo-editor": "^0.3.3",
