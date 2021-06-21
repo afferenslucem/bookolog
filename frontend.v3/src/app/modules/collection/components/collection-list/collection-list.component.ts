@@ -10,6 +10,7 @@ import { CollectionInfo } from '../../models/collection-info';
 import { SearchableList } from '../../../../main/utils/searchable-list';
 import { SearchService } from '../../../search/services/search.service';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
+import { EntityComparator } from '../../../../main/utils/entity.comparer';
 
 interface BookCollection {
   collection: Collection;
@@ -69,7 +70,10 @@ export class CollectionListComponent extends SearchableList implements OnInit {
     counted: ISequence<BookCollection>,
   ): ISequence<BookCollection> {
     return _(collections)
-      .except(counted.select(item => item.collection))
+      .except(
+        counted.select(item => item.collection),
+        new EntityComparator(),
+      )
       .select(item => ({
         collection: item,
         booksForCollection: _.empty() as ISequence<Book>,
