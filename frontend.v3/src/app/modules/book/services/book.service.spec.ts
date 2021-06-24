@@ -227,8 +227,13 @@ describe('BookService', () => {
       const softDeleteSpy = spyOn(bookService, 'softDelete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.rejectWith();
 
-      await bookService.delete(book);
+      let error = null;
 
+      try {
+        await bookService.delete(book);
+      } catch (e) {
+        error = e;
+      }
       expect(storageDeleteSpy).toHaveBeenCalledTimes(0);
 
       expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
