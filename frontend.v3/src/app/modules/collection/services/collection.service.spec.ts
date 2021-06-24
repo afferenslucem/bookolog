@@ -7,6 +7,7 @@ import { CollectionStorageService } from './collection.storage.service';
 import { CollectionOriginService } from './collection.origin.service';
 import { Collection } from '../models/collection';
 import { UUIDGeneratorService } from '../../../main/services/u-u-i-d-generator.service';
+import { BrokenConnectionError } from '../../../main/models/errors/broken-connection-error';
 
 describe('CollectionService', () => {
   let collectionService: CollectionService;
@@ -34,7 +35,10 @@ describe('CollectionService', () => {
 
       const updateSpy = spyOn(storage, 'update').and.resolveTo();
       const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(origin, 'sync').and.resolveTo();
+      const syncSpy = spyOn(origin, 'sync').and.resolveTo({
+        delete: [],
+        update: []
+      });
 
       const collection: Collection = {
         guid: 'guid',
@@ -59,7 +63,10 @@ describe('CollectionService', () => {
 
       const updateSpy = spyOn(storage, 'update').and.resolveTo();
       const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(origin, 'sync').and.resolveTo();
+      const syncSpy = spyOn(origin, 'sync').and.resolveTo({
+        delete: [],
+        update: []
+      });
 
       const collection: Collection = {
         name: 'name',
@@ -160,9 +167,13 @@ describe('CollectionService', () => {
 
       const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
       const softDeleteSpy = spyOn(collectionService, 'softDelete').and.resolveTo();
-      const originDeleteSpy = spyOn(origin, 'delete').and.rejectWith();
+      const originDeleteSpy = spyOn(origin, 'delete').and.rejectWith(new BrokenConnectionError());
 
-      await collectionService.delete(collection);
+      try {
+        await collectionService.delete(collection);
+      } catch (e) {
+        //
+      }
 
       expect(storageDeleteSpy).toHaveBeenCalledTimes(0);
 

@@ -6,24 +6,33 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generator.service';
 import { CollectionService } from '../../services/collection.service';
 import { Action } from '../../../../main/resolvers/action.resolver';
+import { Route, Router } from '@angular/router';
 
 describe('CollectionEditViewComponent', () => {
   let component: CollectionEditViewComponent;
   let fixture: ComponentFixture<CollectionEditViewComponent>;
   let service: CollectionService;
   let element: HTMLElement;
+  let router: Router;
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [CollectionEditViewComponent],
       imports: [HttpClientTestingModule, RouterTestingModule],
-      providers: [{ provide: UUIDGeneratorService, useValue: {} }],
+      providers: [{
+        provide: UUIDGeneratorService, useValue: {
+          generate(): string {
+            return null;
+          }
+        }
+      }],
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CollectionEditViewComponent);
     service = TestBed.inject(CollectionService);
+    router = TestBed.inject(Router);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     fixture.detectChanges();
@@ -59,7 +68,8 @@ describe('CollectionEditViewComponent', () => {
     });
 
     it('should trigger service', async () => {
-      const spy = spyOn(service, 'saveOrUpdate');
+      const spy = spyOn(service, 'saveOrUpdate').and.resolveTo();
+      const routerSpy = spyOn(router, 'navigate').and.resolveTo();
 
       const collection = {
         modifyDate: 'md',
@@ -73,6 +83,9 @@ describe('CollectionEditViewComponent', () => {
 
   describe('data flag', () => {
     it('should declare createDate', async () => {
+      const spy = spyOn(service, 'saveOrUpdate').and.resolveTo();
+      const routerSpy = spyOn(router, 'navigate').and.resolveTo();
+
       const collection = {} as any;
 
       await component.saveOrUpdate(collection);
@@ -81,6 +94,9 @@ describe('CollectionEditViewComponent', () => {
     });
 
     it('should change modifyDate', async () => {
+      const spy = spyOn(service, 'saveOrUpdate').and.resolveTo();
+      const routerSpy = spyOn(router, 'navigate').and.resolveTo();
+      
       const collection = {
         modifyDate: 'md',
       } as any;

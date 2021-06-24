@@ -234,6 +234,7 @@ describe('BookService', () => {
       } catch (e) {
         error = e;
       }
+
       expect(storageDeleteSpy).toHaveBeenCalledTimes(0);
 
       expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
