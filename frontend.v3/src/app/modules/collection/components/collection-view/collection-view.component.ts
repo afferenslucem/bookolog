@@ -12,6 +12,8 @@ import { DestroyService, UiModalService } from 'bookolog-ui-kit';
 import { BookService } from 'src/app/modules/book/services/book.service';
 import { BookSearchableList } from '../../../book/utils/book-searchable-list';
 import { SearchService } from '../../../search/services/search.service';
+import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
+import { NotificationService } from '../../../notification/services/notification.service';
 
 @Component({
   selector: 'app-collection',
@@ -32,6 +34,7 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
     searchService: SearchService,
     private router: Router,
     public dialog: UiModalService,
+    private notificationService: NotificationService,
   ) {
     super(activatedRoute, searchService);
     const data$ = activatedRoute.data;
@@ -64,8 +67,16 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
   }
 
   public async deleteCollection(collection: Collection): Promise<void> {
-    await this.bookService.deleteBooksFromCollection(collection.guid);
-    await this.collectionService.delete(collection);
+    try {
+      await this.bookService.deleteBooksFromCollection(collection.guid);
+      await this.collectionService.delete(collection);
+    } catch (e) {
+      if (e instanceof BrokenConnectionError) {
+        this.notificationService.createWarningNotification('Коллекция удалена локально');
+      } else {
+        this.notificationService.createWarningNotification('Ошибка удаления коллекции');
+      }
+    }
   }
 
   public async redirect(): Promise<void> {

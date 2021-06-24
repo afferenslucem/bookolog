@@ -27,7 +27,7 @@ export class RetryInterceptor implements HttpInterceptor {
           this.logger.warn('retry');
           const newReq = req.clone();
           return this.trySendRequest(newReq, next, count - 1);
-        } else if (err.status === 0) {
+        } else if (+err?.status < 400 || +err.status === 0) {
           return throwError(new BrokenConnectionError());
         } else {
           return throwError(err);

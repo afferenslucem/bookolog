@@ -12,28 +12,10 @@ import { CollectionStorageService } from './collection.storage.service';
 export class CollectionService extends EntityService<CollectionData, Collection> {
   private typedStorage: CollectionStorageService;
 
-  constructor(storage: CollectionStorageService, origin: CollectionOriginService, private notificationService: NotificationService) {
+  constructor(storage: CollectionStorageService, origin: CollectionOriginService) {
     super(storage, origin);
 
     this.typedStorage = storage;
-  }
-
-  public async delete(collection: Collection): Promise<void> {
-    try {
-      await super.delete(collection);
-    } catch (e) {
-      this.notificationService.createWarningNotification('Серия удалена локально');
-    }
-  }
-
-  public async saveOrUpdate(collection: Collection): Promise<Collection> {
-    try {
-      collection = await super.saveOrUpdate(collection);
-    } catch (e) {
-      this.notificationService.createWarningNotification('Серия сохранена локально');
-    }
-
-    return collection;
   }
 
   public async updateModifyTime(guid: string): Promise<void> {

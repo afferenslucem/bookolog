@@ -1,5 +1,5 @@
 export class BrokenConnectionError extends Error {
   public constructor() {
-    super();
+    super('Could not send request');
   }
 }

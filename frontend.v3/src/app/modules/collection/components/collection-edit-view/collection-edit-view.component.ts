@@ -8,6 +8,8 @@ import { NotificationService } from '../../../notification/services/notification
 import { Collection } from '../../models/collection';
 import { CollectionService } from '../../services/collection.service';
 import { CollectionDataForm } from '../../utils/collection-data-form';
+import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
+import { EntityValidationError } from '../../../../main/models/errors/entity-validation-error';
 
 @Component({
   selector: 'app-collection-edit-view',
@@ -41,31 +43,31 @@ export class CollectionEditViewComponent implements OnInit {
   public ngOnInit(): void {}
 
   public async submit(): Promise<void> {
-    const data = Object.assign(this.collection, this.form.value);
-
-    await this.saveOrUpdate(data);
+    try {
+      const data = Object.assign(this.collection, this.form.value);
+      await this.saveOrUpdate(data);
+    } catch (e) {
+      if (e instanceof BrokenConnectionError) {
+        this.notificationService.createWarningNotification('Коллекция сохранена локально');
+      } else if (e instanceof EntityValidationError) {
+        this.notificationService.createWarningNotification('Некорректная модель коллекции');
+      }
+    }
   }
 
   public async saveOrUpdate(data: Collection): Promise<void> {
-    try {
-      data.modifyDate = DateUtils.nowUTC;
+    data.modifyDate = DateUtils.nowUTC;
 
-      if (!data.createDate) {
-        data.createDate = DateUtils.nowUTC;
-      }
+    if (!data.createDate) {
+      data.createDate = DateUtils.nowUTC;
+    }
 
-      await this.collectionService.saveOrUpdate(data);
+    await this.collectionService.saveOrUpdate(data);
 
-      if (this.action === Action.Create) {
-        await this.redirect();
-      } else {
-        await this.redirect(data.guid);
-      }
-    } catch (e) {
-      this.logger.error('Book save error', e);
-      this.notificationService.createErrorNotification('Не удалось сохранить серию', {
-        autoclose: false,
-      });
+    if (this.action === Action.Create) {
+      await this.redirect();
+    } else {
+      await this.redirect(data.guid);
     }
   }
 
