@@ -1,27 +1,24 @@
 import { Injectable } from '@angular/core';
 import _ from 'declarray';
 import { EntityService } from 'src/app/main/services/entity.service';
-import { getConsoleLogger } from '../../../main/app.logging';
-import { NotificationService } from '../../notification/services/notification.service';
 import { Book } from '../models/book';
 import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import { BookOriginService } from './book.origin.service';
 import { BookStorageService } from './book.storage.service';
 import { flatten } from '@angular/compiler';
-import { BookValidationChain } from '../utils/validation/book-validation-chain';
 import { EntityValidationError } from '../../../main/models/errors/entity-validation-error';
+import { BookValidationChain } from '../utils/validation/book-validation-chain';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookService extends EntityService<BookData, Book> {
-  private logger = getConsoleLogger('BookService');
   private validateEntityChain = new BookValidationChain();
 
   private typedStorage: BookStorageService;
 
-  constructor(storage: BookStorageService, origin: BookOriginService, private notificationService: NotificationService) {
+  constructor(storage: BookStorageService, origin: BookOriginService) {
     super(storage, origin);
 
     this.typedStorage = storage;
@@ -109,18 +106,14 @@ export class BookService extends EntityService<BookData, Book> {
   }
 
   public async delete(book: Book): Promise<void> {
-    try {
-      const rereadings = await this.typedStorage.getAllRereadings(book.guid);
+    const rereadings = await this.typedStorage.getAllRereadings(book.guid);
 
-      if (rereadings?.length) {
-        const updated = this.changeRereadingHierarchy(rereadings);
-        await this.storage.updateMany(updated);
-      }
-
-      await super.delete(book);
-    } catch (e) {
-      this.notificationService.createWarningNotification('Книга удалена локально');
+    if (rereadings?.length) {
+      const updated = this.changeRereadingHierarchy(rereadings);
+      await this.storage.updateMany(updated);
     }
+
+    await super.delete(book);
   }
 
   public changeRereadingHierarchy(bookDates: BookData[]): BookData[] {

@@ -9,6 +9,8 @@ import _ from 'declarray';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { DestroyService, UiModalService } from 'bookolog-ui-kit';
 import { filter, takeUntil } from 'rxjs/operators';
+import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
+import { NotificationService } from '../../../notification/services/notification.service';
 
 @Component({
   selector: 'app-book-view',
@@ -33,6 +35,7 @@ export class BookViewComponent implements OnInit, OnDestroy, AfterViewInit {
     private bookService: BookService,
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
+    private notificationService: NotificationService,
   ) {
     activatedRoute.data.subscribe(data => this.onDataInit(data));
   }
@@ -63,7 +66,15 @@ export class BookViewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public async deleteBook(book: Book): Promise<void> {
-    await this.bookService.delete(book);
+    try {
+      await this.bookService.delete(book);
+    } catch (e) {
+      if (e instanceof BrokenConnectionError) {
+        this.notificationService.createWarningNotification('Книга удалена локально');
+      } else {
+        this.notificationService.createWarningNotification('Ошибка удаления книги');
+      }
+    }
   }
 
   public async markAsProgress(book: Book): Promise<void> {

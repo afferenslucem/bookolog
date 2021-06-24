@@ -1,7 +1,6 @@
 import { SingleEntityValidator } from '../../../../main/utils/model-validation/single-entity-validator';
 import { Book } from '../../models/book';
 import { EntityValidationResult } from '../../../../main/utils/model-validation/entity-validation-result';
-import { BookDate } from '../../models/book-date';
 import { BookStatus } from '../../models/book-status';
 
 export class BookDoneLowerOrEqualTotalValidator extends SingleEntityValidator<Book> {
