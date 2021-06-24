@@ -18,6 +18,8 @@ import { BookDataForm } from '../../utils/book-data-form';
 import { AbstractBookDataForm } from '../../utils/abstract-book-data-form';
 import { BookSortUtils } from '../../../../main/utils/book-sort-utils';
 import { ProgressAlgorithmService } from '../../services/progress-algorithm.service';
+import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
+import { EntityValidationError } from '../../../../main/models/errors/entity-validation-error';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -103,6 +105,12 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
         await this.router.navigate(['/book', this.book.guid]);
       }
     } catch (e) {
+      if (e instanceof BrokenConnectionError) {
+        this.notificationService.createWarningNotification('Книга сохранена локально');
+        await this.router.navigate(['/book', this.book.guid]);
+        return;
+      }
+
       this.logSaveError(e);
     }
   }

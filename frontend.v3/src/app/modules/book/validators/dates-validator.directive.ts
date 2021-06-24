@@ -2,6 +2,7 @@ import { Directive } from '@angular/core';
 import { FormGroup, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
 import { BookStatus } from '../models/book-status';
 import { BookDate } from '../models/book-date';
+import { BookStartDateGreaterOrEqualThenFinishDateValidator } from '../utils/validation/book-start-date-greater-or-equal-then-finish-date-validator';
 
 @Directive({
   selector: '[appDatesValidator]',
@@ -19,10 +20,9 @@ export class DatesValidatorDirective implements Validator {
     const started = formGroup.get('started').value as BookDate;
     const finished = formGroup.get('finished').value as BookDate;
 
-    const startDate = new Date(started.year, started.month, started.day);
-    const endDate = new Date(finished.year, finished.month, finished.day);
+    const error = BookStartDateGreaterOrEqualThenFinishDateValidator.checkDates(started, finished);
 
-    return startDate > endDate
+    return error != null
       ? {
           invalidDates: true,
         }

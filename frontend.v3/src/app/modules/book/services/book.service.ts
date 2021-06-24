@@ -9,12 +9,15 @@ import { BookStatus } from '../models/book-status';
 import { BookOriginService } from './book.origin.service';
 import { BookStorageService } from './book.storage.service';
 import { flatten } from '@angular/compiler';
+import { BookValidationChain } from '../utils/validation/book-validation-chain';
+import { EntityValidationError } from '../../../main/models/errors/entity-validation-error';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookService extends EntityService<BookData, Book> {
   private logger = getConsoleLogger('BookService');
+  private validateEntityChain = new BookValidationChain();
 
   private typedStorage: BookStorageService;
 
@@ -30,14 +33,18 @@ export class BookService extends EntityService<BookData, Book> {
   }
 
   public async saveOrUpdate(book: Book): Promise<Book> {
-    try {
-      book = await super.saveOrUpdate(book);
-    } catch (e) {
-      this.logger.warn('error sync', e);
-      this.notificationService.createWarningNotification('Книга сохранена локально');
-    }
+    this.validate(book);
 
+    book = await super.saveOrUpdate(book);
     return book;
+  }
+
+  private validate(book: Book): void {
+    const errors = this.validateEntityChain.validate(book);
+
+    if (errors) {
+      throw new EntityValidationError(errors);
+    }
   }
 
   public async saveRereading(book: Book): Promise<Book> {

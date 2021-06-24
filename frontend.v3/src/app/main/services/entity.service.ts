@@ -6,6 +6,7 @@ import { SyncData } from '../models/sync-data';
 import { EntityStorage } from './entity.storage';
 import { ISyncableOrigin } from './i-syncable-origin';
 import { DateUtils } from '../utils/date-utils';
+import { BookValidationChain } from '../../modules/book/utils/validation/book-validation-chain';
 
 export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity> {
   public constructor(protected storage: EntityStorage<TDTO>, protected origin: ISyncableOrigin<TDTO>) {}
@@ -51,12 +52,12 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     await this.storage.saveMany(entities);
   }
 
-  public async saveOrUpdate(book: TEntity): Promise<TEntity> {
-    book.shouldSync = 1;
-    const dto = this.convertToDTO(book);
+  public async saveOrUpdate(entity: TEntity): Promise<TEntity> {
+    entity.shouldSync = 1;
+    const dto = this.convertToDTO(entity);
 
     dto.modifyDate = this.getNowUTC();
-    if (book.guid) {
+    if (entity.guid) {
       await this.storage.update(dto);
     } else {
       dto.createDate = this.getNowUTC();

@@ -10,6 +10,8 @@ import { BookDataForm } from '../../utils/book-data-form';
 import { AbstractBookDataForm } from '../../utils/abstract-book-data-form';
 import { CollectionService } from '../../../collection/services/collection.service';
 import { ProgressAlgorithmService } from '../../services/progress-algorithm.service';
+import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
+import { EntityValidationError } from '../../../../main/models/errors/entity-validation-error';
 
 @Component({
   selector: 'app-book-reread-form',
@@ -58,6 +60,11 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
 
       await this.redirect();
     } catch (e) {
+      if (e instanceof BrokenConnectionError) {
+        this.notificationService.createWarningNotification('Книга сохранена локально');
+      } else if (e instanceof EntityValidationError) {
+        this.notificationService.createWarningNotification('Некорректная модель книги');
+      }
       this.logSaveError(e);
     }
   }

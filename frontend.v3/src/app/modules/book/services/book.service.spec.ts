@@ -36,7 +36,10 @@ describe('BookService', () => {
 
       const updateSpy = spyOn(storage, 'update').and.resolveTo();
       const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(origin, 'sync').and.resolveTo();
+      const syncSpy = spyOn(origin, 'sync').and.resolveTo({
+        delete: [],
+        update: [],
+      });
 
       const book: Book = {
         guid: 'guid',
@@ -51,7 +54,6 @@ describe('BookService', () => {
 
       expect(updateSpy).toHaveBeenCalledTimes(1);
       expect(saveSpy).toHaveBeenCalledTimes(0);
-
       expect(syncSpy).toHaveBeenCalledTimes(1);
     });
 
@@ -61,7 +63,10 @@ describe('BookService', () => {
 
       const updateSpy = spyOn(storage, 'update').and.resolveTo();
       const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(origin, 'sync').and.resolveTo();
+      const syncSpy = spyOn(origin, 'sync').and.resolveTo({
+        delete: [],
+        update: [],
+      });
 
       const book: Book = {
         name: 'name',

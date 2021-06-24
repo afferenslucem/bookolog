@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { getConsoleLogger } from '../app.logging';
+import { BrokenConnectionError } from '../models/errors/broken-connection-error';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,11 @@ export class RetryInterceptor implements HttpInterceptor {
           const newReq = req.clone();
           return this.trySendRequest(newReq, next, count - 1);
         } else {
-          return throwError(err);
+          if (err.status === 0) {
+            return throwError(new BrokenConnectionError());
+          } else {
+            return throwError(err);
+          }
         }
       }),
     );

@@ -1,0 +1,11 @@
+import { BookDateFormatValidator } from './book-date-format-validator';
+import { Book } from '../../models/book';
+import { EntityValidationResult } from 'src/app/main/utils/model-validation/entity-validation-result';
+
+export class BookFinishedDateFormatValidator extends BookDateFormatValidator {
+  public validate(entity: Book): EntityValidationResult | null {
+    if (entity.finished == null) return null;
+
+    return BookDateFormatValidator.validateDate(entity.finished);
+  }
+}
