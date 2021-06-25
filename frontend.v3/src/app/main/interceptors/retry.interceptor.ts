@@ -23,7 +23,7 @@ export class RetryInterceptor implements HttpInterceptor {
       const newReq = req.clone();
 
       return of(null).pipe(
-        delay(5000),
+        delay(1500),
         switchMap(() => this.trySendRequest(newReq, next, count - 1)),
       );
     } else if (RetryInterceptor.isOffline(err)) {

@@ -69,7 +69,7 @@ export abstract class AbstractBookDataForm {
     return data;
   }
 
-  public async redirect(): Promise<void> {
+  public async redirectToList(): Promise<void> {
     switch (this.bookForm.status) {
       case BookStatus.ToRead: {
         await this.router.navigate(['to-read']);

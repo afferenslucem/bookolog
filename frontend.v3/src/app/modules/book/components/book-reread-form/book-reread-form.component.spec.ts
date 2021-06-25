@@ -141,21 +141,21 @@ describe('BookRereadFormComponent', () => {
 
     it('to progress books', () => {
       component.bookForm.status = BookStatus.InProgress;
-      component.redirect();
+      component.redirectToList();
 
       expect(navigateSpy).toHaveBeenCalledOnceWith(['in-progress']);
     });
 
     it('to done books', () => {
       component.bookForm.status = BookStatus.Done;
-      component.redirect();
+      component.redirectToList();
 
       expect(navigateSpy).toHaveBeenCalledOnceWith(['done']);
     });
 
     it('to to read books', () => {
       component.bookForm.status = BookStatus.ToRead;
-      component.redirect();
+      component.redirectToList();
 
       expect(navigateSpy).toHaveBeenCalledOnceWith(['to-read']);
     });

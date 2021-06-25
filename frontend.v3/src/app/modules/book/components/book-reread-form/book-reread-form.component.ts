@@ -58,7 +58,7 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
       const result = await this.processBook(data);
       await this.touchCollectionIfExists(result);
 
-      await this.redirect();
+      await this.redirectToList();
     } catch (e) {
       if (e instanceof BrokenConnectionError) {
         this.notificationService.createWarningNotification('Книга сохранена локально');

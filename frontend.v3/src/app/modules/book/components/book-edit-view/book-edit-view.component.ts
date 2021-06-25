@@ -98,19 +98,22 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
       await this.bookService.saveOrUpdate(data);
       await this.touchCollectionIfExists(data);
 
-      if (this.action === Action.Create) {
-        await this.redirect();
-      } else {
-        await this.router.navigate(['/book', this.book.guid]);
-      }
+      await this.redirect();
     } catch (e) {
       if (e instanceof BrokenConnectionError) {
         this.notificationService.createWarningNotification('Книга сохранена локально');
-        await this.router.navigate(['/book', this.book.guid]);
-        return;
+        await this.redirect();
+      } else {
+        this.logSaveError(e);
       }
+    }
+  }
 
-      this.logSaveError(e);
+  private async redirect(): Promise<void> {
+    if (this.action === Action.Create) {
+      await this.redirectToList();
+    } else {
+      await this.router.navigate(['/book', this.book.guid]);
     }
   }
 
