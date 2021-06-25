@@ -1,7 +1,8 @@
 <form (click)="emitTouch($event)" [formGroup]="form">
   <ui-form-field-set orientation="horizontal">
     <ui-form-field appearance="fill">
-      <input autocomplete="off" class="hours" formControlName="hours" max="100" min="0" placeholder="Часы" step="1" type="number" uiInput />
+      <input autocomplete="off" class="hours" formControlName="hours" max="200" min="0" placeholder="Часы" step="1" type="number" uiInput />
+      <ui-error *ngIf="form.get('hours').errors"></ui-error>
     </ui-form-field>
 
     <ui-form-field appearance="fill">
@@ -16,6 +17,7 @@
         type="number"
         uiInput
       />
+      <ui-error *ngIf="form.get('minutes').errors"></ui-error>
     </ui-form-field>
   </ui-form-field-set>
 </form>

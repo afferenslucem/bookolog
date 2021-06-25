@@ -21,7 +21,7 @@ export class BookTimeInputComponent extends ValueAccessorBase<number> {
     super();
 
     this.form = new FormBuilder().group({
-      hours: new FormControl(null, [Validators.min(0), Validators.max(100)]),
+      hours: new FormControl(null, [Validators.min(0), Validators.max(200)]),
       minutes: new FormControl(null, [Validators.min(0), Validators.max(59)]),
     });
 

@@ -26,7 +26,7 @@
 
   <ui-form-field>
     <ui-label>Год выпуска</ui-label>
-    <input class="book__year" formControlName="year" type="number" uiInput placeholder="Укажите год издания книги" />
+    <input class="book__year" formControlName="year" type="number" uiInput placeholder="Укажите год издания книги"/>
   </ui-form-field>
 
   <ui-form-field>
@@ -61,7 +61,7 @@
 
     <ui-form-field class="order">
       <ui-label>Порядок</ui-label>
-      <input [appTrimFraction]="1" formControlName="collectionOrder" max="256" min="1" step="1" type="number" uiInput />
+      <input [appTrimFraction]="1" formControlName="collectionOrder" max="256" min="1" step="1" type="number" uiInput/>
     </ui-form-field>
   </ui-form-field-set>
 
@@ -117,7 +117,10 @@
       <ui-form-field-set orientation="horizontal" *ngSwitchDefault class="book-edit__progress_audio">
         <ui-form-field>
           <ui-label>Страниц</ui-label>
-          <input autocomplete="off" class="book__doneUnits" formControlName="doneUnits" max="6000" min="0" step="1" type="number" uiInput />
+          <input autocomplete="off" class="book__doneUnits" formControlName="doneUnits" appMax="12000" appMin="0"
+                 step="1" type="number" uiInput/>
+          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.valueTooLow">Максимум 12000</ui-error>
+          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.valueTooHigh">Минимум 0</ui-error>
         </ui-form-field>
 
         <ui-form-field>
@@ -126,12 +129,14 @@
             autocomplete="off"
             class="book__totalUnits"
             formControlName="totalUnits"
-            max="6000"
+            max="12000"
             min="0"
             step="1"
             type="number"
             uiInput
           />
+          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.valueTooLow">Максимум 12000</ui-error>
+          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.valueTooHigh">Минимум 0</ui-error>
         </ui-form-field>
       </ui-form-field-set>
     </ui-form-field>
@@ -158,5 +163,6 @@
     <textarea appTrimOnBlur autocomplete="off" class="book__notes" formControlName="note" rows="4" uiInput></textarea>
   </ui-form-field>
 
-  <button [disabled]="form.invalid" class="w-100 book__create-button" color="success" type="submit" uiButton>Сохранить</button>
+  <button [disabled]="form.invalid" class="w-100 book__create-button" color="success" type="submit" uiButton>Сохранить
+  </button>
 </form>
