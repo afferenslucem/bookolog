@@ -37,7 +37,7 @@ describe('CollectionService', () => {
       const saveSpy = spyOn(storage, 'save').and.resolveTo();
       const syncSpy = spyOn(origin, 'sync').and.resolveTo({
         delete: [],
-        update: []
+        update: [],
       });
 
       const collection: Collection = {
@@ -65,7 +65,7 @@ describe('CollectionService', () => {
       const saveSpy = spyOn(storage, 'save').and.resolveTo();
       const syncSpy = spyOn(origin, 'sync').and.resolveTo({
         delete: [],
-        update: []
+        update: [],
       });
 
       const collection: Collection = {

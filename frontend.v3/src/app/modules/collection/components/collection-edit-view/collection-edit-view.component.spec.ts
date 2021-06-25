@@ -19,13 +19,16 @@ describe('CollectionEditViewComponent', () => {
     await TestCore.configureTestingModule({
       declarations: [CollectionEditViewComponent],
       imports: [HttpClientTestingModule, RouterTestingModule],
-      providers: [{
-        provide: UUIDGeneratorService, useValue: {
-          generate(): string {
-            return null;
-          }
-        }
-      }],
+      providers: [
+        {
+          provide: UUIDGeneratorService,
+          useValue: {
+            generate(): string {
+              return null;
+            },
+          },
+        },
+      ],
     }).compileComponents();
   });
 
@@ -96,7 +99,7 @@ describe('CollectionEditViewComponent', () => {
     it('should change modifyDate', async () => {
       const spy = spyOn(service, 'saveOrUpdate').and.resolveTo();
       const routerSpy = spyOn(router, 'navigate').and.resolveTo();
-      
+
       const collection = {
         modifyDate: 'md',
       } as any;

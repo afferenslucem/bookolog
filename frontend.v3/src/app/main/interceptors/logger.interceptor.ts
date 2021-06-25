@@ -19,13 +19,21 @@ export class LoggerInterceptor implements HttpInterceptor {
 
     this.logger.debug(`Request ${id}`, req.method, req.url, `withCredentials: ${req.withCredentials}`);
     return next.handle(req).pipe(
-      tap(data => {
-        if (data instanceof HttpResponse) {
-          this.logger.info(`Response ${id}`, data.url, data.status, data.body);
-        } else if (data instanceof HttpErrorResponse) {
-          this.logger.error(`Response ${id}`, data.url, data.status, data.error);
-        }
-      }),
+      tap(
+        data => {
+          if (data instanceof HttpResponse) {
+            this.logger.info(`Response ${id}`, data.url, data.status, data.body);
+          }
+        },
+        error => {
+          if (error instanceof HttpErrorResponse) {
+            this.logger.error(`Response ${id}`);
+            this.logger.error('error.message', error.message);
+            this.logger.error('error.status', error.status);
+            this.logger.error('error.statusText', error.statusText);
+          }
+        },
+      ),
     );
   }
 }
