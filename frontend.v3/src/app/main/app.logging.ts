@@ -26,6 +26,13 @@ const requestFactory = new LoggerFactory([
   {
     name: 'default',
     logger: {
+      logLevel: LogLevel.Disable,
+      appenders: [accumulator],
+    },
+  },
+  {
+    name: 'ErrorLogger',
+    logger: {
       logLevel: LogLevel.Debug,
       appenders: [accumulator],
     },
