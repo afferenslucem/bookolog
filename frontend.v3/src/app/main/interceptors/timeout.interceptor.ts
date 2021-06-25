@@ -8,15 +8,10 @@ import { getConsoleLogger } from '../app.logging';
   providedIn: 'root',
 })
 export class TimeoutInterceptor implements HttpInterceptor {
-  private logger = getConsoleLogger({
-    loggerName: 'TimeoutInterceptor',
-    namespace: 'Interceptor',
-  });
-
   public constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const timeoutValue = Number(req.headers.get('timeout')) || 20 * 1000;
+    const timeoutValue = Number(req.headers.get('timeout')) || 40 * 1000;
 
     return next.handle(req).pipe(timeout(timeoutValue));
   }
