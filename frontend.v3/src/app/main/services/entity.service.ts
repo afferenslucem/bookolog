@@ -8,7 +8,7 @@ import { ISyncableOrigin } from './i-syncable-origin';
 import { DateUtils } from '../utils/date-utils';
 
 export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity> {
-  public constructor(protected storage: EntityStorage<TDTO>, protected origin: ISyncableOrigin<TDTO>) {}
+  protected constructor(protected storage: EntityStorage<TDTO>, protected origin: ISyncableOrigin<TDTO>) {}
 
   public async getAll(): Promise<TEntity[]> {
     const data = await this.storage.getAll();
