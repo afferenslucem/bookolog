@@ -14,6 +14,7 @@ describe('MaxDirective', () => {
 
   it('should create an instance', () => {
     const directive = new MaxDirective(elRef);
+
     expect(directive).toBeTruthy();
   });
 

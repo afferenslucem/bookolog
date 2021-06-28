@@ -8,7 +8,7 @@ import { BookTagsInputComponent } from './components/tags-input/book-tags-input.
 import { BookTimeInputComponent } from './components/time-input/book-time-input.component';
 import { DateMonthValidatorDirective } from './validators/date-month-validator.directive';
 import { DateDayValidatorDirective } from './validators/date-day-validator.directive';
-import { UiButtonModule, UiFormFieldModule, UiChipsModule } from 'bookolog-ui-kit';
+import { UiButtonModule, UiChipsModule, UiFormFieldModule } from 'bookolog-ui-kit';
 import { MaxDirective } from './validators/max.directive';
 import { MinDirective } from './validators/min.directive';
 

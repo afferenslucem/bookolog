@@ -28,11 +28,11 @@ import { ListModuleModule } from '../list-module/list-module.module';
 import {
   UiAccordionModule,
   UiButtonModule,
+  UiChipsModule,
   UiDividerModule,
   UiFormFieldModule,
   UiModalModule,
   UiProgressBarModule,
-  UiChipsModule,
 } from 'bookolog-ui-kit';
 
 @NgModule({

@@ -13,16 +13,36 @@
         type="number"
         uiInput
       />
-       <ui-error *ngIf="form.get('year').errors"></ui-error>
+      <ui-error *ngIf="form.get('year').errors"></ui-error>
     </ui-form-field>
 
     <ui-form-field>
-      <input autocomplete="off" class="month" formControlName="month" appMax="12" appMin="1" placeholder="Месяц" step="1" type="number" uiInput />
+      <input
+        autocomplete="off"
+        class="month"
+        formControlName="month"
+        appMax="12"
+        appMin="1"
+        placeholder="Месяц"
+        step="1"
+        type="number"
+        uiInput
+      />
       <ui-error *ngIf="form.get('month').errors"></ui-error>
     </ui-form-field>
 
     <ui-form-field>
-      <input autocomplete="off" class="day" formControlName="day" appMax="31" appMin="1" placeholder="День" step="1" type="number" uiInput />
+      <input
+        autocomplete="off"
+        class="day"
+        formControlName="day"
+        appMax="31"
+        appMin="1"
+        placeholder="День"
+        step="1"
+        type="number"
+        uiInput
+      />
       <ui-error *ngIf="form.get('day').errors"></ui-error>
     </ui-form-field>
   </ui-form-field-set>

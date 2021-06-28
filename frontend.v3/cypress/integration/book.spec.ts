@@ -49,50 +49,50 @@ context('Book', () => {
 
       it('page should have books', () => {
         po.checkBook({
-          name: 'Преступление и наказание'
+          name: 'Преступление и наказание',
         });
 
         po.checkBook({
-          name: 'Новая жизнь'
+          name: 'Новая жизнь',
         });
 
         po.checkBook({
-          name: 'Норд, норд и немного вест'
+          name: 'Норд, норд и немного вест',
         });
 
         po.checkBook({
-          name: 'Янтарный телескоп'
+          name: 'Янтарный телескоп',
         });
 
         po.checkBook({
-          name: '97 этюдов для программистов'
+          name: '97 этюдов для программистов',
         });
       });
 
       it('page be filtered', () => {
-        po.search('ов')
+        po.search('ов');
 
         po.checkBook({
-          name: 'Норд, норд и немного вест'
+          name: 'Норд, норд и немного вест',
         });
 
         po.checkBook({
-          name: 'Новая жизнь'
+          name: 'Новая жизнь',
         });
 
         po.checkBook({
-          name: '97 этюдов для программистов'
+          name: '97 этюдов для программистов',
         });
 
         po.shouldNotContainsBook({
-          name: 'Янтарный телескоп'
+          name: 'Янтарный телескоп',
         });
 
         po.shouldNotContainsBook({
-          name: 'Чудесный нож'
+          name: 'Чудесный нож',
         });
       });
-    })
+    });
 
     context('Done', () => {
       let po: DoneListPo = null;
@@ -108,55 +108,55 @@ context('Book', () => {
 
       it('page should have books', () => {
         po.checkBook({
-          name: 'Мастер и Маргарита'
+          name: 'Мастер и Маргарита',
         });
 
         po.checkBook({
-          name: 'Записки штурмана АПЛ К-19'
+          name: 'Записки штурмана АПЛ К-19',
         });
 
         po.checkBook({
-          name: 'Гарри Поттер и Проклятое Дитя'
+          name: 'Гарри Поттер и Проклятое Дитя',
         });
 
         po.checkBook({
-          name: 'Последний поход'
+          name: 'Последний поход',
         });
 
         po.checkBook({
-          name: 'Homo sapiens? Как мы все про***ли'
+          name: 'Homo sapiens? Как мы все про***ли',
         });
       });
 
       it('page be filtered', () => {
-        po.search('ов')
+        po.search('ов');
 
         po.checkBook({
-          name: 'Мастер и Маргарита'
+          name: 'Мастер и Маргарита',
         });
 
         po.shouldNotContainsBook({
-          name: 'Записки штурмана АПЛ К-19'
+          name: 'Записки штурмана АПЛ К-19',
         });
 
         po.shouldNotContainsBook({
-          name: 'Гарри Поттер и Проклятое Дитя'
+          name: 'Гарри Поттер и Проклятое Дитя',
         });
 
         po.checkBook({
-          name: 'Последний поход'
+          name: 'Последний поход',
         });
 
         po.shouldNotContainsBook({
-          name: 'Homo sapiens? Как мы все про***ли'
+          name: 'Homo sapiens? Как мы все про***ли',
         });
 
         po.checkBook({
-          name: 'Кокаиновые короли'
+          name: 'Кокаиновые короли',
         });
       });
-    })
-  })
+    });
+  });
 
   context('View', () => {
     beforeEach(() => {

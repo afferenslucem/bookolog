@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generator.service';
 import { CollectionService } from '../../services/collection.service';
 import { Action } from '../../../../main/resolvers/action.resolver';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 describe('CollectionEditViewComponent', () => {
   let component: CollectionEditViewComponent;

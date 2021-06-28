@@ -1,5 +1,5 @@
 import { Component, forwardRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
 
 @Component({

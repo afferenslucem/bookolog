@@ -1,5 +1,5 @@
 import { Component, forwardRef, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BookDate } from '../../../book/models/book-date';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
 import { DateUtils } from '../../../../main/utils/date-utils';

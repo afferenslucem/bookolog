@@ -1,6 +1,5 @@
 import { BookStatusRequiredValidator } from './book-status-required-validator';
 import { Book } from '../../models/book';
-import { BookNameRequiredValidator } from './book-name-required-validator';
 import { BookStatus } from '../../models/book-status';
 
 describe('BookStatusRequiredValidator', () => {

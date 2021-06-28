@@ -20,16 +20,7 @@ import { TrimFractionDirective } from './directives/trim-fraction.directive';
     TrimOnBlurDirective,
     TrimFractionDirective,
   ],
-  exports: [
-    JoinPipe,
-    TimifyUnitsPipe,
-    CapitalizePipe,
-    ChooseFormPipe,
-    MaxLengthPipe,
-    TrimOnBlurDirective,
-    TrimFractionDirective,
-  ],
+  exports: [JoinPipe, TimifyUnitsPipe, CapitalizePipe, ChooseFormPipe, MaxLengthPipe, TrimOnBlurDirective, TrimFractionDirective],
   imports: [CommonModule],
 })
-export class FormattingModule {
-}
+export class FormattingModule {}

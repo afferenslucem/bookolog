@@ -2,7 +2,6 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
-import { getConsoleLogger } from '../app.logging';
 
 @Injectable({
   providedIn: 'root',

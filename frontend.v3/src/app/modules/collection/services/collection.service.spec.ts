@@ -98,8 +98,6 @@ describe('CollectionService', () => {
         createDate: '2020-11-18 10:57:00',
       } as any;
 
-      expect();
-
       try {
         await collectionService.saveOrUpdate(collection);
       } catch (e) {

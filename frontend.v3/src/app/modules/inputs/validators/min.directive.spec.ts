@@ -14,6 +14,7 @@ describe('MinDirective', () => {
 
   it('should create an instance', () => {
     const directive = new MinDirective(elRef);
+
     expect(directive).toBeTruthy();
   });
 
