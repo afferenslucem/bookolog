@@ -8,6 +8,7 @@ import { CollectionOriginService } from './collection.origin.service';
 import { Collection } from '../models/collection';
 import { UUIDGeneratorService } from '../../../main/services/u-u-i-d-generator.service';
 import { BrokenConnectionError } from '../../../main/models/errors/broken-connection-error';
+import { EntityValidationError } from '../../../main/models/errors/entity-validation-error';
 
 describe('CollectionService', () => {
   let collectionService: CollectionService;
@@ -82,6 +83,30 @@ describe('CollectionService', () => {
       expect(updateSpy).toHaveBeenCalledTimes(0);
 
       expect(syncSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should throw error', async () => {
+      const storage = TestBed.inject(CollectionStorageService);
+
+      const saveSpy = spyOn(storage, 'save').and.resolveTo();
+
+      const collection: Collection = {
+        name: '',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+      } as any;
+
+      expect();
+
+      try {
+        await collectionService.saveOrUpdate(collection);
+      } catch (e) {
+        expect(e).toBeInstanceOf(EntityValidationError);
+      }
+
+      expect(saveSpy).not.toHaveBeenCalled();
     });
   });
 
