@@ -29,9 +29,9 @@ export class BookDateInputComponent extends ValueAccessorBase<BookDate> implemen
     super();
 
     this.form = new FormBuilder().group({
-      year: new FormControl(null, [Validators.min(1970), Validators.max(this.maxYear)]),
-      month: new FormControl(null, [Validators.min(1), Validators.max(12)]),
-      day: new FormControl(null, [Validators.min(1), Validators.max(31)]),
+      year: new FormControl(null),
+      month: new FormControl(null),
+      day: new FormControl(null),
     });
 
     this.dateControl = new FormControl(null);

@@ -9,6 +9,8 @@ import { BookTimeInputComponent } from './components/time-input/book-time-input.
 import { DateMonthValidatorDirective } from './validators/date-month-validator.directive';
 import { DateDayValidatorDirective } from './validators/date-day-validator.directive';
 import { UiButtonModule, UiFormFieldModule, UiChipsModule } from 'bookolog-ui-kit';
+import { MaxDirective } from './validators/max.directive';
+import { MinDirective } from './validators/min.directive';
 
 @NgModule({
   declarations: [
@@ -18,8 +20,10 @@ import { UiButtonModule, UiFormFieldModule, UiChipsModule } from 'bookolog-ui-ki
     FileInputComponent,
     DateMonthValidatorDirective,
     DateDayValidatorDirective,
+    MaxDirective,
+    MinDirective,
   ],
   imports: [CommonModule, ReactiveFormsModule, FormattingModule, UiFormFieldModule, UiButtonModule, UiChipsModule],
-  exports: [BookDateInputComponent, BookTimeInputComponent, BookTagsInputComponent, FileInputComponent],
+  exports: [BookDateInputComponent, BookTimeInputComponent, BookTagsInputComponent, FileInputComponent, MaxDirective, MinDirective],
 })
 export class InputsModule {}

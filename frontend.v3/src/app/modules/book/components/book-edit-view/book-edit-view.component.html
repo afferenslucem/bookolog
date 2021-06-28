@@ -119,8 +119,8 @@
           <ui-label>Страниц</ui-label>
           <input autocomplete="off" class="book__doneUnits" formControlName="doneUnits" appMax="12000" appMin="0"
                  step="1" type="number" uiInput/>
-          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.valueTooLow">Максимум 12000</ui-error>
-          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.valueTooHigh">Минимум 0</ui-error>
+          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.max">Максимум 12000</ui-error>
+          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.min">Минимум 0</ui-error>
         </ui-form-field>
 
         <ui-form-field>
@@ -129,14 +129,14 @@
             autocomplete="off"
             class="book__totalUnits"
             formControlName="totalUnits"
-            max="12000"
-            min="0"
+            appMax="12000"
+            appMin="0"
             step="1"
             type="number"
             uiInput
           />
-          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.valueTooLow">Максимум 12000</ui-error>
-          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.valueTooHigh">Минимум 0</ui-error>
+          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.max">Максимум 12000</ui-error>
+          <ui-error *ngIf="bookForm.doneUnitsControl.errors?.min">Минимум 0</ui-error>
         </ui-form-field>
       </ui-form-field-set>
     </ui-form-field>
