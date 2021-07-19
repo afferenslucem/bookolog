@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.8.32",
+  "version": "0.8.33",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host=0.0.0.0",
@@ -27,7 +27,7 @@
     "@angular/router": "~11.0.0",
     "@angular/service-worker": "~11.0.0",
     "@ng-bootstrap/ng-bootstrap": "^9.0.2",
-    "bookolog-ui-kit": "0.0.13",
+    "bookolog-ui-kit": "0.0.14",
     "bootstrap": "^4.5.0",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",

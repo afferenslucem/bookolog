@@ -241,6 +241,7 @@ describe('BookViewComponent', () => {
         component.book = new Book({
           doneUnits: 100,
           totalUnits: 500,
+          status: BookStatus.InProgress,
         } as any);
 
         fixture.detectChanges();
@@ -248,7 +249,7 @@ describe('BookViewComponent', () => {
         expect(element.querySelector<HTMLDivElement>('.book__progress .property__value ui-progress-bar')).toBeTruthy();
       });
 
-      it('should not render', () => {
+      it('should not render only for totalUnits', () => {
         component.book = new Book({
           doneUnits: null,
           totalUnits: 500,
@@ -259,9 +260,21 @@ describe('BookViewComponent', () => {
         expect(element.querySelector<HTMLDivElement>('.book__progress .property__value mat-progress-bar')).toBeFalsy();
       });
 
-      it('should not render', () => {
+      it('should not render only for doneUnits', () => {
         component.book = new Book({
           doneUnits: 10,
+          totalUnits: null,
+          status: BookStatus.InProgress,
+        } as any);
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value mat-progress-bar')).toBeFalsy();
+      });
+
+      it('should not render for empty progress', () => {
+        component.book = new Book({
+          doneUnits: null,
           totalUnits: null,
         } as any);
 
@@ -270,10 +283,11 @@ describe('BookViewComponent', () => {
         expect(element.querySelector<HTMLDivElement>('.book__progress .property__value mat-progress-bar')).toBeFalsy();
       });
 
-      it('should not render', () => {
+      it('should not render for Done status', () => {
         component.book = new Book({
-          doneUnits: null,
-          totalUnits: null,
+          doneUnits: 10,
+          totalUnits: 20,
+          status: BookStatus.Done,
         } as any);
 
         fixture.detectChanges();
