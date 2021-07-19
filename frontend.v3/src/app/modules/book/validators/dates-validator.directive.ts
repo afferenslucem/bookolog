@@ -22,7 +22,7 @@ export class DatesValidatorDirective implements Validator {
 
     const error = BookStartDateGreaterOrEqualThenFinishDateValidator.checkDates(started, finished);
 
-    return error != null
+    return error != null && finished.year
       ? {
           invalidDates: true,
         }

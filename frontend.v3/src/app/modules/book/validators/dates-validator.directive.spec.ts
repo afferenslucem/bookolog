@@ -37,9 +37,7 @@ describe('DatesValidatorDirective', () => {
     });
 
     const result = directive.validate(form);
-    const expected = {
-      invalidDates: true,
-    };
+    const expected: any = null;
 
     expect(result).toEqual(expected);
   });

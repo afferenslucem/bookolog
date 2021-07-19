@@ -65,7 +65,7 @@
   <label>Теги</label>
 </div>
 
-<div *ngIf="book.doneUnits && book.totalUnits" class="book__progress property">
+<div *ngIf="book.doneUnits && book.totalUnits && book.status === BookStatus.InProgress" class="book__progress property">
   <div class="property__value">
     <ui-progress-bar [value]="book.progressPercents"></ui-progress-bar>
   </div>
