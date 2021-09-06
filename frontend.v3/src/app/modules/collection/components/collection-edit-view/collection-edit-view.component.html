@@ -6,17 +6,18 @@
       autocomplete="off"
       class="collection__name"
       formControlName="name"
+      placeholder="Укажите название серии"
       required
       type="text"
       uiInput
-      placeholder="Укажите название серии"
     />
     <ui-error *ngIf="form.nameInvalid">{{ form.nameErrorMessage }}</ui-error>
   </ui-form-field>
 
   <ui-form-field appearance="fill">
     <ui-label>Описание</ui-label>
-    <textarea appTrimOnBlur autocomplete="off" class="collection__description" formControlName="description" rows="5" uiInput></textarea>
+    <textarea appTrimOnBlur autocomplete="off" class="collection__description" formControlName="description" rows="5"
+              uiInput></textarea>
   </ui-form-field>
 
   <button [disabled]="form.invalid" class="w-100 submit" color="primary" type="submit" uiButton>Сохранить</button>

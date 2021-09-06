@@ -36,14 +36,6 @@ export class BookService extends EntityService<BookData, Book> {
     return book;
   }
 
-  private validate(book: Book): void {
-    const errors = this.validateEntityChain.validate(book);
-
-    if (errors) {
-      throw new EntityValidationError(errors);
-    }
-  }
-
   public async saveRereading(book: Book): Promise<Book> {
     const original = await this.getByGuid(book.rereadingBookGuid);
 
@@ -173,6 +165,14 @@ export class BookService extends EntityService<BookData, Book> {
 
   public convertFromDTO(data: BookData): Book {
     return new Book(data);
+  }
+
+  private validate(book: Book): void {
+    const errors = this.validateEntityChain.validate(book);
+
+    if (errors) {
+      throw new EntityValidationError(errors);
+    }
   }
 
   private async findFirstReadingOfBook(guid: string): Promise<Book> {

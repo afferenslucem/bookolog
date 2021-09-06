@@ -22,7 +22,8 @@
         </div>
       </ui-expansion-panel-body>
     </ui-expansion-panel>
-    <ui-expansion-panel (opened)="onOpen(undefined)" *ngIf="undefinedYear$ | async as year" [expanded]="(years$ | async)?.length === 1">
+    <ui-expansion-panel (opened)="onOpen(undefined)" *ngIf="undefinedYear$ | async as year"
+                        [expanded]="(years$ | async)?.length === 1">
       <ui-expansion-panel-header>
         <span class="title">Год не указан</span>
         <div class="description years__meta">

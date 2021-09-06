@@ -83,17 +83,6 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
     );
   }
 
-  private subscribeToAutocomplete(): void {
-    fromEvent<InputEvent>(this.elRef.nativeElement.querySelector('.tag'), 'input')
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((event: InputEvent) => event.inputType == null),
-        filter((event: InputEvent) => event.data == null),
-        map((event: InputEvent) => event.target as any),
-      )
-      .subscribe(target => this.pushTag(target.value));
-  }
-
   public append(): void {
     const value = this.tag;
 
@@ -120,5 +109,16 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
 
   public writeValue(value: string[]): void {
     this.tags = _(value).distinct(new StringComparator()).toArray();
+  }
+
+  private subscribeToAutocomplete(): void {
+    fromEvent<InputEvent>(this.elRef.nativeElement.querySelector('.tag'), 'input')
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((event: InputEvent) => event.inputType == null),
+        filter((event: InputEvent) => event.data == null),
+        map((event: InputEvent) => event.target as any),
+      )
+      .subscribe(target => this.pushTag(target.value));
   }
 }

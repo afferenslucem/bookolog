@@ -6,7 +6,8 @@
 
 <div *ngIf="book.authors.length > 0" class="book__authors property">
   <div class="property__value">
-    <span *ngFor="let author of book.authors | capitalize; let last = last" [routerLink]="['/author', author]" class="link">
+    <span *ngFor="let author of book.authors | capitalize; let last = last" [routerLink]="['/author', author]"
+          class="link">
       {{ author }}<span *ngIf="!last">,</span>
     </span>
   </div>
@@ -40,7 +41,8 @@
 
 <div *ngIf="book.collection" class="book__collection property">
   <div [routerLink]="['/series', book.collection.guid]" class="property__value link">
-    {{ book.collection.name | capitalize }} <span *ngIf="book.collectionOrder != null" class="order">№ {{ book.collectionOrder }}</span>
+    {{ book.collection.name | capitalize }} <span *ngIf="book.collectionOrder != null"
+                                                  class="order">№ {{ book.collectionOrder }}</span>
   </div>
   <label>Серия</label>
 </div>
@@ -101,19 +103,24 @@
 </div>
 
 <div class="button-group vertical">
-  <button (click)="markAsProgress(book)" *ngIf="book.status == BookStatus.ToRead" class="mark-as-progress book-status-button" uiButton>
+  <button (click)="markAsProgress(book)" *ngIf="book.status == BookStatus.ToRead"
+          class="mark-as-progress book-status-button" uiButton>
     Читаю
   </button>
 
-  <button (click)="markAsDone(book)" *ngIf="book.status == BookStatus.InProgress" class="mark-as-done book-status-button" uiButton>
+  <button (click)="markAsDone(book)" *ngIf="book.status == BookStatus.InProgress"
+          class="mark-as-done book-status-button" uiButton>
     Прочитана
   </button>
 
-  <button *ngIf="book.status == BookStatus.Done" [routerLink]="['/book/reread', book.guid]" class="edit-button" color="warning" uiButton>
+  <button *ngIf="book.status == BookStatus.Done" [routerLink]="['/book/reread', book.guid]" class="edit-button"
+          color="warning" uiButton>
     Перечитать
   </button>
 
-  <button [routerLink]="['/book/edit', book.guid]" [replaceUrl]="true" class="w-100 edit-button" color="secondary" uiButton>Редактировать</button>
+  <button [replaceUrl]="true" [routerLink]="['/book/edit', book.guid]" class="w-100 edit-button" color="secondary"
+          uiButton>Редактировать
+  </button>
 
   <button (click)="openDeleteDialog(book)" color="danger" uiButton>Удалить</button>
 </div>

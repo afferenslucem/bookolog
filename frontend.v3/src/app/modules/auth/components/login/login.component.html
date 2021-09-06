@@ -5,13 +5,13 @@
   <form [formGroup]="form.nativeForm">
     <ui-form-field appearance="fill" class="login-field">
       <ui-label>Логин</ui-label>
-      <input appTrimOnBlur class="login" formControlName="login" required uiInput />
+      <input appTrimOnBlur class="login" formControlName="login" required uiInput/>
       <ui-error *ngIf="form.loginInvalid">Это обязательное поле</ui-error>
     </ui-form-field>
 
     <ui-form-field appearance="fill" class="password-field">
       <ui-label>Пароль</ui-label>
-      <input class="password" formControlName="password" required type="password" uiInput />
+      <input class="password" formControlName="password" required type="password" uiInput/>
       <ui-error *ngIf="form.passwordInvalid">Это обязательное поле</ui-error>
     </ui-form-field>
 
@@ -24,6 +24,8 @@
 
     <span [routerLink]="['/recovery-password']" class="link">Восстановить пароль</span>
 
-    <button (click)="submit($event)" [disabled]="form.invalid" class="w-100 submit" color="primary" type="submit" uiButton>Войти</button>
+    <button (click)="submit($event)" [disabled]="form.invalid" class="w-100 submit" color="primary" type="submit"
+            uiButton>Войти
+    </button>
   </form>
 </div>

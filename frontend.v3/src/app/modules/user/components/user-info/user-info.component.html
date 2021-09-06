@@ -10,5 +10,6 @@
 </div>
 
 <div *ngIf="count$ | async as count" class="count">
-  <span class="count_value">{{ count }}</span> <span class="count_label">{{ count | chooseForm: 'книга':'книги':'книг' }}</span>
+  <span class="count_value">{{ count }}</span> <span
+  class="count_label">{{ count | chooseForm: 'книга':'книги':'книг' }}</span>
 </div>

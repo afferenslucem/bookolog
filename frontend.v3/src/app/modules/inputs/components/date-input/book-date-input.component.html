@@ -1,13 +1,13 @@
 <form (click)="emitTouch($event)" [formGroup]="form" appDateDayValidator appDateMonthValidator>
-  <ui-form-field-set orientation="horizontal" class="date-input">
+  <ui-form-field-set class="date-input" orientation="horizontal">
     <ui-form-field>
       <input
+        [appMax]="maxYear"
         [max]="maxYear"
+        appMin="1970"
         autocomplete="off"
         class="year"
         formControlName="year"
-        appMin="1970"
-        [appMax]="maxYear"
         placeholder="Год"
         step="1"
         type="number"
@@ -18,11 +18,11 @@
 
     <ui-form-field>
       <input
+        appMax="12"
+        appMin="1"
         autocomplete="off"
         class="month"
         formControlName="month"
-        appMax="12"
-        appMin="1"
         placeholder="Месяц"
         step="1"
         type="number"
@@ -33,11 +33,11 @@
 
     <ui-form-field>
       <input
+        appMax="31"
+        appMin="1"
         autocomplete="off"
         class="day"
         formControlName="day"
-        appMax="31"
-        appMin="1"
         placeholder="День"
         step="1"
         type="number"

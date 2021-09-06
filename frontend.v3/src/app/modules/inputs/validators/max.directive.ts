@@ -8,12 +8,12 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@an
 export class MaxDirective implements OnInit, Validator {
   private maxNumber: number = null;
 
+  public constructor(private elRef: ElementRef<HTMLInputElement>) {}
+
   @Input('appMax')
   public set max(v: number | string) {
     this.maxNumber = Number(v);
   }
-
-  public constructor(private elRef: ElementRef<HTMLInputElement>) {}
 
   public ngOnInit(): void {
     this.elRef.nativeElement.max = this.maxNumber.toString();

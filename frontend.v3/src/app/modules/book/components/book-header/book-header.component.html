@@ -1,5 +1,6 @@
 <div [class.truncate-text]="truncate" class="book-line__name">{{ name }}</div>
 <div class="book-line__icons">
   <span *ngIf="shouldSync" class="ui-cloud-upload"></span>
-  <span (click)="$event.stopPropagation()" *ngIf="editAllowed" [routerLink]="['/book/edit', book.guid]" class="ui-pencil"> </span>
+  <span (click)="$event.stopPropagation()" *ngIf="editAllowed" [routerLink]="['/book/edit', book.guid]"
+        class="ui-pencil"> </span>
 </div>

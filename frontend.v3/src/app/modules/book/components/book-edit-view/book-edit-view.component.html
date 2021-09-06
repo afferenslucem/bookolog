@@ -6,9 +6,9 @@
       autocomplete="off"
       class="book__name"
       formControlName="name"
+      placeholder="Укажите название книги"
       required
       type="text"
-      placeholder="Укажите название книги"
       uiInput
     />
     <ui-error *ngIf="form.get('name').invalid">Это обязательное поле</ui-error>
@@ -26,7 +26,7 @@
 
   <ui-form-field>
     <ui-label>Год выпуска</ui-label>
-    <input class="book__year" formControlName="year" type="number" uiInput placeholder="Укажите год издания книги" />
+    <input class="book__year" formControlName="year" placeholder="Укажите год издания книги" type="number" uiInput/>
   </ui-form-field>
 
   <ui-form-field>
@@ -36,9 +36,9 @@
       class="book__genre"
       formControlName="genre"
       list="genreAutocomplete"
+      placeholder="Укажите жанр книги"
       type="text"
       uiInput
-      placeholder="Укажите жанр книги"
     />
 
     <datalist id="genreAutocomplete">
@@ -48,7 +48,7 @@
     </datalist>
   </ui-form-field>
 
-  <ui-form-field-set orientation="horizontal" class="collection-input">
+  <ui-form-field-set class="collection-input" orientation="horizontal">
     <ui-form-field class="name">
       <ui-label>Серия</ui-label>
       <select class="book__series" formControlName="collectionGuid" uiSelect>
@@ -61,7 +61,7 @@
 
     <ui-form-field class="order">
       <ui-label>Порядок</ui-label>
-      <input [appTrimFraction]="1" formControlName="collectionOrder" max="256" min="1" step="1" type="number" uiInput />
+      <input [appTrimFraction]="1" formControlName="collectionOrder" max="256" min="1" step="1" type="number" uiInput/>
     </ui-form-field>
   </ui-form-field-set>
 
@@ -103,7 +103,7 @@
 
   <ui-form-field-set [hidden]="status != BookStatus.InProgress">
     <ui-form-field [ngSwitch]="type" class="book-edit__progress">
-      <ui-form-field-set orientation="horizontal" *ngSwitchCase="BookType.Audio" class="book-edit__progress_audio">
+      <ui-form-field-set *ngSwitchCase="BookType.Audio" class="book-edit__progress_audio" orientation="horizontal">
         <div>
           <ui-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</ui-label>
           <app-book-time-input class="book__doneUnits" formControlName="doneUnits"></app-book-time-input>
@@ -114,15 +114,15 @@
         </div>
       </ui-form-field-set>
 
-      <ui-form-field-set orientation="horizontal" *ngSwitchDefault class="book-edit__progress_audio">
+      <ui-form-field-set *ngSwitchDefault class="book-edit__progress_audio" orientation="horizontal">
         <ui-form-field>
           <ui-label>Страниц</ui-label>
           <input
+            appMax="12000"
+            appMin="0"
             autocomplete="off"
             class="book__doneUnits"
             formControlName="doneUnits"
-            appMax="12000"
-            appMin="0"
             step="1"
             type="number"
             uiInput
@@ -134,11 +134,11 @@
         <ui-form-field>
           <ui-label>Всего</ui-label>
           <input
+            appMax="12000"
+            appMin="0"
             autocomplete="off"
             class="book__totalUnits"
             formControlName="totalUnits"
-            appMax="12000"
-            appMin="0"
             step="1"
             type="number"
             uiInput
@@ -171,5 +171,6 @@
     <textarea appTrimOnBlur autocomplete="off" class="book__notes" formControlName="note" rows="4" uiInput></textarea>
   </ui-form-field>
 
-  <button [disabled]="form.invalid" class="w-100 book__create-button" color="success" type="submit" uiButton>Сохранить</button>
+  <button [disabled]="form.invalid" class="w-100 book__create-button" color="success" type="submit" uiButton>Сохранить
+  </button>
 </form>

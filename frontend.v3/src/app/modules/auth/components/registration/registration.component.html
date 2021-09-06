@@ -5,25 +5,25 @@
   <form (ngSubmit)="submit($event)" [formGroup]="form.nativeForm">
     <ui-form-field appearance="fill" class="login-field">
       <ui-label>Логин</ui-label>
-      <input appTrimOnBlur class="login" formControlName="login" required uiInput />
+      <input appTrimOnBlur class="login" formControlName="login" required uiInput/>
       <ui-error *ngIf="form.loginInvalid">{{ form.loginErrorMessage }}</ui-error>
     </ui-form-field>
 
     <ui-form-field appearance="fill" class="email-field">
       <ui-label>Почта</ui-label>
-      <input appTrimOnBlur class="email" formControlName="email" required uiInput />
+      <input appTrimOnBlur class="email" formControlName="email" required uiInput/>
       <ui-error *ngIf="form.emailInvalid">{{ form.emailErrorMessage }}</ui-error>
     </ui-form-field>
 
     <ui-form-field appearance="fill" class="password-field">
       <ui-label>Пароль</ui-label>
-      <input class="password" formControlName="password" required type="password" uiInput />
+      <input class="password" formControlName="password" required type="password" uiInput/>
       <ui-error *ngIf="form.passwordInvalid">{{ form.passwordErrorMessage }}</ui-error>
     </ui-form-field>
 
     <ui-form-field appearance="fill" class="confirmation-field">
       <ui-label>Подтверждение пароля</ui-label>
-      <input class="password-confirmation" formControlName="confirmation" required type="password" uiInput />
+      <input class="password-confirmation" formControlName="confirmation" required type="password" uiInput/>
       <ui-error *ngIf="form.confirmationInvalid">{{ form.confirmationErrorMessage }}</ui-error>
     </ui-form-field>
 
@@ -35,7 +35,8 @@
       </ng-container>
     </ui-error>
 
-    <button (click)="submit($event)" [disabled]="form.invalid" class="w-100 submit" color="primary" type="submit" uiButton>
+    <button (click)="submit($event)" [disabled]="form.invalid" class="w-100 submit" color="primary" type="submit"
+            uiButton>
       Зарегистрироваться
     </button>
   </form>

@@ -7,12 +7,12 @@ import { AbstractControl, ValidationErrors, Validator } from '@angular/forms';
 export class MinDirective implements OnInit, Validator {
   private minNumber: number = null;
 
+  public constructor(private elRef: ElementRef<HTMLInputElement>) {}
+
   @Input('appMin')
   public set min(v: number | string) {
     this.minNumber = Number(v);
   }
-
-  public constructor(private elRef: ElementRef<HTMLInputElement>) {}
 
   public ngOnInit(): void {
     this.elRef.nativeElement.min = this.minNumber.toString();

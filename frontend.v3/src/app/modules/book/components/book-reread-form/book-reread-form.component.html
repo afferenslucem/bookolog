@@ -6,7 +6,8 @@
 
 <div *ngIf="book.authors.length > 0" class="book__authors property">
   <div class="property__value">
-    <span *ngFor="let author of book.authors | capitalize; let last = last" [routerLink]="['/author', author]" class="link">
+    <span *ngFor="let author of book.authors | capitalize; let last = last" [routerLink]="['/author', author]"
+          class="link">
       <span class="author__value">{{ author }}</span
       ><span *ngIf="!last">, </span>
     </span>
@@ -36,13 +37,14 @@
   <ui-form-field [hidden]="bookForm.status !== BookStatus.InProgress" appearance="fill">
     <ui-label>Прогресс</ui-label>
     <select formControlName="progressType" uiSelect>
-      <option [value]="ProgressAlgorithm.Done">{{ bookForm.type == BookType.Audio ? 'Прослушано' : 'Прочитано' }}</option>
+      <option
+        [value]="ProgressAlgorithm.Done">{{ bookForm.type == BookType.Audio ? 'Прослушано' : 'Прочитано' }}</option>
       <option [value]="ProgressAlgorithm.Left">Осталось</option>
     </select>
   </ui-form-field>
 
   <ui-form-field-set [hidden]="status !== BookStatus.InProgress" [ngSwitch]="type" class="book-reread__progress">
-    <ui-form-field-set orientation="horizontal" *ngSwitchCase="BookType.Audio" class="book-reread__progress_audio">
+    <ui-form-field-set *ngSwitchCase="BookType.Audio" class="book-reread__progress_audio" orientation="horizontal">
       <div>
         <ui-label>{{ progressAlgorithm == ProgressAlgorithm.Done ? 'Прослушано' : 'Осталось' }}</ui-label>
         <app-book-time-input formControlName="doneUnits"></app-book-time-input>
@@ -53,15 +55,15 @@
         <app-book-time-input formControlName="totalUnits"></app-book-time-input>
       </div>
     </ui-form-field-set>
-    <ui-form-field-set orientation="horizontal" *ngSwitchDefault class="book-reread__progress_audio">
+    <ui-form-field-set *ngSwitchDefault class="book-reread__progress_audio" orientation="horizontal">
       <ui-form-field>
         <ui-label>Страниц</ui-label>
-        <input autocomplete="off" formControlName="doneUnits" max="6000" min="0" step="1" type="number" uiInput />
+        <input autocomplete="off" formControlName="doneUnits" max="6000" min="0" step="1" type="number" uiInput/>
       </ui-form-field>
 
       <ui-form-field>
         <ui-label>Всего</ui-label>
-        <input autocomplete="off" formControlName="totalUnits" max="6000" min="0" step="1" type="number" uiInput />
+        <input autocomplete="off" formControlName="totalUnits" max="6000" min="0" step="1" type="number" uiInput/>
       </ui-form-field>
     </ui-form-field-set>
 

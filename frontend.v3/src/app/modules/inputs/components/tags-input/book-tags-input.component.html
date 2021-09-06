@@ -2,18 +2,18 @@
   <ui-form-field>
     <ui-label>{{ header }}</ui-label>
     <ui-chip-list>
-      <ui-chip (crossClick)="removeTag(tag)" showCross="true" *ngFor="let tag of tags">
+      <ui-chip (crossClick)="removeTag(tag)" *ngFor="let tag of tags" showCross="true">
         {{ tag | capitalize }}
       </ui-chip>
 
       <input
+        (uiChipAddOnBlur)="append()"
+        (uiChipInputFinished)="append()"
+        [placeholder]="placeholder"
         [uiList]="tagId"
         appTrimOnBlur
         class="tag"
         formControlName="input"
-        [placeholder]="placeholder"
-        (uiChipAddOnBlur)="append()"
-        (uiChipInputFinished)="append()"
       />
     </ui-chip-list>
   </ui-form-field>

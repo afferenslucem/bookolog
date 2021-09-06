@@ -4,27 +4,6 @@ import { EntityValidationResult } from '../../../../main/utils/model-validation/
 import { BookStatus } from '../../models/book-status';
 
 export class BookDoneLowerOrEqualTotalValidator extends SingleEntityValidator<Book> {
-  validate(entity: Book): EntityValidationResult | null {
-    if (BookDoneLowerOrEqualTotalValidator.shouldPassCheck(entity)) {
-      return null;
-    }
-
-    const done = entity.doneUnits;
-    const doneCheck = BookDoneLowerOrEqualTotalValidator.checkUnits(done);
-    if (doneCheck != null) {
-      return doneCheck;
-    }
-
-    const total = entity.totalUnits;
-
-    const totalCheck = BookDoneLowerOrEqualTotalValidator.checkUnits(total);
-    if (totalCheck != null) {
-      return totalCheck;
-    }
-
-    return BookDoneLowerOrEqualTotalValidator.checkProgress(done, total);
-  }
-
   public static checkProgress(done: number, total: number): EntityValidationResult | null {
     if (done > total) {
       return {
@@ -50,5 +29,26 @@ export class BookDoneLowerOrEqualTotalValidator extends SingleEntityValidator<Bo
     const bookIsProgress = Number(book.status) === BookStatus.InProgress;
 
     return !filledBothFields || !bookIsProgress;
+  }
+
+  validate(entity: Book): EntityValidationResult | null {
+    if (BookDoneLowerOrEqualTotalValidator.shouldPassCheck(entity)) {
+      return null;
+    }
+
+    const done = entity.doneUnits;
+    const doneCheck = BookDoneLowerOrEqualTotalValidator.checkUnits(done);
+    if (doneCheck != null) {
+      return doneCheck;
+    }
+
+    const total = entity.totalUnits;
+
+    const totalCheck = BookDoneLowerOrEqualTotalValidator.checkUnits(total);
+    if (totalCheck != null) {
+      return totalCheck;
+    }
+
+    return BookDoneLowerOrEqualTotalValidator.checkProgress(done, total);
   }
 }

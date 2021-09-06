@@ -109,14 +109,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     }
   }
 
-  private async redirect(): Promise<void> {
-    if (this.action === Action.Create) {
-      await this.redirectToList();
-    } else {
-      await this.router.navigate(['/book', this.book.guid], { replaceUrl: true });
-    }
-  }
-
   public async processBook(book: Book): Promise<Book> {
     const result = await this.bookService.saveOrUpdate(book);
     return result;
@@ -144,6 +136,14 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     } else if (this.book.status === BookStatus.InProgress && status === BookStatus.Done) {
       this.bookForm.finished = DateUtils.today;
       this.bookForm.doneUnits = this.bookForm.totalUnits;
+    }
+  }
+
+  private async redirect(): Promise<void> {
+    if (this.action === Action.Create) {
+      await this.redirectToList();
+    } else {
+      await this.router.navigate(['/book', this.book.guid], { replaceUrl: true });
     }
   }
 

@@ -10,6 +10,10 @@ import { BrokenConnectionError } from '../models/errors/broken-connection-error'
 export class RetryInterceptor implements HttpInterceptor {
   public constructor() {}
 
+  private static isOffline(err: HttpErrorResponse): boolean {
+    return err.status === 0 || err.status === 504;
+  }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.trySendRequest(req, next, 3);
   }
@@ -31,9 +35,5 @@ export class RetryInterceptor implements HttpInterceptor {
     } else {
       return throwError(err);
     }
-  }
-
-  private static isOffline(err: HttpErrorResponse): boolean {
-    return err.status === 0 || err.status === 504;
   }
 }
