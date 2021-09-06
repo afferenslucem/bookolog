@@ -72,15 +72,15 @@ export abstract class AbstractBookDataForm {
   public async redirectToList(): Promise<void> {
     switch (this.bookForm.status) {
       case BookStatus.ToRead: {
-        await this.router.navigate(['to-read']);
+        await this.router.navigate(['to-read'], { replaceUrl: true });
         return;
       }
       case BookStatus.Done: {
-        await this.router.navigate(['done']);
+        await this.router.navigate(['done'], { replaceUrl: true });
         return;
       }
       case BookStatus.InProgress: {
-        await this.router.navigate(['in-progress']);
+        await this.router.navigate(['in-progress'], { replaceUrl: true });
         return;
       }
     }

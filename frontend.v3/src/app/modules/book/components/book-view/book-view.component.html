@@ -113,7 +113,7 @@
     Перечитать
   </button>
 
-  <button [routerLink]="['/book/edit', book.guid]" class="w-100 edit-button" color="secondary" uiButton>Редактировать</button>
+  <button [routerLink]="['/book/edit', book.guid]" [replaceUrl]="true" class="w-100 edit-button" color="secondary" uiButton>Редактировать</button>
 
   <button (click)="openDeleteDialog(book)" color="danger" uiButton>Удалить</button>
 </div>
