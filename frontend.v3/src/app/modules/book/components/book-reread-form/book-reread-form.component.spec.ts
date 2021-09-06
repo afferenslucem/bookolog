@@ -143,21 +143,21 @@ describe('BookRereadFormComponent', () => {
       component.bookForm.status = BookStatus.InProgress;
       component.redirectToList();
 
-      expect(navigateSpy).toHaveBeenCalledOnceWith(['in-progress']);
+      expect(navigateSpy).toHaveBeenCalledOnceWith(['in-progress'], { replaceUrl: true });
     });
 
     it('to done books', () => {
       component.bookForm.status = BookStatus.Done;
       component.redirectToList();
 
-      expect(navigateSpy).toHaveBeenCalledOnceWith(['done']);
+      expect(navigateSpy).toHaveBeenCalledOnceWith(['done'], { replaceUrl: true });
     });
 
     it('to to read books', () => {
       component.bookForm.status = BookStatus.ToRead;
       component.redirectToList();
 
-      expect(navigateSpy).toHaveBeenCalledOnceWith(['to-read']);
+      expect(navigateSpy).toHaveBeenCalledOnceWith(['to-read'], { replaceUrl: true });
     });
   });
 
