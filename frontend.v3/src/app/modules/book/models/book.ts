@@ -5,6 +5,9 @@ import { BookDate } from './book-date';
 import { BookStatus } from './book-status';
 import { BookType } from './book-type';
 import { ProgressAlgorithmType } from './progress-algorithm-type';
+import { BookProgress } from '../utils/progress/book-progress';
+import { ProgressFactory } from '../utils/progress/progress-factory';
+import { TimeProgress } from './time-progress';
 
 export class Book extends Entity {
   public name: string;
@@ -12,8 +15,6 @@ export class Book extends Entity {
   public year?: number;
   public status: BookStatus;
   public tags: string[];
-  public totalUnits: number;
-  public doneUnits: number;
   public genre?: string;
   public collection?: Collection = null;
   public collectionGuid?: string;
@@ -24,9 +25,10 @@ export class Book extends Entity {
   public endDate?: Date;
   public type: BookType;
   public note?: string;
-  public progressType: ProgressAlgorithmType;
   public rereadingBookGuid?: string;
   public rereadedBy: string[];
+
+  public progress: BookProgress;
 
   public constructor(data: BookData) {
     super(data);
@@ -36,6 +38,7 @@ export class Book extends Entity {
     this.year = data.year;
     this.status = data.status;
     this.tags = data.tags || [];
+    this.progress = ProgressFactory.getProgress(data.type, data.progressType || ProgressAlgorithmType.Done);
     this.totalUnits = data.totalUnits || 0;
     this.doneUnits = data.doneUnits || 0;
     this.genre = data.genre;
@@ -55,36 +58,68 @@ export class Book extends Entity {
     this.endDate = this.getDate(data.endDate, this.finished);
     this.type = data.type;
     this.note = data.note;
-    this.progressType = data.progressType || ProgressAlgorithmType.Done;
     this.rereadingBookGuid = data.rereadingBookGuid || null;
     this.rereadedBy = data.rereadedBy || [];
   }
 
   public get done(): number {
-    if (this.totalUnits == null || this.doneUnits == null) {
-      return null;
-    }
-    if (this.progressType === ProgressAlgorithmType.Left) {
-      return this.totalUnits - this.doneUnits;
-    } else {
-      return this.doneUnits;
-    }
+    return this.progress.doneNumeric;
   }
 
   public set done(v: number) {
-    if (this.progressType === ProgressAlgorithmType.Left) {
-      this.doneUnits = this.totalUnits - v;
-    } else {
-      this.doneUnits = v;
-    }
+    this.progress.doneNumeric = v;
+  }
+
+  public get doneNative(): number | TimeProgress {
+    return this.progress.done;
+  }
+
+  public set doneNative(v: number | TimeProgress) {
+    this.progress.done = v;
+  }
+
+  public get doneNumeric(): number {
+    return this.progress.doneNumeric;
+  }
+
+  public get doneUnits(): number {
+    return this.progress.doneUnits;
+  }
+
+  public set doneUnits(v: number) {
+    this.progress.doneUnits = v;
+  }
+
+  public get totalUnits(): number {
+    return this.progress.totalUnits;
+  }
+
+  public set totalUnits(v: number) {
+    this.progress.totalUnits = v;
+  }
+
+  public get totalNative(): number | TimeProgress {
+    return this.progress.total;
+  }
+
+  public set totalNative(v: number | TimeProgress) {
+    this.progress.total = v;
+  }
+
+  public get totalNumeric(): number {
+    return this.progress.totalNumeric;
   }
 
   public get progressPercents(): number {
-    if (this.totalUnits && this.doneUnits) {
-      return Math.floor((this.doneUnits / this.totalUnits) * 100);
-    } else {
-      return 0;
-    }
+    return this.progress.progressPercent;
+  }
+
+  public get progressType(): ProgressAlgorithmType {
+    return this.progress.progressType;
+  }
+
+  public set progressType(v: ProgressAlgorithmType) {
+    this.progress.progressType = v;
   }
 
   public toString(): string {

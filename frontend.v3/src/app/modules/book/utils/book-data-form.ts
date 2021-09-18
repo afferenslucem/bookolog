@@ -1,4 +1,3 @@
-import { BookData } from '../models/book-data';
 import { BookStatus } from '../models/book-status';
 import { BookType } from '../models/book-type';
 import { Book } from '../models/book';
@@ -7,8 +6,9 @@ import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
 import { BookDate } from '../models/book-date';
 import { Observable } from 'rxjs';
 import { AbstractForm } from '../../../main/utils/abstract-form';
+import { TimeProgress } from '../models/time-progress';
 
-const defaultValue: BookData = {
+const defaultValue: any = {
   guid: '',
   name: '',
   status: BookStatus.ToRead,
@@ -21,8 +21,8 @@ const defaultValue: BookData = {
   note: '',
   modifyDate: '',
   createDate: '',
-  doneUnits: null,
-  totalUnits: null,
+  done: null,
+  total: null,
   endDateYear: null,
   endDateMonth: null,
   endDateDay: null,
@@ -98,28 +98,28 @@ export class BookDataForm extends AbstractForm<Book> {
     this.finishedControl.setValue(v);
   }
 
-  public get doneUnitsControl(): AbstractControl {
-    return this.form.get('doneUnits');
+  public get doneControl(): AbstractControl {
+    return this.form.get('done');
   }
 
-  public get doneUnits(): number {
-    return this.doneUnitsControl.value;
+  public get done(): number | TimeProgress {
+    return this.doneControl.value;
   }
 
-  public set doneUnits(v: number) {
-    this.doneUnitsControl.setValue(v);
+  public set done(v: number | TimeProgress) {
+    this.doneControl.setValue(v);
   }
 
-  public get totalUnitsControl(): AbstractControl {
-    return this.form.get('totalUnits');
+  public get totalControl(): AbstractControl {
+    return this.form.get('total');
   }
 
-  public get totalUnits(): number {
-    return this.totalUnitsControl.value;
+  public get total(): number | TimeProgress {
+    return this.totalControl.value;
   }
 
-  public set totalUnits(v: number) {
-    this.totalUnitsControl.setValue(v);
+  public set total(v: number | TimeProgress) {
+    this.totalControl.setValue(v);
   }
 
   public get typeControl(): AbstractControl {
@@ -169,8 +169,8 @@ export class BookDataForm extends AbstractForm<Book> {
       type: new FormControl(book.type),
       started: new FormControl(book.started),
       finished: new FormControl(book.finished),
-      doneUnits: new FormControl(book.done || null),
-      totalUnits: new FormControl(book.totalUnits || null),
+      done: new FormControl(book.doneNative || null),
+      total: new FormControl(book.totalNative || null),
       authors: new FormControl(book.authors),
       tags: new FormControl(book.tags),
       note: new FormControl(book.note),

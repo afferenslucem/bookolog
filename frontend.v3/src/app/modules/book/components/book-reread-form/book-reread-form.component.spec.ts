@@ -118,15 +118,15 @@ describe('BookRereadFormComponent', () => {
     });
 
     it('doneUnits', () => {
-      const expectedDone = component.bookForm.doneUnits;
+      const expectedDone = component.bookForm.done;
 
-      expect(expectedDone).toEqual(null);
+      expect(expectedDone).toEqual({ hours: 0, minutes: 0 });
     });
 
     it('totalUnits', () => {
-      const expectedTotal = component.bookForm.totalUnits;
+      const expectedTotal = component.bookForm.total;
 
-      expect(expectedTotal).toEqual(null);
+      expect(expectedTotal).toEqual({ hours: 0, minutes: 0 });
     });
   });
 

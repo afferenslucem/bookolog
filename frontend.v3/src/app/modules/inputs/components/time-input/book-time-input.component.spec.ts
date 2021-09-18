@@ -25,7 +25,10 @@ describe('BookTimeInputComponent', () => {
   });
 
   it('should set nulls', () => {
-    component.writeValue(0);
+    component.writeValue({
+      hours: null,
+      minutes: null,
+    });
 
     const value = component.form.value;
 
@@ -36,29 +39,32 @@ describe('BookTimeInputComponent', () => {
   });
 
   it('should set minutes', () => {
-    component.writeValue(45);
+    component.form.get('minutes').setValue('45');
 
     const value = component.form.value;
 
     expect(value).toEqual({
       hours: null,
-      minutes: 45,
+      minutes: '45',
     });
   });
 
   it('should set hours', () => {
-    component.writeValue(60);
+    component.form.get('hours').setValue('1');
 
     const value = component.form.value;
 
     expect(value).toEqual({
-      hours: 1,
+      hours: '1',
       minutes: null,
     });
   });
 
   it('should set hours and minutes', () => {
-    component.writeValue(105);
+    component.writeValue({
+      hours: 1,
+      minutes: 45,
+    });
 
     const value = component.form.value;
 
@@ -74,8 +80,15 @@ describe('BookTimeInputComponent', () => {
     component.form.get('hours').setValue('1');
     component.form.get('minutes').setValue('10');
 
-    expect(spy).toHaveBeenCalledWith(60);
-    expect(spy).toHaveBeenCalledWith(70);
+    expect(spy).toHaveBeenCalledWith({
+      hours: '1',
+      minutes: null,
+    });
+
+    expect(spy).toHaveBeenCalledWith({
+      hours: '1',
+      minutes: '10',
+    });
 
     expect(spy).toHaveBeenCalledTimes(2);
   });

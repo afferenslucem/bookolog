@@ -135,7 +135,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
       this.bookForm.started = DateUtils.today;
     } else if (this.book.status === BookStatus.InProgress && status === BookStatus.Done) {
       this.bookForm.finished = DateUtils.today;
-      this.bookForm.doneUnits = this.bookForm.totalUnits;
+      this.bookForm.done = this.bookForm.total;
     }
   }
 
@@ -170,9 +170,5 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     this.bookForm = new BookDataForm(book);
     this.book.progressType =
       this.action === Action.Create ? this.progressAlgorithmService.getAlgorithm(this.book.type) : this.book.progressType;
-  }
-
-  private onTypeChange(): void {
-    this.bookForm.progressType = this.progressAlgorithmPreference;
   }
 }

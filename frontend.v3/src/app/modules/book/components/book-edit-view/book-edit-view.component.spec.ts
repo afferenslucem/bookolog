@@ -99,8 +99,8 @@ describe('BookEditViewComponent', () => {
 
     it('should set current data to finished and set done', () => {
       component.bookForm.finished = null;
-      component.bookForm.doneUnits = null;
-      component.bookForm.totalUnits = 100;
+      component.bookForm.done = null;
+      component.bookForm.total = 100;
       component.book.status = BookStatus.InProgress;
 
       component.onStatusChange(BookStatus.Done);

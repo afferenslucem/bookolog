@@ -15,8 +15,8 @@ export class UnitsValidatorDirective implements Validator {
       return null;
     }
 
-    const doneUnits = formGroup.get('doneUnits').value as number;
-    const totalUnits = formGroup.get('totalUnits').value as number;
+    const doneUnits = formGroup.get('done').value as number;
+    const totalUnits = formGroup.get('total').value as number;
 
     return doneUnits > totalUnits
       ? {

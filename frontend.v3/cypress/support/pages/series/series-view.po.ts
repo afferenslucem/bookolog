@@ -2,7 +2,7 @@ import { SearchablePageObject } from '../searchable-page-object';
 
 export class SeriesViewPo extends SearchablePageObject {
   public constructor(guid: string) {
-    super(`/series/${guid}`);
+    super(`/series/${ guid }`);
   }
 
   public nameIs(name: string): void {

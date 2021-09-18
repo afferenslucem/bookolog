@@ -7,8 +7,7 @@
     class="book-list in-progress-books-list"
   >
     <div *cdkVirtualFor="let book of books$ | async; let last = last; trackBy: bookTrackBy">
-      <app-in-progress-book [book]="book" [routerLink]="['/book', book.guid]"
-                            class="book-list__item"></app-in-progress-book>
+      <app-in-progress-book [book]="book" [routerLink]="['/book', book.guid]" class="book-list__item"></app-in-progress-book>
       <ui-divider *ngIf="!last"></ui-divider>
     </div>
   </cdk-virtual-scroll-viewport>

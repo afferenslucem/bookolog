@@ -32,7 +32,9 @@ export class TrimFractionDirective implements OnInit, OnDestroy {
   public trim(): void {
     const currentValue: string = this.value;
 
-    if (!currentValue || !currentValue.includes('.')) return;
+    if (!currentValue || !currentValue.includes('.')) {
+      return;
+    }
 
     const result = Number(currentValue).toFixed(this.length);
 

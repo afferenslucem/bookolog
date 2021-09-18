@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { DateUtils } from '../../../main/utils/date-utils';
 import { CollectionService } from '../../collection/services/collection.service';
 import { ProgressAlgorithmService } from '../services/progress-algorithm.service';
+import { BookFormValue } from '../models/book-form-value';
+import { ProgressFactory } from './progress/progress-factory';
 
 export abstract class AbstractBookDataForm {
   public BookType: typeof BookType = BookType;
@@ -54,11 +56,7 @@ export abstract class AbstractBookDataForm {
   }
 
   public get value(): Book {
-    const data = Object.assign(this.book, this.form.value) as Book;
-
-    if (data.doneUnits) {
-      data.done = data.doneUnits;
-    }
+    const data = this.readValue();
 
     data.modifyDate = DateUtils.nowUTC;
 
@@ -67,6 +65,30 @@ export abstract class AbstractBookDataForm {
     }
 
     return data;
+  }
+
+  private readValue(): Book {
+    const data = this.form.value as BookFormValue;
+
+    const book = this.book;
+
+    book.name = data.name;
+    book.authors = data.authors;
+    book.year = data.year;
+    book.status = data.status;
+    book.tags = data.tags || [];
+    book.progress = ProgressFactory.getProgress(data.type, data.progressType);
+    book.totalNative = data.total;
+    book.doneNative = data.done;
+    book.genre = data.genre;
+    book.collectionGuid = data.collectionGuid;
+    book.collectionOrder = data.collectionOrder;
+    book.started = data.started;
+    book.finished = data.finished;
+    book.type = data.type;
+    book.note = data.note;
+
+    return book;
   }
 
   public async redirectToList(): Promise<void> {
@@ -93,4 +115,22 @@ export abstract class AbstractBookDataForm {
   }
 
   public abstract processBook(book: Book): Promise<Book>;
+
+  protected onTypeChange(type: BookType): void {
+    this.bookForm.progressType = this.progressAlgorithmPreference;
+
+    if (Number(type) === BookType.Audio) {
+      this.bookForm.totalControl.setValue({
+        hours: null,
+        minutes: null,
+      });
+      this.bookForm.doneControl.setValue({
+        hours: null,
+        minutes: null,
+      });
+    } else {
+      this.bookForm.totalControl.setValue(null);
+      this.bookForm.doneControl.setValue(null);
+    }
+  }
 }

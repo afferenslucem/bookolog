@@ -7,8 +7,8 @@ describe('UnitsValidatorDirective', () => {
 
   beforeEach(() => {
     form = new FormBuilder().group({
-      doneUnits: new FormControl(),
-      totalUnits: new FormControl(),
+      done: new FormControl(),
+      total: new FormControl(),
       status: new FormControl(),
     });
   });
@@ -23,8 +23,8 @@ describe('UnitsValidatorDirective', () => {
     const directive = new UnitsValidatorDirective();
 
     form.setValue({
-      doneUnits: 100,
-      totalUnits: null,
+      done: 100,
+      total: null,
       status: BookStatus.InProgress,
     });
 
@@ -36,12 +36,12 @@ describe('UnitsValidatorDirective', () => {
     expect(result).toEqual(expected);
   });
 
-  it('should set error for undefined total lover then done', () => {
+  it('should set error for undefined total lower then done', () => {
     const directive = new UnitsValidatorDirective();
 
     form.setValue({
-      doneUnits: 100,
-      totalUnits: 20,
+      done: 100,
+      total: 20,
       status: BookStatus.InProgress,
     });
 
@@ -57,8 +57,8 @@ describe('UnitsValidatorDirective', () => {
     const directive = new UnitsValidatorDirective();
 
     form.setValue({
-      doneUnits: 100,
-      totalUnits: 20,
+      done: 100,
+      total: 20,
       status: BookStatus.ToRead,
     });
 
@@ -72,8 +72,8 @@ describe('UnitsValidatorDirective', () => {
     const directive = new UnitsValidatorDirective();
 
     form.setValue({
-      doneUnits: 100,
-      totalUnits: 200,
+      done: 100,
+      total: 200,
       status: BookStatus.InProgress,
     });
 

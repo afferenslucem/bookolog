@@ -4,7 +4,9 @@ import { EntityValidationResult } from 'src/app/main/utils/model-validation/enti
 
 export class BookStartDateFormatValidator extends BookDateFormatValidator {
   public validate(entity: Book): EntityValidationResult | null {
-    if (entity.started == null) return null;
+    if (entity.started == null) {
+      return null;
+    }
 
     return BookDateFormatValidator.validateDate(entity.started);
   }

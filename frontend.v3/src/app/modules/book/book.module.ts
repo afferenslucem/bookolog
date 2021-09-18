@@ -34,6 +34,7 @@ import {
   UiModalModule,
   UiProgressBarModule,
 } from 'bookolog-ui-kit';
+import { TimeProgressValidatorDirective } from './validators/time-progress-validator.directive';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {
     BookRereadFormComponent,
     UnitsValidatorDirective,
     DatesValidatorDirective,
+    TimeProgressValidatorDirective,
   ],
   imports: [
     CommonModule,

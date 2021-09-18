@@ -1,6 +1,7 @@
 import { Component, forwardRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
+import { TimeProgress } from '../../../book/models/time-progress';
 
 @Component({
   selector: 'app-book-time-input',
@@ -14,7 +15,7 @@ import { ValueAccessorBase } from '../value-accessor/value-accessor';
     },
   ],
 })
-export class BookTimeInputComponent extends ValueAccessorBase<number> {
+export class BookTimeInputComponent extends ValueAccessorBase<TimeProgress> {
   public form: FormGroup = null;
 
   constructor() {
@@ -26,17 +27,14 @@ export class BookTimeInputComponent extends ValueAccessorBase<number> {
     });
 
     this.form.valueChanges.subscribe(data => {
-      this.emitChangeValue(+data.hours * 60 + +data.minutes);
+      this.emitChangeValue(data);
     });
   }
 
-  public writeValue(value: number): void {
-    const hours = Math.floor(value / 60) || null;
-    const minutes = value % 60 || null;
-
+  public writeValue(value: TimeProgress): void {
     this.form.setValue({
-      hours,
-      minutes,
+      hours: value?.hours,
+      minutes: value?.minutes,
     });
   }
 

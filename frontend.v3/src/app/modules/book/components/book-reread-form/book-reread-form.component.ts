@@ -86,8 +86,4 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
   private createForm(book: Book): void {
     this.bookForm = new BookDataForm(book);
   }
-
-  private onTypeChange(): void {
-    this.bookForm.progressType = this.progressAlgorithmPreference;
-  }
 }

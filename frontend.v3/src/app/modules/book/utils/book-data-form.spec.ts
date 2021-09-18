@@ -82,14 +82,14 @@ describe('BookDataForm', () => {
       expect(control).toBeTruthy();
     });
 
-    it('totalUnitsControl', () => {
-      const control = bookDataForm.totalUnitsControl;
+    it('totalControl', () => {
+      const control = bookDataForm.totalControl;
 
       expect(control).toBeTruthy();
     });
 
-    it('doneUnitsControl', () => {
-      const control = bookDataForm.doneUnitsControl;
+    it('doneControl', () => {
+      const control = bookDataForm.doneControl;
 
       expect(control).toBeTruthy();
     });
@@ -135,20 +135,20 @@ describe('BookDataForm', () => {
       expect(bookDataForm.genre).toEqual('genre');
     });
 
-    it('totalUnits', () => {
+    it('total', () => {
       bookDataForm.snapshot.totalUnits = 100;
 
       bookDataForm.build();
 
-      expect(bookDataForm.totalUnits).toEqual(100);
+      expect(bookDataForm.total).toEqual(100);
     });
 
-    it('doneUnits', () => {
+    it('done', () => {
       bookDataForm.snapshot.doneUnits = 100;
 
       bookDataForm.build();
 
-      expect(bookDataForm.doneUnits).toEqual(100);
+      expect(bookDataForm.done).toEqual(100);
     });
 
     it('type', () => {
@@ -248,18 +248,18 @@ describe('BookDataForm', () => {
       });
     });
 
-    it('doneUnits', () => {
-      bookDataForm.doneUnits = 100;
+    it('done', () => {
+      bookDataForm.done = 100;
 
-      const result = bookDataForm.nativeForm.get('doneUnits').value;
+      const result = bookDataForm.nativeForm.get('done').value;
 
       expect(result).toEqual(100);
     });
 
-    it('totalUnits', () => {
-      bookDataForm.totalUnits = 120;
+    it('total', () => {
+      bookDataForm.total = 120;
 
-      const result = bookDataForm.nativeForm.get('totalUnits').value;
+      const result = bookDataForm.nativeForm.get('total').value;
 
       expect(result).toEqual(120);
     });

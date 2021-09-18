@@ -1,7 +1,7 @@
 <span (click)="open()" *ngIf="isClosed; else searchInput" class="ui-search p-h-4"></span>
 <ng-template #searchInput>
   <div class="search">
-    <input [formControl]="input" autocomplete="off" uiInput/>
+    <input [formControl]="input" autocomplete="off" uiInput />
 
     <span (click)="close()" class="ui-times p-h-4"></span>
   </div>

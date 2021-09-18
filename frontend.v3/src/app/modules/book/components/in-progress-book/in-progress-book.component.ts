@@ -19,11 +19,11 @@ export class InProgressBookComponent extends BookLineComponent implements OnInit
   }
 
   public get done(): number {
-    return this.innerBook.doneUnits;
+    return this.innerBook.doneNumeric;
   }
 
   public get total(): number {
-    return this.innerBook.totalUnits;
+    return this.innerBook.totalNumeric;
   }
 
   public get progressValue(): number {

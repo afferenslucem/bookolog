@@ -2,7 +2,7 @@ import { SearchablePageObject } from '../../searchable-page-object';
 
 export class YearInfoPo extends SearchablePageObject {
   public constructor(year: number) {
-    super(`/year/${year}`);
+    super(`/year/${ year }`);
   }
 
   public booksCount(count: number): void {
