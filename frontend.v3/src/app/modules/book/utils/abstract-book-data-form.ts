@@ -10,6 +10,7 @@ import { CollectionService } from '../../collection/services/collection.service'
 import { ProgressAlgorithmService } from '../services/progress-algorithm.service';
 import { BookFormValue } from '../models/book-form-value';
 import { ProgressFactory } from './progress/progress-factory';
+import { BookProgress } from './progress/book-progress';
 
 export abstract class AbstractBookDataForm {
   public BookType: typeof BookType = BookType;
@@ -114,14 +115,12 @@ export abstract class AbstractBookDataForm {
     const data = this.form.value as BookFormValue;
     const book = this.book;
 
-    const progress = ProgressFactory.getProgress(data.type, data.progressType);
-    progress.done = data.done;
-    progress.total = data.total;
+    const progress = this.getProgress(data);
 
     book.name = data.name;
     book.authors = data.authors;
-    book.year = data.year;
-    book.status = data.status;
+    book.year = Number(data.year);
+    book.status = Number(data.status);
     book.tags = data.tags || [];
     book.progressType = data.progressType;
     book.totalUnits = progress.totalUnits;
@@ -131,9 +130,17 @@ export abstract class AbstractBookDataForm {
     book.collectionOrder = data.collectionOrder;
     book.started = data.started;
     book.finished = data.finished;
-    book.type = data.type;
+    book.type = Number(data.type);
     book.note = data.note;
 
     return book;
+  }
+
+  public getProgress(data: BookFormValue): BookProgress {
+    const progress = ProgressFactory.getProgress(Number(data.type), data.progressType);
+    progress.done = data.done;
+    progress.total = data.total;
+
+    return progress;
   }
 }

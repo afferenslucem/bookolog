@@ -9,7 +9,7 @@ export class ProgressFactory {
   public static getProgress(bookType: BookType): BookProgress;
   public static getProgress(bookType: BookType, progressType: ProgressAlgorithmType): BookProgress;
   public static getProgress(bookType: BookType, progressType = ProgressAlgorithmType.Done): BookProgress {
-    if (Number(bookType) === BookType.Audio) {
+    if (bookType === BookType.Audio) {
       const result = new TimeBookProgress();
       result.progressType = progressType;
 

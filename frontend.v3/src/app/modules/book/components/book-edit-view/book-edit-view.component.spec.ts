@@ -19,6 +19,8 @@ import { Action } from '../../../../main/resolvers/action.resolver';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputsModule } from '../../../inputs/inputs.module';
 import { DateUtils } from '../../../../main/utils/date-utils';
+import { TimeBookProgress } from '../../utils/progress/time-book-progress';
+import { PageBookProgress } from '../../utils/progress/page-book-progress';
 
 const book: Book = new Book({
   name: 'name',
@@ -107,6 +109,42 @@ describe('BookEditViewComponent', () => {
 
       expect(component.bookForm.finished).toEqual(DateUtils.today);
       expect(component.bookForm.finished).toEqual(DateUtils.today);
+    });
+  });
+
+  describe('getProgress', () => {
+    it('should return Time left progress', () => {
+      const result = component.getProgress({
+        progressType: ProgressAlgorithmType.Left,
+        done: {
+          hours: 1,
+          minutes: 20,
+        },
+        total: {
+          hours: 12,
+          minutes: 40,
+        },
+        type: '2',
+      } as any);
+
+      expect(result).toBeInstanceOf(TimeBookProgress);
+      expect(result.progressType).toBe(ProgressAlgorithmType.Left);
+      expect(result.doneNumeric).toBe(11 * 60 + 20);
+      expect(result.totalNumeric).toBe(12 * 60 + 40);
+    });
+
+    it('should return Page progress', () => {
+      const result = component.getProgress({
+        progressType: ProgressAlgorithmType.Done,
+        done: 100,
+        total: 300,
+        type: '1',
+      } as any);
+
+      expect(result).toBeInstanceOf(PageBookProgress);
+      expect(result.progressType).toBe(ProgressAlgorithmType.Done);
+      expect(result.doneNumeric).toBe(100);
+      expect(result.totalNumeric).toBe(300);
     });
   });
 });
