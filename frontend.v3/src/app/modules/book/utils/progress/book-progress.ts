@@ -3,8 +3,6 @@ import { ProgressAlgorithmType } from '../../models/progress-algorithm-type';
 
 export abstract class BookProgress<T = number | TimeProgress> {
   private _done: T;
-  private _total: T;
-  private _progressType = ProgressAlgorithmType.Done;
 
   public get done(): T {
     return this._done;
@@ -14,6 +12,8 @@ export abstract class BookProgress<T = number | TimeProgress> {
     this._done = v;
   }
 
+  private _total: T;
+
   public get total(): T {
     return this._total;
   }
@@ -21,6 +21,8 @@ export abstract class BookProgress<T = number | TimeProgress> {
   public set total(v: T) {
     this._total = v;
   }
+
+  private _progressType = ProgressAlgorithmType.Done;
 
   public get progressType(): ProgressAlgorithmType {
     return this._progressType;
@@ -63,10 +65,6 @@ export abstract class BookProgress<T = number | TimeProgress> {
 
   public get totalNumeric(): number {
     return this.convertToNumber(this._total);
-  }
-
-  public set totalNumeric(v: number) {
-    this._total = this.convertFromNumber(v);
   }
 
   public get doneUnits(): number {

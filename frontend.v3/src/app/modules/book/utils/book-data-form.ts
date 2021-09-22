@@ -7,6 +7,7 @@ import { BookDate } from '../models/book-date';
 import { Observable } from 'rxjs';
 import { AbstractForm } from '../../../main/utils/abstract-form';
 import { TimeProgress } from '../models/time-progress';
+import { ProgressFactory } from './progress/progress-factory';
 
 const defaultValue: any = {
   guid: '',
@@ -159,6 +160,8 @@ export class BookDataForm extends AbstractForm<Book> {
   }
 
   private formFromBook(book: Book): void {
+    const progress = ProgressFactory.getProgressFromBook(book);
+
     this.form = new FormBuilder().group({
       name: new FormControl(book.name, [Validators.required]),
       year: new FormControl(book.year),
@@ -169,8 +172,8 @@ export class BookDataForm extends AbstractForm<Book> {
       type: new FormControl(book.type),
       started: new FormControl(book.started),
       finished: new FormControl(book.finished),
-      done: new FormControl(book.doneNative || null),
-      total: new FormControl(book.totalNative || null),
+      done: new FormControl(progress.done || null),
+      total: new FormControl(progress.total || null),
       authors: new FormControl(book.authors),
       tags: new FormControl(book.tags),
       note: new FormControl(book.note),

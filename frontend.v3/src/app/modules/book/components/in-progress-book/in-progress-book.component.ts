@@ -23,7 +23,7 @@ export class InProgressBookComponent extends BookLineComponent implements OnInit
   }
 
   public get total(): number {
-    return this.innerBook.totalNumeric;
+    return this.innerBook.totalUnits;
   }
 
   public get progressValue(): number {

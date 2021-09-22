@@ -7,7 +7,6 @@ import { BookType } from './book-type';
 import { ProgressAlgorithmType } from './progress-algorithm-type';
 import { BookProgress } from '../utils/progress/book-progress';
 import { ProgressFactory } from '../utils/progress/progress-factory';
-import { TimeProgress } from './time-progress';
 
 export class Book extends Entity {
   public name: string;
@@ -62,26 +61,6 @@ export class Book extends Entity {
     this.rereadedBy = data.rereadedBy || [];
   }
 
-  public get done(): number {
-    return this.progress.doneNumeric;
-  }
-
-  public set done(v: number) {
-    this.progress.doneNumeric = v;
-  }
-
-  public get doneNative(): number | TimeProgress {
-    return this.progress.done;
-  }
-
-  public set doneNative(v: number | TimeProgress) {
-    this.progress.done = v;
-  }
-
-  public get doneNumeric(): number {
-    return this.progress.doneNumeric;
-  }
-
   public get doneUnits(): number {
     return this.progress.doneUnits;
   }
@@ -90,24 +69,16 @@ export class Book extends Entity {
     this.progress.doneUnits = v;
   }
 
+  public get doneNumeric(): number {
+    return this.progress.doneNumeric;
+  }
+
   public get totalUnits(): number {
     return this.progress.totalUnits;
   }
 
   public set totalUnits(v: number) {
     this.progress.totalUnits = v;
-  }
-
-  public get totalNative(): number | TimeProgress {
-    return this.progress.total;
-  }
-
-  public set totalNative(v: number | TimeProgress) {
-    this.progress.total = v;
-  }
-
-  public get totalNumeric(): number {
-    return this.progress.totalNumeric;
   }
 
   public get progressPercents(): number {

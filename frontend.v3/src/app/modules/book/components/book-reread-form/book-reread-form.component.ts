@@ -47,7 +47,7 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
 
     this.bookForm.progressType = this.progressAlgorithmService.getAlgorithm(this.bookForm.type);
 
-    this.bookForm.typeChanges.subscribe((type) => this.onTypeChange(type));
+    this.bookForm.typeChanges.subscribe(type => this.onTypeChange(type));
   }
 
   public ngOnInit(): void {}

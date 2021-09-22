@@ -67,30 +67,6 @@ export abstract class AbstractBookDataForm {
     return data;
   }
 
-  private readValue(): Book {
-    const data = this.form.value as BookFormValue;
-
-    const book = this.book;
-
-    book.name = data.name;
-    book.authors = data.authors;
-    book.year = data.year;
-    book.status = data.status;
-    book.tags = data.tags || [];
-    book.progress = ProgressFactory.getProgress(data.type, data.progressType);
-    book.totalNative = data.total;
-    book.doneNative = data.done;
-    book.genre = data.genre;
-    book.collectionGuid = data.collectionGuid;
-    book.collectionOrder = data.collectionOrder;
-    book.started = data.started;
-    book.finished = data.finished;
-    book.type = data.type;
-    book.note = data.note;
-
-    return book;
-  }
-
   public async redirectToList(): Promise<void> {
     switch (this.bookForm.status) {
       case BookStatus.ToRead: {
@@ -132,5 +108,32 @@ export abstract class AbstractBookDataForm {
       this.bookForm.totalControl.setValue(null);
       this.bookForm.doneControl.setValue(null);
     }
+  }
+
+  private readValue(): Book {
+    const data = this.form.value as BookFormValue;
+    const book = this.book;
+
+    const progress = ProgressFactory.getProgress(data.type, data.progressType);
+    progress.done = data.done;
+    progress.total = data.total;
+
+    book.name = data.name;
+    book.authors = data.authors;
+    book.year = data.year;
+    book.status = data.status;
+    book.tags = data.tags || [];
+    book.progressType = data.progressType;
+    book.totalUnits = progress.totalUnits;
+    book.doneUnits = progress.doneUnits;
+    book.genre = data.genre;
+    book.collectionGuid = data.collectionGuid;
+    book.collectionOrder = data.collectionOrder;
+    book.started = data.started;
+    book.finished = data.finished;
+    book.type = data.type;
+    book.note = data.note;
+
+    return book;
   }
 }

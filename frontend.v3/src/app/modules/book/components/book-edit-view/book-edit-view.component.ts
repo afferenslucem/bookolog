@@ -86,7 +86,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
       switchMap(item => from(item.promisify().toArray())),
     );
     this.bookForm.progressTypeChanges.subscribe(v => (this.progressAlgorithmPreference = v));
-    this.bookForm.typeChanges.subscribe((type) => this.onTypeChange(type));
+    this.bookForm.typeChanges.subscribe(type => this.onTypeChange(type));
     this.bookForm.statusChanges.subscribe(status => this.onStatusChange(status));
   }
 
