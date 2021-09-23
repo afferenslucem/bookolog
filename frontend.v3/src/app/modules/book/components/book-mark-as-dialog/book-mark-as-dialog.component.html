@@ -1,0 +1,10 @@
+<ui-modal-header>
+  <h1>Изменить статус книги?</h1>
+</ui-modal-header>
+<ui-modal-body>
+  <p>Вы уверены, что хотите изменить статус книги на «{{ statusName }}»?</p>
+</ui-modal-body>
+<ui-modal-bottom>
+  <button (click)="cancel()" class="close" color="secondary" uiButton>Закрыть</button>
+  <button (click)="mark()" class="mark" color="primary" uiButton>Продолжить</button>
+</ui-modal-bottom>

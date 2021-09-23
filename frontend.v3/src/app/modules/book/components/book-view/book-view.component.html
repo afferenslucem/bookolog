@@ -101,11 +101,21 @@
 </div>
 
 <div class="button-group vertical">
-  <button (click)="markAsProgress(book)" *ngIf="book.status == BookStatus.ToRead" class="mark-as-progress book-status-button" uiButton>
+  <button
+    (click)="openMarkAsProgressDialog(book)"
+    *ngIf="book.status == BookStatus.ToRead"
+    class="mark-as-progress book-status-button"
+    uiButton
+  >
     Читаю
   </button>
 
-  <button (click)="markAsDone(book)" *ngIf="book.status == BookStatus.InProgress" class="mark-as-done book-status-button" uiButton>
+  <button
+    (click)="openMarkAsDoneDialog(book)"
+    *ngIf="book.status == BookStatus.InProgress"
+    class="mark-as-done book-status-button"
+    uiButton
+  >
     Прочитана
   </button>
 

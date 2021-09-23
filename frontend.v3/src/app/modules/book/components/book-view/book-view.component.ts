@@ -4,13 +4,15 @@ import { Book } from '../../models/book';
 import { BookStatus } from '../../models/book-status';
 import { BookType } from '../../models/book-type';
 import { BookService } from '../../services/book.service';
-import { BookDeleteDialogComponent } from '../book-delete-dialog/book-delete-dialog.component';
+import { BookDeleteDialogComponent, DeleteDialogResult } from '../book-delete-dialog/book-delete-dialog.component';
 import _ from 'declarray';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { DestroyService, UiModalService } from 'bookolog-ui-kit';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
 import { NotificationService } from '../../../notification/services/notification.service';
+import { BookMarkAsDialogComponent, MarkDialogResult } from '../book-mark-as-dialog/book-mark-as-dialog.component';
+import { defaultModalConfig } from '../../../../main/utils/modal-config';
 
 @Component({
   selector: 'app-book-view',
@@ -47,17 +49,39 @@ export class BookViewComponent implements OnInit, OnDestroy, AfterViewInit {
   public ngOnInit(): void {}
 
   public openDeleteDialog(book: Book): void {
-    const dialogRef = this.modal.open(BookDeleteDialogComponent, {
-      width: '90%',
-      maxWidth: '350px',
-    });
+    const dialogRef = this.modal.open(BookDeleteDialogComponent, null, defaultModalConfig);
 
     dialogRef.close$
       .pipe(
-        filter((item?: string) => item === 'delete'),
+        map(item => item as DeleteDialogResult),
+        filter((item?: DeleteDialogResult) => item === 'delete'),
         takeUntil(this.destroy$),
       )
       .subscribe(() => void this.onDelete(book));
+  }
+
+  public openMarkAsProgressDialog(book: Book): void {
+    const dialogRef = this.modal.open(BookMarkAsDialogComponent, { statusName: 'Читаю' }, defaultModalConfig);
+
+    dialogRef.close$
+      .pipe(
+        map(item => item as MarkDialogResult),
+        filter((item?: MarkDialogResult) => item === 'mark'),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => void this.markAsProgress(book));
+  }
+
+  public openMarkAsDoneDialog(book: Book): void {
+    const dialogRef = this.modal.open(BookMarkAsDialogComponent, { statusName: 'Прочитана' }, defaultModalConfig);
+
+    dialogRef.close$
+      .pipe(
+        map(item => item as MarkDialogResult),
+        filter((item?: MarkDialogResult) => item === 'mark'),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => void this.markAsDone(book));
   }
 
   public async onDelete(book: Book): Promise<void> {

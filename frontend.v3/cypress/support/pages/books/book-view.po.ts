@@ -2,7 +2,7 @@ import { PageObject } from '../page-object';
 
 export class BookViewPo extends PageObject {
   public constructor(guid: string) {
-    super(`/book/${ guid }`);
+    super(`/book/${guid}`);
   }
 
   public nameIs(name: string): void {
@@ -47,13 +47,13 @@ export class BookViewPo extends PageObject {
 
   public startDateIs(year: number, month: number, day: number): void {
     cy.get('app-book-view .book__start-date .property__value').contains(
-      `${ day.toString().padStart(2, '0') }.${ month.toString().padStart(2, '0') }.${ year }`,
+      `${day.toString().padStart(2, '0')}.${month.toString().padStart(2, '0')}.${year}`,
     );
   }
 
   public finishDateIs(year: number, month: number, day: number): void {
     cy.get('app-book-view .book__end-date .property__value').contains(
-      `${ day.toString().padStart(2, '0') }.${ month.toString().padStart(2, '0') }.${ year }`,
+      `${day.toString().padStart(2, '0')}.${month.toString().padStart(2, '0')}.${year}`,
     );
   }
 
@@ -69,9 +69,13 @@ export class BookViewPo extends PageObject {
 
   public markAsProgress(): void {
     cy.get('app-book-view .mark-as-progress').click();
+
+    cy.get('app-book-mark-as-dialog ui-modal-bottom .mark').click();
   }
 
   public markAsDone(): void {
     cy.get('app-book-view .mark-as-done').click();
+
+    cy.get('app-book-mark-as-dialog ui-modal-bottom .mark').click();
   }
 }

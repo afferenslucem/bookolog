@@ -14,6 +14,7 @@ import { BookSearchableList } from '../../../book/utils/book-searchable-list';
 import { SearchService } from '../../../search/services/search.service';
 import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
 import { NotificationService } from '../../../notification/services/notification.service';
+import { defaultModalConfig } from '../../../../main/utils/modal-config';
 
 @Component({
   selector: 'app-collection',
@@ -58,12 +59,9 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
   public ngOnInit(): void {}
 
   public openDeleteDialog(collection: Collection): void {
-    const dialogRef = this.dialog.open(CollectionDeleteDialogComponent, {
-      width: '90%',
-      maxWidth: '300px',
-    });
+    const dialogRef = this.dialog.open(CollectionDeleteDialogComponent, null, defaultModalConfig);
 
-    dialogRef.close$.pipe(filter((item?: string) => item && item === 'delete')).subscribe(() => void this.onDelete(collection));
+    dialogRef.close$.pipe(filter((item?: string) => item === 'delete')).subscribe(() => void this.onDelete(collection));
   }
 
   public async deleteCollection(collection: Collection): Promise<void> {
