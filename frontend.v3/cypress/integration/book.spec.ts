@@ -232,6 +232,7 @@ context('Book', () => {
         bookView.authorsIs(book.authors);
         bookView.typeIs(book.type);
         bookView.genreIs(book.genre);
+        bookView.progressIs('08:15 из 18:53', Math.floor((book.doneUnits / book.totalUnits) * 100));
         bookView.seriesIs(book.series);
         bookView.statusIs(book.status);
         bookView.tagsIs(book.tags);

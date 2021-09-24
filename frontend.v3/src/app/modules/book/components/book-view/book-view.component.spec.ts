@@ -15,6 +15,8 @@ import { BookOriginService } from '../../services/book.origin.service';
 import { BookStorageService } from '../../services/book.storage.service';
 import { UUIDGenerator } from 'essents';
 import { UiModalService } from 'bookolog-ui-kit';
+import { BookPagesProgressComponent } from '../book-pages-progress/book-pages-progress.component';
+import { BookTimeProgressComponent } from '../book-time-progress/book-time-progress.component';
 
 describe('BookViewComponent', () => {
   let component: BookViewComponent;
@@ -24,7 +26,7 @@ describe('BookViewComponent', () => {
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
-      declarations: [BookViewComponent],
+      declarations: [BookViewComponent, BookPagesProgressComponent, BookTimeProgressComponent],
       imports: [FormattingModule, RouterTestingModule, HttpClientTestingModule],
       providers: [
         { provide: UiModalService, useValue: {} },
@@ -237,16 +239,38 @@ describe('BookViewComponent', () => {
     });
 
     describe('Progress', () => {
-      it('should render', () => {
+      it('should render paper progress', () => {
         component.book = new Book({
           doneUnits: 100,
           totalUnits: 500,
           status: BookStatus.InProgress,
+          type: BookType.Paper,
         } as any);
 
         fixture.detectChanges();
 
         expect(element.querySelector<HTMLDivElement>('.book__progress .property__value ui-progress-bar')).toBeTruthy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__label__extended app-book-pages-progress')).toBeTruthy();
+        expect(
+          element.querySelector<HTMLDivElement>('.book__progress .property__label__extended app-book-pages-progress')?.innerText,
+        ).toContain('100 страниц из 500');
+      });
+
+      it('should render time progress', () => {
+        component.book = new Book({
+          doneUnits: 100,
+          totalUnits: 500,
+          status: BookStatus.InProgress,
+          type: BookType.Audio,
+        } as any);
+
+        fixture.detectChanges();
+
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value ui-progress-bar')).toBeTruthy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__label__extended app-book-time-progress')).toBeTruthy();
+        expect(
+          element.querySelector<HTMLDivElement>('.book__progress .property__label__extended app-book-time-progress')?.innerText,
+        ).toContain('01:40 из 08:20');
       });
 
       it('should not render only for totalUnits', () => {
@@ -257,7 +281,8 @@ describe('BookViewComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value mat-progress-bar')).toBeFalsy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value ui-progress-bar')).toBeFalsy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__label__extended app-book-pages-progress')).toBeFalsy();
       });
 
       it('should not render only for doneUnits', () => {
@@ -269,7 +294,8 @@ describe('BookViewComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value mat-progress-bar')).toBeFalsy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value ui-progress-bar')).toBeFalsy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__label__extended app-book-pages-progress')).toBeFalsy();
       });
 
       it('should not render for empty progress', () => {
@@ -280,7 +306,8 @@ describe('BookViewComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value mat-progress-bar')).toBeFalsy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value ui-progress-bar')).toBeFalsy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__label__extended app-book-pages-progress')).toBeFalsy();
       });
 
       it('should not render for Done status', () => {
@@ -288,11 +315,13 @@ describe('BookViewComponent', () => {
           doneUnits: 10,
           totalUnits: 20,
           status: BookStatus.Done,
+          type: BookType.Paper,
         } as any);
 
         fixture.detectChanges();
 
-        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value mat-progress-bar')).toBeFalsy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__value ui-progress-bar')).toBeFalsy();
+        expect(element.querySelector<HTMLDivElement>('.book__progress .property__label__extended app-book-pages-progress')).toBeFalsy();
       });
     });
 

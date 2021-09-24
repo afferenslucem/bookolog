@@ -27,6 +27,15 @@ export class BookViewPo extends PageObject {
     cy.get('app-book-view .book__genre .property__value').contains(genre);
   }
 
+  public progressIs(progressText: string, progressPercent: number): void {
+    cy.get('app-book-view .book__progress .property__value ui-progress-bar .ui-progress-bar').should(
+      'have.attr',
+      'style',
+      `width: ${progressPercent}%;`,
+    );
+    cy.get('app-book-view .book__progress .property__label__extended app-book-time-progress').contains(progressText);
+  }
+
   public seriesIs(genre: string): void {
     cy.get('app-book-view .book__collection .property__value').contains(genre);
   }

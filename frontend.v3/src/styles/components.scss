@@ -85,6 +85,12 @@ app-done-book {
 
     margin-left: $ind-1;
   }
+
+  &__label__extended {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
 }
 
 .button-group {

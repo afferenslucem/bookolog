@@ -69,7 +69,15 @@
   <div class="property__value">
     <ui-progress-bar [value]="book.progressPercents"></ui-progress-bar>
   </div>
-  <label>Прогресс</label>
+  <div class="property__label__extended">
+    <label>Прогресс</label>
+    <small class="book-edit__progress__extended">
+      <ng-container [ngSwitch]="book.type">
+        <app-book-time-progress *ngSwitchCase="BookType.Audio" [done]="book.doneNumeric" [total]="book.totalUnits"></app-book-time-progress>
+        <app-book-pages-progress *ngSwitchDefault [done]="book.doneNumeric" [total]="book.totalUnits"></app-book-pages-progress>
+      </ng-container>
+    </small>
+  </div>
 </div>
 
 <div *ngIf="doneReadings?.length > 1" class="book__readings property">
