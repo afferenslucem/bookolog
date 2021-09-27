@@ -4,7 +4,11 @@ on:
   release:
     types: [ published ]
     tags:
-      - v*
+      - v*      
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Publish images'  
 
 
 env:
