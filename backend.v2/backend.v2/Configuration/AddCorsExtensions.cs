@@ -15,7 +15,7 @@ namespace backend.v2.Configuration
                         .AllowCredentials()
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        .WithExposedHeaders(JWTDefaults.AccessHeaderName, JWTDefaults.RefreshHeaderName)
+                        .WithExposedHeaders(JWTDefaults.AccessHeaderName, JWTDefaults.RefreshHeaderName, JWTDefaults.TokenHeaderName)
                 );
             });
         }

@@ -66,9 +66,9 @@ namespace backend.v2.Authentication.Services.Actions
             var tokenData = this.GetTokenData(sessionGuid, long.Parse(userId));
 
             var accessToken = this.GetAccessToken(tokenData);
-            var refrashToken = this.GetRefreshToken(tokenData);
+            var refreshToken = this.GetRefreshToken(tokenData);
 
-            this.AppendTokens(context, accessToken, refrashToken);
+            this.AppendTokens(context, accessToken, refreshToken);
         }
         
         private void AppendClaim(ClaimsPrincipal principal, Guid guid)

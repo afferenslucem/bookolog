@@ -47,7 +47,9 @@ namespace backend.v2.Authentication.Services
             sb.Append(';');
             sb.Append(data.UserId);
             sb.Append(';');
-            sb.Append(data.ValidityDate);
+            sb.Append(data.ValidityDate.ToString("o"));
+            sb.Append(';');
+            sb.Append((int)data.Type);
 
             return sb.ToString();
         }
@@ -66,12 +68,14 @@ namespace backend.v2.Authentication.Services
             var sessionGuid = Guid.Parse(splitted[0]);
             var userId = long.Parse(splitted[1]);
             var validityDate = DateTime.Parse(splitted[2]);
+            var type = int.Parse(splitted[3]);
 
             return new TokenData()
             {
                 SessionGuid = sessionGuid,
                 UserId = userId,
-                ValidityDate = validityDate
+                ValidityDate = validityDate,
+                Type = (TokenType)type,
             };
         }
     }

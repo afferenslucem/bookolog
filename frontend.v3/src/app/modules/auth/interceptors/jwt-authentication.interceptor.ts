@@ -1,7 +1,15 @@
-import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponseBase } from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponseBase,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, filter, tap } from 'rxjs/operators';
 import { JWTDefaults } from '../models/jwt-defaults';
 import { LocalStorageService } from '../../../main/services/local-storage.service';
 
@@ -12,49 +20,64 @@ export class JWTAuthenticationInterceptor implements HttpInterceptor {
   public constructor(private localStorageService: LocalStorageService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const headers = this.getHeaders();
+    return this.sendWithAuth(req, next).pipe(tap(result => this.onResponse(result)));
+  }
 
-    const clone = req.clone({
-      setHeaders: headers,
-    });
-
-    return next.handle(clone).pipe(
-      filter(item => item.type !== 0),
-      tap(item => this.onResponse(item)),
+  public sendWithAuth(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return this.sendWithAccess(req, next).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (!err?.error && err?.status === 401) {
+          return this.sendWithRefresh(req, next);
+        } else {
+          return throwError(err);
+        }
+      }),
     );
   }
 
-  private getHeaders(): { [key: string]: string } {
-    const access = this.localStorageService.getItem(JWTDefaults.accessHeader);
-    const refrash = this.localStorageService.getItem(JWTDefaults.refrashHeader);
+  public sendWithAccess(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = this.localStorageService.getItem(JWTDefaults.accessHeader);
 
-    if (access && refrash) {
-      return {
-        [JWTDefaults.accessHeader]: access,
-        [JWTDefaults.refrashHeader]: refrash,
+    return this.sendWithToken(req, next, token);
+  }
+
+  public sendWithRefresh(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = this.localStorageService.getItem(JWTDefaults.refreshHeader);
+
+    return this.sendWithToken(req, next, token);
+  }
+
+  public sendWithToken(req: HttpRequest<any>, next: HttpHandler, token: string): Observable<HttpEvent<any>> {
+    if (token) {
+      const headers = {
+        [JWTDefaults.tokenHeader]: token,
       };
+
+      const clone = req.clone({
+        setHeaders: headers,
+      });
+
+      return next.handle(clone).pipe(filter(item => item.type !== 0));
     } else {
-      return {};
+      return next.handle(req).pipe(filter(item => item.type !== 0));
     }
   }
 
-  private onResponse(event: HttpEvent<any>): void {
+  public onResponse(event: HttpEvent<any>): void {
     if (event instanceof HttpResponseBase) {
       this.readHeaders(event.headers);
     }
   }
 
   private readHeaders(headers: HttpHeaders): void {
-    this.refrashToken(headers, JWTDefaults.accessHeader);
-    this.refrashToken(headers, JWTDefaults.refrashHeader);
+    this.refreshToken(headers, JWTDefaults.accessHeader);
+    this.refreshToken(headers, JWTDefaults.refreshHeader);
   }
 
-  private refrashToken(headers: HttpHeaders, headerName: string): void {
+  private refreshToken(headers: HttpHeaders, headerName: string): void {
     if (headers.has(headerName)) {
       const token = headers.get(headerName);
       this.localStorageService.setItem(headerName, token);
-    } else {
-      this.localStorageService.removeItem(headerName);
     }
   }
 }

@@ -43,24 +43,26 @@ namespace backend.v2.tests.Authentication.Services
             {
                 SessionGuid = Guid.Empty,
                 UserId = 2,
-                ValidityDate = validityDate
+                ValidityDate = validityDate,
+                Type = TokenType.Refresh
             };
 
             var result = manager.Object.ConcatParameters(data);
             
-            Assert.AreEqual(result, "00000000-0000-0000-0000-000000000000;2;" + validityDate);
+            Assert.AreEqual(result, $"00000000-0000-0000-0000-000000000000;2;{validityDate.ToString("o")};1");
         }
 
         [TestMethod]
         public void ShouldParseParameters()
         {
             var validityDate = new DateTime(2021, 2, 27, 2, 28, 0);
-            var tokenStr = "00000000-0000-0000-0000-000000000000;2;" + validityDate;
+            var tokenStr = $"00000000-0000-0000-0000-000000000000;2;{validityDate};1";
             var data = manager.Object.ParseParameters(tokenStr);
             
             Assert.AreEqual(data.SessionGuid, Guid.Empty);
             Assert.AreEqual(data.UserId, 2);
             Assert.AreEqual(data.ValidityDate, validityDate);
+            Assert.AreEqual(data.Type, TokenType.Refresh);
         }
     }
 }

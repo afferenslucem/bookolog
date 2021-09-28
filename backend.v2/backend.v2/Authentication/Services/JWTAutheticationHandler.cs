@@ -46,61 +46,51 @@ namespace backend.v2.Authentication.Services
 
         public async Task<AuthenticateResult> HandleAuthenticate()
         {
-            if (!Context.Request.Headers.ContainsKey(JWTDefaults.AccessHeaderName) ||
-                !Context.Request.Headers.ContainsKey(JWTDefaults.RefreshHeaderName))
+            if (!Context.Request.Headers.ContainsKey(JWTDefaults.TokenHeaderName))
             {
                 return AuthenticateResult.NoResult();
             }
 
-            var accessToken = Context.Request.Headers[JWTDefaults.AccessHeaderName];
-            var refreshToken = Context.Request.Headers[JWTDefaults.RefreshHeaderName];
+            var token = Context.Request.Headers[JWTDefaults.TokenHeaderName];
 
-            return await this.AuthenticateByTokens(accessToken, refreshToken);
+            return await this.AuthenticateByTokens(token);
         }
 
-        public async Task<AuthenticateResult> AuthenticateByTokens(string accessToken, string refreshToken)
+        public async Task<AuthenticateResult> AuthenticateByTokens(string token)
         {
             try
             {
-                var refreshTokenData = this.tokenManager.DecodeToken(refreshToken);
-                if (refreshTokenData.ValidityDate < this.Clock.UtcNow)
+                var tokenData = this.tokenManager.DecodeToken(token);
+                
+                if (tokenData.Type == TokenType.Access && tokenData.ValidityDate < this.Clock.UtcNow)
                 {
-                    this.OnRefreshExpired();
-                    return AuthenticateResult.NoResult();
+                    return AuthenticateResult.Fail("Token expired");
+                } 
+                
+                if (tokenData.Type == TokenType.Refresh && tokenData.ValidityDate < this.Clock.UtcNow)
+                {
+                    await this.DeleteSession(tokenData.SessionGuid);
+                    return AuthenticateResult.Fail("Token expired");
                 }
                 
-                var accessTokenData = this.tokenManager.DecodeToken(accessToken);
-                if (accessTokenData.ValidityDate < this.Clock.UtcNow)
+                if (tokenData.Type == TokenType.Refresh && tokenData.ValidityDate >= this.Clock.UtcNow)
                 {
-                    this.OnAccessExpired(accessTokenData);
-                }
-                else {
-                    this.CopyTokens();
+                    var accessToken = this.GetAccessToken(tokenData);
+                    var refreshToken = this.GetRefreshToken(tokenData);
+                    
+                    this.AppendTokens(accessToken, refreshToken);
                 }
 
-                await this.CheckSession(accessTokenData.SessionGuid);
+                await this.CheckSession(tokenData.SessionGuid);
 
-                var ticket = await this.Authenticate(accessTokenData);
+                var ticket = await this.Authenticate(tokenData);
 
                 return AuthenticateResult.Success(ticket);
             }
             catch (Exception e)
             {
-                return AuthenticateResult.Fail("Cookies error");
+                return AuthenticateResult.Fail(new Exception("Cookies error", e));
             }
-        }
-
-        public virtual void OnRefreshExpired()
-        {
-            this.DeleteTokens();
-        }
-
-        public virtual void OnAccessExpired(TokenData data)
-        {
-            var accessToken = this.GetAccessToken(data);
-            var refreshToken = this.GetRefreshToken(data);
-
-            this.RenewTokens(accessToken, refreshToken);
         }
         
         public virtual string GetAccessToken(TokenData data) {
@@ -115,7 +105,7 @@ namespace backend.v2.Authentication.Services
             return tokenManager.EncodeToken(data);
         }
 
-        public async Task<AuthenticationTicket> Authenticate(TokenData data)
+        public virtual async Task<AuthenticationTicket> Authenticate(TokenData data)
         {
             var user = await this.userService.GetById(data.UserId);
             this.userSession.User = user;
@@ -131,20 +121,9 @@ namespace backend.v2.Authentication.Services
             return ticket;
         }
 
-        public virtual void RenewTokens(string access, string refresh)
+        public virtual async Task DeleteSession(Guid guid)
         {
-            this.AppendTokens(access, refresh);
-        }
-
-        public virtual void CopyTokens() {
-            this.Context.Response.Headers[JWTDefaults.AccessHeaderName] = this.Context.Request.Headers[JWTDefaults.AccessHeaderName];
-            this.Context.Response.Headers[JWTDefaults.RefreshHeaderName] = this.Context.Request.Headers[JWTDefaults.RefreshHeaderName];
-        }
-
-        public virtual void DeleteTokens()
-        {
-            Context.Response.Headers.Remove(JWTDefaults.AccessHeaderName);
-            Context.Response.Headers.Remove(JWTDefaults.RefreshHeaderName);
+            await this.sessionService.Delete(guid);
         }
         
         public virtual void AppendTokens(string access, string refresh)
