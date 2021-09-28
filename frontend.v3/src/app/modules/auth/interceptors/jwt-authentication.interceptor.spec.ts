@@ -9,9 +9,9 @@ describe('JWTAuthenticationInterceptor', () => {
   let interceptor: JWTAuthenticationInterceptor = null;
   let storage: LocalStorageService = null;
   let handler: HttpHandler = null;
-  let req: any = {};
+  const req: any = {};
 
-  beforeEach(async () => {
+  beforeEach(() => {
     interceptor = TestBed.inject(JWTAuthenticationInterceptor);
     storage = TestBed.inject(LocalStorageService);
 
