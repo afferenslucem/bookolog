@@ -19,6 +19,7 @@ import { AbstractBookDataForm } from '../../utils/abstract-book-data-form';
 import { BookSortUtils } from '../../../../main/utils/book-sort-utils';
 import { ProgressAlgorithmService } from '../../services/progress-algorithm.service';
 import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
+import { MetrikaService } from '../../../metrika/services/metrika.service';
 
 @Component({
   selector: 'app-book-edit-view',
@@ -39,6 +40,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     private activatedRoute: ActivatedRoute,
     private bookService: BookService,
     private location: Location,
+    private metrika: MetrikaService,
     collectionService: CollectionService,
     progressAlgorithmService: ProgressAlgorithmService,
     router: Router,
@@ -139,10 +141,12 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     }
   }
 
-  private async redirect(): Promise<void> {
+  public async redirect(): Promise<void> {
     if (this.action === Action.Create) {
+      this.metrika.fireBookCreate();
       await this.redirectToList();
     } else {
+      this.metrika.fireBookUpdate();
       this.location.back();
     }
   }

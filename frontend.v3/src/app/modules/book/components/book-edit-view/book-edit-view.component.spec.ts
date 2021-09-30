@@ -21,6 +21,8 @@ import { InputsModule } from '../../../inputs/inputs.module';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { TimeBookProgress } from '../../utils/progress/time-book-progress';
 import { PageBookProgress } from '../../utils/progress/page-book-progress';
+import { MetrikaModule } from '../../../metrika/metrika.module';
+import { MetrikaService } from '../../../metrika/services/metrika.service';
 
 const book: Book = new Book({
   name: 'name',
@@ -45,6 +47,7 @@ describe('BookEditViewComponent', () => {
   let component: BookEditViewComponent;
   let fixture: ComponentFixture<BookEditViewComponent>;
   let element: HTMLDivElement = null;
+  let metrika: MetrikaService = null;
 
   let bookService: BookService = null;
 
@@ -59,6 +62,7 @@ describe('BookEditViewComponent', () => {
         ReactiveFormsModule,
         InputsModule,
         FormattingModule,
+        MetrikaModule,
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -72,6 +76,7 @@ describe('BookEditViewComponent', () => {
     fixture = TestBed.createComponent(BookEditViewComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+    metrika = TestBed.inject(MetrikaService);
 
     bookService = TestBed.inject(BookService);
 
@@ -145,6 +150,28 @@ describe('BookEditViewComponent', () => {
       expect(result.progressType).toBe(ProgressAlgorithmType.Done);
       expect(result.doneNumeric).toBe(100);
       expect(result.totalNumeric).toBe(300);
+    });
+  });
+
+  describe('metrika', () => {
+    it('should send create event', async () => {
+      const spy = spyOn(metrika, 'fireBookCreate');
+      spyOn(component, 'redirectToList');
+
+      component.action = Action.Create;
+      await component.redirect();
+
+      expect(spy).toHaveBeenCalledWith();
+    });
+
+    it('should send update event', async () => {
+      const spy = spyOn(metrika, 'fireBookUpdate');
+      spyOn(component, 'redirectToList');
+
+      component.action = Action.Edit;
+      await component.redirect();
+
+      expect(spy).toHaveBeenCalledWith();
     });
   });
 });

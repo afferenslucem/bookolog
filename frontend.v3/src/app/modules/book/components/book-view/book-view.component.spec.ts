@@ -17,17 +17,20 @@ import { UUIDGenerator } from 'essents';
 import { UiModalService } from 'bookolog-ui-kit';
 import { BookPagesProgressComponent } from '../book-pages-progress/book-pages-progress.component';
 import { BookTimeProgressComponent } from '../book-time-progress/book-time-progress.component';
+import { MetrikaModule } from '../../../metrika/metrika.module';
+import { MetrikaService } from '../../../metrika/services/metrika.service';
 
 describe('BookViewComponent', () => {
   let component: BookViewComponent;
   let fixture: ComponentFixture<BookViewComponent>;
   let element: HTMLElement;
   let bookService: BookService;
+  let metrika: MetrikaService;
 
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [BookViewComponent, BookPagesProgressComponent, BookTimeProgressComponent],
-      imports: [FormattingModule, RouterTestingModule, HttpClientTestingModule],
+      imports: [FormattingModule, RouterTestingModule, HttpClientTestingModule, MetrikaModule],
       providers: [
         { provide: UiModalService, useValue: {} },
         BookService,
@@ -49,6 +52,7 @@ describe('BookViewComponent', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     bookService = TestBed.inject(BookService);
+    metrika = TestBed.inject(MetrikaService);
   });
 
   it('Creating', () => {
@@ -494,26 +498,30 @@ describe('BookViewComponent', () => {
         updateSpy = spyOn(bookService, 'saveOrUpdate');
       });
 
-      it('markAsProgress', () => {
+      it('markAsProgress', async () => {
+        const metrikaSpy = spyOn(metrika, 'fireBookUpdate');
         const book = {
           status: BookStatus.ToRead,
         } as Book;
 
-        component.markAsProgress(book);
+        await component.markAsProgress(book);
 
         expect(updateSpy).toHaveBeenCalledOnceWith({
           status: BookStatus.InProgress,
           started: DateUtils.today,
         } as Book);
+
+        expect(metrikaSpy).toHaveBeenCalledWith();
       });
 
-      it('markAsProgress', () => {
+      it('markAsProgress', async () => {
+        const metrikaSpy = spyOn(metrika, 'fireBookUpdate');
         const book = {
           status: BookStatus.InProgress,
           totalUnits: 100,
         } as Book;
 
-        component.markAsDone(book);
+        await component.markAsDone(book);
 
         expect(updateSpy).toHaveBeenCalledOnceWith({
           status: BookStatus.Done,
@@ -521,6 +529,24 @@ describe('BookViewComponent', () => {
           totalUnits: 100,
           finished: DateUtils.today,
         } as Book);
+
+        expect(metrikaSpy).toHaveBeenCalledWith();
+      });
+
+      it('deleteBook', async () => {
+        const metrikaSpy = spyOn(metrika, 'fireBookDelete');
+        const deleteSpy = spyOn(bookService, 'delete');
+        const book = {
+          guid: 'guid',
+        } as Book;
+
+        await component.deleteBook(book);
+
+        expect(deleteSpy).toHaveBeenCalledOnceWith({
+          guid: 'guid',
+        } as Book);
+
+        expect(metrikaSpy).toHaveBeenCalledWith();
       });
     });
   });

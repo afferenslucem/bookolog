@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Action } from 'src/app/main/resolvers/action.resolver';
-import { ILogger } from 'waterlog';
-import { getConsoleLogger } from '../../../../main/app.logging';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { NotificationService } from '../../../notification/services/notification.service';
 import { Collection } from '../../models/collection';
@@ -10,6 +8,7 @@ import { CollectionService } from '../../services/collection.service';
 import { CollectionDataForm } from '../../utils/collection-data-form';
 import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
 import { EntityValidationError } from '../../../../main/models/errors/entity-validation-error';
+import { MetrikaService } from '../../../metrika/services/metrika.service';
 
 @Component({
   selector: 'app-collection-edit-view',
@@ -19,12 +18,12 @@ import { EntityValidationError } from '../../../../main/models/errors/entity-val
 export class CollectionEditViewComponent implements OnInit {
   public form: CollectionDataForm = null;
   public action: Action;
-  private logger: ILogger = getConsoleLogger('CollectionEditViewComponent');
 
   constructor(
     private collectionService: CollectionService,
     private notificationService: NotificationService,
     private activatedRoute: ActivatedRoute,
+    private metrika: MetrikaService,
     private router: Router,
   ) {
     this.activatedRoute.data.subscribe(data => {
@@ -73,8 +72,10 @@ export class CollectionEditViewComponent implements OnInit {
 
   public async redirect(guid?: string): Promise<void> {
     if (!guid) {
+      this.metrika.fireCollectionCreate();
       await this.router.navigate(['/series']);
     } else {
+      this.metrika.fireCollectionUpdate();
       await this.router.navigate(['/series', guid]);
     }
   }

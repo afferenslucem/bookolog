@@ -15,6 +15,7 @@ import { SearchService } from '../../../search/services/search.service';
 import { BrokenConnectionError } from '../../../../main/models/errors/broken-connection-error';
 import { NotificationService } from '../../../notification/services/notification.service';
 import { defaultModalConfig } from '../../../../main/utils/modal-config';
+import { MetrikaService } from '../../../metrika/services/metrika.service';
 
 @Component({
   selector: 'app-collection',
@@ -35,6 +36,7 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
     searchService: SearchService,
     private router: Router,
     public dialog: UiModalService,
+    public metrika: MetrikaService,
     private notificationService: NotificationService,
   ) {
     super(activatedRoute, searchService);
@@ -68,6 +70,7 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
     try {
       await this.bookService.deleteBooksFromCollection(collection.guid);
       await this.collectionService.delete(collection);
+      this.metrika.fireCollectionDelete();
     } catch (e) {
       if (e instanceof BrokenConnectionError) {
         this.notificationService.createWarningNotification('Коллекция удалена локально');

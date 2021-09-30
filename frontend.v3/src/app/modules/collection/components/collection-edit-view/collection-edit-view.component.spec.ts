@@ -7,10 +7,13 @@ import { UUIDGeneratorService } from '../../../../main/services/u-u-i-d-generato
 import { CollectionService } from '../../services/collection.service';
 import { Action } from '../../../../main/resolvers/action.resolver';
 import { Router } from '@angular/router';
+import { MetrikaModule } from '../../../metrika/metrika.module';
+import { MetrikaService } from '../../../metrika/services/metrika.service';
 
 describe('CollectionEditViewComponent', () => {
   let component: CollectionEditViewComponent;
   let fixture: ComponentFixture<CollectionEditViewComponent>;
+  let metrika: MetrikaService = null;
   let service: CollectionService;
   let element: HTMLElement;
   let router: Router;
@@ -18,7 +21,7 @@ describe('CollectionEditViewComponent', () => {
   beforeEach(async () => {
     await TestCore.configureTestingModule({
       declarations: [CollectionEditViewComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule, MetrikaModule],
       providers: [
         {
           provide: UUIDGeneratorService,
@@ -36,6 +39,7 @@ describe('CollectionEditViewComponent', () => {
     fixture = TestBed.createComponent(CollectionEditViewComponent);
     service = TestBed.inject(CollectionService);
     router = TestBed.inject(Router);
+    metrika = TestBed.inject(MetrikaService);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     fixture.detectChanges();
@@ -70,9 +74,10 @@ describe('CollectionEditViewComponent', () => {
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('should trigger service', async () => {
+    it('should trigger saveOrUpdate', async () => {
       const spy = spyOn(service, 'saveOrUpdate').and.resolveTo();
-      const routerSpy = spyOn(router, 'navigate').and.resolveTo();
+      spyOn(router, 'navigate').and.resolveTo();
+      spyOn(metrika, 'fireCollectionCreate');
 
       const collection = {
         modifyDate: 'md',
@@ -86,8 +91,9 @@ describe('CollectionEditViewComponent', () => {
 
   describe('data flag', () => {
     it('should declare createDate', async () => {
-      const spy = spyOn(service, 'saveOrUpdate').and.resolveTo();
-      const routerSpy = spyOn(router, 'navigate').and.resolveTo();
+      spyOn(metrika, 'fireCollectionCreate');
+      spyOn(service, 'saveOrUpdate').and.resolveTo();
+      spyOn(router, 'navigate').and.resolveTo();
 
       const collection = {} as any;
 
@@ -97,8 +103,9 @@ describe('CollectionEditViewComponent', () => {
     });
 
     it('should change modifyDate', async () => {
-      const spy = spyOn(service, 'saveOrUpdate').and.resolveTo();
-      const routerSpy = spyOn(router, 'navigate').and.resolveTo();
+      spyOn(metrika, 'fireCollectionCreate');
+      spyOn(service, 'saveOrUpdate').and.resolveTo();
+      spyOn(router, 'navigate').and.resolveTo();
 
       const collection = {
         modifyDate: 'md',
@@ -114,6 +121,7 @@ describe('CollectionEditViewComponent', () => {
     it('should trigger redirect', async () => {
       const saveOrUpdateSpy = spyOn(service, 'saveOrUpdate');
       const redirectSpy = spyOn(component, 'redirect');
+      spyOn(metrika, 'fireCollectionCreate');
 
       const collection = {
         modifyDate: 'md',
@@ -132,6 +140,7 @@ describe('CollectionEditViewComponent', () => {
     it('should trigger back', async () => {
       const saveOrUpdateSpy = spyOn(service, 'saveOrUpdate');
       const redirectSpy = spyOn(component, 'redirect');
+      spyOn(metrika, 'fireCollectionUpdate');
 
       const collection = {
         modifyDate: 'md',
@@ -145,6 +154,41 @@ describe('CollectionEditViewComponent', () => {
       expect(saveOrUpdateSpy).toHaveBeenCalledWith(collection);
       expect(redirectSpy).not.toHaveBeenCalledWith();
       expect(redirectSpy).toHaveBeenCalledWith(collection.guid);
+    });
+  });
+
+  describe('metrika', () => {
+    it('should send create event', async () => {
+      spyOn(service, 'saveOrUpdate');
+      spyOn(router, 'navigate').and.resolveTo();
+      const spy = spyOn(metrika, 'fireCollectionCreate');
+
+      const collection = {
+        modifyDate: 'md',
+      } as any;
+
+      component.action = Action.Create;
+
+      await component.saveOrUpdate(collection);
+
+      expect(spy).toHaveBeenCalledWith();
+    });
+
+    it('should send update event', async () => {
+      spyOn(service, 'saveOrUpdate');
+      spyOn(router, 'navigate').and.resolveTo();
+      const spy = spyOn(metrika, 'fireCollectionUpdate');
+
+      const collection = {
+        modifyDate: 'md',
+        guid: 'guid',
+      } as any;
+
+      component.action = Action.Edit;
+
+      await component.saveOrUpdate(collection);
+
+      expect(spy).toHaveBeenCalledWith();
     });
   });
 

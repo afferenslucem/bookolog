@@ -10,6 +10,8 @@ import { TitleService } from '../../../title/services/title.service';
 import { BookService } from '../../../book/services/book.service';
 import { CollectionService } from '../../services/collection.service';
 import { Book } from '../../../book/models/book';
+import { MetrikaModule } from '../../../metrika/metrika.module';
+import { MetrikaService } from '../../../metrika/services/metrika.service';
 
 describe('CollectionComponent', () => {
   let component: CollectionViewComponent;
@@ -46,7 +48,7 @@ describe('CollectionComponent', () => {
         },
         { provide: UUIDGeneratorService, useValue: {} },
       ],
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule, MetrikaModule],
     }).compileComponents();
   });
 
@@ -114,6 +116,26 @@ describe('CollectionComponent', () => {
       const sorted = component.sortBooks([third, second, first]);
 
       expect(sorted).toEqual([second, third, first]);
+    });
+  });
+
+  describe('metrika', () => {
+    let metrika: MetrikaService = null;
+
+    beforeEach(() => {
+      metrika = TestBed.inject(MetrikaService);
+    });
+
+    it('should fire deleteEvent', async () => {
+      const spy = spyOn(metrika, 'fireCollectionDelete');
+      const deleteBooksSpy = spyOn(bookService, 'deleteBooksFromCollection');
+      const deleteSpy = spyOn(collectionService, 'delete');
+
+      await component.deleteCollection({
+        guid: 'id1',
+      } as any);
+
+      expect(spy).toHaveBeenCalledWith();
     });
   });
 });

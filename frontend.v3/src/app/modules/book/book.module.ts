@@ -36,6 +36,7 @@ import {
 } from 'bookolog-ui-kit';
 import { TimeProgressValidatorDirective } from './validators/time-progress-validator.directive';
 import { BookMarkAsDialogComponent } from './components/book-mark-as-dialog/book-mark-as-dialog.component';
+import { MetrikaModule } from '../metrika/metrika.module';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { BookMarkAsDialogComponent } from './components/book-mark-as-dialog/book
     UiAccordionModule,
     UiModalModule,
     UiChipsModule,
+    MetrikaModule,
   ],
   exports: [DoneBooksListComponent, DoneBookComponent, BooksByYearsComponent, ToReadBookComponent],
 })

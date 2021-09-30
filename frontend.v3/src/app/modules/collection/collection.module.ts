@@ -10,6 +10,7 @@ import { CollectionListComponent } from './components/collection-list/collection
 import { CollectionViewComponent } from './components/collection-view/collection-view.component';
 import { ListModuleModule } from '../list-module/list-module.module';
 import { UiButtonModule, UiDividerModule, UiFormFieldModule, UiModalModule, UiProgressBarModule } from 'bookolog-ui-kit';
+import { MetrikaModule } from '../metrika/metrika.module';
 
 @NgModule({
   declarations: [CollectionEditViewComponent, CollectionListComponent, CollectionViewComponent, CollectionDeleteDialogComponent],
@@ -25,6 +26,7 @@ import { UiButtonModule, UiDividerModule, UiFormFieldModule, UiModalModule, UiPr
     UiProgressBarModule,
     UiDividerModule,
     UiModalModule,
+    MetrikaModule,
   ],
 })
 export class CollectionModule {}

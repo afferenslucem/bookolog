@@ -13,6 +13,7 @@ import { BrokenConnectionError } from '../../../../main/models/errors/broken-con
 import { NotificationService } from '../../../notification/services/notification.service';
 import { BookMarkAsDialogComponent, MarkDialogResult } from '../book-mark-as-dialog/book-mark-as-dialog.component';
 import { defaultModalConfig } from '../../../../main/utils/modal-config';
+import { MetrikaService } from '../../../metrika/services/metrika.service';
 
 @Component({
   selector: 'app-book-view',
@@ -38,6 +39,7 @@ export class BookViewComponent implements OnInit, OnDestroy, AfterViewInit {
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
     private notificationService: NotificationService,
+    private metrika: MetrikaService,
   ) {
     activatedRoute.data.subscribe(data => this.onDataInit(data));
   }
@@ -92,6 +94,7 @@ export class BookViewComponent implements OnInit, OnDestroy, AfterViewInit {
   public async deleteBook(book: Book): Promise<void> {
     try {
       await this.bookService.delete(book);
+      this.metrika.fireBookDelete();
     } catch (e) {
       if (e instanceof BrokenConnectionError) {
         this.notificationService.createWarningNotification('Книга удалена локально');
@@ -106,6 +109,7 @@ export class BookViewComponent implements OnInit, OnDestroy, AfterViewInit {
     book.status = BookStatus.InProgress;
 
     await this.bookService.saveOrUpdate(book);
+    this.metrika.fireBookUpdate();
     await this.reload();
   }
 
@@ -115,6 +119,7 @@ export class BookViewComponent implements OnInit, OnDestroy, AfterViewInit {
     book.status = BookStatus.Done;
 
     await this.bookService.saveOrUpdate(book);
+    this.metrika.fireBookUpdate();
     await this.reload();
   }
 
