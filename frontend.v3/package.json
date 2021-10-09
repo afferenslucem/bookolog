@@ -14,6 +14,14 @@
     "ci:start-server": "angular-http-server --path ./dist/frontend -p 4200",
     "ci:run-cypress": "$(npm bin)/cypress run"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{html, js, ts, scss}": "eslint --fix"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~11.0.0",
@@ -64,6 +72,7 @@
     "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-prefer-arrow": "1.2.2",
     "eslint-plugin-prettier": "^3.3.1",
+    "husky": "^4.3.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.1.0",
@@ -71,6 +80,7 @@
     "karma-coverage": "^2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "lint-staged": "^11.2.1",
     "ng-packagr": "^11.0.0",
     "prettier": "^2.2.1",
     "start-server-and-test": "^1.12.1",
