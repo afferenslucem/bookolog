@@ -7,6 +7,7 @@ import { PreloaderInterceptor } from './interceptors/preloader.interceptor';
 import { RetryInterceptor } from './interceptors/retry.interceptor';
 import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
 import { UrlInterceptor } from './interceptors/url.interceptor';
+import { PingInterceptor } from './interceptors/ping.interceptor';
 
 export const interceptors = [
   { provide: HTTP_INTERCEPTORS, useClass: PreloaderInterceptor, multi: true },
@@ -17,4 +18,5 @@ export const interceptors = [
   { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoggerInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: RetryInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: PingInterceptor, multi: true },
 ];

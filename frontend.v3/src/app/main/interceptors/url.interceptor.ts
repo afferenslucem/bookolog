@@ -11,9 +11,13 @@ export class UrlInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const clone = req.clone({
-      url: environment.serverUrl + req.url,
+      url: UrlInterceptor.getServerUrl(req.url),
     });
 
     return next.handle(clone);
+  }
+
+  public static getServerUrl(url: string): string {
+    return environment.serverUrl + url;
   }
 }
