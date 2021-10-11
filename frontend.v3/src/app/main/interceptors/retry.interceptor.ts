@@ -3,22 +3,29 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, delay, switchMap } from 'rxjs/operators';
 import { BrokenConnectionError } from '../models/errors/broken-connection-error';
+import { PingService } from '../services/ping.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RetryInterceptor implements HttpInterceptor {
-  public constructor() {}
+  public constructor(public ping: PingService) {}
 
   private static isOffline(err: HttpErrorResponse): boolean {
     return err.status === 0 || err.status === 504;
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.trySendRequest(req, next, 3);
+    if (this.ping.mode === 'online') {
+      return this.trySendRequest(req, next, 3);
+    } else if (this.ping.mode === 'slowConnection') {
+      return this.trySendRequest(req, next, 2);
+    } else {
+      return this.trySendRequest(req, next, 1);
+    }
   }
 
-  private trySendRequest(req: HttpRequest<any>, next: HttpHandler, count: number): Observable<HttpEvent<any>> {
+  public trySendRequest(req: HttpRequest<any>, next: HttpHandler, count: number): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(catchError((err: HttpErrorResponse) => this.handleError(err, req, next, count)));
   }
 
@@ -27,7 +34,7 @@ export class RetryInterceptor implements HttpInterceptor {
       const newReq = req.clone();
 
       return of(null).pipe(
-        delay(1500),
+        delay(250),
         switchMap(() => this.trySendRequest(newReq, next, count - 1)),
       );
     } else if (RetryInterceptor.isOffline(err)) {

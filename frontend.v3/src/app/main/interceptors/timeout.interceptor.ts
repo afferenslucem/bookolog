@@ -2,16 +2,29 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
+import { PingService } from '../services/ping.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TimeoutInterceptor implements HttpInterceptor {
-  public constructor() {}
+  public constructor(private ping: PingService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const timeoutValue = Number(req.headers.get('timeout')) || 40 * 1000;
+    const time = this.getTimeout();
+    const timeoutValue = Number(req.headers.get('timeout')) || time;
 
     return next.handle(req).pipe(timeout(timeoutValue));
+  }
+
+  public getTimeout(): number {
+    switch (this.ping.mode) {
+      case 'online':
+        return 25 * 1000;
+      case 'slowConnection':
+        return 30 * 1000;
+      case 'offline':
+        return 15 * 1000;
+    }
   }
 }

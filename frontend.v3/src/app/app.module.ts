@@ -35,6 +35,7 @@ import {
   UiSpinnerModule,
   UiToolbarModule,
 } from 'bookolog-ui-kit';
+import { ConnectionMarkerComponent } from './main/components/connection-marker/connection-marker.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -47,6 +48,7 @@ registerLocaleData(localeRu, 'ru');
     PreloaderComponent,
     SyncInfoComponent,
     LoggerWindowComponent,
+    ConnectionMarkerComponent,
   ],
   imports: [
     BrowserModule,
