@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, from, Observable, Subject, throwError } from 'rxjs';
-import { catchError, distinct, distinctUntilChanged, finalize, mapTo, takeUntil, tap } from 'rxjs/operators';
+import { HttpBackend, HttpClient } from '@angular/common/http';
+import { from, Observable, Subject, throwError } from 'rxjs';
+import { catchError, distinctUntilChanged, finalize, mapTo, takeUntil, tap } from 'rxjs/operators';
 import { getRequestLogger } from '../app.logging';
 import { UrlInterceptor } from '../interceptors/url.interceptor';
 import { Timer } from 'essents';

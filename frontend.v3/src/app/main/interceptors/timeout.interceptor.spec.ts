@@ -1,4 +1,3 @@
-import { RetryInterceptor } from './retry.interceptor';
 import { TimeoutInterceptor } from './timeout.interceptor';
 
 describe('TimeoutInterceptor', () => {

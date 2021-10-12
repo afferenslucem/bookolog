@@ -80,7 +80,7 @@ describe('PingService', () => {
   });
 
   describe('onRequestFinished', () => {
-    it('should emit online for 500', async done => {
+    it('should emit online for 500', done => {
       service.mode$.subscribe(result => {
         expect(result).toEqual('online');
 
@@ -105,11 +105,13 @@ describe('PingService', () => {
     it('should fire event', done => {
       const [timer, promise] = service.getTimeoutTimer(500);
 
-      promise.then(() => {
-        expect(service.mode).toEqual('offline');
-        expect(timer.alive).toBeFalse();
-        done();
-      });
+      promise
+        .then(() => {
+          expect(service.mode).toEqual('offline');
+          expect(timer.alive).toBeFalse();
+          done();
+        })
+        .catch(done.fail);
     });
   });
 });
