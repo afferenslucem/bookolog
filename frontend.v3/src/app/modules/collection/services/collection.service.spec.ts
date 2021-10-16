@@ -8,7 +8,6 @@ import { CollectionOriginService } from './collection.origin.service';
 import { Collection } from '../models/collection';
 import { UUIDGeneratorService } from '../../../main/services/u-u-i-d-generator.service';
 import { BrokenConnectionError } from '../../../main/models/errors/broken-connection-error';
-import { EntityValidationError } from '../../../main/models/errors/entity-validation-error';
 
 describe('CollectionService', () => {
   let collectionService: CollectionService;
@@ -27,85 +26,6 @@ describe('CollectionService', () => {
 
   it('should be created', () => {
     expect(collectionService).toBeTruthy();
-  });
-
-  describe('saveOrUpdate', () => {
-    it('should update collection', async () => {
-      const storage = TestBed.inject(CollectionStorageService);
-      const origin = TestBed.inject(CollectionOriginService);
-
-      const updateSpy = spyOn(storage, 'update').and.resolveTo();
-      const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(origin, 'sync').and.resolveTo({
-        delete: [],
-        update: [],
-      });
-
-      const collection: Collection = {
-        guid: 'guid',
-        name: 'name',
-        type: 1,
-        status: 1,
-        modifyDate: '2020-11-18 10:57:00',
-        createDate: '2020-11-18 10:57:00',
-      } as any;
-
-      await collectionService.saveOrUpdate(collection);
-
-      expect(updateSpy).toHaveBeenCalledTimes(1);
-      expect(saveSpy).toHaveBeenCalledTimes(0);
-
-      expect(syncSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should save collection', async () => {
-      const storage = TestBed.inject(CollectionStorageService);
-      const origin = TestBed.inject(CollectionOriginService);
-
-      const updateSpy = spyOn(storage, 'update').and.resolveTo();
-      const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(origin, 'sync').and.resolveTo({
-        delete: [],
-        update: [],
-      });
-
-      const collection: Collection = {
-        name: 'name',
-        type: 1,
-        status: 1,
-        modifyDate: '2020-11-18 10:57:00',
-        createDate: '2020-11-18 10:57:00',
-      } as any;
-
-      await collectionService.saveOrUpdate(collection);
-
-      expect(saveSpy).toHaveBeenCalledTimes(1);
-      expect(updateSpy).toHaveBeenCalledTimes(0);
-
-      expect(syncSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should throw error', async () => {
-      const storage = TestBed.inject(CollectionStorageService);
-
-      const saveSpy = spyOn(storage, 'save').and.resolveTo();
-
-      const collection: Collection = {
-        name: '',
-        type: 1,
-        status: 1,
-        modifyDate: '2020-11-18 10:57:00',
-        createDate: '2020-11-18 10:57:00',
-      } as any;
-
-      try {
-        await collectionService.saveOrUpdate(collection);
-      } catch (e) {
-        expect(e).toBeInstanceOf(EntityValidationError);
-      }
-
-      expect(saveSpy).not.toHaveBeenCalled();
-    });
   });
 
   describe('getByGuid', () => {
@@ -159,7 +79,6 @@ describe('CollectionService', () => {
       const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
       const softDeleteSpy = spyOn(collectionService, 'softDelete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.resolveTo();
-      const syncSpy = spyOn(collectionService, 'entitiesSync').and.resolveTo();
 
       await collectionService.delete(collection);
 
@@ -168,8 +87,6 @@ describe('CollectionService', () => {
 
       expect(originDeleteSpy).toHaveBeenCalledWith(dto.guid);
       expect(originDeleteSpy).toHaveBeenCalledTimes(1);
-
-      expect(syncSpy).toHaveBeenCalledTimes(1);
 
       expect(softDeleteSpy).toHaveBeenCalledTimes(0);
     });
@@ -336,15 +253,12 @@ describe('CollectionService', () => {
 
   describe('saveOrUpdate', () => {
     it('should update', async () => {
-      const storage = TestBed.inject(CollectionStorageService);
-
-      const saveSpy = spyOn(storage, 'save');
-      const updateSpy = spyOn(storage, 'update');
-      const syncSpy = spyOn(collectionService, 'entitiesSync');
+      const saveSpy = spyOn(collectionService, 'save');
+      const updateSpy = spyOn(collectionService, 'update');
 
       const collection: Collection = {
-        guid: 'guid',
         name: 'name',
+        guid: 'guid',
         type: 1,
         status: 1,
         modifyDate: null,
@@ -352,31 +266,15 @@ describe('CollectionService', () => {
         progressType: ProgressAlgorithmType.Done,
       } as any;
 
-      const result = await collectionService.saveOrUpdate(collection);
+      await collectionService.saveOrUpdate(collection);
 
-      const expected = new Collection({
-        ...collection,
-        shouldSync: 1,
-      } as any);
-
-      expected.modifyDate = jasmine.any(Date) as any;
-      expected.createDate = jasmine.any(Date) as any;
-
-      expect(result).toEqual(expected);
-
-      const dto = collectionService.convertToDTO(collection);
-      dto.shouldSync = 1;
-
+      expect(updateSpy).toHaveBeenCalledTimes(1);
       expect(saveSpy).toHaveBeenCalledTimes(0);
-      expect(syncSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should save', async () => {
-      const storage = TestBed.inject(CollectionStorageService);
-
-      const saveSpy = spyOn(storage, 'save');
-      const updateSpy = spyOn(storage, 'update');
-      const syncSpy = spyOn(collectionService, 'entitiesSync');
+      const saveSpy = spyOn(collectionService, 'save');
+      const updateSpy = spyOn(collectionService, 'update');
 
       const collection: Collection = {
         name: 'name',
@@ -387,23 +285,10 @@ describe('CollectionService', () => {
         progressType: ProgressAlgorithmType.Done,
       } as any;
 
-      const result = await collectionService.saveOrUpdate(collection);
-
-      const expected = new Collection({
-        ...collection,
-        shouldSync: 1,
-      } as any);
-
-      expected.modifyDate = jasmine.any(Date) as any;
-      expected.createDate = jasmine.any(Date) as any;
-
-      expect(result).toEqual(expected);
-
-      const dto = collectionService.convertToDTO(collection);
-      dto.shouldSync = 1;
+      await collectionService.saveOrUpdate(collection);
 
       expect(updateSpy).toHaveBeenCalledTimes(0);
-      expect(syncSpy).toHaveBeenCalledTimes(1);
+      expect(saveSpy).toHaveBeenCalledTimes(1);
     });
   });
 

@@ -6,6 +6,7 @@ import { SyncData } from '../models/sync-data';
 import { EntityStorage } from './entity.storage';
 import { ISyncableOrigin } from './i-syncable-origin';
 import { DateUtils } from '../utils/date-utils';
+import { BrokenConnectionError } from '../models/errors/broken-connection-error';
 
 export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity> {
   protected constructor(protected storage: EntityStorage<TDTO>, protected origin: ISyncableOrigin<TDTO>) {}
@@ -14,6 +15,7 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     const data = await this.storage.getAll();
 
     return _(data)
+      .where(item => !item.deleted)
       .select(item => this.convertFromDTO(item))
       .toArray();
   }
@@ -39,7 +41,6 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
     try {
       await this.origin.delete(entity.guid);
       await this.storage.delete(entity.guid);
-      await this.entitiesSync();
     } catch (e) {
       await this.softDelete(entity);
       throw e;
@@ -52,20 +53,51 @@ export abstract class EntityService<TDTO extends IEntity, TEntity extends Entity
   }
 
   public async saveOrUpdate(entity: TEntity): Promise<TEntity> {
-    entity.shouldSync = 1;
+    if (entity.guid) {
+      return await this.update(entity);
+    } else {
+      return await this.save(entity);
+    }
+  }
+
+  public async save(entity: TEntity): Promise<TEntity> {
     const dto = this.convertToDTO(entity);
 
-    dto.modifyDate = this.getNowUTC();
-    if (entity.guid) {
-      await this.storage.update(dto);
-    } else {
-      dto.createDate = this.getNowUTC();
-      await this.storage.save(dto);
+    try {
+      const savedToOrigin = await this.origin.create(dto);
+      const savedToStorage = await this.storage.save(savedToOrigin);
+
+      return this.convertFromDTO(savedToStorage);
+    } catch (e) {
+      if (e instanceof BrokenConnectionError) {
+        dto.shouldSync = 1;
+        const saved = await this.storage.save(dto);
+
+        return this.convertFromDTO(saved);
+      }
+
+      throw e;
     }
+  }
 
-    await this.entitiesSync();
+  public async update(entity: TEntity): Promise<TEntity> {
+    const dto = this.convertToDTO(entity);
 
-    return this.convertFromDTO(dto);
+    try {
+      const savedToOrigin = await this.origin.update(dto);
+      const savedToStorage = await this.storage.update(savedToOrigin);
+
+      return this.convertFromDTO(savedToStorage);
+    } catch (e) {
+      if (e instanceof BrokenConnectionError) {
+        dto.shouldSync = 1;
+        const savedToOrigin = await this.storage.update(dto);
+
+        return this.convertFromDTO(savedToOrigin);
+      }
+
+      throw e;
+    }
   }
 
   public async saveOrUpdateMany(entities: TEntity[]): Promise<TEntity[]> {

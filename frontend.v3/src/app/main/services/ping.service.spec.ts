@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { PingService } from './ping.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { from, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 describe('PingService', () => {
   let service: PingService;

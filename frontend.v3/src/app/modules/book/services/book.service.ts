@@ -17,11 +17,13 @@ export class BookService extends EntityService<BookData, Book> {
   private validateEntityChain = new BookValidationChain();
 
   private typedStorage: BookStorageService;
+  private typedOrigin: BookOriginService;
 
   constructor(storage: BookStorageService, origin: BookOriginService) {
     super(storage, origin);
 
     this.typedStorage = storage;
+    this.typedOrigin = origin;
   }
 
   public async getCountByStatus(status: BookStatus): Promise<number> {
@@ -29,11 +31,16 @@ export class BookService extends EntityService<BookData, Book> {
     return data;
   }
 
-  public async saveOrUpdate(book: Book): Promise<Book> {
+  public async save(book: Book): Promise<Book> {
     this.validate(book);
 
-    book = await super.saveOrUpdate(book);
-    return book;
+    return super.save(book);
+  }
+
+  public async update(book: Book): Promise<Book> {
+    this.validate(book);
+
+    return super.update(book);
   }
 
   public async saveRereading(book: Book): Promise<Book> {
@@ -43,10 +50,10 @@ export class BookService extends EntityService<BookData, Book> {
       book.rereadingBookGuid = original.rereadingBookGuid;
     }
 
-    book = await this.saveOrUpdate(book);
+    book = await this.save(book);
 
     original.rereadedBy.push(book.guid);
-    await this.saveOrUpdate(original);
+    await this.update(original);
 
     return book;
   }
@@ -102,7 +109,7 @@ export class BookService extends EntityService<BookData, Book> {
 
     if (rereadings?.length) {
       const updated = this.changeRereadingHierarchy(rereadings);
-      await this.storage.updateMany(updated);
+      await this.saveOrUpdateMany(this.convertFromDTOArray(updated));
     }
 
     await super.delete(book);

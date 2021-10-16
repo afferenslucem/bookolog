@@ -5,6 +5,7 @@ import { BookOriginService } from './book.origin.service';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../user/services/user.service';
 import { of } from 'rxjs';
+import { BookData } from '../models/book-data';
 
 describe('BookOriginService', () => {
   let service: BookOriginService;
@@ -54,6 +55,22 @@ describe('BookOriginService', () => {
     ]);
 
     expect(allSpy).toHaveBeenCalledOnceWith('/book/user/1');
+  });
+
+  it('should do create', async () => {
+    const createSpy = spyOn(httpClient, 'post').and.returnValue(of(null));
+
+    await service.create({} as BookData);
+
+    expect(createSpy).toHaveBeenCalledOnceWith('/book/create/', {});
+  });
+
+  it('should do update', async () => {
+    const createSpy = spyOn(httpClient, 'put').and.returnValue(of(null));
+
+    await service.update({} as BookData);
+
+    expect(createSpy).toHaveBeenCalledOnceWith('/book/update/', {});
   });
 
   it('should do delete', async () => {

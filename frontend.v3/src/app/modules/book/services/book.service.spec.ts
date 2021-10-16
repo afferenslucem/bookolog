@@ -9,6 +9,7 @@ import { BookService } from './book.service';
 import { BookStorageService } from './book.storage.service';
 import { UUIDGeneratorService } from '../../../main/services/u-u-i-d-generator.service';
 import { ProgressAlgorithmType } from '../models/progress-algorithm-type';
+import { BrokenConnectionError } from '../../../main/models/errors/broken-connection-error';
 
 describe('BookService', () => {
   let bookService: BookService;
@@ -31,15 +32,8 @@ describe('BookService', () => {
 
   describe('saveOrUpdate', () => {
     it('should update book', async () => {
-      const storage = TestBed.inject(BookStorageService);
-      const origin = TestBed.inject(BookOriginService);
-
-      const updateSpy = spyOn(storage, 'update').and.resolveTo();
-      const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(origin, 'sync').and.resolveTo({
-        delete: [],
-        update: [],
-      });
+      const updateSpy = spyOn(bookService, 'update').and.resolveTo();
+      const saveSpy = spyOn(bookService, 'save').and.resolveTo();
 
       const book: Book = {
         guid: 'guid',
@@ -54,19 +48,11 @@ describe('BookService', () => {
 
       expect(updateSpy).toHaveBeenCalledTimes(1);
       expect(saveSpy).toHaveBeenCalledTimes(0);
-      expect(syncSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should save book', async () => {
-      const storage = TestBed.inject(BookStorageService);
-      const origin = TestBed.inject(BookOriginService);
-
-      const updateSpy = spyOn(storage, 'update').and.resolveTo();
-      const saveSpy = spyOn(storage, 'save').and.resolveTo();
-      const syncSpy = spyOn(origin, 'sync').and.resolveTo({
-        delete: [],
-        update: [],
-      });
+      const updateSpy = spyOn(bookService, 'update').and.resolveTo();
+      const saveSpy = spyOn(bookService, 'save').and.resolveTo();
 
       const book: Book = {
         name: 'name',
@@ -78,10 +64,114 @@ describe('BookService', () => {
 
       await bookService.saveOrUpdate(book);
 
-      expect(saveSpy).toHaveBeenCalledTimes(1);
       expect(updateSpy).toHaveBeenCalledTimes(0);
+      expect(saveSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 
-      expect(syncSpy).toHaveBeenCalledTimes(1);
+  describe('save', () => {
+    it('should save to origin and storage', async () => {
+      const storage = TestBed.inject(BookStorageService);
+      const origin = TestBed.inject(BookOriginService);
+
+      const book: Book = {
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+      } as any;
+
+      const dto = bookService.convertToDTO(book);
+      const originBook = Object.assign({}, dto);
+      originBook.guid = 'guid1';
+
+      const saveSpy = spyOn(storage, 'save').and.resolveTo(originBook);
+      const createSpy = spyOn(origin, 'create').and.resolveTo(originBook);
+
+      await bookService.save(book);
+
+      expect(createSpy).toHaveBeenCalledOnceWith(dto);
+      expect(saveSpy).toHaveBeenCalledOnceWith(originBook);
+    });
+
+    it('should only to storage', async () => {
+      const storage = TestBed.inject(BookStorageService);
+      const origin = TestBed.inject(BookOriginService);
+
+      const book: Book = {
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+      } as any;
+
+      const dto = bookService.convertToDTO(book);
+
+      const createSpy = spyOn(origin, 'create').and.rejectWith(new BrokenConnectionError());
+      const saveSpy = spyOn(storage, 'save').and.resolveTo(dto);
+
+      await bookService.save(book);
+
+      expect(createSpy).toHaveBeenCalledTimes(1);
+      expect(saveSpy).toHaveBeenCalledOnceWith({
+        ...dto,
+        shouldSync: 1,
+      });
+    });
+  });
+
+  describe('update', () => {
+    it('should update to origin and storage', async () => {
+      const storage = TestBed.inject(BookStorageService);
+      const origin = TestBed.inject(BookOriginService);
+
+      const book: Book = {
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+      } as any;
+
+      const dto = bookService.convertToDTO(book);
+      const originBook = Object.assign({}, dto);
+      originBook.guid = 'guid1';
+
+      const originUpdateSpy = spyOn(storage, 'update').and.resolveTo(originBook);
+      const storageUpdateSpy = spyOn(origin, 'update').and.resolveTo(originBook);
+
+      await bookService.update(book);
+
+      expect(storageUpdateSpy).toHaveBeenCalledOnceWith(dto);
+      expect(originUpdateSpy).toHaveBeenCalledOnceWith(originBook);
+    });
+
+    it('should only to storage', async () => {
+      const storage = TestBed.inject(BookStorageService);
+      const origin = TestBed.inject(BookOriginService);
+
+      const book: Book = {
+        name: 'name',
+        type: 1,
+        status: 1,
+        modifyDate: '2020-11-18 10:57:00',
+        createDate: '2020-11-18 10:57:00',
+      } as any;
+
+      const dto = bookService.convertToDTO(book);
+
+      const originUpdateSpy = spyOn(storage, 'update').and.resolveTo(dto);
+      const storageUpdateSpy = spyOn(origin, 'update').and.rejectWith(new BrokenConnectionError());
+
+      await bookService.update(book);
+
+      expect(originUpdateSpy).toHaveBeenCalledTimes(1);
+      expect(storageUpdateSpy).toHaveBeenCalledOnceWith({
+        ...dto,
+        shouldSync: 1,
+      });
     });
   });
 
@@ -184,11 +274,11 @@ describe('BookService', () => {
 
       const dto = bookService.convertToDTO(book);
 
-      const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
       const storageRereadingsSpy = spyOn(storage, 'getAllRereadings').and.resolveTo();
-      const softDeleteSpy = spyOn(bookService, 'softDelete').and.resolveTo();
+      const saveOrUpdateManySpy = spyOn(bookService, 'saveOrUpdateMany').and.resolveTo();
+
+      const storageDeleteSpy = spyOn(storage, 'delete').and.resolveTo();
       const originDeleteSpy = spyOn(origin, 'delete').and.resolveTo();
-      const syncSpy = spyOn(bookService, 'entitiesSync').and.resolveTo();
 
       await bookService.delete(book);
 
@@ -200,10 +290,6 @@ describe('BookService', () => {
 
       expect(storageRereadingsSpy).toHaveBeenCalledWith(dto.guid);
       expect(storageRereadingsSpy).toHaveBeenCalledTimes(1);
-
-      expect(syncSpy).toHaveBeenCalledTimes(1);
-
-      expect(softDeleteSpy).toHaveBeenCalledTimes(0);
     });
 
     it('Soft delete', async () => {
@@ -403,81 +489,6 @@ describe('BookService', () => {
     ] as any);
   });
 
-  describe('saveOrUpdate', () => {
-    it('should update', async () => {
-      const storage = TestBed.inject(BookStorageService);
-
-      const saveSpy = spyOn(storage, 'save');
-      const updateSpy = spyOn(storage, 'update');
-      const syncSpy = spyOn(bookService, 'entitiesSync');
-
-      const book: Book = {
-        guid: 'guid',
-        name: 'name',
-        type: 1,
-        status: 1,
-        modifyDate: null,
-        createDate: null,
-        progressType: ProgressAlgorithmType.Done,
-      } as any;
-
-      const result = await bookService.saveOrUpdate(book);
-
-      const expected = new Book({
-        ...book,
-        shouldSync: 1,
-      } as any);
-
-      expected.modifyDate = jasmine.any(Date) as any;
-      expected.createDate = jasmine.any(Date) as any;
-
-      expect(result).toEqual(expected);
-
-      const dto = bookService.convertToDTO(book);
-      dto.shouldSync = 1;
-
-      expect(saveSpy).toHaveBeenCalledTimes(0);
-      expect(updateSpy).toHaveBeenCalledTimes(1);
-      expect(syncSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should save', async () => {
-      const storage = TestBed.inject(BookStorageService);
-
-      const saveSpy = spyOn(storage, 'save');
-      const updateSpy = spyOn(storage, 'update');
-      const syncSpy = spyOn(bookService, 'entitiesSync');
-
-      const book: Book = {
-        name: 'name',
-        type: 1,
-        status: 1,
-        modifyDate: null,
-        createDate: null,
-        progressType: ProgressAlgorithmType.Done,
-      } as any;
-
-      const result = await bookService.saveOrUpdate(book);
-
-      const expected = new Book({
-        ...book,
-        shouldSync: 1,
-      } as any);
-
-      expected.modifyDate = jasmine.any(Date) as any;
-      expected.createDate = jasmine.any(Date) as any;
-
-      expect(result).toEqual(expected);
-
-      const dto = bookService.convertToDTO(book);
-      dto.shouldSync = 1;
-
-      expect(saveSpy).toHaveBeenCalledTimes(1);
-      expect(updateSpy).toHaveBeenCalledTimes(0);
-      expect(syncSpy).toHaveBeenCalledTimes(1);
-    });
-  });
-
   it('saveOrUpdateMany', async () => {
     const updateManySpy = spyOn(bookStorage, 'updateMany');
     const saveManySpy = spyOn(bookStorage, 'saveMany');
@@ -641,17 +652,23 @@ describe('BookService', () => {
       } as Book;
 
       const byGuidSpy = spyOn(bookService, 'getByGuid').and.resolveTo(original);
-      const saveSpy = spyOn(bookService, 'saveOrUpdate').and.resolveTo(book);
+      const saveSpy = spyOn(bookService, 'save').and.resolveTo(book);
+      const updateSpy = spyOn(bookService, 'update').and.resolveTo(book);
 
       await bookService.saveRereading(book);
 
       expect(byGuidSpy).toHaveBeenCalledTimes(1);
-      expect(saveSpy).toHaveBeenCalledTimes(2);
       expect(saveSpy).toHaveBeenCalledWith(book);
-      expect(original.rereadedBy).toEqual([book.guid]);
+
+      original.rereadedBy = ['guid'];
+      original.rereadingBookGuid = undefined;
+      original.guid = 'guid';
+
+      expect(updateSpy).toHaveBeenCalledWith(original);
+      expect(original.rereadedBy).toEqual([original.guid]);
     });
 
-    it('shoold change rereading id', async () => {
+    it('should change rereading id', async () => {
       const original = {
         rereadingBookGuid: 'guid2',
         rereadedBy: [],
@@ -666,8 +683,9 @@ describe('BookService', () => {
         createDate: null,
       } as Book;
 
-      const saveSpy = spyOn(bookService, 'saveOrUpdate').and.resolveTo(book);
       const byGuidSpy = spyOn(bookService, 'getByGuid').and.resolveTo(original);
+      const saveSpy = spyOn(bookService, 'save').and.resolveTo(book);
+      const originalSpy = spyOn(bookService, 'update').and.resolveTo(original);
 
       await bookService.saveRereading(book);
 

@@ -65,9 +65,11 @@ export class PingService {
 
           this.onRequestFinished(endTime, startTime);
         }),
-        catchError(err => {
+        catchError(() => {
           this._mode$.next('offline');
-          return throwError(err);
+          return throwError({
+            status: 0,
+          });
         }),
         takeUntil(from(timeoutAwaiter)),
         finalize(() => this.setPingValidation()),

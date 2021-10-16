@@ -69,14 +69,8 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
   public async deleteCollection(collection: Collection): Promise<void> {
     try {
       await this.bookService.deleteBooksFromCollection(collection.guid);
+    } finally {
       await this.collectionService.delete(collection);
-      this.metrika.fireCollectionDelete();
-    } catch (e) {
-      if (e instanceof BrokenConnectionError) {
-        this.notificationService.createWarningNotification('Коллекция удалена локально');
-      } else {
-        this.notificationService.createWarningNotification('Ошибка удаления коллекции');
-      }
     }
   }
 
@@ -93,7 +87,16 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
   }
 
   private async onDelete(collection: Collection): Promise<void> {
-    await this.deleteCollection(collection);
+    try {
+      await this.deleteCollection(collection);
+      this.metrika.fireCollectionDelete();
+    } catch (e) {
+      if (e instanceof BrokenConnectionError) {
+        this.notificationService.createWarningNotification('Коллекция удалена локально');
+      } else {
+        this.notificationService.createWarningNotification('Ошибка удаления коллекции');
+      }
+    }
     await this.redirect();
   }
 }

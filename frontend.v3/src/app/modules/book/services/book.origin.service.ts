@@ -26,6 +26,14 @@ export class BookOriginService implements ISyncableOrigin<BookData> {
       .toPromise();
   }
 
+  public async create(book: BookData): Promise<BookData> {
+    return await this.httpClient.post<BookData>('/book/create/', book).toPromise();
+  }
+
+  public async update(book: BookData): Promise<BookData> {
+    return await this.httpClient.put<BookData>('/book/update/', book).toPromise();
+  }
+
   public async delete(guid: string): Promise<void> {
     return await this.httpClient.delete<void>('/book/delete/' + guid).toPromise();
   }

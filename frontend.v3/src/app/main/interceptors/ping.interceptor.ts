@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { from, Observable, throwError } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { PingService } from '../services/ping.service';
 
 @Injectable()
@@ -9,12 +9,21 @@ export class PingInterceptor implements HttpInterceptor {
   constructor(private ping: PingService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.headers.has('ping')) {
-      return next.handle(req);
-    } else {
-      const ping = this.ping.ping();
+    const ping = this.ping.ping();
 
-      return from(ping).pipe(switchMap(() => next.handle(req)));
+    return from(ping).pipe(
+      tap(() => this.throwIfOffline()),
+      switchMap(() => next.handle(req)),
+    );
+  }
+
+  private throwIfOffline(): Observable<any> {
+    if (this.ping.mode === 'offline') {
+      return throwError({
+        status: 0,
+      });
+    } else {
+      return null;
     }
   }
 }

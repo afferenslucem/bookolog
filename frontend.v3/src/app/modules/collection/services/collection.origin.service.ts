@@ -26,6 +26,14 @@ export class CollectionOriginService implements ISyncableOrigin<CollectionData> 
       .toPromise();
   }
 
+  public async create(collection: CollectionData): Promise<CollectionData> {
+    return await this.httpClient.post<CollectionData>('/collection/create/', collection).toPromise();
+  }
+
+  public async update(collection: CollectionData): Promise<CollectionData> {
+    return await this.httpClient.put<CollectionData>('/collection/update/', collection).toPromise();
+  }
+
   public async delete(guid: string): Promise<void> {
     return await this.httpClient.delete<void>('/collection/delete/' + guid).toPromise();
   }

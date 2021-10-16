@@ -4,6 +4,7 @@ import { UserService } from '../../user/services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { CollectionOriginService } from './collection.origin.service';
+import { CollectionData } from '../models/collection-data';
 
 describe('CollectionOriginService', () => {
   let service: CollectionOriginService;
@@ -54,6 +55,22 @@ describe('CollectionOriginService', () => {
     ]);
 
     expect(allSpy).toHaveBeenCalledOnceWith('/collection/user/1');
+  });
+
+  it('should do create', async () => {
+    const createSpy = spyOn(httpClient, 'post').and.returnValue(of(null));
+
+    await service.create({} as CollectionData);
+
+    expect(createSpy).toHaveBeenCalledOnceWith('/collection/create/', {});
+  });
+
+  it('should do update', async () => {
+    const createSpy = spyOn(httpClient, 'put').and.returnValue(of(null));
+
+    await service.update({} as CollectionData);
+
+    expect(createSpy).toHaveBeenCalledOnceWith('/collection/update/', {});
   });
 
   it('should do delete', async () => {

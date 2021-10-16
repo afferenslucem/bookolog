@@ -2,7 +2,6 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, delay, switchMap } from 'rxjs/operators';
-import { BrokenConnectionError } from '../models/errors/broken-connection-error';
 import { PingService } from '../services/ping.service';
 
 @Injectable({
@@ -37,8 +36,6 @@ export class RetryInterceptor implements HttpInterceptor {
         delay(250),
         switchMap(() => this.trySendRequest(newReq, next, count - 1)),
       );
-    } else if (RetryInterceptor.isOffline(err)) {
-      return throwError(new BrokenConnectionError());
     } else {
       return throwError(err);
     }
