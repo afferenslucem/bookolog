@@ -86,7 +86,7 @@ export class CollectionViewComponent extends BookSearchableList implements OnIni
     this.dialog.registerContainerRef(this.container);
   }
 
-  private async onDelete(collection: Collection): Promise<void> {
+  public async onDelete(collection: Collection): Promise<void> {
     try {
       await this.deleteCollection(collection);
       this.metrika.fireCollectionDelete();

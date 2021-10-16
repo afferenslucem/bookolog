@@ -128,10 +128,10 @@ describe('CollectionComponent', () => {
 
     it('should fire deleteEvent', async () => {
       const spy = spyOn(metrika, 'fireCollectionDelete');
-      const deleteBooksSpy = spyOn(bookService, 'deleteBooksFromCollection');
-      const deleteSpy = spyOn(collectionService, 'delete');
+      spyOn(component, 'deleteCollection').and.resolveTo();
+      spyOn(component, 'redirect').and.resolveTo();
 
-      await component.deleteCollection({
+      await component.onDelete({
         guid: 'id1',
       } as any);
 
