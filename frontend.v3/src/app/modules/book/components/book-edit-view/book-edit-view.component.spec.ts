@@ -151,6 +151,74 @@ describe('BookEditViewComponent', () => {
       expect(result.doneNumeric).toBe(100);
       expect(result.totalNumeric).toBe(300);
     });
+
+    describe('get audio progress', () => {
+      it('should return zero progress', () => {
+        const data = {
+          progressType: ProgressAlgorithmType.Left,
+          total: {
+            hours: 3,
+            minutes: 4,
+          },
+          done: {
+            hours: null,
+            minutes: null,
+          },
+          type: BookType.Audio,
+        } as any;
+
+        const result = component.getProgress(data);
+
+        expect(result.done).toEqual(data.total);
+      });
+
+      it('should return done progress', () => {
+        const data = {
+          progressType: ProgressAlgorithmType.Left,
+          total: {
+            hours: 3,
+            minutes: 4,
+          },
+          done: {
+            hours: 0,
+            minutes: 0,
+          },
+          type: BookType.Audio,
+        } as any;
+
+        const result = component.getProgress(data);
+
+        expect(result.doneNumeric).toEqual(184);
+      });
+
+      it('should return empty progress for done paper book', () => {
+        const data = {
+          progressType: ProgressAlgorithmType.Done,
+          total: 123,
+          done: null,
+          type: BookType.Paper,
+        } as any;
+
+        const result = component.getProgress(data);
+
+        expect(result.doneUnits).toEqual(0);
+        expect(result.totalUnits).toEqual(123);
+      });
+
+      it('should return empty progress for left paper book', () => {
+        const data = {
+          progressType: ProgressAlgorithmType.Left,
+          total: 123,
+          done: null,
+          type: BookType.Paper,
+        } as any;
+
+        const result = component.getProgress(data);
+
+        expect(result.doneUnits).toEqual(123);
+        expect(result.totalUnits).toEqual(123);
+      });
+    });
   });
 
   describe('metrika', () => {

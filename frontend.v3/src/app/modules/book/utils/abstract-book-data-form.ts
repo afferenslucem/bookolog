@@ -11,6 +11,7 @@ import { ProgressAlgorithmService } from '../services/progress-algorithm.service
 import { BookFormValue } from '../models/book-form-value';
 import { ProgressFactory } from './progress/progress-factory';
 import { BookProgress } from './progress/book-progress';
+import { TimeProgress } from '../models/time-progress';
 
 export abstract class AbstractBookDataForm {
   public BookType: typeof BookType = BookType;
@@ -138,9 +139,25 @@ export abstract class AbstractBookDataForm {
 
   public getProgress(data: BookFormValue): BookProgress {
     const progress = ProgressFactory.getProgress(Number(data.type), data.progressType);
-    progress.done = data.done;
+
+    if (this.isNullProgress(data.done, data.type) && data.progressType === ProgressAlgorithmType.Left) {
+      progress.done = data.total;
+    } else {
+      progress.done = data.done;
+    }
+
     progress.total = data.total;
 
     return progress;
+  }
+
+  private isNullProgress(progress: number | TimeProgress, type: BookType): boolean {
+    if (progress == null && type !== BookType.Audio) {
+      return true;
+    } else if (typeof progress === 'object' && progress.hours == null && progress.minutes == null && type === BookType.Audio) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
