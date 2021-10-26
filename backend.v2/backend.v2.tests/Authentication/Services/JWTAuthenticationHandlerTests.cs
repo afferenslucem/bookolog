@@ -127,7 +127,7 @@ namespace backend.v2.tests.Authentication.Services
             var result = await this.service.Object.AuthenticateByTokens("token");
             
             Assert.IsNotNull(result.Failure);
-            Assert.AreEqual(result.Failure.Message, "Cookies error");
+            Assert.AreEqual(result.Failure.Message, "Token error");
         }
     }
 }

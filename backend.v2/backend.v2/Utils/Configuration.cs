@@ -47,7 +47,7 @@ public static class Version
 
     public static readonly OpenApiInfo Info = new OpenApiInfo
     {
-        Version = "v0.5",
+        Version = BuildVersion,
         Title = "Bookolog API"
     };
 }
