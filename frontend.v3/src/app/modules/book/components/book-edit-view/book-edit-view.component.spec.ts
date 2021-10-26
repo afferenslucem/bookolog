@@ -172,6 +172,25 @@ describe('BookEditViewComponent', () => {
         expect(result.done).toEqual(data.total);
       });
 
+      it('should return zero progress for string type', () => {
+        const data = {
+          progressType: ProgressAlgorithmType.Left,
+          total: {
+            hours: 3,
+            minutes: 4,
+          },
+          done: {
+            hours: null,
+            minutes: null,
+          },
+          type: '2',
+        } as any;
+
+        const result = component.getProgress(data);
+
+        expect(result.done).toEqual(data.total);
+      });
+
       it('should return done progress', () => {
         const data = {
           progressType: ProgressAlgorithmType.Left,
@@ -191,12 +210,45 @@ describe('BookEditViewComponent', () => {
         expect(result.doneNumeric).toEqual(184);
       });
 
+      it('should return done progress for string type', () => {
+        const data = {
+          progressType: ProgressAlgorithmType.Left,
+          total: {
+            hours: 3,
+            minutes: 4,
+          },
+          done: {
+            hours: 0,
+            minutes: 0,
+          },
+          type: '2',
+        } as any;
+
+        const result = component.getProgress(data);
+
+        expect(result.doneNumeric).toEqual(184);
+      });
+
       it('should return empty progress for done paper book', () => {
         const data = {
           progressType: ProgressAlgorithmType.Done,
           total: 123,
           done: null,
           type: BookType.Paper,
+        } as any;
+
+        const result = component.getProgress(data);
+
+        expect(result.doneUnits).toEqual(0);
+        expect(result.totalUnits).toEqual(123);
+      });
+
+      it('should return empty progress for done string paper book', () => {
+        const data = {
+          progressType: ProgressAlgorithmType.Done,
+          total: 123,
+          done: null,
+          type: '0',
         } as any;
 
         const result = component.getProgress(data);

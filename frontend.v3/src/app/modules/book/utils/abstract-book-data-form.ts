@@ -114,6 +114,7 @@ export abstract class AbstractBookDataForm {
 
   private readValue(): Book {
     const data = this.form.value as BookFormValue;
+
     const book = this.book;
 
     const progress = this.getProgress(data);
@@ -131,16 +132,18 @@ export abstract class AbstractBookDataForm {
     book.collectionOrder = data.collectionOrder;
     book.started = data.started;
     book.finished = data.finished;
-    book.type = Number(data.type);
+    book.type = data.type;
     book.note = data.note;
 
     return book;
   }
 
   public getProgress(data: BookFormValue): BookProgress {
-    const progress = ProgressFactory.getProgress(Number(data.type), data.progressType);
+    const type = Number(data.type)
 
-    if (this.isNullProgress(data.done, data.type) && data.progressType === ProgressAlgorithmType.Left) {
+    const progress = ProgressFactory.getProgress(type, data.progressType);
+
+    if (this.isNullProgress(data.done, type) && data.progressType === ProgressAlgorithmType.Left) {
       progress.done = data.total;
     } else {
       progress.done = data.done;
