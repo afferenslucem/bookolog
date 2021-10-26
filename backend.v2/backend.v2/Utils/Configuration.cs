@@ -43,7 +43,7 @@ public static class Config
 
 public static class Version
 {
-    public static readonly string BuildVersion = "v0.5.0";
+    public static readonly string BuildVersion = "v0.5.2";
 
     public static readonly OpenApiInfo Info = new OpenApiInfo
     {

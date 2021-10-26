@@ -15,6 +15,8 @@ namespace backend.v2.Authentication.Services
         ISystemClock Clock { get; }
 
         TokenData AuthenticateByTokens(string token);
+
+        void AppendTokens(string access, string refresh);
     }
     
     public class JWTTokenService: IJWTTokenService
@@ -87,7 +89,7 @@ namespace backend.v2.Authentication.Services
             return tokenManager.EncodeToken(data);
         }
         
-        private void AppendTokens(string access, string refresh)
+        public virtual void AppendTokens(string access, string refresh)
         {
             this.Context.Response.Headers[JWTDefaults.AccessHeaderName] = access;
             this.Context.Response.Headers[JWTDefaults.RefreshHeaderName] = refresh;
