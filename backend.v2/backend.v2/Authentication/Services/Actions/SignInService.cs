@@ -82,7 +82,9 @@ namespace backend.v2.Authentication.Services.Actions
             return tokenManager.EncodeToken(data);
         }
 
-        public string GetRefreshToken(TokenData data) {
+        public string GetRefreshToken(TokenData data)
+        {
+            data.Type = TokenType.Refresh;
             data.ValidityDate = this.tokenManager.NextRefreshTime;
 
             return tokenManager.EncodeToken(data);

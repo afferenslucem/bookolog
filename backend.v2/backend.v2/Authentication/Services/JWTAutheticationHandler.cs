@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using backend.v2.Authentication.Models;
+using backend.v2.Exceptions.AuthenticationExceptions;
 using backend.v2.Models.Authentication;
 using backend.v2.Services;
 
@@ -13,30 +14,29 @@ namespace backend.v2.Authentication.Services
 {
     public class JWTAuthenticationHandler : AuthenticationHandler<JWTAuthenticationOptions>
     {
-        private readonly IAuthenticationService authenticationService;
-        private readonly IJWTTokenManager tokenManager;
+        private readonly IJWTTokenService tokenService;
         private readonly IUserSession userSession;
         private readonly IUserService userService;
         private readonly ISessionService sessionService;
+        private readonly ILogger<JWTAuthenticationService> logger;
 
         public JWTAuthenticationHandler(
             IOptionsMonitor<JWTAuthenticationOptions> options,
-            ILoggerFactory logger,
+            ILoggerFactory loggerFactory,
             UrlEncoder encoder,
             ISystemClock clock,
-            IAuthenticationService authenticationService,
             IUserSession userSession,
             IUserService userService,
             ISessionService sessionService,
-            IJWTTokenManager tokenManager,
-            ILogger<JWTAuthenticationService> jwtLogger
-        ) : base(options, logger, encoder, clock)
+            IJWTTokenService tokenService,
+            ILogger<JWTAuthenticationService> logger
+        ) : base(options, loggerFactory, encoder, clock)
         {
             this.userSession = userSession;
             this.userService = userService;
-            this.tokenManager = tokenManager;
+            this.tokenService = tokenService;
             this.sessionService = sessionService;
-            this.authenticationService = authenticationService;
+            this.logger = logger;
         }
         
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -60,26 +60,7 @@ namespace backend.v2.Authentication.Services
         {
             try
             {
-                var tokenData = this.tokenManager.DecodeToken(token);
-                
-                if (tokenData.Type == TokenType.Access && tokenData.ValidityDate < this.Clock.UtcNow)
-                {
-                    return AuthenticateResult.Fail("Token expired");
-                } 
-                
-                if (tokenData.Type == TokenType.Refresh && tokenData.ValidityDate < this.Clock.UtcNow)
-                {
-                    await this.DeleteSession(tokenData.SessionGuid);
-                    return AuthenticateResult.Fail("Token expired");
-                }
-                
-                if (tokenData.Type == TokenType.Refresh && tokenData.ValidityDate >= this.Clock.UtcNow)
-                {
-                    var accessToken = this.GetAccessToken(tokenData);
-                    var refreshToken = this.GetRefreshToken(tokenData);
-                    
-                    this.AppendTokens(accessToken, refreshToken);
-                }
+                var tokenData = this.tokenService.AuthenticateByTokens(token);
 
                 await this.CheckSession(tokenData.SessionGuid);
 
@@ -87,25 +68,29 @@ namespace backend.v2.Authentication.Services
 
                 return AuthenticateResult.Success(ticket);
             }
+            catch (AuthenticationException e)
+            {
+                if (e.Message == "Token expired")
+                {
+                    return AuthenticateResult.Fail(e.Message);
+                }
+                if (e.Message == "Session expired")
+                {
+                    this.logger.LogInformation($"Session with guid: {e.SessionGuid} was expired");
+                    await this.DeleteSession(e.SessionGuid.Value);
+                    return AuthenticateResult.Fail(e.Message);
+                }
+            }
             catch (Exception e)
             {
-                return AuthenticateResult.Fail(new Exception("Cookies error", e));
+                this.logger.LogError($"Could not work with token", e);
+                return AuthenticateResult.Fail(new Exception("Token error", e));
             }
-        }
-        
-        public virtual string GetAccessToken(TokenData data) {
-            data.ValidityDate = this.tokenManager.NextAccessTime;
 
-            return tokenManager.EncodeToken(data);
+            return AuthenticateResult.NoResult();
         }
 
-        public virtual string GetRefreshToken(TokenData data) {
-            data.ValidityDate = this.tokenManager.NextRefreshTime;
-
-            return tokenManager.EncodeToken(data);
-        }
-
-        public virtual async Task<AuthenticationTicket> Authenticate(TokenData data)
+        private async Task<AuthenticationTicket> Authenticate(TokenData data)
         {
             var user = await this.userService.GetById(data.UserId);
             this.userSession.User = user;
@@ -121,23 +106,18 @@ namespace backend.v2.Authentication.Services
             return ticket;
         }
 
-        public virtual async Task DeleteSession(Guid guid)
+        private async Task DeleteSession(Guid guid)
         {
             await this.sessionService.Delete(guid);
         }
-        
-        public virtual void AppendTokens(string access, string refresh)
-        {
-            Context.Response.Headers[JWTDefaults.AccessHeaderName] = access;
-            Context.Response.Headers[JWTDefaults.RefreshHeaderName] = refresh;
-        }
 
-        public virtual async Task CheckSession(Guid guid)
+        private async Task CheckSession(Guid guid)
         {
             var session = await this.sessionService.Get(guid);
 
             if (session == null)
             {
+                this.logger.LogInformation($"Could not find session for guid: {guid}");
                 throw new Exception("Could not find session");
             }
 
