@@ -64,6 +64,8 @@ namespace backend.v2.Authentication.Services
 
                 await this.CheckSession(tokenData.SessionGuid);
 
+                await this.ProlongSession();
+
                 var ticket = await this.Authenticate(tokenData);
 
                 return AuthenticateResult.Success(ticket);
@@ -76,7 +78,7 @@ namespace backend.v2.Authentication.Services
                 }
                 if (e.Message == "Session expired")
                 {
-                    this.logger.LogInformation($"Session with guid: {e.SessionGuid} was expired");
+                    this.logger.LogInformation($"Session with guid: {e.SessionGuid.Value} was expired at {e.Token?.ValidityDate}");
                     await this.DeleteSession(e.SessionGuid.Value);
                     return AuthenticateResult.Fail(e.Message);
                 }
@@ -109,6 +111,17 @@ namespace backend.v2.Authentication.Services
         private async Task DeleteSession(Guid guid)
         {
             await this.sessionService.Delete(guid);
+        }
+
+        private async Task ProlongSession()
+        {
+            if (this.Context.Response.Headers.ContainsKey(JWTDefaults.RefreshHeaderName))
+            {
+                var session = this.userSession.Session;
+                session.ValidityExpired = this.tokenService.NextRefreshValidityDate;
+
+                await this.sessionService.Update(session);
+            }
         }
 
         private async Task CheckSession(Guid guid)

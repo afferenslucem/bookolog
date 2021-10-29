@@ -14,6 +14,8 @@ namespace backend.v2.Authentication.Services
 
         ISystemClock Clock { get; }
 
+        DateTime NextRefreshValidityDate { get; }
+
         TokenData AuthenticateByTokens(string token);
 
         void AppendTokens(string access, string refresh);
@@ -24,6 +26,14 @@ namespace backend.v2.Authentication.Services
         private readonly IJWTTokenManager tokenManager;
         private readonly ISystemClock clock;
         private readonly IHttpContextAccessor contextAccessor;
+        
+        public DateTime NextRefreshValidityDate
+        {
+            get
+            {
+                return this.tokenManager.NextRefreshTime;
+            }
+        }
 
         public HttpContext Context
         {
@@ -58,12 +68,12 @@ namespace backend.v2.Authentication.Services
                 
             if (tokenData.Type == TokenType.Access && tokenData.ValidityDate < this.Clock.UtcNow)
             {
-                throw new AuthenticationException("Token expired", tokenData.SessionGuid);
+                throw new AuthenticationException("Token expired", tokenData);
             } 
             
             if (tokenData.Type == TokenType.Refresh && tokenData.ValidityDate < this.Clock.UtcNow)
             {
-                throw new AuthenticationException("Session expired", tokenData.SessionGuid);
+                throw new AuthenticationException("Session expired", tokenData);
             }
             
             if (tokenData.Type == TokenType.Refresh && tokenData.ValidityDate >= this.Clock.UtcNow)

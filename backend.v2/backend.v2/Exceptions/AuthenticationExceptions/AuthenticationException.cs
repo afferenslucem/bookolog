@@ -1,23 +1,23 @@
 ﻿using System;
+using backend.v2.Authentication.Models;
 
 namespace backend.v2.Exceptions.AuthenticationExceptions
 {
     public class AuthenticationException: Exception
     {
-        public Guid? SessionGuid { get; set; }
-
-        public AuthenticationException(string message) : base(message)
+        public Guid? SessionGuid
         {
+            get
+            {
+                return this.Token?.SessionGuid;
+            }
         }
 
-        public AuthenticationException(string message, Guid sessionGuid) : base(message)
-        {
-            this.SessionGuid = sessionGuid;
-        }
+        public TokenData Token { get; set; }
 
-        public AuthenticationException(string message, Guid sessionGuid, Exception inner) : base(message, inner)
+        public AuthenticationException(string message, TokenData token) : base(message)
         {
-            this.SessionGuid = sessionGuid;
+            this.Token = token;
         }
     }
 }

@@ -58,7 +58,7 @@ namespace backend.v2.tests.Authentication.Services
         {
             this.tokenServiceMock
                 .Setup(tokenService => tokenService.AuthenticateByTokens(It.IsAny<string>()))
-                .Throws(new AuthenticationException("Token expired", Guid.NewGuid()));
+                .Throws(new AuthenticationException("Token expired", new TokenData() { SessionGuid = Guid.NewGuid()}));
 
             var result = await this.service.Object.AuthenticateByTokens("token");
             
@@ -73,7 +73,7 @@ namespace backend.v2.tests.Authentication.Services
             
             this.tokenServiceMock
                 .Setup(tokenService => tokenService.AuthenticateByTokens(It.IsAny<string>()))
-                .Throws(new AuthenticationException("Session expired", sessionGuid));
+                .Throws(new AuthenticationException("Session expired", new TokenData() { SessionGuid = sessionGuid }));
 
             this.sessionServiceMock.Setup(sessionService => sessionService.Delete(It.IsAny<Guid>()));
 
