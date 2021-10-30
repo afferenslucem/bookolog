@@ -19,6 +19,10 @@ namespace backend.v2.Authentication.Services
         TokenData AuthenticateByTokens(string token);
 
         void AppendTokens(string access, string refresh);
+
+        string GetAccessToken(Guid sessionGuid, long userId);
+        
+        string GetRefreshToken(Guid sessionGuid, long userId);
     }
     
     public class JWTTokenService: IJWTTokenService
@@ -87,16 +91,41 @@ namespace backend.v2.Authentication.Services
             return tokenData;
         }
         
-        private string GetAccessToken(TokenData data) {
+        public string GetAccessToken(Guid sessionGuid, long userId)
+        {
+            var data = this.GetTokenData(sessionGuid, userId);
+
+            return this.GetAccessToken(data);
+        }
+        
+        private string GetAccessToken(TokenData data)
+        {
+            data.Type = TokenType.Access;
             data.ValidityDate = this.tokenManager.NextAccessTime;
 
             return tokenManager.EncodeToken(data);
         }
+        
+        public string GetRefreshToken(Guid sessionGuid, long userId)
+        {
+            var data = this.GetTokenData(sessionGuid, userId);
 
-        private string GetRefreshToken(TokenData data) {
+            return this.GetRefreshToken(data);
+        }
+        
+        private string GetRefreshToken(TokenData data)
+        {
+            data.Type = TokenType.Refresh;
             data.ValidityDate = this.tokenManager.NextRefreshTime;
 
             return tokenManager.EncodeToken(data);
+        }
+        
+        private TokenData GetTokenData(Guid sessionGuid, long userId) {
+            return new TokenData() {
+                UserId = userId,
+                SessionGuid = sessionGuid,
+            };
         }
         
         public virtual void AppendTokens(string access, string refresh)

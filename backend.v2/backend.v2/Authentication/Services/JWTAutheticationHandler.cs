@@ -64,8 +64,6 @@ namespace backend.v2.Authentication.Services
 
                 await this.CheckSession(tokenData.SessionGuid);
 
-                await this.ProlongSession();
-
                 var ticket = await this.Authenticate(tokenData);
 
                 return AuthenticateResult.Success(ticket);
@@ -111,17 +109,6 @@ namespace backend.v2.Authentication.Services
         private async Task DeleteSession(Guid guid)
         {
             await this.sessionService.Delete(guid);
-        }
-
-        private async Task ProlongSession()
-        {
-            if (this.Context.Response.Headers.ContainsKey(JWTDefaults.RefreshHeaderName))
-            {
-                var session = this.userSession.Session;
-                session.ValidityExpired = this.tokenService.NextRefreshValidityDate;
-
-                await this.sessionService.Update(session);
-            }
         }
 
         private async Task CheckSession(Guid guid)

@@ -2,7 +2,7 @@ import { version } from '../../package.json';
 
 export const environment = {
   production: false,
-  serverUrl: 'http://localhost:35000',
+  serverUrl: 'http://localhost:5000',
   restoreTimeSeconds: 60,
   version,
   filePath: '/assets/',

@@ -50,7 +50,7 @@ namespace backend.v2.tests.Authentication.Services
         }
 
         [TestMethod]
-        public async Task ChallengeAsyncShouldCheckCode()
+        public async Task ChallengeAsync_ShouldCheckCode()
         {
             contextMock.SetupGet(m => m.Response.StatusCode).Returns(409);
 
@@ -70,17 +70,17 @@ namespace backend.v2.tests.Authentication.Services
         }
 
         [TestMethod]
-        public async Task SignInShouldRunAction()
+        public async Task SignIn_ShouldRunAction()
         {
-            signInServiceMock.Setup(m => m.SignInAsync(It.IsAny<HttpContext>(), It.IsAny<ClaimsPrincipal>()));
+            signInServiceMock.Setup(m => m.SignInAsync(It.IsAny<ClaimsPrincipal>()));
             
             await service.Object.SignInAsync(contextMock.Object, null, null, null);
             
-            signInServiceMock.Verify(m => m.SignInAsync(It.IsAny<HttpContext>(), It.IsAny<ClaimsPrincipal>()), Times.Once());
+            signInServiceMock.Verify(m => m.SignInAsync(It.IsAny<ClaimsPrincipal>()), Times.Once());
         }
 
         [TestMethod]
-        public async Task SignOutShouldRemoveTokensAndSession()
+        public async Task SignOut_ShouldRemoveTokensAndSession()
         {
             signOutServiceMock.Setup(m => m.SignOutAsync(It.IsAny<HttpContext>()));
 

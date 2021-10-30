@@ -45,7 +45,7 @@ namespace backend.v2.Authentication.Services
 
         public override async Task SignInAsync(HttpContext context, string scheme, ClaimsPrincipal principal, AuthenticationProperties properties)
         {
-            await this.signInService.SignInAsync(context, principal);
+            await this.signInService.SignInAsync(principal);
         }
 
         public override async Task SignOutAsync(HttpContext context, string scheme, AuthenticationProperties properties)

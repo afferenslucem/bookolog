@@ -137,4 +137,64 @@ namespace backend.v2.tests.Authentication.Services
             Assert.IsNotNull(token);
         }
     }
+    
+    
+    [TestClass]
+    public class JWTTokenService_TokenCreationTests
+    {
+        private Mock<ISystemClock> clockMock = new Mock<ISystemClock>();
+        private Mock<IHttpContextAccessor> contextAccessorMock = new Mock<IHttpContextAccessor>();
+
+        private Mock<JWTTokenService> service;
+        
+        [TestInitialize]
+        public void BeforeEach()
+        {
+            this.service = new Mock<JWTTokenService>(
+                MockBehavior.Default,
+                new JWTTokenManager(),
+                this.clockMock.Object,
+                this.contextAccessorMock.Object
+            );
+
+            this.service.CallBase = true;
+
+            Config.SessionChiper.Key = "Up3dIK78cXz23LrLjyMP+w==";
+            Config.SessionChiper.Salt = "Up3dIK78cXz23LrLjyMP+w==";
+        }
+        
+        [TestMethod]
+        public void GetAccessToken_ShouldReturnToken()
+        {
+            var sGuid = Guid.NewGuid();
+            var uId = 42;
+
+            var token = this.service.Object.GetAccessToken(sGuid, uId);
+
+            var tm = new JWTTokenManager();
+
+            var result = tm.DecodeToken(token);
+            
+            Assert.AreEqual(result.SessionGuid, sGuid);
+            Assert.AreEqual(result.UserId, uId);
+            Assert.AreEqual(result.Type, TokenType.Access);
+        }
+        
+        [TestMethod]
+        public void GetRefreshToken_ShouldReturnToken()
+        {
+            var sGuid = Guid.NewGuid();
+            var uId = 42;
+
+            var token = this.service.Object.GetRefreshToken(sGuid, uId);
+
+            var tm = new JWTTokenManager();
+
+            var result = tm.DecodeToken(token);
+            
+            Assert.AreEqual(result.SessionGuid, sGuid);
+            Assert.AreEqual(result.UserId, uId);
+            Assert.AreEqual(result.Type, TokenType.Refresh);
+        }
+    }
 }

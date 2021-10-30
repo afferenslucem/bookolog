@@ -11,41 +11,34 @@ namespace backend.v2.Authentication.Services.Actions
 {
     public interface ISignInService
     {
-        Task SignInAsync(HttpContext context, ClaimsPrincipal principal);
+        Task SignInAsync(ClaimsPrincipal principal);
     }
     
     public class SignInService: ISignInService
     {
-        public virtual DateTime SessionLifeTime
-        {
-            get
-            {
-                return DateTime.Now.AddSeconds(Config.Cookie.RefrashTimeSeconds);
-            }
-        }
-        
-        private IJWTTokenManager tokenManager;
+
+        private IJWTTokenService tokenService;
         private ISessionService sessionService;
         private IUserSession userSession;
         private ILogger<SignInService> logger;
         
         public SignInService(
-            IJWTTokenManager tokenManager, 
+            IJWTTokenService tokenService, 
             ISessionService sessionService, 
             IUserSession userSession, 
             ILogger<SignInService> logger
         ) {
-            this.tokenManager = tokenManager;
+            this.tokenService = tokenService;
             this.sessionService = sessionService;
             this.userSession = userSession;
             this.logger = logger;
         }
         
-        public async Task SignInAsync(HttpContext context, ClaimsPrincipal principal)
+        public async Task SignInAsync(ClaimsPrincipal principal)
         {
             try
             {
-                await Task.Run(() => this.SetTokens(context, principal));
+                await Task.Run(() => this.SetTokens(principal));
 
                 this.userSession.Session = await CreateSession(sessionService, principal);
 
@@ -57,49 +50,21 @@ namespace backend.v2.Authentication.Services.Actions
             }
         }
         
-        public virtual void SetTokens(HttpContext context, ClaimsPrincipal principal) {
-            var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        public virtual void SetTokens(ClaimsPrincipal principal) {
+            var userId = long.Parse(principal.FindFirstValue(ClaimTypes.NameIdentifier));
             var sessionGuid = Guid.NewGuid();
             
             this.AppendClaim(principal, sessionGuid);
 
-            var tokenData = this.GetTokenData(sessionGuid, long.Parse(userId));
+            var accessToken = this.tokenService.GetAccessToken(sessionGuid, userId);
+            var refreshToken = this.tokenService.GetRefreshToken(sessionGuid, userId);
 
-            var accessToken = this.GetAccessToken(tokenData);
-            var refreshToken = this.GetRefreshToken(tokenData);
-
-            this.AppendTokens(context, accessToken, refreshToken);
+            this.tokenService.AppendTokens(accessToken, refreshToken);
         }
         
         private void AppendClaim(ClaimsPrincipal principal, Guid guid)
         {
             principal.AddIdentity(new ClaimsIdentity(new [] { new Claim(ClaimTypes.Sid, guid.ToString()) }));
-        }
-        
-        public string GetAccessToken(TokenData data) {
-            data.ValidityDate = this.tokenManager.NextAccessTime;
-
-            return tokenManager.EncodeToken(data);
-        }
-
-        public string GetRefreshToken(TokenData data)
-        {
-            data.Type = TokenType.Refresh;
-            data.ValidityDate = this.tokenManager.NextRefreshTime;
-
-            return tokenManager.EncodeToken(data);
-        }
-        
-        private TokenData GetTokenData(Guid sessionGuid, long userId) {
-            return new TokenData() {
-                UserId = userId,
-                SessionGuid = sessionGuid,
-            };
-        }
-        
-        private void AppendTokens(HttpContext context, string access, string refresh) {
-            context.Response.Headers[JWTDefaults.AccessHeaderName] = access;
-            context.Response.Headers[JWTDefaults.RefreshHeaderName] = refresh;
         }
         
         public virtual async Task<Session> CreateSession(ISessionService sessionService, ClaimsPrincipal principal)
@@ -108,8 +73,7 @@ namespace backend.v2.Authentication.Services.Actions
             
             var session = new Session()
             {
-                Guid = new Guid(sId),
-                ValidityExpired = this.SessionLifeTime
+                Guid = new Guid(sId)
             };
 
             return await sessionService.Save(session);
