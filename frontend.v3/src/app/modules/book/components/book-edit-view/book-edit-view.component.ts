@@ -175,4 +175,8 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     this.book.progressType =
       this.action === Action.Create ? this.progressAlgorithmService.getAlgorithm(this.book.type) : this.book.progressType;
   }
+
+  public trackByValue(index: number, item: any): string {
+    return item;
+  }
 }

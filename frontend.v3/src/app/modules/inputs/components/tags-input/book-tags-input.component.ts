@@ -121,4 +121,8 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
       )
       .subscribe(target => this.pushTag(target.value));
   }
+
+  public trackByValue(index: number, item: any): string {
+    return item;
+  }
 }
