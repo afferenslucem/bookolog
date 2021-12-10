@@ -137,7 +137,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
       this.bookForm.started = DateUtils.today;
     } else if (this.book.status === BookStatus.InProgress && status === BookStatus.Done) {
       this.bookForm.finished = DateUtils.today;
-      this.bookForm.done = this.bookForm.total;
     }
   }
 
