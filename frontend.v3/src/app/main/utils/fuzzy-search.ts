@@ -13,11 +13,11 @@ export class FuzzySearch {
     }
 
     return _(items)
-      .where(item => this.contains(item.toString(), pattern))
+      .where(item => this.contains(item, pattern))
       .toArray();
   }
 
-  public contains(line: string, pattern: string): boolean {
-    return line.toLowerCase().indexOf(pattern) !== -1;
+  public contains(line: any, pattern: string): boolean {
+    return line.toLowerCase().includes(pattern);
   }
 }
