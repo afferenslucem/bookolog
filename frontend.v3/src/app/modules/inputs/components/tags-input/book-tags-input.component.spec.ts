@@ -3,7 +3,7 @@ import { BookTagsInputComponent } from './book-tags-input.component';
 import { TestCore } from '../../../../main/test/test-core.spec';
 import { skip } from 'rxjs/operators';
 
-describe('TagsInputComponent', () => {
+describe('BookTagsInputComponent', () => {
   let component: BookTagsInputComponent;
   let fixture: ComponentFixture<BookTagsInputComponent>;
 
@@ -81,7 +81,7 @@ describe('TagsInputComponent', () => {
     it('should return all', done => {
       component.list = ['one', 'two', 'three'];
 
-      component.availableTags.pipe(skip(1)).subscribe(result => {
+      component.availableTags.subscribe(result => {
         expect(result).toEqual(['one', 'two', 'three']);
         done();
       });
@@ -92,7 +92,7 @@ describe('TagsInputComponent', () => {
     it('should return filtered', done => {
       component.list = ['one', 'two', 'three'];
 
-      component.availableTags.pipe(skip(1)).subscribe(result => {
+      component.availableTags.subscribe(result => {
         expect(result).toEqual(['one', 'two']);
         done();
       });
@@ -105,7 +105,7 @@ describe('TagsInputComponent', () => {
 
       component.pushTag('One');
 
-      component.availableTags.pipe(skip(1)).subscribe(result => {
+      component.availableTags.subscribe(result => {
         expect(result).toEqual(['two', 'three']);
         done();
       });
@@ -118,7 +118,7 @@ describe('TagsInputComponent', () => {
 
       component.pushTag('One');
 
-      component.availableTags.pipe(skip(1)).subscribe(result => {
+      component.availableTags.subscribe(result => {
         expect(result).toEqual(['two']);
         done();
       });
