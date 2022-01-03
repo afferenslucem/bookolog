@@ -79,7 +79,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     this.bookForm.build();
 
     this._filteredGenres = this.bookForm.genreChanges.pipe(
-      debounceTime(300),
       startWith(this.genre || ''),
       map(item => new FuzzySearch().search(this._genres, item)),
       map(item => _(item)),
