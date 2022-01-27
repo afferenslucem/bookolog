@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
-import { getConsoleLogger } from '../app.logging';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IndexedDbService {
-  protected logger = getConsoleLogger({
-    loggerName: 'IndexedDb',
-    namespace: 'Storage',
-  });
   private readonly version = 7;
   private readonly indexedDB = window.indexedDB;
   private database: IDBDatabase;
@@ -24,14 +19,11 @@ export class IndexedDbService {
       const request = this.indexedDB.open(dbName, this.version);
 
       request.onerror = event => {
-        this.logger.error(`Could not open db ${dbName}`, event);
         reject(event);
       };
 
       request.onsuccess = (event: any) => {
         this.database = event.target.result;
-        this.logger.debug(`DB ${dbName} opened!`, event);
-
         resolve(event);
       };
 
@@ -252,11 +244,7 @@ export class IndexedDbService {
     const transaction = this.database.transaction([objectStore], transactionType);
 
     transaction.onerror = event => {
-      this.logger.error(`Transaction failed: `, event);
-    };
-
-    transaction.oncomplete = () => {
-      this.logger.debug(`Transaction completed`);
+      console.error(`Transaction failed: `, event);
     };
 
     return transaction;

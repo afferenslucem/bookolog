@@ -37,6 +37,7 @@
     "@ng-bootstrap/ng-bootstrap": "^9.0.2",
     "bookolog-ui-kit": "0.0.17",
     "bootstrap": "^4.5.0",
+    "datalist-polyfill": "^1.24.4",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
     "declarray": "^0.4.0",

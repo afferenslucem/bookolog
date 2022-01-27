@@ -3,7 +3,6 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 import _ from 'declarray';
 import { from, Observable } from 'rxjs';
 import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
-import { getConsoleLogger } from '../../../../main/app.logging';
 import { Action } from '../../../../main/resolvers/action.resolver';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
@@ -32,7 +31,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
   public action: Action;
 
   public sortUtils = new BookSortUtils();
-  private logger = getConsoleLogger('BookEditViewComponent');
   private _filteredGenres: Observable<string[]>;
 
   constructor(
@@ -149,7 +147,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
   }
 
   private logSaveError(e: any): void {
-    this.logger.error('Book save error', e);
     this.notificationService.createErrorNotification('Не удалось сохранить книгу', {
       autoclose: false,
     });

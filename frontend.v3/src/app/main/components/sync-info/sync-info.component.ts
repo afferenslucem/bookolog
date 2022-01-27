@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../modules/notification/services/notification.service';
-import { getConsoleLogger } from '../../app.logging';
 import { SyncService } from '../../services/sync.service';
 
 @Component({
@@ -10,8 +9,6 @@ import { SyncService } from '../../services/sync.service';
   styleUrls: ['./sync-info.component.scss'],
 })
 export class SyncInfoComponent implements OnInit {
-  private logger = getConsoleLogger('SyncInfoComponent');
-
   constructor(
     private syncService: SyncService,
     private notificationService: NotificationService,
@@ -30,13 +27,10 @@ export class SyncInfoComponent implements OnInit {
     try {
       await this.syncService.syncAll();
       await this.reload();
-    } catch (e) {
-      this.logger.debug('Sync error', e);
-    }
+    } catch (e) {}
   }
 
   public async reload(): Promise<void> {
-    this.logger.debug('reload');
     await this.router.navigate(['.'], { relativeTo: this.activatedRoute });
   }
 }

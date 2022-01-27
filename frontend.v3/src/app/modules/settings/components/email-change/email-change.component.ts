@@ -26,7 +26,6 @@ export class EmailChangeComponent implements OnInit {
       await this.userService.changeEmail(this.email);
       this.notification.createInfoNotification('Почта изменена');
     } catch (e) {
-      this.logger.error('Could not change email', e);
       this.notification.createErrorNotification('Не удалось изменить почту');
     }
   }

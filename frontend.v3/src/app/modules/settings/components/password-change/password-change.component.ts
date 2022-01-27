@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { getConsoleLogger } from '../../../../main/app.logging';
 import { AuthService } from '../../../auth/services/auth.service';
 import { NotificationService } from '../../../notification/services/notification.service';
 import { PasswordChangeForm } from '../../utils/password-change-form';
@@ -16,8 +15,6 @@ export enum ChangePasswordError {
   styleUrls: ['./password-change.component.scss'],
 })
 export class PasswordChangeComponent implements OnInit {
-  public logger = getConsoleLogger('PasswordChangeComponent');
-
   public form = new PasswordChangeForm();
 
   public error: ChangePasswordError = null;
@@ -38,8 +35,6 @@ export class PasswordChangeComponent implements OnInit {
 
       await this.router.navigate(['/in-progress']);
     } catch (e) {
-      this.logger.debug('Error', e);
-
       if (e.error === 'Incorrect old password') {
         this.error = ChangePasswordError.IncorrectOldPassword;
       } else {
