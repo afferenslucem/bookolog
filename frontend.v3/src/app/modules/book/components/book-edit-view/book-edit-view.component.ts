@@ -102,7 +102,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
         this.notificationService.createWarningNotification('Книга сохранена локально');
         await this.redirect();
       } else {
-        this.logSaveError(e);
+        this.logSaveError();
       }
     }
   }
@@ -146,7 +146,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     }
   }
 
-  private logSaveError(e: any): void {
+  private logSaveError(): void {
     this.notificationService.createErrorNotification('Не удалось сохранить книгу', {
       autoclose: false,
     });

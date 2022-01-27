@@ -62,7 +62,7 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
       } else if (e instanceof EntityValidationError) {
         this.notificationService.createWarningNotification('Некорректная модель книги');
       }
-      this.logSaveError(e);
+      this.logSaveError();
     }
   }
 
@@ -73,7 +73,7 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
     return result;
   }
 
-  private logSaveError(e: any): void {
+  private logSaveError(): void {
     this.notificationService.createErrorNotification('Не удалось сохранить книгу', {
       autoclose: false,
     });
