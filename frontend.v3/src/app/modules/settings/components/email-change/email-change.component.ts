@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { getConsoleLogger } from 'src/app/main/app.logging';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { UserService } from 'src/app/modules/user/services/user.service';
-import { ILogger } from 'waterlog';
 import { EmailForm } from '../../../../main/utils/email-form';
 
 @Component({
@@ -12,8 +10,6 @@ import { EmailForm } from '../../../../main/utils/email-form';
 })
 export class EmailChangeComponent implements OnInit {
   public form: EmailForm = null;
-
-  private logger: ILogger = getConsoleLogger('EmailChangeComponent');
 
   constructor(public userService: UserService, private notification: NotificationService) {}
 

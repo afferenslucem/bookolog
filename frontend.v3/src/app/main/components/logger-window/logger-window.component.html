@@ -1,8 +1,0 @@
-<div>
-  <div *ngFor="let log of logs" class="log">
-    <div class="log__id">{{ log.message }}</div>
-    <div *ngFor="let obj of log.objects" class="log__obj">
-      {{ obj | json | maxLength: 40 }}
-    </div>
-  </div>
-</div>

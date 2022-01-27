@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { ILogger } from 'waterlog';
-import { getConsoleLogger } from '../../../main/app.logging';
 import { AppData } from '../../../main/models/app-data';
 import { AppSyncData } from '../../../main/models/app-sync-data';
 import { CredentialsException } from '../../auth/exceptions/credentials.exception';
@@ -14,8 +12,6 @@ import { User } from '../../auth/models/user';
   providedIn: 'root',
 })
 export class UserOriginService {
-  private logger: ILogger = getConsoleLogger('UserOriginService');
-
   constructor(private httpClient: HttpClient) {}
 
   public async login(credentials: Credentials): Promise<User> {

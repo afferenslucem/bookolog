@@ -22,8 +22,7 @@
           "options": {
             "allowedCommonJsDependencies": [
               "declarray",
-              "essents",
-              "waterlog"
+              "essents"
             ],
             "outputPath": "dist/frontend",
             "index": "src/index.html",
