@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
 
 import { SyncData } from '../../../main/models/sync-data';
 import { ISyncableOrigin } from '../../../main/services/i-syncable-origin';

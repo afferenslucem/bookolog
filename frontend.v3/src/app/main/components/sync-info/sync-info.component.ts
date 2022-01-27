@@ -27,7 +27,9 @@ export class SyncInfoComponent implements OnInit {
     try {
       await this.syncService.syncAll();
       await this.reload();
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   public async reload(): Promise<void> {

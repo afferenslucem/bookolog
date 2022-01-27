@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookTagsInputComponent } from './book-tags-input.component';
 import { TestCore } from '../../../../main/test/test-core.spec';
-import { skip } from 'rxjs/operators';
 
 describe('BookTagsInputComponent', () => {
   let component: BookTagsInputComponent;

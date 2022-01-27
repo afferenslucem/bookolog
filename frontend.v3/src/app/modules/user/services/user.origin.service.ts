@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
 import { AppData } from '../../../main/models/app-data';
 import { AppSyncData } from '../../../main/models/app-sync-data';
 import { CredentialsException } from '../../auth/exceptions/credentials.exception';
@@ -30,12 +29,8 @@ export class UserOriginService {
     }
   }
 
-  public async logout(): Promise<void> {
-    try {
-      return (await this.httpClient.get('/auth/logout').toPromise()) as Promise<void>;
-    } catch (e) {
-      throw e;
-    }
+  public logout(): Promise<void> {
+    return this.httpClient.get('/auth/logout').toPromise() as Promise<any>;
   }
 
   public loadMe(): Promise<User> {
