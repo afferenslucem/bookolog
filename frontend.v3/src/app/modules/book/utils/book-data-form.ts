@@ -164,7 +164,7 @@ export class BookDataForm extends AbstractForm<Book> {
 
     this.form = new FormBuilder().group({
       name: new FormControl(book.name, [Validators.required]),
-      year: new FormControl(book.year),
+      year: new FormControl(book.year || null),
       genre: new FormControl(book.genre),
       collectionGuid: new FormControl(book.collectionGuid),
       collectionOrder: new FormControl(book.collectionOrder),

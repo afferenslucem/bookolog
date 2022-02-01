@@ -4,17 +4,11 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '../../modules/user/services/user.service';
-import { getConsoleLogger } from '../app.logging';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizedInterceptor implements HttpInterceptor {
-  private logger = getConsoleLogger({
-    loggerName: 'AuthorizedInterceptor',
-    namespace: 'Interceptor',
-  });
-
   public constructor(private router: Router, private userService: UserService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -23,7 +17,6 @@ export class AuthorizedInterceptor implements HttpInterceptor {
         if (!err.error && err.status === 401) {
           void this.onUnauthorized();
         }
-        this.logger.warn('error: ', err);
         return throwError(err);
       }),
     );

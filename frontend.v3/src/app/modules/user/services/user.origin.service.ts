@@ -1,8 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
-import { ILogger } from 'waterlog';
-import { getConsoleLogger } from '../../../main/app.logging';
 import { AppData } from '../../../main/models/app-data';
 import { AppSyncData } from '../../../main/models/app-sync-data';
 import { CredentialsException } from '../../auth/exceptions/credentials.exception';
@@ -14,8 +11,6 @@ import { User } from '../../auth/models/user';
   providedIn: 'root',
 })
 export class UserOriginService {
-  private logger: ILogger = getConsoleLogger('UserOriginService');
-
   constructor(private httpClient: HttpClient) {}
 
   public async login(credentials: Credentials): Promise<User> {
@@ -24,11 +19,9 @@ export class UserOriginService {
         .post<User>('/auth/login', credentials, {
           responseType: 'json',
         })
-        .pipe(tap(response => this.logger.debug('Sent login', response)))
         .toPromise();
     } catch (e) {
       if (e.error === 'Incorrect login or password') {
-        this.logger.debug('Credentials error', e);
         throw new CredentialsException();
       } else {
         throw e;
@@ -36,35 +29,16 @@ export class UserOriginService {
     }
   }
 
-  public async logout(): Promise<void> {
-    try {
-      return (await this.httpClient
-        .get('/auth/logout')
-        .pipe(tap(() => this.logger.debug('Sent logout')))
-        .toPromise()) as Promise<void>;
-    } catch (e) {
-      this.logger.error('Logout problem');
-      throw e;
-    }
+  public logout(): Promise<void> {
+    return this.httpClient.get('/auth/logout').toPromise() as Promise<any>;
   }
 
-  public async loadMe(): Promise<User> {
-    try {
-      return await this.httpClient
-        .get<User>('/user/me')
-        .pipe(tap(user => this.logger.debug('Me', user)))
-        .toPromise();
-    } catch (e) {
-      this.logger.error('me problem', e);
-      throw e;
-    }
+  public loadMe(): Promise<User> {
+    return this.httpClient.get<User>('/user/me').toPromise();
   }
 
   public async registration(data: RegistrationData): Promise<User> {
-    return await this.httpClient
-      .post<User>('/auth/register', data)
-      .pipe(tap(item => this.logger.debug('Registered', item)))
-      .toPromise();
+    return await this.httpClient.post<User>('/auth/register', data).toPromise();
   }
 
   public async recoveryPassword(email: string): Promise<void> {

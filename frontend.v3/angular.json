@@ -22,8 +22,7 @@
           "options": {
             "allowedCommonJsDependencies": [
               "declarray",
-              "essents",
-              "waterlog"
+              "essents"
             ],
             "outputPath": "dist/frontend",
             "index": "src/index.html",
@@ -39,7 +38,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/datalist-polyfill/datalist-polyfill.min.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import _ from 'declarray';
 import { from, Observable } from 'rxjs';
-import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
-import { getConsoleLogger } from '../../../../main/app.logging';
+import { map, startWith, switchMap } from 'rxjs/operators';
 import { Action } from '../../../../main/resolvers/action.resolver';
 import { DateUtils } from '../../../../main/utils/date-utils';
 import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
@@ -32,7 +31,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
   public action: Action;
 
   public sortUtils = new BookSortUtils();
-  private logger = getConsoleLogger('BookEditViewComponent');
   private _filteredGenres: Observable<string[]>;
 
   constructor(
@@ -79,11 +77,9 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     this.bookForm.build();
 
     this._filteredGenres = this.bookForm.genreChanges.pipe(
-      debounceTime(300),
       startWith(this.genre || ''),
       map(item => new FuzzySearch().search(this._genres, item)),
       map(item => _(item)),
-      map(item => item.where(Boolean)),
       map(item => item.where(variant => variant !== this.genre)),
       switchMap(item => from(item.promisify().toArray())),
     );
@@ -106,7 +102,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
         this.notificationService.createWarningNotification('Книга сохранена локально');
         await this.redirect();
       } else {
-        this.logSaveError(e);
+        this.logSaveError();
       }
     }
   }
@@ -137,7 +133,6 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
       this.bookForm.started = DateUtils.today;
     } else if (this.book.status === BookStatus.InProgress && status === BookStatus.Done) {
       this.bookForm.finished = DateUtils.today;
-      this.bookForm.done = this.bookForm.total;
     }
   }
 
@@ -151,8 +146,7 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     }
   }
 
-  private logSaveError(e: any): void {
-    this.logger.error('Book save error', e);
+  private logSaveError(): void {
     this.notificationService.createErrorNotification('Не удалось сохранить книгу', {
       autoclose: false,
     });
@@ -174,5 +168,9 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     this.bookForm = new BookDataForm(book);
     this.book.progressType =
       this.action === Action.Create ? this.progressAlgorithmService.getAlgorithm(this.book.type) : this.book.progressType;
+  }
+
+  public trackByValue(index: number, item: any): string {
+    return item;
   }
 }

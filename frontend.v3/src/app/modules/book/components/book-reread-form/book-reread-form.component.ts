@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { getConsoleLogger } from '../../../../main/app.logging';
 import { NotificationService } from '../../../notification/services/notification.service';
 import { Book } from '../../models/book';
 import { BookStatus } from '../../models/book-status';
@@ -19,8 +18,6 @@ import { EntityValidationError } from '../../../../main/models/errors/entity-val
   styleUrls: ['./book-reread-form.component.scss'],
 })
 export class BookRereadFormComponent extends AbstractBookDataForm implements OnInit {
-  private logger = getConsoleLogger('BookRereadFormComponent');
-
   constructor(
     private notificationService: NotificationService,
     public activatedRoute: ActivatedRoute,
@@ -65,7 +62,7 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
       } else if (e instanceof EntityValidationError) {
         this.notificationService.createWarningNotification('Некорректная модель книги');
       }
-      this.logSaveError(e);
+      this.logSaveError();
     }
   }
 
@@ -76,8 +73,7 @@ export class BookRereadFormComponent extends AbstractBookDataForm implements OnI
     return result;
   }
 
-  private logSaveError(e: any): void {
-    this.logger.error('Book save error', e);
+  private logSaveError(): void {
     this.notificationService.createErrorNotification('Не удалось сохранить книгу', {
       autoclose: false,
     });

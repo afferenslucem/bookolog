@@ -113,7 +113,6 @@ describe('BookEditViewComponent', () => {
       component.onStatusChange(BookStatus.Done);
 
       expect(component.bookForm.finished).toEqual(DateUtils.today);
-      expect(component.bookForm.finished).toEqual(DateUtils.today);
     });
   });
 

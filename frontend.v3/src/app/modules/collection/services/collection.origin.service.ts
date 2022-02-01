@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
-import { getConsoleLogger } from '../../../main/app.logging';
+
 import { SyncData } from '../../../main/models/sync-data';
 import { ISyncableOrigin } from '../../../main/services/i-syncable-origin';
 import { UserService } from '../../user/services/user.service';
@@ -11,19 +10,11 @@ import { CollectionData } from '../models/collection-data';
   providedIn: 'root',
 })
 export class CollectionOriginService implements ISyncableOrigin<CollectionData> {
-  private logger = getConsoleLogger({
-    loggerName: 'CollectionOrigin',
-    namespace: 'Origin',
-  });
-
   constructor(private httpClient: HttpClient, private userService: UserService) {}
 
   public async getAll(): Promise<CollectionData[]> {
     const userId = this.userService.user.id;
-    return this.httpClient
-      .get<CollectionData[]>(`/collection/user/${userId}`)
-      .pipe(tap(books => this.logger.debug('Loaded collections: ', books)))
-      .toPromise();
+    return this.httpClient.get<CollectionData[]>(`/collection/user/${userId}`).toPromise();
   }
 
   public async create(collection: CollectionData): Promise<CollectionData> {

@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
 import { ISyncableOrigin } from 'src/app/main/services/i-syncable-origin';
-import { getConsoleLogger } from '../../../main/app.logging';
+
 import { SyncData } from '../../../main/models/sync-data';
 import { UserService } from '../../user/services/user.service';
 import { BookData } from '../models/book-data';
@@ -11,19 +10,11 @@ import { BookData } from '../models/book-data';
   providedIn: 'root',
 })
 export class BookOriginService implements ISyncableOrigin<BookData> {
-  private logger = getConsoleLogger({
-    loggerName: 'BookOriginService',
-    namespace: 'Origin',
-  });
-
   constructor(private httpClient: HttpClient, private userService: UserService) {}
 
   public async getAll(): Promise<BookData[]> {
     const userId = this.userService.user.id;
-    return this.httpClient
-      .get<BookData[]>(`/book/user/${userId}`)
-      .pipe(tap(books => this.logger.debug('Loaded books: ', books)))
-      .toPromise();
+    return this.httpClient.get<BookData[]>(`/book/user/${userId}`).toPromise();
   }
 
   public async create(book: BookData): Promise<BookData> {

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, distinctUntilChanged, finalize, mapTo, takeUntil, tap } from 'rxjs/operators';
-import { getRequestLogger } from '../app.logging';
 import { UrlInterceptor } from '../interceptors/url.interceptor';
 import { Timer } from 'essents';
 
@@ -17,7 +16,6 @@ enum Times {
   providedIn: 'root',
 })
 export class PingService {
-  private logger = getRequestLogger('Ping');
   private _mode$: Subject<Mode> = new Subject<Mode>();
   private _mode: Mode;
 
@@ -102,8 +100,6 @@ export class PingService {
 
     const mode = this.solveState(time);
     this._mode$.next(mode);
-
-    this.logger.info(`time: ${time}ms`);
   }
 
   public solveState(time: number): Mode {

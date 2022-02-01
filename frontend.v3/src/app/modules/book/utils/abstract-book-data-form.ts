@@ -139,7 +139,7 @@ export abstract class AbstractBookDataForm {
   }
 
   public getProgress(data: BookFormValue): BookProgress {
-    const type = Number(data.type)
+    const type = Number(data.type);
 
     const progress = ProgressFactory.getProgress(type, data.progressType);
 

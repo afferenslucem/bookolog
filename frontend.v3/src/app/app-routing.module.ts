@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InnerAreaComponent } from './main/components/inner-area/inner-area.component';
-import { LoggerWindowComponent } from './main/components/logger-window/logger-window.component';
 import { StartPageComponent } from './main/components/start-page/start-page.component';
 import { LoggedInGuard } from './modules/auth/guards/logged-in.guard';
 import { routes as bookListRoutes } from './modules/book/book-routing.module';
@@ -38,14 +37,6 @@ const routes: Routes = [
     resolve: {
       sync: BookSyncResolver,
       user: MeResolver,
-    },
-  },
-  {
-    component: LoggerWindowComponent,
-    path: 'logs',
-    pathMatch: 'full',
-    data: {
-      title: 'Логи',
     },
   },
 ];

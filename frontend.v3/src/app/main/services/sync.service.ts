@@ -5,7 +5,6 @@ import { BookService } from '../../modules/book/services/book.service';
 import { CollectionService } from '../../modules/collection/services/collection.service';
 import { NotificationService } from '../../modules/notification/services/notification.service';
 import { UserService } from '../../modules/user/services/user.service';
-import { getConsoleLogger } from '../app.logging';
 import { AppSyncData } from '../models/app-sync-data';
 import { DateUtils } from '../utils/date-utils';
 
@@ -13,9 +12,6 @@ import { DateUtils } from '../utils/date-utils';
   providedIn: 'root',
 })
 export class SyncService {
-  private readonly consoleLogger = getConsoleLogger('SyncService');
-  private readonly requestLogger = getConsoleLogger('SyncService');
-
   constructor(
     private userService: UserService,
     private bookService: BookService,
@@ -53,7 +49,6 @@ export class SyncService {
         await this.syncAll();
       }
     } catch (e) {
-      this.requestLogger.error('Failed sync', e);
       this.notificationService.createErrorNotification('Синхронизация неудалась');
     }
   }
@@ -81,7 +76,6 @@ export class SyncService {
 
       await Promise.all([booksSync, collectionsSync, userSync]);
     } catch (e) {
-      this.consoleLogger.error('syncAll error', e);
       this.notificationService.createErrorNotification('Синхронизация неудалась');
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.8.44",
+  "version": "0.8.47",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host=0.0.0.0",
@@ -37,16 +37,16 @@
     "@ng-bootstrap/ng-bootstrap": "^9.0.2",
     "bookolog-ui-kit": "0.0.17",
     "bootstrap": "^4.5.0",
+    "datalist-polyfill": "^1.24.4",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
-    "declarray": "^0.3.3",
+    "declarray": "^0.4.0",
     "essents": "^1.4.7",
     "moment": "^2.29.1",
     "ngx-photo-editor": "^0.3.3",
     "rxjs": "~6.6.0",
     "sha1": "^1.1.1",
     "tslib": "^2.0.0",
-    "waterlog": "^2.1.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

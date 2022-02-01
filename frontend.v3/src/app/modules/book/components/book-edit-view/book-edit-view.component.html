@@ -42,7 +42,7 @@
     />
 
     <datalist id="genreAutocomplete">
-      <option *ngFor="let genre of genres | async" [value]="genre | capitalize">
+      <option *ngFor="let genre of genres | async; trackBy: trackByValue" [value]="genre | capitalize">
         {{ genre | capitalize }}
       </option>
     </datalist>
@@ -53,7 +53,7 @@
       <ui-label>Серия</ui-label>
       <select class="book__series" formControlName="collectionGuid" uiSelect>
         <option [value]="null">Отсутствует</option>
-        <option *ngFor="let item of allSeries" [value]="item.guid">
+        <option *ngFor="let item of allSeries; trackBy: trackByValue" [value]="item.guid">
           {{ item.name | capitalize }}
         </option>
       </select>

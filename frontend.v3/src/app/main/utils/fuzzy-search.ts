@@ -17,7 +17,24 @@ export class FuzzySearch {
       .toArray();
   }
 
+  public searchAsync<T>(items: T[], pattern: string): Promise<T[]> {
+    if (pattern == null) {
+      return Promise.resolve(items);
+    }
+
+    pattern = pattern.trim().toLowerCase();
+
+    if (pattern === '') {
+      return Promise.resolve(items);
+    }
+
+    return _(items)
+      .where(item => this.contains(item.toString(), pattern))
+      .promisify()
+      .toArray();
+  }
+
   public contains(line: string, pattern: string): boolean {
-    return line.toLowerCase().indexOf(pattern) !== -1;
+    return line.toLowerCase().includes(pattern);
   }
 }
