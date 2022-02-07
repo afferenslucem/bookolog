@@ -4,10 +4,10 @@ namespace backend.v2.Authentication.Models
 {
     public enum TokenType
     {
-        Access=0,
-        Refresh=1,
+        Access = 0,
+        Refresh = 1
     }
-    
+
     public class TokenData
     {
         public Guid SessionGuid { get; set; }

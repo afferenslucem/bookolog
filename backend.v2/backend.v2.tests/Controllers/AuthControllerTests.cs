@@ -161,7 +161,7 @@ namespace backend.v2.tests.Controllers
                 Email = "alexshakirov74@gmail.com"
             };
 
-            userServiceMock.Setup(m => m.RegisterUser(It.IsAny<User>())).ThrowsAsync(new UserWithSameEmailAlreadyExistsException());
+            userServiceMock.Setup(m => m.RegisterUser(It.IsAny<User>())).ThrowsAsync(new RegistrationException("User with same email already exists"));
             controllerMock.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<object>()));
 
             await controllerMock.Object.Register(user);
@@ -170,7 +170,7 @@ namespace backend.v2.tests.Controllers
             controllerMock.Verify(
                 m => m.StatusCode(
                     It.Is<int>(v => v == 400),
-                    It.Is<object>(v => v == "User with same email already exisists")
+                    It.Is<object>(v => v == "User with same email already exists")
                 ),
                 Times.Once());
         }
@@ -185,7 +185,7 @@ namespace backend.v2.tests.Controllers
                 Email = "alexshakirov74@gmail.com"
             };
 
-            userServiceMock.Setup(m => m.RegisterUser(It.IsAny<User>())).ThrowsAsync(new UserWithSameLoginAlreadyExistsException());
+            userServiceMock.Setup(m => m.RegisterUser(It.IsAny<User>())).ThrowsAsync(new RegistrationException("User with same login already exists"));
             controllerMock.Setup(m => m.StatusCode(It.IsAny<int>(), It.IsAny<object>()));
 
             await controllerMock.Object.Register(user);
@@ -194,7 +194,7 @@ namespace backend.v2.tests.Controllers
             controllerMock.Verify(
                 m => m.StatusCode(
                     It.Is<int>(v => v == 400),
-                    It.Is<object>(v => v == "User with same login already exisists")
+                    It.Is<object>(v => v == "User with same login already exists")
                 ),
                 Times.Once());
         }
