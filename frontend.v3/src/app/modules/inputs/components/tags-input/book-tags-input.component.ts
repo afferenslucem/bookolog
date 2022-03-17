@@ -5,8 +5,8 @@ import { FuzzySearch } from '../../../../main/utils/fuzzy-search';
 import { StringComparator } from '../../../../main/utils/string-comparator';
 import { ValueAccessorBase } from '../value-accessor/value-accessor';
 import { DestroyService } from 'bookolog-ui-kit';
-import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { from, fromEvent, Observable } from 'rxjs';
+import { debounce, debounceTime, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { from, fromEvent, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-book-tags-input',
