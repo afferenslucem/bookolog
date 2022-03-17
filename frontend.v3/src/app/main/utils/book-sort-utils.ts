@@ -3,7 +3,6 @@ import _, { IGroupedData, ISequence } from 'declarray';
 import { StringComparator } from './string-comparator';
 import { IEntity } from '../models/i-entity';
 import { Entity } from '../models/entity';
-import { Observable } from 'rxjs';
 
 export class BookSortUtils {
   public static skipEmpty<T>(seq: ISequence<T>): ISequence<T> {
@@ -101,7 +100,7 @@ export class BookSortUtils {
 
   private static stringCount(data: string[], maxLength: number, result = new Map<string, number>()): Promise<Map<string, number>> {
     return new Promise(resolve => {
-      if (data.length == 0) {
+      if (data.length === 0) {
         resolve(result);
       }
 
