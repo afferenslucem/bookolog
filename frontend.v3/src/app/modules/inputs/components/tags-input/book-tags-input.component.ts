@@ -70,6 +70,7 @@ export class BookTagsInputComponent extends ValueAccessorBase<string[]> implemen
     this.subscribeToAutocomplete();
 
     this._filteredTags = this.form.get('input').valueChanges.pipe(
+      filter(() => !!this.list?.length),
       startWith(this.tag || ''),
       switchMap(item => {
         const tags = _(this.list).except(this.tags, new StringComparator()).promisify().toArray();
