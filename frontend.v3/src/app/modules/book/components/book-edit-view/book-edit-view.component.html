@@ -16,7 +16,7 @@
 
   <ui-form-field>
     <app-book-tags-input
-      [list]="authors | async"
+      [list]="authors"
       class="book__authors"
       formControlName="authors"
       header="Авторы"
@@ -67,7 +67,7 @@
 
   <ui-form-field>
     <app-book-tags-input
-      [list]="tags | async"
+      [list]="tags"
       class="book__tags"
       formControlName="tags"
       header="Теги"

@@ -26,8 +26,8 @@ import { MetrikaService } from '../../../metrika/services/metrika.service';
   styleUrls: ['./book-edit-view.component.scss'],
 })
 export class BookEditViewComponent extends AbstractBookDataForm implements OnInit {
-  public authors: Promise<string[]>;
-  public tags: Promise<string[]>;
+  public authors: string[] = [];
+  public tags: string[] = [];
   public action: Action;
 
   public sortUtils = new BookSortUtils();
@@ -152,12 +152,12 @@ export class BookEditViewComponent extends AbstractBookDataForm implements OnIni
     });
   }
 
-  private sortAuthorsByCount(books: Book[]): Promise<string[]> {
-    return this.sortUtils.sortAuthorsByCountDesc$(books);
+  private sortAuthorsByCount(books: Book[]): string[] {
+    return this.sortUtils.sortAuthorsByCountDesc(books);
   }
 
-  private sortTagsByCount(books: Book[]): Promise<string[]> {
-    return this.sortUtils.sortTagsByCountDesc$(books);
+  private sortTagsByCount(books: Book[]): string[] {
+    return this.sortUtils.sortTagsByCountDesc(books);
   }
 
   private sortCollectionsByUsage(series: Collection[]): Collection[] {

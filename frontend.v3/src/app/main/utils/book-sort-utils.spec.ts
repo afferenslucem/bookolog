@@ -1,6 +1,5 @@
 import { BookSortUtils } from './book-sort-utils';
 import { Book } from '../../modules/book/models/book';
-import _ from 'declarray';
 
 describe('BookSortUtils', () => {
   it('should create an instance', () => {
@@ -46,15 +45,15 @@ describe('BookSortUtils', () => {
     });
   });
 
-  describe('sortAuthorsByCountDesc$', () => {
-    it('sort empty', async () => {
-      const result = await new BookSortUtils().sortAuthorsByCountDesc$([]);
+  describe('sortAuthorsByCountDesc', () => {
+    it('sort empty', () => {
+      const result = new BookSortUtils().sortAuthorsByCountDesc([]);
 
       expect(result).toEqual([]);
     });
 
-    it('sort by count', async () => {
-      const result = await new BookSortUtils().sortAuthorsByCountDesc$([
+    it('sort by count', () => {
+      const result = new BookSortUtils().sortAuthorsByCountDesc([
         { authors: ['author1', 'author2'] },
         { authors: ['author2'] },
         { authors: ['author3', 'author2'] },
@@ -63,8 +62,8 @@ describe('BookSortUtils', () => {
       expect(result).toEqual(['author2', 'author1', 'author3']);
     });
 
-    it('sort by alphabet', async () => {
-      const result = await new BookSortUtils().sortAuthorsByCountDesc$([
+    it('sort by alphabet', () => {
+      const result = new BookSortUtils().sortAuthorsByCountDesc([
         { authors: ['c', 'b'] },
         { authors: ['a'] },
         { authors: ['d'] },
@@ -73,8 +72,8 @@ describe('BookSortUtils', () => {
       expect(result).toEqual(['a', 'b', 'c', 'd']);
     });
 
-    it('sort without empty', async () => {
-      const result = await new BookSortUtils().sortAuthorsByCountDesc$([
+    it('sort without empty', () => {
+      const result = new BookSortUtils().sortAuthorsByCountDesc([
         { authors: ['c'] },
         { authors: ['b'] },
         { authors: ['a'] },
@@ -86,15 +85,15 @@ describe('BookSortUtils', () => {
     });
   });
 
-  describe('sortTagsByCountDesc$', () => {
-    it('sort empty', async () => {
-      const result = await new BookSortUtils().sortTagsByCountDesc$([]);
+  describe('sortTagsByCountDesc', () => {
+    it('sort empty', () => {
+      const result = new BookSortUtils().sortTagsByCountDesc([]);
 
       expect(result).toEqual([]);
     });
 
-    it('sort by count', async () => {
-      const result = await new BookSortUtils().sortTagsByCountDesc$([
+    it('sort by count', () => {
+      const result = new BookSortUtils().sortTagsByCountDesc([
         { tags: ['tag1', 'tag2'] },
         { tags: ['tag2'] },
         { tags: ['tag3', 'tag2'] },
@@ -103,14 +102,14 @@ describe('BookSortUtils', () => {
       expect(result).toEqual(['tag2', 'tag1', 'tag3']);
     });
 
-    it('sort by alphabet', async () => {
-      const result = await new BookSortUtils().sortTagsByCountDesc$([{ tags: ['c', 'b'] }, { tags: ['a'] }, { tags: ['d'] }] as Book[]);
+    it('sort by alphabet', () => {
+      const result = new BookSortUtils().sortTagsByCountDesc([{ tags: ['c', 'b'] }, { tags: ['a'] }, { tags: ['d'] }] as Book[]);
 
       expect(result).toEqual(['a', 'b', 'c', 'd']);
     });
 
-    it('sort without empty', async () => {
-      const result = await new BookSortUtils().sortTagsByCountDesc$([
+    it('sort without empty', () => {
+      const result = new BookSortUtils().sortTagsByCountDesc([
         { tags: ['c'] },
         { tags: ['b'] },
         { tags: ['a'] },
@@ -119,30 +118,6 @@ describe('BookSortUtils', () => {
       ] as Book[]);
 
       expect(result).toEqual(['a', 'b', 'c']);
-    });
-
-    it('sort without empty', async () => {
-      const data: any = [];
-
-      _.range(0, 10)
-        .toArray()
-        .forEach(() => data.push({ tags: ['a'] }));
-      _.range(0, 100)
-        .toArray()
-        .forEach(() => data.push({ tags: ['b'] }));
-      _.range(0, 75)
-        .toArray()
-        .forEach(() => data.push({ tags: ['c'] }));
-      _.range(0, 75)
-        .toArray()
-        .forEach(() => data.push({ tags: [] }));
-      _.range(0, 50)
-        .toArray()
-        .forEach(() => data.push({ tags: ['d'] }));
-
-      const result = await new BookSortUtils().sortTagsByCountDesc$(data as Book[]);
-
-      expect(result).toEqual(['b', 'c', 'd', 'a']);
     });
   });
 });

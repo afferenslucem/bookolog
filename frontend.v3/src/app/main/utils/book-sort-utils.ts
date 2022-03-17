@@ -3,7 +3,6 @@ import _, { IGroupedData, ISequence } from 'declarray';
 import { StringComparator } from './string-comparator';
 import { IEntity } from '../models/i-entity';
 import { Entity } from '../models/entity';
-import { Observable } from 'rxjs';
 
 export class BookSortUtils {
   public static skipEmpty<T>(seq: ISequence<T>): ISequence<T> {
@@ -64,60 +63,6 @@ export class BookSortUtils {
     const result = BookSortUtils.countAndSort(tags);
 
     return result.toArray();
-  }
-
-  public async sortAuthorsByCountDesc$(books: Book[]): Promise<string[]> {
-    const authors = _(books)
-      .where(item => item.authors?.length)
-      .selectMany(item => item.authors)
-      .toArray();
-
-    const counted = await BookSortUtils.stringCount(authors, 75);
-
-    const sorted = _(Array.from(counted.entries()))
-      .orderByDescending(item => item[1])
-      .thenBy(item => item[0])
-      .select(item => item[0]);
-
-    return sorted.toArray();
-  }
-
-  public async sortTagsByCountDesc$(books: Book[]): Promise<string[]> {
-    const tags = _(books)
-      .where(item => !!item.tags?.length)
-      .selectMany(item => item.tags)
-      .where(item => Boolean(item))
-      .toArray();
-
-    const counted = await BookSortUtils.stringCount(tags, 75);
-
-    const sorted = _(Array.from(counted.entries()))
-      .orderByDescending(item => item[1])
-      .thenBy(item => item[0])
-      .select(item => item[0]);
-
-    return sorted.toArray();
-  }
-
-  private static stringCount(data: string[], maxLength: number, result = new Map<string, number>()): Promise<Map<string, number>> {
-    return new Promise(resolve => {
-      if (data.length == 0) {
-        resolve(result);
-      }
-
-      const searchable = data.slice(0, maxLength - 1);
-
-      searchable.forEach(item => {
-        const key = item.trim().toLowerCase();
-
-        const count = result.get(key) ?? 0;
-        result.set(key, count + 1);
-      });
-
-      const nextData = data.slice(maxLength);
-
-      setTimeout(() => this.stringCount(nextData, maxLength, result).then(resolve));
-    });
   }
 
   public sortBooksByFinishDate(books: Book[]): Book[] {

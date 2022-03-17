@@ -43,7 +43,7 @@ const activatedRoute: ActivatedRoute = {
   data,
 } as any;
 
-xdescribe('BookEditViewComponent', () => {
+describe('BookEditViewComponent', () => {
   let component: BookEditViewComponent;
   let fixture: ComponentFixture<BookEditViewComponent>;
   let element: HTMLDivElement = null;
