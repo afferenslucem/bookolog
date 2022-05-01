@@ -1,5 +1,7 @@
 using System;
+using System.Net;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +14,7 @@ using backend.v2.Configuration.Middlewares;
 using backend.v2.Storages;
 using backend.v2.Configuration.RequestFormatters;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.v2
 {
@@ -30,19 +33,41 @@ namespace backend.v2
         {
             services.AddCorsRules(corsPolicy);
 
-            services
-                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(14);
+                options.SlidingExpiration = true;
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
+            {
+                o.LoginPath = new PathString("/Auth/Login/");
+                o.Cookie.Path = "/";
+                o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                o.Cookie.HttpOnly = true;
+                o.LogoutPath = new PathString("/Auth/Logout/");
+
+                o.Events = new CookieAuthenticationEvents()
                 {
-                    options.ExpireTimeSpan = TimeSpan.FromHours(24 * 7);
-                    options.SlidingExpiration = true;
-                    options.AccessDeniedPath = "/Forbidden/";
-                });
+                    OnRedirectToLogin = context =>
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        return Task.CompletedTask;
+                    },
+                };
+            });
+            
+            services.AddDistributedMemoryCache();
 
             services.AddMvc(o => o.InputFormatters.Insert(0, new RawRequestBodyFormatter()));
             services.ConfigureFormOptions();
             
             services.ConfigureCookiesPolicy();
+            
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true;
+            });
 
             services
                 .AddControllers()
@@ -75,9 +100,10 @@ namespace backend.v2
             app.UseNoSniffProtection();
             app.UseDenyFrameProtection();
 
-            app.UseMiddleware<SessionMiddleware>();
+            app.UseSession();
             app.UseAuthentication();           
             app.UseAuthorization();
+            app.UseMiddleware<SessionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
