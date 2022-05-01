@@ -11,7 +11,6 @@ namespace backend.v2.Storages
         public DbSet<Book> Books { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Session> Sessions { get; set; }
         public DbSet<Collection> Collections { get; set; }
 
         private ILoggerFactory loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
@@ -34,15 +33,6 @@ namespace backend.v2.Storages
             .HasOne(item => item.Collection)
             .WithMany(item => item.Books)
             .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<Session>().HasQueryFilter(item => item.ValidityExpired > DateTime.Now);
-
-            modelBuilder.Entity<Session>()
-                .HasNoKey()
-                .HasIndex("ValidityExpired");
-
-            modelBuilder.Entity<Session>()
-                .HasIndex("Guid");
 
             modelBuilder.Entity<Book>()
                 .HasOne(b => b.RereadingBook)

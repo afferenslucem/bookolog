@@ -1,40 +1,32 @@
 ﻿using System;
 using backend.v2.Models;
 using backend.v2.Models.Authentication;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.v2.Services
 {
     public interface IUserSession
     {
         void UpdateLastSyncTime();
-        Session Session { get; set; }
         User User { get; set; }
         DateTime? LastSyncTime { get; }
     }
 
     public class UserSession : IUserSession
     {
-        private Session session;
         private User user;
+        private HttpContext context;
 
-        public UserSession(ISessionService sessionService)
+        public UserSession(IHttpContextAccessor context)
         {
-        }
-
-        public Session Session {
-            get {
-                return this.session;
-            }
-            set {
-                this.session = value;
-            }
+            this.context = context.HttpContext;
         }
 
         public void UpdateLastSyncTime()
         {
             var now = DateSessionUtils.Now;
             var str = DateSessionUtils.Stringify(now);
-            this.session.Set("LastSyncTime", str);
+            context.Session.SetString("LastSyncTime", str);
         }
 
         public User User
@@ -54,7 +46,7 @@ namespace backend.v2.Services
         {
             get
             {
-                var saved = this.session != null ? this.session.Get("LastSyncTime") : null;
+                var saved = this.context.Session.GetString("LastSyncTime");
 
                 return DateSessionUtils.Parse(saved) ?? null;
             }

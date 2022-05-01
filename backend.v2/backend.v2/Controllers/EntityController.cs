@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using backend.v2.Exceptions;
 using backend.v2.Models;
-using backend.v2.Authentication.Models;
 using backend.v2.Exceptions.BookExceptions;
 using backend.v2.Services;
 using Microsoft.AspNetCore.Http;

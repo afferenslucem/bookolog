@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,11 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using backend.v2.Configuration;
-using backend.v2.Storages;
-using backend.v2.Authentication.Models;
-using backend.v2.Authentication.Services;
 using backend.v2.Configuration.Middlewares;
+using backend.v2.Storages;
 using backend.v2.Configuration.RequestFormatters;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace backend.v2
 {
@@ -31,8 +31,13 @@ namespace backend.v2
             services.AddCorsRules(corsPolicy);
 
             services
-            .AddAuthentication(JWTDefaults.AuthenticationScheme)
-            .AddJWT<JWTAuthenticationService>();
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromHours(24 * 7);
+                    options.SlidingExpiration = true;
+                    options.AccessDeniedPath = "/Forbidden/";
+                });
 
             services.AddMvc(o => o.InputFormatters.Insert(0, new RawRequestBodyFormatter()));
             services.ConfigureFormOptions();
@@ -70,8 +75,8 @@ namespace backend.v2
             app.UseNoSniffProtection();
             app.UseDenyFrameProtection();
 
-            app.UseAuthentication();           
             app.UseMiddleware<SessionMiddleware>();
+            app.UseAuthentication();           
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

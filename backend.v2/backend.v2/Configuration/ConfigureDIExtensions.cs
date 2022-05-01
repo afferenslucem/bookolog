@@ -1,12 +1,6 @@
-using backend.v2.Authentication.Models;
-using backend.v2.Authentication.Services;
-using backend.v2.Authentication.Services.Actions;
 using backend.v2.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-
 namespace backend.v2.Configuration
 {
     public static class ConfigureDIExtensions
@@ -22,14 +16,6 @@ namespace backend.v2.Configuration
             services.AddScoped<IUserSession, UserSession>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IFileService, FileService>();
-            services.AddScoped<ISignInService, SignInService>();
-            services.AddScoped<ISignOutService, SignOutService>();
-            services.AddScoped<IAuthenticationService, JWTAuthenticationService>();
-
-            services.AddSingleton<ISessionService, SessionService>();
-            services.AddSingleton<IJWTTokenService, JWTTokenService>();
-            services.AddSingleton<IJWTTokenManager, JWTTokenManager>();
-            services.AddSingleton<IPostConfigureOptions<JWTAuthenticationOptions>, JWTAuthenticationPostConfigureOptions>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }

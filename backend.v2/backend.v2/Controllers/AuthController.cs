@@ -9,10 +9,9 @@ using Microsoft.Extensions.Logging;
 using backend.v2.Exceptions.AuthenticationExceptions;
 using backend.v2.Models;
 using backend.v2.Models.Authentication;
-using backend.v2.Authentication.Models;
-using backend.v2.Exceptions.StorageExceptions;
 using backend.v2.Services;
 using backend.v2.Utils;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 
 namespace backend.v2.Controllers
@@ -173,7 +172,7 @@ namespace backend.v2.Controllers
             var identity = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
             await HttpContext.SignInAsync(
-                JWTDefaults.AuthenticationScheme,
+                CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(identity),
                 new AuthenticationProperties
                 {

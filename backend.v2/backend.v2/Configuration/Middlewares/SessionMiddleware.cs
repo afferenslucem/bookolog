@@ -1,11 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using backend.v2.Authentication.Models;
-using backend.v2.Authentication.Services;
-using backend.v2.Models.Authentication;
 using backend.v2.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -24,39 +21,30 @@ namespace backend.v2.Configuration.Middlewares
 
         public async Task InvokeAsync(
             HttpContext context,
-            ISessionService sessionService,
             IUserSession userSession,
-            IJWTTokenManager manager,
+            IUserService userService,
             ILogger<SessionMiddleware> logger
         )
         {
+            await this.SaveSession(context, userSession, userService, logger);
+            
             await next(context);
-
-            await this.SaveSession(context, sessionService, userSession, manager, logger);
         }
 
         public virtual async Task SaveSession(
             HttpContext context,
-            ISessionService sessionService,
             IUserSession userSession,
-            IJWTTokenManager tokenManager,
+            IUserService userService,
             ILogger<SessionMiddleware> logger)
         {
-            var session = userSession.Session;
 
-            if (session == null)
+            var idClaim = context.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            var id = 0;
+
+            if (int.TryParse(idClaim, out id))
             {
-                logger.LogDebug("Empty session");
-                return;
-            }
-
-            if (context.Response.Headers.ContainsKey(JWTDefaults.RefreshHeaderName))
-            {
-                session.ValidityExpired = tokenManager.NextRefreshTime;
-
-                await sessionService.Update(session);
-
-                logger.LogDebug("Session updated");
+                userSession.User = await userService.GetById(id);
             }
         }
     }

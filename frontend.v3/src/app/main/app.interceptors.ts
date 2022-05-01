@@ -1,5 +1,4 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JWTAuthenticationInterceptor } from '../modules/auth/interceptors/jwt-authentication.interceptor';
 import { WithCredentialsInterceptor } from '../modules/auth/interceptors/with-credentials.interceptor';
 import { AuthorizedInterceptor } from './interceptors/authorized.interceptor';
 import { PreloaderInterceptor } from './interceptors/preloader.interceptor';
@@ -14,7 +13,6 @@ export const interceptors = [
   { provide: HTTP_INTERCEPTORS, useClass: UrlInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: WithCredentialsInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: AuthorizedInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: JWTAuthenticationInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: BrokenConnectionInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: PingInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: RetryInterceptor, multi: true },

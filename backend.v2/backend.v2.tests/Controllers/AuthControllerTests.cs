@@ -16,7 +16,6 @@ namespace backend.v2.tests.Controllers
     [TestClass]
     public class AuthControllerTests
     {
-        private Mock<ISessionService> sessionServiceMock;
         private Mock<IUserSession> userSessionMock;
         private Mock<IUserService> userServiceMock;
         private Mock<IMailService> mailServiceMock;
@@ -29,7 +28,6 @@ namespace backend.v2.tests.Controllers
         [TestInitialize]
         public void BeforeEach()
         {
-            sessionServiceMock = new Mock<ISessionService>();
             userSessionMock = new Mock<IUserSession>();
             userServiceMock = new Mock<IUserService>();
             mailServiceMock = new Mock<IMailService>();
