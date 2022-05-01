@@ -43,12 +43,6 @@ namespace backend.v2.tests.Services
         }
 
         [TestMethod]
-        public void ShouldCreate2()
-        {
-            Assert.IsNotNull(new Mock<BookService>(MockBehavior.Default, sessionMock.Object).Object);
-        }
-
-        [TestMethod]
         public async Task ShouldReturnByGuid()
         {
             var guid = Guid.NewGuid();

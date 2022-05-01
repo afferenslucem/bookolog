@@ -146,7 +146,7 @@ namespace backend.v2.Services
 
             if (user != null)
             {
-                throw new UserWithSameLoginAlreadyExistsException();
+                throw new RegistrationException("User with same login already exisits");
             }
         }
 
@@ -156,7 +156,7 @@ namespace backend.v2.Services
 
             if (user != null)
             {
-                throw new UserWithSameEmailAlreadyExistsException();
+                throw new RegistrationException("User with same email already exisits");
             }
         }
 
@@ -166,9 +166,9 @@ namespace backend.v2.Services
             var message = e.InnerException.Message;
 
             if(message.Contains("Login") && message.Contains("unique")) {
-                return new UserWithSameLoginAlreadyExistsException();
+                return new RegistrationException("User with same login already exisits");
             } else  if(message.Contains("Email") && message.Contains("unique")) {
-                return new UserWithSameEmailAlreadyExistsException();
+                return new RegistrationException("User with same email already exisits");
             } else {
                 return null;
             }

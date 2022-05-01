@@ -112,15 +112,10 @@ namespace backend.v2.Controllers
 
                 return Created(HttpContext.Request.Path, withoutPrivate);
             }
-            catch (UserWithSameEmailAlreadyExistsException e)
+            catch (RegistrationException e)
             {
                 this.logger.LogError(400, e.Message, user, e);
-                return StatusCode(400, "User with same email already exisists");
-            }
-            catch (UserWithSameLoginAlreadyExistsException e)
-            {
-                this.logger.LogError(400, e.Message, user, e);
-                return StatusCode(400, "User with same login already exisists");
+                return StatusCode(400, e.Message);
             }
             catch (Exception e)
             {
