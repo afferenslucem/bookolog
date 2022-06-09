@@ -41,7 +41,7 @@
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
     "declarray": "^0.4.0",
-    "essents": "^1.4.7",
+    "essents": "^1.5.7",
     "moment": "^2.29.1",
     "ngx-photo-editor": "^0.3.3",
     "rxjs": "~6.6.0",
