@@ -29,7 +29,7 @@ services:
       - "45587:587"
 
   postgre:
-    image: postgres:12.4-alpine
+    image: postgres:14-bullseye
     environment:
       POSTGRES_PASSWORD: masterkey
     ports:
