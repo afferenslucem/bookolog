@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.scss';
 import { Route, Routes } from "react-router-dom";
-import Auth from "./Auth/Auth";
-import Layout from "./Layout/Layout";
+import Auth from "../../Pages/Auth/Auth";
+import Layout from "../Layout/Layout";
 
 function App() {
   return (
