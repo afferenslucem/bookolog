@@ -1,0 +1,18 @@
+.book {
+  border-radius: 0.5rem;
+  background-color: white;
+  padding: 1rem;
+
+  & > * + * {
+    margin-top: 0.5rem;
+  }
+
+  &__header {
+    font-weight: 500;
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { BookLoader } from "../../../../common/utils/book-loader";
 import { Book } from "../../../../common/models/book";
+import { useOnInit } from "../../../../common/utils/hooks";
+import PureBook from "../../components/Book/Book";
+
+import './InProgress.scss';
 
 export default function InProgress() {
     const [loading, setLoading] = useState(true);
     const [books, setBooks] = useState<Book[]>([]);
 
-    useEffect(() => {
+    useOnInit(() => {
         new BookLoader().getBooksInProgress()
             .then(books => setBooks(books))
     })
 
     return (
-        <div>
+        <div className="in-progress">
             {
-                books.map(book => (
-                    <div key={book.guid}>
-                        {book.name}
-                    </div>
-                ))
+                books.map(book => <PureBook key={book.guid} book={book} />)
             }
         </div>
     )
