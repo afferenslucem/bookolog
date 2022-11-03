@@ -1,4 +1,6 @@
-﻿using backend.v2.Exceptions.BookExceptions;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using backend.v2.Exceptions.BookExceptions;
 using backend.v2.Models;
 using backend.v2.Storages;
 
@@ -6,6 +8,7 @@ namespace backend.v2.Services
 {
     public interface IBookService : IEntityService<Book>
     {
+        Task<IEnumerable<Book>> GetByStatus(Status status);
     }
 
     public class BookService : EntityService<Book>, IBookService
@@ -23,6 +26,11 @@ namespace backend.v2.Services
         {
             this.storage = storage;
             this.session = session;
+        }
+
+        public Task<IEnumerable<Book>> GetByStatus(Status status)
+        {
+            return storage.GetByUserIdAndStatus(session.User.Id, status);
         }
 
         public override void CheckEntity(Book book)

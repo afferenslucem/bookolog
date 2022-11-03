@@ -5,7 +5,7 @@ interface Environment {
 
 const development: Environment = {
     name: 'development',
-    baseUrl: 'http://localhost:35000'
+    baseUrl: 'http://localhost:5000'
 }
 
 const production: Environment = {

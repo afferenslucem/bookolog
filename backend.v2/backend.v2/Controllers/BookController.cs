@@ -13,8 +13,10 @@ namespace backend.v2.Controllers
     [Route("[controller]")]
     public class BookController : EntityController<Book>
     {
+        private IBookService bookService;
         public BookController(IBookService bookService, IUserSession session, ILogger<BookController> logger): base(bookService, session, logger)
         {
+            this.bookService = bookService;
         }
         
         /// <summary>
@@ -68,6 +70,21 @@ namespace backend.v2.Controllers
         public override async Task<IActionResult> Get(Guid guid)
         {
             return await base.Get(guid);
+        }
+        
+        /// <summary>
+        /// Возвращает список читаемых книг
+        /// </summary>
+        /// <response code="200">Возвращает список читаемых книг</response>
+        /// <response code="401">Если пользователь не авторизован в системе.</response>
+        [ProducesResponseType(typeof(Book[]), StatusCodes.Status200OK)]
+        [Route("InProgress")]
+        [HttpGet]
+        public async Task<IActionResult> GetInProgress()
+        {
+            var result = await bookService.GetByStatus(Status.InProgress);
+
+            return Ok(result);
         }
         
         /// <summary>
