@@ -1,28 +1,30 @@
 import { Button, TextField } from "@mui/material";
-import { useState } from "react";
-import { useInput } from "../../../../Common/Utils/hooks";
+import { useInput } from "../../../../../common/utils/hooks";
+import { Credentials } from "../../../models/credentials";
 
 interface LoginFormProps {
-    onSubmit: (credentials: { login: string, password: string }) => void;
+    onSubmit: (credentials: Credentials) => void;
 }
 
 export default function LoginForm(props: LoginFormProps) {
-    const { onSubmit } = props;
+    const {onSubmit} = props;
 
     const [loginProps] = useInput("");
     const [passwordProps] = useInput("");
 
     return (
-        <form>
-            <span className="form-header">Login</span>
+        <form onSubmit={(e) => {
+            e.preventDefault();
 
+            onSubmit({
+                login: loginProps.value,
+                password: passwordProps.value,
+            })
+        }}>
             <TextField data-testid="login" label="Login" variant="outlined" {...loginProps} />
             <TextField data-testid="password" label="Password" variant="outlined" type="password"  {...passwordProps} />
 
-            <Button type="button" color="primary" onClick={() => onSubmit({
-                login: loginProps.value,
-                password: passwordProps.value,
-            })}> Sign In </Button>
+            <Button type="submit" color="primary"> Sign In </Button>
         </form>
     )
 }
