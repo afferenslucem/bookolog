@@ -5,8 +5,8 @@ export default function BookTimeProgress(props: { value: TimeBookProgress }) {
     const {value} = props;
 
     return (
-        <div className="book-progress--page">
-            <Time value={value.done}/> from <Time value={value.total}/>
+        <div className="book-progress book-progress--time">
+            <Time data-testid="done" value={value.done}/> from <Time data-testid="total" value={value.total}/>
         </div>
     )
 }

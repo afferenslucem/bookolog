@@ -1,4 +1,4 @@
-import { Book } from "../../../../common/models/book/book";
+import { Book as BookModel } from "../../../../common/models/book/book";
 import { memo } from "react";
 
 import './Book.scss';
@@ -8,8 +8,9 @@ import BookPageProgress from "../BookPageProgress/BookPageProgress";
 import { PageBookProgress } from "../../../../common/models/book/progress/page-book-progress";
 import BookTimeProgress from "../BookTimeProgress/BookTimeProgress";
 import { TimeBookProgress } from "../../../../common/models/book/progress/time-book-progress";
+import BookDateInterval from "../BookDateInterval/BookDateInterval";
 
-function BookComponent(props: { book: Book }) {
+function BookComponent(props: { book: BookModel }) {
     const {book} = props;
 
     return (
@@ -25,12 +26,12 @@ function BookComponent(props: { book: Book }) {
             }
             {
                 book.progress.totalNumeric &&
-                <LinearProgress variant="determinate" value={book.progress.progressPercent} />
+                <LinearProgress data-testid="progress-bar" variant="determinate" value={book.progress.progressPercent} />
             }
             <div className="book__bottom secondary">
-                <div>
+                <div className="book__progress">
                     {
-                        book.progress.totalUnits != null && (
+                        book.progress.totalUnits && (
                             book.type == BookType.Audio
                             ? <BookTimeProgress value={book.progress as TimeBookProgress} />
                             : <BookPageProgress value={book.progress as PageBookProgress} />
@@ -40,13 +41,17 @@ function BookComponent(props: { book: Book }) {
 
 
                 <div className="book__dates">
-
+                    {
+                        (book.started?.year || book.finished?.year ) && (
+                            <BookDateInterval data-testid="date-interval" from={book.started} to={book.finished} />
+                        )
+                    }
                 </div>
             </div>
         </div>
     )
 }
 
-const PureBook = memo(BookComponent);
+const Book = memo(BookComponent);
 
-export default PureBook;
+export default Book;

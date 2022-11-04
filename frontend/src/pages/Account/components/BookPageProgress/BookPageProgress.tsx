@@ -4,7 +4,7 @@ export default function BookPageProgress(props: {value: PageBookProgress}) {
     const {value} = props;
 
     return (
-        <div className="book-progress--page">
+        <div className="book-progress book-progress--page">
             {value.done} from {value.total}
         </div>
     )
