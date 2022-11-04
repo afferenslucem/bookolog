@@ -14,7 +14,7 @@ function BookComponent(props: { book: BookModel }) {
     const {book} = props;
 
     return (
-        <div className="book">
+        <div className="book" data-testid="book">
             <div className="book__header">
                 {book.name}
             </div>

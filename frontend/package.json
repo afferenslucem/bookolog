@@ -36,6 +36,11 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -49,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^8.0.1",
     "sass": "^1.55.0"
   }
 }

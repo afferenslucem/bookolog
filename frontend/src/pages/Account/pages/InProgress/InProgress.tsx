@@ -5,7 +5,7 @@ import { useOnInit } from "../../../../common/utils/hooks";
 import Book from "../../components/Book/Book";
 
 import './InProgress.scss';
-import { CircularProgress } from "@mui/material";
+import Loader from "../../../../common/components/Loader/Loader";
 
 export default function InProgress() {
     const [loading, setLoading] = useState(true);
@@ -22,9 +22,7 @@ export default function InProgress() {
         <div className="in-progress">
             {
                 loading
-                    ? <div className="in-progress__loading">
-                        <CircularProgress size="6rem"/>
-                      </div>
+                    ? <Loader data-testid="backdrop" />
                     : books.map(book => <Book key={book.guid} book={book}/>)
             }
         </div>
