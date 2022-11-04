@@ -1,13 +1,13 @@
-import { Book } from "../../../../common/models/book";
+import { Book } from "../../../../common/models/book/book";
 import { memo } from "react";
 
 import './Book.scss';
 import { LinearProgress } from "@mui/material";
-import { BookType } from "../../../../common/models/book-type";
+import { BookType } from "../../../../common/models/book/book-type";
 import BookPageProgress from "../BookPageProgress/BookPageProgress";
-import { PageBookProgress } from "../../../../common/models/page-book-progress";
+import { PageBookProgress } from "../../../../common/models/book/progress/page-book-progress";
 import BookTimeProgress from "../BookTimeProgress/BookTimeProgress";
-import { TimeBookProgress } from "../../../../common/models/time-book-progress";
+import { TimeBookProgress } from "../../../../common/models/book/progress/time-book-progress";
 
 function BookComponent(props: { book: Book }) {
     const {book} = props;

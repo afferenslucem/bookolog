@@ -2,8 +2,8 @@ import { PageBookProgress } from "./page-book-progress";
 import { TimeBookProgress } from "./time-book-progress";
 import { BookProgress } from "./book-progress";
 import { ProgressAlgorithmType } from "./progress-algorithm-type";
-import { BookType } from "./book-type";
-import { Book } from "./book";
+import { BookType } from "../book-type";
+import { Book } from "../book";
 
 export class ProgressFactory {
     public static getProgress(bookType: BookType): BookProgress;

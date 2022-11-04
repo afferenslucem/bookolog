@@ -1,5 +1,5 @@
-import { TimeBookProgress } from "../../../../common/models/time-book-progress";
-import { TimeProgress } from "../../../../common/models/time-progress";
+import { TimeBookProgress } from "../../../../common/models/book/progress/time-book-progress";
+import { TimeProgress } from "../../../../common/models/book/progress/time-progress";
 
 export default function BookTimeProgress(props: { value: TimeBookProgress }) {
     const {value} = props;

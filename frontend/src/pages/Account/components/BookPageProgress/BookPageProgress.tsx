@@ -1,4 +1,4 @@
-import { PageBookProgress } from "../../../../common/models/page-book-progress";
+import { PageBookProgress } from "../../../../common/models/book/progress/page-book-progress";
 
 export default function BookPageProgress(props: {value: PageBookProgress}) {
     const {value} = props;

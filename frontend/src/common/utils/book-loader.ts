@@ -1,6 +1,6 @@
 import { httpClient } from "./http-client";
-import { Book } from "../models/book";
-import { BookData } from "../models/book-data";
+import { Book } from "../models/book/book";
+import { BookData } from "../models/book/book-data";
 
 export class BookLoader {
     public getBooksInProgress(): Promise<Book[]> {

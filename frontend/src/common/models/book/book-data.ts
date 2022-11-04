@@ -1,4 +1,4 @@
-import { ProgressAlgorithmType } from "./progress-algorithm-type";
+import { ProgressAlgorithmType } from "./progress/progress-algorithm-type";
 
 export interface BookData {
     guid: string;

@@ -1,10 +1,10 @@
 import { BookDate } from "./book-date";
 import { BookStatus } from "./book-status";
 import { BookType } from "./book-type";
-import { ProgressAlgorithmType } from "./progress-algorithm-type";
+import { ProgressAlgorithmType } from "./progress/progress-algorithm-type";
 import { Collection } from "./collection";
-import { BookProgress } from "./book-progress";
-import { ProgressFactory } from "./progress-factory";
+import { BookProgress } from "./progress/book-progress";
+import { ProgressFactory } from "./progress/progress-factory";
 import { BookData } from "./book-data";
 
 export class Book {
