@@ -6,19 +6,21 @@ import Book from "../../components/Book/Book";
 
 import Loader from "../../../../common/components/Loader/Loader";
 
-export default function InProgress() {
+// TODO: ToReadBook
+
+export default function ToRead() {
     const [loading, setLoading] = useState(true);
     const [books, setBooks] = useState<BookModel[]>([]);
 
     useOnInit(() => {
         setLoading(true);
-        new BookLoader().getBooksInProgress()
+        new BookLoader().getBooksToRead()
             .then(books => setBooks(books))
             .finally(() => setLoading(false));
     })
 
     return (
-        <div className="books-in-progress book-list">
+        <div className="books-done book-list">
             {
                 loading
                     ? <Loader data-testid="backdrop" />

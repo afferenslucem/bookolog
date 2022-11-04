@@ -31,7 +31,12 @@ namespace backend.v2.Storages
 
             var books = await db.Books
                 .Include(item => item.RereadedByBooks)
-                .Where(book => book.UserId == id && book.Status == status).ToArrayAsync();
+                .Where(book => book.UserId == id && book.Status == status)
+                .OrderByDescending(book => book.EndDateYear)
+                .ThenByDescending(book => book.EndDateMonth)
+                .ThenByDescending(book => book.EndDateDay)
+                .ThenByDescending(book => book.ModifyDate)
+                .ToArrayAsync();
             
             return books;
         }

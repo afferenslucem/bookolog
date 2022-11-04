@@ -8,4 +8,16 @@ export class BookLoader {
             .then(response => response.data)
             .then(data => data.map(item => new Book(item)));
     }
+
+    public getBooksDone(): Promise<Book[]> {
+        return httpClient.get<BookData[]>('/book/done')
+            .then(response => response.data)
+            .then(data => data.map(item => new Book(item)));
+    }
+
+    public getBooksToRead(): Promise<Book[]> {
+        return httpClient.get<BookData[]>('/book/toread')
+            .then(response => response.data)
+            .then(data => data.map(item => new Book(item)));
+    }
 }

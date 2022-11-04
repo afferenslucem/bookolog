@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.scss';
 import { Route, Routes } from "react-router-dom";
-import Auth from "../../../pages/Auth/Auth";
-import Account from "../../../pages/Account/Account";
+import Auth from "../pages/Auth/Auth";
+import Account from "../pages/Account/Account";
 
 function App() {
     return (

@@ -19,14 +19,16 @@ function BookComponent(props: { book: BookModel }) {
                 {book.name}
             </div>
             {
-                book.authors?.length &&
-                <div className="book__authors secondary">
+                book.authors?.length
+                && <div className="book__authors secondary">
                     {book.authors.join(', ')}
                 </div>
+                || null
             }
             {
-                book.progress.totalNumeric &&
-                <LinearProgress data-testid="progress-bar" variant="determinate" value={book.progress.progressPercent} />
+                book.progress.totalNumeric
+                && <LinearProgress data-testid="progress-bar" variant="determinate" value={book.progress.progressPercent} />
+                || null
             }
             <div className="book__bottom secondary">
                 <div className="book__progress">
@@ -35,10 +37,9 @@ function BookComponent(props: { book: BookModel }) {
                             book.type == BookType.Audio
                             ? <BookTimeProgress value={book.progress as TimeBookProgress} />
                             : <BookPageProgress value={book.progress as PageBookProgress} />
-                        )
+                        ) || null
                     }
                 </div>
-
 
                 <div className="book__dates">
                     {

@@ -88,6 +88,36 @@ namespace backend.v2.Controllers
         }
         
         /// <summary>
+        /// Возвращает список прочитанных книг
+        /// </summary>
+        /// <response code="200">Возвращает список прочитанных книг</response>
+        /// <response code="401">Если пользователь не авторизован в системе.</response>
+        [ProducesResponseType(typeof(Book[]), StatusCodes.Status200OK)]
+        [Route("Done")]
+        [HttpGet]
+        public async Task<IActionResult> GetDone()
+        {
+            var result = await bookService.GetByStatus(Status.Done);
+
+            return Ok(result);
+        }
+        
+        /// <summary>
+        /// Возвращает список книг к прочтению
+        /// </summary>
+        /// <response code="200">Возвращает список книг к прочтению</response>
+        /// <response code="401">Если пользователь не авторизован в системе.</response>
+        [ProducesResponseType(typeof(Book[]), StatusCodes.Status200OK)]
+        [Route("ToRead")]
+        [HttpGet]
+        public async Task<IActionResult> ToRead()
+        {
+            var result = await bookService.GetByStatus(Status.ToRead);
+
+            return Ok(result);
+        }
+        
+        /// <summary>
         /// Возвращает все книги для указанного пользователя.
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
