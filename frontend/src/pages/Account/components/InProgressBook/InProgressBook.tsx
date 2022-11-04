@@ -1,7 +1,5 @@
-import { Book as BookModel } from "../../../../common/models/book/book";
+import { Book } from "../../../../common/models/book/book";
 import { memo } from "react";
-
-import './Book.scss';
 import { LinearProgress } from "@mui/material";
 import { BookType } from "../../../../common/models/book/book-type";
 import BookPageProgress from "../BookPageProgress/BookPageProgress";
@@ -10,21 +8,21 @@ import BookTimeProgress from "../BookTimeProgress/BookTimeProgress";
 import { TimeBookProgress } from "../../../../common/models/book/progress/time-book-progress";
 import BookDateInterval from "../BookDateInterval/BookDateInterval";
 
-function BookComponent(props: { book: BookModel }) {
+function InProgressBookComponent(props: { book: Book }) {
     const {book} = props;
 
     return (
-        <div className="book" data-testid="book">
+        <div className="book book--in-progress" data-testid="in-progress-book">
             <div className="book__header">
                 {book.name}
             </div>
-            {
-                book.authors?.length
-                && <div className="book__authors secondary">
-                    {book.authors.join(', ')}
-                </div>
-                || null
-            }
+            <div className="book__authors secondary">
+                {
+                    book.authors?.length
+                    ? book.authors.join(', ')
+                    : 'Unknown author'
+                }
+            </div>
             {
                 book.progress.totalNumeric
                 && <LinearProgress data-testid="progress-bar" variant="determinate" value={book.progress.progressPercent} />
@@ -44,7 +42,7 @@ function BookComponent(props: { book: BookModel }) {
                 <div className="book__dates">
                     {
                         (book.started?.year || book.finished?.year ) && (
-                            <BookDateInterval data-testid="date-interval" from={book.started} to={book.finished} />
+                            <BookDateInterval from={book.started} to={null!} />
                         )
                     }
                 </div>
@@ -53,6 +51,6 @@ function BookComponent(props: { book: BookModel }) {
     )
 }
 
-const Book = memo(BookComponent);
+const InProgressBook = memo(InProgressBookComponent);
 
-export default Book;
+export default InProgressBook;

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { BookLoader } from "../../../../common/utils/book-loader";
-import { Book as BookModel } from "../../../../common/models/book/book";
+import { Book } from "../../../../common/models/book/book";
 import { useOnInit } from "../../../../common/utils/hooks";
-import Book from "../../components/Book/Book";
 
 import Loader from "../../../../common/components/Loader/Loader";
+import DoneBook from "../../components/DoneBook/DoneBook";
 
 // TODO: DoneBook
 
 export default function Done() {
     const [loading, setLoading] = useState(true);
-    const [books, setBooks] = useState<BookModel[]>([]);
+    const [books, setBooks] = useState<Book[]>([]);
 
     useOnInit(() => {
         setLoading(true);
@@ -24,7 +24,7 @@ export default function Done() {
             {
                 loading
                     ? <Loader data-testid="backdrop" />
-                    : books.map(book => <Book key={book.guid} book={book}/>)
+                    : books.map(book => <DoneBook key={book.guid} book={book}/>)
             }
         </div>
     )

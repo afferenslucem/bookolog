@@ -5,7 +5,7 @@ export default function BookDateInterval(props: {from: BookDateModel, to: BookDa
     const {from, to} = props;
 
     return (
-        <div className="book-dates-interval">
+        <div className="book-dates-interval" data-testid="book-dates-interval">
             [{
                 from?.year
                     ? <BookDate value={from} />

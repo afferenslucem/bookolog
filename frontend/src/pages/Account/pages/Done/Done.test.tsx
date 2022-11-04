@@ -44,7 +44,7 @@ describe('Done', () => {
 
         await waitFor(() => expect(getSpy).toHaveBeenCalled())
 
-        const books = await el.findAllByTestId("book");
+        const books = await el.findAllByTestId("done-book");
 
         expect(books.length).toBe(2);
     });
