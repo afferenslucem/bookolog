@@ -5,6 +5,7 @@ import { useOnInit } from "../../../../common/utils/hooks";
 import InProgressBook from "../../components/InProgressBook/InProgressBook";
 
 import Loader from "../../../../common/components/Loader/Loader";
+import ToReadBook from "../../components/ToReadBook/ToReadBook";
 
 // TODO: ToReadBook
 
@@ -20,11 +21,11 @@ export default function ToRead() {
     })
 
     return (
-        <div className="books-done book-list">
+        <div className="book-list">
             {
                 loading
                     ? <Loader data-testid="backdrop" />
-                    : books.map(book => <InProgressBook key={book.guid} book={book}/>)
+                    : books.map(book => <ToReadBook key={book.guid} book={book}/>)
             }
         </div>
     )

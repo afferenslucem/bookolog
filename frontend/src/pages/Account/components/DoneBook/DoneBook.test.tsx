@@ -48,7 +48,7 @@ describe('DoneBook', () => {
                 authors: []
             } as any);
 
-            const el = render(<InProgressBook book={value}/>);
+            const el = render(<DoneBook book={value}/>);
 
             const content = el.asFragment().querySelector('.book__authors')!;
 

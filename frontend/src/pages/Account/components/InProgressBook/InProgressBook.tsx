@@ -7,6 +7,7 @@ import { PageBookProgress } from "../../../../common/models/book/progress/page-b
 import BookTimeProgress from "../BookTimeProgress/BookTimeProgress";
 import { TimeBookProgress } from "../../../../common/models/book/progress/time-book-progress";
 import BookDateInterval from "../BookDateInterval/BookDateInterval";
+import Join from "../../../../common/components/formatting/Join/Join";
 
 function InProgressBookComponent(props: { book: Book }) {
     const {book} = props;
@@ -17,15 +18,12 @@ function InProgressBookComponent(props: { book: Book }) {
                 {book.name}
             </div>
             <div className="book__authors secondary">
-                {
-                    book.authors?.length
-                    ? book.authors.join(', ')
-                    : 'Unknown author'
-                }
+                <Join value={book.authors}/>
             </div>
             {
                 book.progress.totalNumeric
-                && <LinearProgress data-testid="progress-bar" variant="determinate" value={book.progress.progressPercent} />
+                &&
+                <LinearProgress data-testid="progress-bar" variant="determinate" value={book.progress.progressPercent}/>
                 || null
             }
             <div className="book__bottom secondary">
@@ -33,16 +31,16 @@ function InProgressBookComponent(props: { book: Book }) {
                     {
                         book.progress.totalUnits && (
                             book.type == BookType.Audio
-                            ? <BookTimeProgress value={book.progress as TimeBookProgress} />
-                            : <BookPageProgress value={book.progress as PageBookProgress} />
+                                ? <BookTimeProgress value={book.progress as TimeBookProgress}/>
+                                : <BookPageProgress value={book.progress as PageBookProgress}/>
                         ) || null
                     }
                 </div>
 
                 <div className="book__dates">
                     {
-                        (book.started?.year || book.finished?.year ) && (
-                            <BookDateInterval from={book.started} to={null!} />
+                        (book.started?.year || book.finished?.year) && (
+                            <BookDateInterval from={book.started} to={null!}/>
                         )
                     }
                 </div>

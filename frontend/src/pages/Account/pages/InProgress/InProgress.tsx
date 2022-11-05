@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BookLoader } from "../../../../common/utils/book-loader";
-import { Book as Book } from "../../../../common/models/book/book";
+import { Book } from "../../../../common/models/book/book";
 import { useOnInit } from "../../../../common/utils/hooks";
 import InProgressBook from "../../components/InProgressBook/InProgressBook";
 
@@ -18,7 +18,7 @@ export default function InProgress() {
     })
 
     return (
-        <div className="books-in-progress book-list">
+        <div className="book-list">
             {
                 loading
                     ? <Loader data-testid="backdrop" />
