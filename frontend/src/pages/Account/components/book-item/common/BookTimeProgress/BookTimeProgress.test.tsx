@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import BookTimeProgress from "./BookTimeProgress";
-import { TimeBookProgress } from "../../../../common/models/book/progress/time-book-progress";
+import { TimeBookProgress } from "../../../../../../common/models/book/progress/time-book-progress";
 
 describe('BookTimeProgress', () => {
     test('renders time progress',  async () => {

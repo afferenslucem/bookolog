@@ -1,6 +1,6 @@
-import { Book as BookModel } from "../../../../common/models/book/book";
+import { Book as BookModel } from "../../../../../common/models/book/book";
 import { memo } from "react";
-import BookDateInterval from "../BookDateInterval/BookDateInterval";
+import BookDateInterval from "../common/BookDateInterval/BookDateInterval";
 
 function DoneBookComponent(props: { book: BookModel }) {
     const {book} = props;

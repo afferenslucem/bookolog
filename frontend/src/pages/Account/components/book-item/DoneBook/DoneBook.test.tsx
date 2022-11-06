@@ -1,9 +1,8 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { Book } from "../../../../common/models/book/book";
+import { Book } from "../../../../../common/models/book/book";
 import DoneBook from './DoneBook';
-import { BookData } from "../../../../common/models/book/book-data";
-import InProgressBook from "../InProgressBook/InProgressBook";
+import { BookData } from "../../../../../common/models/book/book-data";
 
 describe('DoneBook', () => {
     test('renders header',  () => {

@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import BookDateInterval from "./BookDateInterval";
-import { BookDate } from "../../../../common/models/book/book-date";
+import { BookDate } from "../../../../../../common/models/book/book-date";
 
 describe('BookPageProgress', () => {
     test('renders page progress',  async () => {

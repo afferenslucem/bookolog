@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { BookDate as BookDateModel } from "../../../../common/models/book/book-date";
+import { BookDate as BookDateModel } from "../../../../../../common/models/book/book-date";
 import { BookDate } from "./BookDate";
 
 describe('BookDate', () => {

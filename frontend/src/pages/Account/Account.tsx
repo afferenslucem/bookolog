@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useReducer } from "react";
 import Done from "./pages/Done/Done";
 import ToRead from "./pages/ToRead/ToRead";
+import Navigation from "./components/Navigation/Navigation";
 
 export default function Account() {
     const [isDrawerOpened, toggleDrawer] = useReducer(flag => !flag, false);
@@ -26,7 +27,7 @@ export default function Account() {
                 </Routes>
             </Container>
             <Drawer anchor="bottom" open={isDrawerOpened} onClose={toggleDrawer}>
-                Hello
+                <Navigation onClick={toggleDrawer} />
             </Drawer>
         </div>
     )

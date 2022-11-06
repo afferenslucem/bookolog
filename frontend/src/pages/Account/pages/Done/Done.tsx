@@ -4,7 +4,7 @@ import { Book } from "../../../../common/models/book/book";
 import { useOnInit } from "../../../../common/utils/hooks";
 
 import Loader from "../../../../common/components/Loader/Loader";
-import DoneBook from "../../components/DoneBook/DoneBook";
+import DoneBook from "../../components/book-item/DoneBook/DoneBook";
 
 // TODO: DoneBook
 

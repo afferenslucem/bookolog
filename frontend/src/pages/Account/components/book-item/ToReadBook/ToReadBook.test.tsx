@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { Book } from "../../../../common/models/book/book";
+import { Book } from "../../../../../common/models/book/book";
 import ToReadBook from "./ToReadBook";
 
 describe('ToReadBook', () => {

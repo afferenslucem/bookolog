@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { Book } from "../../../../common/models/book/book";
+import { Book } from "../../../../../common/models/book/book";
 import InProgressBook from './InProgressBook';
-import { ProgressAlgorithmType } from "../../../../common/models/book/progress/progress-algorithm-type";
-import { BookType } from "../../../../common/models/book/book-type";
-import { BookData } from "../../../../common/models/book/book-data";
+import { ProgressAlgorithmType } from "../../../../../common/models/book/progress/progress-algorithm-type";
+import { BookType } from "../../../../../common/models/book/book-type";
+import { BookData } from "../../../../../common/models/book/book-data";
 
 describe('InProgressBook', () => {
     test('renders header',  () => {

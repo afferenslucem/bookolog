@@ -1,6 +1,6 @@
-import { Book } from "../../../../common/models/book/book";
+import { Book } from "../../../../../common/models/book/book";
 import { memo } from "react";
-import Join from "../../../../common/components/formatting/Join/Join";
+import Join from "../../../../../common/components/formatting/Join/Join";
 
 function ToReadBookComponent(props: { book: Book }) {
     const {book} = props;

@@ -2,10 +2,10 @@ import { useState } from "react";
 import { BookLoader } from "../../../../common/utils/book-loader";
 import { Book } from "../../../../common/models/book/book";
 import { useOnInit } from "../../../../common/utils/hooks";
-import InProgressBook from "../../components/InProgressBook/InProgressBook";
+import InProgressBook from "../../components/book-item/InProgressBook/InProgressBook";
 
 import Loader from "../../../../common/components/Loader/Loader";
-import ToReadBook from "../../components/ToReadBook/ToReadBook";
+import ToReadBook from "../../components/book-item/ToReadBook/ToReadBook";
 
 // TODO: ToReadBook
 

@@ -1,13 +1,13 @@
-import { Book } from "../../../../common/models/book/book";
+import { Book } from "../../../../../common/models/book/book";
 import { memo } from "react";
 import { LinearProgress } from "@mui/material";
-import { BookType } from "../../../../common/models/book/book-type";
-import BookPageProgress from "../BookPageProgress/BookPageProgress";
-import { PageBookProgress } from "../../../../common/models/book/progress/page-book-progress";
-import BookTimeProgress from "../BookTimeProgress/BookTimeProgress";
-import { TimeBookProgress } from "../../../../common/models/book/progress/time-book-progress";
-import BookDateInterval from "../BookDateInterval/BookDateInterval";
-import Join from "../../../../common/components/formatting/Join/Join";
+import { BookType } from "../../../../../common/models/book/book-type";
+import BookPageProgress from "../common/BookPageProgress/BookPageProgress";
+import { PageBookProgress } from "../../../../../common/models/book/progress/page-book-progress";
+import BookTimeProgress from "../common/BookTimeProgress/BookTimeProgress";
+import { TimeBookProgress } from "../../../../../common/models/book/progress/time-book-progress";
+import BookDateInterval from "../common/BookDateInterval/BookDateInterval";
+import Join from "../../../../../common/components/formatting/Join/Join";
 
 function InProgressBookComponent(props: { book: Book }) {
     const {book} = props;

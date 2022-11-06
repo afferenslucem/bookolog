@@ -1,4 +1,4 @@
-import { BookDate as BookDateModel } from "../../../../common/models/book/book-date";
+import { BookDate as BookDateModel } from "../../../../../../common/models/book/book-date";
 import { format } from "date-fns";
 
 
