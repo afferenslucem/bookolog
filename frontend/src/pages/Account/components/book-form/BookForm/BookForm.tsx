@@ -2,6 +2,8 @@ import { BookData } from "../../../../../common/models/book/book-data";
 import React from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import AuthorsInput from "../AuthorsInput/AuthorsInput";
+import TagsInput from "../TagsInput/TagsInput";
+import GenreInput from "../GenresInput/GenreInput";
 
 interface BookFormProps {
     onSubmit: (value: BookData) => void;
@@ -11,6 +13,7 @@ interface BookFormProps {
 const bookDefault: BookData = {
     name: '',
     authors: [] as string[],
+    tags: [] as string[],
 } as BookData;
 
 export default class BookForm extends React.Component<BookFormProps, BookData> {
@@ -32,6 +35,10 @@ export default class BookForm extends React.Component<BookFormProps, BookData> {
                 />
 
                 <AuthorsInput value={this.state.authors!} onChange={e => this.setState({authors: e})} />
+
+                <TagsInput value={this.state.tags!} onChange={e => this.setState({tags: e})} />
+
+                <GenreInput value={this.state.genre!} onChange={e => this.setState({genre: e})} />
             </form>
         )
     }

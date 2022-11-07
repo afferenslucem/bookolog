@@ -29,7 +29,17 @@ export class BookLoader {
     }
 
     public getAllAuthors(): Promise<string[]> {
-            return httpClient.get<string[]>(`/book/allauthors`)
-                .then(response => response.data);
+        return httpClient.get<string[]>(`/book/allauthors`)
+            .then(response => response.data);
+    }
+
+    public getAllTags(): Promise<string[]> {
+        return httpClient.get<string[]>(`/book/alltags`)
+            .then(response => response.data);
+    }
+
+    public getAllGenres(): Promise<string[]> {
+        return httpClient.get<string[]>(`/book/allgenres`)
+            .then(response => response.data);
     }
 }

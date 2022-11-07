@@ -71,6 +71,7 @@ namespace backend.v2.Storages
             
             var tags = temp
                 .SelectMany(items => items)
+                .Select(item => item.ToLower())
                 .Distinct()
                 .OrderBy(item => item)
                 .ToArray();
@@ -83,8 +84,9 @@ namespace backend.v2.Storages
             using var db = new BookologContext();
 
             var genres = await db.Books
-                .Select(book => book.Genre)
+                .Select(book => book.Genre.ToLower())
                 .Distinct()
+                .Where(genre => !string.IsNullOrEmpty(genre))
                 .OrderBy(item => item)
                 .ToArrayAsync();
 

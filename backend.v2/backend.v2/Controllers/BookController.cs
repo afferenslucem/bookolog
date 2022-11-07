@@ -150,12 +150,42 @@ namespace backend.v2.Controllers
         /// </summary>
         /// <response code="200">Возвращает всех авторов</response>
         /// <response code="401">Если пользователь не авторизован в системе</response>
-        [ProducesResponseType(typeof(IEnumerable<Book>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
         [HttpGet]
         [Route("AllAuthors")]
         public async Task<IActionResult> GetAllAuthors()
         {
             var authors = await bookService.GetAllAuthors();
+
+            return Ok(authors);
+        }
+        
+        /// <summary>
+        /// Возвращает все теги.
+        /// </summary>
+        /// <response code="200">Возвращает все теги</response>
+        /// <response code="401">Если пользователь не авторизован в системе</response>
+        [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
+        [HttpGet]
+        [Route("AllTags")]
+        public async Task<IActionResult> GetAllTags()
+        {
+            var authors = await bookService.GetAllTags();
+
+            return Ok(authors);
+        }
+        
+        /// <summary>
+        /// Возвращает все жанры.
+        /// </summary>
+        /// <response code="200">Возвращает все жанры</response>
+        /// <response code="401">Если пользователь не авторизован в системе</response>
+        [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
+        [HttpGet]
+        [Route("AllGenres")]
+        public async Task<IActionResult> GetAllGenres()
+        {
+            var authors = await bookService.GetAllGenres();
 
             return Ok(authors);
         }

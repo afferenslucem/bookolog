@@ -8,15 +8,16 @@ interface AuthorsInputProps {
     onChange: (newValue: string[]) => void;
 }
 
-export default function AuthorsInput(props: AuthorsInputProps) {
+export default function TagsInput(props: AuthorsInputProps) {
     const source = new BookLoader()
-        .getAllAuthors()
+        .getAllTags()
+        .then(data => new Capitalizer().capitalize(data))
 
     return (
         <AsyncAutocomplete
             value={Array.from(props.value)}
             onChange={props.onChange}
             optionsSource={() => source}
-            label="Authors"/>
+            label="Tags"/>
     )
 }
