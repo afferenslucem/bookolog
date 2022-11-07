@@ -3,6 +3,7 @@ import React from "react";
 import { Book } from "../../../../../common/models/book/book";
 import DoneBook from './DoneBook';
 import { BookData } from "../../../../../common/models/book/book-data";
+import { BrowserRouter as Router } from "react-router-dom";
 
 describe('DoneBook', () => {
     test('renders header',  () => {
@@ -10,7 +11,11 @@ describe('DoneBook', () => {
             name: 'Кровь дракона'
         } as any);
 
-        const el = render(<DoneBook book={value}/>);
+        const el = render(
+            <Router>
+                <DoneBook book={value}/>
+            </Router>
+        );
 
         const content = el.asFragment().querySelector('.book__header')!;
 
@@ -23,7 +28,11 @@ describe('DoneBook', () => {
                 authors: ['Джордж Мартин']
             } as any);
 
-            const el = render(<DoneBook book={value}/>);
+            const el = render(
+                <Router>
+                    <DoneBook book={value}/>
+                </Router>
+            );
 
             const content = el.asFragment().querySelector('.book__authors')!;
 
@@ -35,7 +44,11 @@ describe('DoneBook', () => {
                 authors: ['Андрей Круз', 'Андрей Царев']
             } as any);
 
-            const el = render(<DoneBook book={value}/>);
+            const el = render(
+                <Router>
+                    <DoneBook book={value}/>
+                </Router>
+            );
 
             const content = el.asFragment().querySelector('.book__authors')!;
 
@@ -47,7 +60,11 @@ describe('DoneBook', () => {
                 authors: []
             } as any);
 
-            const el = render(<DoneBook book={value}/>);
+            const el = render(
+                <Router>
+                    <DoneBook book={value}/>
+                </Router>
+            );
 
             const content = el.asFragment().querySelector('.book__authors')!;
 
@@ -61,7 +78,11 @@ describe('DoneBook', () => {
                 startDateYear: 2022,
             } as any);
 
-            const el = render(<DoneBook book={value}/>);
+            const el = render(
+                <Router>
+                    <DoneBook book={value}/>
+                </Router>
+            );
 
             const content = await el.asFragment().querySelector(`.book-dates-interval`)!;
 
@@ -73,7 +94,11 @@ describe('DoneBook', () => {
                 endDateYear: 2022,
             } as any);
 
-            const el = render(<DoneBook book={value}/>);
+            const el = render(
+                <Router>
+                    <DoneBook book={value}/>
+                </Router>
+            );
 
             const content = await el.asFragment().querySelector(`.book-dates-interval`)!;
 
@@ -85,7 +110,11 @@ describe('DoneBook', () => {
                 endDateYear: 2022,
             } as any);
 
-            const el = render(<DoneBook book={value}/>);
+            const el = render(
+                <Router>
+                    <DoneBook book={value}/>
+                </Router>
+            );
 
             const content = await el.asFragment().querySelector(`.book-dates-interval`)!;
 
@@ -102,7 +131,11 @@ describe('DoneBook', () => {
                 endDateDay: 12,
             } as BookData);
 
-            const el = render(<DoneBook book={value}/>);
+            const el = render(
+                <Router>
+                    <DoneBook book={value}/>
+                </Router>
+            );
 
             const interval = await el.findByTestId('book-dates-interval');
             expect(interval.textContent).toBe('[2021.02.21 - 2022.03.12]')

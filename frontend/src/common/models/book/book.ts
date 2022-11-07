@@ -40,13 +40,13 @@ export class Book {
 
         this.name = data.name;
         this.authors = data.authors || [];
-        this.year = data.year;
+        this.year = data.year!;
         this.status = data.status;
         this.tags = data.tags || [];
         this.progress = ProgressFactory.getProgress(data.type, data.progressType || ProgressAlgorithmType.Done);
         this.totalUnits = data.totalUnits || 0;
         this.doneUnits = data.doneUnits || 0;
-        this.genre = data.genre;
+        this.genre = data.genre!;
         this.collectionGuid = data.collectionGuid;
         this.collectionOrder = data.collectionOrder;
         this.started = {

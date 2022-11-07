@@ -6,12 +6,12 @@ export interface BookData {
     createDate: string | Date;
     name: string;
     authors?: string[];
-    year?: number;
+    year?: number | null;
     status: number;
     tags?: string[];
     totalUnits?: number;
     doneUnits?: number;
-    genre?: string;
+    genre?: string | null;
     collectionGuid?: string;
     collectionOrder?: number;
     startDateYear?: number;
