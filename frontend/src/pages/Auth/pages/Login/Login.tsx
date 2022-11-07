@@ -4,7 +4,7 @@ import { httpClient } from "../../../../common/utils/http-client";
 import { useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { Alert } from "@mui/material";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [error, setError] = useState<any>(null);

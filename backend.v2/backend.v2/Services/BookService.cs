@@ -9,6 +9,9 @@ namespace backend.v2.Services
     public interface IBookService : IEntityService<Book>
     {
         Task<IEnumerable<Book>> GetByStatus(Status status);
+        Task<string[]> GetAllAuthors();
+        Task<string[]> GetAllTags();
+        Task<string[]> GetAllGenres();
     }
 
     public class BookService : EntityService<Book>, IBookService
@@ -31,6 +34,21 @@ namespace backend.v2.Services
         public Task<IEnumerable<Book>> GetByStatus(Status status)
         {
             return storage.GetByUserIdAndStatus(session.User.Id, status);
+        }
+
+        public Task<string[]> GetAllAuthors()
+        {
+            return storage.GetAllAuthors();
+        }
+
+        public Task<string[]> GetAllTags()
+        {
+            return storage.GetAllTags();
+        }
+
+        public Task<string[]> GetAllGenres()
+        {
+            return storage.GetAllGenres();
         }
 
         public override void CheckEntity(Book book)

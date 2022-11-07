@@ -67,6 +67,8 @@ namespace backend.v2.Controllers
         /// <response code="200">Возвращает указанную книгу.</response>
         /// <response code="401">Если пользователь не авторизован в системе.</response>
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
+        [Route("{guid:guid}")]
+        [HttpGet]
         public override async Task<IActionResult> Get(Guid guid)
         {
             return await base.Get(guid);
@@ -141,6 +143,21 @@ namespace backend.v2.Controllers
         public override Task<IActionResult> Synchronize([FromBody]SyncData<Book> data)
         {
             return base.Synchronize(data);
+        }
+        
+        /// <summary>
+        /// Возвращает всех авторов.
+        /// </summary>
+        /// <response code="200">Возвращает всех авторов</response>
+        /// <response code="401">Если пользователь не авторизован в системе</response>
+        [ProducesResponseType(typeof(IEnumerable<Book>), StatusCodes.Status200OK)]
+        [HttpGet]
+        [Route("AllAuthors")]
+        public async Task<IActionResult> GetAllAuthors()
+        {
+            var authors = await bookService.GetAllAuthors();
+
+            return Ok(authors);
         }
     }
 }

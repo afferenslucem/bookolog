@@ -1,14 +1,20 @@
 import { Book as BookModel } from "../../../../../common/models/book/book";
 import { memo } from "react";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import BookDateInterval from "../common/BookDateInterval/BookDateInterval";
+import { useNavigate } from "react-router-dom";
 
 function DoneBookComponent(props: { book: BookModel }) {
     const {book} = props;
+    const navigate = useNavigate();
 
     return (
         <div className="book book--in-progress" data-testid="done-book">
             <div className="book__header">
-                {book.name}
+                <span>
+                    {book.name}
+                </span>
+                <EditOutlinedIcon onClick={() => navigate(`../edit-book/${book.guid}`)}/>
             </div>
             <div className="book__authors secondary">
                 {

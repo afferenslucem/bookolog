@@ -9,6 +9,9 @@ namespace backend.v2.Storages
     public interface IBookStorage : IEntityStorage<Book>
     {   
         Task<IEnumerable<Book>> GetByUserIdAndStatus(long id, Status status);
+        Task<string[]> GetAllAuthors();
+        Task<string[]> GetAllTags();
+        Task<string[]> GetAllGenres();
     }
 
     public class BookStorage : EntityStorage<Book>, IBookStorage
@@ -39,6 +42,53 @@ namespace backend.v2.Storages
                 .ToArrayAsync();
             
             return books;
+        }
+
+        public async Task<string[]> GetAllAuthors()
+        {
+            using var db = new BookologContext();
+
+            var temp = await db.Books
+                .Select(book => book.Authors)
+                .ToArrayAsync();
+
+            var authors = temp
+                .SelectMany(items => items)
+                .Distinct()
+                .OrderBy(item => item)
+                .ToArray();
+
+            return authors;
+        }
+
+        public async Task<string[]> GetAllTags()
+        {
+            using var db = new BookologContext();
+
+            var temp = await db.Books
+                .Select(book => book.Tags)
+                .ToArrayAsync();
+            
+            var tags = temp
+                .SelectMany(items => items)
+                .Distinct()
+                .OrderBy(item => item)
+                .ToArray();
+
+            return tags;
+        }
+
+        public async Task<string[]> GetAllGenres()
+        {
+            using var db = new BookologContext();
+
+            var genres = await db.Books
+                .Select(book => book.Genre)
+                .Distinct()
+                .OrderBy(item => item)
+                .ToArrayAsync();
+
+            return genres;
         }
     }
 }
