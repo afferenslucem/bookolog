@@ -1,7 +1,6 @@
 import React from "react";
 import { BookLoader } from "../../../../../common/utils/book-loader";
 import AsyncAutocomplete from "../../../../../common/components/inputs/AsyncAutocomplete";
-import { Capitalizer } from "../../../../../common/utils/capitalizer";
 
 interface AuthorsInputProps {
     value: string[];

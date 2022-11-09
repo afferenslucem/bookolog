@@ -44,7 +44,7 @@ describe('BookForm', () => {
             </Router>
         );
 
-        const year = await el.findByTestId("year");
+        const year = await el.findByTestId("release-year");
         fireEvent.change(year.querySelector('input')!, {target: {value: '1934'}});
 
         const button = await el.findByText("Save");

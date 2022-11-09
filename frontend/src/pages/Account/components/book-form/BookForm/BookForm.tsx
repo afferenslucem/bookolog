@@ -7,6 +7,7 @@ import GenreInput from "../GenresInput/GenreInput";
 import { BookStatus } from "../../../../../common/models/book/book-status";
 import { BookType } from "../../../../../common/models/book/book-type";
 import { ProgressAlgorithmType } from "../../../../../common/models/book/progress/progress-algorithm-type";
+import BookDateInput from "../BookDateInput/BookDateInput";
 
 interface BookFormProps {
     onSubmit: (value: BookData) => void;
@@ -50,7 +51,7 @@ export default class BookForm extends React.Component<BookFormProps, BookData> {
                 <AuthorsInput value={this.state.authors!} onChange={e => this.setState({authors: e})}/>
 
                 <TextField
-                    data-testid="year"
+                    data-testid="release-year"
                     label="Release year"
                     variant="outlined"
                     type="number"
@@ -105,6 +106,8 @@ export default class BookForm extends React.Component<BookFormProps, BookData> {
                         <option value={ProgressAlgorithmType.Left}>Left</option>
                     </Select>
                 </FormControl>
+
+                <BookDateInput label="Start date" value={{}} onChange={(e) => console.debug('book date', e)}/>
 
                 <Button type="submit" color="primary"> Save </Button>
             </form>

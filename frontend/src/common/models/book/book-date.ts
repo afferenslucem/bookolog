@@ -1,13 +1,13 @@
 export interface IBookDate {
-    year?: number;
-    month?: number;
-    day?: number;
+    year?: number | null;
+    month?: number | null;
+    day?: number | null;
 }
 
 export class BookDate {
-    year?: number;
-    month?: number;
-    day?: number;
+    year?: number | null;
+    month?: number | null;
+    day?: number | null;
 
     public constructor(obj?: IBookDate) {
         if (obj) {
