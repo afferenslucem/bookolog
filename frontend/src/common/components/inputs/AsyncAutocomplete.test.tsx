@@ -11,7 +11,7 @@ xdescribe('AsyncAutocomplete', () => {
         let el: RenderResult = null!;
 
         act(() => {
-            el = render(<AsyncAutocomplete value={['1']} onChange={spy} optionsSource={source} label="Label Text" />);
+            //el = render(<AsyncAutocomplete value={['1']} onChange={spy} optionsSource={source} label="Label Text" />);
         });
 
         const labelElement = el.asFragment().querySelector('label');
@@ -25,7 +25,7 @@ xdescribe('AsyncAutocomplete', () => {
         const source = jest.fn().mockReturnValue(Promise.resolve([1, 2, 3]))
 
         act(() => {
-            render(<AsyncAutocomplete value={['1']} onChange={spy} optionsSource={source} label="Label Text" />);
+            // render(<AsyncAutocomplete value={['1']} onChange={spy} optionsSource={source} label="Label Text" />);
         });
 
         expect(source).toHaveBeenCalled();

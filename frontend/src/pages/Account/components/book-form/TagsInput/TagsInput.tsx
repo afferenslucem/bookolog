@@ -4,8 +4,8 @@ import AsyncAutocomplete from "../../../../../common/components/inputs/AsyncAuto
 import { Capitalizer } from "../../../../../common/utils/capitalizer";
 
 interface AuthorsInputProps {
-    value: string[];
-    onChange: (newValue: string[]) => void;
+    value?: string[];
+    onChange?: (newValue: string[]) => void;
 }
 
 export default function TagsInput(props: AuthorsInputProps) {
@@ -15,8 +15,7 @@ export default function TagsInput(props: AuthorsInputProps) {
 
     return (
         <AsyncAutocomplete
-            value={Array.from(props.value)}
-            onChange={props.onChange}
+            name="tags"
             optionsSource={() => source}
             label="Tags"/>
     )

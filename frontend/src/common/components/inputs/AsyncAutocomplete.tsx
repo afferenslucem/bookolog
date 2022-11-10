@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { useOnInit } from "../../utils/hooks";
+import { useForm, useFormContext } from "react-hook-form";
 
 interface Props {
-    value: string[];
-    onChange: (newValue: string[]) => void;
     optionsSource: () => Promise<string[]>;
     label: string;
-    multiple?: boolean
+    name: string;
 }
 
 export default function AsyncAutocomplete(props: Props) {
+    const { register } = useFormContext();
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState<string[]>([]);
-    const [value, setValue] = useState<string[]>(Array.from(props.value));
+
+    const methods = register(props.name);
 
     useOnInit(() => {
         setLoading(true)
@@ -25,17 +26,23 @@ export default function AsyncAutocomplete(props: Props) {
     return (
         <Autocomplete
             multiple
-            value={value}
-            onChange={(_, newValue)=> {
-                setValue(newValue);
-                props.onChange(newValue);
-            }}
             options={options}
             filterSelectedOptions
             loading={loading}
+            {...methods}
+            onChange={
+                (_, newValue) => {
+                    methods.onChange({
+                        target: {
+                            value: newValue
+                        }
+                    })
+                }
+            }
             renderInput={(params) => (
                 <TextField
                     {...params}
+                    {...register(props.name)}
                     InputProps={{
                         ...params.InputProps,
                         endAdornment: (

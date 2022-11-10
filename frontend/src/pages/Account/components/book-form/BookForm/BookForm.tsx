@@ -8,6 +8,7 @@ import { BookStatus } from "../../../../../common/models/book/book-status";
 import { BookType } from "../../../../../common/models/book/book-type";
 import { ProgressAlgorithmType } from "../../../../../common/models/book/progress/progress-algorithm-type";
 import BookDateInput from "../BookDateInput/BookDateInput";
+import { FormProvider, useForm } from "react-hook-form";
 
 interface BookFormProps {
     onSubmit: (value: BookData) => void;
@@ -25,7 +26,87 @@ const bookDefault: BookData = {
     progressType: ProgressAlgorithmType.Done
 } as BookData;
 
-export default class BookForm extends React.Component<BookFormProps, BookData> {
+export default function BookForm() {
+    const methods = useForm();
+    const {handleSubmit, register} = methods;
+    const onSubmit = data => {
+        console.log(data)
+    };
+
+    return (
+        <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                    data-testid="name"
+                    label="Name"
+                    variant="outlined"
+                    {...register('name')}
+                />
+
+                <AuthorsInput />
+
+                <TextField
+                    data-testid="release-year"
+                    label="Release year"
+                    variant="outlined"
+                    type="number"
+                    {...register('year')}
+                />
+
+                <TagsInput />
+
+                <GenreInput />
+
+                <FormControl fullWidth>
+                    <InputLabel htmlFor="book-status">Status</InputLabel>
+                    <Select
+                        native
+                        data-testid="status"
+                        input={<OutlinedInput label="Status" id="book-status" />}
+                        {...register('status')}
+                    >
+                        <option value={BookStatus.ToRead}>To Read</option>
+                        <option value={BookStatus.InProgress}>In Progress</option>
+                        <option value={BookStatus.Done}>Done</option>
+                    </Select>
+                </FormControl>
+
+                <FormControl fullWidth>
+                    <InputLabel htmlFor="book-type">Type</InputLabel>
+                    <Select
+                        native
+                        data-testid="type"
+                        input={<OutlinedInput label="Type" id="book-type" />}
+                        {...register('type')}
+                    >
+                        <option value={BookType.Paper}>Paper</option>
+                        <option value={BookType.Electronic}>Electronic</option>
+                        <option value={BookType.Audio}>Audio</option>
+                    </Select>
+                </FormControl>
+
+                <FormControl fullWidth>
+                    <InputLabel htmlFor="book-progress-type">Progress Type</InputLabel>
+                    <Select
+                        native
+                        data-testid="progress-type"
+                        input={<OutlinedInput label="Progress Type" id="book-progress-type" />}
+                        {...register('progressType')}
+                    >
+                        <option value={ProgressAlgorithmType.Done}>Done</option>
+                        <option value={ProgressAlgorithmType.Left}>Left</option>
+                    </Select>
+                </FormControl>
+
+                <BookDateInput label="Start date" value={{}} onChange={(e) => console.debug('book date', e)}/>
+
+                <Button type="submit" color="primary"> Save </Button>
+            </form>
+        </FormProvider>
+    )
+}
+
+export class BookFormOld extends React.Component<BookFormProps, BookData> {
     public constructor(props: any) {
         super(props);
 

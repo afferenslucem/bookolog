@@ -22,7 +22,7 @@ describe('BookForm', () => {
     test('fire name', async () => {
         const el = render(
             <Router>
-                <BookForm onSubmit={submitSpy as any}/>
+                <BookForm />
             </Router>
         );
 
@@ -40,7 +40,7 @@ describe('BookForm', () => {
     test('fire year', async () => {
         const el = render(
             <Router>
-                <BookForm onSubmit={submitSpy as any}/>
+                <BookForm />
             </Router>
         );
 
@@ -58,7 +58,7 @@ describe('BookForm', () => {
     test('fire status', async () => {
         const el = render(
             <Router>
-                <BookForm onSubmit={submitSpy as any}/>
+                <BookForm />
             </Router>
         );
 
@@ -76,7 +76,7 @@ describe('BookForm', () => {
     test('fire type', async () => {
         const el = render(
             <Router>
-                <BookForm onSubmit={submitSpy as any}/>
+                <BookForm />
             </Router>
         );
 
@@ -94,7 +94,7 @@ describe('BookForm', () => {
     test('fire progress type', async () => {
         const el = render(
             <Router>
-                <BookForm onSubmit={submitSpy as any}/>
+                <BookForm />
             </Router>
         );
 

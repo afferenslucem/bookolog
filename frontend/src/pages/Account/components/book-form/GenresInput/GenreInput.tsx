@@ -5,15 +5,15 @@ import { useOnInit } from "../../../../../common/utils/hooks";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { Capitalizer } from "../../../../../common/utils/capitalizer";
 
-interface AuthorsInputProps {
-    value: string;
-    onChange: (newValue: string) => void;
+interface GenreInputProps {
+    value?: string;
+    onChange?: (newValue: string) => void;
 }
 
-export default function GenreInput(props: AuthorsInputProps) {
+export default function GenreInput(props: GenreInputProps) {
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState<string[]>([]);
-    const [value, setValue] = useState<string>(props.value);
+    const [value, setValue] = useState<string>(props.value ?? '');
 
     useOnInit(() => {
         setLoading(true)
@@ -28,7 +28,7 @@ export default function GenreInput(props: AuthorsInputProps) {
             value={value}
             onChange={(_, newValue)=> {
                 setValue(newValue!);
-                props.onChange(newValue!);
+                props.onChange && props.onChange(newValue!);
             }}
             options={options}
             filterSelectedOptions

@@ -31,7 +31,7 @@ export default function EditBook() {
             ? <Loader/>
             :
             <div>
-                <BookForm onSubmit={() => ({})}/>
+                <BookForm />
             </div>
     )
 }
