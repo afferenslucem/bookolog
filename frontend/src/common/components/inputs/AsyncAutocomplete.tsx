@@ -10,8 +10,8 @@ interface Props {
 }
 
 export default function AsyncAutocomplete(props: Props) {
-    const {control, register } = useFormContext();
-    const {replace} = useFieldArray({control, name: props.name});
+    const { control } = useFormContext();
+    const { replace } = useFieldArray({ control, name: props.name });
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState<string[]>([]);
 
@@ -28,7 +28,7 @@ export default function AsyncAutocomplete(props: Props) {
             options={options}
             filterSelectedOptions
             loading={loading}
-            onChange={(_, newValue)=> {
+            onChange={(_, newValue) => {
                 replace(newValue);
             }}
             renderInput={(params) => (
@@ -38,7 +38,7 @@ export default function AsyncAutocomplete(props: Props) {
                         ...params.InputProps,
                         endAdornment: (
                             <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                {loading ? <CircularProgress color="inherit" size={20}/> : null}
                                 {params.InputProps.endAdornment}
                             </React.Fragment>
                         ),

@@ -28,7 +28,7 @@ const bookDefault: BookData = {
 
 export default function BookForm() {
     const methods = useForm();
-    const {handleSubmit, register} = methods;
+    const {handleSubmit, register, formState: {errors}} = methods;
     const onSubmit = data => {
         console.log(data)
     };
@@ -40,7 +40,7 @@ export default function BookForm() {
                     data-testid="name"
                     label="Name"
                     variant="outlined"
-                    {...register('name')}
+                    {...register('name', {required: true})}
                 />
 
                 <AuthorsInput />

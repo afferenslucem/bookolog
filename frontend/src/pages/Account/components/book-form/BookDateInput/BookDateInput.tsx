@@ -1,11 +1,17 @@
 import { BookDate } from "../../../../../common/models/book/book-date";
 import { TextField } from "@mui/material";
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import './BookDateInput.scss';
+import { useForm } from 'react-hook-form';
+import { BookData } from '../../../../../common/models/book/book-data';
 
 type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 type SetValueFunc = Dispatch<SetStateAction<number | null>>;
 type OnChangeFunc = (value: BookDate) => void;
+
+type BookFormValue = {
+    [K in keyof BookDate]: string
+}
 
 interface Props {
     value?: BookDate;
@@ -14,16 +20,15 @@ interface Props {
 }
 
 export default function BookDateInput(props: Props) {
-    const [year, setYear] = useState(props.value?.year ?? null);
-    const [month, setMonth] = useState(props.value?.month ?? null);
-    const [day, setDay] = useState(props.value?.day ?? null);
+    const { watch, register, getValues, formState: { errors } } = useForm<BookFormValue>({reValidateMode: 'onBlur'});
+
+    const { year, month, day } = watch()
 
     useEffect(() => {
-        props.onChange({
-            year,
-            month,
-            day
-        })
+        const value = getValues();
+        const fixed = fixFields(value);
+        props.onChange(fixed);
+        console.debug(errors)
     }, [year, month, day])
 
     return (
@@ -32,22 +37,34 @@ export default function BookDateInput(props: Props) {
                 props.label && <label className="book-date-input__label"> {props.label} </label>
             }
             <div className="book-date-input__body">
-                <TextField type="number" label="Year" data-testid="year" onChange={(e) => handleNumberChange(e, setYear)} />
-                <TextField type="number" label="Month" data-testid="month" onChange={(e) => handleNumberChange(e, setMonth)} />
-                <TextField type="number" label="Day" data-testid="day" onChange={(e) => handleNumberChange(e, setDay)} />
+                <TextField error={errors.year != null}
+                           type="number"
+                           label="Year"
+                           data-testid="year"
+                           {...register('year', { min: 1950, max: new Date().getFullYear() })} />
+
+                <TextField error={errors.month != null}
+                           type="number"
+                           label="Month"
+                           data-testid="month"
+                           {...register('month', { min: 1, max: 12 })} />
+
+                <TextField error={errors.day != null}
+                           type="number"
+                           label="Day"
+                           data-testid="day"
+                           {...register('day', { min: 1, max: 31 })} />
             </div>
         </div>
     )
 }
 
-function handleNumberChange(e: InputChangeEvent, setValue: SetValueFunc): void {
-    const value = e.target.value;
+function fixFields(date: BookFormValue): BookDate {
+    const result = {} as BookDate;
 
-    if (value == null) {
-        setValue(null);
-    }else {
-        const nextValue = Number(value);
-
-        setValue(nextValue);
+    for (const key in date) {
+        result[key] = Number(date[key])
     }
+
+    return result;
 }

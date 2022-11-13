@@ -4,6 +4,7 @@ import AsyncAutocomplete from "../../../../../common/components/inputs/AsyncAuto
 import { useOnInit } from "../../../../../common/utils/hooks";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { Capitalizer } from "../../../../../common/utils/capitalizer";
+import { useFormContext } from 'react-hook-form';
 
 interface GenreInputProps {
     value?: string;
@@ -11,6 +12,7 @@ interface GenreInputProps {
 }
 
 export default function GenreInput(props: GenreInputProps) {
+    const { register } = useFormContext();
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState<string[]>([]);
     const [value, setValue] = useState<string>(props.value ?? '');
@@ -45,6 +47,7 @@ export default function GenreInput(props: GenreInputProps) {
                             </React.Fragment>
                         ),
                     }}
+                    {...register('genre')}
                     label="Genre"
                 />
             )}

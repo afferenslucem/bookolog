@@ -6,7 +6,7 @@ import SpyInstance = jest.SpyInstance;
 import { BookData } from "../../../../../common/models/book/book-data";
 import { httpClient } from "../../../../../common/utils/http-client";
 
-describe('BookForm', () => {
+xdescribe('BookForm', () => {
     let getSpy: SpyInstance = null!;
     let submitSpy: SpyInstance<void, [BookData]> = null!;
 
