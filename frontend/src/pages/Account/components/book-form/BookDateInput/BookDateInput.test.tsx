@@ -1,5 +1,4 @@
 import { fireEvent, render } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
 import BookForm from "../BookForm/BookForm";
 import React from "react";
 import BookDateInput from "./BookDateInput";
@@ -17,7 +16,7 @@ describe('BookForm', () => {
             const onChange = jest.fn();
 
             const el = render(
-                <BookDateInput value={value} onChange={onChange} />
+                <BookDateInput />
             );
 
             const year = await el.findByTestId("year");
@@ -38,7 +37,7 @@ describe('BookForm', () => {
             const onChange = jest.fn();
 
             const el = render(
-                <BookDateInput value={value} onChange={onChange} />
+                <BookDateInput />
             );
 
             const year = await el.findByTestId("month");
@@ -59,7 +58,7 @@ describe('BookForm', () => {
             const onChange = jest.fn();
 
             const el = render(
-                <BookDateInput value={value} onChange={onChange} />
+                <BookDateInput />
             );
 
             const year = await el.findByTestId("day");
@@ -76,7 +75,7 @@ describe('BookForm', () => {
             const onChange = jest.fn();
 
             const el = render(
-                <BookDateInput label="Label Text" onChange={onChange} />
+                <BookDateInput label="Label Text" />
             );
 
             const label = el.asFragment().querySelector('.book-date-input__label');
@@ -88,7 +87,7 @@ describe('BookForm', () => {
             const onChange = jest.fn();
 
             const el = render(
-                <BookDateInput onChange={onChange} />
+                <BookDateInput />
             );
 
             const label = el.asFragment().querySelector('.book-date-input__label');

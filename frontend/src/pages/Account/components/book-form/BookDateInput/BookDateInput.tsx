@@ -1,70 +1,44 @@
-import { BookDate } from "../../../../../common/models/book/book-date";
 import { TextField } from "@mui/material";
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import './BookDateInput.scss';
-import { useForm } from 'react-hook-form';
-import { BookData } from '../../../../../common/models/book/book-data';
-
-type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-type SetValueFunc = Dispatch<SetStateAction<number | null>>;
-type OnChangeFunc = (value: BookDate) => void;
-
-type BookFormValue = {
-    [K in keyof BookDate]: string
-}
+import { useFormContext } from 'react-hook-form';
 
 interface Props {
-    value?: BookDate;
-    onChange: OnChangeFunc;
+    propertyPrefix?: string;
     label?: string;
 }
 
 export default function BookDateInput(props: Props) {
-    const { watch, register, getValues, formState: { errors } } = useForm<BookFormValue>({reValidateMode: 'onBlur'});
+    const {label, propertyPrefix} = props;
+    const { register, formState: { errors } } = useFormContext<any>();
 
-    const { year, month, day } = watch()
-
-    useEffect(() => {
-        const value = getValues();
-        const fixed = fixFields(value);
-        props.onChange(fixed);
-        console.debug(errors)
-    }, [year, month, day])
+    const yearProp = propertyPrefix + 'DateYear';
+    const monthProp = propertyPrefix + 'DateMonth';
+    const dayProp = propertyPrefix + 'DateDay';
 
     return (
         <div className="book-date-input">
             {
-                props.label && <label className="book-date-input__label"> {props.label} </label>
+                label && <label className="book-date-input__label"> {label} </label>
             }
             <div className="book-date-input__body">
-                <TextField error={errors.year != null}
+                <TextField error={!!errors[yearProp]}
                            type="number"
                            label="Year"
                            data-testid="year"
-                           {...register('year', { min: 1950, max: new Date().getFullYear() })} />
+                           {...register(yearProp, { min: 1950, max: new Date().getFullYear(), required: false, valueAsNumber: true })} />
 
-                <TextField error={errors.month != null}
+                <TextField error={!!errors[monthProp]}
                            type="number"
                            label="Month"
                            data-testid="month"
-                           {...register('month', { min: 1, max: 12 })} />
+                           {...register(monthProp, { min: 0, max: 12, required: false, valueAsNumber: true })} />
 
-                <TextField error={errors.day != null}
+                <TextField error={!!errors[dayProp]}
                            type="number"
                            label="Day"
                            data-testid="day"
-                           {...register('day', { min: 1, max: 31 })} />
+                           {...register(dayProp, { min: 0, max: 31, required: false, valueAsNumber: true })} />
             </div>
         </div>
     )
-}
-
-function fixFields(date: BookFormValue): BookDate {
-    const result = {} as BookDate;
-
-    for (const key in date) {
-        result[key] = Number(date[key])
-    }
-
-    return result;
 }
