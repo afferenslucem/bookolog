@@ -9,6 +9,8 @@ import { BookType } from "../../../../../common/models/book/book-type";
 import { ProgressAlgorithmType } from "../../../../../common/models/book/progress/progress-algorithm-type";
 import BookDateInput from "../BookDateInput/BookDateInput";
 import { FormProvider, useForm } from "react-hook-form";
+import StartDateInput from "../StartDateInput";
+import EndDateInput from "../EndDateInput";
 
 interface BookFormProps {
     onSubmit: (value: BookData) => void;
@@ -33,11 +35,13 @@ const bookDefault: BookData = {
 } as BookData;
 
 export default function BookForm() {
-    const methods = useForm({defaultValues: bookDefault, reValidateMode: 'onBlur'});
-    const {handleSubmit, register, formState: {errors}} = methods;
+    const methods = useForm<BookData>({defaultValues: bookDefault, reValidateMode: 'onBlur'});
+    const {handleSubmit, register, watch, formState: {errors}} = methods;
     const onSubmit = data => {
         console.log(data)
     };
+
+    const status = watch('status');
 
     return (
         <FormProvider {...methods}>
@@ -50,7 +54,7 @@ export default function BookForm() {
                     {...register('name', {required: true})}
                 />
 
-                <AuthorsInput />
+                <AuthorsInput/>
 
                 <TextField
                     data-testid="release-year"
@@ -60,17 +64,17 @@ export default function BookForm() {
                     {...register('year')}
                 />
 
-                <TagsInput />
+                <TagsInput/>
 
-                <GenreInput />
+                <GenreInput/>
 
                 <FormControl fullWidth>
                     <InputLabel htmlFor="book-status">Status</InputLabel>
                     <Select
                         native
                         data-testid="status"
-                        input={<OutlinedInput label="Status" id="book-status" />}
-                        {...register('status')}
+                        input={<OutlinedInput label="Status" id="book-status"/>}
+                        {...register('status', {valueAsNumber: true})}
                     >
                         <option value={BookStatus.ToRead}>To Read</option>
                         <option value={BookStatus.InProgress}>In Progress</option>
@@ -83,8 +87,8 @@ export default function BookForm() {
                     <Select
                         native
                         data-testid="type"
-                        input={<OutlinedInput label="Type" id="book-type" />}
-                        {...register('type')}
+                        input={<OutlinedInput label="Type" id="book-type"/>}
+                        {...register('type', {valueAsNumber: true})}
                     >
                         <option value={BookType.Paper}>Paper</option>
                         <option value={BookType.Electronic}>Electronic</option>
@@ -97,7 +101,7 @@ export default function BookForm() {
                     <Select
                         native
                         data-testid="progress-type"
-                        input={<OutlinedInput label="Progress Type" id="book-progress-type" />}
+                        input={<OutlinedInput label="Progress Type" id="book-progress-type"/>}
                         {...register('progressType')}
                     >
                         <option value={ProgressAlgorithmType.Done}>Done</option>
@@ -105,9 +109,16 @@ export default function BookForm() {
                     </Select>
                 </FormControl>
 
-                <BookDateInput label="Start date" propertyPrefix="start" />
+                <StartDateInput />
+                <EndDateInput />
 
-                <BookDateInput label="Finish date" propertyPrefix="end" />
+                <TextField
+                    data-testid="note"
+                    label="Note"
+                    variant="outlined"
+                    multiline
+                    {...register('note')}
+                />
 
                 <Button type="submit" color="primary"> Save </Button>
             </form>

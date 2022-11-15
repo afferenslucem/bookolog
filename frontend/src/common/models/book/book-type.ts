@@ -1,5 +1,5 @@
 export enum BookType {
-    Paper,
-    Electronic,
-    Audio,
+    Paper = 0,
+    Electronic = 1,
+    Audio = 2,
 }
