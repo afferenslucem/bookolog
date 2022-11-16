@@ -4,12 +4,12 @@ import { BookStatus } from "../../../../common/models/book/book-status";
 import BookDateInput from "./BookDateInput/BookDateInput";
 import React from "react";
 
-export default function EndDateInput() {
+export default function EndDateInput(props: any) {
     const {watch} = useFormContext<BookData>();
 
     const status = watch("status")
 
-    return status !== BookStatus.ToRead
-        ? <BookDateInput label="Start date" propertyPrefix="start" / >
+    return status === BookStatus.Done
+        ? <BookDateInput {...props} label="Start date" propertyPrefix="start"/>
         : null;
 }

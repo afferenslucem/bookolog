@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form';
 interface Props {
     propertyPrefix?: string;
     label?: string;
+    ['data-testid']: string;
 }
 
 export default function BookDateInput(props: Props) {
@@ -16,7 +17,7 @@ export default function BookDateInput(props: Props) {
     const dayProp = propertyPrefix + 'DateDay';
 
     return (
-        <div className="book-date-input">
+        <div className="book-date-input" data-testid={props["data-testid"]}>
             {
                 label && <label className="book-date-input__label"> {label} </label>
             }

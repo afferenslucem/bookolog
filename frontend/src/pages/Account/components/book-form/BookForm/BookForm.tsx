@@ -1,19 +1,18 @@
 import { BookData } from "../../../../../common/models/book/book-data";
-import React, { FormEvent } from "react";
-import { Button, FormControl, InputLabel, OutlinedInput, Select, SelectChangeEvent, TextField } from "@mui/material";
+import React from "react";
+import { Button, FormControl, InputLabel, OutlinedInput, Select, TextField } from "@mui/material";
 import AuthorsInput from "../AuthorsInput/AuthorsInput";
 import TagsInput from "../TagsInput/TagsInput";
 import GenreInput from "../GenresInput/GenreInput";
 import { BookStatus } from "../../../../../common/models/book/book-status";
 import { BookType } from "../../../../../common/models/book/book-type";
 import { ProgressAlgorithmType } from "../../../../../common/models/book/progress/progress-algorithm-type";
-import BookDateInput from "../BookDateInput/BookDateInput";
 import { FormProvider, useForm } from "react-hook-form";
 import StartDateInput from "../StartDateInput";
 import EndDateInput from "../EndDateInput";
 
 interface BookFormProps {
-    onSubmit: (value: BookData) => void;
+    onSubmit?: (value: BookData) => void;
     value?: BookData;
 }
 
@@ -34,18 +33,13 @@ const bookDefault: BookData = {
     endDateDay: null,
 } as BookData;
 
-export default function BookForm() {
+export default function BookForm(props: BookFormProps) {
     const methods = useForm<BookData>({defaultValues: bookDefault, reValidateMode: 'onBlur'});
-    const {handleSubmit, register, watch, formState: {errors}} = methods;
-    const onSubmit = data => {
-        console.log(data)
-    };
-
-    const status = watch('status');
+    const {handleSubmit, register, formState: {errors}} = methods;
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(props.onSubmit!)}>
                 <TextField
                     data-testid="name"
                     error={!!errors.name}
@@ -109,8 +103,8 @@ export default function BookForm() {
                     </Select>
                 </FormControl>
 
-                <StartDateInput />
-                <EndDateInput />
+                <StartDateInput data-testid="start-date" />
+                <EndDateInput data-testid="end-date" />
 
                 <TextField
                     data-testid="note"

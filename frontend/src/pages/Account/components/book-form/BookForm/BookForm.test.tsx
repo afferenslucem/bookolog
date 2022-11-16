@@ -1,12 +1,13 @@
 import React from 'react';
 import { fireEvent, render } from "@testing-library/react";
+import { act } from 'react-dom/test-utils';
 import { BrowserRouter as Router } from "react-router-dom";
 import BookForm from "./BookForm";
-import SpyInstance = jest.SpyInstance;
 import { BookData } from "../../../../../common/models/book/book-data";
 import { httpClient } from "../../../../../common/utils/http-client";
+import SpyInstance = jest.SpyInstance;
 
-xdescribe('BookForm', () => {
+describe('BookForm', () => {
     let getSpy: SpyInstance = null!;
     let submitSpy: SpyInstance<void, [BookData]> = null!;
 
@@ -19,93 +20,115 @@ xdescribe('BookForm', () => {
         getSpy.mockRestore();
     })
 
-    test('fire name', async () => {
-        const el = render(
-            <Router>
-                <BookForm />
-            </Router>
-        );
+    describe('rendering', () => {
+        describe('StartDate', () => {
+            it('does not render for BookStatus.ToRead',  async () => {
+                const el = render(
+                    <Router>
+                        <BookForm />
+                    </Router>
+                );
 
-        const name = await el.findByTestId("name");
-        fireEvent.change(name.querySelector('input')!, {target: {value: 'Война миров'}});
+                const status = await el.findByTestId("status");
+                fireEvent.change(status.querySelector('select')!, {target: {value: 0}});
 
-        const button = await el.findByText("Save");
-        fireEvent.click(button);
+                const input = el.asFragment().querySelector('[data-testid="start-date"]');
 
-        expect(submitSpy).toHaveBeenCalledWith(expect.objectContaining({
-            name: 'Война миров'
-        }))
-    });
+                expect(input).toBeFalsy();
+            })
 
-    test('fire year', async () => {
-        const el = render(
-            <Router>
-                <BookForm />
-            </Router>
-        );
+            it('renders for BookStatus.InProgress',  async () => {
+                const el = render(
+                    <Router>
+                        <BookForm />
+                    </Router>
+                );
 
-        const year = await el.findByTestId("release-year");
-        fireEvent.change(year.querySelector('input')!, {target: {value: '1934'}});
 
-        const button = await el.findByText("Save");
-        fireEvent.click(button);
+                const status = await el.findByTestId("status");
 
-        expect(submitSpy).toHaveBeenCalledWith(expect.objectContaining({
-            year: 1934
-        }))
-    });
+                await act(() => {
+                    fireEvent.change(status.querySelector('select')!, {target: {value: 1}})
+                });
 
-    test('fire status', async () => {
-        const el = render(
-            <Router>
-                <BookForm />
-            </Router>
-        );
+                const input = el.asFragment().querySelector('[data-testid="start-date"]');
 
-        const year = await el.findByTestId("status");
-        fireEvent.change(year.querySelector('select')!, {target: {value: '2'}});
+                expect(input).toBeTruthy();
+            })
 
-        const button = await el.findByText("Save");
-        fireEvent.click(button);
+            it('renders for BookStatus.Done',  async () => {
+                const el = render(
+                    <Router>
+                        <BookForm />
+                    </Router>
+                );
 
-        expect(submitSpy).toHaveBeenCalledWith(expect.objectContaining({
-            status: 2
-        }))
-    });
 
-    test('fire type', async () => {
-        const el = render(
-            <Router>
-                <BookForm />
-            </Router>
-        );
+                const status = await el.findByTestId("status");
 
-        const year = await el.findByTestId("type");
-        fireEvent.change(year.querySelector('select')!, {target: {value: '2'}});
+                await act(() => {
+                    fireEvent.change(status.querySelector('select')!, {target: {value: 2}})
+                });
 
-        const button = await el.findByText("Save");
-        fireEvent.click(button);
+                const input = el.asFragment().querySelector('[data-testid="start-date"]');
 
-        expect(submitSpy).toHaveBeenCalledWith(expect.objectContaining({
-            type: 2
-        }))
-    });
+                expect(input).toBeTruthy();
+            })
+        });
 
-    test('fire progress type', async () => {
-        const el = render(
-            <Router>
-                <BookForm />
-            </Router>
-        );
+        describe('EndDate', () => {
+            it('does not render for BookStatus.ToRead',  async () => {
+                const el = render(
+                    <Router>
+                        <BookForm />
+                    </Router>
+                );
 
-        const year = await el.findByTestId("progress-type");
-        fireEvent.change(year.querySelector('select')!, {target: {value: 'Left'}});
+                const status = await el.findByTestId("status");
+                fireEvent.change(status.querySelector('select')!, {target: {value: 0}});
 
-        const button = await el.findByText("Save");
-        fireEvent.click(button);
+                const input = el.asFragment().querySelector('[data-testid="end-date"]');
 
-        expect(submitSpy).toHaveBeenCalledWith(expect.objectContaining({
-            progressType: 'Left'
-        }))
-    });
+                expect(input).toBeFalsy();
+            })
+
+            it('renders for BookStatus.InProgress',  async () => {
+                const el = render(
+                    <Router>
+                        <BookForm />
+                    </Router>
+                );
+
+
+                const status = await el.findByTestId("status");
+
+                await act(() => {
+                    fireEvent.change(status.querySelector('select')!, {target: {value: 1}})
+                });
+
+                const input = el.asFragment().querySelector('[data-testid="end-date"]');
+
+                expect(input).toBeFalsy();
+            })
+
+            it('renders for BookStatus.Done',  async () => {
+                const el = render(
+                    <Router>
+                        <BookForm />
+                    </Router>
+                );
+
+
+                const status = await el.findByTestId("status");
+
+                await act(() => {
+                    fireEvent.change(status.querySelector('select')!, {target: {value: 2}})
+                });
+
+                const input = el.asFragment().querySelector('[data-testid="end-date"]');
+
+                expect(input).toBeTruthy();
+            })
+        });
+    })
 })
