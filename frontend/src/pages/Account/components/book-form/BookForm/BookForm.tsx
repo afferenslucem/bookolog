@@ -10,6 +10,7 @@ import { ProgressAlgorithmType } from "../../../../../common/models/book/progres
 import { FormProvider, useForm } from "react-hook-form";
 import StartDateInput from "../StartDateInput";
 import EndDateInput from "../EndDateInput";
+import ProgressInput from "../ProgressInput/ProgressInput";
 
 interface BookFormProps {
     onSubmit?: (value: BookData) => void;
@@ -105,6 +106,8 @@ export default function BookForm(props: BookFormProps) {
 
                 <StartDateInput data-testid="start-date" />
                 <EndDateInput data-testid="end-date" />
+
+                <ProgressInput/>
 
                 <TextField
                     data-testid="note"
