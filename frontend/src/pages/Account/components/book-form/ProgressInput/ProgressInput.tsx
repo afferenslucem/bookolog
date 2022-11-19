@@ -4,6 +4,7 @@ import { BookStatus } from "../../../../../common/models/book/book-status";
 import PageProgressInput from "./PageProgressInput/PageProgressInput";
 import { BookType } from "../../../../../common/models/book/book-type";
 import TimeProgressInput from "./TimeProgressInput/TimeProgressInput";
+import './ProgressInput.scss'
 
 export default function ProgressInput() {
     const {watch} = useFormContext<BookData>();
@@ -14,11 +15,16 @@ export default function ProgressInput() {
 
     return (
         <div data-testid="progress">
-            {
-                type === BookType.Audio
-                    ? <TimeProgressInput/>
-                    : <PageProgressInput/>
-            }
+            <div className="progress__label">
+                Progress
+            </div>
+            <div className="progress__input">
+                {
+                    type === BookType.Audio
+                        ? <TimeProgressInput/>
+                        : <PageProgressInput/>
+                }
+            </div>
         </div>
     )
 }

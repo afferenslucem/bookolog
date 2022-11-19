@@ -1,12 +1,14 @@
 .book-date-input {
   &__label {
-    display: block;
-
     margin-bottom: 0.5rem;
   }
 
   &__body {
     display: flex;
     gap: 1rem;
+
+    & > * {
+      flex: 1 1 auto;
+    }
   }
 }

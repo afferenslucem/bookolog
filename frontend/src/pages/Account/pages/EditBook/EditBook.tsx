@@ -31,7 +31,7 @@ export default function EditBook() {
             ? <Loader/>
             :
             <div>
-                <BookForm />
+                <BookForm onSubmit={(data) => console.debug(data)} />
             </div>
     )
 }

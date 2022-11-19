@@ -19,7 +19,7 @@ export default function BookDateInput(props: Props) {
     return (
         <div className="book-date-input" data-testid={props["data-testid"]}>
             {
-                label && <label className="book-date-input__label"> {label} </label>
+                label && <div className="book-date-input__label"> {label} </div>
             }
             <div className="book-date-input__body">
                 <TextField error={!!errors[yearProp]}
