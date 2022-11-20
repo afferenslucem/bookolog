@@ -10,10 +10,11 @@ interface Props {
 }
 
 export default function AsyncAutocomplete(props: Props) {
-    const { control } = useFormContext();
+    const { control, getValues } = useFormContext();
     const { replace } = useFieldArray({ control, name: props.name });
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState<string[]>([]);
+
 
     useOnInit(() => {
         setLoading(true)
@@ -22,12 +23,15 @@ export default function AsyncAutocomplete(props: Props) {
             .finally(() => setLoading(false));
     })
 
+    const value = getValues(props.name);
+
     return (
         <Autocomplete
             multiple
             options={options}
             filterSelectedOptions
             loading={loading}
+            value={value}
             onChange={(_, newValue) => {
                 replace(newValue);
             }}

@@ -14,7 +14,7 @@ function DoneBookComponent(props: { book: BookModel }) {
                 <span>
                     {book.name}
                 </span>
-                <EditOutlinedIcon onClick={() => navigate(`../edit-book/${book.guid}`)}/>
+                <EditOutlinedIcon className="edit-icon" onClick={() => navigate(`../edit-book/${book.guid}`)}/>
             </div>
             <div className="book__authors secondary">
                 {

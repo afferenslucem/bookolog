@@ -42,4 +42,8 @@ export class BookLoader {
         return httpClient.get<string[]>(`/book/allgenres`)
             .then(response => response.data);
     }
+
+    public update(book: BookData): Promise<void> {
+        return httpClient.put<BookData>(`/book/update`, book) as Promise<any>;
+    }
 }

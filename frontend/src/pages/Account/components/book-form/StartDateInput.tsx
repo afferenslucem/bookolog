@@ -10,6 +10,6 @@ export default function StartDateInput(props: any) {
     const status = watch("status")
 
     return status !== BookStatus.ToRead
-        ? <BookDateInput {...props} label="Finish date" propertyPrefix="end"/>
+        ? <BookDateInput {...props} label="Start date" propertyPrefix="start"/>
         : null
 }

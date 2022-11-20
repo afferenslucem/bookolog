@@ -54,13 +54,13 @@ export class Book {
             month: data.startDateMonth,
             day: data.startDateDay,
         };
-        this.startDate = this.getDate(data.startDate, this.started);
+        this.startDate = this.getDate(this.started);
         this.finished = {
             year: data.endDateYear,
             month: data.endDateMonth,
             day: data.endDateDay,
         };
-        this.endDate = this.getDate(data.endDate, this.finished);
+        this.endDate = this.getDate(this.finished);
         this.type = data.type;
         this.note = data.note;
         this.rereadingBookGuid = data.rereadingBookGuid;
@@ -103,14 +103,45 @@ export class Book {
         return this.authors.concat([this.name]).join('|');
     }
 
-    private getDate(date: string | Date | undefined, bDate: BookDate): Date {
-        if (date) {
-            return new Date(date);
-        } else if (bDate.day || bDate.month || bDate.year) {
+    private getDate(bDate: BookDate): Date {
+        if (bDate.day || bDate.month || bDate.year) {
             const month = bDate.month ? bDate.month - 1 : 0;
             return new Date(bDate.year!, month, bDate.day || 1);
         } else {
             return null!;
         }
+    }
+
+    public convertToDTO(): BookData {
+        const book = this;
+
+        const data: BookData = {
+            createDate: book.modifyDate,
+            modifyDate: book.createDate,
+            guid: book.guid,
+            name: book.name,
+            authors: book.authors ? Array.from(book.authors) : [],
+            year: book.year,
+            status: book.status,
+            tags: book.tags ? Array.from(book.tags) : [],
+            totalUnits: book.totalUnits,
+            doneUnits: book.doneUnits,
+            genre: book.genre,
+            collectionGuid: book.collection?.guid || book.collectionGuid,
+            collectionOrder: book.collectionOrder,
+            startDateYear: book.started?.year,
+            startDateMonth: book.started?.month,
+            startDateDay: book.started?.day,
+            endDateYear: book.finished?.year,
+            endDateMonth: book.finished?.month,
+            endDateDay: book.finished?.day,
+            type: book.type,
+            note: book.note,
+            progressType: book.progressType,
+            rereadingBookGuid: book.rereadingBookGuid,
+            rereadedBy: book.rereadedBy
+        };
+
+        return data;
     }
 }

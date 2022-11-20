@@ -4,6 +4,7 @@ import { httpClient } from "../../../../common/utils/http-client";
 import SpyInstance = jest.SpyInstance;
 import { BookData } from "../../../../common/models/book/book-data";
 import ToRead from "./ToRead";
+import { BrowserRouter as Router } from "react-router-dom";
 
 describe('ToRead', () => {
     let getSpy: SpyInstance = null!;
@@ -19,7 +20,12 @@ describe('ToRead', () => {
     test('renders loader', async () => {
         getSpy.mockReturnValue(new Promise((_) => ({})))
 
-        const el = render(<ToRead/>);
+
+        const el = render(
+            <Router>
+                <ToRead/>
+            </Router>
+        );
 
         const backdrop = await el.findByTestId("backdrop");
 
@@ -40,7 +46,11 @@ describe('ToRead', () => {
             ] as BookData[]
         })))
 
-        const el = render(<ToRead/>);
+        const el = render(
+            <Router>
+                <ToRead/>
+            </Router>
+        );
 
         await waitFor(() => expect(getSpy).toHaveBeenCalled())
 

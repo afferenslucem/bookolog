@@ -10,6 +10,6 @@ export default function EndDateInput(props: any) {
     const status = watch("status")
 
     return status === BookStatus.Done
-        ? <BookDateInput {...props} label="Start date" propertyPrefix="start"/>
+        ? <BookDateInput {...props} label="Finish date" propertyPrefix="end"/>
         : null;
 }

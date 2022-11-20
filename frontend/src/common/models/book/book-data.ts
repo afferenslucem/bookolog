@@ -17,11 +17,9 @@ export interface BookData {
     startDateYear?: number | null;
     startDateMonth?: number | null;
     startDateDay?: number | null;
-    startDate?: string;
     endDateYear?: number | null;
     endDateMonth?: number | null;
     endDateDay?: number | null;
-    endDate?: string;
     type: number;
     note?: string;
     progressType?: ProgressAlgorithmType;

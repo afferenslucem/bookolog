@@ -4,6 +4,7 @@ import InProgress from "./InProgress";
 import { httpClient } from "../../../../common/utils/http-client";
 import SpyInstance = jest.SpyInstance;
 import { BookData } from "../../../../common/models/book/book-data";
+import { BrowserRouter as Router } from "react-router-dom";
 
 describe('InProgress', () => {
     let getSpy: SpyInstance = null!;
@@ -19,7 +20,11 @@ describe('InProgress', () => {
     test('renders loader', async () => {
         getSpy.mockReturnValue(new Promise((_) => ({})))
 
-        const el = render(<InProgress/>);
+        const el = render(
+            <Router>
+                <InProgress/>
+            </Router>
+        );
 
         const backdrop = await el.findByTestId("backdrop");
 
@@ -40,7 +45,11 @@ describe('InProgress', () => {
             ] as BookData[]
         })))
 
-        const el = render(<InProgress/>);
+        const el = render(
+            <Router>
+                <InProgress/>
+            </Router>
+        );
 
         await waitFor(() => expect(getSpy).toHaveBeenCalled())
 

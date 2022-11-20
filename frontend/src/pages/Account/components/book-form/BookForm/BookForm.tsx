@@ -35,8 +35,10 @@ const bookDefault: BookData = {
 } as BookData;
 
 export default function BookForm(props: BookFormProps) {
-    const methods = useForm<BookData>({defaultValues: bookDefault, reValidateMode: 'onBlur'});
-    const {handleSubmit, register, formState: {errors}} = methods;
+    const bookValue = props.value ?? bookDefault
+
+    const methods = useForm<BookData>({ defaultValues: bookValue, reValidateMode: 'onBlur' });
+    const { handleSubmit, register, formState: { errors } } = methods;
 
     return (
         <FormProvider {...methods}>
@@ -46,7 +48,7 @@ export default function BookForm(props: BookFormProps) {
                     error={!!errors.name}
                     label="Name"
                     variant="outlined"
-                    {...register('name', {required: true})}
+                    {...register('name', { required: true })}
                 />
 
                 <AuthorsInput/>
@@ -69,7 +71,7 @@ export default function BookForm(props: BookFormProps) {
                         native
                         data-testid="status"
                         input={<OutlinedInput label="Status" id="book-status"/>}
-                        {...register('status', {valueAsNumber: true})}
+                        {...register('status', { valueAsNumber: true })}
                     >
                         <option value={BookStatus.ToRead}>To Read</option>
                         <option value={BookStatus.InProgress}>In Progress</option>
@@ -83,7 +85,7 @@ export default function BookForm(props: BookFormProps) {
                         native
                         data-testid="type"
                         input={<OutlinedInput label="Type" id="book-type"/>}
-                        {...register('type', {valueAsNumber: true})}
+                        {...register('type', { valueAsNumber: true })}
                     >
                         <option value={BookType.Paper}>Paper</option>
                         <option value={BookType.Electronic}>Electronic</option>
@@ -104,8 +106,8 @@ export default function BookForm(props: BookFormProps) {
                     </Select>
                 </FormControl>
 
-                <StartDateInput data-testid="start-date" />
-                <EndDateInput data-testid="end-date" />
+                <StartDateInput data-testid="start-date"/>
+                <EndDateInput data-testid="end-date"/>
 
                 <ProgressInput/>
 

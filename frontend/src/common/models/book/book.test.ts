@@ -86,8 +86,6 @@ describe('Book', () => {
       type: 1,
       modifyDate: '2020-11-18 10:57',
       createDate: '2020-11-18 09:57',
-      startDate: '2020-11-10 10:34',
-      endDate: '2020-11-11 11:11',
       rereadedBy: ['guid1', 'guid2'],
       rereadingBookGuid: 'guid3',
     };
@@ -123,8 +121,6 @@ describe('Book', () => {
     expect(book.modifyDate).toEqual(new Date('2020-11-18 10:57:00'));
     expect(book.createDate).toEqual(new Date('2020-11-18 09:57:00'));
     expect(book.note).toEqual(data.note);
-    expect(book.startDate).toEqual(new Date(data.startDate!));
-    expect(book.endDate).toEqual(new Date(data.endDate!));
     expect(book.progressPercents).toEqual(50);
     expect(book.rereadedBy).toEqual(['guid1', 'guid2']);
     expect(book.rereadingBookGuid).toEqual('guid3');

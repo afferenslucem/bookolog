@@ -5,17 +5,14 @@ import { useOnInit } from "../../../../../common/utils/hooks";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { Capitalizer } from "../../../../../common/utils/capitalizer";
 import { useFormContext } from 'react-hook-form';
+import { BookData } from '../../../../../common/models/book/book-data';
 
-interface GenreInputProps {
-    value?: string;
-    onChange?: (newValue: string) => void;
-}
-
-export default function GenreInput(props: GenreInputProps) {
-    const { register } = useFormContext();
+export default function GenreInput() {
+    const { register, getValues, setValue } = useFormContext<BookData>();
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState<string[]>([]);
-    const [value, setValue] = useState<string>(props.value ?? '');
+
+    const value = getValues('genre');
 
     useOnInit(() => {
         setLoading(true)
@@ -29,8 +26,7 @@ export default function GenreInput(props: GenreInputProps) {
         <Autocomplete
             value={value}
             onChange={(_, newValue)=> {
-                setValue(newValue!);
-                props.onChange && props.onChange(newValue!);
+                setValue('genre', newValue);
             }}
             options={options}
             filterSelectedOptions
