@@ -7,6 +7,7 @@ import Done from "./pages/Done/Done";
 import ToRead from "./pages/ToRead/ToRead";
 import Navigation from "./components/Navigation/Navigation";
 import EditBook from "./pages/EditBook/EditBook";
+import CreateBook from "./pages/CreateBook/CreateBook";
 
 export default function Account() {
     const [isDrawerOpened, toggleDrawer] = useReducer(flag => !flag, false);
@@ -26,6 +27,7 @@ export default function Account() {
                     <Route path="/done" element={<Done/>}/>
                     <Route path="/to-read" element={<ToRead/>}/>
                     <Route path="/edit-book/:guid" element={<EditBook/>}/>
+                    <Route path="/create-book/:status" element={<CreateBook/>}/>
                 </Routes>
             </Container>
             <Drawer anchor="bottom" open={isDrawerOpened} onClose={toggleDrawer}>

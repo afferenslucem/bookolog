@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import InProgress from "./InProgress";
 import { httpClient } from "../../../../common/utils/http-client";
 import SpyInstance = jest.SpyInstance;

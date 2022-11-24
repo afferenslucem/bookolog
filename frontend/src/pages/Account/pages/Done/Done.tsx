@@ -5,12 +5,14 @@ import { useOnInit } from "../../../../common/utils/hooks";
 
 import Loader from "../../../../common/components/Loader/Loader";
 import DoneBook from "../../components/book-item/DoneBook/DoneBook";
-
-// TODO: DoneBook
+import { Fab } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
 export default function Done() {
     const [loading, setLoading] = useState(true);
     const [books, setBooks] = useState<Book[]>([]);
+    const navigate = useNavigate();
 
     useOnInit(() => {
         setLoading(true);
@@ -25,6 +27,12 @@ export default function Done() {
                 loading
                     ? <Loader data-testid="backdrop" />
                     : books.map(book => <DoneBook key={book.guid} book={book}/>)
+            }
+            {
+                !loading &&
+                <Fab className="book-list__add-icon" data-testid="add" size="medium" color="secondary" aria-label="add" onClick={() => navigate('/create-book/2')}>
+                    <AddIcon />
+                </Fab>
             }
         </div>
     )

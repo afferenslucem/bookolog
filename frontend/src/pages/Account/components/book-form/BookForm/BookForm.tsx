@@ -17,14 +17,14 @@ interface BookFormProps {
     value?: BookData;
 }
 
-const bookDefault: BookData = {
+export const defaultBookCreateModel: BookData = {
     name: '',
     authors: [] as string[],
     tags: [] as string[],
     year: null,
     genre: null,
-    status: 1,
-    type: 0,
+    status: BookStatus.InProgress,
+    type: BookType.Paper,
     progressType: ProgressAlgorithmType.Done,
     startDateYear: null,
     startDateMonth: null,
@@ -35,7 +35,7 @@ const bookDefault: BookData = {
 } as BookData;
 
 export default function BookForm(props: BookFormProps) {
-    const bookValue = props.value ?? bookDefault
+    const bookValue = props.value ?? defaultBookCreateModel
 
     const methods = useForm<BookData>({ defaultValues: bookValue, reValidateMode: 'onBlur' });
     const { handleSubmit, register, formState: { errors } } = methods;

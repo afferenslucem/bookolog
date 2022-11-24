@@ -46,4 +46,8 @@ export class BookLoader {
     public update(book: BookData): Promise<void> {
         return httpClient.put<BookData>(`/book/update`, book) as Promise<any>;
     }
+
+    public create(book: BookData): Promise<void> {
+        return httpClient.post<BookData>(`/book/create`, book) as Promise<any>;
+    }
 }

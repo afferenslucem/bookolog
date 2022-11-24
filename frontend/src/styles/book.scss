@@ -35,5 +35,12 @@
   & > * + * {
     margin-top: 1rem;
   }
+
+  & > &__add-icon {
+    position: fixed;
+
+    bottom: 1rem;
+    right: 1rem;
+  }
 }
 
