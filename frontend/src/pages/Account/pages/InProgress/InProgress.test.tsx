@@ -1,10 +1,10 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import InProgress from "./InProgress";
 import { httpClient } from "../../../../common/utils/http-client";
-import SpyInstance = jest.SpyInstance;
 import { BookData } from "../../../../common/models/book/book-data";
 import { BrowserRouter as Router } from "react-router-dom";
+import SpyInstance = jest.SpyInstance;
 
 describe('InProgress', () => {
     let getSpy: SpyInstance = null!;

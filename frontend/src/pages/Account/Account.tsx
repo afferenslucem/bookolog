@@ -8,6 +8,7 @@ import ToRead from "./pages/ToRead/ToRead";
 import Navigation from "./components/Navigation/Navigation";
 import EditBook from "./pages/EditBook/EditBook";
 import CreateBook from "./pages/CreateBook/CreateBook";
+import BookInfo from './pages/Book/BookInfo';
 
 export default function Account() {
     const [isDrawerOpened, toggleDrawer] = useReducer(flag => !flag, false);
@@ -28,6 +29,7 @@ export default function Account() {
                     <Route path="/to-read" element={<ToRead/>}/>
                     <Route path="/edit-book/:guid" element={<EditBook/>}/>
                     <Route path="/create-book/:status" element={<CreateBook/>}/>
+                    <Route path="/book/:guid" element={<BookInfo/>}/>
                 </Routes>
             </Container>
             <Drawer anchor="bottom" open={isDrawerOpened} onClose={toggleDrawer}>

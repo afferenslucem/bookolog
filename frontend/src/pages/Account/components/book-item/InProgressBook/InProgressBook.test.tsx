@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 import { Book } from "../../../../../common/models/book/book";
 import InProgressBook from './InProgressBook';

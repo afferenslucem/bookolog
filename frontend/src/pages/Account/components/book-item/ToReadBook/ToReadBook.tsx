@@ -9,12 +9,23 @@ function ToReadBookComponent(props: { book: Book }) {
     const navigate = useNavigate();
 
     return (
-        <div className="book book--to-read" data-testid="to-read-book">
+        <div className="book book--to-read" data-testid="to-read-book"
+             onClick={
+                 e => {
+                     navigate(`/book/${book.guid}`)
+                     e.stopPropagation()
+                 }
+             }>
             <div className="book__header">
                 <span>
                     {book.name}
                 </span>
-                <EditOutlinedIcon className="edit-icon" onClick={() => navigate(`../edit-book/${book.guid}`)}/>
+                <EditOutlinedIcon className="edit-icon"
+                                  onClick={e => {
+                                      navigate(`../edit-book/${book.guid}`)
+                                      e.stopPropagation();
+                                  }
+                                  }/>
             </div>
             <div className="book__authors secondary">
                 <Join value={book.authors}/>

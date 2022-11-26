@@ -19,3 +19,24 @@ body {
 [role=alert] {
   margin-bottom: 1rem;
 }
+
+.page {
+  background-color: white;
+  border-radius: 2rem;
+  padding: 1rem 2rem 2rem 2rem;
+  margin-top: 1rem;
+}
+
+.info-row {
+  & > &__label {
+    margin: 0.5rem 0;
+  }
+
+  & > &__value {
+
+  }
+
+  & + & {
+    margin-top: 1.5rem;
+  }
+}

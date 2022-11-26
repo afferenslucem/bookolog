@@ -1,7 +1,6 @@
 import { httpClient } from "./http-client";
 import { Book } from "../models/book/book";
 import { BookData } from "../models/book/book-data";
-import { BookAutocompleteData } from "../../pages/Account/models/book-autocomplete-data";
 
 export class BookLoader {
     public getBooksInProgress(): Promise<Book[]> {

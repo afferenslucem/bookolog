@@ -24,13 +24,14 @@ export default function InProgress() {
         <div className="book-list">
             {
                 loading
-                    ? <Loader data-testid="backdrop" />
+                    ? <Loader data-testid="backdrop"/>
                     : books.map(book => <InProgressBook key={book.guid} book={book}/>)
             }
             {
                 !loading &&
-                <Fab className="book-list__add-icon" data-testid="add" size="medium" color="secondary" aria-label="add" onClick={() => navigate('/create-book/1')}>
-                    <AddIcon />
+                <Fab className="book-list__add-icon" data-testid="add" size="medium" color="secondary" aria-label="add"
+                     onClick={() => navigate('/create-book/1')}>
+                    <AddIcon/>
                 </Fab>
             }
         </div>
