@@ -3,19 +3,19 @@ services:
   client:
     image: docker.pkg.github.com/afferenslucem/bookolog/client:latest
     ports:
-      - "40080:80"    
-    depends_on: 
+      - "127.0.0.1:40080:80"
+    depends_on:
       - server
 
   server:
     image: docker.pkg.github.com/afferenslucem/bookolog/server:latest
     ports:
-      - "45080:80"
-      - "45081:81"
-    depends_on: 
+      - "127.0.0.1:45080:80"
+      - "127.0.0.1:45081:81"
+    depends_on:
       - postgre
       - postfix
-    volumes: 
+    volumes:
       - "./backend.v2/backend.v2/appsettings.json:/app/appsettings.json"
       - "/imageStorage:/imageStorage"
 
@@ -33,7 +33,6 @@ services:
     environment:
       POSTGRES_PASSWORD: masterkey
     ports:
-      - "45432:5432"
-    volumes: 
+      - "127.0.0.1:45432:5432"
+    volumes:
       - "./database/init-db/:/docker-entrypoint-initdb.d/"
-
